@@ -18,6 +18,9 @@ let package = Package(
             name: "DemoInfo",
             dependencies: [
                 .product(name: "Vulkan", package: "swift-vulkan")
+            ],
+            swiftSettings: [
+                .defaultIsolation(MainActor.self)
             ]
         ),
         .executableTarget(
