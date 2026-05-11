@@ -23,5 +23,6 @@ let package = Package(
         .target(
             name: "Vulkan",
             dependencies: ["CVulkan"]),
-    ]
+    ],
+    swiftLanguageModes: [.v5]
 )
