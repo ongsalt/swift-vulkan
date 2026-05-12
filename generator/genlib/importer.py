@@ -29,13 +29,15 @@ class SwiftMember:
 class SwiftStruct:
     def __init__(self, c_struct: CStruct, name: str,
                  members: List[SwiftMember], member_conversions: tc.MemberConversions,
-                 convertible_from_c_struct: bool = True, parent_class: 'SwiftClass' = None):
+                 convertible_from_c_struct: bool = True, parent_class: 'SwiftClass' = None, 
+                 protocols: List[str] = None):
         self.name = name
         self.members = members
         self.member_conversions: tc.MemberConversions = member_conversions
         self.c_struct = c_struct
         self.convertible_from_c_struct = convertible_from_c_struct
         self.parent_class = parent_class
+        self.protocols = protocols or []
 
 
 class SwiftCommand:
@@ -246,7 +248,7 @@ class Importer:
         name = remove_vk_prefix(c_struct.name)
 
         convertible_from_c_struct = True
-        parent_class: SwiftClass = None
+        parent_class: SwiftClass | None = None
         for member in c_struct.members:
             type_name = member.type.type_name
             if type_name in self.c_structs:
@@ -262,6 +264,10 @@ class Importer:
                     parent_class = self.imported_classes[type_name].parent
                 elif type_name in self.imported_classes:
                     convertible_from_c_struct = False
+        
+        protocols: List[str] = []
+        for base in c_struct.struct_extends:
+            protocols.append(f"{remove_vk_prefix(base)}.Extension")
 
         members, conversions = self.get_member_conversions(c_struct.members, c_struct=c_struct)
         struct = SwiftStruct(c_struct=c_struct,
@@ -269,7 +275,8 @@ class Importer:
                              members=members,
                              member_conversions=conversions,
                              convertible_from_c_struct=convertible_from_c_struct,
-                             parent_class=parent_class)
+                             parent_class=parent_class,
+                             protocols=protocols)
         self.swift_context.structs.append(struct)
         self.imported_structs[c_struct.name] = struct
         return struct
@@ -477,7 +484,8 @@ class Importer:
                 continue
 
             if c_struct and c_member.name == 'pNext':
-                conversions.add_static_value(c_member.name, 'nil')
+                # some pNext is mutable, some is not. And the header dont really follows the spec.
+                conversions.add_static_value(c_member.name, 'maybeMutable(pNext)')
                 continue
 
             if (c_struct and (
@@ -508,6 +516,16 @@ class Importer:
 
             swift_name = get_member_name(c_member.name, c_member.type)
             is_closure = c_member.type.name and c_member.type.name.startswith('PFN_') and not c_member.type.optional
+            
+            # only do this for fn params AND that type must be pNext base
+            if not c_struct and c_member.type.pointer_to:
+                struct_ty = self.c_structs.get(c_member.type.pointer_to.name)
+                if struct_ty and struct_ty.is_chainable_base and not is_array_convertible(c_member.type):
+                    # ignore array somehow
+                    # print(struct_ty.name)
+                    # swift_type = f"some Chainable<{c_member.type.pointer_to.name}>"
+                    swift_type = f"some Chainable<{swift_type}>"
+
 
             member = SwiftMember(name=swift_name, type_=swift_type, is_closure=is_closure)
             members.append(member)

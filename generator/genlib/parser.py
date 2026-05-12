@@ -38,6 +38,7 @@ class CType:
         if self.array_of:
             return self.array_of.type_name
         return self.name
+    
 
 
 class CMember:
@@ -48,10 +49,12 @@ class CMember:
 
 
 class CStruct:
-    def __init__(self, name: str, members: List[CMember] = None, returned_only=False):
+    def __init__(self, name: str, members: List[CMember] = None, returned_only=False, struct_extends: List[str] = None):
         self.name = name
         self.members = members or []
         self.returned_only = returned_only
+        self.struct_extends = struct_extends or []
+        self.is_chainable_base = False
 
 
 class CHandle:
@@ -112,6 +115,7 @@ class CContext:
         self.parse_bitmasks(tree)
         self.parse_structs(tree)
         self.parse_commands(tree)
+
 
     def parse_platforms(self, tree: ElementTree):
         for platform in tree.findall('./platforms/platform'):
@@ -228,7 +232,9 @@ class CContext:
 
             self.bitmasks.append(c_bitmask)
 
+
     def parse_structs(self, tree: ElementTree):
+        bases: List[str] = []
         for struct in tree.findall('./types/type[@category="struct"]'):
             if 'alias' in struct.attrib:
                 continue
@@ -236,12 +242,22 @@ class CContext:
             if self.should_ignore(type_=struct.attrib['name']):
                 continue
 
-            c_struct = CStruct(struct.attrib['name'], returned_only=struct.get('returnedonly') == 'true')
+            extends = None
+            if 'structextends' in struct.attrib:
+                extends = struct.attrib['structextends'].split(",")
+                bases += extends
+            
+            c_struct = CStruct(struct.attrib['name'], returned_only=struct.get('returnedonly') == 'true', struct_extends=extends)
 
             for member in struct.findall('./member'):
-                c_struct.members.append(parse_member(member, tree))
+                member = parse_member(member, tree)
+                c_struct.members.append(member)
+                # TODO: checl pNext type, maybe
+                if member.name == "pNext": 
+                    c_struct.is_chainable_base = True
 
             self.structs.append(c_struct)
+        
 
     def parse_commands(self, tree: ElementTree):
         for e_command in tree.findall('./commands/command'):
@@ -289,7 +305,6 @@ def parse_enum_value(e_enum: ElementTree, extension_number: int = None) -> str:
     else:
         return e_enum.attrib['value']
 
-
 def parse_member(member: ElementTree, tree: ElementTree) -> CMember:
     e_type = member.find('./type')
     type_string = (member.text or '') + e_type.text + (e_type.tail or '')
@@ -329,7 +344,7 @@ def parse_member(member: ElementTree, tree: ElementTree) -> CMember:
 
     for pointer, length, optional in zip_longest(pointers, lengths, optionals):
         c_type = CType(pointer_to=c_type, length=length, const='const' in pointer,
-                       optional=optional == 'true')
+                    optional=optional == 'true')
 
     if array_size is not None:
         c_type = CType(array_of=c_type, length=array_size)

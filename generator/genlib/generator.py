@@ -1,6 +1,6 @@
 from contextlib import contextmanager
 from .importer import SwiftEnum, SwiftOptionSet, SwiftStruct, SwiftClass, SwiftCommand, SwiftAlias, DispatchTable
-from typing import TextIO, List, Tuple, Dict
+from typing import Literal, TextIO, List, Tuple, Dict
 from . import typeconversion as tc
 
 
@@ -15,7 +15,7 @@ class BaseGenerator:
             self.stream.write(indent + line)
         self.linebreak()
 
-    def linebreak(self, n: int=1):
+    def linebreak(self, n: int = 1):
         self.stream.write('\n' * n)
 
     def __lshift__(self, text: str):
@@ -63,8 +63,11 @@ class Generator(BaseGenerator):
         self.linebreak()
 
     def generate_struct(self, struct: SwiftStruct):
-        with self.indent(f'public struct {struct.name}: CStructConvertible {{', '}'):
-            self << f'typealias CStruct = {struct.c_struct.name}'
+        protocols = ['ChainableBase' if struct.c_struct.is_chainable_base else 'CStructConvertible'] + struct.protocols
+        with self.indent(f'public struct {struct.name}: {", ".join(protocols)} {{', '}'):
+            self << f'public typealias CStruct = {struct.c_struct.name}'
+            if struct.c_struct.is_chainable_base:
+                self << 'protocol Extension: Chainable {}'
             self.linebreak()
             for member in struct.members:
                 self << f'public let {safe_name(member.name)}: {member.type}'
@@ -73,9 +76,10 @@ class Generator(BaseGenerator):
                 self.generate_struct_init(struct)
                 self.linebreak()
             if struct.convertible_from_c_struct:
+                # TODO: update generate_struct_c_to_swift_method
                 self.generate_struct_c_to_swift_method(struct)
             self.linebreak()
-            self.generate_struct_swift_to_c_method(struct)
+            self.generate_struct_swift_to_c_method(struct, is_chainable_base=struct.c_struct.is_chainable_base)
         self.linebreak()
 
     def generate_struct_init(self, struct: SwiftStruct):
@@ -92,21 +96,27 @@ class Generator(BaseGenerator):
         params = [f'cStruct: {struct.c_struct.name}']
         parent_class = struct.parent_class
         if parent_class:
-            params.append(f'{parent_class.reference_name}: {parent_class.name}')
+            params.append(
+                f'{parent_class.reference_name}: {parent_class.name}')
 
         with self.indent(f'init({", ".join(params)}) {{', '}'):
-            c_values = {member.name: f'cStruct.{member.name}' for member in struct.c_struct.members}
-            classes = {parent_class.reference_name: parent_class.reference_name} if parent_class else None
-            swift_values = struct.member_conversions.get_swift_values(c_values, classes)
+            c_values = {
+                member.name: f'cStruct.{member.name}' for member in struct.c_struct.members}
+            classes = {
+                parent_class.reference_name: parent_class.reference_name} if parent_class else None
+            swift_values = struct.member_conversions.get_swift_values(
+                c_values, classes)
             for member in struct.members:
                 self << f'self.{member.name} = {swift_values[member.name]}'
 
-    def generate_struct_swift_to_c_method(self, struct: SwiftStruct):
-        with self.indent('func withCStruct<R>'
-                         f'(_ body: (UnsafePointer<{struct.c_struct.name}>) throws -> R)'
-                         ' rethrows -> R {', '}'):
+    def generate_struct_swift_to_c_method(self, struct: SwiftStruct, is_chainable_base=False):
+        with self.indent('public func withCStruct<R>(' + 
+                        ('pNext: UnsafeRawPointer?, ' if is_chainable_base else '') +
+                         f'_ body: (UnsafePointer<{struct.c_struct.name}>) throws -> R' +
+                         ') rethrows -> R {', '}'):
 
-            swift_values = {member.name: f'self.{member.name}' for member in struct.members}
+            swift_values = {
+                member.name: f'self.{member.name}' for member in struct.members}
             c_values = struct.member_conversions.get_c_values(swift_values)
             closures = struct.member_conversions.get_c_closures(swift_values)
 
@@ -149,7 +159,8 @@ class Generator(BaseGenerator):
                 self << f'self.{cls.parent.reference_name} = {cls.parent.reference_name}'
             if cls.dispatch_table:
                 loader_name, _ = cls.dispatch_table.loader
-                params = [f'{loader_name}: {get_dispatch_table_path(cls, cls.dispatcher)}.{loader_name}']
+                params = [
+                    f'{loader_name}: {get_dispatch_table_path(cls, cls.dispatcher)}.{loader_name}']
                 if cls.dispatch_table.param:
                     param_name, _ = cls.dispatch_table.param
                     params.append(f'{param_name}: handle')
@@ -158,19 +169,20 @@ class Generator(BaseGenerator):
     def generate_command(self, command: SwiftCommand, cls: SwiftClass):
         swift_values = {param.name: param.name for param in command.params}
         swift_values.update(
-            {param: get_class_chain(cls, target_class) for param, target_class in command.class_params.items()}
+            {param: get_class_chain(cls, target_class)
+             for param, target_class in command.class_params.items()}
         )
         closures = command.param_conversions.get_c_closures(swift_values)
         c_values = command.param_conversions.get_c_values(swift_values)
 
         classes = get_all_class_chains(cls)
         if command.name == 'allocateCommandBuffers':
-            classes['commandPool'] = 'allocateInfo.commandPool'
+            classes['commandPool'] = 'allocateInfo.base.commandPool'
         elif command.name == 'allocateDescriptorSets':
-            classes['descriptorPool'] = 'allocateInfo.descriptorPool'
+            classes['descriptorPool'] = 'allocateInfo.base.descriptorPool'
 
-        param_string = ', '.join([f'{param.name}: {param.type}' for param in command.params])
-        throws_string = ' throws' if command.throws else ''
+        param_string = ', '.join(f'{param.name}: {param.type}' for param in command.params)
+        throws_string: Literal[' throws'] | Literal[''] = ' throws' if command.throws else ''
 
         with self.indent(f'public func {command.name}({param_string})'
                          f'{throws_string} -> {command.return_type} {{', '}'):
@@ -189,14 +201,16 @@ class Generator(BaseGenerator):
                     else:
                         params.append(c_values[param.name])
                 param_string = ', '.join(params)
-                dispatch_path = get_dispatch_table_path(cls, command.dispatcher)
+                dispatch_path = get_dispatch_table_path(
+                    cls, command.dispatcher)
                 call_string = f'{dispatch_path}.{command.c_command.name}({param_string})'
 
                 if command.output_param:
                     if isinstance(command.return_conversion, tc.ArrayConversion):
                         conversion = command.return_conversion
                         if conversion.swift_element_template:
-                            element_value = conversion.get_swift_element_value('$0', classes=classes)
+                            element_value = conversion.get_swift_element_value(
+                                '$0', classes=classes)
                             map_string = f'.map {{ {element_value} }}'
                         else:
                             map_string = ''
@@ -231,10 +245,12 @@ class Generator(BaseGenerator):
                         self << f'return {command.return_conversion.get_swift_value("out", classes=classes)}'
 
                 elif command.enumeration_pointer_param:
-                    assert isinstance(command.return_conversion, tc.ArrayConversion)
+                    assert isinstance(
+                        command.return_conversion, tc.ArrayConversion)
                     conversion = command.return_conversion
                     if conversion.swift_element_template:
-                        element_value = conversion.get_swift_element_value('$0', classes=classes)
+                        element_value = conversion.get_swift_element_value(
+                            '$0', classes=classes)
                         map_string = f'.map {{ {element_value} }}'
                     else:
                         map_string = ''
@@ -243,7 +259,8 @@ class Generator(BaseGenerator):
                                      f'{command.enumeration_count_param} in', f'}}{map_string}'):
                         self << call_string
                 else:
-                    result_string = command.return_conversion.get_swift_value(call_string)
+                    result_string = command.return_conversion.get_swift_value(
+                        call_string)
                     if command.throws:
                         with self.indent('try checkResult(', ')'):
                             self << result_string
@@ -270,7 +287,7 @@ class Generator(BaseGenerator):
             with self.indent(f'init({", ".join(args)}) {{', '}'):
                 for command in dispatch_table.commands:
                     self << f'self.{command.name} = unsafeBitCast' \
-                            f'({loader_name}({param_name}, "{command.name}"), to: PFN_{command.name}?.self)'
+                        f'({loader_name}({param_name}, "{command.name}"), to: PFN_{command.name}?.self)'
         self.linebreak()
 
     @contextmanager

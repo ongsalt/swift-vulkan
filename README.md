@@ -47,3 +47,9 @@ Swift-vulkan is a relatively new project, and there are still some important mil
 - Optimize struct conversion (currently, a conversion is performed each time a struct is passed to a command)
 - Use preprocessor conditions to enable specific types at compile time (could do this for all extensions / features, or just for platform-specific extensions)
 - Parse Vulkan documentation and generate Swift comments
+
+
+## Todos
+- mark every extensible type with either base or extension
+- vulkan 1.4
+- array handling in some special case like `getQueueFamilyPerformanceQueryCountersKHR`
