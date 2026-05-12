@@ -242,11 +242,13 @@ class CContext:
             if self.should_ignore(type_=struct.attrib['name']):
                 continue
 
-            extends = None
+            extends: List[str] = []
             if 'structextends' in struct.attrib:
-                extends = struct.attrib['structextends'].split(",")
-                bases += extends
-            
+                for name in struct.attrib['structextends'].split(","):
+                    if self.should_ignore(type_=name):
+                        continue
+                    extends.append(name)
+                
             c_struct = CStruct(struct.attrib['name'], returned_only=struct.get('returnedonly') == 'true', struct_extends=extends)
 
             for member in struct.findall('./member'):
