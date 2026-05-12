@@ -288,6 +288,7 @@ class CContext:
             return extension.protect
 
     def should_ignore(self, type_: str = None, command: str = None) -> bool:
+        return False
         extension = self.find_extension(type_, command)
         if extension and (extension.supported == 'disabled' or extension.platform):
             return True
