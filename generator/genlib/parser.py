@@ -104,7 +104,17 @@ class CContext:
 
     def parse(self, source):
         tree = ElementTree.parse(source)
+        self._filter_vulkansc(tree.getroot())
         self.parse_tree(tree)
+
+    def _filter_vulkansc(self, element: ElementTree.Element):
+        for child in list(element):
+            if 'api' in child.attrib:
+                apis = child.attrib['api'].split(',')
+                if 'vulkansc' in apis and 'vulkan' not in apis:
+                    element.remove(child)
+                    continue
+            self._filter_vulkansc(child)
 
     def parse_tree(self, tree: ElementTree):
         self.parse_platforms(tree)

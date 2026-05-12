@@ -55,3 +55,4 @@ Swift-vulkan is a relatively new project, and there are still some important mil
 - proper extension support
 - assert(array1.count == array2.count)
 - typed throws
+- handle `api`, currently im going to nuke everything `vulkansc` 

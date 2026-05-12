@@ -464,12 +464,12 @@ class Importer:
         for c_member in c_members:
             if is_array_convertible(c_member.type):
                 lengths.append(c_member.type.length)
-        if c_struct:
-            # why aren't these specified in the Vulkan spec?
-            if c_struct.name == 'VkPhysicalDeviceMemoryProperties':
-                lengths += ['memoryTypeCount', 'memoryHeapCount']
-            elif c_struct.name == 'VkPhysicalDeviceGroupProperties':
-                lengths.append('physicalDeviceCount')
+        # if c_struct:
+        #     # why aren't these specified in the Vulkan spec?
+        #     if c_struct.name == 'VkPhysicalDeviceMemoryProperties':
+        #         lengths += ['memoryTypeCount', 'memoryHeapCount']
+        #     elif c_struct.name == 'VkPhysicalDeviceGroupProperties':
+        #         lengths.append('physicalDeviceCount')
 
         for c_member in c_members:
             if c_member.name in lengths:
