@@ -336,7 +336,7 @@ def parse_member(member: ElementTree, tree: ElementTree) -> CMember:
     c_type = CType(name=' '.join(first_type), const=is_const)
 
     pointers = type_strings[1:]
-    lengths = member.attrib['len'].split(',') if 'len' in member.attrib else []
+    lengths = member.attrib['len'].split(',') if 'len' in member.attrib and member.attrib['len'] != '1' else []
     optionals = member.attrib['optional'].split(',') if 'optional' in member.attrib else []
 
     if len(optionals) > len(pointers):
