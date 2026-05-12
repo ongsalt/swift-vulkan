@@ -50,9 +50,15 @@ Swift-vulkan is a relatively new project, and there are still some important mil
 
 
 ## Todos
-- vulkan 1.4
-- array handling in some special case like `getQueueFamilyPerformanceQueryCountersKHR`
-- proper extension support
+- multiple out array  
 - assert(array1.count == array2.count)
+- proper extension support
 - typed throws
-- handle `api`, currently im going to nuke everything `vulkansc` 
+- handle `api`, currently i nuked everything `vulkansc`
+
+## Chaining
+- `inout some Chainable<Base>`
+    - pain to access becuase its `Chain<BaseA, Chain<ABExt, ABExt>>`
+
+- `ash` way. this required a (`MutableRef`)[https://github.com/swiftlang/swift-evolution/blob/main/proposals/0519-ref-mutableref-types.md] in swift 6.4 (available in recent `main`)
+
