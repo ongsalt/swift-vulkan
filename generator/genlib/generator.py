@@ -217,7 +217,7 @@ class Generator(BaseGenerator):
                             map_string = f'.map {{ {element_value} }}'
                         else:
                             map_string = ''
-                        length_path = conversion.length.split('::')
+                        length_path = conversion.length.split('->')
                         count_value = c_values[length_path[0]]
                         if len(length_path) > 1:
                             count_value = '.'.join(
