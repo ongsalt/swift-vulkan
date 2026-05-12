@@ -12656,7 +12656,7 @@ public struct PipelineCreationFeedbackEXT: CStructConvertible {
     }
 }
 
-public struct PipelineCreationFeedbackCreateInfoEXT: ChainableBase, GraphicsPipelineCreateInfo.Extension, ComputePipelineCreateInfo.Extension, RayTracingPipelineCreateInfoNV.Extension, RayTracingPipelineCreateInfoKHR.Extension {
+public struct PipelineCreationFeedbackCreateInfoEXT: ChainableBase, GraphicsPipelineCreateInfo.Extension, ComputePipelineCreateInfo.Extension, RayTracingPipelineCreateInfoNV.Extension {
     public typealias CStruct = VkPipelineCreationFeedbackCreateInfoEXT
     protocol Extension: Chainable {}
 

@@ -50,6 +50,8 @@ Swift-vulkan is a relatively new project, and there are still some important mil
 
 
 ## Todos
-- mark every extensible type with either base or extension
 - vulkan 1.4
 - array handling in some special case like `getQueueFamilyPerformanceQueryCountersKHR`
+- proper extension support
+- assert(array1.count == array2.count)
+- typed throws
