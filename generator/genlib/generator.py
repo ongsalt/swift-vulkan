@@ -63,7 +63,8 @@ class Generator(BaseGenerator):
         self.linebreak()
 
     def generate_struct(self, struct: SwiftStruct):
-        protocols = ['ChainableBase' if struct.c_struct.is_chainable_base else 'CStructConvertible'] + struct.protocols
+        protocols = [
+            'ChainableBase' if struct.c_struct.is_chainable_base else 'CStructConvertible'] + struct.protocols
         with self.indent(f'public struct {struct.name}: {", ".join(protocols)} {{', '}'):
             self << f'public typealias CStruct = {struct.c_struct.name}'
             if struct.c_struct.is_chainable_base:
@@ -79,7 +80,8 @@ class Generator(BaseGenerator):
                 # TODO: update generate_struct_c_to_swift_method
                 self.generate_struct_c_to_swift_method(struct)
             self.linebreak()
-            self.generate_struct_swift_to_c_method(struct, is_chainable_base=struct.c_struct.is_chainable_base)
+            self.generate_struct_swift_to_c_method(
+                struct, is_chainable_base=struct.c_struct.is_chainable_base)
         self.linebreak()
 
     def generate_struct_init(self, struct: SwiftStruct):
@@ -110,8 +112,8 @@ class Generator(BaseGenerator):
                 self << f'self.{member.name} = {swift_values[member.name]}'
 
     def generate_struct_swift_to_c_method(self, struct: SwiftStruct, is_chainable_base=False):
-        with self.indent('public func withCStruct<R>(' + 
-                        ('pNext: UnsafeRawPointer?, ' if is_chainable_base else '') +
+        with self.indent('public func withCStruct<R>(' +
+                         ('pNext: UnsafeRawPointer?, ' if is_chainable_base else '') +
                          f'_ body: (UnsafePointer<{struct.c_struct.name}>) throws -> R' +
                          ') rethrows -> R {', '}'):
 
@@ -181,8 +183,9 @@ class Generator(BaseGenerator):
         elif command.name == 'allocateDescriptorSets':
             classes['descriptorPool'] = 'allocateInfo.base.descriptorPool'
 
-        param_string = ', '.join(f'{param.name}: {param.type}' for param in command.params)
-        throws_string: Literal[' throws'] | Literal[''] = ' throws' if command.throws else ''
+        param_string = ', '.join(
+            f'{param.name}: {param.type}' for param in command.params)
+        throws_string = ' throws' if command.throws else ''
 
         with self.indent(f'public func {command.name}({param_string})'
                          f'{throws_string} -> {command.return_type} {{', '}'):

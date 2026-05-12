@@ -1,6 +1,6 @@
 import CVulkan
 
-func checkResult(_ result: VkResult) throws {
+func checkResult(_ result: VkResult) throws(Result) {
     if result.rawValue < 0 {
         throw Result(rawValue: result.rawValue)!
     }
@@ -113,41 +113,55 @@ extension Sequence {
         return UnsafeMutableRawBufferPointer(ptr).bindMemory(to: T.self).baseAddress!.pointee
     }
 }
-func enumerate<R>(_ body: (UnsafeMutablePointer<R>?, UnsafeMutablePointer<UInt32>) -> VkResult)
-    throws -> [R]
+private func nilPointer<T>(for _: T.Type) -> UnsafeMutablePointer<T>? { nil }
+func enumerate<each R>(
+    body: ((repeat UnsafeMutablePointer<each R>?), UnsafeMutablePointer<UInt32>) -> VkResult
+)
+    throws -> (repeat [each R])
 {
     var count: UInt32 = 0
-    var result = VK_SUCCESS
-    var array: [R]
+    try checkResult(body((repeat nilPointer(for: (each R).self)), &count))
 
-    repeat {
-        try checkResult(body(nil, &count))
-
+    while true {
         if count == 0 {
-            return []
+            return (repeat [each R]())
         }
 
-        array = [R](unsafeUninitializedCapacity: Int(count)) { buffer, initializedCount in
-            result = body(buffer.baseAddress!, &count)
-            initializedCount = Int(count)
-        }
-    } while result == VK_INCOMPLETE
+        let buffers: (repeat UnsafeMutablePointer<each R>?) =
+            (repeat UnsafeMutablePointer<each R>.allocate(capacity: Int(count)))
+        let result = body(buffers, &count)
 
-    try checkResult(result)
-    return array
+        defer {
+            repeat (each buffers).deallocate()
+        }
+
+        if result != VK_INCOMPLETE {
+            try checkResult(result)
+            return (repeat (Array(UnsafeBufferPointer(start: each buffers, count: Int(count)))))
+        }
+    }
 }
-func enumerate<R>(_ body: (UnsafeMutablePointer<R>?, UnsafeMutablePointer<UInt32>) -> Void) -> [R] {
+func enumerate<each R>(
+    body: ((repeat UnsafeMutablePointer<each R>?), UnsafeMutablePointer<UInt32>) -> Void
+)
+    -> (repeat [each R])
+{
     var count: UInt32 = 0
-    body(nil, &count)
+    body((repeat nilPointer(for: (each R).self)), &count)
 
     if count == 0 {
-        return []
+        return (repeat [each R]())
     }
 
-    return [R](unsafeUninitializedCapacity: Int(count)) { buffer, initializedCount in
-        body(buffer.baseAddress!, &count)
-        initializedCount = Int(count)
+    let buffers: (repeat UnsafeMutablePointer<each R>?) =
+        (repeat UnsafeMutablePointer<each R>.allocate(capacity: Int(count)))
+    body(buffers, &count)
+
+    defer {
+        repeat (each buffers).deallocate()
     }
+
+    return (repeat (Array(UnsafeBufferPointer(start: each buffers, count: Int(count)))))
 }
 protocol StringConvertibleOptionSet: OptionSet, CustomStringConvertible {
     static var descriptions: [(Self.Element, String)] { get }
