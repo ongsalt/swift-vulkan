@@ -132,7 +132,7 @@ func enumerate<each R>(
         let result = body(buffers, &count)
 
         defer {
-            repeat (each buffers).deallocate()
+            repeat (each buffers)?.deallocate()
         }
 
         if result != VK_INCOMPLETE {
