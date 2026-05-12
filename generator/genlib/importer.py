@@ -518,7 +518,8 @@ class Importer:
             is_closure = c_member.type.name and c_member.type.name.startswith('PFN_') and not c_member.type.optional
             
             # only do this for fn params AND that type must be pNext base
-            if not c_struct and c_member.type.pointer_to:
+            # getQueueFamilyPerformanceQueryCountersKHR????
+            if not c_struct and c_member.type.pointer_to and not c_member.type.length:
                 struct_ty = self.c_structs.get(c_member.type.pointer_to.name)
                 if struct_ty and struct_ty.is_chainable_base and not is_array_convertible(c_member.type):
                     # ignore array somehow
