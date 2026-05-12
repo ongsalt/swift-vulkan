@@ -158,7 +158,7 @@ func enumerate<each R>(
     body(buffers, &count)
 
     defer {
-        repeat (each buffers).deallocate()
+        repeat (each buffers)?.deallocate()
     }
 
     return (repeat (Array(UnsafeBufferPointer(start: each buffers, count: Int(count)))))
