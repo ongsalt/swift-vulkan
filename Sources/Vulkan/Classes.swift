@@ -405,7 +405,7 @@ public class PhysicalDevice: _HandleContainer {
         }.map { CooperativeMatrixPropertiesNV(cStruct: $0) }
     }
 
-    public func getQueueFamilyPerformanceQueryCountersKHR(queueFamilyIndex: UInt32, counterCount: UnsafeMutablePointer<UInt32>, counters: some Chainable<UnsafeMutablePointer<VkPerformanceCounterKHR>?>, counterDescriptions: some Chainable<UnsafeMutablePointer<VkPerformanceCounterDescriptionKHR>?>) throws -> Void {
+    public func getQueueFamilyPerformanceQueryCountersKHR(queueFamilyIndex: UInt32, counterCount: UnsafeMutablePointer<UInt32>, counters: UnsafeMutablePointer<VkPerformanceCounterKHR>?, counterDescriptions: UnsafeMutablePointer<VkPerformanceCounterDescriptionKHR>?) throws -> Void {
         try checkResult(
             self.instance.dispatchTable.vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR(self.handle, queueFamilyIndex, counterCount, counters, counterDescriptions)
         )
