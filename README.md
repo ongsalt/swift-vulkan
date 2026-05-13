@@ -50,6 +50,8 @@ Swift-vulkan is a relatively new project, and there are still some important mil
 
 
 ## Todos
+- No return type 
+- nuke handle class. just do newtype
 - multiple out array
     - is multiple out array of pNext chain possible?
 - assert(array1.count == array2.count)
@@ -62,6 +64,12 @@ Swift-vulkan is a relatively new project, and there are still some important mil
 - explicitly type `enumerate()`
 - some flag is UInt64 (BufferUsageFlags2)
 - `some Chainable<...>` can not be wrapped in an optional
+
+# Design
+## Signature transformation
+- map simple types
+- return types:
+    - VkResult -> throws(VulkanResult)
 
 ## Chaining
 - `[inout] some Chainable<Base>`. (maybe we can provide some `extension` `.0` `.1`...)

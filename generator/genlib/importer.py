@@ -263,7 +263,10 @@ class Importer:
                 if type_name in ('VkPhysicalDevice', 'VkDisplayKHR', 'VkDisplayModeKHR'):
                     parent_class = self.imported_classes[type_name].parent
                 elif type_name in self.imported_classes:
-                    convertible_from_c_struct = False
+                    # TODO: cant we just do Global.getHandleClass() or some shi
+                    # vulkan wont return an existing handle which mean we can create this
+                    # convertible_from_c_struct = False
+                    pass
         
         protocols: List[str] = []
         for base in c_struct.struct_extends:
@@ -363,10 +366,14 @@ class Importer:
         output_param: str = None
         output_param_implicit_type: str = None
         unwrap_output_param = False
-        enumeration_pointer_param: str = None
+        enumeration_pointer_params: List[str] = []
         enumeration_count_param: str = None
         if c_return_type.name == 'void':
             output_params = get_output_params(c_command)
+            # if len(output_params) > 2:
+            #     print(c_command.name)
+            #     print(output_params)
+            
             if len(output_params) == 1:
                 if c_command.name == 'vkEnumerateInstanceVersion':
                     output_param = output_params[0].name
@@ -386,14 +393,18 @@ class Importer:
                     unwrap_output_param = self.is_pointer_type(output_params[0].type.pointer_to)
 
             elif len(output_params) == 2 and output_params[1].type.length == output_params[0].name:
-                enumeration_pointer_param = output_params[1].name
+                enumeration_pointer_params = output_params[1].name
                 enumeration_count_param = output_params[0].name
                 return_type, return_conversion = self.get_array_conversion(output_params[1].type, force_optional=False)
 
         class_params = [param for param, _ in class_params_and_classes]
-        output_params = (output_param, enumeration_pointer_param, enumeration_count_param)
+        output_params = (output_param, enumeration_pointer_params, enumeration_count_param)
+        # if output_params[1] != None:
+        #     print(output_params)
         c_input_params = [param for param in c_command.params if param.name not in output_params]
         c_input_params = class_params + c_input_params[len(class_params):]
+
+        # we need to generate an overload in case of param with Chainable<...> is optional
         params, conversions = self.get_member_conversions(c_input_params, c_command=c_command)
 
         dispatcher = self.get_dispatcher(c_command)
@@ -412,7 +423,7 @@ class Importer:
             output_param=output_param,
             output_param_implicit_type=output_param_implicit_type,
             unwrap_output_param=unwrap_output_param,
-            enumeration_pointer_param=enumeration_pointer_param,
+            enumeration_pointer_param=enumeration_pointer_params,
             enumeration_count_param=enumeration_count_param,
             dispatcher=dispatcher
         )
@@ -512,22 +523,12 @@ class Importer:
 
             else:
                 swift_type, conversion = self.get_type_conversion(c_member.type,
-                                                                  convert_array_to_pointer=c_command is not None)
+                                                                  convert_array_to_pointer=c_command is not None,
+                                                                  transform_chainable=c_command is not None)
 
             swift_name = get_member_name(c_member.name, c_member.type)
             is_closure = c_member.type.name and c_member.type.name.startswith('PFN_') and not c_member.type.optional
             
-            # only do this for fn params AND that type must be pNext base
-            # getQueueFamilyPerformanceQueryCountersKHR????
-            if not c_struct and c_member.type.pointer_to and not c_member.type.length:
-                struct_ty = self.c_structs.get(c_member.type.pointer_to.name)
-                if struct_ty and struct_ty.is_chainable_base and not is_array_convertible(c_member.type):
-                    # ignore array somehow
-                    # print(struct_ty.name)
-                    # swift_type = f"some Chainable<{c_member.type.pointer_to.name}>"
-                    swift_type = f"some Chainable<{swift_type}>"
-
-
             member = SwiftMember(name=swift_name, type_=swift_type, is_closure=is_closure)
             members.append(member)
             conversions.add_conversion(c_member.name, swift_name, conversion)
@@ -535,7 +536,7 @@ class Importer:
         return members, conversions
 
     def get_type_conversion(self, c_type: CType, implicit_only: bool = False, force_optional: bool = None,
-                            convert_array_to_pointer: bool = False) -> Tuple[str, tc.Conversion]:
+                            convert_array_to_pointer: bool = False, transform_chainable = False) -> Tuple[str, tc.Conversion]:
         optional = force_optional if force_optional is not None else c_type.optional
         if c_type.name:
             if c_type.name in tc.IMPLICIT_TYPE_MAP:
@@ -594,10 +595,14 @@ class Importer:
                 if c_type.pointer_to.name and not c_type.length and c_type.pointer_to.name in self.imported_structs:
                     swift_struct = self.imported_structs[c_type.pointer_to.name]
                     parent_name = swift_struct.parent_class.reference_name if swift_struct.parent_class else None
+                    
+                    name = swift_struct.name 
+                    if transform_chainable:
+                        name = f"some Chainable<{name}>"
                     if optional:
-                        return swift_struct.name + '?', tc.optional_struct_conversion(swift_struct.name, parent_name)
+                        return name + '?', tc.optional_struct_conversion(swift_struct.name, parent_name, chainable=transform_chainable)
                     else:
-                        return swift_struct.name, tc.struct_pointer_conversion(swift_struct.name, parent_name)
+                        return name, tc.struct_pointer_conversion(swift_struct.name, parent_name, chainable=transform_chainable)
 
             to_type, _ = self.get_type_conversion(c_type.pointer_to, implicit_only=True, force_optional=True)
             swift_type = f'UnsafePointer<{to_type}>' if c_type.pointer_to.const else f'UnsafeMutablePointer<{to_type}>'
@@ -658,6 +663,7 @@ class Importer:
         return string, None
 
 
+# excluding the one with pnext
 def get_output_params(command: CCommand) -> List[CMember]:
     output_params: List[CMember] = []
     for param in command.params:

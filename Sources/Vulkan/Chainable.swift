@@ -22,7 +22,7 @@ extension Chainable where Base == Self {
 
 public protocol ChainableBase: Chainable {}
 
-public struct Chain<Base: ChainableBase, Next: Chainable> {
+public struct Chain<Base: Chainable, Next: Chainable> {
   public let base: Base
   public let next: Next
 }
@@ -39,6 +39,15 @@ extension Chain: Chainable<Base> {
   }
 }
 
+extension Optional where Wrapped: Chainable, Wrapped: CStructConvertible {
+  func withOptionalCStruct<R>(
+    pNext: UnsafeRawPointer?, _ body: (UnsafePointer<Wrapped.CStruct>?) throws -> R
+  ) rethrows -> R {
+    guard let s = self else { return try body(nil) }
+    return try s.withCStruct(body)
+  }
+}
+
 public struct BaseA: ChainableBase {
   public typealias CStruct = Int
   protocol Extension: Chainable {}
@@ -51,24 +60,28 @@ public struct BaseA: ChainableBase {
   }
 }
 
-extension Chainable where Base == BaseA {
-  func push<Extension: BaseA.Extension>(_ next: Extension)
-    -> Chain<Base, some Chainable>
+extension BaseA {
+  func push<Extension: BaseA.Extension>(_ ext: Extension)
+    -> Chain<Self, Extension>
   {
-    Chain<Base, _>(base: base, next: next)
+    Chain(base: base, next: ext)
   }
 }
 
-// extension Chain where Base == BaseA {
-//   func push<NewValue: BaseA.Extension>(_ newValue: NewValue)
-//     -> Chain<Base, Chain<NewValue, Next>>
-//   {
-//     Chain<Base, _>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
-//   }
-// }
+private struct Chain2<Base: ChainableBase, each Next: Chainable> {
+  public let base: Base
+  public let next: (repeat each Next)
+}
 
+extension Chain where Base == BaseA {
+  fileprivate func push<NewValue: BaseA.Extension>(_ newValue: NewValue)
+    -> Chain<Base, Chain<NewValue, Next>>
+  {
+    Chain<Base, _>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+  }
+}
 
-struct BaseB: ChainableBase {
+private struct BaseB: ChainableBase {
   typealias CStruct = String
   protocol Extension: Chainable {}
 
@@ -79,7 +92,7 @@ struct BaseB: ChainableBase {
   }
 
 }
-struct ABExt: BaseA.Extension, BaseB.Extension {
+private struct ABExt: BaseA.Extension, BaseB.Extension {
   func withCStruct<R>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<UInt32>) throws -> R)
     rethrows -> R
   {
@@ -97,13 +110,12 @@ struct ABExt: BaseA.Extension, BaseB.Extension {
 //   typealias CStruct = UInt32
 // }
 
-func example() {
-  let a = BaseA()
+private func example() {
+  let a: Chain<BaseA, Chain<ABExt, ABExt>> = BaseA()
     .push(ABExt())
     .push(ABExt())
 
   let aa = BaseA().base
-
 }
 
 func maybeMutable(_ ptr: UnsafeRawPointer?) -> UnsafeRawPointer? {

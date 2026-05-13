@@ -1,3 +1,3 @@
 public typealias DescriptorUpdateTemplateKHR = DescriptorUpdateTemplate
 public typealias SamplerYcbcrConversionKHR = SamplerYcbcrConversion
-public typealias AccelerationStructureNV = AccelerationStructureKHR
+public typealias PrivateDataSlotEXT = PrivateDataSlot

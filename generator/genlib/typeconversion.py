@@ -132,7 +132,8 @@ bool_conversion = Conversion(
 
 def enum_conversion(c_enum: str, swift_enum: str) -> Conversion:
     return Conversion(
-        swift_value_template=f'{swift_enum}(rawValue: unsafeBitCast($value.rawValue, to: UInt32.self))!',
+        # swift_value_template=f'{swift_enum}(rawValue: unsafeBitCast($value, to: UInt32.self))!',
+        swift_value_template=f'{swift_enum}(rawValue: unsafeBitCast($value, to: UInt32.self))!',
         c_value_template=f'{c_enum}(rawValue: {c_enum}.RawValue(bitPattern: $value.rawValue))'
     )
 
@@ -181,7 +182,7 @@ def struct_conversion(swift_struct: str, parent_name: str = None) -> Conversion:
     )
 
 
-def struct_pointer_conversion(swift_struct: str, parent_name: str = None) -> Conversion:
+def struct_pointer_conversion(swift_struct: str, parent_name: str = None, chainable = False) -> Conversion:
     swift_params = ['cStruct: $value.pointee']
     if parent_name:
         swift_params.append(f'{parent_name}: $cls_{parent_name}')
@@ -192,7 +193,7 @@ def struct_pointer_conversion(swift_struct: str, parent_name: str = None) -> Con
     )
 
 
-def optional_struct_conversion(swift_struct: str, parent_name: str = None) -> Conversion:
+def optional_struct_conversion(swift_struct: str, parent_name: str = None, chainable = False) -> Conversion:
     swift_params = ['cStruct: $value.pointee']
     if parent_name:
         swift_params.append(f'{parent_name}: $cls_{parent_name}')

@@ -241,16 +241,16 @@ public class PhysicalDevice: _HandleContainer {
         return SurfaceCapabilitiesKHR(cStruct: out)
     }
 
-    public func getSurfaceFormatsKHR(surface: SurfaceKHR) throws -> Array<SurfaceFormatKHR> {
+    public func getSurfaceFormatsKHR(surface: SurfaceKHR?) throws -> Array<SurfaceFormatKHR> {
         try enumerate { pSurfaceFormats, pSurfaceFormatCount in
-            self.instance.dispatchTable.vkGetPhysicalDeviceSurfaceFormatsKHR(self.handle, surface.handle, pSurfaceFormatCount, pSurfaceFormats)
+            self.instance.dispatchTable.vkGetPhysicalDeviceSurfaceFormatsKHR(self.handle, surface?.handle, pSurfaceFormatCount, pSurfaceFormats)
         }.map { SurfaceFormatKHR(cStruct: $0) }
     }
 
-    public func getSurfacePresentModesKHR(surface: SurfaceKHR) throws -> Array<PresentModeKHR> {
+    public func getSurfacePresentModesKHR(surface: SurfaceKHR?) throws -> Array<PresentModeKHR> {
         try enumerate { pPresentModes, pPresentModeCount in
-            self.instance.dispatchTable.vkGetPhysicalDeviceSurfacePresentModesKHR(self.handle, surface.handle, pPresentModeCount, pPresentModes)
-        }.map { PresentModeKHR(rawValue: unsafeBitCast($0.rawValue, to: UInt32.self))! }
+            self.instance.dispatchTable.vkGetPhysicalDeviceSurfacePresentModesKHR(self.handle, surface?.handle, pPresentModeCount, pPresentModes)
+        }.map { PresentModeKHR(rawValue: unsafeBitCast($0, to: UInt32.self))! }
     }
 
     public func getExternalImageFormatPropertiesNV(format: Format, type: ImageType, tiling: ImageTiling, usage: ImageUsageFlags, flags: ImageCreateFlags, externalHandleType: ExternalMemoryHandleTypeFlagsNV) throws -> ExternalImageFormatPropertiesNV {
@@ -393,10 +393,10 @@ public class PhysicalDevice: _HandleContainer {
         }
     }
 
-    public func getCalibrateableTimeDomainsEXT() throws -> Array<TimeDomainEXT> {
+    public func getCalibrateableTimeDomainsKHR() throws -> Array<TimeDomainKHR> {
         try enumerate { pTimeDomains, pTimeDomainCount in
-            self.instance.dispatchTable.vkGetPhysicalDeviceCalibrateableTimeDomainsEXT(self.handle, pTimeDomainCount, pTimeDomains)
-        }.map { TimeDomainEXT(rawValue: unsafeBitCast($0.rawValue, to: UInt32.self))! }
+            self.instance.dispatchTable.vkGetPhysicalDeviceCalibrateableTimeDomainsKHR(self.handle, pTimeDomainCount, pTimeDomains)
+        }.map { TimeDomainKHR(rawValue: unsafeBitCast($0, to: UInt32.self))! }
     }
 
     public func getCooperativeMatrixPropertiesNV() throws -> Array<CooperativeMatrixPropertiesNV> {
@@ -425,10 +425,148 @@ public class PhysicalDevice: _HandleContainer {
         }.map { FramebufferMixedSamplesCombinationNV(cStruct: $0) }
     }
 
-    public func getToolPropertiesEXT() throws -> Array<PhysicalDeviceToolPropertiesEXT> {
+    public func getToolProperties() throws -> Array<PhysicalDeviceToolProperties> {
         try enumerate { pToolProperties, pToolCount in
-            self.instance.dispatchTable.vkGetPhysicalDeviceToolPropertiesEXT(self.handle, pToolCount, pToolProperties)
-        }.map { PhysicalDeviceToolPropertiesEXT(cStruct: $0) }
+            self.instance.dispatchTable.vkGetPhysicalDeviceToolProperties(self.handle, pToolCount, pToolProperties)
+        }.map { PhysicalDeviceToolProperties(cStruct: $0) }
+    }
+
+    public func getRefreshableObjectTypesKHR() throws -> Array<ObjectType> {
+        try enumerate { pRefreshableObjectTypes, pRefreshableObjectTypeCount in
+            self.instance.dispatchTable.vkGetPhysicalDeviceRefreshableObjectTypesKHR(self.handle, pRefreshableObjectTypeCount, pRefreshableObjectTypes)
+        }.map { ObjectType(rawValue: unsafeBitCast($0, to: UInt32.self))! }
+    }
+
+    public func getFragmentShadingRatesKHR() throws -> Array<PhysicalDeviceFragmentShadingRateKHR> {
+        try enumerate { pFragmentShadingRates, pFragmentShadingRateCount in
+            self.instance.dispatchTable.vkGetPhysicalDeviceFragmentShadingRatesKHR(self.handle, pFragmentShadingRateCount, pFragmentShadingRates)
+        }.map { PhysicalDeviceFragmentShadingRateKHR(cStruct: $0) }
+    }
+
+    public func getVideoCapabilitiesKHR(videoProfile: some Chainable<VideoProfileInfoKHR>) throws -> VideoCapabilitiesKHR {
+        try videoProfile.withCStruct { ptr_videoProfile in
+            var out = VkVideoCapabilitiesKHR()
+            try checkResult(
+                self.instance.dispatchTable.vkGetPhysicalDeviceVideoCapabilitiesKHR(self.handle, ptr_videoProfile, &out)
+            )
+            return VideoCapabilitiesKHR(cStruct: out)
+        }
+    }
+
+    public func getVideoFormatPropertiesKHR(videoFormatInfo: some Chainable<PhysicalDeviceVideoFormatInfoKHR>) throws -> Array<VideoFormatPropertiesKHR> {
+        try videoFormatInfo.withCStruct { ptr_videoFormatInfo in
+            try enumerate { pVideoFormatProperties, pVideoFormatPropertyCount in
+                self.instance.dispatchTable.vkGetPhysicalDeviceVideoFormatPropertiesKHR(self.handle, ptr_videoFormatInfo, pVideoFormatPropertyCount, pVideoFormatProperties)
+            }.map { VideoFormatPropertiesKHR(cStruct: $0) }
+        }
+    }
+
+    public func getVideoEncodeQualityLevelPropertiesKHR(qualityLevelInfo: some Chainable<PhysicalDeviceVideoEncodeQualityLevelInfoKHR>) throws -> VideoEncodeQualityLevelPropertiesKHR {
+        try qualityLevelInfo.withCStruct { ptr_qualityLevelInfo in
+            var out = VkVideoEncodeQualityLevelPropertiesKHR()
+            try checkResult(
+                self.instance.dispatchTable.vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR(self.handle, ptr_qualityLevelInfo, &out)
+            )
+            return VideoEncodeQualityLevelPropertiesKHR(cStruct: out)
+        }
+    }
+
+    public func acquireDrmDisplayEXT(drmFd: Int32, display: DisplayKHR) throws -> Void {
+        try checkResult(
+            self.instance.dispatchTable.vkAcquireDrmDisplayEXT(self.handle, drmFd, display.handle)
+        )
+    }
+
+    public func getDrmDisplayEXT(drmFd: Int32, connectorId: UInt32) throws -> DisplayKHR {
+        var out: VkDisplayKHR!
+        try checkResult(
+            self.instance.dispatchTable.vkGetDrmDisplayEXT(self.handle, drmFd, connectorId, &out)
+        )
+        return DisplayKHR(handle: out, physicalDevice: self)
+    }
+
+    public func getOpticalFlowImageFormatsNV(opticalFlowImageFormatInfo: some Chainable<OpticalFlowImageFormatInfoNV>) throws -> Array<OpticalFlowImageFormatPropertiesNV> {
+        try opticalFlowImageFormatInfo.withCStruct { ptr_opticalFlowImageFormatInfo in
+            try enumerate { pImageFormatProperties, pFormatCount in
+                self.instance.dispatchTable.vkGetPhysicalDeviceOpticalFlowImageFormatsNV(self.handle, ptr_opticalFlowImageFormatInfo, pFormatCount, pImageFormatProperties)
+            }.map { OpticalFlowImageFormatPropertiesNV(cStruct: $0) }
+        }
+    }
+
+    public func getCooperativeMatrixPropertiesKHR() throws -> Array<CooperativeMatrixPropertiesKHR> {
+        try enumerate { pProperties, pPropertyCount in
+            self.instance.dispatchTable.vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR(self.handle, pPropertyCount, pProperties)
+        }.map { CooperativeMatrixPropertiesKHR(cStruct: $0) }
+    }
+
+    public func getCooperativeMatrixFlexibleDimensionsPropertiesNV() throws -> Array<CooperativeMatrixFlexibleDimensionsPropertiesNV> {
+        try enumerate { pProperties, pPropertyCount in
+            self.instance.dispatchTable.vkGetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV(self.handle, pPropertyCount, pProperties)
+        }.map { CooperativeMatrixFlexibleDimensionsPropertiesNV(cStruct: $0) }
+    }
+
+    public func getCooperativeVectorPropertiesNV() throws -> Array<CooperativeVectorPropertiesNV> {
+        try enumerate { pProperties, pPropertyCount in
+            self.instance.dispatchTable.vkGetPhysicalDeviceCooperativeVectorPropertiesNV(self.handle, pPropertyCount, pProperties)
+        }.map { CooperativeVectorPropertiesNV(cStruct: $0) }
+    }
+
+    public func getShaderInstrumentationMetricsARM() throws -> Array<ShaderInstrumentationMetricDescriptionARM> {
+        try enumerate { pDescriptions, pDescriptionCount in
+            self.instance.dispatchTable.vkEnumeratePhysicalDeviceShaderInstrumentationMetricsARM(self.handle, pDescriptionCount, pDescriptions)
+        }.map { ShaderInstrumentationMetricDescriptionARM(cStruct: $0) }
+    }
+
+    public func getExternalTensorPropertiesARM(externalTensorInfo: some Chainable<PhysicalDeviceExternalTensorInfoARM>) -> ExternalTensorPropertiesARM {
+        externalTensorInfo.withCStruct { ptr_externalTensorInfo in
+            var out = VkExternalTensorPropertiesARM()
+            self.instance.dispatchTable.vkGetPhysicalDeviceExternalTensorPropertiesARM(self.handle, ptr_externalTensorInfo, &out)
+            return ExternalTensorPropertiesARM(cStruct: out)
+        }
+    }
+
+    public func getQueueFamilyDataGraphPropertiesARM(queueFamilyIndex: UInt32) throws -> Array<QueueFamilyDataGraphPropertiesARM> {
+        try enumerate { pQueueFamilyDataGraphProperties, pQueueFamilyDataGraphPropertyCount in
+            self.instance.dispatchTable.vkGetPhysicalDeviceQueueFamilyDataGraphPropertiesARM(self.handle, queueFamilyIndex, pQueueFamilyDataGraphPropertyCount, pQueueFamilyDataGraphProperties)
+        }.map { QueueFamilyDataGraphPropertiesARM(cStruct: $0) }
+    }
+
+    public func getQueueFamilyDataGraphProcessingEnginePropertiesARM(queueFamilyDataGraphProcessingEngineInfo: some Chainable<PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM>) -> QueueFamilyDataGraphProcessingEnginePropertiesARM {
+        queueFamilyDataGraphProcessingEngineInfo.withCStruct { ptr_queueFamilyDataGraphProcessingEngineInfo in
+            var out = VkQueueFamilyDataGraphProcessingEnginePropertiesARM()
+            self.instance.dispatchTable.vkGetPhysicalDeviceQueueFamilyDataGraphProcessingEnginePropertiesARM(self.handle, ptr_queueFamilyDataGraphProcessingEngineInfo, &out)
+            return QueueFamilyDataGraphProcessingEnginePropertiesARM(cStruct: out)
+        }
+    }
+
+    public func getQueueFamilyPerformanceCountersByRegionARM(queueFamilyIndex: UInt32, counterCount: UnsafeMutablePointer<UInt32>, counters: UnsafeMutablePointer<VkPerformanceCounterARM>?, counterDescriptions: UnsafeMutablePointer<VkPerformanceCounterDescriptionARM>?) throws -> Void {
+        try checkResult(
+            self.instance.dispatchTable.vkEnumeratePhysicalDeviceQueueFamilyPerformanceCountersByRegionARM(self.handle, queueFamilyIndex, counterCount, counters, counterDescriptions)
+        )
+    }
+
+    public func getDescriptorSizeEXT(descriptorType: DescriptorType) -> VkDeviceSize {
+        self.instance.dispatchTable.vkGetPhysicalDeviceDescriptorSizeEXT(self.handle, VkDescriptorType(rawValue: VkDescriptorType.RawValue(bitPattern: descriptorType.rawValue)))
+    }
+
+    public func getQueueFamilyDataGraphEngineOperationPropertiesARM(queueFamilyIndex: UInt32, queueFamilyDataGraphProperties: some Chainable<QueueFamilyDataGraphPropertiesARM>) throws -> VkBaseOutStructure {
+        try queueFamilyDataGraphProperties.withCStruct { ptr_queueFamilyDataGraphProperties in
+            var out = VkBaseOutStructure()
+            try checkResult(
+                self.instance.dispatchTable.vkGetPhysicalDeviceQueueFamilyDataGraphEngineOperationPropertiesARM(self.handle, queueFamilyIndex, ptr_queueFamilyDataGraphProperties, &out)
+            )
+            return out
+        }
+    }
+
+    public func getQueueFamilyDataGraphOpticalFlowImageFormatsARM(queueFamilyIndex: UInt32, queueFamilyDataGraphProperties: some Chainable<QueueFamilyDataGraphPropertiesARM>, opticalFlowImageFormatInfo: some Chainable<DataGraphOpticalFlowImageFormatInfoARM>) throws -> Array<DataGraphOpticalFlowImageFormatPropertiesARM> {
+        try queueFamilyDataGraphProperties.withCStruct { ptr_queueFamilyDataGraphProperties in
+            try opticalFlowImageFormatInfo.withCStruct { ptr_opticalFlowImageFormatInfo in
+                try enumerate { pImageFormatProperties, pFormatCount in
+                    self.instance.dispatchTable.vkGetPhysicalDeviceQueueFamilyDataGraphOpticalFlowImageFormatsARM(self.handle, queueFamilyIndex, ptr_queueFamilyDataGraphProperties, ptr_opticalFlowImageFormatInfo, pFormatCount, pImageFormatProperties)
+                }.map { DataGraphOpticalFlowImageFormatPropertiesARM(cStruct: $0) }
+            }
+        }
     }
 }
 
@@ -607,6 +745,42 @@ public class Device: _HandleContainer {
         }
     }
 
+    public func createPipelineBinariesKHR(createInfo: some Chainable<PipelineBinaryCreateInfoKHR>) throws -> PipelineBinaryHandlesInfoKHR {
+        try createInfo.withCStruct { ptr_createInfo in
+            var out = VkPipelineBinaryHandlesInfoKHR()
+            try checkResult(
+                self.dispatchTable.vkCreatePipelineBinariesKHR(self.handle, ptr_createInfo, nil, &out)
+            )
+            return PipelineBinaryHandlesInfoKHR(cStruct: out)
+        }
+    }
+
+    public func getPipelineKeyKHR(pipelineCreateInfo: some Chainable<PipelineCreateInfoKHR>?) throws -> PipelineBinaryKeyKHR {
+        try pipelineCreateInfo.withOptionalCStruct { ptr_pipelineCreateInfo in
+            var out = VkPipelineBinaryKeyKHR()
+            try checkResult(
+                self.dispatchTable.vkGetPipelineKeyKHR(self.handle, ptr_pipelineCreateInfo, &out)
+            )
+            return PipelineBinaryKeyKHR(cStruct: out)
+        }
+    }
+
+    public func getPipelineBinaryDataKHR(info: some Chainable<PipelineBinaryDataInfoKHR>, pipelineBinaryKey: UnsafeMutablePointer<VkPipelineBinaryKeyKHR>, pipelineBinaryDataSize: UnsafeMutablePointer<Int>, pipelineBinaryData: UnsafeMutableRawPointer?) throws -> Void {
+        try info.withCStruct { ptr_info in
+            try checkResult(
+                self.dispatchTable.vkGetPipelineBinaryDataKHR(self.handle, ptr_info, pipelineBinaryKey, pipelineBinaryDataSize, pipelineBinaryData)
+            )
+        }
+    }
+
+    public func releaseCapturedPipelineDataKHR(info: some Chainable<ReleaseCapturedPipelineDataInfoKHR>) throws -> Void {
+        try info.withCStruct { ptr_info in
+            try checkResult(
+                self.dispatchTable.vkReleaseCapturedPipelineDataKHR(self.handle, ptr_info, nil)
+            )
+        }
+    }
+
     public func createGraphicsPipelines(pipelineCache: PipelineCache?, createInfos: Array<GraphicsPipelineCreateInfo>) throws -> Array<Pipeline> {
         try createInfos.withCStructBufferPointer { ptr_createInfos in
             try Array<VkPipeline?>(unsafeUninitializedCapacity: Int(UInt32(ptr_createInfos.count))) { out, initializedCount in
@@ -708,6 +882,14 @@ public class Device: _HandleContainer {
         }
     }
 
+    public func getRenderingAreaGranularity(renderingAreaInfo: some Chainable<RenderingAreaInfo>) -> Extent2D {
+        renderingAreaInfo.withCStruct { ptr_renderingAreaInfo in
+            var out = VkExtent2D()
+            self.dispatchTable.vkGetRenderingAreaGranularity(self.handle, ptr_renderingAreaInfo, &out)
+            return Extent2D(cStruct: out)
+        }
+    }
+
     public func createCommandPool(createInfo: some Chainable<CommandPoolCreateInfo>) throws -> CommandPool {
         try createInfo.withCStruct { ptr_createInfo in
             var out: VkCommandPool!
@@ -784,6 +966,34 @@ public class Device: _HandleContainer {
         }
     }
 
+    public func getGeneratedCommandsMemoryRequirementsEXT(info: some Chainable<GeneratedCommandsMemoryRequirementsInfoEXT>) -> MemoryRequirements2 {
+        info.withCStruct { ptr_info in
+            var out = VkMemoryRequirements2()
+            self.dispatchTable.vkGetGeneratedCommandsMemoryRequirementsEXT(self.handle, ptr_info, &out)
+            return MemoryRequirements2(cStruct: out)
+        }
+    }
+
+    public func createIndirectCommandsLayoutEXT(createInfo: some Chainable<IndirectCommandsLayoutCreateInfoEXT>) throws -> IndirectCommandsLayoutEXT {
+        try createInfo.withCStruct { ptr_createInfo in
+            var out: VkIndirectCommandsLayoutEXT!
+            try checkResult(
+                self.dispatchTable.vkCreateIndirectCommandsLayoutEXT(self.handle, ptr_createInfo, nil, &out)
+            )
+            return IndirectCommandsLayoutEXT(handle: out, device: self)
+        }
+    }
+
+    public func createIndirectExecutionSetEXT(createInfo: some Chainable<IndirectExecutionSetCreateInfoEXT>) throws -> IndirectExecutionSetEXT {
+        try createInfo.withCStruct { ptr_createInfo in
+            var out: VkIndirectExecutionSetEXT!
+            try checkResult(
+                self.dispatchTable.vkCreateIndirectExecutionSetEXT(self.handle, ptr_createInfo, nil, &out)
+            )
+            return IndirectExecutionSetEXT(handle: out, device: self)
+        }
+    }
+
     public func getMemoryFdKHR(getFdInfo: some Chainable<MemoryGetFdInfoKHR>) throws -> Int32 {
         try getFdInfo.withCStruct { ptr_getFdInfo in
             var out = Int32()
@@ -800,6 +1010,16 @@ public class Device: _HandleContainer {
             self.dispatchTable.vkGetMemoryFdPropertiesKHR(self.handle, VkExternalMemoryHandleTypeFlagBits(rawValue: VkExternalMemoryHandleTypeFlagBits.RawValue(bitPattern: handleType.rawValue)), fd, &out)
         )
         return MemoryFdPropertiesKHR(cStruct: out)
+    }
+
+    public func getMemoryRemoteAddressNV(memoryGetRemoteAddressInfo: some Chainable<MemoryGetRemoteAddressInfoNV>) throws -> VkRemoteAddressNV {
+        try memoryGetRemoteAddressInfo.withCStruct { ptr_memoryGetRemoteAddressInfo in
+            var out = VkRemoteAddressNV()
+            try checkResult(
+                self.dispatchTable.vkGetMemoryRemoteAddressNV(self.handle, ptr_memoryGetRemoteAddressInfo, &out)
+            )
+            return out
+        }
     }
 
     public func getSemaphoreFdKHR(getFdInfo: some Chainable<SemaphoreGetFdInfoKHR>) throws -> Int32 {
@@ -956,6 +1176,30 @@ public class Device: _HandleContainer {
         }
     }
 
+    public func getBufferMemoryRequirements(info: some Chainable<DeviceBufferMemoryRequirements>) -> MemoryRequirements2 {
+        info.withCStruct { ptr_info in
+            var out = VkMemoryRequirements2()
+            self.dispatchTable.vkGetDeviceBufferMemoryRequirements(self.handle, ptr_info, &out)
+            return MemoryRequirements2(cStruct: out)
+        }
+    }
+
+    public func getImageMemoryRequirements(info: some Chainable<DeviceImageMemoryRequirements>) -> MemoryRequirements2 {
+        info.withCStruct { ptr_info in
+            var out = VkMemoryRequirements2()
+            self.dispatchTable.vkGetDeviceImageMemoryRequirements(self.handle, ptr_info, &out)
+            return MemoryRequirements2(cStruct: out)
+        }
+    }
+
+    public func getImageSparseMemoryRequirements(info: some Chainable<DeviceImageMemoryRequirements>) -> Array<SparseImageMemoryRequirements2> {
+        info.withCStruct { ptr_info in
+            enumerate { pSparseMemoryRequirements, pSparseMemoryRequirementCount in
+                self.dispatchTable.vkGetDeviceImageSparseMemoryRequirements(self.handle, ptr_info, pSparseMemoryRequirementCount, pSparseMemoryRequirements)
+            }.map { SparseImageMemoryRequirements2(cStruct: $0) }
+        }
+    }
+
     public func createSamplerYcbcrConversion(createInfo: some Chainable<SamplerYcbcrConversionCreateInfo>) throws -> SamplerYcbcrConversion {
         try createInfo.withCStruct { ptr_createInfo in
             var out: VkSamplerYcbcrConversion!
@@ -992,10 +1236,10 @@ public class Device: _HandleContainer {
         }
     }
 
-    public func getCalibratedTimestampsEXT(timestampInfos: Array<CalibratedTimestampInfoEXT>, timestamps: UnsafeMutablePointer<UInt64>, maxDeviation: UnsafeMutablePointer<UInt64>) throws -> Void {
+    public func getCalibratedTimestampsKHR(timestampInfos: Array<CalibratedTimestampInfoKHR>, timestamps: UnsafeMutablePointer<UInt64>, maxDeviation: UnsafeMutablePointer<UInt64>) throws -> Void {
         try timestampInfos.withCStructBufferPointer { ptr_timestampInfos in
             try checkResult(
-                self.dispatchTable.vkGetCalibratedTimestampsEXT(self.handle, UInt32(ptr_timestampInfos.count), ptr_timestampInfos.baseAddress, timestamps, maxDeviation)
+                self.dispatchTable.vkGetCalibratedTimestampsKHR(self.handle, UInt32(ptr_timestampInfos.count), ptr_timestampInfos.baseAddress, timestamps, maxDeviation)
             )
         }
     }
@@ -1060,11 +1304,51 @@ public class Device: _HandleContainer {
         }
     }
 
-    public func getAccelerationStructureMemoryRequirementsNV(info: some Chainable<AccelerationStructureMemoryRequirementsInfoNV>) -> VkMemoryRequirements2KHR {
+    public func getAccelerationStructureMemoryRequirementsNV(info: some Chainable<AccelerationStructureMemoryRequirementsInfoNV>) -> MemoryRequirements2 {
         info.withCStruct { ptr_info in
-            var out = VkMemoryRequirements2KHR()
+            var out = VkMemoryRequirements2()
             self.dispatchTable.vkGetAccelerationStructureMemoryRequirementsNV(self.handle, ptr_info, &out)
-            return out
+            return MemoryRequirements2(cStruct: out)
+        }
+    }
+
+    public func bindAccelerationStructureMemoryNV(bindInfos: Array<BindAccelerationStructureMemoryInfoNV>) throws -> Void {
+        try bindInfos.withCStructBufferPointer { ptr_bindInfos in
+            try checkResult(
+                self.dispatchTable.vkBindAccelerationStructureMemoryNV(self.handle, UInt32(ptr_bindInfos.count), ptr_bindInfos.baseAddress)
+            )
+        }
+    }
+
+    public func copyAccelerationStructureKHR(deferredOperation: DeferredOperationKHR?, info: some Chainable<CopyAccelerationStructureInfoKHR>) throws -> Void {
+        try info.withCStruct { ptr_info in
+            try checkResult(
+                self.dispatchTable.vkCopyAccelerationStructureKHR(self.handle, deferredOperation?.handle, ptr_info)
+            )
+        }
+    }
+
+    public func copyAccelerationStructureToMemoryKHR(deferredOperation: DeferredOperationKHR?, info: some Chainable<CopyAccelerationStructureToMemoryInfoKHR>) throws -> Void {
+        try info.withCStruct { ptr_info in
+            try checkResult(
+                self.dispatchTable.vkCopyAccelerationStructureToMemoryKHR(self.handle, deferredOperation?.handle, ptr_info)
+            )
+        }
+    }
+
+    public func copyMemoryToAccelerationStructureKHR(deferredOperation: DeferredOperationKHR?, info: some Chainable<CopyMemoryToAccelerationStructureInfoKHR>) throws -> Void {
+        try info.withCStruct { ptr_info in
+            try checkResult(
+                self.dispatchTable.vkCopyMemoryToAccelerationStructureKHR(self.handle, deferredOperation?.handle, ptr_info)
+            )
+        }
+    }
+
+    public func writeAccelerationStructuresPropertiesKHR(accelerationStructures: Array<AccelerationStructureKHR>, queryType: QueryType, dataSize: Int, data: UnsafeMutableRawPointer, stride: Int) throws -> Void {
+        try accelerationStructures.map{ $0.handle }.withUnsafeBufferPointer { ptr_accelerationStructures in
+            try checkResult(
+                self.dispatchTable.vkWriteAccelerationStructuresPropertiesKHR(self.handle, UInt32(ptr_accelerationStructures.count), ptr_accelerationStructures.baseAddress, VkQueryType(rawValue: VkQueryType.RawValue(bitPattern: queryType.rawValue)), dataSize, data, stride)
+            )
         }
     }
 
@@ -1079,10 +1363,47 @@ public class Device: _HandleContainer {
         }
     }
 
+    public func createRayTracingPipelinesKHR(deferredOperation: DeferredOperationKHR?, pipelineCache: PipelineCache?, createInfos: Array<RayTracingPipelineCreateInfoKHR>) throws -> Array<Pipeline> {
+        try createInfos.withCStructBufferPointer { ptr_createInfos in
+            try Array<VkPipeline?>(unsafeUninitializedCapacity: Int(UInt32(ptr_createInfos.count))) { out, initializedCount in
+                try checkResult(
+                    self.dispatchTable.vkCreateRayTracingPipelinesKHR(self.handle, deferredOperation?.handle, pipelineCache?.handle, UInt32(ptr_createInfos.count), ptr_createInfos.baseAddress, nil, out.baseAddress)
+                )
+                initializedCount = out.count
+            }.map { Pipeline(handle: $0, device: self) }
+        }
+    }
+
+    public func getClusterAccelerationStructureBuildSizesNV(info: some Chainable<ClusterAccelerationStructureInputInfoNV>) -> AccelerationStructureBuildSizesInfoKHR {
+        info.withCStruct { ptr_info in
+            var out = VkAccelerationStructureBuildSizesInfoKHR()
+            self.dispatchTable.vkGetClusterAccelerationStructureBuildSizesNV(self.handle, ptr_info, &out)
+            return AccelerationStructureBuildSizesInfoKHR(cStruct: out)
+        }
+    }
+
+    public func getAccelerationStructureCompatibilityKHR(versionInfo: some Chainable<AccelerationStructureVersionInfoKHR>) -> AccelerationStructureCompatibilityKHR {
+        versionInfo.withCStruct { ptr_versionInfo in
+            var out = VkAccelerationStructureCompatibilityKHR()
+            self.dispatchTable.vkGetDeviceAccelerationStructureCompatibilityKHR(self.handle, ptr_versionInfo, &out)
+            return AccelerationStructureCompatibilityKHR(rawValue: unsafeBitCast(out, to: UInt32.self))!
+        }
+    }
+
     public func getImageViewHandleNVX(info: some Chainable<ImageViewHandleInfoNVX>) -> UInt32 {
         info.withCStruct { ptr_info in
             self.dispatchTable.vkGetImageViewHandleNVX(self.handle, ptr_info)
         }
+    }
+
+    public func getImageViewHandle64NVX(info: some Chainable<ImageViewHandleInfoNVX>) -> UInt64 {
+        info.withCStruct { ptr_info in
+            self.dispatchTable.vkGetImageViewHandle64NVX(self.handle, ptr_info)
+        }
+    }
+
+    public func getCombinedImageSamplerIndexNVX(imageViewIndex: UInt64, samplerIndex: UInt64) -> UInt64 {
+        self.dispatchTable.vkGetDeviceCombinedImageSamplerIndexNVX(self.handle, imageViewIndex, samplerIndex)
     }
 
     public func acquireProfilingLockKHR(info: some Chainable<AcquireProfilingLockInfoKHR>) throws -> Void {
@@ -1131,6 +1452,12 @@ public class Device: _HandleContainer {
         }
     }
 
+    public func releasePerformanceConfigurationINTEL(configuration: PerformanceConfigurationINTEL?) throws -> Void {
+        try checkResult(
+            self.dispatchTable.vkReleasePerformanceConfigurationINTEL(self.handle, configuration?.handle)
+        )
+    }
+
     public func getPerformanceParameterINTEL(parameter: PerformanceParameterTypeINTEL) throws -> PerformanceValueINTEL {
         var out = VkPerformanceValueINTEL()
         try checkResult(
@@ -1166,6 +1493,661 @@ public class Device: _HandleContainer {
             try enumerate { pInternalRepresentations, pInternalRepresentationCount in
                 self.dispatchTable.vkGetPipelineExecutableInternalRepresentationsKHR(self.handle, ptr_executableInfo, pInternalRepresentationCount, pInternalRepresentations)
             }.map { PipelineExecutableInternalRepresentationKHR(cStruct: $0) }
+        }
+    }
+
+    public func getFaultData(faultQueryBehavior: FaultQueryBehavior, unrecordedFaults: UnsafeMutablePointer<VkBool32>, faultCount: UnsafeMutablePointer<UInt32>, faults: UnsafeMutablePointer<VkFaultData>?) throws -> Void {
+        try checkResult(
+            self.dispatchTable.vkGetFaultData(self.handle, VkFaultQueryBehavior(rawValue: VkFaultQueryBehavior.RawValue(bitPattern: faultQueryBehavior.rawValue)), unrecordedFaults, faultCount, faults)
+        )
+    }
+
+    public func createAccelerationStructureKHR(createInfo: some Chainable<AccelerationStructureCreateInfoKHR>) throws -> AccelerationStructureKHR {
+        try createInfo.withCStruct { ptr_createInfo in
+            var out: VkAccelerationStructureKHR!
+            try checkResult(
+                self.dispatchTable.vkCreateAccelerationStructureKHR(self.handle, ptr_createInfo, nil, &out)
+            )
+            return AccelerationStructureKHR(handle: out, device: self)
+        }
+    }
+
+    public func buildAccelerationStructuresKHR(deferredOperation: DeferredOperationKHR?, infos: Array<AccelerationStructureBuildGeometryInfoKHR>, buildRangeInfos: UnsafePointer<UnsafePointer<VkAccelerationStructureBuildRangeInfoKHR>?>) throws -> Void {
+        try infos.withCStructBufferPointer { ptr_infos in
+            try checkResult(
+                self.dispatchTable.vkBuildAccelerationStructuresKHR(self.handle, deferredOperation?.handle, UInt32(ptr_infos.count), ptr_infos.baseAddress, buildRangeInfos)
+            )
+        }
+    }
+
+    public func getAccelerationStructureAddressKHR(info: some Chainable<AccelerationStructureDeviceAddressInfoKHR>) -> VkDeviceAddress {
+        info.withCStruct { ptr_info in
+            self.dispatchTable.vkGetAccelerationStructureDeviceAddressKHR(self.handle, ptr_info)
+        }
+    }
+
+    public func createDeferredOperationKHR() throws -> DeferredOperationKHR {
+        var out: VkDeferredOperationKHR!
+        try checkResult(
+            self.dispatchTable.vkCreateDeferredOperationKHR(self.handle, nil, &out)
+        )
+        return DeferredOperationKHR(handle: out, device: self)
+    }
+
+    public func getPipelineIndirectMemoryRequirementsNV(createInfo: some Chainable<ComputePipelineCreateInfo>) -> MemoryRequirements2 {
+        createInfo.withCStruct { ptr_createInfo in
+            var out = VkMemoryRequirements2()
+            self.dispatchTable.vkGetPipelineIndirectMemoryRequirementsNV(self.handle, ptr_createInfo, &out)
+            return MemoryRequirements2(cStruct: out)
+        }
+    }
+
+    public func getPipelineIndirectAddressNV(info: some Chainable<PipelineIndirectDeviceAddressInfoNV>) -> VkDeviceAddress {
+        info.withCStruct { ptr_info in
+            self.dispatchTable.vkGetPipelineIndirectDeviceAddressNV(self.handle, ptr_info)
+        }
+    }
+
+    public func antiLagUpdateAMD(data: some Chainable<AntiLagDataAMD>) -> Void {
+        data.withCStruct { ptr_data in
+            self.dispatchTable.vkAntiLagUpdateAMD(self.handle, ptr_data)
+        }
+    }
+
+    public func createPrivateDataSlot(createInfo: some Chainable<PrivateDataSlotCreateInfo>) throws -> PrivateDataSlot {
+        try createInfo.withCStruct { ptr_createInfo in
+            var out: VkPrivateDataSlot!
+            try checkResult(
+                self.dispatchTable.vkCreatePrivateDataSlot(self.handle, ptr_createInfo, nil, &out)
+            )
+            return PrivateDataSlot(handle: out, device: self)
+        }
+    }
+
+    public func setPrivateData(objectType: ObjectType, objectHandle: UInt64, privateDataSlot: PrivateDataSlot, data: UInt64) throws -> Void {
+        try checkResult(
+            self.dispatchTable.vkSetPrivateData(self.handle, VkObjectType(rawValue: VkObjectType.RawValue(bitPattern: objectType.rawValue)), objectHandle, privateDataSlot.handle, data)
+        )
+    }
+
+    public func getPrivateData(objectType: ObjectType, objectHandle: UInt64, privateDataSlot: PrivateDataSlot) -> UInt64 {
+        var out = UInt64()
+        self.dispatchTable.vkGetPrivateData(self.handle, VkObjectType(rawValue: VkObjectType.RawValue(bitPattern: objectType.rawValue)), objectHandle, privateDataSlot.handle, &out)
+        return out
+    }
+
+    public func getAccelerationStructureBuildSizesKHR(buildType: AccelerationStructureBuildTypeKHR, buildInfo: some Chainable<AccelerationStructureBuildGeometryInfoKHR>, maxPrimitiveCounts: Array<UInt32>?) -> AccelerationStructureBuildSizesInfoKHR {
+        buildInfo.withCStruct { ptr_buildInfo in
+            maxPrimitiveCounts.withOptionalUnsafeBufferPointer { ptr_maxPrimitiveCounts in
+                var out = VkAccelerationStructureBuildSizesInfoKHR()
+                self.dispatchTable.vkGetAccelerationStructureBuildSizesKHR(self.handle, VkAccelerationStructureBuildTypeKHR(rawValue: VkAccelerationStructureBuildTypeKHR.RawValue(bitPattern: buildType.rawValue)), ptr_buildInfo, ptr_maxPrimitiveCounts.baseAddress, &out)
+                return AccelerationStructureBuildSizesInfoKHR(cStruct: out)
+            }
+        }
+    }
+
+    public func copyMemoryToImage(copyMemoryToImageInfo: some Chainable<CopyMemoryToImageInfo>) throws -> Void {
+        try copyMemoryToImageInfo.withCStruct { ptr_copyMemoryToImageInfo in
+            try checkResult(
+                self.dispatchTable.vkCopyMemoryToImage(self.handle, ptr_copyMemoryToImageInfo)
+            )
+        }
+    }
+
+    public func copyImageToMemory(copyImageToMemoryInfo: some Chainable<CopyImageToMemoryInfo>) throws -> Void {
+        try copyImageToMemoryInfo.withCStruct { ptr_copyImageToMemoryInfo in
+            try checkResult(
+                self.dispatchTable.vkCopyImageToMemory(self.handle, ptr_copyImageToMemoryInfo)
+            )
+        }
+    }
+
+    public func copyImageToImage(copyImageToImageInfo: some Chainable<CopyImageToImageInfo>) throws -> Void {
+        try copyImageToImageInfo.withCStruct { ptr_copyImageToImageInfo in
+            try checkResult(
+                self.dispatchTable.vkCopyImageToImage(self.handle, ptr_copyImageToImageInfo)
+            )
+        }
+    }
+
+    public func transitionImageLayout(transitions: Array<HostImageLayoutTransitionInfo>) throws -> Void {
+        try transitions.withCStructBufferPointer { ptr_transitions in
+            try checkResult(
+                self.dispatchTable.vkTransitionImageLayout(self.handle, UInt32(ptr_transitions.count), ptr_transitions.baseAddress)
+            )
+        }
+    }
+
+    public func createVideoSessionKHR(createInfo: some Chainable<VideoSessionCreateInfoKHR>) throws -> VideoSessionKHR {
+        try createInfo.withCStruct { ptr_createInfo in
+            var out: VkVideoSessionKHR!
+            try checkResult(
+                self.dispatchTable.vkCreateVideoSessionKHR(self.handle, ptr_createInfo, nil, &out)
+            )
+            return VideoSessionKHR(handle: out, device: self)
+        }
+    }
+
+    public func createVideoSessionParametersKHR(createInfo: some Chainable<VideoSessionParametersCreateInfoKHR>) throws -> VideoSessionParametersKHR {
+        try createInfo.withCStruct { ptr_createInfo in
+            var out: VkVideoSessionParametersKHR!
+            try checkResult(
+                self.dispatchTable.vkCreateVideoSessionParametersKHR(self.handle, ptr_createInfo, nil, &out)
+            )
+            return VideoSessionParametersKHR(handle: out, device: self)
+        }
+    }
+
+    public func getEncodedVideoSessionParametersKHR(videoSessionParametersInfo: some Chainable<VideoEncodeSessionParametersGetInfoKHR>, feedbackInfo: UnsafeMutablePointer<VkVideoEncodeSessionParametersFeedbackInfoKHR>?, dataSize: UnsafeMutablePointer<Int>, data: UnsafeMutableRawPointer?) throws -> Void {
+        try videoSessionParametersInfo.withCStruct { ptr_videoSessionParametersInfo in
+            try checkResult(
+                self.dispatchTable.vkGetEncodedVideoSessionParametersKHR(self.handle, ptr_videoSessionParametersInfo, feedbackInfo, dataSize, data)
+            )
+        }
+    }
+
+    public func getPartitionedAccelerationStructuresBuildSizesNV(info: some Chainable<PartitionedAccelerationStructureInstancesInputNV>) -> AccelerationStructureBuildSizesInfoKHR {
+        info.withCStruct { ptr_info in
+            var out = VkAccelerationStructureBuildSizesInfoKHR()
+            self.dispatchTable.vkGetPartitionedAccelerationStructuresBuildSizesNV(self.handle, ptr_info, &out)
+            return AccelerationStructureBuildSizesInfoKHR(cStruct: out)
+        }
+    }
+
+    public func createCuModuleNVX(createInfo: some Chainable<CuModuleCreateInfoNVX>) throws -> CuModuleNVX {
+        try createInfo.withCStruct { ptr_createInfo in
+            var out: VkCuModuleNVX!
+            try checkResult(
+                self.dispatchTable.vkCreateCuModuleNVX(self.handle, ptr_createInfo, nil, &out)
+            )
+            return CuModuleNVX(handle: out, device: self)
+        }
+    }
+
+    public func createCuFunctionNVX(createInfo: some Chainable<CuFunctionCreateInfoNVX>) throws -> CuFunctionNVX {
+        try createInfo.withCStruct { ptr_createInfo in
+            var out: VkCuFunctionNVX!
+            try checkResult(
+                self.dispatchTable.vkCreateCuFunctionNVX(self.handle, ptr_createInfo, nil, &out)
+            )
+            return CuFunctionNVX(handle: out, device: self)
+        }
+    }
+
+    public func getDescriptorEXT(descriptorInfo: some Chainable<DescriptorGetInfoEXT>, dataSize: Int, descriptor: UnsafeMutableRawPointer) -> Void {
+        descriptorInfo.withCStruct { ptr_descriptorInfo in
+            self.dispatchTable.vkGetDescriptorEXT(self.handle, ptr_descriptorInfo, dataSize, descriptor)
+        }
+    }
+
+    public func getBufferOpaqueCaptureDescriptorDataEXT(info: some Chainable<BufferCaptureDescriptorDataInfoEXT>, data: UnsafeMutableRawPointer) throws -> Void {
+        try info.withCStruct { ptr_info in
+            try checkResult(
+                self.dispatchTable.vkGetBufferOpaqueCaptureDescriptorDataEXT(self.handle, ptr_info, data)
+            )
+        }
+    }
+
+    public func getImageOpaqueCaptureDescriptorDataEXT(info: some Chainable<ImageCaptureDescriptorDataInfoEXT>, data: UnsafeMutableRawPointer) throws -> Void {
+        try info.withCStruct { ptr_info in
+            try checkResult(
+                self.dispatchTable.vkGetImageOpaqueCaptureDescriptorDataEXT(self.handle, ptr_info, data)
+            )
+        }
+    }
+
+    public func getImageViewOpaqueCaptureDescriptorDataEXT(info: some Chainable<ImageViewCaptureDescriptorDataInfoEXT>, data: UnsafeMutableRawPointer) throws -> Void {
+        try info.withCStruct { ptr_info in
+            try checkResult(
+                self.dispatchTable.vkGetImageViewOpaqueCaptureDescriptorDataEXT(self.handle, ptr_info, data)
+            )
+        }
+    }
+
+    public func getSamplerOpaqueCaptureDescriptorDataEXT(info: some Chainable<SamplerCaptureDescriptorDataInfoEXT>, data: UnsafeMutableRawPointer) throws -> Void {
+        try info.withCStruct { ptr_info in
+            try checkResult(
+                self.dispatchTable.vkGetSamplerOpaqueCaptureDescriptorDataEXT(self.handle, ptr_info, data)
+            )
+        }
+    }
+
+    public func getAccelerationStructureOpaqueCaptureDescriptorDataEXT(info: some Chainable<AccelerationStructureCaptureDescriptorDataInfoEXT>, data: UnsafeMutableRawPointer) throws -> Void {
+        try info.withCStruct { ptr_info in
+            try checkResult(
+                self.dispatchTable.vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT(self.handle, ptr_info, data)
+            )
+        }
+    }
+
+    public func getDescriptorSetLayoutHostMappingInfoVALVE(bindingReference: some Chainable<DescriptorSetBindingReferenceVALVE>) -> DescriptorSetLayoutHostMappingInfoVALVE {
+        bindingReference.withCStruct { ptr_bindingReference in
+            var out = VkDescriptorSetLayoutHostMappingInfoVALVE()
+            self.dispatchTable.vkGetDescriptorSetLayoutHostMappingInfoVALVE(self.handle, ptr_bindingReference, &out)
+            return DescriptorSetLayoutHostMappingInfoVALVE(cStruct: out)
+        }
+    }
+
+    public func createMicromapEXT(createInfo: some Chainable<MicromapCreateInfoEXT>) throws -> MicromapEXT {
+        try createInfo.withCStruct { ptr_createInfo in
+            var out: VkMicromapEXT!
+            try checkResult(
+                self.dispatchTable.vkCreateMicromapEXT(self.handle, ptr_createInfo, nil, &out)
+            )
+            return MicromapEXT(handle: out, device: self)
+        }
+    }
+
+    public func buildMicromapsEXT(deferredOperation: DeferredOperationKHR?, infos: Array<MicromapBuildInfoEXT>) throws -> Void {
+        try infos.withCStructBufferPointer { ptr_infos in
+            try checkResult(
+                self.dispatchTable.vkBuildMicromapsEXT(self.handle, deferredOperation?.handle, UInt32(ptr_infos.count), ptr_infos.baseAddress)
+            )
+        }
+    }
+
+    public func copyMicromapEXT(deferredOperation: DeferredOperationKHR?, info: some Chainable<CopyMicromapInfoEXT>) throws -> Void {
+        try info.withCStruct { ptr_info in
+            try checkResult(
+                self.dispatchTable.vkCopyMicromapEXT(self.handle, deferredOperation?.handle, ptr_info)
+            )
+        }
+    }
+
+    public func copyMicromapToMemoryEXT(deferredOperation: DeferredOperationKHR?, info: some Chainable<CopyMicromapToMemoryInfoEXT>) throws -> Void {
+        try info.withCStruct { ptr_info in
+            try checkResult(
+                self.dispatchTable.vkCopyMicromapToMemoryEXT(self.handle, deferredOperation?.handle, ptr_info)
+            )
+        }
+    }
+
+    public func copyMemoryToMicromapEXT(deferredOperation: DeferredOperationKHR?, info: some Chainable<CopyMemoryToMicromapInfoEXT>) throws -> Void {
+        try info.withCStruct { ptr_info in
+            try checkResult(
+                self.dispatchTable.vkCopyMemoryToMicromapEXT(self.handle, deferredOperation?.handle, ptr_info)
+            )
+        }
+    }
+
+    public func writeMicromapsPropertiesEXT(micromaps: Array<MicromapEXT>, queryType: QueryType, dataSize: Int, data: UnsafeMutableRawPointer, stride: Int) throws -> Void {
+        try micromaps.map{ $0.handle }.withUnsafeBufferPointer { ptr_micromaps in
+            try checkResult(
+                self.dispatchTable.vkWriteMicromapsPropertiesEXT(self.handle, UInt32(ptr_micromaps.count), ptr_micromaps.baseAddress, VkQueryType(rawValue: VkQueryType.RawValue(bitPattern: queryType.rawValue)), dataSize, data, stride)
+            )
+        }
+    }
+
+    public func getMicromapCompatibilityEXT(versionInfo: some Chainable<MicromapVersionInfoEXT>) -> AccelerationStructureCompatibilityKHR {
+        versionInfo.withCStruct { ptr_versionInfo in
+            var out = VkAccelerationStructureCompatibilityKHR()
+            self.dispatchTable.vkGetDeviceMicromapCompatibilityEXT(self.handle, ptr_versionInfo, &out)
+            return AccelerationStructureCompatibilityKHR(rawValue: unsafeBitCast(out, to: UInt32.self))!
+        }
+    }
+
+    public func getMicromapBuildSizesEXT(buildType: AccelerationStructureBuildTypeKHR, buildInfo: some Chainable<MicromapBuildInfoEXT>) -> MicromapBuildSizesInfoEXT {
+        buildInfo.withCStruct { ptr_buildInfo in
+            var out = VkMicromapBuildSizesInfoEXT()
+            self.dispatchTable.vkGetMicromapBuildSizesEXT(self.handle, VkAccelerationStructureBuildTypeKHR(rawValue: VkAccelerationStructureBuildTypeKHR.RawValue(bitPattern: buildType.rawValue)), ptr_buildInfo, &out)
+            return MicromapBuildSizesInfoEXT(cStruct: out)
+        }
+    }
+
+    public func getShaderModuleCreateInfoIdentifierEXT(createInfo: some Chainable<ShaderModuleCreateInfo>) -> ShaderModuleIdentifierEXT {
+        createInfo.withCStruct { ptr_createInfo in
+            var out = VkShaderModuleIdentifierEXT()
+            self.dispatchTable.vkGetShaderModuleCreateInfoIdentifierEXT(self.handle, ptr_createInfo, &out)
+            return ShaderModuleIdentifierEXT(cStruct: out)
+        }
+    }
+
+    public func getPipelinePropertiesEXT(pipelineInfo: some Chainable<PipelineInfoKHR>) throws -> VkBaseOutStructure {
+        try pipelineInfo.withCStruct { ptr_pipelineInfo in
+            var out = VkBaseOutStructure()
+            try checkResult(
+                self.dispatchTable.vkGetPipelinePropertiesEXT(self.handle, ptr_pipelineInfo, &out)
+            )
+            return out
+        }
+    }
+
+    public func getDynamicRenderingTilePropertiesQCOM(renderingInfo: some Chainable<RenderingInfo>) throws -> TilePropertiesQCOM {
+        try renderingInfo.withCStruct { ptr_renderingInfo in
+            var out = VkTilePropertiesQCOM()
+            try checkResult(
+                self.dispatchTable.vkGetDynamicRenderingTilePropertiesQCOM(self.handle, ptr_renderingInfo, &out)
+            )
+            return TilePropertiesQCOM(cStruct: out)
+        }
+    }
+
+    public func createOpticalFlowSessionNV(createInfo: some Chainable<OpticalFlowSessionCreateInfoNV>) throws -> OpticalFlowSessionNV {
+        try createInfo.withCStruct { ptr_createInfo in
+            var out: VkOpticalFlowSessionNV!
+            try checkResult(
+                self.dispatchTable.vkCreateOpticalFlowSessionNV(self.handle, ptr_createInfo, nil, &out)
+            )
+            return OpticalFlowSessionNV(handle: out, device: self)
+        }
+    }
+
+    public func getFaultInfoEXT(faultCounts: UnsafeMutablePointer<VkDeviceFaultCountsEXT>, faultInfo: UnsafeMutablePointer<VkDeviceFaultInfoEXT>?) throws -> Void {
+        try checkResult(
+            self.dispatchTable.vkGetDeviceFaultInfoEXT(self.handle, faultCounts, faultInfo)
+        )
+    }
+
+    public func getFaultReportsKHR(timeout: UInt64) throws -> Array<DeviceFaultInfoKHR> {
+        try enumerate { pFaultInfo, pFaultCounts in
+            self.dispatchTable.vkGetDeviceFaultReportsKHR(self.handle, timeout, pFaultCounts, pFaultInfo)
+        }.map { DeviceFaultInfoKHR(cStruct: $0) }
+    }
+
+    public func getFaultDebugInfoKHR() throws -> DeviceFaultDebugInfoKHR {
+        var out = VkDeviceFaultDebugInfoKHR()
+        try checkResult(
+            self.dispatchTable.vkGetDeviceFaultDebugInfoKHR(self.handle, &out)
+        )
+        return DeviceFaultDebugInfoKHR(cStruct: out)
+    }
+
+    public func releaseSwapchainImagesKHR(releaseInfo: some Chainable<ReleaseSwapchainImagesInfoKHR>) throws -> Void {
+        try releaseInfo.withCStruct { ptr_releaseInfo in
+            try checkResult(
+                self.dispatchTable.vkReleaseSwapchainImagesKHR(self.handle, ptr_releaseInfo)
+            )
+        }
+    }
+
+    public func getImageSubresourceLayout(info: some Chainable<DeviceImageSubresourceInfo>) -> SubresourceLayout2 {
+        info.withCStruct { ptr_info in
+            var out = VkSubresourceLayout2()
+            self.dispatchTable.vkGetDeviceImageSubresourceLayout(self.handle, ptr_info, &out)
+            return SubresourceLayout2(cStruct: out)
+        }
+    }
+
+    public func mapMemory2(memoryMapInfo: some Chainable<MemoryMapInfo>) throws -> UnsafeMutableRawPointer {
+        try memoryMapInfo.withCStruct { ptr_memoryMapInfo in
+            var out: UnsafeMutableRawPointer!
+            try checkResult(
+                self.dispatchTable.vkMapMemory2(self.handle, ptr_memoryMapInfo, &out)
+            )
+            return out
+        }
+    }
+
+    public func unmapMemory2(memoryUnmapInfo: some Chainable<MemoryUnmapInfo>) throws -> Void {
+        try memoryUnmapInfo.withCStruct { ptr_memoryUnmapInfo in
+            try checkResult(
+                self.dispatchTable.vkUnmapMemory2(self.handle, ptr_memoryUnmapInfo)
+            )
+        }
+    }
+
+    public func createShadersEXT(createInfos: Array<ShaderCreateInfoEXT>) throws -> Array<ShaderEXT> {
+        try createInfos.withCStructBufferPointer { ptr_createInfos in
+            try Array<VkShaderEXT?>(unsafeUninitializedCapacity: Int(UInt32(ptr_createInfos.count))) { out, initializedCount in
+                try checkResult(
+                    self.dispatchTable.vkCreateShadersEXT(self.handle, UInt32(ptr_createInfos.count), ptr_createInfos.baseAddress, nil, out.baseAddress)
+                )
+                initializedCount = out.count
+            }.map { ShaderEXT(handle: $0, device: self) }
+        }
+    }
+
+    public func getPastPresentationTimingEXT(pastPresentationTimingInfo: some Chainable<PastPresentationTimingInfoEXT>) throws -> PastPresentationTimingPropertiesEXT {
+        try pastPresentationTimingInfo.withCStruct { ptr_pastPresentationTimingInfo in
+            var out = VkPastPresentationTimingPropertiesEXT()
+            try checkResult(
+                self.dispatchTable.vkGetPastPresentationTimingEXT(self.handle, ptr_pastPresentationTimingInfo, &out)
+            )
+            return PastPresentationTimingPropertiesEXT(cStruct: out)
+        }
+    }
+
+    public func createGpaSessionAMD(createInfo: some Chainable<GpaSessionCreateInfoAMD>) throws -> GpaSessionAMD {
+        try createInfo.withCStruct { ptr_createInfo in
+            var out: VkGpaSessionAMD!
+            try checkResult(
+                self.dispatchTable.vkCreateGpaSessionAMD(self.handle, ptr_createInfo, nil, &out)
+            )
+            return GpaSessionAMD(handle: out, device: self)
+        }
+    }
+
+    public func setGpaClockModeAMD() throws -> GpaDeviceClockModeInfoAMD {
+        var out = VkGpaDeviceClockModeInfoAMD()
+        try checkResult(
+            self.dispatchTable.vkSetGpaDeviceClockModeAMD(self.handle, &out)
+        )
+        return GpaDeviceClockModeInfoAMD(cStruct: out)
+    }
+
+    public func getGpaClockInfoAMD() throws -> GpaDeviceGetClockInfoAMD {
+        var out = VkGpaDeviceGetClockInfoAMD()
+        try checkResult(
+            self.dispatchTable.vkGetGpaDeviceClockInfoAMD(self.handle, &out)
+        )
+        return GpaDeviceGetClockInfoAMD(cStruct: out)
+    }
+
+    public func convertCooperativeVectorMatrixNV(info: some Chainable<ConvertCooperativeVectorMatrixInfoNV>) throws -> Void {
+        try info.withCStruct { ptr_info in
+            try checkResult(
+                self.dispatchTable.vkConvertCooperativeVectorMatrixNV(self.handle, ptr_info)
+            )
+        }
+    }
+
+    public func createExternalComputeQueueNV(createInfo: some Chainable<ExternalComputeQueueCreateInfoNV>) throws -> ExternalComputeQueueNV {
+        try createInfo.withCStruct { ptr_createInfo in
+            var out: VkExternalComputeQueueNV!
+            try checkResult(
+                self.dispatchTable.vkCreateExternalComputeQueueNV(self.handle, ptr_createInfo, nil, &out)
+            )
+            return ExternalComputeQueueNV(handle: out, device: self)
+        }
+    }
+
+    public func createShaderInstrumentationARM(createInfo: some Chainable<ShaderInstrumentationCreateInfoARM>) throws -> ShaderInstrumentationARM {
+        try createInfo.withCStruct { ptr_createInfo in
+            var out: VkShaderInstrumentationARM!
+            try checkResult(
+                self.dispatchTable.vkCreateShaderInstrumentationARM(self.handle, ptr_createInfo, nil, &out)
+            )
+            return ShaderInstrumentationARM(handle: out, device: self)
+        }
+    }
+
+    public func createTensorARM(createInfo: some Chainable<TensorCreateInfoARM>) throws -> TensorARM {
+        try createInfo.withCStruct { ptr_createInfo in
+            var out: VkTensorARM!
+            try checkResult(
+                self.dispatchTable.vkCreateTensorARM(self.handle, ptr_createInfo, nil, &out)
+            )
+            return TensorARM(handle: out, device: self)
+        }
+    }
+
+    public func createTensorViewARM(createInfo: some Chainable<TensorViewCreateInfoARM>) throws -> TensorViewARM {
+        try createInfo.withCStruct { ptr_createInfo in
+            var out: VkTensorViewARM!
+            try checkResult(
+                self.dispatchTable.vkCreateTensorViewARM(self.handle, ptr_createInfo, nil, &out)
+            )
+            return TensorViewARM(handle: out, device: self)
+        }
+    }
+
+    public func getTensorMemoryRequirementsARM(info: some Chainable<TensorMemoryRequirementsInfoARM>) -> MemoryRequirements2 {
+        info.withCStruct { ptr_info in
+            var out = VkMemoryRequirements2()
+            self.dispatchTable.vkGetTensorMemoryRequirementsARM(self.handle, ptr_info, &out)
+            return MemoryRequirements2(cStruct: out)
+        }
+    }
+
+    public func bindTensorMemoryARM(bindInfos: Array<BindTensorMemoryInfoARM>) throws -> Void {
+        try bindInfos.withCStructBufferPointer { ptr_bindInfos in
+            try checkResult(
+                self.dispatchTable.vkBindTensorMemoryARM(self.handle, UInt32(ptr_bindInfos.count), ptr_bindInfos.baseAddress)
+            )
+        }
+    }
+
+    public func getTensorMemoryRequirementsARM(info: some Chainable<DeviceTensorMemoryRequirementsARM>) -> MemoryRequirements2 {
+        info.withCStruct { ptr_info in
+            var out = VkMemoryRequirements2()
+            self.dispatchTable.vkGetDeviceTensorMemoryRequirementsARM(self.handle, ptr_info, &out)
+            return MemoryRequirements2(cStruct: out)
+        }
+    }
+
+    public func getTensorOpaqueCaptureDescriptorDataARM(info: some Chainable<TensorCaptureDescriptorDataInfoARM>, data: UnsafeMutableRawPointer) throws -> Void {
+        try info.withCStruct { ptr_info in
+            try checkResult(
+                self.dispatchTable.vkGetTensorOpaqueCaptureDescriptorDataARM(self.handle, ptr_info, data)
+            )
+        }
+    }
+
+    public func getTensorViewOpaqueCaptureDescriptorDataARM(info: some Chainable<TensorViewCaptureDescriptorDataInfoARM>, data: UnsafeMutableRawPointer) throws -> Void {
+        try info.withCStruct { ptr_info in
+            try checkResult(
+                self.dispatchTable.vkGetTensorViewOpaqueCaptureDescriptorDataARM(self.handle, ptr_info, data)
+            )
+        }
+    }
+
+    public func createDataGraphPipelinesARM(deferredOperation: DeferredOperationKHR?, pipelineCache: PipelineCache?, createInfos: Array<DataGraphPipelineCreateInfoARM>) throws -> Array<Pipeline> {
+        try createInfos.withCStructBufferPointer { ptr_createInfos in
+            try Array<VkPipeline?>(unsafeUninitializedCapacity: Int(UInt32(ptr_createInfos.count))) { out, initializedCount in
+                try checkResult(
+                    self.dispatchTable.vkCreateDataGraphPipelinesARM(self.handle, deferredOperation?.handle, pipelineCache?.handle, UInt32(ptr_createInfos.count), ptr_createInfos.baseAddress, nil, out.baseAddress)
+                )
+                initializedCount = out.count
+            }.map { Pipeline(handle: $0, device: self) }
+        }
+    }
+
+    public func createDataGraphPipelineSessionARM(createInfo: some Chainable<DataGraphPipelineSessionCreateInfoARM>) throws -> DataGraphPipelineSessionARM {
+        try createInfo.withCStruct { ptr_createInfo in
+            var out: VkDataGraphPipelineSessionARM!
+            try checkResult(
+                self.dispatchTable.vkCreateDataGraphPipelineSessionARM(self.handle, ptr_createInfo, nil, &out)
+            )
+            return DataGraphPipelineSessionARM(handle: out, device: self)
+        }
+    }
+
+    public func getDataGraphPipelineSessionBindPointRequirementsARM(info: some Chainable<DataGraphPipelineSessionBindPointRequirementsInfoARM>) throws -> Array<DataGraphPipelineSessionBindPointRequirementARM> {
+        try info.withCStruct { ptr_info in
+            try enumerate { pBindPointRequirements, pBindPointRequirementCount in
+                self.dispatchTable.vkGetDataGraphPipelineSessionBindPointRequirementsARM(self.handle, ptr_info, pBindPointRequirementCount, pBindPointRequirements)
+            }.map { DataGraphPipelineSessionBindPointRequirementARM(cStruct: $0) }
+        }
+    }
+
+    public func getDataGraphPipelineSessionMemoryRequirementsARM(info: some Chainable<DataGraphPipelineSessionMemoryRequirementsInfoARM>) -> MemoryRequirements2 {
+        info.withCStruct { ptr_info in
+            var out = VkMemoryRequirements2()
+            self.dispatchTable.vkGetDataGraphPipelineSessionMemoryRequirementsARM(self.handle, ptr_info, &out)
+            return MemoryRequirements2(cStruct: out)
+        }
+    }
+
+    public func bindDataGraphPipelineSessionMemoryARM(bindInfos: Array<BindDataGraphPipelineSessionMemoryInfoARM>) throws -> Void {
+        try bindInfos.withCStructBufferPointer { ptr_bindInfos in
+            try checkResult(
+                self.dispatchTable.vkBindDataGraphPipelineSessionMemoryARM(self.handle, UInt32(ptr_bindInfos.count), ptr_bindInfos.baseAddress)
+            )
+        }
+    }
+
+    public func getDataGraphPipelineAvailablePropertiesARM(pipelineInfo: some Chainable<DataGraphPipelineInfoARM>) throws -> Array<DataGraphPipelinePropertyARM> {
+        try pipelineInfo.withCStruct { ptr_pipelineInfo in
+            try enumerate { pProperties, pPropertiesCount in
+                self.dispatchTable.vkGetDataGraphPipelineAvailablePropertiesARM(self.handle, ptr_pipelineInfo, pPropertiesCount, pProperties)
+            }.map { DataGraphPipelinePropertyARM(rawValue: unsafeBitCast($0, to: UInt32.self))! }
+        }
+    }
+
+    public func getDataGraphPipelinePropertiesARM(pipelineInfo: some Chainable<DataGraphPipelineInfoARM>, propertiesCount: UInt32) throws -> Array<DataGraphPipelinePropertyQueryResultARM> {
+        try pipelineInfo.withCStruct { ptr_pipelineInfo in
+            try Array<VkDataGraphPipelinePropertyQueryResultARM>(unsafeUninitializedCapacity: Int(propertiesCount)) { out, initializedCount in
+                try checkResult(
+                    self.dispatchTable.vkGetDataGraphPipelinePropertiesARM(self.handle, ptr_pipelineInfo, propertiesCount, out.baseAddress)
+                )
+                initializedCount = out.count
+            }.map { DataGraphPipelinePropertyQueryResultARM(cStruct: $0) }
+        }
+    }
+
+    public func writeSamplerDescriptorsEXT(samplers: Array<SamplerCreateInfo>, descriptors: Array<HostAddressRangeEXT>) throws -> Void {
+        try samplers.withCStructBufferPointer { ptr_samplers in
+            try descriptors.withCStructBufferPointer { ptr_descriptors in
+                try checkResult(
+                    self.dispatchTable.vkWriteSamplerDescriptorsEXT(self.handle, UInt32(ptr_samplers.count), ptr_samplers.baseAddress, ptr_descriptors.baseAddress)
+                )
+            }
+        }
+    }
+
+    public func writeResourceDescriptorsEXT(resources: Array<ResourceDescriptorInfoEXT>, descriptors: Array<HostAddressRangeEXT>) throws -> Void {
+        try resources.withCStructBufferPointer { ptr_resources in
+            try descriptors.withCStructBufferPointer { ptr_descriptors in
+                try checkResult(
+                    self.dispatchTable.vkWriteResourceDescriptorsEXT(self.handle, UInt32(ptr_resources.count), ptr_resources.baseAddress, ptr_descriptors.baseAddress)
+                )
+            }
+        }
+    }
+
+    public func registerCustomBorderColorEXT(borderColor: some Chainable<SamplerCustomBorderColorCreateInfoEXT>, requestIndex: Bool) throws -> UInt32 {
+        try borderColor.withCStruct { ptr_borderColor in
+            var out = UInt32()
+            try checkResult(
+                self.dispatchTable.vkRegisterCustomBorderColorEXT(self.handle, ptr_borderColor, VkBool32(requestIndex ? VK_TRUE : VK_FALSE), &out)
+            )
+            return out
+        }
+    }
+
+    public func unregisterCustomBorderColorEXT(index: UInt32) -> Void {
+        self.dispatchTable.vkUnregisterCustomBorderColorEXT(self.handle, index)
+    }
+
+    public func getImageOpaqueCaptureDataEXT(images: Array<Image>) throws -> Array<HostAddressRangeEXT> {
+        try images.map{ $0.handle }.withUnsafeBufferPointer { ptr_images in
+            try Array<VkHostAddressRangeEXT>(unsafeUninitializedCapacity: Int(UInt32(ptr_images.count))) { out, initializedCount in
+                try checkResult(
+                    self.dispatchTable.vkGetImageOpaqueCaptureDataEXT(self.handle, UInt32(ptr_images.count), ptr_images.baseAddress, out.baseAddress)
+                )
+                initializedCount = out.count
+            }.map { HostAddressRangeEXT(cStruct: $0) }
+        }
+    }
+
+    public func getTensorOpaqueCaptureDataARM(tensors: Array<TensorARM>) throws -> Array<HostAddressRangeEXT> {
+        try tensors.map{ $0.handle }.withUnsafeBufferPointer { ptr_tensors in
+            try Array<VkHostAddressRangeEXT>(unsafeUninitializedCapacity: Int(UInt32(ptr_tensors.count))) { out, initializedCount in
+                try checkResult(
+                    self.dispatchTable.vkGetTensorOpaqueCaptureDataARM(self.handle, UInt32(ptr_tensors.count), ptr_tensors.baseAddress, out.baseAddress)
+                )
+                initializedCount = out.count
+            }.map { HostAddressRangeEXT(cStruct: $0) }
+        }
+    }
+
+    public func createAccelerationStructure2KHR(createInfo: some Chainable<AccelerationStructureCreateInfo2KHR>) throws -> AccelerationStructureKHR {
+        try createInfo.withCStruct { ptr_createInfo in
+            var out: VkAccelerationStructureKHR!
+            try checkResult(
+                self.dispatchTable.vkCreateAccelerationStructure2KHR(self.handle, ptr_createInfo, nil, &out)
+            )
+            return AccelerationStructureKHR(handle: out, device: self)
         }
     }
 }
@@ -1236,6 +2218,34 @@ public class Queue: _HandleContainer {
             self.device.dispatchTable.vkQueueSetPerformanceConfigurationINTEL(self.handle, configuration.handle)
         )
     }
+
+    public func submit2(submits: Array<SubmitInfo2>, fence: Fence?) throws -> Void {
+        try submits.withCStructBufferPointer { ptr_submits in
+            try checkResult(
+                self.device.dispatchTable.vkQueueSubmit2(self.handle, UInt32(ptr_submits.count), ptr_submits.baseAddress, fence?.handle)
+            )
+        }
+    }
+
+    public func getCheckpointData2NV() -> Array<CheckpointData2NV> {
+        enumerate { pCheckpointData, pCheckpointDataCount in
+            self.device.dispatchTable.vkGetQueueCheckpointData2NV(self.handle, pCheckpointDataCount, pCheckpointData)
+        }.map { CheckpointData2NV(cStruct: $0) }
+    }
+
+    public func notifyOutOfBandNV(queueTypeInfo: some Chainable<OutOfBandQueueTypeInfoNV>) -> Void {
+        queueTypeInfo.withCStruct { ptr_queueTypeInfo in
+            self.device.dispatchTable.vkQueueNotifyOutOfBandNV(self.handle, ptr_queueTypeInfo)
+        }
+    }
+
+    public func setPerfHintQCOM(perfHintInfo: some Chainable<PerfHintInfoQCOM>) throws -> Void {
+        try perfHintInfo.withCStruct { ptr_perfHintInfo in
+            try checkResult(
+                self.device.dispatchTable.vkQueueSetPerfHintQCOM(self.handle, ptr_perfHintInfo)
+            )
+        }
+    }
 }
 
 public class CommandPool: _HandleContainer {
@@ -1265,6 +2275,12 @@ public class CommandPool: _HandleContainer {
 
     public func trim(flags: CommandPoolTrimFlags) -> Void {
         self.device.dispatchTable.vkTrimCommandPool(self.device.handle, self.handle, flags.rawValue)
+    }
+
+    public func getMemoryConsumption(commandBuffer: CommandBuffer?) -> CommandPoolMemoryConsumption {
+        var out = VkCommandPoolMemoryConsumption()
+        self.device.dispatchTable.vkGetCommandPoolMemoryConsumption(self.device.handle, self.handle, commandBuffer?.handle, &out)
+        return CommandPoolMemoryConsumption(cStruct: out)
     }
 }
 
@@ -1299,6 +2315,14 @@ public class CommandBuffer: _HandleContainer {
 
     public func cmdBindPipeline(pipelineBindPoint: PipelineBindPoint, pipeline: Pipeline) -> Void {
         self.commandPool.device.dispatchTable.vkCmdBindPipeline(self.handle, VkPipelineBindPoint(rawValue: VkPipelineBindPoint.RawValue(bitPattern: pipelineBindPoint.rawValue)), pipeline.handle)
+    }
+
+    public func cmdSetPrimitiveRestartIndexEXT(primitiveRestartIndex: UInt32) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetPrimitiveRestartIndexEXT(self.handle, primitiveRestartIndex)
+    }
+
+    public func cmdSetAttachmentFeedbackLoopEnableEXT(aspectMask: ImageAspectFlags) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetAttachmentFeedbackLoopEnableEXT(self.handle, aspectMask.rawValue)
     }
 
     public func cmdSetViewport(firstViewport: UInt32, viewports: Array<Viewport>) -> Void {
@@ -1343,20 +2367,20 @@ public class CommandBuffer: _HandleContainer {
         self.commandPool.device.dispatchTable.vkCmdSetStencilReference(self.handle, faceMask.rawValue, reference)
     }
 
-    public func cmdBindDescriptorSets(pipelineBindPoint: PipelineBindPoint, layout: PipelineLayout, firstSet: UInt32, descriptorSets: Array<DescriptorSet>, dynamicOffsets: Array<UInt32>) -> Void {
-        descriptorSets.map{ $0.handle }.withUnsafeBufferPointer { ptr_descriptorSets in
+    public func cmdBindDescriptorSets(pipelineBindPoint: PipelineBindPoint, layout: PipelineLayout, firstSet: UInt32, descriptorSets: Array<DescriptorSet?>, dynamicOffsets: Array<UInt32>) -> Void {
+        descriptorSets.map{ $0?.handle }.withUnsafeBufferPointer { ptr_descriptorSets in
             dynamicOffsets.withUnsafeBufferPointer { ptr_dynamicOffsets in
                 self.commandPool.device.dispatchTable.vkCmdBindDescriptorSets(self.handle, VkPipelineBindPoint(rawValue: VkPipelineBindPoint.RawValue(bitPattern: pipelineBindPoint.rawValue)), layout.handle, firstSet, UInt32(ptr_descriptorSets.count), ptr_descriptorSets.baseAddress, UInt32(ptr_dynamicOffsets.count), ptr_dynamicOffsets.baseAddress)
             }
         }
     }
 
-    public func cmdBindIndexBuffer(buffer: Buffer, offset: VkDeviceSize, indexType: IndexType) -> Void {
-        self.commandPool.device.dispatchTable.vkCmdBindIndexBuffer(self.handle, buffer.handle, offset, VkIndexType(rawValue: VkIndexType.RawValue(bitPattern: indexType.rawValue)))
+    public func cmdBindIndexBuffer(buffer: Buffer?, offset: VkDeviceSize, indexType: IndexType) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdBindIndexBuffer(self.handle, buffer?.handle, offset, VkIndexType(rawValue: VkIndexType.RawValue(bitPattern: indexType.rawValue)))
     }
 
-    public func cmdBindVertexBuffers(firstBinding: UInt32, buffers: Array<Buffer>, offsets: Array<VkDeviceSize>) -> Void {
-        buffers.map{ $0.handle }.withUnsafeBufferPointer { ptr_buffers in
+    public func cmdBindVertexBuffers(firstBinding: UInt32, buffers: Array<Buffer?>, offsets: Array<VkDeviceSize>) -> Void {
+        buffers.map{ $0?.handle }.withUnsafeBufferPointer { ptr_buffers in
             offsets.withUnsafeBufferPointer { ptr_offsets in
                 self.commandPool.device.dispatchTable.vkCmdBindVertexBuffers(self.handle, firstBinding, UInt32(ptr_buffers.count), ptr_buffers.baseAddress, ptr_offsets.baseAddress)
             }
@@ -1369,6 +2393,18 @@ public class CommandBuffer: _HandleContainer {
 
     public func cmdDrawIndexed(indexCount: UInt32, instanceCount: UInt32, firstIndex: UInt32, vertexOffset: Int32, firstInstance: UInt32) -> Void {
         self.commandPool.device.dispatchTable.vkCmdDrawIndexed(self.handle, indexCount, instanceCount, firstIndex, vertexOffset, firstInstance)
+    }
+
+    public func cmdDrawMultiEXT(vertexInfo: Array<MultiDrawInfoEXT>, instanceCount: UInt32, firstInstance: UInt32, stride: UInt32) -> Void {
+        vertexInfo.withCStructBufferPointer { ptr_vertexInfo in
+            self.commandPool.device.dispatchTable.vkCmdDrawMultiEXT(self.handle, UInt32(ptr_vertexInfo.count), ptr_vertexInfo.baseAddress, instanceCount, firstInstance, stride)
+        }
+    }
+
+    public func cmdDrawMultiIndexedEXT(indexInfo: Array<MultiDrawIndexedInfoEXT>, instanceCount: UInt32, firstInstance: UInt32, stride: UInt32, vertexOffset: UnsafePointer<Int32>?) -> Void {
+        indexInfo.withCStructBufferPointer { ptr_indexInfo in
+            self.commandPool.device.dispatchTable.vkCmdDrawMultiIndexedEXT(self.handle, UInt32(ptr_indexInfo.count), ptr_indexInfo.baseAddress, instanceCount, firstInstance, stride, vertexOffset)
+        }
     }
 
     public func cmdDrawIndirect(buffer: Buffer, offset: VkDeviceSize, drawCount: UInt32, stride: UInt32) -> Void {
@@ -1385,6 +2421,22 @@ public class CommandBuffer: _HandleContainer {
 
     public func cmdDispatchIndirect(buffer: Buffer, offset: VkDeviceSize) -> Void {
         self.commandPool.device.dispatchTable.vkCmdDispatchIndirect(self.handle, buffer.handle, offset)
+    }
+
+    public func cmdSubpassShadingHUAWEI() -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSubpassShadingHUAWEI(self.handle)
+    }
+
+    public func cmdDrawClusterHUAWEI(groupCountX: UInt32, groupCountY: UInt32, groupCountZ: UInt32) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdDrawClusterHUAWEI(self.handle, groupCountX, groupCountY, groupCountZ)
+    }
+
+    public func cmdDrawClusterIndirectHUAWEI(buffer: Buffer, offset: VkDeviceSize) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdDrawClusterIndirectHUAWEI(self.handle, buffer.handle, offset)
+    }
+
+    public func cmdUpdatePipelineIndirectBufferNV(pipelineBindPoint: PipelineBindPoint, pipeline: Pipeline) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdUpdatePipelineIndirectBufferNV(self.handle, VkPipelineBindPoint(rawValue: VkPipelineBindPoint.RawValue(bitPattern: pipelineBindPoint.rawValue)), pipeline.handle)
     }
 
     public func cmdCopyBuffer(srcBuffer: Buffer, dstBuffer: Buffer, regions: Array<BufferCopy>) -> Void {
@@ -1417,6 +2469,28 @@ public class CommandBuffer: _HandleContainer {
         }
     }
 
+    public func cmdCopyMemoryIndirectNV(copyBufferAddress: VkDeviceAddress, copyCount: UInt32, stride: UInt32) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdCopyMemoryIndirectNV(self.handle, copyBufferAddress, copyCount, stride)
+    }
+
+    public func cmdCopyMemoryIndirectKHR(copyMemoryIndirectInfo: some Chainable<CopyMemoryIndirectInfoKHR>) -> Void {
+        copyMemoryIndirectInfo.withCStruct { ptr_copyMemoryIndirectInfo in
+            self.commandPool.device.dispatchTable.vkCmdCopyMemoryIndirectKHR(self.handle, ptr_copyMemoryIndirectInfo)
+        }
+    }
+
+    public func cmdCopyMemoryToImageIndirectNV(copyBufferAddress: VkDeviceAddress, stride: UInt32, dstImage: Image, dstImageLayout: ImageLayout, imageSubresources: Array<ImageSubresourceLayers>) -> Void {
+        imageSubresources.withCStructBufferPointer { ptr_imageSubresources in
+            self.commandPool.device.dispatchTable.vkCmdCopyMemoryToImageIndirectNV(self.handle, copyBufferAddress, UInt32(ptr_imageSubresources.count), stride, dstImage.handle, VkImageLayout(rawValue: VkImageLayout.RawValue(bitPattern: dstImageLayout.rawValue)), ptr_imageSubresources.baseAddress)
+        }
+    }
+
+    public func cmdCopyMemoryToImageIndirectKHR(copyMemoryToImageIndirectInfo: some Chainable<CopyMemoryToImageIndirectInfoKHR>) -> Void {
+        copyMemoryToImageIndirectInfo.withCStruct { ptr_copyMemoryToImageIndirectInfo in
+            self.commandPool.device.dispatchTable.vkCmdCopyMemoryToImageIndirectKHR(self.handle, ptr_copyMemoryToImageIndirectInfo)
+        }
+    }
+
     public func cmdUpdateBuffer(dstBuffer: Buffer, dstOffset: VkDeviceSize, dataSize: VkDeviceSize, data: UnsafeRawPointer) -> Void {
         self.commandPool.device.dispatchTable.vkCmdUpdateBuffer(self.handle, dstBuffer.handle, dstOffset, dataSize, data)
     }
@@ -1431,7 +2505,7 @@ public class CommandBuffer: _HandleContainer {
         }
     }
 
-    public func cmdClearDepthStencilImage(image: Image, imageLayout: ImageLayout, depthStencil: ClearDepthStencilValue, ranges: Array<ImageSubresourceRange>) -> Void {
+    public func cmdClearDepthStencilImage(image: Image, imageLayout: ImageLayout, depthStencil: some Chainable<ClearDepthStencilValue>, ranges: Array<ImageSubresourceRange>) -> Void {
         depthStencil.withCStruct { ptr_depthStencil in
             ranges.withCStructBufferPointer { ptr_ranges in
                 self.commandPool.device.dispatchTable.vkCmdClearDepthStencilImage(self.handle, image.handle, VkImageLayout(rawValue: VkImageLayout.RawValue(bitPattern: imageLayout.rawValue)), ptr_depthStencil, UInt32(ptr_ranges.count), ptr_ranges.baseAddress)
@@ -1499,6 +2573,12 @@ public class CommandBuffer: _HandleContainer {
 
     public func cmdEndConditionalRenderingEXT() -> Void {
         self.commandPool.device.dispatchTable.vkCmdEndConditionalRenderingEXT(self.handle)
+    }
+
+    public func cmdBeginCustomResolveEXT(beginCustomResolveInfo: some Chainable<BeginCustomResolveInfoEXT>?) -> Void {
+        beginCustomResolveInfo.withOptionalCStruct { ptr_beginCustomResolveInfo in
+            self.commandPool.device.dispatchTable.vkCmdBeginCustomResolveEXT(self.handle, ptr_beginCustomResolveInfo)
+        }
     }
 
     public func cmdResetQueryPool(queryPool: QueryPool, firstQuery: UInt32, queryCount: UInt32) -> Void {
@@ -1569,9 +2649,21 @@ public class CommandBuffer: _HandleContainer {
         self.commandPool.device.dispatchTable.vkCmdBindPipelineShaderGroupNV(self.handle, VkPipelineBindPoint(rawValue: VkPipelineBindPoint.RawValue(bitPattern: pipelineBindPoint.rawValue)), pipeline.handle, groupIndex)
     }
 
-    public func cmdPushDescriptorSetKHR(pipelineBindPoint: PipelineBindPoint, layout: PipelineLayout, set: UInt32, descriptorWrites: Array<WriteDescriptorSet>) -> Void {
+    public func cmdExecuteGeneratedCommandsEXT(isPreprocessed: Bool, generatedCommandsInfo: some Chainable<GeneratedCommandsInfoEXT>) -> Void {
+        generatedCommandsInfo.withCStruct { ptr_generatedCommandsInfo in
+            self.commandPool.device.dispatchTable.vkCmdExecuteGeneratedCommandsEXT(self.handle, VkBool32(isPreprocessed ? VK_TRUE : VK_FALSE), ptr_generatedCommandsInfo)
+        }
+    }
+
+    public func cmdPreprocessGeneratedCommandsEXT(generatedCommandsInfo: some Chainable<GeneratedCommandsInfoEXT>, stateCommandBuffer: CommandBuffer) -> Void {
+        generatedCommandsInfo.withCStruct { ptr_generatedCommandsInfo in
+            self.commandPool.device.dispatchTable.vkCmdPreprocessGeneratedCommandsEXT(self.handle, ptr_generatedCommandsInfo, stateCommandBuffer.handle)
+        }
+    }
+
+    public func cmdPushDescriptorSet(pipelineBindPoint: PipelineBindPoint, layout: PipelineLayout, set: UInt32, descriptorWrites: Array<WriteDescriptorSet>) -> Void {
         descriptorWrites.withCStructBufferPointer { ptr_descriptorWrites in
-            self.commandPool.device.dispatchTable.vkCmdPushDescriptorSetKHR(self.handle, VkPipelineBindPoint(rawValue: VkPipelineBindPoint.RawValue(bitPattern: pipelineBindPoint.rawValue)), layout.handle, set, UInt32(ptr_descriptorWrites.count), ptr_descriptorWrites.baseAddress)
+            self.commandPool.device.dispatchTable.vkCmdPushDescriptorSet(self.handle, VkPipelineBindPoint(rawValue: VkPipelineBindPoint.RawValue(bitPattern: pipelineBindPoint.rawValue)), layout.handle, set, UInt32(ptr_descriptorWrites.count), ptr_descriptorWrites.baseAddress)
         }
     }
 
@@ -1583,8 +2675,8 @@ public class CommandBuffer: _HandleContainer {
         self.commandPool.device.dispatchTable.vkCmdDispatchBase(self.handle, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ)
     }
 
-    public func cmdPushDescriptorSetWithTemplateKHR(descriptorUpdateTemplate: DescriptorUpdateTemplate, layout: PipelineLayout, set: UInt32, data: UnsafeRawPointer) -> Void {
-        self.commandPool.device.dispatchTable.vkCmdPushDescriptorSetWithTemplateKHR(self.handle, descriptorUpdateTemplate.handle, layout.handle, set, data)
+    public func cmdPushDescriptorSetWithTemplate(descriptorUpdateTemplate: DescriptorUpdateTemplate, layout: PipelineLayout, set: UInt32, data: UnsafeRawPointer) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdPushDescriptorSetWithTemplate(self.handle, descriptorUpdateTemplate.handle, layout.handle, set, data)
     }
 
     public func cmdSetViewportWScalingNV(firstViewport: UInt32, viewportWScalings: Array<ViewportWScalingNV>) -> Void {
@@ -1597,6 +2689,14 @@ public class CommandBuffer: _HandleContainer {
         discardRectangles.withCStructBufferPointer { ptr_discardRectangles in
             self.commandPool.device.dispatchTable.vkCmdSetDiscardRectangleEXT(self.handle, firstDiscardRectangle, UInt32(ptr_discardRectangles.count), ptr_discardRectangles.baseAddress)
         }
+    }
+
+    public func cmdSetDiscardRectangleEnableEXT(discardRectangleEnable: Bool) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetDiscardRectangleEnableEXT(self.handle, VkBool32(discardRectangleEnable ? VK_TRUE : VK_FALSE))
+    }
+
+    public func cmdSetDiscardRectangleModeEXT(discardRectangleMode: DiscardRectangleModeEXT) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetDiscardRectangleModeEXT(self.handle, VkDiscardRectangleModeEXT(rawValue: VkDiscardRectangleModeEXT.RawValue(bitPattern: discardRectangleMode.rawValue)))
     }
 
     public func cmdSetSampleLocationsEXT(sampleLocationsInfo: some Chainable<SampleLocationsInfoEXT>) -> Void {
@@ -1703,6 +2803,12 @@ public class CommandBuffer: _HandleContainer {
         }
     }
 
+    public func cmdSetExclusiveScissorEnableNV(firstExclusiveScissor: UInt32, exclusiveScissorEnables: Array<Bool>) -> Void {
+        exclusiveScissorEnables.map{ VkBool32($0 ? VK_TRUE : VK_FALSE) }.withUnsafeBufferPointer { ptr_exclusiveScissorEnables in
+            self.commandPool.device.dispatchTable.vkCmdSetExclusiveScissorEnableNV(self.handle, firstExclusiveScissor, UInt32(ptr_exclusiveScissorEnables.count), ptr_exclusiveScissorEnables.baseAddress)
+        }
+    }
+
     public func cmdBindShadingRateImageNV(imageView: ImageView?, imageLayout: ImageLayout) -> Void {
         self.commandPool.device.dispatchTable.vkCmdBindShadingRateImageNV(self.handle, imageView?.handle, VkImageLayout(rawValue: VkImageLayout.RawValue(bitPattern: imageLayout.rawValue)))
     }
@@ -1731,18 +2837,102 @@ public class CommandBuffer: _HandleContainer {
         self.commandPool.device.dispatchTable.vkCmdDrawMeshTasksIndirectCountNV(self.handle, buffer.handle, offset, countBuffer.handle, countBufferOffset, maxDrawCount, stride)
     }
 
-    public func cmdCopyAccelerationStructureNV(dst: AccelerationStructureKHR, src: AccelerationStructureKHR, mode: VkCopyAccelerationStructureModeKHR) -> Void {
-        self.commandPool.device.dispatchTable.vkCmdCopyAccelerationStructureNV(self.handle, dst.handle, src.handle, mode)
+    public func cmdDrawMeshTasksEXT(groupCountX: UInt32, groupCountY: UInt32, groupCountZ: UInt32) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdDrawMeshTasksEXT(self.handle, groupCountX, groupCountY, groupCountZ)
     }
 
-    public func cmdBuildAccelerationStructureNV(info: some Chainable<AccelerationStructureInfoNV>, instanceData: Buffer?, instanceOffset: VkDeviceSize, update: Bool, dst: AccelerationStructureKHR, src: AccelerationStructureKHR?, scratch: Buffer, scratchOffset: VkDeviceSize) -> Void {
+    public func cmdDrawMeshTasksIndirectEXT(buffer: Buffer, offset: VkDeviceSize, drawCount: UInt32, stride: UInt32) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdDrawMeshTasksIndirectEXT(self.handle, buffer.handle, offset, drawCount, stride)
+    }
+
+    public func cmdDrawMeshTasksIndirectCountEXT(buffer: Buffer, offset: VkDeviceSize, countBuffer: Buffer, countBufferOffset: VkDeviceSize, maxDrawCount: UInt32, stride: UInt32) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdDrawMeshTasksIndirectCountEXT(self.handle, buffer.handle, offset, countBuffer.handle, countBufferOffset, maxDrawCount, stride)
+    }
+
+    public func cmdBindInvocationMaskHUAWEI(imageView: ImageView?, imageLayout: ImageLayout) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdBindInvocationMaskHUAWEI(self.handle, imageView?.handle, VkImageLayout(rawValue: VkImageLayout.RawValue(bitPattern: imageLayout.rawValue)))
+    }
+
+    public func cmdCopyAccelerationStructureNV(dst: AccelerationStructureNV, src: AccelerationStructureNV, mode: CopyAccelerationStructureModeKHR) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdCopyAccelerationStructureNV(self.handle, dst.handle, src.handle, VkCopyAccelerationStructureModeKHR(rawValue: VkCopyAccelerationStructureModeKHR.RawValue(bitPattern: mode.rawValue)))
+    }
+
+    public func cmdCopyAccelerationStructureKHR(info: some Chainable<CopyAccelerationStructureInfoKHR>) -> Void {
+        info.withCStruct { ptr_info in
+            self.commandPool.device.dispatchTable.vkCmdCopyAccelerationStructureKHR(self.handle, ptr_info)
+        }
+    }
+
+    public func cmdCopyAccelerationStructureToMemoryKHR(info: some Chainable<CopyAccelerationStructureToMemoryInfoKHR>) -> Void {
+        info.withCStruct { ptr_info in
+            self.commandPool.device.dispatchTable.vkCmdCopyAccelerationStructureToMemoryKHR(self.handle, ptr_info)
+        }
+    }
+
+    public func cmdCopyMemoryToAccelerationStructureKHR(info: some Chainable<CopyMemoryToAccelerationStructureInfoKHR>) -> Void {
+        info.withCStruct { ptr_info in
+            self.commandPool.device.dispatchTable.vkCmdCopyMemoryToAccelerationStructureKHR(self.handle, ptr_info)
+        }
+    }
+
+    public func cmdWriteAccelerationStructuresPropertiesKHR(accelerationStructures: Array<AccelerationStructureKHR>, queryType: QueryType, queryPool: QueryPool, firstQuery: UInt32) -> Void {
+        accelerationStructures.map{ $0.handle }.withUnsafeBufferPointer { ptr_accelerationStructures in
+            self.commandPool.device.dispatchTable.vkCmdWriteAccelerationStructuresPropertiesKHR(self.handle, UInt32(ptr_accelerationStructures.count), ptr_accelerationStructures.baseAddress, VkQueryType(rawValue: VkQueryType.RawValue(bitPattern: queryType.rawValue)), queryPool.handle, firstQuery)
+        }
+    }
+
+    public func cmdWriteAccelerationStructuresPropertiesNV(accelerationStructures: Array<AccelerationStructureNV>, queryType: QueryType, queryPool: QueryPool, firstQuery: UInt32) -> Void {
+        accelerationStructures.map{ $0.handle }.withUnsafeBufferPointer { ptr_accelerationStructures in
+            self.commandPool.device.dispatchTable.vkCmdWriteAccelerationStructuresPropertiesNV(self.handle, UInt32(ptr_accelerationStructures.count), ptr_accelerationStructures.baseAddress, VkQueryType(rawValue: VkQueryType.RawValue(bitPattern: queryType.rawValue)), queryPool.handle, firstQuery)
+        }
+    }
+
+    public func cmdBuildAccelerationStructureNV(info: some Chainable<AccelerationStructureInfoNV>, instanceData: Buffer?, instanceOffset: VkDeviceSize, update: Bool, dst: AccelerationStructureNV, src: AccelerationStructureNV?, scratch: Buffer, scratchOffset: VkDeviceSize) -> Void {
         info.withCStruct { ptr_info in
             self.commandPool.device.dispatchTable.vkCmdBuildAccelerationStructureNV(self.handle, ptr_info, instanceData?.handle, instanceOffset, VkBool32(update ? VK_TRUE : VK_FALSE), dst.handle, src?.handle, scratch.handle, scratchOffset)
         }
     }
 
+    public func cmdTraceRaysKHR(raygenShaderBindingTable: some Chainable<StridedDeviceAddressRegionKHR>, missShaderBindingTable: some Chainable<StridedDeviceAddressRegionKHR>, hitShaderBindingTable: some Chainable<StridedDeviceAddressRegionKHR>, callableShaderBindingTable: some Chainable<StridedDeviceAddressRegionKHR>, width: UInt32, height: UInt32, depth: UInt32) -> Void {
+        raygenShaderBindingTable.withCStruct { ptr_raygenShaderBindingTable in
+            missShaderBindingTable.withCStruct { ptr_missShaderBindingTable in
+                hitShaderBindingTable.withCStruct { ptr_hitShaderBindingTable in
+                    callableShaderBindingTable.withCStruct { ptr_callableShaderBindingTable in
+                        self.commandPool.device.dispatchTable.vkCmdTraceRaysKHR(self.handle, ptr_raygenShaderBindingTable, ptr_missShaderBindingTable, ptr_hitShaderBindingTable, ptr_callableShaderBindingTable, width, height, depth)
+                    }
+                }
+            }
+        }
+    }
+
     public func cmdTraceRaysNV(raygenShaderBindingTableBuffer: Buffer, raygenShaderBindingOffset: VkDeviceSize, missShaderBindingTableBuffer: Buffer?, missShaderBindingOffset: VkDeviceSize, missShaderBindingStride: VkDeviceSize, hitShaderBindingTableBuffer: Buffer?, hitShaderBindingOffset: VkDeviceSize, hitShaderBindingStride: VkDeviceSize, callableShaderBindingTableBuffer: Buffer?, callableShaderBindingOffset: VkDeviceSize, callableShaderBindingStride: VkDeviceSize, width: UInt32, height: UInt32, depth: UInt32) -> Void {
         self.commandPool.device.dispatchTable.vkCmdTraceRaysNV(self.handle, raygenShaderBindingTableBuffer.handle, raygenShaderBindingOffset, missShaderBindingTableBuffer?.handle, missShaderBindingOffset, missShaderBindingStride, hitShaderBindingTableBuffer?.handle, hitShaderBindingOffset, hitShaderBindingStride, callableShaderBindingTableBuffer?.handle, callableShaderBindingOffset, callableShaderBindingStride, width, height, depth)
+    }
+
+    public func cmdTraceRaysIndirectKHR(raygenShaderBindingTable: some Chainable<StridedDeviceAddressRegionKHR>, missShaderBindingTable: some Chainable<StridedDeviceAddressRegionKHR>, hitShaderBindingTable: some Chainable<StridedDeviceAddressRegionKHR>, callableShaderBindingTable: some Chainable<StridedDeviceAddressRegionKHR>, indirectDeviceAddress: VkDeviceAddress) -> Void {
+        raygenShaderBindingTable.withCStruct { ptr_raygenShaderBindingTable in
+            missShaderBindingTable.withCStruct { ptr_missShaderBindingTable in
+                hitShaderBindingTable.withCStruct { ptr_hitShaderBindingTable in
+                    callableShaderBindingTable.withCStruct { ptr_callableShaderBindingTable in
+                        self.commandPool.device.dispatchTable.vkCmdTraceRaysIndirectKHR(self.handle, ptr_raygenShaderBindingTable, ptr_missShaderBindingTable, ptr_hitShaderBindingTable, ptr_callableShaderBindingTable, indirectDeviceAddress)
+                    }
+                }
+            }
+        }
+    }
+
+    public func cmdTraceRaysIndirect2KHR(indirectDeviceAddress: VkDeviceAddress) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdTraceRaysIndirect2KHR(self.handle, indirectDeviceAddress)
+    }
+
+    public func cmdBuildClusterAccelerationStructureIndirectNV(commandInfos: some Chainable<ClusterAccelerationStructureCommandsInfoNV>) -> Void {
+        commandInfos.withCStruct { ptr_commandInfos in
+            self.commandPool.device.dispatchTable.vkCmdBuildClusterAccelerationStructureIndirectNV(self.handle, ptr_commandInfos)
+        }
+    }
+
+    public func cmdSetRayTracingPipelineStackSizeKHR(pipelineStackSize: UInt32) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetRayTracingPipelineStackSizeKHR(self.handle, pipelineStackSize)
     }
 
     public func cmdSetPerformanceMarkerINTEL(markerInfo: some Chainable<PerformanceMarkerInfoINTEL>) throws -> Void {
@@ -1769,8 +2959,782 @@ public class CommandBuffer: _HandleContainer {
         }
     }
 
-    public func cmdSetLineStippleEXT(lineStippleFactor: UInt32, lineStipplePattern: UInt16) -> Void {
-        self.commandPool.device.dispatchTable.vkCmdSetLineStippleEXT(self.handle, lineStippleFactor, lineStipplePattern)
+    public func cmdSetLineStipple(lineStippleFactor: UInt32, lineStipplePattern: UInt16) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetLineStipple(self.handle, lineStippleFactor, lineStipplePattern)
+    }
+
+    public func cmdBuildAccelerationStructuresKHR(infos: Array<AccelerationStructureBuildGeometryInfoKHR>, buildRangeInfos: UnsafePointer<UnsafePointer<VkAccelerationStructureBuildRangeInfoKHR>?>) -> Void {
+        infos.withCStructBufferPointer { ptr_infos in
+            self.commandPool.device.dispatchTable.vkCmdBuildAccelerationStructuresKHR(self.handle, UInt32(ptr_infos.count), ptr_infos.baseAddress, buildRangeInfos)
+        }
+    }
+
+    public func cmdBuildAccelerationStructuresIndirectKHR(infos: Array<AccelerationStructureBuildGeometryInfoKHR>, indirectDeviceAddresses: Array<VkDeviceAddress>, indirectStrides: Array<UInt32>, maxPrimitiveCounts: UnsafePointer<UnsafePointer<UInt32>?>) -> Void {
+        infos.withCStructBufferPointer { ptr_infos in
+            indirectDeviceAddresses.withUnsafeBufferPointer { ptr_indirectDeviceAddresses in
+                indirectStrides.withUnsafeBufferPointer { ptr_indirectStrides in
+                    self.commandPool.device.dispatchTable.vkCmdBuildAccelerationStructuresIndirectKHR(self.handle, UInt32(ptr_infos.count), ptr_infos.baseAddress, ptr_indirectDeviceAddresses.baseAddress, ptr_indirectStrides.baseAddress, maxPrimitiveCounts)
+                }
+            }
+        }
+    }
+
+    public func cmdSetCullMode(cullMode: CullModeFlags) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetCullMode(self.handle, cullMode.rawValue)
+    }
+
+    public func cmdSetFrontFace(frontFace: FrontFace) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetFrontFace(self.handle, VkFrontFace(rawValue: VkFrontFace.RawValue(bitPattern: frontFace.rawValue)))
+    }
+
+    public func cmdSetPrimitiveTopology(primitiveTopology: PrimitiveTopology) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetPrimitiveTopology(self.handle, VkPrimitiveTopology(rawValue: VkPrimitiveTopology.RawValue(bitPattern: primitiveTopology.rawValue)))
+    }
+
+    public func cmdSetViewportWithCount(viewports: Array<Viewport>) -> Void {
+        viewports.withCStructBufferPointer { ptr_viewports in
+            self.commandPool.device.dispatchTable.vkCmdSetViewportWithCount(self.handle, UInt32(ptr_viewports.count), ptr_viewports.baseAddress)
+        }
+    }
+
+    public func cmdSetScissorWithCount(scissors: Array<Rect2D>) -> Void {
+        scissors.withCStructBufferPointer { ptr_scissors in
+            self.commandPool.device.dispatchTable.vkCmdSetScissorWithCount(self.handle, UInt32(ptr_scissors.count), ptr_scissors.baseAddress)
+        }
+    }
+
+    public func cmdBindIndexBuffer2(buffer: Buffer?, offset: VkDeviceSize, size: VkDeviceSize, indexType: IndexType) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdBindIndexBuffer2(self.handle, buffer?.handle, offset, size, VkIndexType(rawValue: VkIndexType.RawValue(bitPattern: indexType.rawValue)))
+    }
+
+    public func cmdBindVertexBuffers2(firstBinding: UInt32, buffers: Array<Buffer?>, offsets: Array<VkDeviceSize>, sizes: Array<VkDeviceSize>?, strides: Array<VkDeviceSize>?) -> Void {
+        buffers.map{ $0?.handle }.withUnsafeBufferPointer { ptr_buffers in
+            offsets.withUnsafeBufferPointer { ptr_offsets in
+                sizes.withOptionalUnsafeBufferPointer { ptr_sizes in
+                    strides.withOptionalUnsafeBufferPointer { ptr_strides in
+                        self.commandPool.device.dispatchTable.vkCmdBindVertexBuffers2(self.handle, firstBinding, UInt32(ptr_buffers.count), ptr_buffers.baseAddress, ptr_offsets.baseAddress, ptr_sizes.baseAddress, ptr_strides.baseAddress)
+                    }
+                }
+            }
+        }
+    }
+
+    public func cmdSetDepthTestEnable(depthTestEnable: Bool) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetDepthTestEnable(self.handle, VkBool32(depthTestEnable ? VK_TRUE : VK_FALSE))
+    }
+
+    public func cmdSetDepthWriteEnable(depthWriteEnable: Bool) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetDepthWriteEnable(self.handle, VkBool32(depthWriteEnable ? VK_TRUE : VK_FALSE))
+    }
+
+    public func cmdSetDepthCompareOp(depthCompareOp: CompareOp) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetDepthCompareOp(self.handle, VkCompareOp(rawValue: VkCompareOp.RawValue(bitPattern: depthCompareOp.rawValue)))
+    }
+
+    public func cmdSetDepthBoundsTestEnable(depthBoundsTestEnable: Bool) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetDepthBoundsTestEnable(self.handle, VkBool32(depthBoundsTestEnable ? VK_TRUE : VK_FALSE))
+    }
+
+    public func cmdSetStencilTestEnable(stencilTestEnable: Bool) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetStencilTestEnable(self.handle, VkBool32(stencilTestEnable ? VK_TRUE : VK_FALSE))
+    }
+
+    public func cmdSetStencilOp(faceMask: StencilFaceFlags, failOp: StencilOp, passOp: StencilOp, depthFailOp: StencilOp, compareOp: CompareOp) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetStencilOp(self.handle, faceMask.rawValue, VkStencilOp(rawValue: VkStencilOp.RawValue(bitPattern: failOp.rawValue)), VkStencilOp(rawValue: VkStencilOp.RawValue(bitPattern: passOp.rawValue)), VkStencilOp(rawValue: VkStencilOp.RawValue(bitPattern: depthFailOp.rawValue)), VkCompareOp(rawValue: VkCompareOp.RawValue(bitPattern: compareOp.rawValue)))
+    }
+
+    public func cmdSetPatchControlPointsEXT(patchControlPoints: UInt32) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetPatchControlPointsEXT(self.handle, patchControlPoints)
+    }
+
+    public func cmdSetRasterizerDiscardEnable(rasterizerDiscardEnable: Bool) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetRasterizerDiscardEnable(self.handle, VkBool32(rasterizerDiscardEnable ? VK_TRUE : VK_FALSE))
+    }
+
+    public func cmdSetDepthBiasEnable(depthBiasEnable: Bool) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetDepthBiasEnable(self.handle, VkBool32(depthBiasEnable ? VK_TRUE : VK_FALSE))
+    }
+
+    public func cmdSetLogicOpEXT(logicOp: LogicOp) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetLogicOpEXT(self.handle, VkLogicOp(rawValue: VkLogicOp.RawValue(bitPattern: logicOp.rawValue)))
+    }
+
+    public func cmdSetPrimitiveRestartEnable(primitiveRestartEnable: Bool) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetPrimitiveRestartEnable(self.handle, VkBool32(primitiveRestartEnable ? VK_TRUE : VK_FALSE))
+    }
+
+    public func cmdSetTessellationDomainOriginEXT(domainOrigin: TessellationDomainOrigin) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetTessellationDomainOriginEXT(self.handle, VkTessellationDomainOrigin(rawValue: VkTessellationDomainOrigin.RawValue(bitPattern: domainOrigin.rawValue)))
+    }
+
+    public func cmdSetDepthClampEnableEXT(depthClampEnable: Bool) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetDepthClampEnableEXT(self.handle, VkBool32(depthClampEnable ? VK_TRUE : VK_FALSE))
+    }
+
+    public func cmdSetPolygonModeEXT(polygonMode: PolygonMode) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetPolygonModeEXT(self.handle, VkPolygonMode(rawValue: VkPolygonMode.RawValue(bitPattern: polygonMode.rawValue)))
+    }
+
+    public func cmdSetRasterizationSamplesEXT(rasterizationSamples: SampleCountFlags) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetRasterizationSamplesEXT(self.handle, VkSampleCountFlagBits(rawValue: VkSampleCountFlagBits.RawValue(bitPattern: rasterizationSamples.rawValue)))
+    }
+
+    public func cmdSetSampleMaskEXT(samples: SampleCountFlags, sampleMask: UnsafePointer<VkSampleMask>?) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetSampleMaskEXT(self.handle, VkSampleCountFlagBits(rawValue: VkSampleCountFlagBits.RawValue(bitPattern: samples.rawValue)), sampleMask)
+    }
+
+    public func cmdSetAlphaToCoverageEnableEXT(alphaToCoverageEnable: Bool) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetAlphaToCoverageEnableEXT(self.handle, VkBool32(alphaToCoverageEnable ? VK_TRUE : VK_FALSE))
+    }
+
+    public func cmdSetAlphaToOneEnableEXT(alphaToOneEnable: Bool) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetAlphaToOneEnableEXT(self.handle, VkBool32(alphaToOneEnable ? VK_TRUE : VK_FALSE))
+    }
+
+    public func cmdSetLogicOpEnableEXT(logicOpEnable: Bool) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetLogicOpEnableEXT(self.handle, VkBool32(logicOpEnable ? VK_TRUE : VK_FALSE))
+    }
+
+    public func cmdSetColorBlendEnableEXT(firstAttachment: UInt32, colorBlendEnables: Array<Bool>) -> Void {
+        colorBlendEnables.map{ VkBool32($0 ? VK_TRUE : VK_FALSE) }.withUnsafeBufferPointer { ptr_colorBlendEnables in
+            self.commandPool.device.dispatchTable.vkCmdSetColorBlendEnableEXT(self.handle, firstAttachment, UInt32(ptr_colorBlendEnables.count), ptr_colorBlendEnables.baseAddress)
+        }
+    }
+
+    public func cmdSetColorBlendEquationEXT(firstAttachment: UInt32, colorBlendEquations: Array<ColorBlendEquationEXT>) -> Void {
+        colorBlendEquations.withCStructBufferPointer { ptr_colorBlendEquations in
+            self.commandPool.device.dispatchTable.vkCmdSetColorBlendEquationEXT(self.handle, firstAttachment, UInt32(ptr_colorBlendEquations.count), ptr_colorBlendEquations.baseAddress)
+        }
+    }
+
+    public func cmdSetColorWriteMaskEXT(firstAttachment: UInt32, colorWriteMasks: Array<ColorComponentFlags>) -> Void {
+        colorWriteMasks.map{ $0.rawValue }.withUnsafeBufferPointer { ptr_colorWriteMasks in
+            self.commandPool.device.dispatchTable.vkCmdSetColorWriteMaskEXT(self.handle, firstAttachment, UInt32(ptr_colorWriteMasks.count), ptr_colorWriteMasks.baseAddress)
+        }
+    }
+
+    public func cmdSetRasterizationStreamEXT(rasterizationStream: UInt32) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetRasterizationStreamEXT(self.handle, rasterizationStream)
+    }
+
+    public func cmdSetConservativeRasterizationModeEXT(conservativeRasterizationMode: ConservativeRasterizationModeEXT) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetConservativeRasterizationModeEXT(self.handle, VkConservativeRasterizationModeEXT(rawValue: VkConservativeRasterizationModeEXT.RawValue(bitPattern: conservativeRasterizationMode.rawValue)))
+    }
+
+    public func cmdSetExtraPrimitiveOverestimationSizeEXT(extraPrimitiveOverestimationSize: Float) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetExtraPrimitiveOverestimationSizeEXT(self.handle, extraPrimitiveOverestimationSize)
+    }
+
+    public func cmdSetDepthClipEnableEXT(depthClipEnable: Bool) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetDepthClipEnableEXT(self.handle, VkBool32(depthClipEnable ? VK_TRUE : VK_FALSE))
+    }
+
+    public func cmdSetSampleLocationsEnableEXT(sampleLocationsEnable: Bool) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetSampleLocationsEnableEXT(self.handle, VkBool32(sampleLocationsEnable ? VK_TRUE : VK_FALSE))
+    }
+
+    public func cmdSetColorBlendAdvancedEXT(firstAttachment: UInt32, colorBlendAdvanced: Array<ColorBlendAdvancedEXT>) -> Void {
+        colorBlendAdvanced.withCStructBufferPointer { ptr_colorBlendAdvanced in
+            self.commandPool.device.dispatchTable.vkCmdSetColorBlendAdvancedEXT(self.handle, firstAttachment, UInt32(ptr_colorBlendAdvanced.count), ptr_colorBlendAdvanced.baseAddress)
+        }
+    }
+
+    public func cmdSetProvokingVertexModeEXT(provokingVertexMode: ProvokingVertexModeEXT) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetProvokingVertexModeEXT(self.handle, VkProvokingVertexModeEXT(rawValue: VkProvokingVertexModeEXT.RawValue(bitPattern: provokingVertexMode.rawValue)))
+    }
+
+    public func cmdSetLineRasterizationModeEXT(lineRasterizationMode: VkLineRasterizationModeEXT) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetLineRasterizationModeEXT(self.handle, lineRasterizationMode)
+    }
+
+    public func cmdSetLineStippleEnableEXT(stippledLineEnable: Bool) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetLineStippleEnableEXT(self.handle, VkBool32(stippledLineEnable ? VK_TRUE : VK_FALSE))
+    }
+
+    public func cmdSetDepthClipNegativeOneToOneEXT(negativeOneToOne: Bool) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetDepthClipNegativeOneToOneEXT(self.handle, VkBool32(negativeOneToOne ? VK_TRUE : VK_FALSE))
+    }
+
+    public func cmdSetViewportWScalingEnableNV(viewportWScalingEnable: Bool) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetViewportWScalingEnableNV(self.handle, VkBool32(viewportWScalingEnable ? VK_TRUE : VK_FALSE))
+    }
+
+    public func cmdSetViewportSwizzleNV(firstViewport: UInt32, viewportSwizzles: Array<ViewportSwizzleNV>) -> Void {
+        viewportSwizzles.withCStructBufferPointer { ptr_viewportSwizzles in
+            self.commandPool.device.dispatchTable.vkCmdSetViewportSwizzleNV(self.handle, firstViewport, UInt32(ptr_viewportSwizzles.count), ptr_viewportSwizzles.baseAddress)
+        }
+    }
+
+    public func cmdSetCoverageToColorEnableNV(coverageToColorEnable: Bool) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetCoverageToColorEnableNV(self.handle, VkBool32(coverageToColorEnable ? VK_TRUE : VK_FALSE))
+    }
+
+    public func cmdSetCoverageToColorLocationNV(coverageToColorLocation: UInt32) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetCoverageToColorLocationNV(self.handle, coverageToColorLocation)
+    }
+
+    public func cmdSetCoverageModulationModeNV(coverageModulationMode: CoverageModulationModeNV) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetCoverageModulationModeNV(self.handle, VkCoverageModulationModeNV(rawValue: VkCoverageModulationModeNV.RawValue(bitPattern: coverageModulationMode.rawValue)))
+    }
+
+    public func cmdSetCoverageModulationTableEnableNV(coverageModulationTableEnable: Bool) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetCoverageModulationTableEnableNV(self.handle, VkBool32(coverageModulationTableEnable ? VK_TRUE : VK_FALSE))
+    }
+
+    public func cmdSetCoverageModulationTableNV(coverageModulationTable: Array<Float>) -> Void {
+        coverageModulationTable.withUnsafeBufferPointer { ptr_coverageModulationTable in
+            self.commandPool.device.dispatchTable.vkCmdSetCoverageModulationTableNV(self.handle, UInt32(ptr_coverageModulationTable.count), ptr_coverageModulationTable.baseAddress)
+        }
+    }
+
+    public func cmdSetShadingRateImageEnableNV(shadingRateImageEnable: Bool) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetShadingRateImageEnableNV(self.handle, VkBool32(shadingRateImageEnable ? VK_TRUE : VK_FALSE))
+    }
+
+    public func cmdSetCoverageReductionModeNV(coverageReductionMode: CoverageReductionModeNV) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetCoverageReductionModeNV(self.handle, VkCoverageReductionModeNV(rawValue: VkCoverageReductionModeNV.RawValue(bitPattern: coverageReductionMode.rawValue)))
+    }
+
+    public func cmdSetRepresentativeFragmentTestEnableNV(representativeFragmentTestEnable: Bool) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdSetRepresentativeFragmentTestEnableNV(self.handle, VkBool32(representativeFragmentTestEnable ? VK_TRUE : VK_FALSE))
+    }
+
+    public func cmdCopyBuffer2(copyBufferInfo: some Chainable<CopyBufferInfo2>) -> Void {
+        copyBufferInfo.withCStruct { ptr_copyBufferInfo in
+            self.commandPool.device.dispatchTable.vkCmdCopyBuffer2(self.handle, ptr_copyBufferInfo)
+        }
+    }
+
+    public func cmdCopyImage2(copyImageInfo: some Chainable<CopyImageInfo2>) -> Void {
+        copyImageInfo.withCStruct { ptr_copyImageInfo in
+            self.commandPool.device.dispatchTable.vkCmdCopyImage2(self.handle, ptr_copyImageInfo)
+        }
+    }
+
+    public func cmdBlitImage2(blitImageInfo: some Chainable<BlitImageInfo2>) -> Void {
+        blitImageInfo.withCStruct { ptr_blitImageInfo in
+            self.commandPool.device.dispatchTable.vkCmdBlitImage2(self.handle, ptr_blitImageInfo)
+        }
+    }
+
+    public func cmdCopyBufferToImage2(copyBufferToImageInfo: some Chainable<CopyBufferToImageInfo2>) -> Void {
+        copyBufferToImageInfo.withCStruct { ptr_copyBufferToImageInfo in
+            self.commandPool.device.dispatchTable.vkCmdCopyBufferToImage2(self.handle, ptr_copyBufferToImageInfo)
+        }
+    }
+
+    public func cmdCopyImageToBuffer2(copyImageToBufferInfo: some Chainable<CopyImageToBufferInfo2>) -> Void {
+        copyImageToBufferInfo.withCStruct { ptr_copyImageToBufferInfo in
+            self.commandPool.device.dispatchTable.vkCmdCopyImageToBuffer2(self.handle, ptr_copyImageToBufferInfo)
+        }
+    }
+
+    public func cmdResolveImage2(resolveImageInfo: some Chainable<ResolveImageInfo2>) -> Void {
+        resolveImageInfo.withCStruct { ptr_resolveImageInfo in
+            self.commandPool.device.dispatchTable.vkCmdResolveImage2(self.handle, ptr_resolveImageInfo)
+        }
+    }
+
+    public func cmdRefreshObjectsKHR(refreshObjects: some Chainable<RefreshObjectListKHR>) -> Void {
+        refreshObjects.withCStruct { ptr_refreshObjects in
+            self.commandPool.device.dispatchTable.vkCmdRefreshObjectsKHR(self.handle, ptr_refreshObjects)
+        }
+    }
+
+    public func cmdSetFragmentShadingRateKHR(fragmentSize: some Chainable<Extent2D>, combinerOps: (VkFragmentShadingRateCombinerOpKHR, VkFragmentShadingRateCombinerOpKHR)) -> Void {
+        fragmentSize.withCStruct { ptr_fragmentSize in
+            withUnsafeBytes(of: combinerOps) { ptr_combinerOps in
+                self.commandPool.device.dispatchTable.vkCmdSetFragmentShadingRateKHR(self.handle, ptr_fragmentSize, ptr_combinerOps.bindMemory(to: VkFragmentShadingRateCombinerOpKHR.self).baseAddress)
+            }
+        }
+    }
+
+    public func cmdSetFragmentShadingRateEnumNV(shadingRate: FragmentShadingRateNV, combinerOps: (VkFragmentShadingRateCombinerOpKHR, VkFragmentShadingRateCombinerOpKHR)) -> Void {
+        withUnsafeBytes(of: combinerOps) { ptr_combinerOps in
+            self.commandPool.device.dispatchTable.vkCmdSetFragmentShadingRateEnumNV(self.handle, VkFragmentShadingRateNV(rawValue: VkFragmentShadingRateNV.RawValue(bitPattern: shadingRate.rawValue)), ptr_combinerOps.bindMemory(to: VkFragmentShadingRateCombinerOpKHR.self).baseAddress)
+        }
+    }
+
+    public func cmdSetVertexInputEXT(vertexBindingDescriptions: Array<VertexInputBindingDescription2EXT>, vertexAttributeDescriptions: Array<VertexInputAttributeDescription2EXT>) -> Void {
+        vertexBindingDescriptions.withCStructBufferPointer { ptr_vertexBindingDescriptions in
+            vertexAttributeDescriptions.withCStructBufferPointer { ptr_vertexAttributeDescriptions in
+                self.commandPool.device.dispatchTable.vkCmdSetVertexInputEXT(self.handle, UInt32(ptr_vertexBindingDescriptions.count), ptr_vertexBindingDescriptions.baseAddress, UInt32(ptr_vertexAttributeDescriptions.count), ptr_vertexAttributeDescriptions.baseAddress)
+            }
+        }
+    }
+
+    public func cmdSetColorWriteEnableEXT(colorWriteEnables: Array<Bool>) -> Void {
+        colorWriteEnables.map{ VkBool32($0 ? VK_TRUE : VK_FALSE) }.withUnsafeBufferPointer { ptr_colorWriteEnables in
+            self.commandPool.device.dispatchTable.vkCmdSetColorWriteEnableEXT(self.handle, UInt32(ptr_colorWriteEnables.count), ptr_colorWriteEnables.baseAddress)
+        }
+    }
+
+    public func cmdSetEvent2(event: Event, dependencyInfo: some Chainable<DependencyInfo>) -> Void {
+        dependencyInfo.withCStruct { ptr_dependencyInfo in
+            self.commandPool.device.dispatchTable.vkCmdSetEvent2(self.handle, event.handle, ptr_dependencyInfo)
+        }
+    }
+
+    public func cmdResetEvent2(event: Event, stageMask: PipelineStageFlags2) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdResetEvent2(self.handle, event.handle, stageMask.rawValue)
+    }
+
+    public func cmdWaitEvents2(events: Array<Event>, dependencyInfos: Array<DependencyInfo>) -> Void {
+        events.map{ $0.handle }.withUnsafeBufferPointer { ptr_events in
+            dependencyInfos.withCStructBufferPointer { ptr_dependencyInfos in
+                self.commandPool.device.dispatchTable.vkCmdWaitEvents2(self.handle, UInt32(ptr_events.count), ptr_events.baseAddress, ptr_dependencyInfos.baseAddress)
+            }
+        }
+    }
+
+    public func cmdPipelineBarrier2(dependencyInfo: some Chainable<DependencyInfo>) -> Void {
+        dependencyInfo.withCStruct { ptr_dependencyInfo in
+            self.commandPool.device.dispatchTable.vkCmdPipelineBarrier2(self.handle, ptr_dependencyInfo)
+        }
+    }
+
+    public func cmdWriteTimestamp2(stage: PipelineStageFlags2, queryPool: QueryPool, query: UInt32) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdWriteTimestamp2(self.handle, stage.rawValue, queryPool.handle, query)
+    }
+
+    public func cmdWriteBufferMarker2AMD(stage: PipelineStageFlags2, dstBuffer: Buffer, dstOffset: VkDeviceSize, marker: UInt32) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdWriteBufferMarker2AMD(self.handle, stage.rawValue, dstBuffer.handle, dstOffset, marker)
+    }
+
+    public func cmdDecodeVideoKHR(decodeInfo: some Chainable<VideoDecodeInfoKHR>) -> Void {
+        decodeInfo.withCStruct { ptr_decodeInfo in
+            self.commandPool.device.dispatchTable.vkCmdDecodeVideoKHR(self.handle, ptr_decodeInfo)
+        }
+    }
+
+    public func cmdBeginVideoCodingKHR(beginInfo: some Chainable<VideoBeginCodingInfoKHR>) -> Void {
+        beginInfo.withCStruct { ptr_beginInfo in
+            self.commandPool.device.dispatchTable.vkCmdBeginVideoCodingKHR(self.handle, ptr_beginInfo)
+        }
+    }
+
+    public func cmdControlVideoCodingKHR(codingControlInfo: some Chainable<VideoCodingControlInfoKHR>) -> Void {
+        codingControlInfo.withCStruct { ptr_codingControlInfo in
+            self.commandPool.device.dispatchTable.vkCmdControlVideoCodingKHR(self.handle, ptr_codingControlInfo)
+        }
+    }
+
+    public func cmdEndVideoCodingKHR(endCodingInfo: some Chainable<VideoEndCodingInfoKHR>) -> Void {
+        endCodingInfo.withCStruct { ptr_endCodingInfo in
+            self.commandPool.device.dispatchTable.vkCmdEndVideoCodingKHR(self.handle, ptr_endCodingInfo)
+        }
+    }
+
+    public func cmdEncodeVideoKHR(encodeInfo: some Chainable<VideoEncodeInfoKHR>) -> Void {
+        encodeInfo.withCStruct { ptr_encodeInfo in
+            self.commandPool.device.dispatchTable.vkCmdEncodeVideoKHR(self.handle, ptr_encodeInfo)
+        }
+    }
+
+    public func cmdDecompressMemoryNV(decompressMemoryRegions: Array<DecompressMemoryRegionNV>) -> Void {
+        decompressMemoryRegions.withCStructBufferPointer { ptr_decompressMemoryRegions in
+            self.commandPool.device.dispatchTable.vkCmdDecompressMemoryNV(self.handle, UInt32(ptr_decompressMemoryRegions.count), ptr_decompressMemoryRegions.baseAddress)
+        }
+    }
+
+    public func cmdDecompressMemoryIndirectCountNV(indirectCommandsAddress: VkDeviceAddress, indirectCommandsCountAddress: VkDeviceAddress, stride: UInt32) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdDecompressMemoryIndirectCountNV(self.handle, indirectCommandsAddress, indirectCommandsCountAddress, stride)
+    }
+
+    public func cmdBuildPartitionedAccelerationStructuresNV(buildInfo: some Chainable<BuildPartitionedAccelerationStructureInfoNV>) -> Void {
+        buildInfo.withCStruct { ptr_buildInfo in
+            self.commandPool.device.dispatchTable.vkCmdBuildPartitionedAccelerationStructuresNV(self.handle, ptr_buildInfo)
+        }
+    }
+
+    public func cmdDecompressMemoryEXT(decompressMemoryInfoEXT: some Chainable<DecompressMemoryInfoEXT>) -> Void {
+        decompressMemoryInfoEXT.withCStruct { ptr_decompressMemoryInfoEXT in
+            self.commandPool.device.dispatchTable.vkCmdDecompressMemoryEXT(self.handle, ptr_decompressMemoryInfoEXT)
+        }
+    }
+
+    public func cmdDecompressMemoryIndirectCountEXT(decompressionMethod: MemoryDecompressionMethodFlagsEXT, indirectCommandsAddress: VkDeviceAddress, indirectCommandsCountAddress: VkDeviceAddress, maxDecompressionCount: UInt32, stride: UInt32) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdDecompressMemoryIndirectCountEXT(self.handle, decompressionMethod.rawValue, indirectCommandsAddress, indirectCommandsCountAddress, maxDecompressionCount, stride)
+    }
+
+    public func cmdCuLaunchKernelNVX(launchInfo: some Chainable<CuLaunchInfoNVX>) -> Void {
+        launchInfo.withCStruct { ptr_launchInfo in
+            self.commandPool.device.dispatchTable.vkCmdCuLaunchKernelNVX(self.handle, ptr_launchInfo)
+        }
+    }
+
+    public func cmdBindDescriptorBuffersEXT(bindingInfos: Array<DescriptorBufferBindingInfoEXT>) -> Void {
+        bindingInfos.withCStructBufferPointer { ptr_bindingInfos in
+            self.commandPool.device.dispatchTable.vkCmdBindDescriptorBuffersEXT(self.handle, UInt32(ptr_bindingInfos.count), ptr_bindingInfos.baseAddress)
+        }
+    }
+
+    public func cmdSetDescriptorBufferOffsetsEXT(pipelineBindPoint: PipelineBindPoint, layout: PipelineLayout, firstSet: UInt32, bufferIndices: Array<UInt32>, offsets: Array<VkDeviceSize>) -> Void {
+        bufferIndices.withUnsafeBufferPointer { ptr_bufferIndices in
+            offsets.withUnsafeBufferPointer { ptr_offsets in
+                self.commandPool.device.dispatchTable.vkCmdSetDescriptorBufferOffsetsEXT(self.handle, VkPipelineBindPoint(rawValue: VkPipelineBindPoint.RawValue(bitPattern: pipelineBindPoint.rawValue)), layout.handle, firstSet, UInt32(ptr_bufferIndices.count), ptr_bufferIndices.baseAddress, ptr_offsets.baseAddress)
+            }
+        }
+    }
+
+    public func cmdBindDescriptorBufferEmbeddedSamplersEXT(pipelineBindPoint: PipelineBindPoint, layout: PipelineLayout, set: UInt32) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdBindDescriptorBufferEmbeddedSamplersEXT(self.handle, VkPipelineBindPoint(rawValue: VkPipelineBindPoint.RawValue(bitPattern: pipelineBindPoint.rawValue)), layout.handle, set)
+    }
+
+    public func cmdBeginRendering(renderingInfo: some Chainable<RenderingInfo>) -> Void {
+        renderingInfo.withCStruct { ptr_renderingInfo in
+            self.commandPool.device.dispatchTable.vkCmdBeginRendering(self.handle, ptr_renderingInfo)
+        }
+    }
+
+    public func cmdEndRendering() -> Void {
+        self.commandPool.device.dispatchTable.vkCmdEndRendering(self.handle)
+    }
+
+    public func cmdEndRendering2KHR(renderingEndInfo: some Chainable<RenderingEndInfoKHR>?) -> Void {
+        renderingEndInfo.withOptionalCStruct { ptr_renderingEndInfo in
+            self.commandPool.device.dispatchTable.vkCmdEndRendering2KHR(self.handle, ptr_renderingEndInfo)
+        }
+    }
+
+    public func cmdBuildMicromapsEXT(infos: Array<MicromapBuildInfoEXT>) -> Void {
+        infos.withCStructBufferPointer { ptr_infos in
+            self.commandPool.device.dispatchTable.vkCmdBuildMicromapsEXT(self.handle, UInt32(ptr_infos.count), ptr_infos.baseAddress)
+        }
+    }
+
+    public func cmdCopyMicromapEXT(info: some Chainable<CopyMicromapInfoEXT>) -> Void {
+        info.withCStruct { ptr_info in
+            self.commandPool.device.dispatchTable.vkCmdCopyMicromapEXT(self.handle, ptr_info)
+        }
+    }
+
+    public func cmdCopyMicromapToMemoryEXT(info: some Chainable<CopyMicromapToMemoryInfoEXT>) -> Void {
+        info.withCStruct { ptr_info in
+            self.commandPool.device.dispatchTable.vkCmdCopyMicromapToMemoryEXT(self.handle, ptr_info)
+        }
+    }
+
+    public func cmdCopyMemoryToMicromapEXT(info: some Chainable<CopyMemoryToMicromapInfoEXT>) -> Void {
+        info.withCStruct { ptr_info in
+            self.commandPool.device.dispatchTable.vkCmdCopyMemoryToMicromapEXT(self.handle, ptr_info)
+        }
+    }
+
+    public func cmdWriteMicromapsPropertiesEXT(micromaps: Array<MicromapEXT>, queryType: QueryType, queryPool: QueryPool, firstQuery: UInt32) -> Void {
+        micromaps.map{ $0.handle }.withUnsafeBufferPointer { ptr_micromaps in
+            self.commandPool.device.dispatchTable.vkCmdWriteMicromapsPropertiesEXT(self.handle, UInt32(ptr_micromaps.count), ptr_micromaps.baseAddress, VkQueryType(rawValue: VkQueryType.RawValue(bitPattern: queryType.rawValue)), queryPool.handle, firstQuery)
+        }
+    }
+
+    public func cmdBindTileMemoryQCOM(tileMemoryBindInfo: some Chainable<TileMemoryBindInfoQCOM>?) -> Void {
+        tileMemoryBindInfo.withOptionalCStruct { ptr_tileMemoryBindInfo in
+            self.commandPool.device.dispatchTable.vkCmdBindTileMemoryQCOM(self.handle, ptr_tileMemoryBindInfo)
+        }
+    }
+
+    public func cmdOpticalFlowExecuteNV(session: OpticalFlowSessionNV, executeInfo: some Chainable<OpticalFlowExecuteInfoNV>) -> Void {
+        executeInfo.withCStruct { ptr_executeInfo in
+            self.commandPool.device.dispatchTable.vkCmdOpticalFlowExecuteNV(self.handle, session.handle, ptr_executeInfo)
+        }
+    }
+
+    public func cmdSetDepthBias2EXT(depthBiasInfo: some Chainable<DepthBiasInfoEXT>) -> Void {
+        depthBiasInfo.withCStruct { ptr_depthBiasInfo in
+            self.commandPool.device.dispatchTable.vkCmdSetDepthBias2EXT(self.handle, ptr_depthBiasInfo)
+        }
+    }
+
+    public func cmdBindShadersEXT(stages: Array<ShaderStageFlags>, shaders: Array<ShaderEXT?>?) -> Void {
+        stages.map{ VkShaderStageFlagBits(rawValue: VkShaderStageFlagBits.RawValue(bitPattern: $0.rawValue)) }.withUnsafeBufferPointer { ptr_stages in
+            (shaders?.map{ $0?.handle }).withOptionalUnsafeBufferPointer { ptr_shaders in
+                self.commandPool.device.dispatchTable.vkCmdBindShadersEXT(self.handle, UInt32(ptr_stages.count), ptr_stages.baseAddress, ptr_shaders.baseAddress)
+            }
+        }
+    }
+
+    public func cmdBeginGpaSessionAMD(gpaSession: GpaSessionAMD) throws -> Void {
+        try checkResult(
+            self.commandPool.device.dispatchTable.vkCmdBeginGpaSessionAMD(self.handle, gpaSession.handle)
+        )
+    }
+
+    public func cmdEndGpaSessionAMD(gpaSession: GpaSessionAMD) throws -> Void {
+        try checkResult(
+            self.commandPool.device.dispatchTable.vkCmdEndGpaSessionAMD(self.handle, gpaSession.handle)
+        )
+    }
+
+    public func cmdBeginGpaSampleAMD(gpaSession: GpaSessionAMD, gpaSampleBeginInfo: some Chainable<GpaSampleBeginInfoAMD>) throws -> UInt32 {
+        try gpaSampleBeginInfo.withCStruct { ptr_gpaSampleBeginInfo in
+            var out = UInt32()
+            try checkResult(
+                self.commandPool.device.dispatchTable.vkCmdBeginGpaSampleAMD(self.handle, gpaSession.handle, ptr_gpaSampleBeginInfo, &out)
+            )
+            return out
+        }
+    }
+
+    public func cmdEndGpaSampleAMD(gpaSession: GpaSessionAMD, sampleID: UInt32) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdEndGpaSampleAMD(self.handle, gpaSession.handle, sampleID)
+    }
+
+    public func cmdCopyGpaSessionResultsAMD(gpaSession: GpaSessionAMD) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdCopyGpaSessionResultsAMD(self.handle, gpaSession.handle)
+    }
+
+    public func cmdBindDescriptorSets2(bindDescriptorSetsInfo: some Chainable<BindDescriptorSetsInfo>) -> Void {
+        bindDescriptorSetsInfo.withCStruct { ptr_bindDescriptorSetsInfo in
+            self.commandPool.device.dispatchTable.vkCmdBindDescriptorSets2(self.handle, ptr_bindDescriptorSetsInfo)
+        }
+    }
+
+    public func cmdPushConstants2(pushConstantsInfo: some Chainable<PushConstantsInfo>) -> Void {
+        pushConstantsInfo.withCStruct { ptr_pushConstantsInfo in
+            self.commandPool.device.dispatchTable.vkCmdPushConstants2(self.handle, ptr_pushConstantsInfo)
+        }
+    }
+
+    public func cmdPushDescriptorSet2(pushDescriptorSetInfo: some Chainable<PushDescriptorSetInfo>) -> Void {
+        pushDescriptorSetInfo.withCStruct { ptr_pushDescriptorSetInfo in
+            self.commandPool.device.dispatchTable.vkCmdPushDescriptorSet2(self.handle, ptr_pushDescriptorSetInfo)
+        }
+    }
+
+    public func cmdPushDescriptorSetWithTemplate2(pushDescriptorSetWithTemplateInfo: some Chainable<PushDescriptorSetWithTemplateInfo>) -> Void {
+        pushDescriptorSetWithTemplateInfo.withCStruct { ptr_pushDescriptorSetWithTemplateInfo in
+            self.commandPool.device.dispatchTable.vkCmdPushDescriptorSetWithTemplate2(self.handle, ptr_pushDescriptorSetWithTemplateInfo)
+        }
+    }
+
+    public func cmdSetDescriptorBufferOffsets2EXT(setDescriptorBufferOffsetsInfo: some Chainable<SetDescriptorBufferOffsetsInfoEXT>) -> Void {
+        setDescriptorBufferOffsetsInfo.withCStruct { ptr_setDescriptorBufferOffsetsInfo in
+            self.commandPool.device.dispatchTable.vkCmdSetDescriptorBufferOffsets2EXT(self.handle, ptr_setDescriptorBufferOffsetsInfo)
+        }
+    }
+
+    public func cmdBindDescriptorBufferEmbeddedSamplers2EXT(bindDescriptorBufferEmbeddedSamplersInfo: some Chainable<BindDescriptorBufferEmbeddedSamplersInfoEXT>) -> Void {
+        bindDescriptorBufferEmbeddedSamplersInfo.withCStruct { ptr_bindDescriptorBufferEmbeddedSamplersInfo in
+            self.commandPool.device.dispatchTable.vkCmdBindDescriptorBufferEmbeddedSamplers2EXT(self.handle, ptr_bindDescriptorBufferEmbeddedSamplersInfo)
+        }
+    }
+
+    public func cmdSetRenderingAttachmentLocations(locationInfo: some Chainable<RenderingAttachmentLocationInfo>) -> Void {
+        locationInfo.withCStruct { ptr_locationInfo in
+            self.commandPool.device.dispatchTable.vkCmdSetRenderingAttachmentLocations(self.handle, ptr_locationInfo)
+        }
+    }
+
+    public func cmdSetRenderingInputAttachmentIndices(inputAttachmentIndexInfo: some Chainable<RenderingInputAttachmentIndexInfo>) -> Void {
+        inputAttachmentIndexInfo.withCStruct { ptr_inputAttachmentIndexInfo in
+            self.commandPool.device.dispatchTable.vkCmdSetRenderingInputAttachmentIndices(self.handle, ptr_inputAttachmentIndexInfo)
+        }
+    }
+
+    public func cmdSetDepthClampRangeEXT(depthClampMode: DepthClampModeEXT, depthClampRange: some Chainable<DepthClampRangeEXT>?) -> Void {
+        depthClampRange.withOptionalCStruct { ptr_depthClampRange in
+            self.commandPool.device.dispatchTable.vkCmdSetDepthClampRangeEXT(self.handle, VkDepthClampModeEXT(rawValue: VkDepthClampModeEXT.RawValue(bitPattern: depthClampMode.rawValue)), ptr_depthClampRange)
+        }
+    }
+
+    public func cmdConvertCooperativeVectorMatrixNV(infos: Array<ConvertCooperativeVectorMatrixInfoNV>) -> Void {
+        infos.withCStructBufferPointer { ptr_infos in
+            self.commandPool.device.dispatchTable.vkCmdConvertCooperativeVectorMatrixNV(self.handle, UInt32(ptr_infos.count), ptr_infos.baseAddress)
+        }
+    }
+
+    public func cmdDispatchTileQCOM(dispatchTileInfo: some Chainable<DispatchTileInfoQCOM>) -> Void {
+        dispatchTileInfo.withCStruct { ptr_dispatchTileInfo in
+            self.commandPool.device.dispatchTable.vkCmdDispatchTileQCOM(self.handle, ptr_dispatchTileInfo)
+        }
+    }
+
+    public func cmdBeginPerTileExecutionQCOM(perTileBeginInfo: some Chainable<PerTileBeginInfoQCOM>) -> Void {
+        perTileBeginInfo.withCStruct { ptr_perTileBeginInfo in
+            self.commandPool.device.dispatchTable.vkCmdBeginPerTileExecutionQCOM(self.handle, ptr_perTileBeginInfo)
+        }
+    }
+
+    public func cmdEndPerTileExecutionQCOM(perTileEndInfo: some Chainable<PerTileEndInfoQCOM>) -> Void {
+        perTileEndInfo.withCStruct { ptr_perTileEndInfo in
+            self.commandPool.device.dispatchTable.vkCmdEndPerTileExecutionQCOM(self.handle, ptr_perTileEndInfo)
+        }
+    }
+
+    public func cmdBeginShaderInstrumentationARM(instrumentation: ShaderInstrumentationARM) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdBeginShaderInstrumentationARM(self.handle, instrumentation.handle)
+    }
+
+    public func cmdEndShaderInstrumentationARM() -> Void {
+        self.commandPool.device.dispatchTable.vkCmdEndShaderInstrumentationARM(self.handle)
+    }
+
+    public func cmdCopyTensorARM(copyTensorInfo: some Chainable<CopyTensorInfoARM>) -> Void {
+        copyTensorInfo.withCStruct { ptr_copyTensorInfo in
+            self.commandPool.device.dispatchTable.vkCmdCopyTensorARM(self.handle, ptr_copyTensorInfo)
+        }
+    }
+
+    public func cmdDispatchDataGraphARM(session: DataGraphPipelineSessionARM, info: some Chainable<DataGraphPipelineDispatchInfoARM>?) -> Void {
+        info.withOptionalCStruct { ptr_info in
+            self.commandPool.device.dispatchTable.vkCmdDispatchDataGraphARM(self.handle, session.handle, ptr_info)
+        }
+    }
+
+    public func cmdSetComputeOccupancyPriorityNV(parameters: some Chainable<ComputeOccupancyPriorityParametersNV>) -> Void {
+        parameters.withCStruct { ptr_parameters in
+            self.commandPool.device.dispatchTable.vkCmdSetComputeOccupancyPriorityNV(self.handle, ptr_parameters)
+        }
+    }
+
+    public func cmdBindSamplerHeapEXT(bindInfo: some Chainable<BindHeapInfoEXT>) -> Void {
+        bindInfo.withCStruct { ptr_bindInfo in
+            self.commandPool.device.dispatchTable.vkCmdBindSamplerHeapEXT(self.handle, ptr_bindInfo)
+        }
+    }
+
+    public func cmdBindResourceHeapEXT(bindInfo: some Chainable<BindHeapInfoEXT>) -> Void {
+        bindInfo.withCStruct { ptr_bindInfo in
+            self.commandPool.device.dispatchTable.vkCmdBindResourceHeapEXT(self.handle, ptr_bindInfo)
+        }
+    }
+
+    public func cmdPushDataEXT(pushDataInfo: some Chainable<PushDataInfoEXT>) -> Void {
+        pushDataInfo.withCStruct { ptr_pushDataInfo in
+            self.commandPool.device.dispatchTable.vkCmdPushDataEXT(self.handle, ptr_pushDataInfo)
+        }
+    }
+
+    public func cmdCopyMemoryKHR(copyMemoryInfo: some Chainable<CopyDeviceMemoryInfoKHR>?) -> Void {
+        copyMemoryInfo.withOptionalCStruct { ptr_copyMemoryInfo in
+            self.commandPool.device.dispatchTable.vkCmdCopyMemoryKHR(self.handle, ptr_copyMemoryInfo)
+        }
+    }
+
+    public func cmdCopyMemoryToImageKHR(copyMemoryInfo: some Chainable<CopyDeviceMemoryImageInfoKHR>?) -> Void {
+        copyMemoryInfo.withOptionalCStruct { ptr_copyMemoryInfo in
+            self.commandPool.device.dispatchTable.vkCmdCopyMemoryToImageKHR(self.handle, ptr_copyMemoryInfo)
+        }
+    }
+
+    public func cmdCopyImageToMemoryKHR(copyMemoryInfo: some Chainable<CopyDeviceMemoryImageInfoKHR>?) -> Void {
+        copyMemoryInfo.withOptionalCStruct { ptr_copyMemoryInfo in
+            self.commandPool.device.dispatchTable.vkCmdCopyImageToMemoryKHR(self.handle, ptr_copyMemoryInfo)
+        }
+    }
+
+    public func cmdUpdateMemoryKHR(dstRange: some Chainable<DeviceAddressRangeKHR>, dstFlags: AddressCommandFlagsKHR, dataSize: VkDeviceSize, data: UnsafeRawPointer) -> Void {
+        dstRange.withCStruct { ptr_dstRange in
+            self.commandPool.device.dispatchTable.vkCmdUpdateMemoryKHR(self.handle, ptr_dstRange, dstFlags.rawValue, dataSize, data)
+        }
+    }
+
+    public func cmdFillMemoryKHR(dstRange: some Chainable<DeviceAddressRangeKHR>, dstFlags: AddressCommandFlagsKHR, data: UInt32) -> Void {
+        dstRange.withCStruct { ptr_dstRange in
+            self.commandPool.device.dispatchTable.vkCmdFillMemoryKHR(self.handle, ptr_dstRange, dstFlags.rawValue, data)
+        }
+    }
+
+    public func cmdCopyQueryPoolResultsToMemoryKHR(queryPool: QueryPool, firstQuery: UInt32, queryCount: UInt32, dstRange: some Chainable<StridedDeviceAddressRangeKHR>, dstFlags: AddressCommandFlagsKHR, queryResultFlags: QueryResultFlags) -> Void {
+        dstRange.withCStruct { ptr_dstRange in
+            self.commandPool.device.dispatchTable.vkCmdCopyQueryPoolResultsToMemoryKHR(self.handle, queryPool.handle, firstQuery, queryCount, ptr_dstRange, dstFlags.rawValue, queryResultFlags.rawValue)
+        }
+    }
+
+    public func cmdBeginConditionalRendering2EXT(conditionalRenderingBegin: some Chainable<ConditionalRenderingBeginInfo2EXT>) -> Void {
+        conditionalRenderingBegin.withCStruct { ptr_conditionalRenderingBegin in
+            self.commandPool.device.dispatchTable.vkCmdBeginConditionalRendering2EXT(self.handle, ptr_conditionalRenderingBegin)
+        }
+    }
+
+    public func cmdBindTransformFeedbackBuffers2EXT(firstBinding: UInt32, bindingInfos: Array<BindTransformFeedbackBuffer2InfoEXT>?) -> Void {
+        bindingInfos.withOptionalCStructBufferPointer { ptr_bindingInfos in
+            self.commandPool.device.dispatchTable.vkCmdBindTransformFeedbackBuffers2EXT(self.handle, firstBinding, UInt32(ptr_bindingInfos.count), ptr_bindingInfos.baseAddress)
+        }
+    }
+
+    public func cmdBeginTransformFeedback2EXT(firstCounterRange: UInt32, counterInfos: Array<BindTransformFeedbackBuffer2InfoEXT>?) -> Void {
+        counterInfos.withOptionalCStructBufferPointer { ptr_counterInfos in
+            self.commandPool.device.dispatchTable.vkCmdBeginTransformFeedback2EXT(self.handle, firstCounterRange, UInt32(ptr_counterInfos.count), ptr_counterInfos.baseAddress)
+        }
+    }
+
+    public func cmdEndTransformFeedback2EXT(firstCounterRange: UInt32, counterInfos: Array<BindTransformFeedbackBuffer2InfoEXT>?) -> Void {
+        counterInfos.withOptionalCStructBufferPointer { ptr_counterInfos in
+            self.commandPool.device.dispatchTable.vkCmdEndTransformFeedback2EXT(self.handle, firstCounterRange, UInt32(ptr_counterInfos.count), ptr_counterInfos.baseAddress)
+        }
+    }
+
+    public func cmdDrawIndirectByteCount2EXT(instanceCount: UInt32, firstInstance: UInt32, counterInfo: some Chainable<BindTransformFeedbackBuffer2InfoEXT>, counterOffset: UInt32, vertexStride: UInt32) -> Void {
+        counterInfo.withCStruct { ptr_counterInfo in
+            self.commandPool.device.dispatchTable.vkCmdDrawIndirectByteCount2EXT(self.handle, instanceCount, firstInstance, ptr_counterInfo, counterOffset, vertexStride)
+        }
+    }
+
+    public func cmdWriteMarkerToMemoryAMD(info: some Chainable<MemoryMarkerInfoAMD>) -> Void {
+        info.withCStruct { ptr_info in
+            self.commandPool.device.dispatchTable.vkCmdWriteMarkerToMemoryAMD(self.handle, ptr_info)
+        }
+    }
+
+    public func cmdBindIndexBuffer3KHR(info: some Chainable<BindIndexBuffer3InfoKHR>) -> Void {
+        info.withCStruct { ptr_info in
+            self.commandPool.device.dispatchTable.vkCmdBindIndexBuffer3KHR(self.handle, ptr_info)
+        }
+    }
+
+    public func cmdBindVertexBuffers3KHR(firstBinding: UInt32, bindingInfos: Array<BindVertexBuffer3InfoKHR>) -> Void {
+        bindingInfos.withCStructBufferPointer { ptr_bindingInfos in
+            self.commandPool.device.dispatchTable.vkCmdBindVertexBuffers3KHR(self.handle, firstBinding, UInt32(ptr_bindingInfos.count), ptr_bindingInfos.baseAddress)
+        }
+    }
+
+    public func cmdDrawIndirect2KHR(info: some Chainable<DrawIndirect2InfoKHR>) -> Void {
+        info.withCStruct { ptr_info in
+            self.commandPool.device.dispatchTable.vkCmdDrawIndirect2KHR(self.handle, ptr_info)
+        }
+    }
+
+    public func cmdDrawIndexedIndirect2KHR(info: some Chainable<DrawIndirect2InfoKHR>) -> Void {
+        info.withCStruct { ptr_info in
+            self.commandPool.device.dispatchTable.vkCmdDrawIndexedIndirect2KHR(self.handle, ptr_info)
+        }
+    }
+
+    public func cmdDrawIndirectCount2KHR(info: some Chainable<DrawIndirectCount2InfoKHR>) -> Void {
+        info.withCStruct { ptr_info in
+            self.commandPool.device.dispatchTable.vkCmdDrawIndirectCount2KHR(self.handle, ptr_info)
+        }
+    }
+
+    public func cmdDrawIndexedIndirectCount2KHR(info: some Chainable<DrawIndirectCount2InfoKHR>) -> Void {
+        info.withCStruct { ptr_info in
+            self.commandPool.device.dispatchTable.vkCmdDrawIndexedIndirectCount2KHR(self.handle, ptr_info)
+        }
+    }
+
+    public func cmdDrawMeshTasksIndirect2EXT(info: some Chainable<DrawIndirect2InfoKHR>) -> Void {
+        info.withCStruct { ptr_info in
+            self.commandPool.device.dispatchTable.vkCmdDrawMeshTasksIndirect2EXT(self.handle, ptr_info)
+        }
+    }
+
+    public func cmdDrawMeshTasksIndirectCount2EXT(info: some Chainable<DrawIndirectCount2InfoKHR>) -> Void {
+        info.withCStruct { ptr_info in
+            self.commandPool.device.dispatchTable.vkCmdDrawMeshTasksIndirectCount2EXT(self.handle, ptr_info)
+        }
+    }
+
+    public func cmdDispatchIndirect2KHR(info: some Chainable<DispatchIndirect2InfoKHR>) -> Void {
+        info.withCStruct { ptr_info in
+            self.commandPool.device.dispatchTable.vkCmdDispatchIndirect2KHR(self.handle, ptr_info)
+        }
+    }
+
+    public func cmdSetDispatchParametersARM(dispatchParameters: some Chainable<DispatchParametersARM>) -> Void {
+        dispatchParameters.withCStruct { ptr_dispatchParameters in
+            self.commandPool.device.dispatchTable.vkCmdSetDispatchParametersARM(self.handle, ptr_dispatchParameters)
+        }
     }
 }
 
@@ -1803,6 +3767,10 @@ public class DeviceMemory: _HandleContainer {
         var out = VkDeviceSize()
         self.device.dispatchTable.vkGetDeviceMemoryCommitment(self.device.handle, self.handle, &out)
         return out
+    }
+
+    public func setPriorityEXT(priority: Float) -> Void {
+        self.device.dispatchTable.vkSetDeviceMemoryPriorityEXT(self.device.handle, self.handle, priority)
     }
 }
 
@@ -1877,7 +3845,7 @@ public class Image: _HandleContainer {
         self.device.dispatchTable.vkDestroyImage(self.device.handle, self.handle, nil)
     }
 
-    public func getSubresourceLayout(subresource: ImageSubresource) -> SubresourceLayout {
+    public func getSubresourceLayout(subresource: some Chainable<ImageSubresource>) -> SubresourceLayout {
         subresource.withCStruct { ptr_subresource in
             var out = VkSubresourceLayout()
             self.device.dispatchTable.vkGetImageSubresourceLayout(self.device.handle, self.handle, ptr_subresource, &out)
@@ -1891,6 +3859,14 @@ public class Image: _HandleContainer {
             self.device.dispatchTable.vkGetImageDrmFormatModifierPropertiesEXT(self.device.handle, self.handle, &out)
         )
         return ImageDrmFormatModifierPropertiesEXT(cStruct: out)
+    }
+
+    public func getSubresourceLayout2(subresource: some Chainable<ImageSubresource2>) -> SubresourceLayout2 {
+        subresource.withCStruct { ptr_subresource in
+            var out = VkSubresourceLayout2()
+            self.device.dispatchTable.vkGetImageSubresourceLayout2(self.device.handle, self.handle, ptr_subresource, &out)
+            return SubresourceLayout2(cStruct: out)
+        }
     }
 }
 
@@ -1906,6 +3882,14 @@ public class ImageView: _HandleContainer {
     public func destroy() -> Void {
         self.device.dispatchTable.vkDestroyImageView(self.device.handle, self.handle, nil)
     }
+
+    public func getAddressNVX() throws -> ImageViewAddressPropertiesNVX {
+        var out = VkImageViewAddressPropertiesNVX()
+        try checkResult(
+            self.device.dispatchTable.vkGetImageViewAddressNVX(self.device.handle, self.handle, &out)
+        )
+        return ImageViewAddressPropertiesNVX(cStruct: out)
+    }
 }
 
 public class ShaderModule: _HandleContainer {
@@ -1919,6 +3903,12 @@ public class ShaderModule: _HandleContainer {
 
     public func destroy() -> Void {
         self.device.dispatchTable.vkDestroyShaderModule(self.device.handle, self.handle, nil)
+    }
+
+    public func getIdentifierEXT() -> ShaderModuleIdentifierEXT {
+        var out = VkShaderModuleIdentifierEXT()
+        self.device.dispatchTable.vkGetShaderModuleIdentifierEXT(self.device.handle, self.handle, &out)
+        return ShaderModuleIdentifierEXT(cStruct: out)
     }
 }
 
@@ -1947,6 +3937,22 @@ public class Pipeline: _HandleContainer {
         try checkResult(
             self.device.dispatchTable.vkCompileDeferredNV(self.device.handle, self.handle, shader)
         )
+    }
+
+    public func getRayTracingShaderGroupHandlesKHR(firstGroup: UInt32, groupCount: UInt32, dataSize: Int, data: UnsafeMutableRawPointer) throws -> Void {
+        try checkResult(
+            self.device.dispatchTable.vkGetRayTracingShaderGroupHandlesKHR(self.device.handle, self.handle, firstGroup, groupCount, dataSize, data)
+        )
+    }
+
+    public func getRayTracingCaptureReplayShaderGroupHandlesKHR(firstGroup: UInt32, groupCount: UInt32, dataSize: Int, data: UnsafeMutableRawPointer) throws -> Void {
+        try checkResult(
+            self.device.dispatchTable.vkGetRayTracingCaptureReplayShaderGroupHandlesKHR(self.device.handle, self.handle, firstGroup, groupCount, dataSize, data)
+        )
+    }
+
+    public func getRayTracingShaderGroupStackSizeKHR(group: UInt32, groupShader: ShaderGroupShaderKHR) -> VkDeviceSize {
+        self.device.dispatchTable.vkGetRayTracingShaderGroupStackSizeKHR(self.device.handle, self.handle, group, VkShaderGroupShaderKHR(rawValue: VkShaderGroupShaderKHR.RawValue(bitPattern: groupShader.rawValue)))
     }
 }
 
@@ -2018,6 +4024,12 @@ public class DescriptorSet: _HandleContainer {
     public func updateWithTemplate(descriptorUpdateTemplate: DescriptorUpdateTemplate, data: UnsafeRawPointer) -> Void {
         self.descriptorPool.device.dispatchTable.vkUpdateDescriptorSetWithTemplate(self.descriptorPool.device.handle, self.handle, descriptorUpdateTemplate.handle, data)
     }
+
+    public func getHostMappingVALVE() -> UnsafeMutableRawPointer {
+        var out: UnsafeMutableRawPointer!
+        self.descriptorPool.device.dispatchTable.vkGetDescriptorSetHostMappingVALVE(self.descriptorPool.device.handle, self.handle, &out)
+        return out
+    }
 }
 
 public class DescriptorSetLayout: _HandleContainer {
@@ -2031,6 +4043,18 @@ public class DescriptorSetLayout: _HandleContainer {
 
     public func destroy() -> Void {
         self.device.dispatchTable.vkDestroyDescriptorSetLayout(self.device.handle, self.handle, nil)
+    }
+
+    public func getSizeEXT() -> VkDeviceSize {
+        var out = VkDeviceSize()
+        self.device.dispatchTable.vkGetDescriptorSetLayoutSizeEXT(self.device.handle, self.handle, &out)
+        return out
+    }
+
+    public func getBindingOffsetEXT(binding: UInt32) -> VkDeviceSize {
+        var out = VkDeviceSize()
+        self.device.dispatchTable.vkGetDescriptorSetLayoutBindingOffsetEXT(self.device.handle, self.handle, binding, &out)
+        return out
     }
 }
 
@@ -2144,6 +4168,12 @@ public class Framebuffer: _HandleContainer {
     public func destroy() -> Void {
         self.device.dispatchTable.vkDestroyFramebuffer(self.device.handle, self.handle, nil)
     }
+
+    public func getTilePropertiesQCOM() throws -> Array<TilePropertiesQCOM> {
+        try enumerate { pProperties, pPropertiesCount in
+            self.device.dispatchTable.vkGetFramebufferTilePropertiesQCOM(self.device.handle, self.handle, pPropertiesCount, pProperties)
+        }.map { TilePropertiesQCOM(cStruct: $0) }
+    }
 }
 
 public class RenderPass: _HandleContainer {
@@ -2153,6 +4183,14 @@ public class RenderPass: _HandleContainer {
     public init(handle: VkRenderPass!, device: Device) {
         self.handle = handle
         self.device = device
+    }
+
+    public func getDeviceSubpassShadingMaxWorkgroupSizeHUAWEI() throws -> Extent2D {
+        var out = VkExtent2D()
+        try checkResult(
+            self.device.dispatchTable.vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI(self.device.handle, self.handle, &out)
+        )
+        return Extent2D(cStruct: out)
     }
 
     public func destroy() -> Void {
@@ -2196,6 +4234,20 @@ public class PipelineCache: _HandleContainer {
     }
 }
 
+public class PipelineBinaryKHR: _HandleContainer {
+    let handle: VkPipelineBinaryKHR?
+    public let device: Device
+
+    public init(handle: VkPipelineBinaryKHR!, device: Device) {
+        self.handle = handle
+        self.device = device
+    }
+
+    public func destroyKHR() -> Void {
+        self.device.dispatchTable.vkDestroyPipelineBinaryKHR(self.device.handle, self.handle, nil)
+    }
+}
+
 public class IndirectCommandsLayoutNV: _HandleContainer {
     let handle: VkIndirectCommandsLayoutNV?
     public let device: Device
@@ -2207,6 +4259,46 @@ public class IndirectCommandsLayoutNV: _HandleContainer {
 
     public func destroyNV() -> Void {
         self.device.dispatchTable.vkDestroyIndirectCommandsLayoutNV(self.device.handle, self.handle, nil)
+    }
+}
+
+public class IndirectCommandsLayoutEXT: _HandleContainer {
+    let handle: VkIndirectCommandsLayoutEXT?
+    public let device: Device
+
+    public init(handle: VkIndirectCommandsLayoutEXT!, device: Device) {
+        self.handle = handle
+        self.device = device
+    }
+
+    public func destroyEXT() -> Void {
+        self.device.dispatchTable.vkDestroyIndirectCommandsLayoutEXT(self.device.handle, self.handle, nil)
+    }
+}
+
+public class IndirectExecutionSetEXT: _HandleContainer {
+    let handle: VkIndirectExecutionSetEXT?
+    public let device: Device
+
+    public init(handle: VkIndirectExecutionSetEXT!, device: Device) {
+        self.handle = handle
+        self.device = device
+    }
+
+    public func destroyEXT() -> Void {
+        self.device.dispatchTable.vkDestroyIndirectExecutionSetEXT(self.device.handle, self.handle, nil)
+    }
+
+    public func updatePipelineEXT(executionSetWrites: Array<WriteIndirectExecutionSetPipelineEXT>) -> Void {
+        executionSetWrites.withCStructBufferPointer { ptr_executionSetWrites in
+            self.device.dispatchTable.vkUpdateIndirectExecutionSetPipelineEXT(self.device.handle, self.handle, UInt32(ptr_executionSetWrites.count), ptr_executionSetWrites.baseAddress)
+        }
+    }
+
+    public func updateShaderEXT(executionSetWrites: Array<WriteIndirectExecutionSetShaderEXT>) -> Void {
+        executionSetWrites.withCStructBufferPointer { ptr_executionSetWrites in
+            self.device.dispatchTable.vkUpdateIndirectExecutionSetShaderEXT(self.device.handle, self.handle, UInt32(ptr_executionSetWrites.count), ptr_executionSetWrites.baseAddress)
+        }
     }
 }
 
@@ -2277,6 +4369,24 @@ public class AccelerationStructureKHR: _HandleContainer {
         self.device = device
     }
 
+    public func destroyKHR() -> Void {
+        self.device.dispatchTable.vkDestroyAccelerationStructureKHR(self.device.handle, self.handle, nil)
+    }
+}
+
+public class AccelerationStructureNV: _HandleContainer {
+    let handle: VkAccelerationStructureNV?
+    public let device: Device
+
+    public init(handle: VkAccelerationStructureNV!, device: Device) {
+        self.handle = handle
+        self.device = device
+    }
+
+    public func destroyNV() -> Void {
+        self.device.dispatchTable.vkDestroyAccelerationStructureNV(self.device.handle, self.handle, nil)
+    }
+
     public func getHandleNV(dataSize: Int, data: UnsafeMutableRawPointer) throws -> Void {
         try checkResult(
             self.device.dispatchTable.vkGetAccelerationStructureHandleNV(self.device.handle, self.handle, dataSize, data)
@@ -2292,10 +4402,234 @@ public class PerformanceConfigurationINTEL: _HandleContainer {
         self.handle = handle
         self.device = device
     }
+}
 
-    public func releaseINTEL() throws -> Void {
+public class DeferredOperationKHR: _HandleContainer {
+    let handle: VkDeferredOperationKHR?
+    public let device: Device
+
+    public init(handle: VkDeferredOperationKHR!, device: Device) {
+        self.handle = handle
+        self.device = device
+    }
+
+    public func destroyKHR() -> Void {
+        self.device.dispatchTable.vkDestroyDeferredOperationKHR(self.device.handle, self.handle, nil)
+    }
+
+    public func getMaxConcurrencyKHR() -> UInt32 {
+        self.device.dispatchTable.vkGetDeferredOperationMaxConcurrencyKHR(self.device.handle, self.handle)
+    }
+
+    public func getResultKHR() throws -> Void {
         try checkResult(
-            self.device.dispatchTable.vkReleasePerformanceConfigurationINTEL(self.device.handle, self.handle)
+            self.device.dispatchTable.vkGetDeferredOperationResultKHR(self.device.handle, self.handle)
+        )
+    }
+
+    public func joinKHR() throws -> Void {
+        try checkResult(
+            self.device.dispatchTable.vkDeferredOperationJoinKHR(self.device.handle, self.handle)
+        )
+    }
+}
+
+public class PrivateDataSlot: _HandleContainer {
+    let handle: VkPrivateDataSlot?
+    public let device: Device
+
+    public init(handle: VkPrivateDataSlot!, device: Device) {
+        self.handle = handle
+        self.device = device
+    }
+
+    public func destroy() -> Void {
+        self.device.dispatchTable.vkDestroyPrivateDataSlot(self.device.handle, self.handle, nil)
+    }
+}
+
+public class CuModuleNVX: _HandleContainer {
+    let handle: VkCuModuleNVX?
+    public let device: Device
+
+    public init(handle: VkCuModuleNVX!, device: Device) {
+        self.handle = handle
+        self.device = device
+    }
+
+    public func destroyNVX() -> Void {
+        self.device.dispatchTable.vkDestroyCuModuleNVX(self.device.handle, self.handle, nil)
+    }
+}
+
+public class CuFunctionNVX: _HandleContainer {
+    let handle: VkCuFunctionNVX?
+    public let device: Device
+
+    public init(handle: VkCuFunctionNVX!, device: Device) {
+        self.handle = handle
+        self.device = device
+    }
+
+    public func destroyNVX() -> Void {
+        self.device.dispatchTable.vkDestroyCuFunctionNVX(self.device.handle, self.handle, nil)
+    }
+}
+
+public class OpticalFlowSessionNV: _HandleContainer {
+    let handle: VkOpticalFlowSessionNV?
+    public let device: Device
+
+    public init(handle: VkOpticalFlowSessionNV!, device: Device) {
+        self.handle = handle
+        self.device = device
+    }
+
+    public func destroyNV() -> Void {
+        self.device.dispatchTable.vkDestroyOpticalFlowSessionNV(self.device.handle, self.handle, nil)
+    }
+
+    public func bindImageNV(bindingPoint: OpticalFlowSessionBindingPointNV, view: ImageView?, layout: ImageLayout) throws -> Void {
+        try checkResult(
+            self.device.dispatchTable.vkBindOpticalFlowSessionImageNV(self.device.handle, self.handle, VkOpticalFlowSessionBindingPointNV(rawValue: VkOpticalFlowSessionBindingPointNV.RawValue(bitPattern: bindingPoint.rawValue)), view?.handle, VkImageLayout(rawValue: VkImageLayout.RawValue(bitPattern: layout.rawValue)))
+        )
+    }
+}
+
+public class MicromapEXT: _HandleContainer {
+    let handle: VkMicromapEXT?
+    public let device: Device
+
+    public init(handle: VkMicromapEXT!, device: Device) {
+        self.handle = handle
+        self.device = device
+    }
+
+    public func destroyEXT() -> Void {
+        self.device.dispatchTable.vkDestroyMicromapEXT(self.device.handle, self.handle, nil)
+    }
+}
+
+public class ShaderEXT: _HandleContainer {
+    let handle: VkShaderEXT?
+    public let device: Device
+
+    public init(handle: VkShaderEXT!, device: Device) {
+        self.handle = handle
+        self.device = device
+    }
+
+    public func destroyEXT() -> Void {
+        self.device.dispatchTable.vkDestroyShaderEXT(self.device.handle, self.handle, nil)
+    }
+
+    public func getBinaryDataEXT(data: UnsafeMutableRawPointer?) throws -> Int {
+        var out = Int()
+        try checkResult(
+            self.device.dispatchTable.vkGetShaderBinaryDataEXT(self.device.handle, self.handle, &out, data)
+        )
+        return out
+    }
+}
+
+public class TensorARM: _HandleContainer {
+    let handle: VkTensorARM?
+    public let device: Device
+
+    public init(handle: VkTensorARM!, device: Device) {
+        self.handle = handle
+        self.device = device
+    }
+
+    public func destroyARM() -> Void {
+        self.device.dispatchTable.vkDestroyTensorARM(self.device.handle, self.handle, nil)
+    }
+}
+
+public class TensorViewARM: _HandleContainer {
+    let handle: VkTensorViewARM?
+    public let device: Device
+
+    public init(handle: VkTensorViewARM!, device: Device) {
+        self.handle = handle
+        self.device = device
+    }
+
+    public func destroyARM() -> Void {
+        self.device.dispatchTable.vkDestroyTensorViewARM(self.device.handle, self.handle, nil)
+    }
+}
+
+public class DataGraphPipelineSessionARM: _HandleContainer {
+    let handle: VkDataGraphPipelineSessionARM?
+    public let device: Device
+
+    public init(handle: VkDataGraphPipelineSessionARM!, device: Device) {
+        self.handle = handle
+        self.device = device
+    }
+
+    public func destroyARM() -> Void {
+        self.device.dispatchTable.vkDestroyDataGraphPipelineSessionARM(self.device.handle, self.handle, nil)
+    }
+}
+
+public class ShaderInstrumentationARM: _HandleContainer {
+    let handle: VkShaderInstrumentationARM?
+    public let device: Device
+
+    public init(handle: VkShaderInstrumentationARM!, device: Device) {
+        self.handle = handle
+        self.device = device
+    }
+
+    public func destroyARM() -> Void {
+        self.device.dispatchTable.vkDestroyShaderInstrumentationARM(self.device.handle, self.handle, nil)
+    }
+
+    public func getValuesARM(metricValues: UnsafeMutableRawPointer, flags: ShaderInstrumentationValuesFlagsARM) throws -> UInt32 {
+        var out = UInt32()
+        try checkResult(
+            self.device.dispatchTable.vkGetShaderInstrumentationValuesARM(self.device.handle, self.handle, &out, metricValues, flags.rawValue)
+        )
+        return out
+    }
+
+    public func clearMetricsARM() -> Void {
+        self.device.dispatchTable.vkClearShaderInstrumentationMetricsARM(self.device.handle, self.handle)
+    }
+}
+
+public class GpaSessionAMD: _HandleContainer {
+    let handle: VkGpaSessionAMD?
+    public let device: Device
+
+    public init(handle: VkGpaSessionAMD!, device: Device) {
+        self.handle = handle
+        self.device = device
+    }
+
+    public func destroyAMD() -> Void {
+        self.device.dispatchTable.vkDestroyGpaSessionAMD(self.device.handle, self.handle, nil)
+    }
+
+    public func getStatusAMD() throws -> Void {
+        try checkResult(
+            self.device.dispatchTable.vkGetGpaSessionStatusAMD(self.device.handle, self.handle)
+        )
+    }
+
+    public func getResultsAMD(sampleID: UInt32, data: UnsafeMutableRawPointer?) throws -> Int {
+        var out = Int()
+        try checkResult(
+            self.device.dispatchTable.vkGetGpaSessionResultsAMD(self.device.handle, self.handle, sampleID, &out, data)
+        )
+        return out
+    }
+
+    public func resetAMD() throws -> Void {
+        try checkResult(
+            self.device.dispatchTable.vkResetGpaSessionAMD(self.device.handle, self.handle)
         )
     }
 }
@@ -2428,6 +4762,66 @@ public class SwapchainKHR: _HandleContainer {
     public func setLocalDimmingAMD(localDimmingEnable: Bool) -> Void {
         self.device.dispatchTable.vkSetLocalDimmingAMD(self.device.handle, self.handle, VkBool32(localDimmingEnable ? VK_TRUE : VK_FALSE))
     }
+
+    public func waitForPresent2KHR(presentWait2Info: some Chainable<PresentWait2InfoKHR>) throws -> Void {
+        try presentWait2Info.withCStruct { ptr_presentWait2Info in
+            try checkResult(
+                self.device.dispatchTable.vkWaitForPresent2KHR(self.device.handle, self.handle, ptr_presentWait2Info)
+            )
+        }
+    }
+
+    public func waitForPresentKHR(presentId: UInt64, timeout: UInt64) throws -> Void {
+        try checkResult(
+            self.device.dispatchTable.vkWaitForPresentKHR(self.device.handle, self.handle, presentId, timeout)
+        )
+    }
+
+    public func setPresentTimingQueueSizeEXT(size: UInt32) throws -> Void {
+        try checkResult(
+            self.device.dispatchTable.vkSetSwapchainPresentTimingQueueSizeEXT(self.device.handle, self.handle, size)
+        )
+    }
+
+    public func getTimingPropertiesEXT(swapchainTimingProperties: UnsafeMutablePointer<VkSwapchainTimingPropertiesEXT>, swapchainTimingPropertiesCounter: UnsafeMutablePointer<UInt64>?) throws -> Void {
+        try checkResult(
+            self.device.dispatchTable.vkGetSwapchainTimingPropertiesEXT(self.device.handle, self.handle, swapchainTimingProperties, swapchainTimingPropertiesCounter)
+        )
+    }
+
+    public func getTimeDomainPropertiesEXT(swapchainTimeDomainProperties: UnsafeMutablePointer<VkSwapchainTimeDomainPropertiesEXT>, timeDomainsCounter: UnsafeMutablePointer<UInt64>?) throws -> Void {
+        try checkResult(
+            self.device.dispatchTable.vkGetSwapchainTimeDomainPropertiesEXT(self.device.handle, self.handle, swapchainTimeDomainProperties, timeDomainsCounter)
+        )
+    }
+
+    public func setLatencySleepModeNV(sleepModeInfo: some Chainable<LatencySleepModeInfoNV>) throws -> Void {
+        try sleepModeInfo.withCStruct { ptr_sleepModeInfo in
+            try checkResult(
+                self.device.dispatchTable.vkSetLatencySleepModeNV(self.device.handle, self.handle, ptr_sleepModeInfo)
+            )
+        }
+    }
+
+    public func latencySleepNV(sleepInfo: some Chainable<LatencySleepInfoNV>) throws -> Void {
+        try sleepInfo.withCStruct { ptr_sleepInfo in
+            try checkResult(
+                self.device.dispatchTable.vkLatencySleepNV(self.device.handle, self.handle, ptr_sleepInfo)
+            )
+        }
+    }
+
+    public func setLatencyMarkerNV(latencyMarkerInfo: some Chainable<SetLatencyMarkerInfoNV>) -> Void {
+        latencyMarkerInfo.withCStruct { ptr_latencyMarkerInfo in
+            self.device.dispatchTable.vkSetLatencyMarkerNV(self.device.handle, self.handle, ptr_latencyMarkerInfo)
+        }
+    }
+
+    public func getLatencyTimingsNV() -> GetLatencyMarkerInfoNV {
+        var out = VkGetLatencyMarkerInfoNV()
+        self.device.dispatchTable.vkGetLatencyTimingsNV(self.device.handle, self.handle, &out)
+        return GetLatencyMarkerInfoNV(cStruct: out)
+    }
 }
 
 public class DebugReportCallbackEXT: _HandleContainer {
@@ -2455,6 +4849,76 @@ public class DebugUtilsMessengerEXT: _HandleContainer {
 
     public func destroyEXT() -> Void {
         self.instance.dispatchTable.vkDestroyDebugUtilsMessengerEXT(self.instance.handle, self.handle, nil)
+    }
+}
+
+public class VideoSessionKHR: _HandleContainer {
+    let handle: VkVideoSessionKHR?
+    public let device: Device
+
+    public init(handle: VkVideoSessionKHR!, device: Device) {
+        self.handle = handle
+        self.device = device
+    }
+
+    public func destroyKHR() -> Void {
+        self.device.dispatchTable.vkDestroyVideoSessionKHR(self.device.handle, self.handle, nil)
+    }
+
+    public func getMemoryRequirementsKHR() throws -> Array<VideoSessionMemoryRequirementsKHR> {
+        try enumerate { pMemoryRequirements, pMemoryRequirementsCount in
+            self.device.dispatchTable.vkGetVideoSessionMemoryRequirementsKHR(self.device.handle, self.handle, pMemoryRequirementsCount, pMemoryRequirements)
+        }.map { VideoSessionMemoryRequirementsKHR(cStruct: $0) }
+    }
+
+    public func bindMemoryKHR(bindSessionMemoryInfos: Array<BindVideoSessionMemoryInfoKHR>) throws -> Void {
+        try bindSessionMemoryInfos.withCStructBufferPointer { ptr_bindSessionMemoryInfos in
+            try checkResult(
+                self.device.dispatchTable.vkBindVideoSessionMemoryKHR(self.device.handle, self.handle, UInt32(ptr_bindSessionMemoryInfos.count), ptr_bindSessionMemoryInfos.baseAddress)
+            )
+        }
+    }
+}
+
+public class VideoSessionParametersKHR: _HandleContainer {
+    let handle: VkVideoSessionParametersKHR?
+    public let device: Device
+
+    public init(handle: VkVideoSessionParametersKHR!, device: Device) {
+        self.handle = handle
+        self.device = device
+    }
+
+    public func updateKHR(updateInfo: some Chainable<VideoSessionParametersUpdateInfoKHR>) throws -> Void {
+        try updateInfo.withCStruct { ptr_updateInfo in
+            try checkResult(
+                self.device.dispatchTable.vkUpdateVideoSessionParametersKHR(self.device.handle, self.handle, ptr_updateInfo)
+            )
+        }
+    }
+
+    public func destroyKHR() -> Void {
+        self.device.dispatchTable.vkDestroyVideoSessionParametersKHR(self.device.handle, self.handle, nil)
+    }
+}
+
+public class ExternalComputeQueueNV: _HandleContainer {
+    let handle: VkExternalComputeQueueNV?
+    public let device: Device
+
+    public init(handle: VkExternalComputeQueueNV!, device: Device) {
+        self.handle = handle
+        self.device = device
+    }
+
+    public func destroyNV() -> Void {
+        self.device.dispatchTable.vkDestroyExternalComputeQueueNV(self.device.handle, self.handle, nil)
+    }
+
+    public func getDataNV(data: UnsafeMutableRawPointer) -> ExternalComputeQueueDataParamsNV {
+        var out = VkExternalComputeQueueDataParamsNV()
+        self.device.dispatchTable.vkGetExternalComputeQueueDataNV(self.handle, &out, data)
+        return ExternalComputeQueueDataParamsNV(cStruct: out)
     }
 }
 

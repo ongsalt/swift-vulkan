@@ -164,6 +164,12 @@ extension Sequence {
 //     return (repeat (Array(UnsafeBufferPointer(start: each buffers, count: Int(count)))))
 // }
 
+func enumerate<R>(_ type: R.Type, _ body: (UnsafeMutablePointer<R>?, UnsafeMutablePointer<UInt32>) -> VkResult)
+    throws -> [R]
+{
+    try enumerate(body)
+}
+
 func enumerate<R>(_ body: (UnsafeMutablePointer<R>?, UnsafeMutablePointer<UInt32>) -> VkResult)
     throws -> [R]
 {
@@ -187,6 +193,11 @@ func enumerate<R>(_ body: (UnsafeMutablePointer<R>?, UnsafeMutablePointer<UInt32
     try checkResult(result)
     return array
 }
+
+func enumerate<R>(_ type: R.Type, _ body: (UnsafeMutablePointer<R>?, UnsafeMutablePointer<UInt32>) -> Void) -> [R] {
+    enumerate(body)
+}
+
 func enumerate<R>(_ body: (UnsafeMutablePointer<R>?, UnsafeMutablePointer<UInt32>) -> Void) -> [R] {
     var count: UInt32 = 0
     body(nil, &count)
