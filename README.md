@@ -50,15 +50,37 @@ Swift-vulkan is a relatively new project, and there are still some important mil
 
 
 ## Todos
-- multiple out array  
+- multiple out array
+    - is multiple out array of pNext chain possible?
 - assert(array1.count == array2.count)
 - proper extension support
 - typed throws
 - handle `api`, currently i nuked everything `vulkansc`
+- generate `push(_:)` per each ChainableBase
+- namespace platform specific header?
+- why do some struct not have `init(cStruct: Self.CStruct)` 
+- explicitly type `enumerate()`
+- some flag is UInt64 (BufferUsageFlags2)
+- `some Chainable<...>` can not be wrapped in an optional
 
 ## Chaining
-- `inout some Chainable<Base>`
-    - pain to access becuase its `Chain<BaseA, Chain<ABExt, ABExt>>`
+- `[inout] some Chainable<Base>`. (maybe we can provide some `extension` `.0` `.1`...)
+    ```swift
+    let createInfo = DeviceCreateInfo(...)
+        .push(FeaturesA(..))
+        .push(FeaturesB(...))
+    // createInfo: Chain<DeviceCreateInfo, Chain<FeaturesA, FeaturesB>>
+    ``` 
 
-- `ash` way. this required a (`MutableRef`)[https://github.com/swiftlang/swift-evolution/blob/main/proposals/0519-ref-mutableref-types.md] in swift 6.4 (available in recent `main`)
+    if we want to do it `ash` way (no chain type). It will requires a (`MutableRef`)[https://github.com/swiftlang/swift-evolution/blob/main/proposals/0519-ref-mutableref-types.md] in swift 6.4 (available in recent `main`)
+
+
+- return value
+```swift
+func getSomething<T>(outType: T) throws(VulkanError) -> T where T {}
+
+handl.getSomething(querying: #chainOf<A, B, C>) -> Chain<A, Chain<B, C>>
+
+
+``` 
 
