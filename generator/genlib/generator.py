@@ -52,7 +52,7 @@ class Generator(BaseGenerator):
             self.linebreak()
             if option_set.cases:
                 for case in option_set.cases:
-                    self << f'public static let {case.name} = {option_set.name}(rawValue: {case.value})'
+                    self << f'public static let {safe_name(case.name)} = {option_set.name}(rawValue: {case.value})'
                 self.linebreak()
             with self.indent(f'public init(rawValue: {option_set.raw_type}) {{', '}'):
                 self << 'self.rawValue = rawValue'
