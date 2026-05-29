@@ -50,8 +50,7 @@ Swift-vulkan is a relatively new project, and there are still some important mil
 
 
 ## Todos
-- result enum extension
-- fix parent class
+- fix parent class?
 
 - generate overload for Chainable out param
     - discrete type: fill sType for out param

@@ -178,6 +178,19 @@ class CContext:
                 name = command.attrib['name']
                 command_names.append(name)
 
+            for e_enum in feature.findall('./require/enum[@extends]'):
+                extension_number = None
+                if 'extnumber' in e_enum.attrib:
+                    extension_number = int(e_enum.attrib['extnumber'])
+                if 'alias' in e_enum.attrib:
+                    continue
+                c_case = CEnum.Case(
+                    e_enum.attrib['name'], parse_enum_value(e_enum, extension_number))
+                for enum in self.enums:
+                    if enum.name == e_enum.attrib['extends']:
+                        enum.cases.append(c_case)
+                        break
+
             apitype = None
             if apitype in feature.attrib:
                 apitype = feature.attrib['apitype']
@@ -216,7 +229,7 @@ class CContext:
                              for t in e_require.findall('./type'))
                 commands.extend(t.attrib['name']
                                 for t in e_require.findall('./command'))
-                for e_enum in e_require.findall('./require/enum[@extends]'):
+                for e_enum in e_require.findall('./enum[@extends]'):
                     if 'alias' in e_enum.attrib:
                         continue
                     c_case = CEnum.Case(
