@@ -958,6 +958,15 @@ public enum MemoryOverallocationBehaviorAMD: UInt32 {
     case disallowed = 2
 }
 
+#if VK_USE_PLATFORM_WIN32_KHR
+public enum FullScreenExclusiveEXT: UInt32 {
+    case `default` = 0
+    case allowed = 1
+    case disallowed = 2
+    case applicationControlled = 3
+}
+#endif
+
 public enum PerformanceCounterScopeKHR: UInt32 {
     case commandBuffer = 0
     case renderPass = 1
@@ -1198,6 +1207,14 @@ public enum IndirectCommandsTokenTypeEXT: UInt32 {
     case dispatch = 9
 }
 
+#if VK_ENABLE_BETA_EXTENSIONS
+public enum DisplacementMicromapFormatNV: UInt32 {
+    case type64Triangles64Bytes = 1
+    case type256Triangles128Bytes = 2
+    case type1024Triangles128Bytes = 3
+}
+#endif
+
 public enum ShaderCodeTypeEXT: UInt32 {
     case binary = 0
     case spirv = 1
@@ -1268,6 +1285,12 @@ public enum OutOfBandQueueTypeNV: UInt32 {
     case render = 0
     case present = 1
 }
+
+#if VK_ENABLE_BETA_EXTENSIONS
+public enum CompressedTriangleFormatAMDX: UInt32 {
+    case dgf1 = 0
+}
+#endif
 
 public enum DepthClampModeEXT: UInt32 {
     case viewportRange = 0

@@ -6,18 +6,32 @@ import PackageDescription
 let package = Package(
     name: "swift-vulkan",
     products: [
-        // Products define the executables and libraries produced by a package, and make them visible to other packages.
         .library(
             name: "Vulkan",
             targets: ["Vulkan"])
     ],
-    dependencies: [
-        // Dependencies declare other packages that this package depends on.
-        // .package(url: /* package url */, from: "1.0.0"),
+    traits: [
+        .trait(name: "VK_USE_PLATFORM_XLIB_KHR"),
+        .trait(name: "VK_USE_PLATFORM_XLIB_XRANDR_EXT"),
+        .trait(name: "VK_USE_PLATFORM_XCB_KHR"),
+        .trait(name: "VK_USE_PLATFORM_WAYLAND_KHR"),
+        .trait(name: "VK_USE_PLATFORM_UBM_SEC"),
+        .trait(name: "VK_USE_PLATFORM_DIRECTFB_EXT"),
+        .trait(name: "VK_USE_PLATFORM_ANDROID_KHR"),
+        .trait(name: "VK_USE_PLATFORM_WIN32_KHR"),
+        .trait(name: "VK_USE_PLATFORM_VI_NN"),
+        .trait(name: "VK_USE_PLATFORM_IOS_MVK"),
+        .trait(name: "VK_USE_PLATFORM_MACOS_MVK"),
+        .trait(name: "VK_USE_PLATFORM_METAL_EXT"),
+        .trait(name: "VK_USE_PLATFORM_FUCHSIA"),
+        .trait(name: "VK_USE_PLATFORM_GGP"),
+        .trait(name: "VK_USE_PLATFORM_SCI"),
+        .trait(name: "VK_ENABLE_BETA_EXTENSIONS"),
+        .trait(name: "VK_USE_PLATFORM_SCREEN_QNX"),
+        .trait(name: "VK_USE_PLATFORM_OHOS"),
     ],
+    dependencies: [],
     targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(name: "CVulkan"),
         .target(
             name: "Vulkan",

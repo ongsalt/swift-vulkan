@@ -10,16 +10,18 @@ class CEnum:
             self.name = name
             self.value = value
 
-    def __init__(self, name: str, cases: List[Case] = None):
+    def __init__(self, name: str, cases: List[Case] = None, protect: str | None = None):
         self.name = name
         self.cases = cases or []
+        self.protect = protect
 
 
 class CBitmask:
-    def __init__(self, name: str, enum: CEnum = None, is64: bool = False):
+    def __init__(self, name: str, enum: CEnum = None, is64: bool = False, protect: str | None = None):
         self.name = name
         self.enum = enum
         self.is64 = is64
+        self.protect = protect
 
 
 class CType:
@@ -49,26 +51,28 @@ class CMember:
 
 
 class CStruct:
-    def __init__(self, name: str, members: List[CMember] = None, returned_only=False, struct_extends: List[str] = None):
+    def __init__(self, name: str, members: List[CMember] = None, returned_only=False, struct_extends: List[str] = None, is_chainable_base: bool = False, protect: str | None = None):
         self.name = name
         self.members = members or []
         self.returned_only = returned_only
         self.struct_extends = struct_extends or []
-        self.is_chainable_base = False
+        self.is_chainable_base = is_chainable_base
+        self.protect = protect
 
 
 class CHandle:
-    def __init__(self, name: str, parent: 'CHandle' = None, protect: str = None):
+    def __init__(self, name: str, parent: 'CHandle' = None, protect: str | None = None):
         self.name = name
         self.parent = parent
         self.protect = protect
 
 
 class CCommand:
-    def __init__(self, name: str, return_type: CType, params: List[CMember] = None):
+    def __init__(self, name: str, return_type: CType, params: List[CMember] = None, protect: str | None = None):
         self.name = name
         self.return_type = return_type
         self.params = params or []
+        self.protect = protect
 
 
 class CExtension:
@@ -115,7 +119,7 @@ class CAlias:
 
 
 class CContext:
-    def __init__(self):
+    def __init__(self) -> None:
         self.platform_protects: Dict[str, str] = {}
         self.extension_tags: List[str] = []
         self.extensions: List[CExtension] = []
@@ -292,7 +296,7 @@ class CContext:
                             cases[ext_case.name] = ext_case.value
 
             c_enum = CEnum(enum_name, [CEnum.Case(name, value)
-                           for name, value in cases.items()])
+                           for name, value in cases.items()], protect=self.find_protect(type_=enum_name))
             self.enums.append(c_enum)
 
     def parse_bitmasks(self, tree: ElementTree):
@@ -305,7 +309,7 @@ class CContext:
             if self.should_ignore(type_=bitmask_name, api=parse_api(e_bitmask)):
                 continue
 
-            c_bitmask = CBitmask(bitmask_name, is64=e_bitmask.find('./type').text == "VkFlags64")
+            c_bitmask = CBitmask(bitmask_name, is64=e_bitmask.find('./type').text == "VkFlags64", protect=self.find_protect(type_=bitmask_name))
 
 
             requires = e_bitmask.get('requires')
@@ -347,7 +351,7 @@ class CContext:
                     extends.append(name)
 
             c_struct = CStruct(struct.attrib['name'], returned_only=struct.get(
-                'returnedonly') == 'true', struct_extends=extends)
+                'returnedonly') == 'true', struct_extends=extends, protect=self.find_protect(type_=struct.attrib['name']))
 
             for member in struct.findall('./member'):
                 if self.should_ignore(api=parse_api(member)):
@@ -370,7 +374,7 @@ class CContext:
             if self.should_ignore(command=proto.name, api=parse_api(e_command)):
                 continue
 
-            c_command = CCommand(proto.name, proto.type)
+            c_command = CCommand(proto.name, proto.type, protect=self.find_protect(command=proto.name))
             for e_param in e_command.findall('./param'):
                 if self.should_ignore(api=parse_api(e_param)):
                     continue
@@ -399,14 +403,13 @@ class CContext:
         if api == 'vulkansc':
             return True
         extension = self.find_extension(type_, command)
-        if extension and ((type_ or command) in extension.ignored_names or extension.name in blacklisted_extensions or extension.supported in ('disabled', 'vulkansc') or extension.platform):
+        if extension and ((type_ or command) in extension.ignored_names or extension.name in blacklisted_extensions or extension.supported in ('disabled', 'vulkansc')):
             return True
 
         features = self.find_features(type_, command)
         if len(features) == 1 and len(features[0].api) == 1 and 'vulkansc' in features[0].api:
             return True
-        return False
-
+        return False    
 
 def parse_enum_value(e_enum: ElementTree, extension_number: int = None) -> str:
     if 'offset' in e_enum.attrib:

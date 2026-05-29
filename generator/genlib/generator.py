@@ -38,10 +38,14 @@ class Generator(BaseGenerator):
         self.linebreak()
 
     def generate_enum(self, enum: SwiftEnum):
+        if enum.protect:
+            self << f'#if {enum.protect}'
         # an enum with no cases cannot declare a raw type
         if len(enum.cases) == 0:
             self << f'public typealias {enum.name} = EmptyEnum<{enum.raw_type}>'
             # There are no error enum with 0 case, in fact there is only one error enum
+            if enum.protect:
+                self << '#endif'
             self.linebreak()
             return
         types = [enum.raw_type] if len(enum.cases) != 0 else []
@@ -50,9 +54,13 @@ class Generator(BaseGenerator):
         with self.indent(f'public enum {enum.name}: {", ".join(types)} {{', '}'):
             for case in enum.cases:
                 self << f'case {safe_name(case.name)} = {case.value}'
+        if enum.protect:
+            self << '#endif'
         self.linebreak()
 
     def generate_option_set(self, option_set: SwiftOptionSet):
+        if option_set.protect:
+            self << f'#if {option_set.protect}'
         with self.indent(f'public struct {option_set.name}: OptionSet, StringConvertibleOptionSet {{', '}'):
             self << f'public let rawValue: {option_set.raw_type}'
             self.linebreak()
@@ -70,15 +78,17 @@ class Generator(BaseGenerator):
             with self.indent('static let descriptions: [(Self, String)] = [', ']'):
                 for case in option_set.cases:
                     self << f'(.{case.name}, "{case.name}"),'
+        if option_set.protect:
+            self << '#endif'
         self.linebreak()
 
     def generate_struct(self, struct: SwiftStruct):
+        if struct.protect:
+            self << f'#if {struct.protect}'
         protocols = [
             'ChainableBase' if struct.c_struct.is_chainable_base else 'CStructConvertible'] + struct.protocols
         with self.indent(f'public struct {struct.name}: {", ".join(protocols)} {{', '}'):
             self << f'public typealias CStruct = {struct.c_struct.name}'
-            if struct.c_struct.is_chainable_base:
-                self << 'protocol Extension: Chainable {}'
             self.linebreak()
             for member in struct.members:
                 self << f'public let {safe_name(member.name)}: {member.type}'
@@ -93,6 +103,10 @@ class Generator(BaseGenerator):
             self.linebreak()
             self.generate_struct_swift_to_c_method(
                 struct, is_chainable_base=struct.c_struct.is_chainable_base)
+        if struct.protect:
+            self << '#endif'
+        if struct.c_struct.is_chainable_base:
+            self << f'protocol {struct.name}Extension: Chainable {{}}'
         self.linebreak()
 
     def generate_struct_init(self, struct: SwiftStruct):
@@ -145,6 +159,8 @@ class Generator(BaseGenerator):
                 self << 'return try body(&cStruct)'
 
     def generate_class(self, cls: SwiftClass):
+        if cls.protect:
+            self << f'#if {cls.protect}'
         protocol_string = ': _HandleContainer' if cls.c_handle else ''
         with self.indent(f'public class {cls.name}{protocol_string} {{', '}'):
             if cls.c_handle:
@@ -161,6 +177,8 @@ class Generator(BaseGenerator):
                 self.linebreak()
                 self.generate_command(command, cls)
 
+        if cls.protect:
+            self << '#endif'
         self.linebreak()
 
     def generate_class_init(self, cls: SwiftClass):
@@ -185,6 +203,8 @@ class Generator(BaseGenerator):
                 self << f'self.dispatchTable = {cls.dispatch_table.name}({", ".join(params)})'
 
     def generate_command(self, command: SwiftCommand, cls: SwiftClass):
+        if command.protect:
+            self << f'#if {command.protect}'
         swift_values = {param.name: param.name for param in command.params}
         swift_values.update(
             {param: get_class_chain(cls, target_class)
@@ -287,14 +307,24 @@ class Generator(BaseGenerator):
                             self << result_string
                     else:
                         self << result_string
+        if command.protect:
+            self << '#endif'
 
     def generate_alias(self, alias: SwiftAlias):
+        if alias.protect:
+            self << f'#if {alias.protect}'
         self << f'public typealias {alias.name} = {alias.alias}'
+        if alias.protect:
+            self << '#endif'
 
     def generate_dispatch_table(self, dispatch_table: DispatchTable):
         with self.indent(f'struct {dispatch_table.name} {{', '}'):
             for command in dispatch_table.commands:
+                if command.protect:
+                    self << f'#if {command.protect}'
                 self << f'let {command.name}: PFN_{command.name}!'
+                if command.protect:
+                    self << '#endif'
             self.linebreak()
 
             loader_name, loader_type = dispatch_table.loader
@@ -307,8 +337,12 @@ class Generator(BaseGenerator):
 
             with self.indent(f'init({", ".join(args)}) {{', '}'):
                 for command in dispatch_table.commands:
+                    if command.protect:
+                        self << f'#if {command.protect}'
                     self << f'self.{command.name} = unsafeBitCast' \
                         f'({loader_name}({param_name}, "{command.name}"), to: PFN_{command.name}?.self)'
+                    if command.protect:
+                        self << '#endif'
         self.linebreak()
 
     @contextmanager

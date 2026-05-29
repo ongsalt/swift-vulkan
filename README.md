@@ -50,9 +50,7 @@ Swift-vulkan is a relatively new project, and there are still some important mil
 
 
 ## Todos
-- namespace platform specific header?
-- proper extension support
-    - generate `push(_:)` per each ChainableBase
+- generate `push(_:)` per each ChainableBase
 - result enum extension
 
 - multiple out array

@@ -1735,6 +1735,175 @@ public struct DisplaySurfaceCreateFlagsKHR: OptionSet, StringConvertibleOptionSe
     ]
 }
 
+#if VK_USE_PLATFORM_ANDROID_KHR
+public struct AndroidSurfaceCreateFlagsKHR: OptionSet, StringConvertibleOptionSet {
+    public let rawValue: UInt32
+
+    public init(rawValue: UInt32) {
+        self.rawValue = rawValue
+    }
+
+    static let descriptions: [(Self, String)] = [
+    ]
+}
+#endif
+
+#if VK_USE_PLATFORM_VI_NN
+public struct ViSurfaceCreateFlagsNN: OptionSet, StringConvertibleOptionSet {
+    public let rawValue: UInt32
+
+    public init(rawValue: UInt32) {
+        self.rawValue = rawValue
+    }
+
+    static let descriptions: [(Self, String)] = [
+    ]
+}
+#endif
+
+#if VK_USE_PLATFORM_WAYLAND_KHR
+public struct WaylandSurfaceCreateFlagsKHR: OptionSet, StringConvertibleOptionSet {
+    public let rawValue: UInt32
+
+    public init(rawValue: UInt32) {
+        self.rawValue = rawValue
+    }
+
+    static let descriptions: [(Self, String)] = [
+    ]
+}
+#endif
+
+#if VK_USE_PLATFORM_UBM_SEC
+public struct UbmSurfaceCreateFlagsSEC: OptionSet, StringConvertibleOptionSet {
+    public let rawValue: UInt32
+
+    public init(rawValue: UInt32) {
+        self.rawValue = rawValue
+    }
+
+    static let descriptions: [(Self, String)] = [
+    ]
+}
+#endif
+
+#if VK_USE_PLATFORM_WIN32_KHR
+public struct Win32SurfaceCreateFlagsKHR: OptionSet, StringConvertibleOptionSet {
+    public let rawValue: UInt32
+
+    public init(rawValue: UInt32) {
+        self.rawValue = rawValue
+    }
+
+    static let descriptions: [(Self, String)] = [
+    ]
+}
+#endif
+
+#if VK_USE_PLATFORM_XLIB_KHR
+public struct XlibSurfaceCreateFlagsKHR: OptionSet, StringConvertibleOptionSet {
+    public let rawValue: UInt32
+
+    public init(rawValue: UInt32) {
+        self.rawValue = rawValue
+    }
+
+    static let descriptions: [(Self, String)] = [
+    ]
+}
+#endif
+
+#if VK_USE_PLATFORM_XCB_KHR
+public struct XcbSurfaceCreateFlagsKHR: OptionSet, StringConvertibleOptionSet {
+    public let rawValue: UInt32
+
+    public init(rawValue: UInt32) {
+        self.rawValue = rawValue
+    }
+
+    static let descriptions: [(Self, String)] = [
+    ]
+}
+#endif
+
+#if VK_USE_PLATFORM_DIRECTFB_EXT
+public struct DirectFBSurfaceCreateFlagsEXT: OptionSet, StringConvertibleOptionSet {
+    public let rawValue: UInt32
+
+    public init(rawValue: UInt32) {
+        self.rawValue = rawValue
+    }
+
+    static let descriptions: [(Self, String)] = [
+    ]
+}
+#endif
+
+#if VK_USE_PLATFORM_IOS_MVK
+public struct IOSSurfaceCreateFlagsMVK: OptionSet, StringConvertibleOptionSet {
+    public let rawValue: UInt32
+
+    public init(rawValue: UInt32) {
+        self.rawValue = rawValue
+    }
+
+    static let descriptions: [(Self, String)] = [
+    ]
+}
+#endif
+
+#if VK_USE_PLATFORM_MACOS_MVK
+public struct MacOSSurfaceCreateFlagsMVK: OptionSet, StringConvertibleOptionSet {
+    public let rawValue: UInt32
+
+    public init(rawValue: UInt32) {
+        self.rawValue = rawValue
+    }
+
+    static let descriptions: [(Self, String)] = [
+    ]
+}
+#endif
+
+#if VK_USE_PLATFORM_METAL_EXT
+public struct MetalSurfaceCreateFlagsEXT: OptionSet, StringConvertibleOptionSet {
+    public let rawValue: UInt32
+
+    public init(rawValue: UInt32) {
+        self.rawValue = rawValue
+    }
+
+    static let descriptions: [(Self, String)] = [
+    ]
+}
+#endif
+
+#if VK_USE_PLATFORM_FUCHSIA
+public struct ImagePipeSurfaceCreateFlagsFUCHSIA: OptionSet, StringConvertibleOptionSet {
+    public let rawValue: UInt32
+
+    public init(rawValue: UInt32) {
+        self.rawValue = rawValue
+    }
+
+    static let descriptions: [(Self, String)] = [
+    ]
+}
+#endif
+
+#if VK_USE_PLATFORM_GGP
+public struct StreamDescriptorSurfaceCreateFlagsGGP: OptionSet, StringConvertibleOptionSet {
+    public let rawValue: UInt32
+
+    public init(rawValue: UInt32) {
+        self.rawValue = rawValue
+    }
+
+    static let descriptions: [(Self, String)] = [
+    ]
+}
+#endif
+
 public struct HeadlessSurfaceCreateFlagsEXT: OptionSet, StringConvertibleOptionSet {
     public let rawValue: UInt32
 
@@ -1745,6 +1914,19 @@ public struct HeadlessSurfaceCreateFlagsEXT: OptionSet, StringConvertibleOptionS
     static let descriptions: [(Self, String)] = [
     ]
 }
+
+#if VK_USE_PLATFORM_SCREEN_QNX
+public struct ScreenSurfaceCreateFlagsQNX: OptionSet, StringConvertibleOptionSet {
+    public let rawValue: UInt32
+
+    public init(rawValue: UInt32) {
+        self.rawValue = rawValue
+    }
+
+    static let descriptions: [(Self, String)] = [
+    ]
+}
+#endif
 
 public struct PeerMemoryFeatureFlags: OptionSet, StringConvertibleOptionSet {
     public let rawValue: UInt32
@@ -2311,6 +2493,19 @@ public struct SubmitFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
+#if VK_USE_PLATFORM_FUCHSIA
+public struct ImageFormatConstraintsFlagsFUCHSIA: OptionSet, StringConvertibleOptionSet {
+    public let rawValue: UInt32
+
+    public init(rawValue: UInt32) {
+        self.rawValue = rawValue
+    }
+
+    static let descriptions: [(Self, String)] = [
+    ]
+}
+#endif
+
 public struct HostImageCopyFlags: OptionSet, StringConvertibleOptionSet {
     public let rawValue: UInt32
 
@@ -2346,6 +2541,30 @@ public struct PartitionedAccelerationStructureInstanceFlagsNV: OptionSet, String
         (.flagEnableExplicitBoundingBox, "flagEnableExplicitBoundingBox"),
     ]
 }
+
+#if VK_USE_PLATFORM_FUCHSIA
+public struct ImageConstraintsInfoFlagsFUCHSIA: OptionSet, StringConvertibleOptionSet {
+    public let rawValue: UInt32
+
+    public static let cpuReadRarely = ImageConstraintsInfoFlagsFUCHSIA(rawValue: 1)
+    public static let cpuReadOften = ImageConstraintsInfoFlagsFUCHSIA(rawValue: 2)
+    public static let cpuWriteRarely = ImageConstraintsInfoFlagsFUCHSIA(rawValue: 4)
+    public static let cpuWriteOften = ImageConstraintsInfoFlagsFUCHSIA(rawValue: 8)
+    public static let protectedOptional = ImageConstraintsInfoFlagsFUCHSIA(rawValue: 16)
+
+    public init(rawValue: UInt32) {
+        self.rawValue = rawValue
+    }
+
+    static let descriptions: [(Self, String)] = [
+        (.cpuReadRarely, "cpuReadRarely"),
+        (.cpuReadOften, "cpuReadOften"),
+        (.cpuWriteRarely, "cpuWriteRarely"),
+        (.cpuWriteOften, "cpuWriteOften"),
+        (.protectedOptional, "protectedOptional"),
+    ]
+}
+#endif
 
 public struct GraphicsPipelineLibraryFlagsEXT: OptionSet, StringConvertibleOptionSet {
     public let rawValue: UInt32
@@ -2448,6 +2667,32 @@ public struct ImageCompressionFixedRateFlagsEXT: OptionSet, StringConvertibleOpt
         (.type24bpc, "type24bpc"),
     ]
 }
+
+#if VK_USE_PLATFORM_METAL_EXT
+public struct ExportMetalObjectTypeFlagsEXT: OptionSet, StringConvertibleOptionSet {
+    public let rawValue: UInt32
+
+    public static let metalDevice = ExportMetalObjectTypeFlagsEXT(rawValue: 1)
+    public static let metalCommandQueue = ExportMetalObjectTypeFlagsEXT(rawValue: 2)
+    public static let metalBuffer = ExportMetalObjectTypeFlagsEXT(rawValue: 4)
+    public static let metalTexture = ExportMetalObjectTypeFlagsEXT(rawValue: 8)
+    public static let metalIosurface = ExportMetalObjectTypeFlagsEXT(rawValue: 16)
+    public static let metalSharedEvent = ExportMetalObjectTypeFlagsEXT(rawValue: 32)
+
+    public init(rawValue: UInt32) {
+        self.rawValue = rawValue
+    }
+
+    static let descriptions: [(Self, String)] = [
+        (.metalDevice, "metalDevice"),
+        (.metalCommandQueue, "metalCommandQueue"),
+        (.metalBuffer, "metalBuffer"),
+        (.metalTexture, "metalTexture"),
+        (.metalIosurface, "metalIosurface"),
+        (.metalSharedEvent, "metalSharedEvent"),
+    ]
+}
+#endif
 
 public struct RenderingAttachmentFlagsKHR: OptionSet, StringConvertibleOptionSet {
     public let rawValue: UInt32
@@ -2657,6 +2902,19 @@ public struct PhysicalDeviceSchedulingControlsFlagsARM: OptionSet, StringConvert
     static let descriptions: [(Self, String)] = [
     ]
 }
+
+#if VK_USE_PLATFORM_OHOS
+public struct SurfaceCreateFlagsOHOS: OptionSet, StringConvertibleOptionSet {
+    public let rawValue: UInt32
+
+    public init(rawValue: UInt32) {
+        self.rawValue = rawValue
+    }
+
+    static let descriptions: [(Self, String)] = [
+    ]
+}
+#endif
 
 public struct PresentStageFlagsEXT: OptionSet, StringConvertibleOptionSet {
     public let rawValue: UInt32

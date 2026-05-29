@@ -28,6 +28,12 @@ struct InstanceDispatchTable {
     let vkEnumerateDeviceLayerProperties: PFN_vkEnumerateDeviceLayerProperties!
     let vkEnumerateDeviceExtensionProperties: PFN_vkEnumerateDeviceExtensionProperties!
     let vkGetPhysicalDeviceSparseImageFormatProperties: PFN_vkGetPhysicalDeviceSparseImageFormatProperties!
+    #if VK_USE_PLATFORM_ANDROID_KHR
+    let vkCreateAndroidSurfaceKHR: PFN_vkCreateAndroidSurfaceKHR!
+    #endif
+    #if VK_USE_PLATFORM_OHOS
+    let vkCreateSurfaceOHOS: PFN_vkCreateSurfaceOHOS!
+    #endif
     let vkGetPhysicalDeviceDisplayPropertiesKHR: PFN_vkGetPhysicalDeviceDisplayPropertiesKHR!
     let vkGetPhysicalDeviceDisplayPlanePropertiesKHR: PFN_vkGetPhysicalDeviceDisplayPlanePropertiesKHR!
     let vkGetDisplayPlaneSupportedDisplaysKHR: PFN_vkGetDisplayPlaneSupportedDisplaysKHR!
@@ -40,6 +46,57 @@ struct InstanceDispatchTable {
     let vkGetPhysicalDeviceSurfaceCapabilitiesKHR: PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR!
     let vkGetPhysicalDeviceSurfaceFormatsKHR: PFN_vkGetPhysicalDeviceSurfaceFormatsKHR!
     let vkGetPhysicalDeviceSurfacePresentModesKHR: PFN_vkGetPhysicalDeviceSurfacePresentModesKHR!
+    #if VK_USE_PLATFORM_VI_NN
+    let vkCreateViSurfaceNN: PFN_vkCreateViSurfaceNN!
+    #endif
+    #if VK_USE_PLATFORM_WAYLAND_KHR
+    let vkCreateWaylandSurfaceKHR: PFN_vkCreateWaylandSurfaceKHR!
+    #endif
+    #if VK_USE_PLATFORM_WAYLAND_KHR
+    let vkGetPhysicalDeviceWaylandPresentationSupportKHR: PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR!
+    #endif
+    #if VK_USE_PLATFORM_UBM_SEC
+    let vkCreateUbmSurfaceSEC: PFN_vkCreateUbmSurfaceSEC!
+    #endif
+    #if VK_USE_PLATFORM_UBM_SEC
+    let vkGetPhysicalDeviceUbmPresentationSupportSEC: PFN_vkGetPhysicalDeviceUbmPresentationSupportSEC!
+    #endif
+    #if VK_USE_PLATFORM_WIN32_KHR
+    let vkCreateWin32SurfaceKHR: PFN_vkCreateWin32SurfaceKHR!
+    #endif
+    #if VK_USE_PLATFORM_WIN32_KHR
+    let vkGetPhysicalDeviceWin32PresentationSupportKHR: PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR!
+    #endif
+    #if VK_USE_PLATFORM_XLIB_KHR
+    let vkCreateXlibSurfaceKHR: PFN_vkCreateXlibSurfaceKHR!
+    #endif
+    #if VK_USE_PLATFORM_XLIB_KHR
+    let vkGetPhysicalDeviceXlibPresentationSupportKHR: PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR!
+    #endif
+    #if VK_USE_PLATFORM_XCB_KHR
+    let vkCreateXcbSurfaceKHR: PFN_vkCreateXcbSurfaceKHR!
+    #endif
+    #if VK_USE_PLATFORM_XCB_KHR
+    let vkGetPhysicalDeviceXcbPresentationSupportKHR: PFN_vkGetPhysicalDeviceXcbPresentationSupportKHR!
+    #endif
+    #if VK_USE_PLATFORM_DIRECTFB_EXT
+    let vkCreateDirectFBSurfaceEXT: PFN_vkCreateDirectFBSurfaceEXT!
+    #endif
+    #if VK_USE_PLATFORM_DIRECTFB_EXT
+    let vkGetPhysicalDeviceDirectFBPresentationSupportEXT: PFN_vkGetPhysicalDeviceDirectFBPresentationSupportEXT!
+    #endif
+    #if VK_USE_PLATFORM_FUCHSIA
+    let vkCreateImagePipeSurfaceFUCHSIA: PFN_vkCreateImagePipeSurfaceFUCHSIA!
+    #endif
+    #if VK_USE_PLATFORM_GGP
+    let vkCreateStreamDescriptorSurfaceGGP: PFN_vkCreateStreamDescriptorSurfaceGGP!
+    #endif
+    #if VK_USE_PLATFORM_SCREEN_QNX
+    let vkCreateScreenSurfaceQNX: PFN_vkCreateScreenSurfaceQNX!
+    #endif
+    #if VK_USE_PLATFORM_SCREEN_QNX
+    let vkGetPhysicalDeviceScreenPresentationSupportQNX: PFN_vkGetPhysicalDeviceScreenPresentationSupportQNX!
+    #endif
     let vkCreateDebugReportCallbackEXT: PFN_vkCreateDebugReportCallbackEXT!
     let vkDestroyDebugReportCallbackEXT: PFN_vkDestroyDebugReportCallbackEXT!
     let vkDebugReportMessageEXT: PFN_vkDebugReportMessageEXT!
@@ -55,9 +112,30 @@ struct InstanceDispatchTable {
     let vkGetPhysicalDeviceExternalSemaphoreProperties: PFN_vkGetPhysicalDeviceExternalSemaphoreProperties!
     let vkGetPhysicalDeviceExternalFenceProperties: PFN_vkGetPhysicalDeviceExternalFenceProperties!
     let vkReleaseDisplayEXT: PFN_vkReleaseDisplayEXT!
+    #if VK_USE_PLATFORM_XLIB_XRANDR_EXT
+    let vkAcquireXlibDisplayEXT: PFN_vkAcquireXlibDisplayEXT!
+    #endif
+    #if VK_USE_PLATFORM_XLIB_XRANDR_EXT
+    let vkGetRandROutputDisplayEXT: PFN_vkGetRandROutputDisplayEXT!
+    #endif
+    #if VK_USE_PLATFORM_WIN32_KHR
+    let vkAcquireWinrtDisplayNV: PFN_vkAcquireWinrtDisplayNV!
+    #endif
+    #if VK_USE_PLATFORM_WIN32_KHR
+    let vkGetWinrtDisplayNV: PFN_vkGetWinrtDisplayNV!
+    #endif
     let vkGetPhysicalDeviceSurfaceCapabilities2EXT: PFN_vkGetPhysicalDeviceSurfaceCapabilities2EXT!
     let vkEnumeratePhysicalDeviceGroups: PFN_vkEnumeratePhysicalDeviceGroups!
     let vkGetPhysicalDevicePresentRectanglesKHR: PFN_vkGetPhysicalDevicePresentRectanglesKHR!
+    #if VK_USE_PLATFORM_IOS_MVK
+    let vkCreateIOSSurfaceMVK: PFN_vkCreateIOSSurfaceMVK!
+    #endif
+    #if VK_USE_PLATFORM_MACOS_MVK
+    let vkCreateMacOSSurfaceMVK: PFN_vkCreateMacOSSurfaceMVK!
+    #endif
+    #if VK_USE_PLATFORM_METAL_EXT
+    let vkCreateMetalSurfaceEXT: PFN_vkCreateMetalSurfaceEXT!
+    #endif
     let vkGetPhysicalDeviceMultisamplePropertiesEXT: PFN_vkGetPhysicalDeviceMultisamplePropertiesEXT!
     let vkGetPhysicalDeviceSurfaceCapabilities2KHR: PFN_vkGetPhysicalDeviceSurfaceCapabilities2KHR!
     let vkGetPhysicalDeviceSurfaceFormats2KHR: PFN_vkGetPhysicalDeviceSurfaceFormats2KHR!
@@ -70,6 +148,9 @@ struct InstanceDispatchTable {
     let vkDestroyDebugUtilsMessengerEXT: PFN_vkDestroyDebugUtilsMessengerEXT!
     let vkSubmitDebugUtilsMessageEXT: PFN_vkSubmitDebugUtilsMessageEXT!
     let vkGetPhysicalDeviceCooperativeMatrixPropertiesNV: PFN_vkGetPhysicalDeviceCooperativeMatrixPropertiesNV!
+    #if VK_USE_PLATFORM_WIN32_KHR
+    let vkGetPhysicalDeviceSurfacePresentModes2EXT: PFN_vkGetPhysicalDeviceSurfacePresentModes2EXT!
+    #endif
     let vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR: PFN_vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR!
     let vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR: PFN_vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR!
     let vkCreateHeadlessSurfaceEXT: PFN_vkCreateHeadlessSurfaceEXT!
@@ -108,6 +189,12 @@ struct InstanceDispatchTable {
         self.vkEnumerateDeviceLayerProperties = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkEnumerateDeviceLayerProperties"), to: PFN_vkEnumerateDeviceLayerProperties?.self)
         self.vkEnumerateDeviceExtensionProperties = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkEnumerateDeviceExtensionProperties"), to: PFN_vkEnumerateDeviceExtensionProperties?.self)
         self.vkGetPhysicalDeviceSparseImageFormatProperties = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceSparseImageFormatProperties"), to: PFN_vkGetPhysicalDeviceSparseImageFormatProperties?.self)
+        #if VK_USE_PLATFORM_ANDROID_KHR
+        self.vkCreateAndroidSurfaceKHR = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkCreateAndroidSurfaceKHR"), to: PFN_vkCreateAndroidSurfaceKHR?.self)
+        #endif
+        #if VK_USE_PLATFORM_OHOS
+        self.vkCreateSurfaceOHOS = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkCreateSurfaceOHOS"), to: PFN_vkCreateSurfaceOHOS?.self)
+        #endif
         self.vkGetPhysicalDeviceDisplayPropertiesKHR = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceDisplayPropertiesKHR"), to: PFN_vkGetPhysicalDeviceDisplayPropertiesKHR?.self)
         self.vkGetPhysicalDeviceDisplayPlanePropertiesKHR = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceDisplayPlanePropertiesKHR"), to: PFN_vkGetPhysicalDeviceDisplayPlanePropertiesKHR?.self)
         self.vkGetDisplayPlaneSupportedDisplaysKHR = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkGetDisplayPlaneSupportedDisplaysKHR"), to: PFN_vkGetDisplayPlaneSupportedDisplaysKHR?.self)
@@ -120,6 +207,57 @@ struct InstanceDispatchTable {
         self.vkGetPhysicalDeviceSurfaceCapabilitiesKHR = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceSurfaceCapabilitiesKHR"), to: PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR?.self)
         self.vkGetPhysicalDeviceSurfaceFormatsKHR = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceSurfaceFormatsKHR"), to: PFN_vkGetPhysicalDeviceSurfaceFormatsKHR?.self)
         self.vkGetPhysicalDeviceSurfacePresentModesKHR = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceSurfacePresentModesKHR"), to: PFN_vkGetPhysicalDeviceSurfacePresentModesKHR?.self)
+        #if VK_USE_PLATFORM_VI_NN
+        self.vkCreateViSurfaceNN = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkCreateViSurfaceNN"), to: PFN_vkCreateViSurfaceNN?.self)
+        #endif
+        #if VK_USE_PLATFORM_WAYLAND_KHR
+        self.vkCreateWaylandSurfaceKHR = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkCreateWaylandSurfaceKHR"), to: PFN_vkCreateWaylandSurfaceKHR?.self)
+        #endif
+        #if VK_USE_PLATFORM_WAYLAND_KHR
+        self.vkGetPhysicalDeviceWaylandPresentationSupportKHR = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceWaylandPresentationSupportKHR"), to: PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR?.self)
+        #endif
+        #if VK_USE_PLATFORM_UBM_SEC
+        self.vkCreateUbmSurfaceSEC = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkCreateUbmSurfaceSEC"), to: PFN_vkCreateUbmSurfaceSEC?.self)
+        #endif
+        #if VK_USE_PLATFORM_UBM_SEC
+        self.vkGetPhysicalDeviceUbmPresentationSupportSEC = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceUbmPresentationSupportSEC"), to: PFN_vkGetPhysicalDeviceUbmPresentationSupportSEC?.self)
+        #endif
+        #if VK_USE_PLATFORM_WIN32_KHR
+        self.vkCreateWin32SurfaceKHR = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkCreateWin32SurfaceKHR"), to: PFN_vkCreateWin32SurfaceKHR?.self)
+        #endif
+        #if VK_USE_PLATFORM_WIN32_KHR
+        self.vkGetPhysicalDeviceWin32PresentationSupportKHR = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceWin32PresentationSupportKHR"), to: PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR?.self)
+        #endif
+        #if VK_USE_PLATFORM_XLIB_KHR
+        self.vkCreateXlibSurfaceKHR = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkCreateXlibSurfaceKHR"), to: PFN_vkCreateXlibSurfaceKHR?.self)
+        #endif
+        #if VK_USE_PLATFORM_XLIB_KHR
+        self.vkGetPhysicalDeviceXlibPresentationSupportKHR = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceXlibPresentationSupportKHR"), to: PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR?.self)
+        #endif
+        #if VK_USE_PLATFORM_XCB_KHR
+        self.vkCreateXcbSurfaceKHR = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkCreateXcbSurfaceKHR"), to: PFN_vkCreateXcbSurfaceKHR?.self)
+        #endif
+        #if VK_USE_PLATFORM_XCB_KHR
+        self.vkGetPhysicalDeviceXcbPresentationSupportKHR = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceXcbPresentationSupportKHR"), to: PFN_vkGetPhysicalDeviceXcbPresentationSupportKHR?.self)
+        #endif
+        #if VK_USE_PLATFORM_DIRECTFB_EXT
+        self.vkCreateDirectFBSurfaceEXT = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkCreateDirectFBSurfaceEXT"), to: PFN_vkCreateDirectFBSurfaceEXT?.self)
+        #endif
+        #if VK_USE_PLATFORM_DIRECTFB_EXT
+        self.vkGetPhysicalDeviceDirectFBPresentationSupportEXT = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceDirectFBPresentationSupportEXT"), to: PFN_vkGetPhysicalDeviceDirectFBPresentationSupportEXT?.self)
+        #endif
+        #if VK_USE_PLATFORM_FUCHSIA
+        self.vkCreateImagePipeSurfaceFUCHSIA = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkCreateImagePipeSurfaceFUCHSIA"), to: PFN_vkCreateImagePipeSurfaceFUCHSIA?.self)
+        #endif
+        #if VK_USE_PLATFORM_GGP
+        self.vkCreateStreamDescriptorSurfaceGGP = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkCreateStreamDescriptorSurfaceGGP"), to: PFN_vkCreateStreamDescriptorSurfaceGGP?.self)
+        #endif
+        #if VK_USE_PLATFORM_SCREEN_QNX
+        self.vkCreateScreenSurfaceQNX = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkCreateScreenSurfaceQNX"), to: PFN_vkCreateScreenSurfaceQNX?.self)
+        #endif
+        #if VK_USE_PLATFORM_SCREEN_QNX
+        self.vkGetPhysicalDeviceScreenPresentationSupportQNX = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceScreenPresentationSupportQNX"), to: PFN_vkGetPhysicalDeviceScreenPresentationSupportQNX?.self)
+        #endif
         self.vkCreateDebugReportCallbackEXT = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkCreateDebugReportCallbackEXT"), to: PFN_vkCreateDebugReportCallbackEXT?.self)
         self.vkDestroyDebugReportCallbackEXT = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkDestroyDebugReportCallbackEXT"), to: PFN_vkDestroyDebugReportCallbackEXT?.self)
         self.vkDebugReportMessageEXT = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkDebugReportMessageEXT"), to: PFN_vkDebugReportMessageEXT?.self)
@@ -135,9 +273,30 @@ struct InstanceDispatchTable {
         self.vkGetPhysicalDeviceExternalSemaphoreProperties = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceExternalSemaphoreProperties"), to: PFN_vkGetPhysicalDeviceExternalSemaphoreProperties?.self)
         self.vkGetPhysicalDeviceExternalFenceProperties = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceExternalFenceProperties"), to: PFN_vkGetPhysicalDeviceExternalFenceProperties?.self)
         self.vkReleaseDisplayEXT = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkReleaseDisplayEXT"), to: PFN_vkReleaseDisplayEXT?.self)
+        #if VK_USE_PLATFORM_XLIB_XRANDR_EXT
+        self.vkAcquireXlibDisplayEXT = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkAcquireXlibDisplayEXT"), to: PFN_vkAcquireXlibDisplayEXT?.self)
+        #endif
+        #if VK_USE_PLATFORM_XLIB_XRANDR_EXT
+        self.vkGetRandROutputDisplayEXT = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkGetRandROutputDisplayEXT"), to: PFN_vkGetRandROutputDisplayEXT?.self)
+        #endif
+        #if VK_USE_PLATFORM_WIN32_KHR
+        self.vkAcquireWinrtDisplayNV = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkAcquireWinrtDisplayNV"), to: PFN_vkAcquireWinrtDisplayNV?.self)
+        #endif
+        #if VK_USE_PLATFORM_WIN32_KHR
+        self.vkGetWinrtDisplayNV = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkGetWinrtDisplayNV"), to: PFN_vkGetWinrtDisplayNV?.self)
+        #endif
         self.vkGetPhysicalDeviceSurfaceCapabilities2EXT = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceSurfaceCapabilities2EXT"), to: PFN_vkGetPhysicalDeviceSurfaceCapabilities2EXT?.self)
         self.vkEnumeratePhysicalDeviceGroups = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkEnumeratePhysicalDeviceGroups"), to: PFN_vkEnumeratePhysicalDeviceGroups?.self)
         self.vkGetPhysicalDevicePresentRectanglesKHR = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkGetPhysicalDevicePresentRectanglesKHR"), to: PFN_vkGetPhysicalDevicePresentRectanglesKHR?.self)
+        #if VK_USE_PLATFORM_IOS_MVK
+        self.vkCreateIOSSurfaceMVK = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkCreateIOSSurfaceMVK"), to: PFN_vkCreateIOSSurfaceMVK?.self)
+        #endif
+        #if VK_USE_PLATFORM_MACOS_MVK
+        self.vkCreateMacOSSurfaceMVK = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkCreateMacOSSurfaceMVK"), to: PFN_vkCreateMacOSSurfaceMVK?.self)
+        #endif
+        #if VK_USE_PLATFORM_METAL_EXT
+        self.vkCreateMetalSurfaceEXT = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkCreateMetalSurfaceEXT"), to: PFN_vkCreateMetalSurfaceEXT?.self)
+        #endif
         self.vkGetPhysicalDeviceMultisamplePropertiesEXT = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceMultisamplePropertiesEXT"), to: PFN_vkGetPhysicalDeviceMultisamplePropertiesEXT?.self)
         self.vkGetPhysicalDeviceSurfaceCapabilities2KHR = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceSurfaceCapabilities2KHR"), to: PFN_vkGetPhysicalDeviceSurfaceCapabilities2KHR?.self)
         self.vkGetPhysicalDeviceSurfaceFormats2KHR = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceSurfaceFormats2KHR"), to: PFN_vkGetPhysicalDeviceSurfaceFormats2KHR?.self)
@@ -150,6 +309,9 @@ struct InstanceDispatchTable {
         self.vkDestroyDebugUtilsMessengerEXT = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkDestroyDebugUtilsMessengerEXT"), to: PFN_vkDestroyDebugUtilsMessengerEXT?.self)
         self.vkSubmitDebugUtilsMessageEXT = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkSubmitDebugUtilsMessageEXT"), to: PFN_vkSubmitDebugUtilsMessageEXT?.self)
         self.vkGetPhysicalDeviceCooperativeMatrixPropertiesNV = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceCooperativeMatrixPropertiesNV"), to: PFN_vkGetPhysicalDeviceCooperativeMatrixPropertiesNV?.self)
+        #if VK_USE_PLATFORM_WIN32_KHR
+        self.vkGetPhysicalDeviceSurfacePresentModes2EXT = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceSurfacePresentModes2EXT"), to: PFN_vkGetPhysicalDeviceSurfacePresentModes2EXT?.self)
+        #endif
         self.vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR"), to: PFN_vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR?.self)
         self.vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR"), to: PFN_vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR?.self)
         self.vkCreateHeadlessSurfaceEXT = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkCreateHeadlessSurfaceEXT"), to: PFN_vkCreateHeadlessSurfaceEXT?.self)
@@ -331,6 +493,9 @@ struct DeviceDispatchTable {
     let vkCmdDebugMarkerBeginEXT: PFN_vkCmdDebugMarkerBeginEXT!
     let vkCmdDebugMarkerEndEXT: PFN_vkCmdDebugMarkerEndEXT!
     let vkCmdDebugMarkerInsertEXT: PFN_vkCmdDebugMarkerInsertEXT!
+    #if VK_USE_PLATFORM_WIN32_KHR
+    let vkGetMemoryWin32HandleNV: PFN_vkGetMemoryWin32HandleNV!
+    #endif
     let vkCmdExecuteGeneratedCommandsNV: PFN_vkCmdExecuteGeneratedCommandsNV!
     let vkCmdPreprocessGeneratedCommandsNV: PFN_vkCmdPreprocessGeneratedCommandsNV!
     let vkCmdBindPipelineShaderGroupNV: PFN_vkCmdBindPipelineShaderGroupNV!
@@ -348,11 +513,41 @@ struct DeviceDispatchTable {
     let vkUpdateIndirectExecutionSetShaderEXT: PFN_vkUpdateIndirectExecutionSetShaderEXT!
     let vkCmdPushDescriptorSet: PFN_vkCmdPushDescriptorSet!
     let vkTrimCommandPool: PFN_vkTrimCommandPool!
+    #if VK_USE_PLATFORM_WIN32_KHR
+    let vkGetMemoryWin32HandleKHR: PFN_vkGetMemoryWin32HandleKHR!
+    #endif
+    #if VK_USE_PLATFORM_WIN32_KHR
+    let vkGetMemoryWin32HandlePropertiesKHR: PFN_vkGetMemoryWin32HandlePropertiesKHR!
+    #endif
     let vkGetMemoryFdKHR: PFN_vkGetMemoryFdKHR!
     let vkGetMemoryFdPropertiesKHR: PFN_vkGetMemoryFdPropertiesKHR!
+    #if VK_USE_PLATFORM_FUCHSIA
+    let vkGetMemoryZirconHandleFUCHSIA: PFN_vkGetMemoryZirconHandleFUCHSIA!
+    #endif
+    #if VK_USE_PLATFORM_FUCHSIA
+    let vkGetMemoryZirconHandlePropertiesFUCHSIA: PFN_vkGetMemoryZirconHandlePropertiesFUCHSIA!
+    #endif
     let vkGetMemoryRemoteAddressNV: PFN_vkGetMemoryRemoteAddressNV!
+    #if VK_USE_PLATFORM_WIN32_KHR
+    let vkGetSemaphoreWin32HandleKHR: PFN_vkGetSemaphoreWin32HandleKHR!
+    #endif
+    #if VK_USE_PLATFORM_WIN32_KHR
+    let vkImportSemaphoreWin32HandleKHR: PFN_vkImportSemaphoreWin32HandleKHR!
+    #endif
     let vkGetSemaphoreFdKHR: PFN_vkGetSemaphoreFdKHR!
     let vkImportSemaphoreFdKHR: PFN_vkImportSemaphoreFdKHR!
+    #if VK_USE_PLATFORM_FUCHSIA
+    let vkGetSemaphoreZirconHandleFUCHSIA: PFN_vkGetSemaphoreZirconHandleFUCHSIA!
+    #endif
+    #if VK_USE_PLATFORM_FUCHSIA
+    let vkImportSemaphoreZirconHandleFUCHSIA: PFN_vkImportSemaphoreZirconHandleFUCHSIA!
+    #endif
+    #if VK_USE_PLATFORM_WIN32_KHR
+    let vkGetFenceWin32HandleKHR: PFN_vkGetFenceWin32HandleKHR!
+    #endif
+    #if VK_USE_PLATFORM_WIN32_KHR
+    let vkImportFenceWin32HandleKHR: PFN_vkImportFenceWin32HandleKHR!
+    #endif
     let vkGetFenceFdKHR: PFN_vkGetFenceFdKHR!
     let vkImportFenceFdKHR: PFN_vkImportFenceFdKHR!
     let vkDisplayPowerControlEXT: PFN_vkDisplayPowerControlEXT!
@@ -414,6 +609,12 @@ struct DeviceDispatchTable {
     let vkGetSemaphoreCounterValue: PFN_vkGetSemaphoreCounterValue!
     let vkWaitSemaphores: PFN_vkWaitSemaphores!
     let vkSignalSemaphore: PFN_vkSignalSemaphore!
+    #if VK_USE_PLATFORM_ANDROID_KHR
+    let vkGetAndroidHardwareBufferPropertiesANDROID: PFN_vkGetAndroidHardwareBufferPropertiesANDROID!
+    #endif
+    #if VK_USE_PLATFORM_ANDROID_KHR
+    let vkGetMemoryAndroidHardwareBufferANDROID: PFN_vkGetMemoryAndroidHardwareBufferANDROID!
+    #endif
     let vkCmdDrawIndirectCount: PFN_vkCmdDrawIndirectCount!
     let vkCmdDrawIndexedIndirectCount: PFN_vkCmdDrawIndexedIndirectCount!
     let vkCmdSetCheckpointNV: PFN_vkCmdSetCheckpointNV!
@@ -471,6 +672,15 @@ struct DeviceDispatchTable {
     let vkGetImageViewHandle64NVX: PFN_vkGetImageViewHandle64NVX!
     let vkGetImageViewAddressNVX: PFN_vkGetImageViewAddressNVX!
     let vkGetDeviceCombinedImageSamplerIndexNVX: PFN_vkGetDeviceCombinedImageSamplerIndexNVX!
+    #if VK_USE_PLATFORM_WIN32_KHR
+    let vkGetDeviceGroupSurfacePresentModes2EXT: PFN_vkGetDeviceGroupSurfacePresentModes2EXT!
+    #endif
+    #if VK_USE_PLATFORM_WIN32_KHR
+    let vkAcquireFullScreenExclusiveModeEXT: PFN_vkAcquireFullScreenExclusiveModeEXT!
+    #endif
+    #if VK_USE_PLATFORM_WIN32_KHR
+    let vkReleaseFullScreenExclusiveModeEXT: PFN_vkReleaseFullScreenExclusiveModeEXT!
+    #endif
     let vkAcquireProfilingLockKHR: PFN_vkAcquireProfilingLockKHR!
     let vkReleaseProfilingLockKHR: PFN_vkReleaseProfilingLockKHR!
     let vkGetImageDrmFormatModifierPropertiesEXT: PFN_vkGetImageDrmFormatModifierPropertiesEXT!
@@ -617,6 +827,39 @@ struct DeviceDispatchTable {
     let vkSetDeviceMemoryPriorityEXT: PFN_vkSetDeviceMemoryPriorityEXT!
     let vkWaitForPresent2KHR: PFN_vkWaitForPresent2KHR!
     let vkWaitForPresentKHR: PFN_vkWaitForPresentKHR!
+    #if VK_USE_PLATFORM_FUCHSIA
+    let vkCreateBufferCollectionFUCHSIA: PFN_vkCreateBufferCollectionFUCHSIA!
+    #endif
+    #if VK_USE_PLATFORM_FUCHSIA
+    let vkSetBufferCollectionBufferConstraintsFUCHSIA: PFN_vkSetBufferCollectionBufferConstraintsFUCHSIA!
+    #endif
+    #if VK_USE_PLATFORM_FUCHSIA
+    let vkSetBufferCollectionImageConstraintsFUCHSIA: PFN_vkSetBufferCollectionImageConstraintsFUCHSIA!
+    #endif
+    #if VK_USE_PLATFORM_FUCHSIA
+    let vkDestroyBufferCollectionFUCHSIA: PFN_vkDestroyBufferCollectionFUCHSIA!
+    #endif
+    #if VK_USE_PLATFORM_FUCHSIA
+    let vkGetBufferCollectionPropertiesFUCHSIA: PFN_vkGetBufferCollectionPropertiesFUCHSIA!
+    #endif
+    #if VK_ENABLE_BETA_EXTENSIONS
+    let vkCreateCudaModuleNV: PFN_vkCreateCudaModuleNV!
+    #endif
+    #if VK_ENABLE_BETA_EXTENSIONS
+    let vkGetCudaModuleCacheNV: PFN_vkGetCudaModuleCacheNV!
+    #endif
+    #if VK_ENABLE_BETA_EXTENSIONS
+    let vkCreateCudaFunctionNV: PFN_vkCreateCudaFunctionNV!
+    #endif
+    #if VK_ENABLE_BETA_EXTENSIONS
+    let vkDestroyCudaModuleNV: PFN_vkDestroyCudaModuleNV!
+    #endif
+    #if VK_ENABLE_BETA_EXTENSIONS
+    let vkDestroyCudaFunctionNV: PFN_vkDestroyCudaFunctionNV!
+    #endif
+    #if VK_ENABLE_BETA_EXTENSIONS
+    let vkCmdCudaLaunchKernelNV: PFN_vkCmdCudaLaunchKernelNV!
+    #endif
     let vkCmdBeginRendering: PFN_vkCmdBeginRendering!
     let vkCmdEndRendering: PFN_vkCmdEndRendering!
     let vkCmdEndRendering2KHR: PFN_vkCmdEndRendering2KHR!
@@ -626,6 +869,9 @@ struct DeviceDispatchTable {
     let vkGetShaderModuleCreateInfoIdentifierEXT: PFN_vkGetShaderModuleCreateInfoIdentifierEXT!
     let vkGetImageSubresourceLayout2: PFN_vkGetImageSubresourceLayout2!
     let vkGetPipelinePropertiesEXT: PFN_vkGetPipelinePropertiesEXT!
+    #if VK_USE_PLATFORM_METAL_EXT
+    let vkExportMetalObjectsEXT: PFN_vkExportMetalObjectsEXT!
+    #endif
     let vkCmdBindTileMemoryQCOM: PFN_vkCmdBindTileMemoryQCOM!
     let vkGetFramebufferTilePropertiesQCOM: PFN_vkGetFramebufferTilePropertiesQCOM!
     let vkGetDynamicRenderingTilePropertiesQCOM: PFN_vkGetDynamicRenderingTilePropertiesQCOM!
@@ -649,6 +895,30 @@ struct DeviceDispatchTable {
     let vkGetSwapchainTimingPropertiesEXT: PFN_vkGetSwapchainTimingPropertiesEXT!
     let vkGetSwapchainTimeDomainPropertiesEXT: PFN_vkGetSwapchainTimeDomainPropertiesEXT!
     let vkGetPastPresentationTimingEXT: PFN_vkGetPastPresentationTimingEXT!
+    #if VK_USE_PLATFORM_SCREEN_QNX
+    let vkGetScreenBufferPropertiesQNX: PFN_vkGetScreenBufferPropertiesQNX!
+    #endif
+    #if VK_ENABLE_BETA_EXTENSIONS
+    let vkGetExecutionGraphPipelineScratchSizeAMDX: PFN_vkGetExecutionGraphPipelineScratchSizeAMDX!
+    #endif
+    #if VK_ENABLE_BETA_EXTENSIONS
+    let vkGetExecutionGraphPipelineNodeIndexAMDX: PFN_vkGetExecutionGraphPipelineNodeIndexAMDX!
+    #endif
+    #if VK_ENABLE_BETA_EXTENSIONS
+    let vkCreateExecutionGraphPipelinesAMDX: PFN_vkCreateExecutionGraphPipelinesAMDX!
+    #endif
+    #if VK_ENABLE_BETA_EXTENSIONS
+    let vkCmdInitializeGraphScratchMemoryAMDX: PFN_vkCmdInitializeGraphScratchMemoryAMDX!
+    #endif
+    #if VK_ENABLE_BETA_EXTENSIONS
+    let vkCmdDispatchGraphAMDX: PFN_vkCmdDispatchGraphAMDX!
+    #endif
+    #if VK_ENABLE_BETA_EXTENSIONS
+    let vkCmdDispatchGraphIndirectAMDX: PFN_vkCmdDispatchGraphIndirectAMDX!
+    #endif
+    #if VK_ENABLE_BETA_EXTENSIONS
+    let vkCmdDispatchGraphIndirectCountAMDX: PFN_vkCmdDispatchGraphIndirectCountAMDX!
+    #endif
     let vkCmdBindDescriptorSets2: PFN_vkCmdBindDescriptorSets2!
     let vkCmdPushConstants2: PFN_vkCmdPushConstants2!
     let vkCmdPushDescriptorSet2: PFN_vkCmdPushDescriptorSet2!
@@ -663,6 +933,12 @@ struct DeviceDispatchTable {
     let vkCmdSetRenderingAttachmentLocations: PFN_vkCmdSetRenderingAttachmentLocations!
     let vkCmdSetRenderingInputAttachmentIndices: PFN_vkCmdSetRenderingInputAttachmentIndices!
     let vkCmdSetDepthClampRangeEXT: PFN_vkCmdSetDepthClampRangeEXT!
+    #if VK_USE_PLATFORM_METAL_EXT
+    let vkGetMemoryMetalHandleEXT: PFN_vkGetMemoryMetalHandleEXT!
+    #endif
+    #if VK_USE_PLATFORM_METAL_EXT
+    let vkGetMemoryMetalHandlePropertiesEXT: PFN_vkGetMemoryMetalHandlePropertiesEXT!
+    #endif
     let vkConvertCooperativeVectorMatrixNV: PFN_vkConvertCooperativeVectorMatrixNV!
     let vkCmdConvertCooperativeVectorMatrixNV: PFN_vkCmdConvertCooperativeVectorMatrixNV!
     let vkCmdDispatchTileQCOM: PFN_vkCmdDispatchTileQCOM!
@@ -696,6 +972,12 @@ struct DeviceDispatchTable {
     let vkCmdDispatchDataGraphARM: PFN_vkCmdDispatchDataGraphARM!
     let vkGetDataGraphPipelineAvailablePropertiesARM: PFN_vkGetDataGraphPipelineAvailablePropertiesARM!
     let vkGetDataGraphPipelinePropertiesARM: PFN_vkGetDataGraphPipelinePropertiesARM!
+    #if VK_USE_PLATFORM_OHOS
+    let vkGetNativeBufferPropertiesOHOS: PFN_vkGetNativeBufferPropertiesOHOS!
+    #endif
+    #if VK_USE_PLATFORM_OHOS
+    let vkGetMemoryNativeBufferOHOS: PFN_vkGetMemoryNativeBufferOHOS!
+    #endif
     let vkQueueSetPerfHintQCOM: PFN_vkQueueSetPerfHintQCOM!
     let vkCmdSetComputeOccupancyPriorityNV: PFN_vkCmdSetComputeOccupancyPriorityNV!
     let vkWriteSamplerDescriptorsEXT: PFN_vkWriteSamplerDescriptorsEXT!
@@ -886,6 +1168,9 @@ struct DeviceDispatchTable {
         self.vkCmdDebugMarkerBeginEXT = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdDebugMarkerBeginEXT"), to: PFN_vkCmdDebugMarkerBeginEXT?.self)
         self.vkCmdDebugMarkerEndEXT = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdDebugMarkerEndEXT"), to: PFN_vkCmdDebugMarkerEndEXT?.self)
         self.vkCmdDebugMarkerInsertEXT = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdDebugMarkerInsertEXT"), to: PFN_vkCmdDebugMarkerInsertEXT?.self)
+        #if VK_USE_PLATFORM_WIN32_KHR
+        self.vkGetMemoryWin32HandleNV = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetMemoryWin32HandleNV"), to: PFN_vkGetMemoryWin32HandleNV?.self)
+        #endif
         self.vkCmdExecuteGeneratedCommandsNV = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdExecuteGeneratedCommandsNV"), to: PFN_vkCmdExecuteGeneratedCommandsNV?.self)
         self.vkCmdPreprocessGeneratedCommandsNV = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdPreprocessGeneratedCommandsNV"), to: PFN_vkCmdPreprocessGeneratedCommandsNV?.self)
         self.vkCmdBindPipelineShaderGroupNV = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdBindPipelineShaderGroupNV"), to: PFN_vkCmdBindPipelineShaderGroupNV?.self)
@@ -903,11 +1188,41 @@ struct DeviceDispatchTable {
         self.vkUpdateIndirectExecutionSetShaderEXT = unsafeBitCast(vkGetDeviceProcAddr(device, "vkUpdateIndirectExecutionSetShaderEXT"), to: PFN_vkUpdateIndirectExecutionSetShaderEXT?.self)
         self.vkCmdPushDescriptorSet = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdPushDescriptorSet"), to: PFN_vkCmdPushDescriptorSet?.self)
         self.vkTrimCommandPool = unsafeBitCast(vkGetDeviceProcAddr(device, "vkTrimCommandPool"), to: PFN_vkTrimCommandPool?.self)
+        #if VK_USE_PLATFORM_WIN32_KHR
+        self.vkGetMemoryWin32HandleKHR = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetMemoryWin32HandleKHR"), to: PFN_vkGetMemoryWin32HandleKHR?.self)
+        #endif
+        #if VK_USE_PLATFORM_WIN32_KHR
+        self.vkGetMemoryWin32HandlePropertiesKHR = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetMemoryWin32HandlePropertiesKHR"), to: PFN_vkGetMemoryWin32HandlePropertiesKHR?.self)
+        #endif
         self.vkGetMemoryFdKHR = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetMemoryFdKHR"), to: PFN_vkGetMemoryFdKHR?.self)
         self.vkGetMemoryFdPropertiesKHR = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetMemoryFdPropertiesKHR"), to: PFN_vkGetMemoryFdPropertiesKHR?.self)
+        #if VK_USE_PLATFORM_FUCHSIA
+        self.vkGetMemoryZirconHandleFUCHSIA = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetMemoryZirconHandleFUCHSIA"), to: PFN_vkGetMemoryZirconHandleFUCHSIA?.self)
+        #endif
+        #if VK_USE_PLATFORM_FUCHSIA
+        self.vkGetMemoryZirconHandlePropertiesFUCHSIA = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetMemoryZirconHandlePropertiesFUCHSIA"), to: PFN_vkGetMemoryZirconHandlePropertiesFUCHSIA?.self)
+        #endif
         self.vkGetMemoryRemoteAddressNV = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetMemoryRemoteAddressNV"), to: PFN_vkGetMemoryRemoteAddressNV?.self)
+        #if VK_USE_PLATFORM_WIN32_KHR
+        self.vkGetSemaphoreWin32HandleKHR = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetSemaphoreWin32HandleKHR"), to: PFN_vkGetSemaphoreWin32HandleKHR?.self)
+        #endif
+        #if VK_USE_PLATFORM_WIN32_KHR
+        self.vkImportSemaphoreWin32HandleKHR = unsafeBitCast(vkGetDeviceProcAddr(device, "vkImportSemaphoreWin32HandleKHR"), to: PFN_vkImportSemaphoreWin32HandleKHR?.self)
+        #endif
         self.vkGetSemaphoreFdKHR = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetSemaphoreFdKHR"), to: PFN_vkGetSemaphoreFdKHR?.self)
         self.vkImportSemaphoreFdKHR = unsafeBitCast(vkGetDeviceProcAddr(device, "vkImportSemaphoreFdKHR"), to: PFN_vkImportSemaphoreFdKHR?.self)
+        #if VK_USE_PLATFORM_FUCHSIA
+        self.vkGetSemaphoreZirconHandleFUCHSIA = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetSemaphoreZirconHandleFUCHSIA"), to: PFN_vkGetSemaphoreZirconHandleFUCHSIA?.self)
+        #endif
+        #if VK_USE_PLATFORM_FUCHSIA
+        self.vkImportSemaphoreZirconHandleFUCHSIA = unsafeBitCast(vkGetDeviceProcAddr(device, "vkImportSemaphoreZirconHandleFUCHSIA"), to: PFN_vkImportSemaphoreZirconHandleFUCHSIA?.self)
+        #endif
+        #if VK_USE_PLATFORM_WIN32_KHR
+        self.vkGetFenceWin32HandleKHR = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetFenceWin32HandleKHR"), to: PFN_vkGetFenceWin32HandleKHR?.self)
+        #endif
+        #if VK_USE_PLATFORM_WIN32_KHR
+        self.vkImportFenceWin32HandleKHR = unsafeBitCast(vkGetDeviceProcAddr(device, "vkImportFenceWin32HandleKHR"), to: PFN_vkImportFenceWin32HandleKHR?.self)
+        #endif
         self.vkGetFenceFdKHR = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetFenceFdKHR"), to: PFN_vkGetFenceFdKHR?.self)
         self.vkImportFenceFdKHR = unsafeBitCast(vkGetDeviceProcAddr(device, "vkImportFenceFdKHR"), to: PFN_vkImportFenceFdKHR?.self)
         self.vkDisplayPowerControlEXT = unsafeBitCast(vkGetDeviceProcAddr(device, "vkDisplayPowerControlEXT"), to: PFN_vkDisplayPowerControlEXT?.self)
@@ -969,6 +1284,12 @@ struct DeviceDispatchTable {
         self.vkGetSemaphoreCounterValue = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetSemaphoreCounterValue"), to: PFN_vkGetSemaphoreCounterValue?.self)
         self.vkWaitSemaphores = unsafeBitCast(vkGetDeviceProcAddr(device, "vkWaitSemaphores"), to: PFN_vkWaitSemaphores?.self)
         self.vkSignalSemaphore = unsafeBitCast(vkGetDeviceProcAddr(device, "vkSignalSemaphore"), to: PFN_vkSignalSemaphore?.self)
+        #if VK_USE_PLATFORM_ANDROID_KHR
+        self.vkGetAndroidHardwareBufferPropertiesANDROID = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetAndroidHardwareBufferPropertiesANDROID"), to: PFN_vkGetAndroidHardwareBufferPropertiesANDROID?.self)
+        #endif
+        #if VK_USE_PLATFORM_ANDROID_KHR
+        self.vkGetMemoryAndroidHardwareBufferANDROID = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetMemoryAndroidHardwareBufferANDROID"), to: PFN_vkGetMemoryAndroidHardwareBufferANDROID?.self)
+        #endif
         self.vkCmdDrawIndirectCount = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdDrawIndirectCount"), to: PFN_vkCmdDrawIndirectCount?.self)
         self.vkCmdDrawIndexedIndirectCount = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdDrawIndexedIndirectCount"), to: PFN_vkCmdDrawIndexedIndirectCount?.self)
         self.vkCmdSetCheckpointNV = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdSetCheckpointNV"), to: PFN_vkCmdSetCheckpointNV?.self)
@@ -1026,6 +1347,15 @@ struct DeviceDispatchTable {
         self.vkGetImageViewHandle64NVX = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetImageViewHandle64NVX"), to: PFN_vkGetImageViewHandle64NVX?.self)
         self.vkGetImageViewAddressNVX = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetImageViewAddressNVX"), to: PFN_vkGetImageViewAddressNVX?.self)
         self.vkGetDeviceCombinedImageSamplerIndexNVX = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetDeviceCombinedImageSamplerIndexNVX"), to: PFN_vkGetDeviceCombinedImageSamplerIndexNVX?.self)
+        #if VK_USE_PLATFORM_WIN32_KHR
+        self.vkGetDeviceGroupSurfacePresentModes2EXT = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetDeviceGroupSurfacePresentModes2EXT"), to: PFN_vkGetDeviceGroupSurfacePresentModes2EXT?.self)
+        #endif
+        #if VK_USE_PLATFORM_WIN32_KHR
+        self.vkAcquireFullScreenExclusiveModeEXT = unsafeBitCast(vkGetDeviceProcAddr(device, "vkAcquireFullScreenExclusiveModeEXT"), to: PFN_vkAcquireFullScreenExclusiveModeEXT?.self)
+        #endif
+        #if VK_USE_PLATFORM_WIN32_KHR
+        self.vkReleaseFullScreenExclusiveModeEXT = unsafeBitCast(vkGetDeviceProcAddr(device, "vkReleaseFullScreenExclusiveModeEXT"), to: PFN_vkReleaseFullScreenExclusiveModeEXT?.self)
+        #endif
         self.vkAcquireProfilingLockKHR = unsafeBitCast(vkGetDeviceProcAddr(device, "vkAcquireProfilingLockKHR"), to: PFN_vkAcquireProfilingLockKHR?.self)
         self.vkReleaseProfilingLockKHR = unsafeBitCast(vkGetDeviceProcAddr(device, "vkReleaseProfilingLockKHR"), to: PFN_vkReleaseProfilingLockKHR?.self)
         self.vkGetImageDrmFormatModifierPropertiesEXT = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetImageDrmFormatModifierPropertiesEXT"), to: PFN_vkGetImageDrmFormatModifierPropertiesEXT?.self)
@@ -1172,6 +1502,39 @@ struct DeviceDispatchTable {
         self.vkSetDeviceMemoryPriorityEXT = unsafeBitCast(vkGetDeviceProcAddr(device, "vkSetDeviceMemoryPriorityEXT"), to: PFN_vkSetDeviceMemoryPriorityEXT?.self)
         self.vkWaitForPresent2KHR = unsafeBitCast(vkGetDeviceProcAddr(device, "vkWaitForPresent2KHR"), to: PFN_vkWaitForPresent2KHR?.self)
         self.vkWaitForPresentKHR = unsafeBitCast(vkGetDeviceProcAddr(device, "vkWaitForPresentKHR"), to: PFN_vkWaitForPresentKHR?.self)
+        #if VK_USE_PLATFORM_FUCHSIA
+        self.vkCreateBufferCollectionFUCHSIA = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCreateBufferCollectionFUCHSIA"), to: PFN_vkCreateBufferCollectionFUCHSIA?.self)
+        #endif
+        #if VK_USE_PLATFORM_FUCHSIA
+        self.vkSetBufferCollectionBufferConstraintsFUCHSIA = unsafeBitCast(vkGetDeviceProcAddr(device, "vkSetBufferCollectionBufferConstraintsFUCHSIA"), to: PFN_vkSetBufferCollectionBufferConstraintsFUCHSIA?.self)
+        #endif
+        #if VK_USE_PLATFORM_FUCHSIA
+        self.vkSetBufferCollectionImageConstraintsFUCHSIA = unsafeBitCast(vkGetDeviceProcAddr(device, "vkSetBufferCollectionImageConstraintsFUCHSIA"), to: PFN_vkSetBufferCollectionImageConstraintsFUCHSIA?.self)
+        #endif
+        #if VK_USE_PLATFORM_FUCHSIA
+        self.vkDestroyBufferCollectionFUCHSIA = unsafeBitCast(vkGetDeviceProcAddr(device, "vkDestroyBufferCollectionFUCHSIA"), to: PFN_vkDestroyBufferCollectionFUCHSIA?.self)
+        #endif
+        #if VK_USE_PLATFORM_FUCHSIA
+        self.vkGetBufferCollectionPropertiesFUCHSIA = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetBufferCollectionPropertiesFUCHSIA"), to: PFN_vkGetBufferCollectionPropertiesFUCHSIA?.self)
+        #endif
+        #if VK_ENABLE_BETA_EXTENSIONS
+        self.vkCreateCudaModuleNV = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCreateCudaModuleNV"), to: PFN_vkCreateCudaModuleNV?.self)
+        #endif
+        #if VK_ENABLE_BETA_EXTENSIONS
+        self.vkGetCudaModuleCacheNV = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetCudaModuleCacheNV"), to: PFN_vkGetCudaModuleCacheNV?.self)
+        #endif
+        #if VK_ENABLE_BETA_EXTENSIONS
+        self.vkCreateCudaFunctionNV = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCreateCudaFunctionNV"), to: PFN_vkCreateCudaFunctionNV?.self)
+        #endif
+        #if VK_ENABLE_BETA_EXTENSIONS
+        self.vkDestroyCudaModuleNV = unsafeBitCast(vkGetDeviceProcAddr(device, "vkDestroyCudaModuleNV"), to: PFN_vkDestroyCudaModuleNV?.self)
+        #endif
+        #if VK_ENABLE_BETA_EXTENSIONS
+        self.vkDestroyCudaFunctionNV = unsafeBitCast(vkGetDeviceProcAddr(device, "vkDestroyCudaFunctionNV"), to: PFN_vkDestroyCudaFunctionNV?.self)
+        #endif
+        #if VK_ENABLE_BETA_EXTENSIONS
+        self.vkCmdCudaLaunchKernelNV = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdCudaLaunchKernelNV"), to: PFN_vkCmdCudaLaunchKernelNV?.self)
+        #endif
         self.vkCmdBeginRendering = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdBeginRendering"), to: PFN_vkCmdBeginRendering?.self)
         self.vkCmdEndRendering = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdEndRendering"), to: PFN_vkCmdEndRendering?.self)
         self.vkCmdEndRendering2KHR = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdEndRendering2KHR"), to: PFN_vkCmdEndRendering2KHR?.self)
@@ -1181,6 +1544,9 @@ struct DeviceDispatchTable {
         self.vkGetShaderModuleCreateInfoIdentifierEXT = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetShaderModuleCreateInfoIdentifierEXT"), to: PFN_vkGetShaderModuleCreateInfoIdentifierEXT?.self)
         self.vkGetImageSubresourceLayout2 = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetImageSubresourceLayout2"), to: PFN_vkGetImageSubresourceLayout2?.self)
         self.vkGetPipelinePropertiesEXT = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetPipelinePropertiesEXT"), to: PFN_vkGetPipelinePropertiesEXT?.self)
+        #if VK_USE_PLATFORM_METAL_EXT
+        self.vkExportMetalObjectsEXT = unsafeBitCast(vkGetDeviceProcAddr(device, "vkExportMetalObjectsEXT"), to: PFN_vkExportMetalObjectsEXT?.self)
+        #endif
         self.vkCmdBindTileMemoryQCOM = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdBindTileMemoryQCOM"), to: PFN_vkCmdBindTileMemoryQCOM?.self)
         self.vkGetFramebufferTilePropertiesQCOM = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetFramebufferTilePropertiesQCOM"), to: PFN_vkGetFramebufferTilePropertiesQCOM?.self)
         self.vkGetDynamicRenderingTilePropertiesQCOM = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetDynamicRenderingTilePropertiesQCOM"), to: PFN_vkGetDynamicRenderingTilePropertiesQCOM?.self)
@@ -1204,6 +1570,30 @@ struct DeviceDispatchTable {
         self.vkGetSwapchainTimingPropertiesEXT = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetSwapchainTimingPropertiesEXT"), to: PFN_vkGetSwapchainTimingPropertiesEXT?.self)
         self.vkGetSwapchainTimeDomainPropertiesEXT = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetSwapchainTimeDomainPropertiesEXT"), to: PFN_vkGetSwapchainTimeDomainPropertiesEXT?.self)
         self.vkGetPastPresentationTimingEXT = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetPastPresentationTimingEXT"), to: PFN_vkGetPastPresentationTimingEXT?.self)
+        #if VK_USE_PLATFORM_SCREEN_QNX
+        self.vkGetScreenBufferPropertiesQNX = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetScreenBufferPropertiesQNX"), to: PFN_vkGetScreenBufferPropertiesQNX?.self)
+        #endif
+        #if VK_ENABLE_BETA_EXTENSIONS
+        self.vkGetExecutionGraphPipelineScratchSizeAMDX = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetExecutionGraphPipelineScratchSizeAMDX"), to: PFN_vkGetExecutionGraphPipelineScratchSizeAMDX?.self)
+        #endif
+        #if VK_ENABLE_BETA_EXTENSIONS
+        self.vkGetExecutionGraphPipelineNodeIndexAMDX = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetExecutionGraphPipelineNodeIndexAMDX"), to: PFN_vkGetExecutionGraphPipelineNodeIndexAMDX?.self)
+        #endif
+        #if VK_ENABLE_BETA_EXTENSIONS
+        self.vkCreateExecutionGraphPipelinesAMDX = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCreateExecutionGraphPipelinesAMDX"), to: PFN_vkCreateExecutionGraphPipelinesAMDX?.self)
+        #endif
+        #if VK_ENABLE_BETA_EXTENSIONS
+        self.vkCmdInitializeGraphScratchMemoryAMDX = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdInitializeGraphScratchMemoryAMDX"), to: PFN_vkCmdInitializeGraphScratchMemoryAMDX?.self)
+        #endif
+        #if VK_ENABLE_BETA_EXTENSIONS
+        self.vkCmdDispatchGraphAMDX = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdDispatchGraphAMDX"), to: PFN_vkCmdDispatchGraphAMDX?.self)
+        #endif
+        #if VK_ENABLE_BETA_EXTENSIONS
+        self.vkCmdDispatchGraphIndirectAMDX = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdDispatchGraphIndirectAMDX"), to: PFN_vkCmdDispatchGraphIndirectAMDX?.self)
+        #endif
+        #if VK_ENABLE_BETA_EXTENSIONS
+        self.vkCmdDispatchGraphIndirectCountAMDX = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdDispatchGraphIndirectCountAMDX"), to: PFN_vkCmdDispatchGraphIndirectCountAMDX?.self)
+        #endif
         self.vkCmdBindDescriptorSets2 = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdBindDescriptorSets2"), to: PFN_vkCmdBindDescriptorSets2?.self)
         self.vkCmdPushConstants2 = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdPushConstants2"), to: PFN_vkCmdPushConstants2?.self)
         self.vkCmdPushDescriptorSet2 = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdPushDescriptorSet2"), to: PFN_vkCmdPushDescriptorSet2?.self)
@@ -1218,6 +1608,12 @@ struct DeviceDispatchTable {
         self.vkCmdSetRenderingAttachmentLocations = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdSetRenderingAttachmentLocations"), to: PFN_vkCmdSetRenderingAttachmentLocations?.self)
         self.vkCmdSetRenderingInputAttachmentIndices = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdSetRenderingInputAttachmentIndices"), to: PFN_vkCmdSetRenderingInputAttachmentIndices?.self)
         self.vkCmdSetDepthClampRangeEXT = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdSetDepthClampRangeEXT"), to: PFN_vkCmdSetDepthClampRangeEXT?.self)
+        #if VK_USE_PLATFORM_METAL_EXT
+        self.vkGetMemoryMetalHandleEXT = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetMemoryMetalHandleEXT"), to: PFN_vkGetMemoryMetalHandleEXT?.self)
+        #endif
+        #if VK_USE_PLATFORM_METAL_EXT
+        self.vkGetMemoryMetalHandlePropertiesEXT = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetMemoryMetalHandlePropertiesEXT"), to: PFN_vkGetMemoryMetalHandlePropertiesEXT?.self)
+        #endif
         self.vkConvertCooperativeVectorMatrixNV = unsafeBitCast(vkGetDeviceProcAddr(device, "vkConvertCooperativeVectorMatrixNV"), to: PFN_vkConvertCooperativeVectorMatrixNV?.self)
         self.vkCmdConvertCooperativeVectorMatrixNV = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdConvertCooperativeVectorMatrixNV"), to: PFN_vkCmdConvertCooperativeVectorMatrixNV?.self)
         self.vkCmdDispatchTileQCOM = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdDispatchTileQCOM"), to: PFN_vkCmdDispatchTileQCOM?.self)
@@ -1251,6 +1647,12 @@ struct DeviceDispatchTable {
         self.vkCmdDispatchDataGraphARM = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdDispatchDataGraphARM"), to: PFN_vkCmdDispatchDataGraphARM?.self)
         self.vkGetDataGraphPipelineAvailablePropertiesARM = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetDataGraphPipelineAvailablePropertiesARM"), to: PFN_vkGetDataGraphPipelineAvailablePropertiesARM?.self)
         self.vkGetDataGraphPipelinePropertiesARM = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetDataGraphPipelinePropertiesARM"), to: PFN_vkGetDataGraphPipelinePropertiesARM?.self)
+        #if VK_USE_PLATFORM_OHOS
+        self.vkGetNativeBufferPropertiesOHOS = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetNativeBufferPropertiesOHOS"), to: PFN_vkGetNativeBufferPropertiesOHOS?.self)
+        #endif
+        #if VK_USE_PLATFORM_OHOS
+        self.vkGetMemoryNativeBufferOHOS = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetMemoryNativeBufferOHOS"), to: PFN_vkGetMemoryNativeBufferOHOS?.self)
+        #endif
         self.vkQueueSetPerfHintQCOM = unsafeBitCast(vkGetDeviceProcAddr(device, "vkQueueSetPerfHintQCOM"), to: PFN_vkQueueSetPerfHintQCOM?.self)
         self.vkCmdSetComputeOccupancyPriorityNV = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdSetComputeOccupancyPriorityNV"), to: PFN_vkCmdSetComputeOccupancyPriorityNV?.self)
         self.vkWriteSamplerDescriptorsEXT = unsafeBitCast(vkGetDeviceProcAddr(device, "vkWriteSamplerDescriptorsEXT"), to: PFN_vkWriteSamplerDescriptorsEXT?.self)

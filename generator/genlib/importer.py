@@ -30,7 +30,7 @@ class SwiftStruct:
     def __init__(self, c_struct: CStruct, name: str,
                  members: List[SwiftMember], member_conversions: tc.MemberConversions,
                  convertible_from_c_struct: bool = True, parent_classes: 'List[SwiftClass] | None' = None,
-                 protocols: List[str] = None):
+                 protocols: List[str] = None, protect: str | None = None):
         self.name = name
         self.members = members
         self.member_conversions: tc.MemberConversions = member_conversions
@@ -38,6 +38,7 @@ class SwiftStruct:
         self.convertible_from_c_struct = convertible_from_c_struct
         self.parent_classes = parent_classes or []
         self.protocols = protocols or []
+        self.protect = protect
 
 
 class SwiftCommand:
@@ -46,7 +47,7 @@ class SwiftCommand:
                  param_conversions: tc.MemberConversions, return_conversion: tc.Conversion,
                  output_param: str = None, output_param_implicit_type: str = None, output_param_custom_initializer: str | None = None, unwrap_output_param: bool = False,
                  enumeration_pointer_param: str = None, enumeration_count_param: str = None,
-                 dispatcher: 'SwiftClass' = None):
+                 dispatcher: 'SwiftClass' = None, protect: str | None = None):
         self.c_command = c_command
         self.name = name
         self.return_type = return_type
@@ -62,6 +63,7 @@ class SwiftCommand:
         self.enumeration_pointer_param = enumeration_pointer_param
         self.enumeration_count_param = enumeration_count_param
         self.dispatcher = dispatcher
+        self.protect = protect
 
 
 class DispatchTable:
@@ -76,7 +78,7 @@ class DispatchTable:
 class SwiftClass:
     def __init__(self, name: str, reference_name: str, c_handle: CHandle = None,  parent: 'SwiftClass' = None,
                  dispatch_table: DispatchTable = None, dispatcher: 'SwiftClass' = None,
-                 commands: List[SwiftCommand] = None):
+                 commands: List[SwiftCommand] = None, protect: str | None = None):
         self.c_handle = c_handle
         self.name = name
         self.reference_name = reference_name
@@ -84,6 +86,7 @@ class SwiftClass:
         self.dispatch_table = dispatch_table
         self.dispatcher = dispatcher
         self.commands = commands or []
+        self.protect = protect
 
     @property
     def ancestors(self) -> List['SwiftClass']:
@@ -96,10 +99,11 @@ class SwiftClass:
 
 
 class SwiftAlias:
-    def __init__(self, c_alias: CAlias, name: str, alias: str):
+    def __init__(self, c_alias: CAlias, name: str, alias: str, protect: str | None = None):
         self.c_alias = c_alias
         self.name = name
         self.alias = alias
+        self.protect = protect
 
 
 class SwiftContext:
@@ -135,12 +139,10 @@ class Importer:
             self.import_bitmask(bitmask)
 
         for handle in self.c_context.handles:
-            if not handle.protect:
-                self.import_handle(handle)
+            self.import_handle(handle)
 
         for alias in self.c_context.aliases:
-            if not alias.protect:
-                self.import_alias(alias)
+            self.import_alias(alias)
 
         for struct in self.c_context.structs:
             if struct.name not in ('VkBaseInStructure', 'VkBaseOutStructure'):
@@ -157,7 +159,8 @@ class Importer:
             cases=[],
             c_enum=c_enum,
             raw_type='UInt32',
-            error=c_enum.name == 'VkResult'
+            error=c_enum.name == 'VkResult',
+            protect=c_enum.protect
         )
 
         prefix, enum_tag = self.pop_extension_tag(swift_enum.name)
@@ -203,7 +206,8 @@ class Importer:
             name=remove_vk_prefix(c_bitmask.name),
             cases=[],
             c_bitmask=c_bitmask,
-            raw_type='UInt64' if c_bitmask.is64 else 'UInt32'
+            raw_type='UInt64' if c_bitmask.is64 else 'UInt32',
+            protect=c_bitmask.protect
         )
 
         if c_bitmask.enum:
@@ -275,7 +279,7 @@ class Importer:
 
         protocols: List[str] = []
         for base in c_struct.struct_extends:
-            protocols.append(f"{remove_vk_prefix(base)}.Extension")
+            protocols.append(f"{remove_vk_prefix(base)}Extension")
 
         members, conversions = self.get_member_conversions(
             c_struct.members, c_struct=c_struct)
@@ -285,7 +289,8 @@ class Importer:
                              member_conversions=conversions,
                              convertible_from_c_struct=convertible_from_c_struct,
                              parent_classes=list(parent_classes),
-                             protocols=protocols)
+                             protocols=protocols,
+                             protect=c_struct.protect)
         self.swift_context.structs.append(struct)
         self.imported_structs[c_struct.name] = struct
         return struct
@@ -346,7 +351,8 @@ class Importer:
             reference_name=reference_name,
             parent=parent,
             dispatch_table=dispatch_table,
-            dispatcher=dispatcher
+            dispatcher=dispatcher,
+            protect=handle.protect
         )
         self.swift_context.classes.append(cls)
         self.imported_classes[handle.name] = cls
@@ -455,7 +461,8 @@ class Importer:
                 unwrap_output_param=unwrap_output_param,
                 enumeration_pointer_param=enumeration_pointer_params,
                 enumeration_count_param=enumeration_count_param,
-                dispatcher=dispatcher
+                dispatcher=dispatcher,
+                protect=c_command.protect
             )
             current_class.commands.append(command)
 
@@ -478,7 +485,8 @@ class Importer:
             unwrap_output_param=unwrap_output_param,
             enumeration_pointer_param=enumeration_pointer_params,
             enumeration_count_param=enumeration_count_param,
-            dispatcher=dispatcher
+            dispatcher=dispatcher,
+            protect=c_command.protect
         )
 
         current_class.commands.append(command)
@@ -488,7 +496,7 @@ class Importer:
 
     def import_alias(self, c_alias: CAlias) -> SwiftAlias:
         alias = SwiftAlias(c_alias, remove_vk_prefix(
-            c_alias.name), self.imported_classes[c_alias.alias].name)
+            c_alias.name), self.imported_classes[c_alias.alias].name, protect=c_alias.protect)
         self.swift_context.aliases.append(alias)
         self.imported_aliases[c_alias.name] = alias
         return alias
