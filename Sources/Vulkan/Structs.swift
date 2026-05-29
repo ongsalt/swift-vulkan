@@ -5134,7 +5134,7 @@ public struct SubmitInfo: ChainableBase {
         self.signalSemaphores = signalSemaphores
     }
 
-    init(cStruct: VkSubmitInfo, commandPool: CommandPool, device: Device) {
+    init(cStruct: VkSubmitInfo, device: Device, commandPool: CommandPool) {
         self.waitSemaphores = UnsafeBufferPointer(start: cStruct.pWaitSemaphores, count: Int(cStruct.waitSemaphoreCount)).map{ Semaphore(handle: $0, device: device) }
         self.waitDstStageMask = UnsafeBufferPointer(start: cStruct.pWaitDstStageMask, count: Int(cStruct.waitSemaphoreCount)).map{ PipelineStageFlags(rawValue: $0) }
         self.commandBuffers = UnsafeBufferPointer(start: cStruct.pCommandBuffers, count: Int(cStruct.commandBufferCount)).map{ CommandBuffer(handle: $0, commandPool: commandPool) }
@@ -6564,9 +6564,9 @@ public struct ImportMemoryWin32HandleInfoNV: ChainableBase, MemoryAllocateInfoEx
     public typealias CStruct = VkImportMemoryWin32HandleInfoNV
 
     public let handleType: ExternalMemoryHandleTypeFlagsNV
-    public let handle: HANDLE
+    public let handle: HANDLE?
 
-    public init(handleType: ExternalMemoryHandleTypeFlagsNV = [], handle: HANDLE) {
+    public init(handleType: ExternalMemoryHandleTypeFlagsNV = [], handle: HANDLE?) {
         self.handleType = handleType
         self.handle = handle
     }
@@ -8877,10 +8877,10 @@ public struct ImportMemoryWin32HandleInfoKHR: ChainableBase, MemoryAllocateInfoE
     public typealias CStruct = VkImportMemoryWin32HandleInfoKHR
 
     public let handleType: ExternalMemoryHandleTypeFlags
-    public let handle: HANDLE
+    public let handle: HANDLE?
     public let name: LPCWSTR
 
-    public init(handleType: ExternalMemoryHandleTypeFlags, handle: HANDLE, name: LPCWSTR) {
+    public init(handleType: ExternalMemoryHandleTypeFlags, handle: HANDLE?, name: LPCWSTR) {
         self.handleType = handleType
         self.handle = handle
         self.name = name
@@ -9418,10 +9418,10 @@ public struct ImportSemaphoreWin32HandleInfoKHR: ChainableBase {
     public let semaphore: Semaphore
     public let flags: SemaphoreImportFlags
     public let handleType: ExternalSemaphoreHandleTypeFlags
-    public let handle: HANDLE
+    public let handle: HANDLE?
     public let name: LPCWSTR
 
-    public init(semaphore: Semaphore, flags: SemaphoreImportFlags = [], handleType: ExternalSemaphoreHandleTypeFlags, handle: HANDLE, name: LPCWSTR) {
+    public init(semaphore: Semaphore, flags: SemaphoreImportFlags = [], handleType: ExternalSemaphoreHandleTypeFlags, handle: HANDLE?, name: LPCWSTR) {
         self.semaphore = semaphore
         self.flags = flags
         self.handleType = handleType
@@ -9799,10 +9799,10 @@ public struct ImportFenceWin32HandleInfoKHR: ChainableBase {
     public let fence: Fence
     public let flags: FenceImportFlags
     public let handleType: ExternalFenceHandleTypeFlags
-    public let handle: HANDLE
+    public let handle: HANDLE?
     public let name: LPCWSTR
 
-    public init(fence: Fence, flags: FenceImportFlags = [], handleType: ExternalFenceHandleTypeFlags, handle: HANDLE, name: LPCWSTR) {
+    public init(fence: Fence, flags: FenceImportFlags = [], handleType: ExternalFenceHandleTypeFlags, handle: HANDLE?, name: LPCWSTR) {
         self.fence = fence
         self.flags = flags
         self.handleType = handleType
@@ -27683,7 +27683,7 @@ public struct SubmitInfo2: ChainableBase {
         self.signalSemaphoreInfos = signalSemaphoreInfos
     }
 
-    init(cStruct: VkSubmitInfo2, commandPool: CommandPool, device: Device) {
+    init(cStruct: VkSubmitInfo2, device: Device, commandPool: CommandPool) {
         self.flags = SubmitFlags(rawValue: cStruct.flags)
         self.waitSemaphoreInfos = UnsafeBufferPointer(start: cStruct.pWaitSemaphoreInfos, count: Int(cStruct.waitSemaphoreInfoCount)).map{ SemaphoreSubmitInfo(cStruct: $0, device: device) }
         self.commandBufferInfos = UnsafeBufferPointer(start: cStruct.pCommandBufferInfos, count: Int(cStruct.commandBufferInfoCount)).map{ CommandBufferSubmitInfo(cStruct: $0, commandPool: commandPool) }
@@ -40054,7 +40054,7 @@ public struct BindDescriptorSetsInfo: ChainableBase {
         self.dynamicOffsets = dynamicOffsets
     }
 
-    init(cStruct: VkBindDescriptorSetsInfo, descriptorPool: DescriptorPool, device: Device) {
+    init(cStruct: VkBindDescriptorSetsInfo, device: Device, descriptorPool: DescriptorPool) {
         self.stageFlags = ShaderStageFlags(rawValue: cStruct.stageFlags)
         self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout, device: device) : nil
         self.firstSet = cStruct.firstSet
@@ -40144,7 +40144,7 @@ public struct PushDescriptorSetInfo: ChainableBase {
         self.descriptorWrites = descriptorWrites
     }
 
-    init(cStruct: VkPushDescriptorSetInfo, descriptorPool: DescriptorPool, device: Device) {
+    init(cStruct: VkPushDescriptorSetInfo, device: Device, descriptorPool: DescriptorPool) {
         self.stageFlags = ShaderStageFlags(rawValue: cStruct.stageFlags)
         self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout, device: device) : nil
         self.set = cStruct.set

@@ -1975,7 +1975,7 @@ public class Device: _HandleContainer {
     #if VK_USE_PLATFORM_WIN32_KHR
     public func getMemoryWin32HandleKHR(_ getWin32HandleInfo: (some Chainable<MemoryGetWin32HandleInfoKHR>)) throws -> HANDLE {
         try getWin32HandleInfo.withCStruct { ptr_getWin32HandleInfo in
-            var out = HANDLE()
+            var out: HANDLE!
             try checkResult(
                 self.dispatchTable.vkGetMemoryWin32HandleKHR(self.handle, ptr_getWin32HandleInfo, &out)
             )
@@ -1987,7 +1987,7 @@ public class Device: _HandleContainer {
     #if VK_USE_PLATFORM_WIN32_KHR
     public func getMemoryWin32HandleKHR(_ getWin32HandleInfo: MemoryGetWin32HandleInfoKHR) throws -> HANDLE {
         try getWin32HandleInfo.withCStruct { ptr_getWin32HandleInfo in
-            var out = HANDLE()
+            var out: HANDLE!
             try checkResult(
                 self.dispatchTable.vkGetMemoryWin32HandleKHR(self.handle, ptr_getWin32HandleInfo, &out)
             )
@@ -2091,7 +2091,7 @@ public class Device: _HandleContainer {
     #if VK_USE_PLATFORM_WIN32_KHR
     public func getSemaphoreWin32HandleKHR(_ getWin32HandleInfo: (some Chainable<SemaphoreGetWin32HandleInfoKHR>)) throws -> HANDLE {
         try getWin32HandleInfo.withCStruct { ptr_getWin32HandleInfo in
-            var out = HANDLE()
+            var out: HANDLE!
             try checkResult(
                 self.dispatchTable.vkGetSemaphoreWin32HandleKHR(self.handle, ptr_getWin32HandleInfo, &out)
             )
@@ -2103,7 +2103,7 @@ public class Device: _HandleContainer {
     #if VK_USE_PLATFORM_WIN32_KHR
     public func getSemaphoreWin32HandleKHR(_ getWin32HandleInfo: SemaphoreGetWin32HandleInfoKHR) throws -> HANDLE {
         try getWin32HandleInfo.withCStruct { ptr_getWin32HandleInfo in
-            var out = HANDLE()
+            var out: HANDLE!
             try checkResult(
                 self.dispatchTable.vkGetSemaphoreWin32HandleKHR(self.handle, ptr_getWin32HandleInfo, &out)
             )
@@ -2215,7 +2215,7 @@ public class Device: _HandleContainer {
     #if VK_USE_PLATFORM_WIN32_KHR
     public func getFenceWin32HandleKHR(_ getWin32HandleInfo: (some Chainable<FenceGetWin32HandleInfoKHR>)) throws -> HANDLE {
         try getWin32HandleInfo.withCStruct { ptr_getWin32HandleInfo in
-            var out = HANDLE()
+            var out: HANDLE!
             try checkResult(
                 self.dispatchTable.vkGetFenceWin32HandleKHR(self.handle, ptr_getWin32HandleInfo, &out)
             )
@@ -2227,7 +2227,7 @@ public class Device: _HandleContainer {
     #if VK_USE_PLATFORM_WIN32_KHR
     public func getFenceWin32HandleKHR(_ getWin32HandleInfo: FenceGetWin32HandleInfoKHR) throws -> HANDLE {
         try getWin32HandleInfo.withCStruct { ptr_getWin32HandleInfo in
-            var out = HANDLE()
+            var out: HANDLE!
             try checkResult(
                 self.dispatchTable.vkGetFenceWin32HandleKHR(self.handle, ptr_getWin32HandleInfo, &out)
             )
@@ -6357,7 +6357,7 @@ public class DeviceMemory: _HandleContainer {
 
     #if VK_USE_PLATFORM_WIN32_KHR
     public func getMemoryWin32HandleNV(handleType: ExternalMemoryHandleTypeFlagsNV) throws -> HANDLE {
-        var out = HANDLE()
+        var out: HANDLE!
         try checkResult(
             self.device.dispatchTable.vkGetMemoryWin32HandleNV(self.device.handle, self.handle, handleType.rawValue, &out)
         )

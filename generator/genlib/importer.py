@@ -262,20 +262,25 @@ class Importer:
         name = remove_vk_prefix(c_struct.name)
 
         convertible_from_c_struct = True
-        parent_classes: set[SwiftClass] = set()
+        parent_classes: list[SwiftClass] = []
+        
         for member in c_struct.members:
             type_name = member.type.type_name
             if type_name in self.c_structs:
                 child_struct = self.import_struct(self.c_structs[type_name])
                 if convertible_from_c_struct:
                     convertible_from_c_struct = child_struct.convertible_from_c_struct
-                    parent_classes.update(child_struct.parent_classes)
+                    for c in child_struct.parent_classes:
+                        if c not in parent_classes:
+                            parent_classes.append(c)
             elif convertible_from_c_struct:
                 if type_name in self.imported_aliases:
                     type_name = self.imported_aliases[type_name].c_alias.alias
                 # if type_name in ('VkPhysicalDevice', 'VkDisplayKHR', 'VkDisplayModeKHR'):
                 elif type_name in self.imported_classes:
-                    parent_classes.add(self.imported_classes[type_name].parent)
+                    c = self.imported_classes[type_name].parent
+                    if c not in parent_classes:
+                        parent_classes.append(c)
 
                     # TODO: cant we just do Global.getHandleClass() or some shi
                     # vulkan wont return an existing handle which mean we can create this
@@ -420,10 +425,6 @@ class Importer:
 
                     if output_params[0].type.pointer_to.name in self.imported_enums:
                         output_param_custom_initializer = f'{output_param_implicit_type}(rawValue: 0)'
-
-                if c_command.name == 'vkGetMemoryRemoteAddressNV':
-                    # we can make it fall into branch above by telling it somehow that VkRemoteAddressNV is a pointer (void*)
-                    unwrap_output_param = True
 
             elif len(output_params) == 2 and output_params[1].type.length == output_params[0].name:
                 enumeration_pointer_params = output_params[1].name
@@ -790,6 +791,8 @@ class Importer:
             return f'Array<{element_type}>?', tc.optional_array_conversion(c_type.length)
 
     def is_pointer_type(self, c_type: CType) -> bool:
+        if c_type.name in ('VkRemoteAddressNV', 'HANDLE'):
+            return True
         return (c_type.pointer_to is not None
                 or (c_type.name and (c_type.name in self.pointer_types or c_type.name.startswith('PFN_'))))
 

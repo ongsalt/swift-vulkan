@@ -1,3 +1,4 @@
 module CVulkan {
   header "vulkan/vulkan.h"
+  export *
 }
