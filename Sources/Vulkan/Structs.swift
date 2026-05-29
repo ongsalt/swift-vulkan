@@ -690,7 +690,7 @@ public struct ApplicationInfo: ChainableBase {
     public let engineVersion: UInt32
     public let apiVersion: Version
 
-    public init(applicationName: String?, applicationVersion: UInt32, engineName: String?, engineVersion: UInt32, apiVersion: Version) {
+    public init(applicationName: String? = nil, applicationVersion: UInt32, engineName: String? = nil, engineVersion: UInt32, apiVersion: Version) {
         self.applicationName = applicationName
         self.applicationVersion = applicationVersion
         self.engineName = engineName
@@ -2767,7 +2767,7 @@ public struct DescriptorSetLayoutBinding: CStructConvertible {
     public let stageFlags: ShaderStageFlags
     public let immutableSamplers: Array<Sampler>?
 
-    public init(binding: UInt32, descriptorType: DescriptorType, stageFlags: ShaderStageFlags, immutableSamplers: Array<Sampler>? = []) {
+    public init(binding: UInt32, descriptorType: DescriptorType, stageFlags: ShaderStageFlags, immutableSamplers: Array<Sampler>? = nil) {
         self.binding = binding
         self.descriptorType = descriptorType
         self.stageFlags = stageFlags
@@ -3311,7 +3311,7 @@ public struct PipelineViewportStateCreateInfo: ChainableBase {
     public let viewports: Array<Viewport>?
     public let scissors: Array<Rect2D>?
 
-    public init(flags: PipelineViewportStateCreateFlags = [], viewports: Array<Viewport>? = [], scissors: Array<Rect2D>? = []) {
+    public init(flags: PipelineViewportStateCreateFlags = [], viewports: Array<Viewport>? = nil, scissors: Array<Rect2D>? = nil) {
         self.flags = flags
         self.viewports = viewports
         self.scissors = scissors
@@ -3520,7 +3520,7 @@ public struct PipelineColorBlendStateCreateInfo: ChainableBase {
     public let attachments: Array<PipelineColorBlendAttachmentState>?
     public let blendConstants: (Float, Float, Float, Float)
 
-    public init(flags: PipelineColorBlendStateCreateFlags = [], logicOpEnable: Bool, logicOp: LogicOp, attachments: Array<PipelineColorBlendAttachmentState>? = [], blendConstants: (Float, Float, Float, Float)) {
+    public init(flags: PipelineColorBlendStateCreateFlags = [], logicOpEnable: Bool, logicOp: LogicOp, attachments: Array<PipelineColorBlendAttachmentState>? = nil, blendConstants: (Float, Float, Float, Float)) {
         self.flags = flags
         self.logicOpEnable = logicOpEnable
         self.logicOp = logicOp
@@ -3722,7 +3722,7 @@ public struct GraphicsPipelineCreateInfo: ChainableBase {
     public let basePipelineHandle: Pipeline?
     public let basePipelineIndex: Int32
 
-    public init(flags: PipelineCreateFlags = [], stages: Array<PipelineShaderStageCreateInfo>? = [], vertexInputState: PipelineVertexInputStateCreateInfo? = nil, inputAssemblyState: PipelineInputAssemblyStateCreateInfo? = nil, tessellationState: PipelineTessellationStateCreateInfo? = nil, viewportState: PipelineViewportStateCreateInfo? = nil, rasterizationState: PipelineRasterizationStateCreateInfo? = nil, multisampleState: PipelineMultisampleStateCreateInfo? = nil, depthStencilState: PipelineDepthStencilStateCreateInfo? = nil, colorBlendState: PipelineColorBlendStateCreateInfo? = nil, dynamicState: PipelineDynamicStateCreateInfo? = nil, layout: PipelineLayout? = nil, renderPass: RenderPass? = nil, subpass: UInt32, basePipelineHandle: Pipeline? = nil, basePipelineIndex: Int32) {
+    public init(flags: PipelineCreateFlags = [], stages: Array<PipelineShaderStageCreateInfo>? = nil, vertexInputState: PipelineVertexInputStateCreateInfo? = nil, inputAssemblyState: PipelineInputAssemblyStateCreateInfo? = nil, tessellationState: PipelineTessellationStateCreateInfo? = nil, viewportState: PipelineViewportStateCreateInfo? = nil, rasterizationState: PipelineRasterizationStateCreateInfo? = nil, multisampleState: PipelineMultisampleStateCreateInfo? = nil, depthStencilState: PipelineDepthStencilStateCreateInfo? = nil, colorBlendState: PipelineColorBlendStateCreateInfo? = nil, dynamicState: PipelineDynamicStateCreateInfo? = nil, layout: PipelineLayout? = nil, renderPass: RenderPass? = nil, subpass: UInt32, basePipelineHandle: Pipeline? = nil, basePipelineIndex: Int32) {
         self.flags = flags
         self.stages = stages
         self.vertexInputState = vertexInputState
@@ -4663,7 +4663,7 @@ public struct SubpassDescription: CStructConvertible {
     public let depthStencilAttachment: AttachmentReference?
     public let preserveAttachments: Array<UInt32>
 
-    public init(flags: SubpassDescriptionFlags = [], pipelineBindPoint: PipelineBindPoint, inputAttachments: Array<AttachmentReference> = [], colorAttachments: Array<AttachmentReference> = [], resolveAttachments: Array<AttachmentReference>? = [], depthStencilAttachment: AttachmentReference? = nil, preserveAttachments: Array<UInt32> = []) {
+    public init(flags: SubpassDescriptionFlags = [], pipelineBindPoint: PipelineBindPoint, inputAttachments: Array<AttachmentReference> = [], colorAttachments: Array<AttachmentReference> = [], resolveAttachments: Array<AttachmentReference>? = nil, depthStencilAttachment: AttachmentReference? = nil, preserveAttachments: Array<UInt32> = []) {
         self.flags = flags
         self.pipelineBindPoint = pipelineBindPoint
         self.inputAttachments = inputAttachments
@@ -8543,7 +8543,7 @@ public struct PresentRegionKHR: CStructConvertible {
 
     public let rectangles: Array<RectLayerKHR>?
 
-    public init(rectangles: Array<RectLayerKHR>? = []) {
+    public init(rectangles: Array<RectLayerKHR>? = nil) {
         self.rectangles = rectangles
     }
 
@@ -9500,7 +9500,7 @@ public struct D3D12FenceSubmitInfoKHR: ChainableBase, SubmitInfoExtension {
     public let waitSemaphoreValues: Array<UInt64>?
     public let signalSemaphoreValues: Array<UInt64>?
 
-    public init(waitSemaphoreValues: Array<UInt64>? = [], signalSemaphoreValues: Array<UInt64>? = []) {
+    public init(waitSemaphoreValues: Array<UInt64>? = nil, signalSemaphoreValues: Array<UInt64>? = nil) {
         self.waitSemaphoreValues = waitSemaphoreValues
         self.signalSemaphoreValues = signalSemaphoreValues
     }
@@ -13742,7 +13742,7 @@ public struct PipelineCoverageModulationStateCreateInfoNV: ChainableBase, Pipeli
     public let coverageModulationTableEnable: Bool
     public let coverageModulationTable: Array<Float>?
 
-    public init(flags: PipelineCoverageModulationStateCreateFlagsNV = [], coverageModulationMode: CoverageModulationModeNV, coverageModulationTableEnable: Bool, coverageModulationTable: Array<Float>? = []) {
+    public init(flags: PipelineCoverageModulationStateCreateFlagsNV = [], coverageModulationMode: CoverageModulationModeNV, coverageModulationTableEnable: Bool, coverageModulationTable: Array<Float>? = nil) {
         self.flags = flags
         self.coverageModulationMode = coverageModulationMode
         self.coverageModulationTableEnable = coverageModulationTableEnable
@@ -14807,7 +14807,7 @@ public struct DebugUtilsObjectNameInfoEXT: ChainableBase, PipelineShaderStageCre
     public let objectHandle: UInt64
     public let objectName: String?
 
-    public init(objectType: ObjectType, objectHandle: UInt64, objectName: String?) {
+    public init(objectType: ObjectType, objectHandle: UInt64, objectName: String? = nil) {
         self.objectType = objectType
         self.objectHandle = objectHandle
         self.objectName = objectName
@@ -14967,7 +14967,7 @@ public struct DebugUtilsMessengerCallbackDataEXT: ChainableBase {
     public let cmdBufLabels: Array<DebugUtilsLabelEXT>
     public let objects: Array<DebugUtilsObjectNameInfoEXT>
 
-    public init(flags: DebugUtilsMessengerCallbackDataFlagsEXT = [], messageIdName: String?, messageIdNumber: Int32, message: String?, queueLabels: Array<DebugUtilsLabelEXT> = [], cmdBufLabels: Array<DebugUtilsLabelEXT> = [], objects: Array<DebugUtilsObjectNameInfoEXT> = []) {
+    public init(flags: DebugUtilsMessengerCallbackDataFlagsEXT = [], messageIdName: String? = nil, messageIdNumber: Int32, message: String? = nil, queueLabels: Array<DebugUtilsLabelEXT> = [], cmdBufLabels: Array<DebugUtilsLabelEXT> = [], objects: Array<DebugUtilsObjectNameInfoEXT> = []) {
         self.flags = flags
         self.messageIdName = messageIdName
         self.messageIdNumber = messageIdNumber
@@ -15778,7 +15778,7 @@ public struct SubpassDescription2: ChainableBase {
     public let depthStencilAttachment: AttachmentReference2?
     public let preserveAttachments: Array<UInt32>
 
-    public init(flags: SubpassDescriptionFlags = [], pipelineBindPoint: PipelineBindPoint, viewMask: UInt32, inputAttachments: Array<AttachmentReference2> = [], colorAttachments: Array<AttachmentReference2> = [], resolveAttachments: Array<AttachmentReference2>? = [], depthStencilAttachment: AttachmentReference2? = nil, preserveAttachments: Array<UInt32> = []) {
+    public init(flags: SubpassDescriptionFlags = [], pipelineBindPoint: PipelineBindPoint, viewMask: UInt32, inputAttachments: Array<AttachmentReference2> = [], colorAttachments: Array<AttachmentReference2> = [], resolveAttachments: Array<AttachmentReference2>? = nil, depthStencilAttachment: AttachmentReference2? = nil, preserveAttachments: Array<UInt32> = []) {
         self.flags = flags
         self.pipelineBindPoint = pipelineBindPoint
         self.viewMask = viewMask
@@ -16081,7 +16081,7 @@ public struct TimelineSemaphoreSubmitInfo: ChainableBase, SubmitInfoExtension, B
     public let waitSemaphoreValues: Array<UInt64>?
     public let signalSemaphoreValues: Array<UInt64>?
 
-    public init(waitSemaphoreValues: Array<UInt64>? = [], signalSemaphoreValues: Array<UInt64>? = []) {
+    public init(waitSemaphoreValues: Array<UInt64>? = nil, signalSemaphoreValues: Array<UInt64>? = nil) {
         self.waitSemaphoreValues = waitSemaphoreValues
         self.signalSemaphoreValues = signalSemaphoreValues
     }
@@ -23502,7 +23502,7 @@ public struct AccelerationStructureBuildGeometryInfoKHR: ChainableBase {
     public let geometries2: Array<UnsafePointer<VkAccelerationStructureGeometryKHR>?>?
     public let scratchData: VkDeviceOrHostAddressKHR
 
-    public init(type: AccelerationStructureTypeKHR, flags: BuildAccelerationStructureFlagsKHR = [], mode: BuildAccelerationStructureModeKHR, srcAccelerationStructure: AccelerationStructureKHR? = nil, dstAccelerationStructure: AccelerationStructureKHR? = nil, geometries: Array<AccelerationStructureGeometryKHR>? = [], geometries2: Array<UnsafePointer<VkAccelerationStructureGeometryKHR>?>? = [], scratchData: VkDeviceOrHostAddressKHR) {
+    public init(type: AccelerationStructureTypeKHR, flags: BuildAccelerationStructureFlagsKHR = [], mode: BuildAccelerationStructureModeKHR, srcAccelerationStructure: AccelerationStructureKHR? = nil, dstAccelerationStructure: AccelerationStructureKHR? = nil, geometries: Array<AccelerationStructureGeometryKHR>? = nil, geometries2: Array<UnsafePointer<VkAccelerationStructureGeometryKHR>?>? = nil, scratchData: VkDeviceOrHostAddressKHR) {
         self.type = type
         self.flags = flags
         self.mode = mode
@@ -30834,7 +30834,7 @@ public struct VideoEncodeH264SessionParametersAddInfoKHR: ChainableBase, VideoSe
     public let stdSPSs: Array<StdVideoH264SequenceParameterSet>?
     public let stdPPSs: Array<StdVideoH264PictureParameterSet>?
 
-    public init(stdSPSs: Array<StdVideoH264SequenceParameterSet>? = [], stdPPSs: Array<StdVideoH264PictureParameterSet>? = []) {
+    public init(stdSPSs: Array<StdVideoH264SequenceParameterSet>? = nil, stdPPSs: Array<StdVideoH264PictureParameterSet>? = nil) {
         self.stdSPSs = stdSPSs
         self.stdPPSs = stdPPSs
     }
@@ -31435,7 +31435,7 @@ public struct VideoEncodeH265SessionParametersAddInfoKHR: ChainableBase, VideoSe
     public let stdSPSs: Array<StdVideoH265SequenceParameterSet>?
     public let stdPPSs: Array<StdVideoH265PictureParameterSet>?
 
-    public init(stdVPSs: Array<StdVideoH265VideoParameterSet>? = [], stdSPSs: Array<StdVideoH265SequenceParameterSet>? = [], stdPPSs: Array<StdVideoH265PictureParameterSet>? = []) {
+    public init(stdVPSs: Array<StdVideoH265VideoParameterSet>? = nil, stdSPSs: Array<StdVideoH265SequenceParameterSet>? = nil, stdPPSs: Array<StdVideoH265PictureParameterSet>? = nil) {
         self.stdVPSs = stdVPSs
         self.stdSPSs = stdSPSs
         self.stdPPSs = stdPPSs
@@ -32131,7 +32131,7 @@ public struct VideoEncodeAV1SessionParametersCreateInfoKHR: ChainableBase, Video
     public let stdDecoderModelInfo: UnsafePointer<StdVideoEncodeAV1DecoderModelInfo>?
     public let stdOperatingPoints: Array<StdVideoEncodeAV1OperatingPointInfo>?
 
-    public init(stdSequenceHeader: UnsafePointer<StdVideoAV1SequenceHeader>, stdDecoderModelInfo: UnsafePointer<StdVideoEncodeAV1DecoderModelInfo>? = nil, stdOperatingPoints: Array<StdVideoEncodeAV1OperatingPointInfo>? = []) {
+    public init(stdSequenceHeader: UnsafePointer<StdVideoAV1SequenceHeader>, stdDecoderModelInfo: UnsafePointer<StdVideoEncodeAV1DecoderModelInfo>? = nil, stdOperatingPoints: Array<StdVideoEncodeAV1OperatingPointInfo>? = nil) {
         self.stdSequenceHeader = stdSequenceHeader
         self.stdDecoderModelInfo = stdDecoderModelInfo
         self.stdOperatingPoints = stdOperatingPoints
@@ -36112,7 +36112,7 @@ public struct AccelerationStructureTrianglesDisplacementMicromapNV: ChainableBas
     public let usageCounts2: Array<UnsafePointer<VkMicromapUsageEXT>?>?
     public let micromap: VkMicromapEXT
 
-    public init(displacementBiasAndScaleFormat: Format, displacementVectorFormat: Format, displacementBiasAndScaleBuffer: VkDeviceOrHostAddressConstKHR, displacementBiasAndScaleStride: VkDeviceSize, displacementVectorBuffer: VkDeviceOrHostAddressConstKHR, displacementVectorStride: VkDeviceSize, displacedMicromapPrimitiveFlags: VkDeviceOrHostAddressConstKHR, displacedMicromapPrimitiveFlagsStride: VkDeviceSize, indexType: IndexType, indexBuffer: VkDeviceOrHostAddressConstKHR, indexStride: VkDeviceSize, baseTriangle: UInt32, usageCounts: Array<VkMicromapUsageEXT>? = [], usageCounts2: Array<UnsafePointer<VkMicromapUsageEXT>?>? = [], micromap: VkMicromapEXT) {
+    public init(displacementBiasAndScaleFormat: Format, displacementVectorFormat: Format, displacementBiasAndScaleBuffer: VkDeviceOrHostAddressConstKHR, displacementBiasAndScaleStride: VkDeviceSize, displacementVectorBuffer: VkDeviceOrHostAddressConstKHR, displacementVectorStride: VkDeviceSize, displacedMicromapPrimitiveFlags: VkDeviceOrHostAddressConstKHR, displacedMicromapPrimitiveFlagsStride: VkDeviceSize, indexType: IndexType, indexBuffer: VkDeviceOrHostAddressConstKHR, indexStride: VkDeviceSize, baseTriangle: UInt32, usageCounts: Array<VkMicromapUsageEXT>? = nil, usageCounts2: Array<UnsafePointer<VkMicromapUsageEXT>?>? = nil, micromap: VkMicromapEXT) {
         self.displacementBiasAndScaleFormat = displacementBiasAndScaleFormat
         self.displacementVectorFormat = displacementVectorFormat
         self.displacementBiasAndScaleBuffer = displacementBiasAndScaleBuffer
@@ -38096,7 +38096,7 @@ public struct FrameBoundaryEXT: ChainableBase, SubmitInfoExtension, SubmitInfo2E
     public let tagSize: Int
     public let tag: UnsafeRawPointer?
 
-    public init(flags: FrameBoundaryFlagsEXT = [], frameID: UInt64, images: Array<Image>? = [], buffers: Array<Buffer>? = [], tagName: UInt64 = 0, tagSize: Int = 0, tag: UnsafeRawPointer?) {
+    public init(flags: FrameBoundaryFlagsEXT = [], frameID: UInt64, images: Array<Image>? = nil, buffers: Array<Buffer>? = nil, tagName: UInt64 = 0, tagSize: Int = 0, tag: UnsafeRawPointer?) {
         self.flags = flags
         self.frameID = frameID
         self.images = images
@@ -39116,7 +39116,7 @@ public struct ShaderCreateInfoEXT: ChainableBase {
     public let pushConstantRanges: Array<PushConstantRange>?
     public let specializationInfo: SpecializationInfo?
 
-    public init(flags: ShaderCreateFlagsEXT = [], stage: ShaderStageFlags, nextStage: ShaderStageFlags = [], codeType: ShaderCodeTypeEXT, codeSize: Int, code: UnsafeRawPointer, name: String?, setLayouts: Array<DescriptorSetLayout>? = [], pushConstantRanges: Array<PushConstantRange>? = [], specializationInfo: SpecializationInfo? = nil) {
+    public init(flags: ShaderCreateFlagsEXT = [], stage: ShaderStageFlags, nextStage: ShaderStageFlags = [], codeType: ShaderCodeTypeEXT, codeSize: Int, code: UnsafeRawPointer, name: String? = nil, setLayouts: Array<DescriptorSetLayout>? = nil, pushConstantRanges: Array<PushConstantRange>? = nil, specializationInfo: SpecializationInfo? = nil) {
         self.flags = flags
         self.stage = stage
         self.nextStage = nextStage
@@ -39620,7 +39620,7 @@ public struct ExecutionGraphPipelineCreateInfoAMDX: ChainableBase {
     public let basePipelineHandle: Pipeline?
     public let basePipelineIndex: Int32
 
-    public init(flags: PipelineCreateFlags = [], stages: Array<PipelineShaderStageCreateInfo>? = [], libraryInfo: PipelineLibraryCreateInfoKHR? = nil, layout: PipelineLayout? = nil, basePipelineHandle: Pipeline? = nil, basePipelineIndex: Int32) {
+    public init(flags: PipelineCreateFlags = [], stages: Array<PipelineShaderStageCreateInfo>? = nil, libraryInfo: PipelineLibraryCreateInfoKHR? = nil, layout: PipelineLayout? = nil, basePipelineHandle: Pipeline? = nil, basePipelineIndex: Int32) {
         self.flags = flags
         self.stages = stages
         self.libraryInfo = libraryInfo
@@ -39670,7 +39670,7 @@ public struct PipelineShaderStageNodeCreateInfoAMDX: ChainableBase, PipelineShad
     public let name: String?
     public let index: UInt32
 
-    public init(name: String?, index: UInt32) {
+    public init(name: String? = nil, index: UInt32) {
         self.name = name
         self.index = index
     }
@@ -40046,7 +40046,7 @@ public struct BindDescriptorSetsInfo: ChainableBase {
     public let descriptorSets: Array<DescriptorSet>
     public let dynamicOffsets: Array<UInt32>?
 
-    public init(stageFlags: ShaderStageFlags, layout: PipelineLayout? = nil, firstSet: UInt32 = 0, descriptorSets: Array<DescriptorSet>, dynamicOffsets: Array<UInt32>? = []) {
+    public init(stageFlags: ShaderStageFlags, layout: PipelineLayout? = nil, firstSet: UInt32 = 0, descriptorSets: Array<DescriptorSet>, dynamicOffsets: Array<UInt32>? = nil) {
         self.stageFlags = stageFlags
         self.layout = layout
         self.firstSet = firstSet
@@ -41584,7 +41584,7 @@ public struct RenderingInputAttachmentIndexInfo: ChainableBase, GraphicsPipeline
     public let depthInputAttachmentIndex: UnsafePointer<UInt32>?
     public let stencilInputAttachmentIndex: UnsafePointer<UInt32>?
 
-    public init(colorAttachmentInputIndices: Array<UInt32>? = [], depthInputAttachmentIndex: UnsafePointer<UInt32>? = nil, stencilInputAttachmentIndex: UnsafePointer<UInt32>? = nil) {
+    public init(colorAttachmentInputIndices: Array<UInt32>? = nil, depthInputAttachmentIndex: UnsafePointer<UInt32>? = nil, stencilInputAttachmentIndex: UnsafePointer<UInt32>? = nil) {
         self.colorAttachmentInputIndices = colorAttachmentInputIndices
         self.depthInputAttachmentIndex = depthInputAttachmentIndex
         self.stencilInputAttachmentIndex = stencilInputAttachmentIndex
@@ -43549,7 +43549,7 @@ public struct TensorCopyARM: ChainableBase {
     public let dstOffset: Array<UInt64>?
     public let extent: Array<UInt64>?
 
-    public init(srcOffset: Array<UInt64>? = [], dstOffset: Array<UInt64>? = [], extent: Array<UInt64>? = []) {
+    public init(srcOffset: Array<UInt64>? = nil, dstOffset: Array<UInt64>? = nil, extent: Array<UInt64>? = nil) {
         self.srcOffset = srcOffset
         self.dstOffset = dstOffset
         self.extent = extent
@@ -44225,7 +44225,7 @@ public struct DataGraphPipelineShaderModuleCreateInfoARM: ChainableBase, DataGra
     public let specializationInfo: SpecializationInfo?
     public let constants: Array<DataGraphPipelineConstantARM>?
 
-    public init(module: ShaderModule? = nil, name: String, specializationInfo: SpecializationInfo? = nil, constants: Array<DataGraphPipelineConstantARM>? = []) {
+    public init(module: ShaderModule? = nil, name: String, specializationInfo: SpecializationInfo? = nil, constants: Array<DataGraphPipelineConstantARM>? = nil) {
         self.module = module
         self.name = name
         self.specializationInfo = specializationInfo

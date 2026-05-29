@@ -49,7 +49,7 @@ public class Entry {
         }.map { LayerProperties(cStruct: $0) }
     }
 
-    public func getInstanceExtensionProperties(layerName: String?) throws -> Array<ExtensionProperties> {
+    public func getInstanceExtensionProperties(layerName: String? = nil) throws -> Array<ExtensionProperties> {
         try layerName.withOptionalCString { cString_layerName in
             try enumerate { pProperties, pPropertyCount in
                 self.dispatchTable.vkEnumerateInstanceExtensionProperties(cString_layerName, pPropertyCount, pProperties)
@@ -619,7 +619,7 @@ public class PhysicalDevice: _HandleContainer {
         }.map { LayerProperties(cStruct: $0) }
     }
 
-    public func getDeviceExtensionProperties(layerName: String?) throws -> Array<ExtensionProperties> {
+    public func getDeviceExtensionProperties(layerName: String? = nil) throws -> Array<ExtensionProperties> {
         try layerName.withOptionalCString { cString_layerName in
             try enumerate { pProperties, pPropertyCount in
                 self.instance.dispatchTable.vkEnumerateDeviceExtensionProperties(self.handle, cString_layerName, pPropertyCount, pProperties)
@@ -5005,7 +5005,7 @@ public class CommandBuffer: _HandleContainer {
         }
     }
 
-    public func cmdBeginTransformFeedbackEXT(firstCounterBuffer: UInt32, counterBuffers: Array<Buffer> = [], counterBufferOffsets: Array<VkDeviceSize>? = []) -> Void {
+    public func cmdBeginTransformFeedbackEXT(firstCounterBuffer: UInt32, counterBuffers: Array<Buffer> = [], counterBufferOffsets: Array<VkDeviceSize>? = nil) -> Void {
         counterBuffers.map{ $0.handle }.withUnsafeBufferPointer { ptr_counterBuffers in
             counterBufferOffsets.withOptionalUnsafeBufferPointer { ptr_counterBufferOffsets in
                 self.commandPool.device.dispatchTable.vkCmdBeginTransformFeedbackEXT(self.handle, firstCounterBuffer, UInt32(ptr_counterBuffers.count), ptr_counterBuffers.baseAddress, ptr_counterBufferOffsets.baseAddress)
@@ -5013,7 +5013,7 @@ public class CommandBuffer: _HandleContainer {
         }
     }
 
-    public func cmdEndTransformFeedbackEXT(firstCounterBuffer: UInt32, counterBuffers: Array<Buffer> = [], counterBufferOffsets: Array<VkDeviceSize>? = []) -> Void {
+    public func cmdEndTransformFeedbackEXT(firstCounterBuffer: UInt32, counterBuffers: Array<Buffer> = [], counterBufferOffsets: Array<VkDeviceSize>? = nil) -> Void {
         counterBuffers.map{ $0.handle }.withUnsafeBufferPointer { ptr_counterBuffers in
             counterBufferOffsets.withOptionalUnsafeBufferPointer { ptr_counterBufferOffsets in
                 self.commandPool.device.dispatchTable.vkCmdEndTransformFeedbackEXT(self.handle, firstCounterBuffer, UInt32(ptr_counterBuffers.count), ptr_counterBuffers.baseAddress, ptr_counterBufferOffsets.baseAddress)
@@ -6173,13 +6173,13 @@ public class CommandBuffer: _HandleContainer {
         }
     }
 
-    public func cmdBeginTransformFeedback2EXT(firstCounterRange: UInt32, counterInfos: Array<BindTransformFeedbackBuffer2InfoEXT>? = []) -> Void {
+    public func cmdBeginTransformFeedback2EXT(firstCounterRange: UInt32, counterInfos: Array<BindTransformFeedbackBuffer2InfoEXT>? = nil) -> Void {
         counterInfos.withOptionalCStructBufferPointer { ptr_counterInfos in
             self.commandPool.device.dispatchTable.vkCmdBeginTransformFeedback2EXT(self.handle, firstCounterRange, UInt32(ptr_counterInfos.count), ptr_counterInfos.baseAddress)
         }
     }
 
-    public func cmdEndTransformFeedback2EXT(firstCounterRange: UInt32, counterInfos: Array<BindTransformFeedbackBuffer2InfoEXT>? = []) -> Void {
+    public func cmdEndTransformFeedback2EXT(firstCounterRange: UInt32, counterInfos: Array<BindTransformFeedbackBuffer2InfoEXT>? = nil) -> Void {
         counterInfos.withOptionalCStructBufferPointer { ptr_counterInfos in
             self.commandPool.device.dispatchTable.vkCmdEndTransformFeedback2EXT(self.handle, firstCounterRange, UInt32(ptr_counterInfos.count), ptr_counterInfos.baseAddress)
         }

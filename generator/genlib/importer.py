@@ -616,9 +616,14 @@ class Importer:
             ty = c_member.type
             if ty.length and type(ty.length) == str and ty.length != 'null-terminated': 
                 if ty.length in optional_lengths:
-                    default_value = '[]'
-            elif c_member.type.optional:
+                    if ty.optional:
+                        default_value = 'nil'
+                    else:
+                        default_value = '[]'
+            elif ty.optional:
                 if ty.pointer_to and not ty.length:
+                    default_value = 'nil'
+                elif ty.length == 'null-terminated':
                     default_value = 'nil'
                 elif ty.name in tc.NUMERIC_TYPE:
                     default_value = '0'
