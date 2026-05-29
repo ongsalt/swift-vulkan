@@ -50,55 +50,19 @@ Swift-vulkan is a relatively new project, and there are still some important mil
 
 
 ## Todos
-- remove system `vulkan.h` dependency
-
 - namespace platform specific header?
-- handle `api`, currently i nuked everything `vulkansc`
 - proper extension support
-
-- Parent classs fix
-- alias fix
+    - generate `push(_:)` per each ChainableBase
 - result enum extension
 
 - multiple out array
     - is multiple out array of pNext chain possible?
-- PipelineBinaryHandlesInfoKHR should become array of handle?
-    - it should not take in `device`
 - assert(array1.count == array2.count)?
-- generate `push(_:)` per each ChainableBase
 - explicitly type `enumerate()`
-- `some Chainable<...>` can not be wrapped in an optional
-    - just use any for now
-    - then generate an overload for default structure
-    - or use swift 6.4 `MutableRef<T>`
 - typed throws
-- rename `createX(createInfo:)` to `createX(_:)`
-- fill sType for out param (must generate overload for an `inout` param with pNext)
+- name translation `createX(createInfo:)` to `createX(_:)`
+- generate overload for Chainable out param
+    - discrete type: fill sType for out param
+    - `Chainable<_>`: make it inout param
+
 - remove some hardcode fix
-
-
-DataGraphPipelineNodeConnectionTypeARM
-error: an enum with no cases cannot declare a raw type (UInt32)
-
-
-## Chaining
-- `[inout] some Chainable<Base>`. (maybe we can provide some `extension` `.0` `.1`...)
-    ```swift
-    let createInfo = DeviceCreateInfo(...)
-        .push(FeaturesA(..))
-        .push(FeaturesB(...))
-    // createInfo: Chain<DeviceCreateInfo, Chain<FeaturesA, FeaturesB>>
-    ``` 
-
-    if we want to do it `ash` way (no chain type). It will requires a (`MutableRef`)[https://github.com/swiftlang/swift-evolution/blob/main/proposals/0519-ref-mutableref-types.md] in swift 6.4 (available in recent `main`)
-
-
-- return value
-```swift
-func getSomething<T>(outType: T) throws(VulkanError) -> T where T {}
-
-handl.getSomething(querying: #chainOf<A, B, C>) -> Chain<A, Chain<B, C>>
-
-
-``` 
-
