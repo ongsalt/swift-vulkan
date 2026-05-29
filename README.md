@@ -53,14 +53,17 @@ Swift-vulkan is a relatively new project, and there are still some important mil
 - generate `push(_:)` per each ChainableBase
 - result enum extension
 
-- multiple out array
-    - is multiple out array of pNext chain possible?
-- assert(array1.count == array2.count)?
-- explicitly type `enumerate()`
-- typed throws
-- name translation `createX(createInfo:)` to `createX(_:)`
 - generate overload for Chainable out param
     - discrete type: fill sType for out param
     - `Chainable<_>`: make it inout param
+    - or 
+    ```swift
+    let (features, vulkan11Properties, descriptorIndexingProperties) = physicalDevice.getFeatures2(features: #ChainOf(PhysicalDeviceVulkan11Properties, PhysicalDeviceDescriptorIndexingProperties))
+    ```
 
+- explicitly type `enumerate()`
+- typed throws
+- assert(array1.count == array2.count)?
+- multiple out array
+    - is multiple out array of pNext chain possible?
 - remove some hardcode fix

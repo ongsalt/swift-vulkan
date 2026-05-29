@@ -46,7 +46,7 @@ class App {
         
         let entry = try Entry()
         instance = try entry.createInstance(
-            createInfo: .init(
+            .init(
                 flags: [],
                 applicationInfo: nil,
                 enabledLayerNames: layers,
@@ -56,7 +56,7 @@ class App {
         
         #if DEBUG
         debugMessenger = try instance.createDebugUtilsMessengerEXT(
-            createInfo: .init(
+            .init(
                 flags: [],
                 messageSeverity: [.warning, .error],
                 messageType: [.general, .performance, .validation],

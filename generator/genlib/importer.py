@@ -25,6 +25,13 @@ class SwiftMember:
         self.type = type_
         self.is_closure = is_closure
 
+    @property
+    def declaration(self):
+        out = f'{self.name}: {self.type}'
+        if self.external_name:
+            out = f'{self.external_name} {out}'
+        return out
+
 
 class SwiftStruct:
     def __init__(self, c_struct: CStruct, name: str,
@@ -605,6 +612,7 @@ class Importer:
 
             member = SwiftMember(
                 name=swift_name, type_=swift_type, is_closure=is_closure)
+
             members.append(member)
             conversions.add_conversion(c_member.name, swift_name, conversion)
 

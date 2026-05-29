@@ -1484,7 +1484,7 @@ public struct WriteDescriptorSet: ChainableBase {
         self.texelBufferView = texelBufferView
     }
 
-    init(cStruct: VkWriteDescriptorSet, descriptorPool: DescriptorPool, device: Device) {
+    init(cStruct: VkWriteDescriptorSet, device: Device, descriptorPool: DescriptorPool) {
         self.dstSet = DescriptorSet(handle: cStruct.dstSet, descriptorPool: descriptorPool)
         self.dstBinding = cStruct.dstBinding
         self.dstArrayElement = cStruct.dstArrayElement
@@ -36118,7 +36118,7 @@ public struct BindDescriptorSetsInfo: ChainableBase {
         self.dynamicOffsets = dynamicOffsets
     }
 
-    init(cStruct: VkBindDescriptorSetsInfo, descriptorPool: DescriptorPool, device: Device) {
+    init(cStruct: VkBindDescriptorSetsInfo, device: Device, descriptorPool: DescriptorPool) {
         self.stageFlags = ShaderStageFlags(rawValue: cStruct.stageFlags)
         self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout, device: device) : nil
         self.firstSet = cStruct.firstSet
@@ -36200,11 +36200,11 @@ public struct PushDescriptorSetInfo: ChainableBase {
         self.descriptorWrites = descriptorWrites
     }
 
-    init(cStruct: VkPushDescriptorSetInfo, descriptorPool: DescriptorPool, device: Device) {
+    init(cStruct: VkPushDescriptorSetInfo, device: Device, descriptorPool: DescriptorPool) {
         self.stageFlags = ShaderStageFlags(rawValue: cStruct.stageFlags)
         self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout, device: device) : nil
         self.set = cStruct.set
-        self.descriptorWrites = UnsafeBufferPointer(start: cStruct.pDescriptorWrites, count: Int(cStruct.descriptorWriteCount)).map{ WriteDescriptorSet(cStruct: $0, descriptorPool: descriptorPool, device: device) }
+        self.descriptorWrites = UnsafeBufferPointer(start: cStruct.pDescriptorWrites, count: Int(cStruct.descriptorWriteCount)).map{ WriteDescriptorSet(cStruct: $0, device: device, descriptorPool: descriptorPool) }
     }
 
     public func withCStruct<R>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPushDescriptorSetInfo>) throws -> R) rethrows -> R {

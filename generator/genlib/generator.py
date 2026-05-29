@@ -219,8 +219,14 @@ class Generator(BaseGenerator):
         elif command.name == 'allocateDescriptorSets':
             classes['descriptorPool'] = 'allocateInfo.base.descriptorPool'
 
-        param_string = ', '.join(
-            f'{param.name}: {param.type}' for param in command.params)
+        param_strings: list[str] = []
+        for index, param in enumerate(command.params):
+            if index == 0 and param.name.endswith("Info"):
+                param_strings.append(f'_ {param.name}: {param.type}')
+            else:
+                param_strings.append(f'{param.name}: {param.type}')
+        param_string = ', '.join(param_strings)
+        
         throws_string = ' throws' if command.throws else ''
 
         with self.indent(f'public func {command.name}({param_string})'
