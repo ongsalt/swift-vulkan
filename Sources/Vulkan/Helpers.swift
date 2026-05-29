@@ -1,4 +1,4 @@
-import CVulkan
+@_exported import CVulkan
 
 func checkResult(_ result: VkResult) throws(Result) {
     if result.rawValue < 0 {
