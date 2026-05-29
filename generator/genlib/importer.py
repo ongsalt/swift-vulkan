@@ -379,7 +379,7 @@ class Importer:
 
         name = remove_vk_prefix(c_command.name)
         name = re.sub(
-            f'({class_name_without_extension})([A-Z]\w*)?$', r'\2', name)
+            f'({class_name_without_extension})([A-Z]\\w*)?$', r'\2', name)
         name = name[0].lower() + name[1:]
         if name.startswith('enumerate'):
             name = 'get' + name[9:]
@@ -659,6 +659,9 @@ class Importer:
     def get_type_conversion(self, c_type: CType, implicit_only: bool = False, force_optional: bool = None,
                             convert_array_to_pointer: bool = False, transform_chainable=False) -> Tuple[str, tc.Conversion]:
         optional = force_optional if force_optional is not None else c_type.optional
+        if c_type.pointer_to and c_type.pointer_to.name in ('wl_display', 'wl_surface'):
+            return 'OpaquePointer', tc.implicit_conversion
+
         if c_type.name:
             if c_type.name in tc.IMPLICIT_TYPE_MAP:
                 return tc.IMPLICIT_TYPE_MAP[c_type.name], tc.implicit_conversion

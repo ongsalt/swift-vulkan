@@ -448,7 +448,7 @@ def parse_member(member: ElementTree, tree: ElementTree) -> CMember:
 
     array_size: int | list[int] = None
     if e_name.tail and e_name.tail.startswith('['):
-        match = re.findall('\[\s*(\d+)\s*\]', e_name.tail)
+        match = re.findall(r'\[\s*(\d+)\s*\]', e_name.tail)
         if match:
             if len(match) == 1:
                 array_size = int(match[0])

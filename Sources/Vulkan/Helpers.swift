@@ -251,3 +251,8 @@ func maybeMutable(_ ptr: UnsafeRawPointer?) -> UnsafeRawPointer? {
 func maybeMutable(_ ptr: UnsafeRawPointer?) -> UnsafeMutableRawPointer? {
   UnsafeMutableRawPointer(mutating: ptr)
 }
+
+// #if VK_USE_PLATFORM_WAYLAND_KHR
+// public typealias wl_display = OpaquePointer
+// public typealias wl_surface = OpaquePointer
+// #endif
