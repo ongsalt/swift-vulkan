@@ -431,13 +431,13 @@ class Importer:
         if dispatcher.dispatch_table:
             dispatcher.dispatch_table.commands.append(c_command)
 
-        # we need to generate an overload in case of param with Chainable<...> is optional
+        # a Chainable<_> overlaod
         shuold_generate_overload = self.shuold_generate_chainable_overload(
             c_command, c_input_params)
 
         if shuold_generate_overload:
             params, conversions = self.get_member_conversions(
-                c_input_params, c_command=c_command, transform_chainable=False)
+                c_input_params, c_command=c_command, transform_chainable=True)
 
             command = SwiftCommand(
                 c_command=c_command,
@@ -460,7 +460,7 @@ class Importer:
             current_class.commands.append(command)
 
         params, conversions = self.get_member_conversions(
-            c_input_params, c_command=c_command, transform_chainable=True)
+            c_input_params, c_command=c_command, transform_chainable=False)
 
         command = SwiftCommand(
             c_command=c_command,
@@ -608,11 +608,10 @@ class Importer:
             name = p.type.type_name
             if name in self.imported_structs and p.type.pointer_to and p.type.pointer_to.const and not p.type.name:
                 swift_struct = self.imported_structs[name]
-                if swift_struct.c_struct.is_chainable_base and p.type.optional and not p.type.length:
+                if swift_struct.c_struct.is_chainable_base and not p.type.length:
                     if out == True:
                         print(
                             f"warning: {c_command.name} contains multiple chainable parameter")
-                        return False
                     out = True
 
         return out
