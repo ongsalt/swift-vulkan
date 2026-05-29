@@ -20,17 +20,12 @@ class SwiftOptionSet(CEnum):
 
 
 class SwiftMember:
-    def __init__(self, name: str, type_: str, is_closure: bool = False):
+    def __init__(self, name: str, type_: str, is_closure: bool = False, default_value: str | None = None):
         self.name = name
         self.type = type_
         self.is_closure = is_closure
+        self.default_value = default_value
 
-    @property
-    def declaration(self):
-        out = f'{self.name}: {self.type}'
-        if self.external_name:
-            out = f'{self.external_name} {out}'
-        return out
 
 
 class SwiftStruct:
@@ -543,6 +538,7 @@ class Importer:
         members: List[SwiftMember] = []
         conversions = tc.MemberConversions()
         lengths: List[str] = []
+        optional_lengths: set[str] = set()
 
         for c_member in c_members:
             if is_array_convertible(c_member.type):
@@ -556,6 +552,8 @@ class Importer:
 
         for c_member in c_members:
             if c_member.name in lengths:
+                if c_member.type.optional:
+                    optional_lengths.add(c_member.name)
                 continue
 
             if len(c_member.values) == 1:
@@ -610,8 +608,30 @@ class Importer:
             is_closure = c_member.type.name and c_member.type.name.startswith(
                 'PFN_') and not c_member.type.optional
 
+            default_value = None
+            ty = c_member.type
+            if ty.length and type(ty.length) == str and ty.length != 'null-terminated': 
+                if ty.length in optional_lengths:
+                    default_value = '[]'
+            elif c_member.type.optional:
+                if ty.pointer_to and not ty.length:
+                    default_value = 'nil'
+                elif ty.name in tc.NUMERIC_TYPE:
+                    default_value = '0'
+                elif ty.name == 'VkBool32':
+                    default_value = 'false'
+                elif ty.name in self.imported_enums:
+                    default_value = '.init(rawValue: 0)!'
+                elif ty.name in self.imported_option_sets:
+                    default_value = '[]'
+                elif ty.name in self.imported_classes:
+                    default_value = 'nil'
+                # elif ty.name in self.imported_option_set_bits:
+                #     default_value = '0'
+
+
             member = SwiftMember(
-                name=swift_name, type_=swift_type, is_closure=is_closure)
+                name=swift_name, type_=swift_type, is_closure=is_closure, default_value=default_value)
 
             members.append(member)
             conversions.add_conversion(c_member.name, swift_name, conversion)
@@ -697,10 +717,6 @@ class Importer:
 
                     name = swift_struct.name
                     if transform_chainable:
-                        # if optional:
-                        #     raise Exception(
-                        #         f"cannot generate (some Chainable<{name}>)?, use overloading instead")
-                        # else:
                         name = f"(some Chainable<{name}>)"
                     if optional and not transform_chainable:
                         return name + '?', tc.optional_struct_conversion(swift_struct.name, parent_names)

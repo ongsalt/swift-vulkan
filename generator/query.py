@@ -9,5 +9,5 @@ if __name__ == '__main__':
     importer = Importer(c_context)
     swift_context = importer.import_all()
 
-    for protect in c_context.platform_protects.values():
-        print(protect)
+    # for protect in c_context.platform_protects.values():
+    #     print(protect)

@@ -734,7 +734,7 @@ public struct AllocationCallbacks: CStructConvertible {
     public let pfnInternalAllocation: PFN_vkInternalAllocationNotification?
     public let pfnInternalFree: PFN_vkInternalFreeNotification?
 
-    public init(userData: UnsafeMutableRawPointer?, pfnAllocation: @escaping PFN_vkAllocationFunction, pfnReallocation: @escaping PFN_vkReallocationFunction, pfnFree: @escaping PFN_vkFreeFunction, pfnInternalAllocation: PFN_vkInternalAllocationNotification?, pfnInternalFree: PFN_vkInternalFreeNotification?) {
+    public init(userData: UnsafeMutableRawPointer? = nil, pfnAllocation: @escaping PFN_vkAllocationFunction, pfnReallocation: @escaping PFN_vkReallocationFunction, pfnFree: @escaping PFN_vkFreeFunction, pfnInternalAllocation: PFN_vkInternalAllocationNotification?, pfnInternalFree: PFN_vkInternalFreeNotification?) {
         self.userData = userData
         self.pfnAllocation = pfnAllocation
         self.pfnReallocation = pfnReallocation
@@ -771,7 +771,7 @@ public struct DeviceQueueCreateInfo: ChainableBase {
     public let queueFamilyIndex: UInt32
     public let queuePriorities: Array<Float>
 
-    public init(flags: DeviceQueueCreateFlags, queueFamilyIndex: UInt32, queuePriorities: Array<Float>) {
+    public init(flags: DeviceQueueCreateFlags = [], queueFamilyIndex: UInt32, queuePriorities: Array<Float>) {
         self.flags = flags
         self.queueFamilyIndex = queueFamilyIndex
         self.queuePriorities = queuePriorities
@@ -1043,7 +1043,7 @@ public struct DeviceCreateInfo: ChainableBase {
     public let enabledExtensionNames: Array<String>
     public let enabledFeatures: PhysicalDeviceFeatures?
 
-    public init(flags: DeviceCreateFlags, queueCreateInfos: Array<DeviceQueueCreateInfo>, enabledLayerNames: Array<String>, enabledExtensionNames: Array<String>, enabledFeatures: PhysicalDeviceFeatures?) {
+    public init(flags: DeviceCreateFlags = [], queueCreateInfos: Array<DeviceQueueCreateInfo> = [], enabledLayerNames: Array<String> = [], enabledExtensionNames: Array<String> = [], enabledFeatures: PhysicalDeviceFeatures? = nil) {
         self.flags = flags
         self.queueCreateInfos = queueCreateInfos
         self.enabledLayerNames = enabledLayerNames
@@ -1092,7 +1092,7 @@ public struct InstanceCreateInfo: ChainableBase {
     public let enabledLayerNames: Array<String>
     public let enabledExtensionNames: Array<String>
 
-    public init(flags: InstanceCreateFlags, applicationInfo: ApplicationInfo?, enabledLayerNames: Array<String>, enabledExtensionNames: Array<String>) {
+    public init(flags: InstanceCreateFlags = [], applicationInfo: ApplicationInfo? = nil, enabledLayerNames: Array<String> = [], enabledExtensionNames: Array<String> = []) {
         self.flags = flags
         self.applicationInfo = applicationInfo
         self.enabledLayerNames = enabledLayerNames
@@ -1414,7 +1414,7 @@ public struct DescriptorBufferInfo: CStructConvertible {
     public let offset: VkDeviceSize
     public let range: VkDeviceSize
 
-    public init(buffer: Buffer?, offset: VkDeviceSize, range: VkDeviceSize) {
+    public init(buffer: Buffer? = nil, offset: VkDeviceSize, range: VkDeviceSize) {
         self.buffer = buffer
         self.offset = offset
         self.range = range
@@ -1484,7 +1484,7 @@ public struct WriteDescriptorSet: ChainableBase {
         self.texelBufferView = texelBufferView
     }
 
-    init(cStruct: VkWriteDescriptorSet, device: Device, descriptorPool: DescriptorPool) {
+    init(cStruct: VkWriteDescriptorSet, descriptorPool: DescriptorPool, device: Device) {
         self.dstSet = DescriptorSet(handle: cStruct.dstSet, descriptorPool: descriptorPool)
         self.dstBinding = cStruct.dstBinding
         self.dstArrayElement = cStruct.dstArrayElement
@@ -1596,7 +1596,7 @@ public struct BufferCreateInfo: ChainableBase {
     public let sharingMode: SharingMode
     public let queueFamilyIndices: Array<UInt32>
 
-    public init(flags: BufferCreateFlags, size: VkDeviceSize, usage: BufferUsageFlags, sharingMode: SharingMode, queueFamilyIndices: Array<UInt32>) {
+    public init(flags: BufferCreateFlags = [], size: VkDeviceSize, usage: BufferUsageFlags, sharingMode: SharingMode, queueFamilyIndices: Array<UInt32> = []) {
         self.flags = flags
         self.size = size
         self.usage = usage
@@ -1638,7 +1638,7 @@ public struct BufferViewCreateInfo: ChainableBase {
     public let offset: VkDeviceSize
     public let range: VkDeviceSize
 
-    public init(flags: BufferViewCreateFlags, buffer: Buffer, format: Format, offset: VkDeviceSize, range: VkDeviceSize) {
+    public init(flags: BufferViewCreateFlags = [], buffer: Buffer, format: Format, offset: VkDeviceSize, range: VkDeviceSize) {
         self.flags = flags
         self.buffer = buffer
         self.format = format
@@ -1770,7 +1770,7 @@ public struct MemoryBarrier: ChainableBase {
     public let srcAccessMask: AccessFlags
     public let dstAccessMask: AccessFlags
 
-    public init(srcAccessMask: AccessFlags, dstAccessMask: AccessFlags) {
+    public init(srcAccessMask: AccessFlags = [], dstAccessMask: AccessFlags = []) {
         self.srcAccessMask = srcAccessMask
         self.dstAccessMask = dstAccessMask
     }
@@ -1907,7 +1907,7 @@ public struct ImageCreateInfo: ChainableBase {
     public let queueFamilyIndices: Array<UInt32>
     public let initialLayout: ImageLayout
 
-    public init(flags: ImageCreateFlags, imageType: ImageType, format: Format, extent: Extent3D, mipLevels: UInt32, arrayLayers: UInt32, samples: SampleCountFlags, tiling: ImageTiling, usage: ImageUsageFlags, sharingMode: SharingMode, queueFamilyIndices: Array<UInt32>, initialLayout: ImageLayout) {
+    public init(flags: ImageCreateFlags = [], imageType: ImageType, format: Format, extent: Extent3D, mipLevels: UInt32, arrayLayers: UInt32, samples: SampleCountFlags, tiling: ImageTiling, usage: ImageUsageFlags, sharingMode: SharingMode, queueFamilyIndices: Array<UInt32> = [], initialLayout: ImageLayout) {
         self.flags = flags
         self.imageType = imageType
         self.format = format
@@ -2009,7 +2009,7 @@ public struct ImageViewCreateInfo: ChainableBase {
     public let components: ComponentMapping
     public let subresourceRange: ImageSubresourceRange
 
-    public init(flags: ImageViewCreateFlags, image: Image, viewType: ImageViewType, format: Format, components: ComponentMapping, subresourceRange: ImageSubresourceRange) {
+    public init(flags: ImageViewCreateFlags = [], image: Image, viewType: ImageViewType, format: Format, components: ComponentMapping, subresourceRange: ImageSubresourceRange) {
         self.flags = flags
         self.image = image
         self.viewType = viewType
@@ -2083,7 +2083,7 @@ public struct SparseMemoryBind: CStructConvertible {
     public let memoryOffset: VkDeviceSize
     public let flags: SparseMemoryBindFlags
 
-    public init(resourceOffset: VkDeviceSize, size: VkDeviceSize, memory: DeviceMemory?, memoryOffset: VkDeviceSize, flags: SparseMemoryBindFlags) {
+    public init(resourceOffset: VkDeviceSize, size: VkDeviceSize, memory: DeviceMemory? = nil, memoryOffset: VkDeviceSize, flags: SparseMemoryBindFlags = []) {
         self.resourceOffset = resourceOffset
         self.size = size
         self.memory = memory
@@ -2120,7 +2120,7 @@ public struct SparseImageMemoryBind: CStructConvertible {
     public let memoryOffset: VkDeviceSize
     public let flags: SparseMemoryBindFlags
 
-    public init(subresource: ImageSubresource, offset: Offset3D, extent: Extent3D, memory: DeviceMemory?, memoryOffset: VkDeviceSize, flags: SparseMemoryBindFlags) {
+    public init(subresource: ImageSubresource, offset: Offset3D, extent: Extent3D, memory: DeviceMemory? = nil, memoryOffset: VkDeviceSize, flags: SparseMemoryBindFlags = []) {
         self.subresource = subresource
         self.offset = offset
         self.extent = extent
@@ -2246,7 +2246,7 @@ public struct BindSparseInfo: ChainableBase {
     public let imageBinds: Array<SparseImageMemoryBindInfo>
     public let signalSemaphores: Array<Semaphore>
 
-    public init(waitSemaphores: Array<Semaphore>, bufferBinds: Array<SparseBufferMemoryBindInfo>, imageOpaqueBinds: Array<SparseImageOpaqueMemoryBindInfo>, imageBinds: Array<SparseImageMemoryBindInfo>, signalSemaphores: Array<Semaphore>) {
+    public init(waitSemaphores: Array<Semaphore> = [], bufferBinds: Array<SparseBufferMemoryBindInfo> = [], imageOpaqueBinds: Array<SparseImageOpaqueMemoryBindInfo> = [], imageBinds: Array<SparseImageMemoryBindInfo> = [], signalSemaphores: Array<Semaphore> = []) {
         self.waitSemaphores = waitSemaphores
         self.bufferBinds = bufferBinds
         self.imageOpaqueBinds = imageOpaqueBinds
@@ -2483,7 +2483,7 @@ public struct CopyMemoryIndirectInfoKHR: ChainableBase {
     public let copyCount: UInt32
     public let copyAddressRange: StridedDeviceAddressRangeKHR
 
-    public init(srcCopyFlags: AddressCopyFlagsKHR, dstCopyFlags: AddressCopyFlagsKHR, copyCount: UInt32, copyAddressRange: StridedDeviceAddressRangeKHR) {
+    public init(srcCopyFlags: AddressCopyFlagsKHR = [], dstCopyFlags: AddressCopyFlagsKHR = [], copyCount: UInt32, copyAddressRange: StridedDeviceAddressRangeKHR) {
         self.srcCopyFlags = srcCopyFlags
         self.dstCopyFlags = dstCopyFlags
         self.copyCount = copyCount
@@ -2567,7 +2567,7 @@ public struct CopyMemoryToImageIndirectInfoKHR: ChainableBase {
     public let dstImageLayout: ImageLayout
     public let imageSubresources: Array<ImageSubresourceLayers>
 
-    public init(srcCopyFlags: AddressCopyFlagsKHR, copyAddressRange: StridedDeviceAddressRangeKHR, dstImage: Image, dstImageLayout: ImageLayout, imageSubresources: Array<ImageSubresourceLayers>) {
+    public init(srcCopyFlags: AddressCopyFlagsKHR = [], copyAddressRange: StridedDeviceAddressRangeKHR, dstImage: Image, dstImageLayout: ImageLayout, imageSubresources: Array<ImageSubresourceLayers>) {
         self.srcCopyFlags = srcCopyFlags
         self.copyAddressRange = copyAddressRange
         self.dstImage = dstImage
@@ -2655,7 +2655,7 @@ public struct ShaderModuleCreateInfo: ChainableBase, PipelineShaderStageCreateIn
     public let codeSize: Int
     public let code: UnsafePointer<UInt32>
 
-    public init(flags: ShaderModuleCreateFlags, codeSize: Int, code: UnsafePointer<UInt32>) {
+    public init(flags: ShaderModuleCreateFlags = [], codeSize: Int, code: UnsafePointer<UInt32>) {
         self.flags = flags
         self.codeSize = codeSize
         self.code = code
@@ -2687,7 +2687,7 @@ public struct DescriptorSetLayoutBinding: CStructConvertible {
     public let stageFlags: ShaderStageFlags
     public let immutableSamplers: Array<Sampler>?
 
-    public init(binding: UInt32, descriptorType: DescriptorType, stageFlags: ShaderStageFlags, immutableSamplers: Array<Sampler>?) {
+    public init(binding: UInt32, descriptorType: DescriptorType, stageFlags: ShaderStageFlags, immutableSamplers: Array<Sampler>? = []) {
         self.binding = binding
         self.descriptorType = descriptorType
         self.stageFlags = stageFlags
@@ -2720,7 +2720,7 @@ public struct DescriptorSetLayoutCreateInfo: ChainableBase {
     public let flags: DescriptorSetLayoutCreateFlags
     public let bindings: Array<DescriptorSetLayoutBinding>
 
-    public init(flags: DescriptorSetLayoutCreateFlags, bindings: Array<DescriptorSetLayoutBinding>) {
+    public init(flags: DescriptorSetLayoutCreateFlags = [], bindings: Array<DescriptorSetLayoutBinding> = []) {
         self.flags = flags
         self.bindings = bindings
     }
@@ -2775,7 +2775,7 @@ public struct DescriptorPoolCreateInfo: ChainableBase {
     public let maxSets: UInt32
     public let poolSizes: Array<DescriptorPoolSize>
 
-    public init(flags: DescriptorPoolCreateFlags, maxSets: UInt32, poolSizes: Array<DescriptorPoolSize>) {
+    public init(flags: DescriptorPoolCreateFlags = [], maxSets: UInt32, poolSizes: Array<DescriptorPoolSize> = []) {
         self.flags = flags
         self.maxSets = maxSets
         self.poolSizes = poolSizes
@@ -2867,7 +2867,7 @@ public struct SpecializationInfo: CStructConvertible {
     public let dataSize: Int
     public let data: UnsafeRawPointer
 
-    public init(mapEntries: Array<SpecializationMapEntry>, dataSize: Int, data: UnsafeRawPointer) {
+    public init(mapEntries: Array<SpecializationMapEntry> = [], dataSize: Int = 0, data: UnsafeRawPointer) {
         self.mapEntries = mapEntries
         self.dataSize = dataSize
         self.data = data
@@ -2900,7 +2900,7 @@ public struct PipelineShaderStageCreateInfo: ChainableBase {
     public let name: String
     public let specializationInfo: SpecializationInfo?
 
-    public init(flags: PipelineShaderStageCreateFlags, stage: ShaderStageFlags, module: ShaderModule?, name: String, specializationInfo: SpecializationInfo?) {
+    public init(flags: PipelineShaderStageCreateFlags = [], stage: ShaderStageFlags, module: ShaderModule? = nil, name: String, specializationInfo: SpecializationInfo? = nil) {
         self.flags = flags
         self.stage = stage
         self.module = module
@@ -2943,7 +2943,7 @@ public struct ComputePipelineCreateInfo: ChainableBase {
     public let basePipelineHandle: Pipeline?
     public let basePipelineIndex: Int32
 
-    public init(flags: PipelineCreateFlags, stage: PipelineShaderStageCreateInfo, layout: PipelineLayout?, basePipelineHandle: Pipeline?, basePipelineIndex: Int32) {
+    public init(flags: PipelineCreateFlags = [], stage: PipelineShaderStageCreateInfo, layout: PipelineLayout? = nil, basePipelineHandle: Pipeline? = nil, basePipelineIndex: Int32) {
         self.flags = flags
         self.stage = stage
         self.layout = layout
@@ -3011,7 +3011,7 @@ public struct PipelineCreateFlags2CreateInfo: ChainableBase, ComputePipelineCrea
 
     public let flags: PipelineCreateFlags2
 
-    public init(flags: PipelineCreateFlags2) {
+    public init(flags: PipelineCreateFlags2 = []) {
         self.flags = flags
     }
 
@@ -3096,7 +3096,7 @@ public struct PipelineVertexInputStateCreateInfo: ChainableBase {
     public let vertexBindingDescriptions: Array<VertexInputBindingDescription>
     public let vertexAttributeDescriptions: Array<VertexInputAttributeDescription>
 
-    public init(flags: PipelineVertexInputStateCreateFlags, vertexBindingDescriptions: Array<VertexInputBindingDescription>, vertexAttributeDescriptions: Array<VertexInputAttributeDescription>) {
+    public init(flags: PipelineVertexInputStateCreateFlags = [], vertexBindingDescriptions: Array<VertexInputBindingDescription> = [], vertexAttributeDescriptions: Array<VertexInputAttributeDescription> = []) {
         self.flags = flags
         self.vertexBindingDescriptions = vertexBindingDescriptions
         self.vertexAttributeDescriptions = vertexAttributeDescriptions
@@ -3133,7 +3133,7 @@ public struct PipelineInputAssemblyStateCreateInfo: ChainableBase {
     public let topology: PrimitiveTopology
     public let primitiveRestartEnable: Bool
 
-    public init(flags: PipelineInputAssemblyStateCreateFlags, topology: PrimitiveTopology, primitiveRestartEnable: Bool) {
+    public init(flags: PipelineInputAssemblyStateCreateFlags = [], topology: PrimitiveTopology, primitiveRestartEnable: Bool) {
         self.flags = flags
         self.topology = topology
         self.primitiveRestartEnable = primitiveRestartEnable
@@ -3163,7 +3163,7 @@ public struct PipelineTessellationStateCreateInfo: ChainableBase {
     public let flags: PipelineTessellationStateCreateFlags
     public let patchControlPoints: UInt32
 
-    public init(flags: PipelineTessellationStateCreateFlags, patchControlPoints: UInt32) {
+    public init(flags: PipelineTessellationStateCreateFlags = [], patchControlPoints: UInt32) {
         self.flags = flags
         self.patchControlPoints = patchControlPoints
     }
@@ -3191,7 +3191,7 @@ public struct PipelineViewportStateCreateInfo: ChainableBase {
     public let viewports: Array<Viewport>?
     public let scissors: Array<Rect2D>?
 
-    public init(flags: PipelineViewportStateCreateFlags, viewports: Array<Viewport>?, scissors: Array<Rect2D>?) {
+    public init(flags: PipelineViewportStateCreateFlags = [], viewports: Array<Viewport>? = [], scissors: Array<Rect2D>? = []) {
         self.flags = flags
         self.viewports = viewports
         self.scissors = scissors
@@ -3236,7 +3236,7 @@ public struct PipelineRasterizationStateCreateInfo: ChainableBase {
     public let depthBiasSlopeFactor: Float
     public let lineWidth: Float
 
-    public init(flags: PipelineRasterizationStateCreateFlags, depthClampEnable: Bool, rasterizerDiscardEnable: Bool, polygonMode: PolygonMode, cullMode: CullModeFlags, frontFace: FrontFace, depthBiasEnable: Bool, depthBiasConstantFactor: Float, depthBiasClamp: Float, depthBiasSlopeFactor: Float, lineWidth: Float) {
+    public init(flags: PipelineRasterizationStateCreateFlags = [], depthClampEnable: Bool, rasterizerDiscardEnable: Bool, polygonMode: PolygonMode, cullMode: CullModeFlags = [], frontFace: FrontFace, depthBiasEnable: Bool, depthBiasConstantFactor: Float, depthBiasClamp: Float, depthBiasSlopeFactor: Float, lineWidth: Float) {
         self.flags = flags
         self.depthClampEnable = depthClampEnable
         self.rasterizerDiscardEnable = rasterizerDiscardEnable
@@ -3295,7 +3295,7 @@ public struct PipelineMultisampleStateCreateInfo: ChainableBase {
     public let alphaToCoverageEnable: Bool
     public let alphaToOneEnable: Bool
 
-    public init(flags: PipelineMultisampleStateCreateFlags, rasterizationSamples: SampleCountFlags, sampleShadingEnable: Bool, minSampleShading: Float, sampleMask: UnsafePointer<VkSampleMask>?, alphaToCoverageEnable: Bool, alphaToOneEnable: Bool) {
+    public init(flags: PipelineMultisampleStateCreateFlags = [], rasterizationSamples: SampleCountFlags, sampleShadingEnable: Bool, minSampleShading: Float, sampleMask: UnsafePointer<VkSampleMask>?, alphaToCoverageEnable: Bool, alphaToOneEnable: Bool) {
         self.flags = flags
         self.rasterizationSamples = rasterizationSamples
         self.sampleShadingEnable = sampleShadingEnable
@@ -3343,7 +3343,7 @@ public struct PipelineColorBlendAttachmentState: CStructConvertible {
     public let alphaBlendOp: BlendOp
     public let colorWriteMask: ColorComponentFlags
 
-    public init(blendEnable: Bool, srcColorBlendFactor: BlendFactor, dstColorBlendFactor: BlendFactor, colorBlendOp: BlendOp, srcAlphaBlendFactor: BlendFactor, dstAlphaBlendFactor: BlendFactor, alphaBlendOp: BlendOp, colorWriteMask: ColorComponentFlags) {
+    public init(blendEnable: Bool, srcColorBlendFactor: BlendFactor, dstColorBlendFactor: BlendFactor, colorBlendOp: BlendOp, srcAlphaBlendFactor: BlendFactor, dstAlphaBlendFactor: BlendFactor, alphaBlendOp: BlendOp, colorWriteMask: ColorComponentFlags = []) {
         self.blendEnable = blendEnable
         self.srcColorBlendFactor = srcColorBlendFactor
         self.dstColorBlendFactor = dstColorBlendFactor
@@ -3388,7 +3388,7 @@ public struct PipelineColorBlendStateCreateInfo: ChainableBase {
     public let attachments: Array<PipelineColorBlendAttachmentState>?
     public let blendConstants: (Float, Float, Float, Float)
 
-    public init(flags: PipelineColorBlendStateCreateFlags, logicOpEnable: Bool, logicOp: LogicOp, attachments: Array<PipelineColorBlendAttachmentState>?, blendConstants: (Float, Float, Float, Float)) {
+    public init(flags: PipelineColorBlendStateCreateFlags = [], logicOpEnable: Bool, logicOp: LogicOp, attachments: Array<PipelineColorBlendAttachmentState>? = [], blendConstants: (Float, Float, Float, Float)) {
         self.flags = flags
         self.logicOpEnable = logicOpEnable
         self.logicOp = logicOp
@@ -3427,7 +3427,7 @@ public struct PipelineDynamicStateCreateInfo: ChainableBase {
     public let flags: PipelineDynamicStateCreateFlags
     public let dynamicStates: Array<DynamicState>
 
-    public init(flags: PipelineDynamicStateCreateFlags, dynamicStates: Array<DynamicState>) {
+    public init(flags: PipelineDynamicStateCreateFlags = [], dynamicStates: Array<DynamicState> = []) {
         self.flags = flags
         self.dynamicStates = dynamicStates
     }
@@ -3509,7 +3509,7 @@ public struct PipelineDepthStencilStateCreateInfo: ChainableBase {
     public let minDepthBounds: Float
     public let maxDepthBounds: Float
 
-    public init(flags: PipelineDepthStencilStateCreateFlags, depthTestEnable: Bool, depthWriteEnable: Bool, depthCompareOp: CompareOp, depthBoundsTestEnable: Bool, stencilTestEnable: Bool, front: StencilOpState, back: StencilOpState, minDepthBounds: Float, maxDepthBounds: Float) {
+    public init(flags: PipelineDepthStencilStateCreateFlags = [], depthTestEnable: Bool, depthWriteEnable: Bool, depthCompareOp: CompareOp, depthBoundsTestEnable: Bool, stencilTestEnable: Bool, front: StencilOpState, back: StencilOpState, minDepthBounds: Float, maxDepthBounds: Float) {
         self.flags = flags
         self.depthTestEnable = depthTestEnable
         self.depthWriteEnable = depthWriteEnable
@@ -3578,7 +3578,7 @@ public struct GraphicsPipelineCreateInfo: ChainableBase {
     public let basePipelineHandle: Pipeline?
     public let basePipelineIndex: Int32
 
-    public init(flags: PipelineCreateFlags, stages: Array<PipelineShaderStageCreateInfo>?, vertexInputState: PipelineVertexInputStateCreateInfo?, inputAssemblyState: PipelineInputAssemblyStateCreateInfo?, tessellationState: PipelineTessellationStateCreateInfo?, viewportState: PipelineViewportStateCreateInfo?, rasterizationState: PipelineRasterizationStateCreateInfo?, multisampleState: PipelineMultisampleStateCreateInfo?, depthStencilState: PipelineDepthStencilStateCreateInfo?, colorBlendState: PipelineColorBlendStateCreateInfo?, dynamicState: PipelineDynamicStateCreateInfo?, layout: PipelineLayout?, renderPass: RenderPass?, subpass: UInt32, basePipelineHandle: Pipeline?, basePipelineIndex: Int32) {
+    public init(flags: PipelineCreateFlags = [], stages: Array<PipelineShaderStageCreateInfo>? = [], vertexInputState: PipelineVertexInputStateCreateInfo? = nil, inputAssemblyState: PipelineInputAssemblyStateCreateInfo? = nil, tessellationState: PipelineTessellationStateCreateInfo? = nil, viewportState: PipelineViewportStateCreateInfo? = nil, rasterizationState: PipelineRasterizationStateCreateInfo? = nil, multisampleState: PipelineMultisampleStateCreateInfo? = nil, depthStencilState: PipelineDepthStencilStateCreateInfo? = nil, colorBlendState: PipelineColorBlendStateCreateInfo? = nil, dynamicState: PipelineDynamicStateCreateInfo? = nil, layout: PipelineLayout? = nil, renderPass: RenderPass? = nil, subpass: UInt32, basePipelineHandle: Pipeline? = nil, basePipelineIndex: Int32) {
         self.flags = flags
         self.stages = stages
         self.vertexInputState = vertexInputState
@@ -3669,7 +3669,7 @@ public struct PipelineCacheCreateInfo: ChainableBase {
     public let initialDataSize: Int
     public let initialData: UnsafeRawPointer
 
-    public init(flags: PipelineCacheCreateFlags, initialDataSize: Int, initialData: UnsafeRawPointer) {
+    public init(flags: PipelineCacheCreateFlags = [], initialDataSize: Int = 0, initialData: UnsafeRawPointer) {
         self.flags = flags
         self.initialDataSize = initialDataSize
         self.initialData = initialData
@@ -3899,7 +3899,7 @@ public struct PipelineBinaryCreateInfoKHR: ChainableBase {
     public let pipeline: Pipeline?
     public let pipelineCreateInfo: PipelineCreateInfoKHR?
 
-    public init(keysAndDataInfo: PipelineBinaryKeysAndDataKHR?, pipeline: Pipeline?, pipelineCreateInfo: PipelineCreateInfoKHR?) {
+    public init(keysAndDataInfo: PipelineBinaryKeysAndDataKHR? = nil, pipeline: Pipeline? = nil, pipelineCreateInfo: PipelineCreateInfoKHR? = nil) {
         self.keysAndDataInfo = keysAndDataInfo
         self.pipeline = pipeline
         self.pipelineCreateInfo = pipelineCreateInfo
@@ -3933,7 +3933,7 @@ public struct PipelineBinaryHandlesInfoKHR: ChainableBase {
     public let pipelineBinaryCount: UInt32
     public let pipelineBinaries: UnsafeMutablePointer<VkPipelineBinaryKHR?>?
 
-    public init(pipelineBinaryCount: UInt32, pipelineBinaries: UnsafeMutablePointer<VkPipelineBinaryKHR?>?) {
+    public init(pipelineBinaryCount: UInt32 = 0, pipelineBinaries: UnsafeMutablePointer<VkPipelineBinaryKHR?>?) {
         self.pipelineBinaryCount = pipelineBinaryCount
         self.pipelineBinaries = pipelineBinaries
     }
@@ -3959,7 +3959,7 @@ public struct PipelineBinaryInfoKHR: ChainableBase, GraphicsPipelineCreateInfoEx
 
     public let pipelineBinaries: Array<PipelineBinaryKHR>
 
-    public init(pipelineBinaries: Array<PipelineBinaryKHR>) {
+    public init(pipelineBinaries: Array<PipelineBinaryKHR> = []) {
         self.pipelineBinaries = pipelineBinaries
     }
 
@@ -4033,7 +4033,7 @@ public struct PipelineLayoutCreateInfo: ChainableBase, BindDescriptorSetsInfoExt
     public let setLayouts: Array<DescriptorSetLayout?>
     public let pushConstantRanges: Array<PushConstantRange>
 
-    public init(flags: PipelineLayoutCreateFlags, setLayouts: Array<DescriptorSetLayout?>, pushConstantRanges: Array<PushConstantRange>) {
+    public init(flags: PipelineLayoutCreateFlags = [], setLayouts: Array<DescriptorSetLayout?> = [], pushConstantRanges: Array<PushConstantRange> = []) {
         self.flags = flags
         self.setLayouts = setLayouts
         self.pushConstantRanges = pushConstantRanges
@@ -4083,7 +4083,7 @@ public struct SamplerCreateInfo: ChainableBase {
     public let borderColor: BorderColor
     public let unnormalizedCoordinates: Bool
 
-    public init(flags: SamplerCreateFlags, magFilter: Filter, minFilter: Filter, mipmapMode: SamplerMipmapMode, addressModeU: SamplerAddressMode, addressModeV: SamplerAddressMode, addressModeW: SamplerAddressMode, mipLodBias: Float, anisotropyEnable: Bool, maxAnisotropy: Float, compareEnable: Bool, compareOp: CompareOp, minLod: Float, maxLod: Float, borderColor: BorderColor, unnormalizedCoordinates: Bool) {
+    public init(flags: SamplerCreateFlags = [], magFilter: Filter, minFilter: Filter, mipmapMode: SamplerMipmapMode, addressModeU: SamplerAddressMode, addressModeV: SamplerAddressMode, addressModeW: SamplerAddressMode, mipLodBias: Float, anisotropyEnable: Bool, maxAnisotropy: Float, compareEnable: Bool, compareOp: CompareOp, minLod: Float, maxLod: Float, borderColor: BorderColor, unnormalizedCoordinates: Bool) {
         self.flags = flags
         self.magFilter = magFilter
         self.minFilter = minFilter
@@ -4152,7 +4152,7 @@ public struct CommandPoolCreateInfo: ChainableBase {
     public let flags: CommandPoolCreateFlags
     public let queueFamilyIndex: UInt32
 
-    public init(flags: CommandPoolCreateFlags, queueFamilyIndex: UInt32) {
+    public init(flags: CommandPoolCreateFlags = [], queueFamilyIndex: UInt32) {
         self.flags = flags
         self.queueFamilyIndex = queueFamilyIndex
     }
@@ -4214,7 +4214,7 @@ public struct CommandBufferInheritanceInfo: ChainableBase {
     public let queryFlags: QueryControlFlags
     public let pipelineStatistics: QueryPipelineStatisticFlags
 
-    public init(renderPass: RenderPass?, subpass: UInt32, framebuffer: Framebuffer?, occlusionQueryEnable: Bool, queryFlags: QueryControlFlags, pipelineStatistics: QueryPipelineStatisticFlags) {
+    public init(renderPass: RenderPass? = nil, subpass: UInt32, framebuffer: Framebuffer? = nil, occlusionQueryEnable: Bool, queryFlags: QueryControlFlags = [], pipelineStatistics: QueryPipelineStatisticFlags = []) {
         self.renderPass = renderPass
         self.subpass = subpass
         self.framebuffer = framebuffer
@@ -4253,7 +4253,7 @@ public struct CommandBufferBeginInfo: ChainableBase {
     public let flags: CommandBufferUsageFlags
     public let inheritanceInfo: CommandBufferInheritanceInfo?
 
-    public init(flags: CommandBufferUsageFlags, inheritanceInfo: CommandBufferInheritanceInfo?) {
+    public init(flags: CommandBufferUsageFlags = [], inheritanceInfo: CommandBufferInheritanceInfo? = nil) {
         self.flags = flags
         self.inheritanceInfo = inheritanceInfo
     }
@@ -4284,7 +4284,7 @@ public struct RenderPassBeginInfo: ChainableBase {
     public let renderArea: Rect2D
     public let clearValues: Array<VkClearValue>
 
-    public init(renderPass: RenderPass, framebuffer: Framebuffer, renderArea: Rect2D, clearValues: Array<VkClearValue>) {
+    public init(renderPass: RenderPass, framebuffer: Framebuffer, renderArea: Rect2D, clearValues: Array<VkClearValue> = []) {
         self.renderPass = renderPass
         self.framebuffer = framebuffer
         self.renderArea = renderArea
@@ -4381,7 +4381,7 @@ public struct AttachmentDescription: CStructConvertible {
     public let initialLayout: ImageLayout
     public let finalLayout: ImageLayout
 
-    public init(flags: AttachmentDescriptionFlags, format: Format, samples: SampleCountFlags, loadOp: AttachmentLoadOp, storeOp: AttachmentStoreOp, stencilLoadOp: AttachmentLoadOp, stencilStoreOp: AttachmentStoreOp, initialLayout: ImageLayout, finalLayout: ImageLayout) {
+    public init(flags: AttachmentDescriptionFlags = [], format: Format, samples: SampleCountFlags, loadOp: AttachmentLoadOp, storeOp: AttachmentStoreOp, stencilLoadOp: AttachmentLoadOp, stencilStoreOp: AttachmentStoreOp, initialLayout: ImageLayout, finalLayout: ImageLayout) {
         self.flags = flags
         self.format = format
         self.samples = samples
@@ -4455,7 +4455,7 @@ public struct SubpassDescription: CStructConvertible {
     public let depthStencilAttachment: AttachmentReference?
     public let preserveAttachments: Array<UInt32>
 
-    public init(flags: SubpassDescriptionFlags, pipelineBindPoint: PipelineBindPoint, inputAttachments: Array<AttachmentReference>, colorAttachments: Array<AttachmentReference>, resolveAttachments: Array<AttachmentReference>?, depthStencilAttachment: AttachmentReference?, preserveAttachments: Array<UInt32>) {
+    public init(flags: SubpassDescriptionFlags = [], pipelineBindPoint: PipelineBindPoint, inputAttachments: Array<AttachmentReference> = [], colorAttachments: Array<AttachmentReference> = [], resolveAttachments: Array<AttachmentReference>? = [], depthStencilAttachment: AttachmentReference? = nil, preserveAttachments: Array<UInt32> = []) {
         self.flags = flags
         self.pipelineBindPoint = pipelineBindPoint
         self.inputAttachments = inputAttachments
@@ -4512,7 +4512,7 @@ public struct SubpassDependency: CStructConvertible {
     public let dstAccessMask: AccessFlags
     public let dependencyFlags: DependencyFlags
 
-    public init(srcSubpass: UInt32, dstSubpass: UInt32, srcStageMask: PipelineStageFlags, dstStageMask: PipelineStageFlags, srcAccessMask: AccessFlags, dstAccessMask: AccessFlags, dependencyFlags: DependencyFlags) {
+    public init(srcSubpass: UInt32, dstSubpass: UInt32, srcStageMask: PipelineStageFlags = [], dstStageMask: PipelineStageFlags = [], srcAccessMask: AccessFlags = [], dstAccessMask: AccessFlags = [], dependencyFlags: DependencyFlags = []) {
         self.srcSubpass = srcSubpass
         self.dstSubpass = dstSubpass
         self.srcStageMask = srcStageMask
@@ -4553,7 +4553,7 @@ public struct RenderPassCreateInfo: ChainableBase {
     public let subpasses: Array<SubpassDescription>
     public let dependencies: Array<SubpassDependency>
 
-    public init(flags: RenderPassCreateFlags, attachments: Array<AttachmentDescription>, subpasses: Array<SubpassDescription>, dependencies: Array<SubpassDependency>) {
+    public init(flags: RenderPassCreateFlags = [], attachments: Array<AttachmentDescription> = [], subpasses: Array<SubpassDescription>, dependencies: Array<SubpassDependency> = []) {
         self.flags = flags
         self.attachments = attachments
         self.subpasses = subpasses
@@ -4594,7 +4594,7 @@ public struct EventCreateInfo: ChainableBase {
 
     public let flags: EventCreateFlags
 
-    public init(flags: EventCreateFlags) {
+    public init(flags: EventCreateFlags = []) {
         self.flags = flags
     }
 
@@ -4617,7 +4617,7 @@ public struct FenceCreateInfo: ChainableBase {
 
     public let flags: FenceCreateFlags
 
-    public init(flags: FenceCreateFlags) {
+    public init(flags: FenceCreateFlags = []) {
         self.flags = flags
     }
 
@@ -4640,7 +4640,7 @@ public struct SemaphoreCreateInfo: ChainableBase {
 
     public let flags: SemaphoreCreateFlags
 
-    public init(flags: SemaphoreCreateFlags) {
+    public init(flags: SemaphoreCreateFlags = []) {
         self.flags = flags
     }
 
@@ -4666,7 +4666,7 @@ public struct QueryPoolCreateInfo: ChainableBase {
     public let queryCount: UInt32
     public let pipelineStatistics: QueryPipelineStatisticFlags
 
-    public init(flags: QueryPoolCreateFlags, queryType: QueryType, queryCount: UInt32, pipelineStatistics: QueryPipelineStatisticFlags) {
+    public init(flags: QueryPoolCreateFlags = [], queryType: QueryType, queryCount: UInt32, pipelineStatistics: QueryPipelineStatisticFlags = []) {
         self.flags = flags
         self.queryType = queryType
         self.queryCount = queryCount
@@ -4703,7 +4703,7 @@ public struct FramebufferCreateInfo: ChainableBase {
     public let height: UInt32
     public let layers: UInt32
 
-    public init(flags: FramebufferCreateFlags, renderPass: RenderPass, attachments: Array<ImageView>, width: UInt32, height: UInt32, layers: UInt32) {
+    public init(flags: FramebufferCreateFlags = [], renderPass: RenderPass, attachments: Array<ImageView> = [], width: UInt32, height: UInt32, layers: UInt32) {
         self.flags = flags
         self.renderPass = renderPass
         self.attachments = attachments
@@ -4895,14 +4895,14 @@ public struct SubmitInfo: ChainableBase {
     public let commandBuffers: Array<CommandBuffer>
     public let signalSemaphores: Array<Semaphore>
 
-    public init(waitSemaphores: Array<Semaphore>, waitDstStageMask: Array<PipelineStageFlags>, commandBuffers: Array<CommandBuffer>, signalSemaphores: Array<Semaphore>) {
+    public init(waitSemaphores: Array<Semaphore> = [], waitDstStageMask: Array<PipelineStageFlags> = [], commandBuffers: Array<CommandBuffer> = [], signalSemaphores: Array<Semaphore> = []) {
         self.waitSemaphores = waitSemaphores
         self.waitDstStageMask = waitDstStageMask
         self.commandBuffers = commandBuffers
         self.signalSemaphores = signalSemaphores
     }
 
-    init(cStruct: VkSubmitInfo, device: Device, commandPool: CommandPool) {
+    init(cStruct: VkSubmitInfo, commandPool: CommandPool, device: Device) {
         self.waitSemaphores = UnsafeBufferPointer(start: cStruct.pWaitSemaphores, count: Int(cStruct.waitSemaphoreCount)).map{ Semaphore(handle: $0, device: device) }
         self.waitDstStageMask = UnsafeBufferPointer(start: cStruct.pWaitDstStageMask, count: Int(cStruct.waitSemaphoreCount)).map{ PipelineStageFlags(rawValue: $0) }
         self.commandBuffers = UnsafeBufferPointer(start: cStruct.pCommandBuffers, count: Int(cStruct.commandBufferCount)).map{ CommandBuffer(handle: $0, commandPool: commandPool) }
@@ -5045,7 +5045,7 @@ public struct DisplayModeCreateInfoKHR: ChainableBase {
     public let flags: DisplayModeCreateFlagsKHR
     public let parameters: DisplayModeParametersKHR
 
-    public init(flags: DisplayModeCreateFlagsKHR, parameters: DisplayModeParametersKHR) {
+    public init(flags: DisplayModeCreateFlagsKHR = [], parameters: DisplayModeParametersKHR) {
         self.flags = flags
         self.parameters = parameters
     }
@@ -5136,7 +5136,7 @@ public struct DisplaySurfaceCreateInfoKHR: ChainableBase {
     public let alphaMode: DisplayPlaneAlphaFlagsKHR
     public let imageExtent: Extent2D
 
-    public init(flags: DisplaySurfaceCreateFlagsKHR, displayMode: DisplayModeKHR, planeIndex: UInt32, planeStackIndex: UInt32, transform: SurfaceTransformFlagsKHR, globalAlpha: Float, alphaMode: DisplayPlaneAlphaFlagsKHR, imageExtent: Extent2D) {
+    public init(flags: DisplaySurfaceCreateFlagsKHR = [], displayMode: DisplayModeKHR, planeIndex: UInt32, planeStackIndex: UInt32, transform: SurfaceTransformFlagsKHR, globalAlpha: Float, alphaMode: DisplayPlaneAlphaFlagsKHR, imageExtent: Extent2D) {
         self.flags = flags
         self.displayMode = displayMode
         self.planeIndex = planeIndex
@@ -5291,7 +5291,7 @@ public struct AndroidSurfaceCreateInfoKHR: ChainableBase {
     public let flags: AndroidSurfaceCreateFlagsKHR
     public let window: UnsafeMutablePointer<ANativeWindow>
 
-    public init(flags: AndroidSurfaceCreateFlagsKHR, window: UnsafeMutablePointer<ANativeWindow>) {
+    public init(flags: AndroidSurfaceCreateFlagsKHR = [], window: UnsafeMutablePointer<ANativeWindow>) {
         self.flags = flags
         self.window = window
     }
@@ -5320,7 +5320,7 @@ public struct ViSurfaceCreateInfoNN: ChainableBase {
     public let flags: ViSurfaceCreateFlagsNN
     public let window: UnsafeMutableRawPointer
 
-    public init(flags: ViSurfaceCreateFlagsNN, window: UnsafeMutableRawPointer) {
+    public init(flags: ViSurfaceCreateFlagsNN = [], window: UnsafeMutableRawPointer) {
         self.flags = flags
         self.window = window
     }
@@ -5350,7 +5350,7 @@ public struct WaylandSurfaceCreateInfoKHR: ChainableBase {
     public let display: UnsafeMutablePointer<wl_display>
     public let surface: UnsafeMutablePointer<wl_surface>
 
-    public init(flags: WaylandSurfaceCreateFlagsKHR, display: UnsafeMutablePointer<wl_display>, surface: UnsafeMutablePointer<wl_surface>) {
+    public init(flags: WaylandSurfaceCreateFlagsKHR = [], display: UnsafeMutablePointer<wl_display>, surface: UnsafeMutablePointer<wl_surface>) {
         self.flags = flags
         self.display = display
         self.surface = surface
@@ -5383,7 +5383,7 @@ public struct UbmSurfaceCreateInfoSEC: ChainableBase {
     public let device: UnsafeMutablePointer<ubm_device>
     public let surface: UnsafeMutablePointer<ubm_surface>
 
-    public init(flags: UbmSurfaceCreateFlagsSEC, device: UnsafeMutablePointer<ubm_device>, surface: UnsafeMutablePointer<ubm_surface>) {
+    public init(flags: UbmSurfaceCreateFlagsSEC = [], device: UnsafeMutablePointer<ubm_device>, surface: UnsafeMutablePointer<ubm_surface>) {
         self.flags = flags
         self.device = device
         self.surface = surface
@@ -5416,7 +5416,7 @@ public struct Win32SurfaceCreateInfoKHR: ChainableBase {
     public let hinstance: HINSTANCE
     public let hwnd: HWND
 
-    public init(flags: Win32SurfaceCreateFlagsKHR, hinstance: HINSTANCE, hwnd: HWND) {
+    public init(flags: Win32SurfaceCreateFlagsKHR = [], hinstance: HINSTANCE, hwnd: HWND) {
         self.flags = flags
         self.hinstance = hinstance
         self.hwnd = hwnd
@@ -5449,7 +5449,7 @@ public struct XlibSurfaceCreateInfoKHR: ChainableBase {
     public let dpy: UnsafeMutablePointer<Display>
     public let window: Window
 
-    public init(flags: XlibSurfaceCreateFlagsKHR, dpy: UnsafeMutablePointer<Display>, window: Window) {
+    public init(flags: XlibSurfaceCreateFlagsKHR = [], dpy: UnsafeMutablePointer<Display>, window: Window) {
         self.flags = flags
         self.dpy = dpy
         self.window = window
@@ -5482,7 +5482,7 @@ public struct XcbSurfaceCreateInfoKHR: ChainableBase {
     public let connection: UnsafeMutablePointer<xcb_connection_t>
     public let window: xcb_window_t
 
-    public init(flags: XcbSurfaceCreateFlagsKHR, connection: UnsafeMutablePointer<xcb_connection_t>, window: xcb_window_t) {
+    public init(flags: XcbSurfaceCreateFlagsKHR = [], connection: UnsafeMutablePointer<xcb_connection_t>, window: xcb_window_t) {
         self.flags = flags
         self.connection = connection
         self.window = window
@@ -5515,7 +5515,7 @@ public struct DirectFBSurfaceCreateInfoEXT: ChainableBase {
     public let dfb: UnsafeMutablePointer<IDirectFB>
     public let surface: UnsafeMutablePointer<IDirectFBSurface>
 
-    public init(flags: DirectFBSurfaceCreateFlagsEXT, dfb: UnsafeMutablePointer<IDirectFB>, surface: UnsafeMutablePointer<IDirectFBSurface>) {
+    public init(flags: DirectFBSurfaceCreateFlagsEXT = [], dfb: UnsafeMutablePointer<IDirectFB>, surface: UnsafeMutablePointer<IDirectFBSurface>) {
         self.flags = flags
         self.dfb = dfb
         self.surface = surface
@@ -5547,7 +5547,7 @@ public struct ImagePipeSurfaceCreateInfoFUCHSIA: ChainableBase {
     public let flags: ImagePipeSurfaceCreateFlagsFUCHSIA
     public let imagePipeHandle: zx_handle_t
 
-    public init(flags: ImagePipeSurfaceCreateFlagsFUCHSIA, imagePipeHandle: zx_handle_t) {
+    public init(flags: ImagePipeSurfaceCreateFlagsFUCHSIA = [], imagePipeHandle: zx_handle_t) {
         self.flags = flags
         self.imagePipeHandle = imagePipeHandle
     }
@@ -5576,7 +5576,7 @@ public struct StreamDescriptorSurfaceCreateInfoGGP: ChainableBase {
     public let flags: StreamDescriptorSurfaceCreateFlagsGGP
     public let streamDescriptor: GgpStreamDescriptor
 
-    public init(flags: StreamDescriptorSurfaceCreateFlagsGGP, streamDescriptor: GgpStreamDescriptor) {
+    public init(flags: StreamDescriptorSurfaceCreateFlagsGGP = [], streamDescriptor: GgpStreamDescriptor) {
         self.flags = flags
         self.streamDescriptor = streamDescriptor
     }
@@ -5606,7 +5606,7 @@ public struct ScreenSurfaceCreateInfoQNX: ChainableBase {
     public let context: UnsafeMutablePointer<_screen_context>
     public let window: UnsafeMutablePointer<_screen_window>
 
-    public init(flags: ScreenSurfaceCreateFlagsQNX, context: UnsafeMutablePointer<_screen_context>, window: UnsafeMutablePointer<_screen_window>) {
+    public init(flags: ScreenSurfaceCreateFlagsQNX = [], context: UnsafeMutablePointer<_screen_context>, window: UnsafeMutablePointer<_screen_window>) {
         self.flags = flags
         self.context = context
         self.window = window
@@ -5669,7 +5669,7 @@ public struct SwapchainCreateInfoKHR: ChainableBase {
     public let clipped: Bool
     public let oldSwapchain: SwapchainKHR?
 
-    public init(flags: SwapchainCreateFlagsKHR, surface: SurfaceKHR, minImageCount: UInt32, imageFormat: Format, imageColorSpace: ColorSpaceKHR, imageExtent: Extent2D, imageArrayLayers: UInt32, imageUsage: ImageUsageFlags, imageSharingMode: SharingMode, queueFamilyIndices: Array<UInt32>, preTransform: SurfaceTransformFlagsKHR, compositeAlpha: CompositeAlphaFlagsKHR, presentMode: PresentModeKHR, clipped: Bool, oldSwapchain: SwapchainKHR?) {
+    public init(flags: SwapchainCreateFlagsKHR = [], surface: SurfaceKHR, minImageCount: UInt32, imageFormat: Format, imageColorSpace: ColorSpaceKHR, imageExtent: Extent2D, imageArrayLayers: UInt32, imageUsage: ImageUsageFlags, imageSharingMode: SharingMode, queueFamilyIndices: Array<UInt32> = [], preTransform: SurfaceTransformFlagsKHR, compositeAlpha: CompositeAlphaFlagsKHR, presentMode: PresentModeKHR, clipped: Bool, oldSwapchain: SwapchainKHR? = nil) {
         self.flags = flags
         self.surface = surface
         self.minImageCount = minImageCount
@@ -5742,7 +5742,7 @@ public struct PresentInfoKHR: ChainableBase {
     public let imageIndices: Array<UInt32>
     public let results: UnsafeMutablePointer<VkResult>?
 
-    public init(waitSemaphores: Array<Semaphore>, swapchains: Array<SwapchainKHR>, imageIndices: Array<UInt32>, results: UnsafeMutablePointer<VkResult>?) {
+    public init(waitSemaphores: Array<Semaphore> = [], swapchains: Array<SwapchainKHR>, imageIndices: Array<UInt32>, results: UnsafeMutablePointer<VkResult>?) {
         self.waitSemaphores = waitSemaphores
         self.swapchains = swapchains
         self.imageIndices = imageIndices
@@ -5784,7 +5784,7 @@ public struct DebugReportCallbackCreateInfoEXT: ChainableBase, InstanceCreateInf
     public let pfnCallback: PFN_vkDebugReportCallbackEXT
     public let userData: UnsafeMutableRawPointer?
 
-    public init(flags: DebugReportFlagsEXT, pfnCallback: @escaping PFN_vkDebugReportCallbackEXT, userData: UnsafeMutableRawPointer?) {
+    public init(flags: DebugReportFlagsEXT = [], pfnCallback: @escaping PFN_vkDebugReportCallbackEXT, userData: UnsafeMutableRawPointer? = nil) {
         self.flags = flags
         self.pfnCallback = pfnCallback
         self.userData = userData
@@ -5840,7 +5840,7 @@ public struct ValidationFeaturesEXT: ChainableBase, InstanceCreateInfoExtension,
     public let enabledValidationFeatures: Array<ValidationFeatureEnableEXT>
     public let disabledValidationFeatures: Array<ValidationFeatureDisableEXT>
 
-    public init(enabledValidationFeatures: Array<ValidationFeatureEnableEXT>, disabledValidationFeatures: Array<ValidationFeatureDisableEXT>) {
+    public init(enabledValidationFeatures: Array<ValidationFeatureEnableEXT> = [], disabledValidationFeatures: Array<ValidationFeatureDisableEXT> = []) {
         self.enabledValidationFeatures = enabledValidationFeatures
         self.disabledValidationFeatures = disabledValidationFeatures
     }
@@ -5876,7 +5876,7 @@ public struct LayerSettingEXT: CStructConvertible {
     public let valueCount: UInt32
     public let values: UnsafeRawPointer
 
-    public init(layerName: String, settingName: String, type: LayerSettingTypeEXT, valueCount: UInt32, values: UnsafeRawPointer) {
+    public init(layerName: String, settingName: String, type: LayerSettingTypeEXT, valueCount: UInt32 = 0, values: UnsafeRawPointer) {
         self.layerName = layerName
         self.settingName = settingName
         self.type = type
@@ -5912,7 +5912,7 @@ public struct LayerSettingsCreateInfoEXT: ChainableBase, InstanceCreateInfoExten
 
     public let settings: Array<LayerSettingEXT>
 
-    public init(settings: Array<LayerSettingEXT>) {
+    public init(settings: Array<LayerSettingEXT> = []) {
         self.settings = settings
     }
 
@@ -6109,7 +6109,7 @@ public struct DedicatedAllocationMemoryAllocateInfoNV: ChainableBase, MemoryAllo
     public let image: Image?
     public let buffer: Buffer?
 
-    public init(image: Image?, buffer: Buffer?) {
+    public init(image: Image? = nil, buffer: Buffer? = nil) {
         self.image = image
         self.buffer = buffer
     }
@@ -6162,7 +6162,7 @@ public struct ExternalMemoryImageCreateInfoNV: ChainableBase, ImageCreateInfoExt
 
     public let handleTypes: ExternalMemoryHandleTypeFlagsNV
 
-    public init(handleTypes: ExternalMemoryHandleTypeFlagsNV) {
+    public init(handleTypes: ExternalMemoryHandleTypeFlagsNV = []) {
         self.handleTypes = handleTypes
     }
 
@@ -6185,7 +6185,7 @@ public struct ExportMemoryAllocateInfoNV: ChainableBase, MemoryAllocateInfoExten
 
     public let handleTypes: ExternalMemoryHandleTypeFlagsNV
 
-    public init(handleTypes: ExternalMemoryHandleTypeFlagsNV) {
+    public init(handleTypes: ExternalMemoryHandleTypeFlagsNV = []) {
         self.handleTypes = handleTypes
     }
 
@@ -6210,7 +6210,7 @@ public struct ImportMemoryWin32HandleInfoNV: ChainableBase, MemoryAllocateInfoEx
     public let handleType: ExternalMemoryHandleTypeFlagsNV
     public let handle: HANDLE
 
-    public init(handleType: ExternalMemoryHandleTypeFlagsNV, handle: HANDLE) {
+    public init(handleType: ExternalMemoryHandleTypeFlagsNV = [], handle: HANDLE) {
         self.handleType = handleType
         self.handle = handle
     }
@@ -6239,7 +6239,7 @@ public struct ExportMemoryWin32HandleInfoNV: ChainableBase, MemoryAllocateInfoEx
     public let attributes: UnsafePointer<SECURITY_ATTRIBUTES>?
     public let dwAccess: DWORD
 
-    public init(attributes: UnsafePointer<SECURITY_ATTRIBUTES>?, dwAccess: DWORD) {
+    public init(attributes: UnsafePointer<SECURITY_ATTRIBUTES>? = nil, dwAccess: DWORD) {
         self.attributes = attributes
         self.dwAccess = dwAccess
     }
@@ -6271,7 +6271,7 @@ public struct Win32KeyedMutexAcquireReleaseInfoNV: ChainableBase, SubmitInfoExte
     public let releaseSyncs: Array<DeviceMemory>
     public let releaseKeys: Array<UInt64>
 
-    public init(acquireSyncs: Array<DeviceMemory>, acquireKeys: Array<UInt64>, acquireTimeoutMilliseconds: Array<UInt32>, releaseSyncs: Array<DeviceMemory>, releaseKeys: Array<UInt64>) {
+    public init(acquireSyncs: Array<DeviceMemory> = [], acquireKeys: Array<UInt64> = [], acquireTimeoutMilliseconds: Array<UInt32> = [], releaseSyncs: Array<DeviceMemory> = [], releaseKeys: Array<UInt64> = []) {
         self.acquireSyncs = acquireSyncs
         self.acquireKeys = acquireKeys
         self.acquireTimeoutMilliseconds = acquireTimeoutMilliseconds
@@ -6781,7 +6781,7 @@ public struct ClusterAccelerationStructureBuildTriangleClusterInfoNV: CStructCon
     public let opacityMicromapArray: VkDeviceAddress
     public let opacityMicromapIndexBuffer: VkDeviceAddress
 
-    public init(clusterID: UInt32, clusterFlags: ClusterAccelerationStructureClusterFlagsNV, triangleCount: UInt32, vertexCount: UInt32, positionTruncateBitCount: UInt32, indexType: UInt32, opacityMicromapIndexType: UInt32, baseGeometryIndexAndGeometryFlags: ClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV, indexBufferStride: UInt16, vertexBufferStride: UInt16, geometryIndexAndFlagsBufferStride: UInt16, opacityMicromapIndexBufferStride: UInt16, indexBuffer: VkDeviceAddress, vertexBuffer: VkDeviceAddress, geometryIndexAndFlagsBuffer: VkDeviceAddress, opacityMicromapArray: VkDeviceAddress, opacityMicromapIndexBuffer: VkDeviceAddress) {
+    public init(clusterID: UInt32, clusterFlags: ClusterAccelerationStructureClusterFlagsNV = [], triangleCount: UInt32, vertexCount: UInt32, positionTruncateBitCount: UInt32, indexType: UInt32, opacityMicromapIndexType: UInt32, baseGeometryIndexAndGeometryFlags: ClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV, indexBufferStride: UInt16, vertexBufferStride: UInt16, geometryIndexAndFlagsBufferStride: UInt16, opacityMicromapIndexBufferStride: UInt16, indexBuffer: VkDeviceAddress, vertexBuffer: VkDeviceAddress, geometryIndexAndFlagsBuffer: VkDeviceAddress, opacityMicromapArray: VkDeviceAddress, opacityMicromapIndexBuffer: VkDeviceAddress) {
         self.clusterID = clusterID
         self.clusterFlags = clusterFlags
         self.triangleCount = triangleCount
@@ -6868,7 +6868,7 @@ public struct ClusterAccelerationStructureBuildTriangleClusterTemplateInfoNV: CS
     public let opacityMicromapIndexBuffer: VkDeviceAddress
     public let instantiationBoundingBoxLimit: VkDeviceAddress
 
-    public init(clusterID: UInt32, clusterFlags: ClusterAccelerationStructureClusterFlagsNV, triangleCount: UInt32, vertexCount: UInt32, positionTruncateBitCount: UInt32, indexType: UInt32, opacityMicromapIndexType: UInt32, baseGeometryIndexAndGeometryFlags: ClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV, indexBufferStride: UInt16, vertexBufferStride: UInt16, geometryIndexAndFlagsBufferStride: UInt16, opacityMicromapIndexBufferStride: UInt16, indexBuffer: VkDeviceAddress, vertexBuffer: VkDeviceAddress, geometryIndexAndFlagsBuffer: VkDeviceAddress, opacityMicromapArray: VkDeviceAddress, opacityMicromapIndexBuffer: VkDeviceAddress, instantiationBoundingBoxLimit: VkDeviceAddress) {
+    public init(clusterID: UInt32, clusterFlags: ClusterAccelerationStructureClusterFlagsNV = [], triangleCount: UInt32, vertexCount: UInt32, positionTruncateBitCount: UInt32, indexType: UInt32, opacityMicromapIndexType: UInt32, baseGeometryIndexAndGeometryFlags: ClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV, indexBufferStride: UInt16, vertexBufferStride: UInt16, geometryIndexAndFlagsBufferStride: UInt16, opacityMicromapIndexBufferStride: UInt16, indexBuffer: VkDeviceAddress, vertexBuffer: VkDeviceAddress, geometryIndexAndFlagsBuffer: VkDeviceAddress, opacityMicromapArray: VkDeviceAddress, opacityMicromapIndexBuffer: VkDeviceAddress, instantiationBoundingBoxLimit: VkDeviceAddress) {
         self.clusterID = clusterID
         self.clusterFlags = clusterFlags
         self.triangleCount = triangleCount
@@ -7092,7 +7092,7 @@ public struct ClusterAccelerationStructureInputInfoNV: ChainableBase {
     public let opMode: ClusterAccelerationStructureOpModeNV
     public let opInput: VkClusterAccelerationStructureOpInputNV
 
-    public init(maxAccelerationStructureCount: UInt32, flags: BuildAccelerationStructureFlagsKHR, opType: ClusterAccelerationStructureOpTypeNV, opMode: ClusterAccelerationStructureOpModeNV, opInput: VkClusterAccelerationStructureOpInputNV) {
+    public init(maxAccelerationStructureCount: UInt32, flags: BuildAccelerationStructureFlagsKHR = [], opType: ClusterAccelerationStructureOpTypeNV, opMode: ClusterAccelerationStructureOpModeNV, opInput: VkClusterAccelerationStructureOpInputNV) {
         self.maxAccelerationStructureCount = maxAccelerationStructureCount
         self.flags = flags
         self.opType = opType
@@ -7162,7 +7162,7 @@ public struct ClusterAccelerationStructureCommandsInfoNV: ChainableBase {
     public let srcInfosCount: VkDeviceAddress
     public let addressResolutionFlags: ClusterAccelerationStructureAddressResolutionFlagsNV
 
-    public init(input: ClusterAccelerationStructureInputInfoNV, dstImplicitData: VkDeviceAddress, scratchData: VkDeviceAddress, dstAddressesArray: StridedDeviceAddressRegionKHR, dstSizesArray: StridedDeviceAddressRegionKHR, srcInfosArray: StridedDeviceAddressRegionKHR, srcInfosCount: VkDeviceAddress, addressResolutionFlags: ClusterAccelerationStructureAddressResolutionFlagsNV) {
+    public init(input: ClusterAccelerationStructureInputInfoNV, dstImplicitData: VkDeviceAddress, scratchData: VkDeviceAddress, dstAddressesArray: StridedDeviceAddressRegionKHR, dstSizesArray: StridedDeviceAddressRegionKHR, srcInfosArray: StridedDeviceAddressRegionKHR, srcInfosCount: VkDeviceAddress, addressResolutionFlags: ClusterAccelerationStructureAddressResolutionFlagsNV = []) {
         self.input = input
         self.dstImplicitData = dstImplicitData
         self.scratchData = scratchData
@@ -7235,7 +7235,7 @@ public struct GraphicsShaderGroupCreateInfoNV: ChainableBase {
     public let vertexInputState: PipelineVertexInputStateCreateInfo?
     public let tessellationState: PipelineTessellationStateCreateInfo?
 
-    public init(stages: Array<PipelineShaderStageCreateInfo>, vertexInputState: PipelineVertexInputStateCreateInfo?, tessellationState: PipelineTessellationStateCreateInfo?) {
+    public init(stages: Array<PipelineShaderStageCreateInfo>, vertexInputState: PipelineVertexInputStateCreateInfo? = nil, tessellationState: PipelineTessellationStateCreateInfo? = nil) {
         self.stages = stages
         self.vertexInputState = vertexInputState
         self.tessellationState = tessellationState
@@ -7272,7 +7272,7 @@ public struct GraphicsPipelineShaderGroupsCreateInfoNV: ChainableBase, GraphicsP
     public let groups: Array<GraphicsShaderGroupCreateInfoNV>
     public let pipelines: Array<Pipeline>
 
-    public init(groups: Array<GraphicsShaderGroupCreateInfoNV>, pipelines: Array<Pipeline>) {
+    public init(groups: Array<GraphicsShaderGroupCreateInfoNV> = [], pipelines: Array<Pipeline> = []) {
         self.groups = groups
         self.pipelines = pipelines
     }
@@ -7435,7 +7435,7 @@ public struct IndirectCommandsLayoutTokenNV: ChainableBase {
     public let indexTypes: Array<IndexType>
     public let indexTypeValues: Array<UInt32>
 
-    public init(tokenType: IndirectCommandsTokenTypeNV, stream: UInt32, offset: UInt32, vertexBindingUnit: UInt32, vertexDynamicStride: Bool, pushconstantPipelineLayout: PipelineLayout?, pushconstantShaderStageFlags: ShaderStageFlags, pushconstantOffset: UInt32, pushconstantSize: UInt32, indirectStateFlags: IndirectStateFlagsNV, indexTypes: Array<IndexType>, indexTypeValues: Array<UInt32>) {
+    public init(tokenType: IndirectCommandsTokenTypeNV, stream: UInt32, offset: UInt32, vertexBindingUnit: UInt32, vertexDynamicStride: Bool, pushconstantPipelineLayout: PipelineLayout? = nil, pushconstantShaderStageFlags: ShaderStageFlags = [], pushconstantOffset: UInt32, pushconstantSize: UInt32, indirectStateFlags: IndirectStateFlagsNV = [], indexTypes: Array<IndexType> = [], indexTypeValues: Array<UInt32> = []) {
         self.tokenType = tokenType
         self.stream = stream
         self.offset = offset
@@ -7499,7 +7499,7 @@ public struct IndirectCommandsLayoutCreateInfoNV: ChainableBase {
     public let tokens: Array<IndirectCommandsLayoutTokenNV>
     public let streamStrides: Array<UInt32>
 
-    public init(flags: IndirectCommandsLayoutUsageFlagsNV, pipelineBindPoint: PipelineBindPoint, tokens: Array<IndirectCommandsLayoutTokenNV>, streamStrides: Array<UInt32>) {
+    public init(flags: IndirectCommandsLayoutUsageFlagsNV = [], pipelineBindPoint: PipelineBindPoint, tokens: Array<IndirectCommandsLayoutTokenNV>, streamStrides: Array<UInt32>) {
         self.flags = flags
         self.pipelineBindPoint = pipelineBindPoint
         self.tokens = tokens
@@ -7548,7 +7548,7 @@ public struct GeneratedCommandsInfoNV: ChainableBase {
     public let sequencesIndexBuffer: Buffer?
     public let sequencesIndexOffset: VkDeviceSize
 
-    public init(pipelineBindPoint: PipelineBindPoint, pipeline: Pipeline?, indirectCommandsLayout: IndirectCommandsLayoutNV, streams: Array<IndirectCommandsStreamNV>, sequencesCount: UInt32, preprocessBuffer: Buffer, preprocessOffset: VkDeviceSize, preprocessSize: VkDeviceSize, sequencesCountBuffer: Buffer?, sequencesCountOffset: VkDeviceSize, sequencesIndexBuffer: Buffer?, sequencesIndexOffset: VkDeviceSize) {
+    public init(pipelineBindPoint: PipelineBindPoint, pipeline: Pipeline? = nil, indirectCommandsLayout: IndirectCommandsLayoutNV, streams: Array<IndirectCommandsStreamNV>, sequencesCount: UInt32, preprocessBuffer: Buffer, preprocessOffset: VkDeviceSize, preprocessSize: VkDeviceSize, sequencesCountBuffer: Buffer? = nil, sequencesCountOffset: VkDeviceSize, sequencesIndexBuffer: Buffer? = nil, sequencesIndexOffset: VkDeviceSize) {
         self.pipelineBindPoint = pipelineBindPoint
         self.pipeline = pipeline
         self.indirectCommandsLayout = indirectCommandsLayout
@@ -7610,7 +7610,7 @@ public struct GeneratedCommandsMemoryRequirementsInfoNV: ChainableBase {
     public let indirectCommandsLayout: IndirectCommandsLayoutNV
     public let maxSequencesCount: UInt32
 
-    public init(pipelineBindPoint: PipelineBindPoint, pipeline: Pipeline?, indirectCommandsLayout: IndirectCommandsLayoutNV, maxSequencesCount: UInt32) {
+    public init(pipelineBindPoint: PipelineBindPoint, pipeline: Pipeline? = nil, indirectCommandsLayout: IndirectCommandsLayoutNV, maxSequencesCount: UInt32) {
         self.pipelineBindPoint = pipelineBindPoint
         self.pipeline = pipeline
         self.indirectCommandsLayout = indirectCommandsLayout
@@ -7781,7 +7781,7 @@ public struct PhysicalDeviceImageFormatInfo2: ChainableBase {
     public let usage: ImageUsageFlags
     public let flags: ImageCreateFlags
 
-    public init(format: Format, type: ImageType, tiling: ImageTiling, usage: ImageUsageFlags, flags: ImageCreateFlags) {
+    public init(format: Format, type: ImageType, tiling: ImageTiling, usage: ImageUsageFlags, flags: ImageCreateFlags = []) {
         self.format = format
         self.type = type
         self.tiling = tiling
@@ -8031,7 +8031,7 @@ public struct PresentRegionKHR: CStructConvertible {
 
     public let rectangles: Array<RectLayerKHR>?
 
-    public init(rectangles: Array<RectLayerKHR>?) {
+    public init(rectangles: Array<RectLayerKHR>? = []) {
         self.rectangles = rectangles
     }
 
@@ -8175,7 +8175,7 @@ public struct PhysicalDeviceExternalBufferInfo: ChainableBase {
     public let usage: BufferUsageFlags
     public let handleType: ExternalMemoryHandleTypeFlags
 
-    public init(flags: BufferCreateFlags, usage: BufferUsageFlags, handleType: ExternalMemoryHandleTypeFlags) {
+    public init(flags: BufferCreateFlags = [], usage: BufferUsageFlags = [], handleType: ExternalMemoryHandleTypeFlags) {
         self.flags = flags
         self.usage = usage
         self.handleType = handleType
@@ -8256,7 +8256,7 @@ public struct ExternalMemoryImageCreateInfo: ChainableBase, ImageCreateInfoExten
 
     public let handleTypes: ExternalMemoryHandleTypeFlags
 
-    public init(handleTypes: ExternalMemoryHandleTypeFlags) {
+    public init(handleTypes: ExternalMemoryHandleTypeFlags = []) {
         self.handleTypes = handleTypes
     }
 
@@ -8279,7 +8279,7 @@ public struct ExternalMemoryBufferCreateInfo: ChainableBase, BufferCreateInfoExt
 
     public let handleTypes: ExternalMemoryHandleTypeFlags
 
-    public init(handleTypes: ExternalMemoryHandleTypeFlags) {
+    public init(handleTypes: ExternalMemoryHandleTypeFlags = []) {
         self.handleTypes = handleTypes
     }
 
@@ -8302,7 +8302,7 @@ public struct ExportMemoryAllocateInfo: ChainableBase, MemoryAllocateInfoExtensi
 
     public let handleTypes: ExternalMemoryHandleTypeFlags
 
-    public init(handleTypes: ExternalMemoryHandleTypeFlags) {
+    public init(handleTypes: ExternalMemoryHandleTypeFlags = []) {
         self.handleTypes = handleTypes
     }
 
@@ -8361,7 +8361,7 @@ public struct ExportMemoryWin32HandleInfoKHR: ChainableBase, MemoryAllocateInfoE
     public let dwAccess: DWORD
     public let name: LPCWSTR
 
-    public init(attributes: UnsafePointer<SECURITY_ATTRIBUTES>?, dwAccess: DWORD, name: LPCWSTR) {
+    public init(attributes: UnsafePointer<SECURITY_ATTRIBUTES>? = nil, dwAccess: DWORD, name: LPCWSTR) {
         self.attributes = attributes
         self.dwAccess = dwAccess
         self.name = name
@@ -8598,7 +8598,7 @@ public struct Win32KeyedMutexAcquireReleaseInfoKHR: ChainableBase, SubmitInfoExt
     public let releaseSyncs: Array<DeviceMemory>
     public let releaseKeys: Array<UInt64>
 
-    public init(acquireSyncs: Array<DeviceMemory>, acquireKeys: Array<UInt64>, acquireTimeouts: Array<UInt32>, releaseSyncs: Array<DeviceMemory>, releaseKeys: Array<UInt64>) {
+    public init(acquireSyncs: Array<DeviceMemory> = [], acquireKeys: Array<UInt64> = [], acquireTimeouts: Array<UInt32> = [], releaseSyncs: Array<DeviceMemory> = [], releaseKeys: Array<UInt64> = []) {
         self.acquireSyncs = acquireSyncs
         self.acquireKeys = acquireKeys
         self.acquireTimeouts = acquireTimeouts
@@ -8648,7 +8648,7 @@ public struct ImportMemoryMetalHandleInfoEXT: ChainableBase, MemoryAllocateInfoE
     public let handleType: ExternalMemoryHandleTypeFlags
     public let handle: UnsafeMutableRawPointer?
 
-    public init(handleType: ExternalMemoryHandleTypeFlags, handle: UnsafeMutableRawPointer?) {
+    public init(handleType: ExternalMemoryHandleTypeFlags, handle: UnsafeMutableRawPointer? = nil) {
         self.handleType = handleType
         self.handle = handle
     }
@@ -8773,7 +8773,7 @@ public struct ExportSemaphoreCreateInfo: ChainableBase, SemaphoreCreateInfoExten
 
     public let handleTypes: ExternalSemaphoreHandleTypeFlags
 
-    public init(handleTypes: ExternalSemaphoreHandleTypeFlags) {
+    public init(handleTypes: ExternalSemaphoreHandleTypeFlags = []) {
         self.handleTypes = handleTypes
     }
 
@@ -8801,7 +8801,7 @@ public struct ImportSemaphoreWin32HandleInfoKHR: ChainableBase {
     public let handle: HANDLE
     public let name: LPCWSTR
 
-    public init(semaphore: Semaphore, flags: SemaphoreImportFlags, handleType: ExternalSemaphoreHandleTypeFlags, handle: HANDLE, name: LPCWSTR) {
+    public init(semaphore: Semaphore, flags: SemaphoreImportFlags = [], handleType: ExternalSemaphoreHandleTypeFlags, handle: HANDLE, name: LPCWSTR) {
         self.semaphore = semaphore
         self.flags = flags
         self.handleType = handleType
@@ -8840,7 +8840,7 @@ public struct ExportSemaphoreWin32HandleInfoKHR: ChainableBase, SemaphoreCreateI
     public let dwAccess: DWORD
     public let name: LPCWSTR
 
-    public init(attributes: UnsafePointer<SECURITY_ATTRIBUTES>?, dwAccess: DWORD, name: LPCWSTR) {
+    public init(attributes: UnsafePointer<SECURITY_ATTRIBUTES>? = nil, dwAccess: DWORD, name: LPCWSTR) {
         self.attributes = attributes
         self.dwAccess = dwAccess
         self.name = name
@@ -8872,7 +8872,7 @@ public struct D3D12FenceSubmitInfoKHR: ChainableBase, SubmitInfoExtension {
     public let waitSemaphoreValues: Array<UInt64>?
     public let signalSemaphoreValues: Array<UInt64>?
 
-    public init(waitSemaphoreValues: Array<UInt64>?, signalSemaphoreValues: Array<UInt64>?) {
+    public init(waitSemaphoreValues: Array<UInt64>? = [], signalSemaphoreValues: Array<UInt64>? = []) {
         self.waitSemaphoreValues = waitSemaphoreValues
         self.signalSemaphoreValues = signalSemaphoreValues
     }
@@ -8937,7 +8937,7 @@ public struct ImportSemaphoreFdInfoKHR: ChainableBase {
     public let handleType: ExternalSemaphoreHandleTypeFlags
     public let fd: Int32
 
-    public init(semaphore: Semaphore, flags: SemaphoreImportFlags, handleType: ExternalSemaphoreHandleTypeFlags, fd: Int32) {
+    public init(semaphore: Semaphore, flags: SemaphoreImportFlags = [], handleType: ExternalSemaphoreHandleTypeFlags, fd: Int32) {
         self.semaphore = semaphore
         self.flags = flags
         self.handleType = handleType
@@ -9000,7 +9000,7 @@ public struct ImportSemaphoreZirconHandleInfoFUCHSIA: ChainableBase {
     public let handleType: ExternalSemaphoreHandleTypeFlags
     public let zirconHandle: zx_handle_t
 
-    public init(semaphore: Semaphore, flags: SemaphoreImportFlags, handleType: ExternalSemaphoreHandleTypeFlags, zirconHandle: zx_handle_t) {
+    public init(semaphore: Semaphore, flags: SemaphoreImportFlags = [], handleType: ExternalSemaphoreHandleTypeFlags, zirconHandle: zx_handle_t) {
         self.semaphore = semaphore
         self.flags = flags
         self.handleType = handleType
@@ -9110,7 +9110,7 @@ public struct ExportFenceCreateInfo: ChainableBase, FenceCreateInfoExtension {
 
     public let handleTypes: ExternalFenceHandleTypeFlags
 
-    public init(handleTypes: ExternalFenceHandleTypeFlags) {
+    public init(handleTypes: ExternalFenceHandleTypeFlags = []) {
         self.handleTypes = handleTypes
     }
 
@@ -9138,7 +9138,7 @@ public struct ImportFenceWin32HandleInfoKHR: ChainableBase {
     public let handle: HANDLE
     public let name: LPCWSTR
 
-    public init(fence: Fence, flags: FenceImportFlags, handleType: ExternalFenceHandleTypeFlags, handle: HANDLE, name: LPCWSTR) {
+    public init(fence: Fence, flags: FenceImportFlags = [], handleType: ExternalFenceHandleTypeFlags, handle: HANDLE, name: LPCWSTR) {
         self.fence = fence
         self.flags = flags
         self.handleType = handleType
@@ -9177,7 +9177,7 @@ public struct ExportFenceWin32HandleInfoKHR: ChainableBase, FenceCreateInfoExten
     public let dwAccess: DWORD
     public let name: LPCWSTR
 
-    public init(attributes: UnsafePointer<SECURITY_ATTRIBUTES>?, dwAccess: DWORD, name: LPCWSTR) {
+    public init(attributes: UnsafePointer<SECURITY_ATTRIBUTES>? = nil, dwAccess: DWORD, name: LPCWSTR) {
         self.attributes = attributes
         self.dwAccess = dwAccess
         self.name = name
@@ -9239,7 +9239,7 @@ public struct ImportFenceFdInfoKHR: ChainableBase {
     public let handleType: ExternalFenceHandleTypeFlags
     public let fd: Int32
 
-    public init(fence: Fence, flags: FenceImportFlags, handleType: ExternalFenceHandleTypeFlags, fd: Int32) {
+    public init(fence: Fence, flags: FenceImportFlags = [], handleType: ExternalFenceHandleTypeFlags, fd: Int32) {
         self.fence = fence
         self.flags = flags
         self.handleType = handleType
@@ -9353,7 +9353,7 @@ public struct RenderPassMultiviewCreateInfo: ChainableBase, RenderPassCreateInfo
     public let viewOffsets: Array<Int32>
     public let correlationMasks: Array<UInt32>
 
-    public init(viewMasks: Array<UInt32>, viewOffsets: Array<Int32>, correlationMasks: Array<UInt32>) {
+    public init(viewMasks: Array<UInt32> = [], viewOffsets: Array<Int32> = [], correlationMasks: Array<UInt32> = []) {
         self.viewMasks = viewMasks
         self.viewOffsets = viewOffsets
         self.correlationMasks = correlationMasks
@@ -9515,7 +9515,7 @@ public struct SwapchainCounterCreateInfoEXT: ChainableBase, SwapchainCreateInfoK
 
     public let surfaceCounters: SurfaceCounterFlagsEXT
 
-    public init(surfaceCounters: SurfaceCounterFlagsEXT) {
+    public init(surfaceCounters: SurfaceCounterFlagsEXT = []) {
         self.surfaceCounters = surfaceCounters
     }
 
@@ -9566,7 +9566,7 @@ public struct MemoryAllocateFlagsInfo: ChainableBase, MemoryAllocateInfoExtensio
     public let flags: MemoryAllocateFlags
     public let deviceMask: UInt32
 
-    public init(flags: MemoryAllocateFlags, deviceMask: UInt32) {
+    public init(flags: MemoryAllocateFlags = [], deviceMask: UInt32) {
         self.flags = flags
         self.deviceMask = deviceMask
     }
@@ -9623,7 +9623,7 @@ public struct BindBufferMemoryDeviceGroupInfo: ChainableBase, BindBufferMemoryIn
 
     public let deviceIndices: Array<UInt32>
 
-    public init(deviceIndices: Array<UInt32>) {
+    public init(deviceIndices: Array<UInt32> = []) {
         self.deviceIndices = deviceIndices
     }
 
@@ -9681,7 +9681,7 @@ public struct BindImageMemoryDeviceGroupInfo: ChainableBase, BindImageMemoryInfo
     public let deviceIndices: Array<UInt32>
     public let splitInstanceBindRegions: Array<Rect2D>
 
-    public init(deviceIndices: Array<UInt32>, splitInstanceBindRegions: Array<Rect2D>) {
+    public init(deviceIndices: Array<UInt32> = [], splitInstanceBindRegions: Array<Rect2D> = []) {
         self.deviceIndices = deviceIndices
         self.splitInstanceBindRegions = splitInstanceBindRegions
     }
@@ -9714,7 +9714,7 @@ public struct DeviceGroupRenderPassBeginInfo: ChainableBase, RenderPassBeginInfo
     public let deviceMask: UInt32
     public let deviceRenderAreas: Array<Rect2D>
 
-    public init(deviceMask: UInt32, deviceRenderAreas: Array<Rect2D>) {
+    public init(deviceMask: UInt32, deviceRenderAreas: Array<Rect2D> = []) {
         self.deviceMask = deviceMask
         self.deviceRenderAreas = deviceRenderAreas
     }
@@ -9768,7 +9768,7 @@ public struct DeviceGroupSubmitInfo: ChainableBase, SubmitInfoExtension {
     public let commandBufferDeviceMasks: Array<UInt32>
     public let signalSemaphoreDeviceIndices: Array<UInt32>
 
-    public init(waitSemaphoreDeviceIndices: Array<UInt32>, commandBufferDeviceMasks: Array<UInt32>, signalSemaphoreDeviceIndices: Array<UInt32>) {
+    public init(waitSemaphoreDeviceIndices: Array<UInt32> = [], commandBufferDeviceMasks: Array<UInt32> = [], signalSemaphoreDeviceIndices: Array<UInt32> = []) {
         self.waitSemaphoreDeviceIndices = waitSemaphoreDeviceIndices
         self.commandBufferDeviceMasks = commandBufferDeviceMasks
         self.signalSemaphoreDeviceIndices = signalSemaphoreDeviceIndices
@@ -9855,7 +9855,7 @@ public struct ImageSwapchainCreateInfoKHR: ChainableBase, ImageCreateInfoExtensi
 
     public let swapchain: SwapchainKHR?
 
-    public init(swapchain: SwapchainKHR?) {
+    public init(swapchain: SwapchainKHR? = nil) {
         self.swapchain = swapchain
     }
 
@@ -9909,7 +9909,7 @@ public struct AcquireNextImageInfoKHR: ChainableBase {
     public let fence: Fence?
     public let deviceMask: UInt32
 
-    public init(swapchain: SwapchainKHR, timeout: UInt64, semaphore: Semaphore?, fence: Fence?, deviceMask: UInt32) {
+    public init(swapchain: SwapchainKHR, timeout: UInt64, semaphore: Semaphore? = nil, fence: Fence? = nil, deviceMask: UInt32) {
         self.swapchain = swapchain
         self.timeout = timeout
         self.semaphore = semaphore
@@ -9945,7 +9945,7 @@ public struct DeviceGroupPresentInfoKHR: ChainableBase, PresentInfoKHRExtension 
     public let deviceMasks: Array<UInt32>
     public let mode: DeviceGroupPresentModeFlagsKHR
 
-    public init(deviceMasks: Array<UInt32>, mode: DeviceGroupPresentModeFlagsKHR) {
+    public init(deviceMasks: Array<UInt32> = [], mode: DeviceGroupPresentModeFlagsKHR) {
         self.deviceMasks = deviceMasks
         self.mode = mode
     }
@@ -9974,7 +9974,7 @@ public struct DeviceGroupDeviceCreateInfo: ChainableBase, DeviceCreateInfoExtens
 
     public let physicalDevices: Array<PhysicalDevice>
 
-    public init(physicalDevices: Array<PhysicalDevice>) {
+    public init(physicalDevices: Array<PhysicalDevice> = []) {
         self.physicalDevices = physicalDevices
     }
 
@@ -10069,7 +10069,7 @@ public struct DescriptorUpdateTemplateCreateInfo: ChainableBase {
     public let pipelineLayout: PipelineLayout
     public let set: UInt32
 
-    public init(flags: DescriptorUpdateTemplateCreateFlags, descriptorUpdateEntries: Array<DescriptorUpdateTemplateEntry>, templateType: DescriptorUpdateTemplateType, descriptorSetLayout: DescriptorSetLayout, pipelineBindPoint: PipelineBindPoint, pipelineLayout: PipelineLayout, set: UInt32) {
+    public init(flags: DescriptorUpdateTemplateCreateFlags = [], descriptorUpdateEntries: Array<DescriptorUpdateTemplateEntry>, templateType: DescriptorUpdateTemplateType, descriptorSetLayout: DescriptorSetLayout, pipelineBindPoint: PipelineBindPoint, pipelineLayout: PipelineLayout, set: UInt32) {
         self.flags = flags
         self.descriptorUpdateEntries = descriptorUpdateEntries
         self.templateType = templateType
@@ -10434,7 +10434,7 @@ public struct PastPresentationTimingInfoEXT: ChainableBase {
     public let flags: PastPresentationTimingFlagsEXT
     public let swapchain: SwapchainKHR
 
-    public init(flags: PastPresentationTimingFlagsEXT, swapchain: SwapchainKHR) {
+    public init(flags: PastPresentationTimingFlagsEXT = [], swapchain: SwapchainKHR) {
         self.flags = flags
         self.swapchain = swapchain
     }
@@ -10529,7 +10529,7 @@ public struct PresentTimingInfoEXT: ChainableBase {
     public let presentStageQueries: PresentStageFlagsEXT
     public let targetTimeDomainPresentStage: PresentStageFlagsEXT
 
-    public init(flags: PresentTimingInfoFlagsEXT, targetTime: UInt64, timeDomainId: UInt64, presentStageQueries: PresentStageFlagsEXT, targetTimeDomainPresentStage: PresentStageFlagsEXT) {
+    public init(flags: PresentTimingInfoFlagsEXT = [], targetTime: UInt64, timeDomainId: UInt64, presentStageQueries: PresentStageFlagsEXT = [], targetTimeDomainPresentStage: PresentStageFlagsEXT = []) {
         self.flags = flags
         self.targetTime = targetTime
         self.timeDomainId = timeDomainId
@@ -10592,7 +10592,7 @@ public struct SwapchainCalibratedTimestampInfoEXT: ChainableBase, CalibratedTime
     public let presentStage: PresentStageFlagsEXT
     public let timeDomainId: UInt64
 
-    public init(swapchain: SwapchainKHR, presentStage: PresentStageFlagsEXT, timeDomainId: UInt64) {
+    public init(swapchain: SwapchainKHR, presentStage: PresentStageFlagsEXT = [], timeDomainId: UInt64) {
         self.swapchain = swapchain
         self.presentStage = presentStage
         self.timeDomainId = timeDomainId
@@ -10845,7 +10845,7 @@ public struct IOSSurfaceCreateInfoMVK: ChainableBase {
     public let flags: IOSSurfaceCreateFlagsMVK
     public let view: UnsafeRawPointer
 
-    public init(flags: IOSSurfaceCreateFlagsMVK, view: UnsafeRawPointer) {
+    public init(flags: IOSSurfaceCreateFlagsMVK = [], view: UnsafeRawPointer) {
         self.flags = flags
         self.view = view
     }
@@ -10874,7 +10874,7 @@ public struct MacOSSurfaceCreateInfoMVK: ChainableBase {
     public let flags: MacOSSurfaceCreateFlagsMVK
     public let view: UnsafeRawPointer
 
-    public init(flags: MacOSSurfaceCreateFlagsMVK, view: UnsafeRawPointer) {
+    public init(flags: MacOSSurfaceCreateFlagsMVK = [], view: UnsafeRawPointer) {
         self.flags = flags
         self.view = view
     }
@@ -10903,7 +10903,7 @@ public struct MetalSurfaceCreateInfoEXT: ChainableBase {
     public let flags: MetalSurfaceCreateFlagsEXT
     public let layer: UnsafePointer<CAMetalLayer>
 
-    public init(flags: MetalSurfaceCreateFlagsEXT, layer: UnsafePointer<CAMetalLayer>) {
+    public init(flags: MetalSurfaceCreateFlagsEXT = [], layer: UnsafePointer<CAMetalLayer>) {
         self.flags = flags
         self.layer = layer
     }
@@ -11017,7 +11017,7 @@ public struct PipelineViewportSwizzleStateCreateInfoNV: ChainableBase, PipelineV
     public let flags: PipelineViewportSwizzleStateCreateFlagsNV
     public let viewportSwizzles: Array<ViewportSwizzleNV>
 
-    public init(flags: PipelineViewportSwizzleStateCreateFlagsNV, viewportSwizzles: Array<ViewportSwizzleNV>) {
+    public init(flags: PipelineViewportSwizzleStateCreateFlagsNV = [], viewportSwizzles: Array<ViewportSwizzleNV>) {
         self.flags = flags
         self.viewportSwizzles = viewportSwizzles
     }
@@ -11067,7 +11067,7 @@ public struct PipelineDiscardRectangleStateCreateInfoEXT: ChainableBase, Graphic
     public let discardRectangleMode: DiscardRectangleModeEXT
     public let discardRectangles: Array<Rect2D>
 
-    public init(flags: PipelineDiscardRectangleStateCreateFlagsEXT, discardRectangleMode: DiscardRectangleModeEXT, discardRectangles: Array<Rect2D>) {
+    public init(flags: PipelineDiscardRectangleStateCreateFlagsEXT = [], discardRectangleMode: DiscardRectangleModeEXT, discardRectangles: Array<Rect2D> = []) {
         self.flags = flags
         self.discardRectangleMode = discardRectangleMode
         self.discardRectangles = discardRectangles
@@ -11172,7 +11172,7 @@ public struct PhysicalDeviceSurfaceInfo2KHR: ChainableBase {
 
     public let surface: SurfaceKHR?
 
-    public init(surface: SurfaceKHR?) {
+    public init(surface: SurfaceKHR? = nil) {
         self.surface = surface
     }
 
@@ -11679,7 +11679,7 @@ public struct MemoryDedicatedAllocateInfo: ChainableBase, MemoryAllocateInfoExte
     public let image: Image?
     public let buffer: Buffer?
 
-    public init(image: Image?, buffer: Buffer?) {
+    public init(image: Image? = nil, buffer: Buffer? = nil) {
         self.image = image
         self.buffer = buffer
     }
@@ -11963,7 +11963,7 @@ public struct ConditionalRenderingBeginInfoEXT: ChainableBase {
     public let offset: VkDeviceSize
     public let flags: ConditionalRenderingFlagsEXT
 
-    public init(buffer: Buffer, offset: VkDeviceSize, flags: ConditionalRenderingFlagsEXT) {
+    public init(buffer: Buffer, offset: VkDeviceSize, flags: ConditionalRenderingFlagsEXT = []) {
         self.buffer = buffer
         self.offset = offset
         self.flags = flags
@@ -12059,7 +12059,7 @@ public struct DeviceQueueInfo2: ChainableBase {
     public let queueFamilyIndex: UInt32
     public let queueIndex: UInt32
 
-    public init(flags: DeviceQueueCreateFlags, queueFamilyIndex: UInt32, queueIndex: UInt32) {
+    public init(flags: DeviceQueueCreateFlags = [], queueFamilyIndex: UInt32, queueIndex: UInt32) {
         self.flags = flags
         self.queueFamilyIndex = queueFamilyIndex
         self.queueIndex = queueIndex
@@ -12090,7 +12090,7 @@ public struct PipelineCoverageToColorStateCreateInfoNV: ChainableBase, PipelineM
     public let coverageToColorEnable: Bool
     public let coverageToColorLocation: UInt32
 
-    public init(flags: PipelineCoverageToColorStateCreateFlagsNV, coverageToColorEnable: Bool, coverageToColorLocation: UInt32) {
+    public init(flags: PipelineCoverageToColorStateCreateFlagsNV = [], coverageToColorEnable: Bool, coverageToColorLocation: UInt32 = 0) {
         self.flags = flags
         self.coverageToColorEnable = coverageToColorEnable
         self.coverageToColorLocation = coverageToColorLocation
@@ -12167,7 +12167,7 @@ public struct SampleLocationsInfoEXT: ChainableBase, ImageMemoryBarrierExtension
     public let sampleLocationGridSize: Extent2D
     public let sampleLocations: Array<SampleLocationEXT>
 
-    public init(sampleLocationsPerPixel: SampleCountFlags, sampleLocationGridSize: Extent2D, sampleLocations: Array<SampleLocationEXT>) {
+    public init(sampleLocationsPerPixel: SampleCountFlags, sampleLocationGridSize: Extent2D, sampleLocations: Array<SampleLocationEXT> = []) {
         self.sampleLocationsPerPixel = sampleLocationsPerPixel
         self.sampleLocationGridSize = sampleLocationGridSize
         self.sampleLocations = sampleLocations
@@ -12254,7 +12254,7 @@ public struct RenderPassSampleLocationsBeginInfoEXT: ChainableBase, RenderPassBe
     public let attachmentInitialSampleLocations: Array<AttachmentSampleLocationsEXT>
     public let postSubpassSampleLocations: Array<SubpassSampleLocationsEXT>
 
-    public init(attachmentInitialSampleLocations: Array<AttachmentSampleLocationsEXT>, postSubpassSampleLocations: Array<SubpassSampleLocationsEXT>) {
+    public init(attachmentInitialSampleLocations: Array<AttachmentSampleLocationsEXT> = [], postSubpassSampleLocations: Array<SubpassSampleLocationsEXT> = []) {
         self.attachmentInitialSampleLocations = attachmentInitialSampleLocations
         self.postSubpassSampleLocations = postSubpassSampleLocations
     }
@@ -12614,7 +12614,7 @@ public struct PipelineCoverageModulationStateCreateInfoNV: ChainableBase, Pipeli
     public let coverageModulationTableEnable: Bool
     public let coverageModulationTable: Array<Float>?
 
-    public init(flags: PipelineCoverageModulationStateCreateFlagsNV, coverageModulationMode: CoverageModulationModeNV, coverageModulationTableEnable: Bool, coverageModulationTable: Array<Float>?) {
+    public init(flags: PipelineCoverageModulationStateCreateFlagsNV = [], coverageModulationMode: CoverageModulationModeNV, coverageModulationTableEnable: Bool, coverageModulationTable: Array<Float>? = []) {
         self.flags = flags
         self.coverageModulationMode = coverageModulationMode
         self.coverageModulationTableEnable = coverageModulationTableEnable
@@ -12649,7 +12649,7 @@ public struct ImageFormatListCreateInfo: ChainableBase, ImageCreateInfoExtension
 
     public let viewFormats: Array<Format>
 
-    public init(viewFormats: Array<Format>) {
+    public init(viewFormats: Array<Format> = []) {
         self.viewFormats = viewFormats
     }
 
@@ -12677,7 +12677,7 @@ public struct ValidationCacheCreateInfoEXT: ChainableBase {
     public let initialDataSize: Int
     public let initialData: UnsafeRawPointer
 
-    public init(flags: ValidationCacheCreateFlagsEXT, initialDataSize: Int, initialData: UnsafeRawPointer) {
+    public init(flags: ValidationCacheCreateFlagsEXT = [], initialDataSize: Int = 0, initialData: UnsafeRawPointer) {
         self.flags = flags
         self.initialDataSize = initialDataSize
         self.initialData = initialData
@@ -12990,7 +12990,7 @@ public struct PhysicalDeviceLayeredApiPropertiesListKHR: ChainableBase, Physical
     public let layeredApiCount: UInt32
     public let layeredApis: UnsafeMutablePointer<VkPhysicalDeviceLayeredApiPropertiesKHR>?
 
-    public init(layeredApiCount: UInt32, layeredApis: UnsafeMutablePointer<VkPhysicalDeviceLayeredApiPropertiesKHR>?) {
+    public init(layeredApiCount: UInt32 = 0, layeredApis: UnsafeMutablePointer<VkPhysicalDeviceLayeredApiPropertiesKHR>?) {
         self.layeredApiCount = layeredApiCount
         self.layeredApis = layeredApis
     }
@@ -13219,7 +13219,7 @@ public struct RenderingAreaInfo: ChainableBase {
     public let depthAttachmentFormat: Format
     public let stencilAttachmentFormat: Format
 
-    public init(viewMask: UInt32, colorAttachmentFormats: Array<Format>, depthAttachmentFormat: Format, stencilAttachmentFormat: Format) {
+    public init(viewMask: UInt32, colorAttachmentFormats: Array<Format> = [], depthAttachmentFormat: Format, stencilAttachmentFormat: Format) {
         self.viewMask = viewMask
         self.colorAttachmentFormats = colorAttachmentFormats
         self.depthAttachmentFormat = depthAttachmentFormat
@@ -13650,7 +13650,7 @@ public struct DebugUtilsMessengerCreateInfoEXT: ChainableBase, InstanceCreateInf
     public let pfnUserCallback: PFN_vkDebugUtilsMessengerCallbackEXT
     public let userData: UnsafeMutableRawPointer?
 
-    public init(flags: DebugUtilsMessengerCreateFlagsEXT, messageSeverity: DebugUtilsMessageSeverityFlagsEXT, messageType: DebugUtilsMessageTypeFlagsEXT, pfnUserCallback: @escaping PFN_vkDebugUtilsMessengerCallbackEXT, userData: UnsafeMutableRawPointer?) {
+    public init(flags: DebugUtilsMessengerCreateFlagsEXT = [], messageSeverity: DebugUtilsMessageSeverityFlagsEXT, messageType: DebugUtilsMessageTypeFlagsEXT, pfnUserCallback: @escaping PFN_vkDebugUtilsMessengerCallbackEXT, userData: UnsafeMutableRawPointer? = nil) {
         self.flags = flags
         self.messageSeverity = messageSeverity
         self.messageType = messageType
@@ -13691,7 +13691,7 @@ public struct DebugUtilsMessengerCallbackDataEXT: ChainableBase {
     public let cmdBufLabels: Array<DebugUtilsLabelEXT>
     public let objects: Array<DebugUtilsObjectNameInfoEXT>
 
-    public init(flags: DebugUtilsMessengerCallbackDataFlagsEXT, messageIdName: String?, messageIdNumber: Int32, message: String?, queueLabels: Array<DebugUtilsLabelEXT>, cmdBufLabels: Array<DebugUtilsLabelEXT>, objects: Array<DebugUtilsObjectNameInfoEXT>) {
+    public init(flags: DebugUtilsMessengerCallbackDataFlagsEXT = [], messageIdName: String?, messageIdNumber: Int32, message: String?, queueLabels: Array<DebugUtilsLabelEXT> = [], cmdBufLabels: Array<DebugUtilsLabelEXT> = [], objects: Array<DebugUtilsObjectNameInfoEXT> = []) {
         self.flags = flags
         self.messageIdName = messageIdName
         self.messageIdNumber = messageIdNumber
@@ -13770,7 +13770,7 @@ public struct DeviceDeviceMemoryReportCreateInfoEXT: ChainableBase, DeviceCreate
     public let pfnUserCallback: PFN_vkDeviceMemoryReportCallbackEXT
     public let userData: UnsafeMutableRawPointer?
 
-    public init(flags: DeviceMemoryReportFlagsEXT, pfnUserCallback: @escaping PFN_vkDeviceMemoryReportCallbackEXT, userData: UnsafeMutableRawPointer?) {
+    public init(flags: DeviceMemoryReportFlagsEXT, pfnUserCallback: @escaping PFN_vkDeviceMemoryReportCallbackEXT, userData: UnsafeMutableRawPointer? = nil) {
         self.flags = flags
         self.pfnUserCallback = pfnUserCallback
         self.userData = userData
@@ -14049,7 +14049,7 @@ public struct PipelineRasterizationConservativeStateCreateInfoEXT: ChainableBase
     public let conservativeRasterizationMode: ConservativeRasterizationModeEXT
     public let extraPrimitiveOverestimationSize: Float
 
-    public init(flags: PipelineRasterizationConservativeStateCreateFlagsEXT, conservativeRasterizationMode: ConservativeRasterizationModeEXT, extraPrimitiveOverestimationSize: Float) {
+    public init(flags: PipelineRasterizationConservativeStateCreateFlagsEXT = [], conservativeRasterizationMode: ConservativeRasterizationModeEXT, extraPrimitiveOverestimationSize: Float) {
         self.flags = flags
         self.conservativeRasterizationMode = conservativeRasterizationMode
         self.extraPrimitiveOverestimationSize = extraPrimitiveOverestimationSize
@@ -14262,7 +14262,7 @@ public struct DescriptorSetLayoutBindingFlagsCreateInfo: ChainableBase, Descript
 
     public let bindingFlags: Array<DescriptorBindingFlags>
 
-    public init(bindingFlags: Array<DescriptorBindingFlags>) {
+    public init(bindingFlags: Array<DescriptorBindingFlags> = []) {
         self.bindingFlags = bindingFlags
     }
 
@@ -14288,7 +14288,7 @@ public struct DescriptorSetVariableDescriptorCountAllocateInfo: ChainableBase, D
 
     public let descriptorCounts: Array<UInt32>
 
-    public init(descriptorCounts: Array<UInt32>) {
+    public init(descriptorCounts: Array<UInt32> = []) {
         self.descriptorCounts = descriptorCounts
     }
 
@@ -14341,7 +14341,7 @@ public struct AttachmentDescription2: ChainableBase {
     public let initialLayout: ImageLayout
     public let finalLayout: ImageLayout
 
-    public init(flags: AttachmentDescriptionFlags, format: Format, samples: SampleCountFlags, loadOp: AttachmentLoadOp, storeOp: AttachmentStoreOp, stencilLoadOp: AttachmentLoadOp, stencilStoreOp: AttachmentStoreOp, initialLayout: ImageLayout, finalLayout: ImageLayout) {
+    public init(flags: AttachmentDescriptionFlags = [], format: Format, samples: SampleCountFlags, loadOp: AttachmentLoadOp, storeOp: AttachmentStoreOp, stencilLoadOp: AttachmentLoadOp, stencilStoreOp: AttachmentStoreOp, initialLayout: ImageLayout, finalLayout: ImageLayout) {
         self.flags = flags
         self.format = format
         self.samples = samples
@@ -14426,7 +14426,7 @@ public struct SubpassDescription2: ChainableBase {
     public let depthStencilAttachment: AttachmentReference2?
     public let preserveAttachments: Array<UInt32>
 
-    public init(flags: SubpassDescriptionFlags, pipelineBindPoint: PipelineBindPoint, viewMask: UInt32, inputAttachments: Array<AttachmentReference2>, colorAttachments: Array<AttachmentReference2>, resolveAttachments: Array<AttachmentReference2>?, depthStencilAttachment: AttachmentReference2?, preserveAttachments: Array<UInt32>) {
+    public init(flags: SubpassDescriptionFlags = [], pipelineBindPoint: PipelineBindPoint, viewMask: UInt32, inputAttachments: Array<AttachmentReference2> = [], colorAttachments: Array<AttachmentReference2> = [], resolveAttachments: Array<AttachmentReference2>? = [], depthStencilAttachment: AttachmentReference2? = nil, preserveAttachments: Array<UInt32> = []) {
         self.flags = flags
         self.pipelineBindPoint = pipelineBindPoint
         self.viewMask = viewMask
@@ -14490,7 +14490,7 @@ public struct SubpassDependency2: ChainableBase {
     public let dependencyFlags: DependencyFlags
     public let viewOffset: Int32
 
-    public init(srcSubpass: UInt32, dstSubpass: UInt32, srcStageMask: PipelineStageFlags, dstStageMask: PipelineStageFlags, srcAccessMask: AccessFlags, dstAccessMask: AccessFlags, dependencyFlags: DependencyFlags, viewOffset: Int32) {
+    public init(srcSubpass: UInt32, dstSubpass: UInt32, srcStageMask: PipelineStageFlags = [], dstStageMask: PipelineStageFlags = [], srcAccessMask: AccessFlags = [], dstAccessMask: AccessFlags = [], dependencyFlags: DependencyFlags = [], viewOffset: Int32) {
         self.srcSubpass = srcSubpass
         self.dstSubpass = dstSubpass
         self.srcStageMask = srcStageMask
@@ -14538,7 +14538,7 @@ public struct RenderPassCreateInfo2: ChainableBase {
     public let dependencies: Array<SubpassDependency2>
     public let correlatedViewMasks: Array<UInt32>
 
-    public init(flags: RenderPassCreateFlags, attachments: Array<AttachmentDescription2>, subpasses: Array<SubpassDescription2>, dependencies: Array<SubpassDependency2>, correlatedViewMasks: Array<UInt32>) {
+    public init(flags: RenderPassCreateFlags = [], attachments: Array<AttachmentDescription2> = [], subpasses: Array<SubpassDescription2>, dependencies: Array<SubpassDependency2> = [], correlatedViewMasks: Array<UInt32> = []) {
         self.flags = flags
         self.attachments = attachments
         self.subpasses = subpasses
@@ -14697,7 +14697,7 @@ public struct TimelineSemaphoreSubmitInfo: ChainableBase, SubmitInfoExtension, B
     public let waitSemaphoreValues: Array<UInt64>?
     public let signalSemaphoreValues: Array<UInt64>?
 
-    public init(waitSemaphoreValues: Array<UInt64>?, signalSemaphoreValues: Array<UInt64>?) {
+    public init(waitSemaphoreValues: Array<UInt64>? = [], signalSemaphoreValues: Array<UInt64>? = []) {
         self.waitSemaphoreValues = waitSemaphoreValues
         self.signalSemaphoreValues = signalSemaphoreValues
     }
@@ -14731,7 +14731,7 @@ public struct SemaphoreWaitInfo: ChainableBase {
     public let semaphores: Array<Semaphore>
     public let values: Array<UInt64>
 
-    public init(flags: SemaphoreWaitFlags, semaphores: Array<Semaphore>, values: Array<UInt64>) {
+    public init(flags: SemaphoreWaitFlags = [], semaphores: Array<Semaphore>, values: Array<UInt64>) {
         self.flags = flags
         self.semaphores = semaphores
         self.values = values
@@ -15446,7 +15446,7 @@ public struct SubpassDescriptionDepthStencilResolve: ChainableBase, SubpassDescr
     public let stencilResolveMode: ResolveModeFlags
     public let depthStencilResolveAttachment: AttachmentReference2?
 
-    public init(depthResolveMode: ResolveModeFlags, stencilResolveMode: ResolveModeFlags, depthStencilResolveAttachment: AttachmentReference2?) {
+    public init(depthResolveMode: ResolveModeFlags, stencilResolveMode: ResolveModeFlags, depthStencilResolveAttachment: AttachmentReference2? = nil) {
         self.depthResolveMode = depthResolveMode
         self.stencilResolveMode = stencilResolveMode
         self.depthStencilResolveAttachment = depthStencilResolveAttachment
@@ -15597,7 +15597,7 @@ public struct PipelineRasterizationStateStreamCreateInfoEXT: ChainableBase, Pipe
     public let flags: PipelineRasterizationStateStreamCreateFlagsEXT
     public let rasterizationStream: UInt32
 
-    public init(flags: PipelineRasterizationStateStreamCreateFlagsEXT, rasterizationStream: UInt32) {
+    public init(flags: PipelineRasterizationStateStreamCreateFlagsEXT = [], rasterizationStream: UInt32) {
         self.flags = flags
         self.rasterizationStream = rasterizationStream
     }
@@ -15692,7 +15692,7 @@ public struct PipelineViewportExclusiveScissorStateCreateInfoNV: ChainableBase, 
 
     public let exclusiveScissors: Array<Rect2D>
 
-    public init(exclusiveScissors: Array<Rect2D>) {
+    public init(exclusiveScissors: Array<Rect2D> = []) {
         self.exclusiveScissors = exclusiveScissors
     }
 
@@ -15971,7 +15971,7 @@ public struct PipelineViewportShadingRateImageStateCreateInfoNV: ChainableBase, 
     public let shadingRateImageEnable: Bool
     public let shadingRatePalettes: Array<ShadingRatePaletteNV>
 
-    public init(shadingRateImageEnable: Bool, shadingRatePalettes: Array<ShadingRatePaletteNV>) {
+    public init(shadingRateImageEnable: Bool, shadingRatePalettes: Array<ShadingRatePaletteNV> = []) {
         self.shadingRateImageEnable = shadingRateImageEnable
         self.shadingRatePalettes = shadingRatePalettes
     }
@@ -16137,7 +16137,7 @@ public struct PipelineViewportCoarseSampleOrderStateCreateInfoNV: ChainableBase,
     public let sampleOrderType: CoarseSampleOrderTypeNV
     public let customSampleOrders: Array<CoarseSampleOrderCustomNV>
 
-    public init(sampleOrderType: CoarseSampleOrderTypeNV, customSampleOrders: Array<CoarseSampleOrderCustomNV>) {
+    public init(sampleOrderType: CoarseSampleOrderTypeNV, customSampleOrders: Array<CoarseSampleOrderCustomNV> = []) {
         self.sampleOrderType = sampleOrderType
         self.customSampleOrders = customSampleOrders
     }
@@ -16483,7 +16483,7 @@ public struct RayTracingShaderGroupCreateInfoKHR: ChainableBase {
     public let intersectionShader: UInt32
     public let shaderGroupCaptureReplayHandle: UnsafeRawPointer?
 
-    public init(type: RayTracingShaderGroupTypeKHR, generalShader: UInt32, closestHitShader: UInt32, anyHitShader: UInt32, intersectionShader: UInt32, shaderGroupCaptureReplayHandle: UnsafeRawPointer?) {
+    public init(type: RayTracingShaderGroupTypeKHR, generalShader: UInt32, closestHitShader: UInt32, anyHitShader: UInt32, intersectionShader: UInt32, shaderGroupCaptureReplayHandle: UnsafeRawPointer? = nil) {
         self.type = type
         self.generalShader = generalShader
         self.closestHitShader = closestHitShader
@@ -16527,7 +16527,7 @@ public struct RayTracingPipelineCreateInfoNV: ChainableBase {
     public let basePipelineHandle: Pipeline?
     public let basePipelineIndex: Int32
 
-    public init(flags: PipelineCreateFlags, stages: Array<PipelineShaderStageCreateInfo>, groups: Array<RayTracingShaderGroupCreateInfoNV>, maxRecursionDepth: UInt32, layout: PipelineLayout?, basePipelineHandle: Pipeline?, basePipelineIndex: Int32) {
+    public init(flags: PipelineCreateFlags = [], stages: Array<PipelineShaderStageCreateInfo>, groups: Array<RayTracingShaderGroupCreateInfoNV>, maxRecursionDepth: UInt32, layout: PipelineLayout? = nil, basePipelineHandle: Pipeline? = nil, basePipelineIndex: Int32) {
         self.flags = flags
         self.stages = stages
         self.groups = groups
@@ -16574,7 +16574,7 @@ public struct PipelineLibraryCreateInfoKHR: ChainableBase, GraphicsPipelineCreat
 
     public let libraries: Array<Pipeline>
 
-    public init(libraries: Array<Pipeline>) {
+    public init(libraries: Array<Pipeline> = []) {
         self.libraries = libraries
     }
 
@@ -16636,7 +16636,7 @@ public struct RayTracingPipelineCreateInfoKHR: ChainableBase {
     public let basePipelineHandle: Pipeline?
     public let basePipelineIndex: Int32
 
-    public init(flags: PipelineCreateFlags, stages: Array<PipelineShaderStageCreateInfo>, groups: Array<RayTracingShaderGroupCreateInfoKHR>, maxPipelineRayRecursionDepth: UInt32, libraryInfo: PipelineLibraryCreateInfoKHR?, libraryInterface: RayTracingPipelineInterfaceCreateInfoKHR?, dynamicState: PipelineDynamicStateCreateInfo?, layout: PipelineLayout?, basePipelineHandle: Pipeline?, basePipelineIndex: Int32) {
+    public init(flags: PipelineCreateFlags = [], stages: Array<PipelineShaderStageCreateInfo> = [], groups: Array<RayTracingShaderGroupCreateInfoKHR> = [], maxPipelineRayRecursionDepth: UInt32, libraryInfo: PipelineLibraryCreateInfoKHR? = nil, libraryInterface: RayTracingPipelineInterfaceCreateInfoKHR? = nil, dynamicState: PipelineDynamicStateCreateInfo? = nil, layout: PipelineLayout? = nil, basePipelineHandle: Pipeline? = nil, basePipelineIndex: Int32) {
         self.flags = flags
         self.stages = stages
         self.groups = groups
@@ -16708,7 +16708,7 @@ public struct GeometryTrianglesNV: ChainableBase {
     public let transformData: Buffer?
     public let transformOffset: VkDeviceSize
 
-    public init(vertexData: Buffer?, vertexOffset: VkDeviceSize, vertexCount: UInt32, vertexStride: VkDeviceSize, vertexFormat: Format, indexData: Buffer?, indexOffset: VkDeviceSize, indexCount: UInt32, indexType: IndexType, transformData: Buffer?, transformOffset: VkDeviceSize) {
+    public init(vertexData: Buffer? = nil, vertexOffset: VkDeviceSize, vertexCount: UInt32, vertexStride: VkDeviceSize, vertexFormat: Format, indexData: Buffer? = nil, indexOffset: VkDeviceSize, indexCount: UInt32, indexType: IndexType, transformData: Buffer? = nil, transformOffset: VkDeviceSize) {
         self.vertexData = vertexData
         self.vertexOffset = vertexOffset
         self.vertexCount = vertexCount
@@ -16764,7 +16764,7 @@ public struct GeometryAABBNV: ChainableBase {
     public let stride: UInt32
     public let offset: VkDeviceSize
 
-    public init(aabbData: Buffer?, numAABBs: UInt32, stride: UInt32, offset: VkDeviceSize) {
+    public init(aabbData: Buffer? = nil, numAABBs: UInt32, stride: UInt32, offset: VkDeviceSize) {
         self.aabbData = aabbData
         self.numAABBs = numAABBs
         self.stride = stride
@@ -16826,7 +16826,7 @@ public struct GeometryNV: ChainableBase {
     public let geometry: GeometryDataNV
     public let flags: GeometryFlagsKHR
 
-    public init(geometryType: GeometryTypeKHR, geometry: GeometryDataNV, flags: GeometryFlagsKHR) {
+    public init(geometryType: GeometryTypeKHR, geometry: GeometryDataNV, flags: GeometryFlagsKHR = []) {
         self.geometryType = geometryType
         self.geometry = geometry
         self.flags = flags
@@ -16860,7 +16860,7 @@ public struct AccelerationStructureInfoNV: ChainableBase {
     public let instanceCount: UInt32
     public let geometries: Array<GeometryNV>
 
-    public init(type: VkAccelerationStructureTypeNV, flags: BuildAccelerationStructureFlagsKHR, instanceCount: UInt32, geometries: Array<GeometryNV>) {
+    public init(type: VkAccelerationStructureTypeNV, flags: BuildAccelerationStructureFlagsKHR = [], instanceCount: UInt32 = 0, geometries: Array<GeometryNV> = []) {
         self.type = type
         self.flags = flags
         self.instanceCount = instanceCount
@@ -16927,7 +16927,7 @@ public struct BindAccelerationStructureMemoryInfoNV: ChainableBase {
     public let memoryOffset: VkDeviceSize
     public let deviceIndices: Array<UInt32>
 
-    public init(accelerationStructure: AccelerationStructureNV, memory: DeviceMemory, memoryOffset: VkDeviceSize, deviceIndices: Array<UInt32>) {
+    public init(accelerationStructure: AccelerationStructureNV, memory: DeviceMemory, memoryOffset: VkDeviceSize, deviceIndices: Array<UInt32> = []) {
         self.accelerationStructure = accelerationStructure
         self.memory = memory
         self.memoryOffset = memoryOffset
@@ -17435,7 +17435,7 @@ public struct PhysicalDeviceImageDrmFormatModifierInfoEXT: ChainableBase, Physic
     public let sharingMode: SharingMode
     public let queueFamilyIndices: Array<UInt32>
 
-    public init(drmFormatModifier: UInt64, sharingMode: SharingMode, queueFamilyIndices: Array<UInt32>) {
+    public init(drmFormatModifier: UInt64, sharingMode: SharingMode, queueFamilyIndices: Array<UInt32> = []) {
         self.drmFormatModifier = drmFormatModifier
         self.sharingMode = sharingMode
         self.queueFamilyIndices = queueFamilyIndices
@@ -17768,7 +17768,7 @@ public struct RenderPassFragmentDensityMapOffsetEndInfoEXT: ChainableBase, Subpa
 
     public let fragmentDensityOffsets: Array<Offset2D>
 
-    public init(fragmentDensityOffsets: Array<Offset2D>) {
+    public init(fragmentDensityOffsets: Array<Offset2D> = []) {
         self.fragmentDensityOffsets = fragmentDensityOffsets
     }
 
@@ -17883,7 +17883,7 @@ public struct PipelineRasterizationDepthClipStateCreateInfoEXT: ChainableBase, P
     public let flags: PipelineRasterizationDepthClipStateCreateFlagsEXT
     public let depthClipEnable: Bool
 
-    public init(flags: PipelineRasterizationDepthClipStateCreateFlagsEXT, depthClipEnable: Bool) {
+    public init(flags: PipelineRasterizationDepthClipStateCreateFlagsEXT = [], depthClipEnable: Bool) {
         self.flags = flags
         self.depthClipEnable = depthClipEnable
     }
@@ -18204,7 +18204,7 @@ public struct FramebufferAttachmentImageInfo: ChainableBase {
     public let layerCount: UInt32
     public let viewFormats: Array<Format>
 
-    public init(flags: ImageCreateFlags, usage: ImageUsageFlags, width: UInt32, height: UInt32, layerCount: UInt32, viewFormats: Array<Format>) {
+    public init(flags: ImageCreateFlags = [], usage: ImageUsageFlags, width: UInt32, height: UInt32, layerCount: UInt32, viewFormats: Array<Format> = []) {
         self.flags = flags
         self.usage = usage
         self.width = width
@@ -18245,7 +18245,7 @@ public struct FramebufferAttachmentsCreateInfo: ChainableBase, FramebufferCreate
 
     public let attachmentImageInfos: Array<FramebufferAttachmentImageInfo>
 
-    public init(attachmentImageInfos: Array<FramebufferAttachmentImageInfo>) {
+    public init(attachmentImageInfos: Array<FramebufferAttachmentImageInfo> = []) {
         self.attachmentImageInfos = attachmentImageInfos
     }
 
@@ -18271,7 +18271,7 @@ public struct RenderPassAttachmentBeginInfo: ChainableBase, RenderPassBeginInfoE
 
     public let attachments: Array<ImageView>
 
-    public init(attachments: Array<ImageView>) {
+    public init(attachments: Array<ImageView> = []) {
         self.attachments = attachments
     }
 
@@ -18431,7 +18431,7 @@ public struct ImageViewHandleInfoNVX: ChainableBase {
     public let descriptorType: DescriptorType
     public let sampler: Sampler?
 
-    public init(imageView: ImageView, descriptorType: DescriptorType, sampler: Sampler?) {
+    public init(imageView: ImageView, descriptorType: DescriptorType, sampler: Sampler? = nil) {
         self.imageView = imageView
         self.descriptorType = descriptorType
         self.sampler = sampler
@@ -18528,7 +18528,7 @@ public struct PipelineCreationFeedbackCreateInfo: ChainableBase, GraphicsPipelin
     public let pipelineStageCreationFeedbackCount: UInt32
     public let pipelineStageCreationFeedbacks: UnsafeMutablePointer<VkPipelineCreationFeedback>
 
-    public init(pipelineCreationFeedback: UnsafeMutablePointer<VkPipelineCreationFeedback>, pipelineStageCreationFeedbackCount: UInt32, pipelineStageCreationFeedbacks: UnsafeMutablePointer<VkPipelineCreationFeedback>) {
+    public init(pipelineCreationFeedback: UnsafeMutablePointer<VkPipelineCreationFeedback>, pipelineStageCreationFeedbackCount: UInt32 = 0, pipelineStageCreationFeedbacks: UnsafeMutablePointer<VkPipelineCreationFeedback>) {
         self.pipelineCreationFeedback = pipelineCreationFeedback
         self.pipelineStageCreationFeedbackCount = pipelineStageCreationFeedbackCount
         self.pipelineStageCreationFeedbacks = pipelineStageCreationFeedbacks
@@ -18826,7 +18826,7 @@ public struct AcquireProfilingLockInfoKHR: ChainableBase {
     public let flags: AcquireProfilingLockFlagsKHR
     public let timeout: UInt64
 
-    public init(flags: AcquireProfilingLockFlagsKHR, timeout: UInt64) {
+    public init(flags: AcquireProfilingLockFlagsKHR = [], timeout: UInt64) {
         self.flags = flags
         self.timeout = timeout
     }
@@ -18875,7 +18875,7 @@ public struct HeadlessSurfaceCreateInfoEXT: ChainableBase {
 
     public let flags: HeadlessSurfaceCreateFlagsEXT
 
-    public init(flags: HeadlessSurfaceCreateFlagsEXT) {
+    public init(flags: HeadlessSurfaceCreateFlagsEXT = []) {
         self.flags = flags
     }
 
@@ -18922,7 +18922,7 @@ public struct PipelineCoverageReductionStateCreateInfoNV: ChainableBase, Pipelin
     public let flags: PipelineCoverageReductionStateCreateFlagsNV
     public let coverageReductionMode: CoverageReductionModeNV
 
-    public init(flags: PipelineCoverageReductionStateCreateFlagsNV, coverageReductionMode: CoverageReductionModeNV) {
+    public init(flags: PipelineCoverageReductionStateCreateFlagsNV = [], coverageReductionMode: CoverageReductionModeNV) {
         self.flags = flags
         self.coverageReductionMode = coverageReductionMode
     }
@@ -19018,7 +19018,7 @@ public struct InitializePerformanceApiInfoINTEL: ChainableBase {
 
     public let userData: UnsafeMutableRawPointer?
 
-    public init(userData: UnsafeMutableRawPointer?) {
+    public init(userData: UnsafeMutableRawPointer? = nil) {
         self.userData = userData
     }
 
@@ -20875,7 +20875,7 @@ public struct PipelineCompilerControlCreateInfoAMD: ChainableBase, GraphicsPipel
 
     public let compilerControlFlags: PipelineCompilerControlFlagsAMD
 
-    public init(compilerControlFlags: PipelineCompilerControlFlagsAMD) {
+    public init(compilerControlFlags: PipelineCompilerControlFlagsAMD = []) {
         self.compilerControlFlags = compilerControlFlags
     }
 
@@ -21302,7 +21302,7 @@ public struct AccelerationStructureGeometryKHR: ChainableBase {
     public let geometry: VkAccelerationStructureGeometryDataKHR
     public let flags: GeometryFlagsKHR
 
-    public init(geometryType: GeometryTypeKHR, geometry: VkAccelerationStructureGeometryDataKHR, flags: GeometryFlagsKHR) {
+    public init(geometryType: GeometryTypeKHR, geometry: VkAccelerationStructureGeometryDataKHR, flags: GeometryFlagsKHR = []) {
         self.geometryType = geometryType
         self.geometry = geometry
         self.flags = flags
@@ -21338,7 +21338,7 @@ public struct AccelerationStructureBuildGeometryInfoKHR: ChainableBase {
     public let geometries2: Array<UnsafePointer<VkAccelerationStructureGeometryKHR>?>?
     public let scratchData: VkDeviceOrHostAddressKHR
 
-    public init(type: AccelerationStructureTypeKHR, flags: BuildAccelerationStructureFlagsKHR, mode: BuildAccelerationStructureModeKHR, srcAccelerationStructure: AccelerationStructureKHR?, dstAccelerationStructure: AccelerationStructureKHR?, geometries: Array<AccelerationStructureGeometryKHR>?, geometries2: Array<UnsafePointer<VkAccelerationStructureGeometryKHR>?>?, scratchData: VkDeviceOrHostAddressKHR) {
+    public init(type: AccelerationStructureTypeKHR, flags: BuildAccelerationStructureFlagsKHR = [], mode: BuildAccelerationStructureModeKHR, srcAccelerationStructure: AccelerationStructureKHR? = nil, dstAccelerationStructure: AccelerationStructureKHR? = nil, geometries: Array<AccelerationStructureGeometryKHR>? = [], geometries2: Array<UnsafePointer<VkAccelerationStructureGeometryKHR>?>? = [], scratchData: VkDeviceOrHostAddressKHR) {
         self.type = type
         self.flags = flags
         self.mode = mode
@@ -21424,7 +21424,7 @@ public struct AccelerationStructureCreateInfoKHR: ChainableBase {
     public let type: AccelerationStructureTypeKHR
     public let deviceAddress: VkDeviceAddress
 
-    public init(createFlags: AccelerationStructureCreateFlagsKHR, buffer: Buffer, offset: VkDeviceSize, size: VkDeviceSize, type: AccelerationStructureTypeKHR, deviceAddress: VkDeviceAddress) {
+    public init(createFlags: AccelerationStructureCreateFlagsKHR = [], buffer: Buffer, offset: VkDeviceSize, size: VkDeviceSize, type: AccelerationStructureTypeKHR, deviceAddress: VkDeviceAddress) {
         self.createFlags = createFlags
         self.buffer = buffer
         self.offset = offset
@@ -21527,7 +21527,7 @@ public struct AccelerationStructureInstanceKHR: CStructConvertible {
     public let flags: GeometryInstanceFlagsKHR
     public let accelerationStructureReference: UInt64
 
-    public init(transform: TransformMatrixKHR, instanceCustomIndex: UInt32, mask: UInt32, instanceShaderBindingTableRecordOffset: UInt32, flags: GeometryInstanceFlagsKHR, accelerationStructureReference: UInt64) {
+    public init(transform: TransformMatrixKHR, instanceCustomIndex: UInt32, mask: UInt32, instanceShaderBindingTableRecordOffset: UInt32, flags: GeometryInstanceFlagsKHR = [], accelerationStructureReference: UInt64) {
         self.transform = transform
         self.instanceCustomIndex = instanceCustomIndex
         self.mask = mask
@@ -22173,7 +22173,7 @@ public struct PartitionedAccelerationStructureWriteInstanceDataNV: CStructConver
     public let partitionIndex: UInt32
     public let accelerationStructure: VkDeviceAddress
 
-    public init(transform: TransformMatrixKHR, explicitAABB: (Float, Float, Float, Float, Float, Float), instanceID: UInt32, instanceMask: UInt32, instanceContributionToHitGroupIndex: UInt32, instanceFlags: PartitionedAccelerationStructureInstanceFlagsNV, instanceIndex: UInt32, partitionIndex: UInt32, accelerationStructure: VkDeviceAddress) {
+    public init(transform: TransformMatrixKHR, explicitAABB: (Float, Float, Float, Float, Float, Float), instanceID: UInt32, instanceMask: UInt32, instanceContributionToHitGroupIndex: UInt32, instanceFlags: PartitionedAccelerationStructureInstanceFlagsNV = [], instanceIndex: UInt32, partitionIndex: UInt32, accelerationStructure: VkDeviceAddress) {
         self.transform = transform
         self.explicitAABB = explicitAABB
         self.instanceID = instanceID
@@ -22301,7 +22301,7 @@ public struct PartitionedAccelerationStructureInstancesInputNV: ChainableBase {
     public let partitionCount: UInt32
     public let maxInstanceInGlobalPartitionCount: UInt32
 
-    public init(flags: BuildAccelerationStructureFlagsKHR, instanceCount: UInt32, maxInstancePerPartitionCount: UInt32, partitionCount: UInt32, maxInstanceInGlobalPartitionCount: UInt32) {
+    public init(flags: BuildAccelerationStructureFlagsKHR = [], instanceCount: UInt32, maxInstancePerPartitionCount: UInt32, partitionCount: UInt32, maxInstanceInGlobalPartitionCount: UInt32) {
         self.flags = flags
         self.instanceCount = instanceCount
         self.maxInstancePerPartitionCount = maxInstancePerPartitionCount
@@ -22404,7 +22404,7 @@ public struct DeviceDiagnosticsConfigCreateInfoNV: ChainableBase, DeviceCreateIn
 
     public let flags: DeviceDiagnosticsConfigFlagsNV
 
-    public init(flags: DeviceDiagnosticsConfigFlagsNV) {
+    public init(flags: DeviceDiagnosticsConfigFlagsNV = []) {
         self.flags = flags
     }
 
@@ -23271,7 +23271,7 @@ public struct FragmentShadingRateAttachmentInfoKHR: ChainableBase, SubpassDescri
     public let fragmentShadingRateAttachment: AttachmentReference2?
     public let shadingRateAttachmentTexelSize: Extent2D
 
-    public init(fragmentShadingRateAttachment: AttachmentReference2?, shadingRateAttachmentTexelSize: Extent2D) {
+    public init(fragmentShadingRateAttachment: AttachmentReference2? = nil, shadingRateAttachmentTexelSize: Extent2D) {
         self.fragmentShadingRateAttachment = fragmentShadingRateAttachment
         self.shadingRateAttachmentTexelSize = shadingRateAttachmentTexelSize
     }
@@ -23725,7 +23725,7 @@ public struct MutableDescriptorTypeListEXT: CStructConvertible {
 
     public let descriptorTypes: Array<DescriptorType>
 
-    public init(descriptorTypes: Array<DescriptorType>) {
+    public init(descriptorTypes: Array<DescriptorType> = []) {
         self.descriptorTypes = descriptorTypes
     }
 
@@ -23748,7 +23748,7 @@ public struct MutableDescriptorTypeCreateInfoEXT: ChainableBase, DescriptorSetLa
 
     public let mutableDescriptorTypeLists: Array<MutableDescriptorTypeListEXT>
 
-    public init(mutableDescriptorTypeLists: Array<MutableDescriptorTypeListEXT>) {
+    public init(mutableDescriptorTypeLists: Array<MutableDescriptorTypeListEXT> = []) {
         self.mutableDescriptorTypeLists = mutableDescriptorTypeLists
     }
 
@@ -23865,7 +23865,7 @@ public struct CustomResolveCreateInfoEXT: ChainableBase, GraphicsPipelineCreateI
     public let depthAttachmentFormat: Format
     public let stencilAttachmentFormat: Format
 
-    public init(customResolve: Bool, colorAttachmentFormats: Array<Format>, depthAttachmentFormat: Format, stencilAttachmentFormat: Format) {
+    public init(customResolve: Bool, colorAttachmentFormats: Array<Format> = [], depthAttachmentFormat: Format, stencilAttachmentFormat: Format) {
         self.customResolve = customResolve
         self.colorAttachmentFormats = colorAttachmentFormats
         self.depthAttachmentFormat = depthAttachmentFormat
@@ -24031,7 +24031,7 @@ public struct GeneratedCommandsMemoryRequirementsInfoEXT: ChainableBase {
     public let maxSequenceCount: UInt32
     public let maxDrawCount: UInt32
 
-    public init(indirectExecutionSet: IndirectExecutionSetEXT?, indirectCommandsLayout: IndirectCommandsLayoutEXT, maxSequenceCount: UInt32, maxDrawCount: UInt32) {
+    public init(indirectExecutionSet: IndirectExecutionSetEXT? = nil, indirectCommandsLayout: IndirectCommandsLayoutEXT, maxSequenceCount: UInt32, maxDrawCount: UInt32) {
         self.indirectExecutionSet = indirectExecutionSet
         self.indirectCommandsLayout = indirectCommandsLayout
         self.maxSequenceCount = maxSequenceCount
@@ -24090,7 +24090,7 @@ public struct IndirectExecutionSetShaderLayoutInfoEXT: ChainableBase {
 
     public let setLayouts: Array<DescriptorSetLayout?>
 
-    public init(setLayouts: Array<DescriptorSetLayout?>) {
+    public init(setLayouts: Array<DescriptorSetLayout?> = []) {
         self.setLayouts = setLayouts
     }
 
@@ -24119,7 +24119,7 @@ public struct IndirectExecutionSetShaderInfoEXT: ChainableBase {
     public let maxShaderCount: UInt32
     public let pushConstantRanges: Array<PushConstantRange>
 
-    public init(initialShaders: Array<ShaderEXT>, setLayoutInfos: Array<IndirectExecutionSetShaderLayoutInfoEXT>?, maxShaderCount: UInt32, pushConstantRanges: Array<PushConstantRange>) {
+    public init(initialShaders: Array<ShaderEXT>, setLayoutInfos: Array<IndirectExecutionSetShaderLayoutInfoEXT>?, maxShaderCount: UInt32, pushConstantRanges: Array<PushConstantRange> = []) {
         self.initialShaders = initialShaders
         self.setLayoutInfos = setLayoutInfos
         self.maxShaderCount = maxShaderCount
@@ -24195,7 +24195,7 @@ public struct GeneratedCommandsInfoEXT: ChainableBase {
     public let sequenceCountAddress: VkDeviceAddress
     public let maxDrawCount: UInt32
 
-    public init(shaderStages: ShaderStageFlags, indirectExecutionSet: IndirectExecutionSetEXT?, indirectCommandsLayout: IndirectCommandsLayoutEXT, indirectAddress: VkDeviceAddress, indirectAddressSize: VkDeviceSize, preprocessAddress: VkDeviceAddress, preprocessSize: VkDeviceSize, maxSequenceCount: UInt32, sequenceCountAddress: VkDeviceAddress, maxDrawCount: UInt32) {
+    public init(shaderStages: ShaderStageFlags, indirectExecutionSet: IndirectExecutionSetEXT? = nil, indirectCommandsLayout: IndirectCommandsLayoutEXT, indirectAddress: VkDeviceAddress, indirectAddressSize: VkDeviceSize, preprocessAddress: VkDeviceAddress, preprocessSize: VkDeviceSize, maxSequenceCount: UInt32, sequenceCountAddress: VkDeviceAddress, maxDrawCount: UInt32) {
         self.shaderStages = shaderStages
         self.indirectExecutionSet = indirectExecutionSet
         self.indirectCommandsLayout = indirectCommandsLayout
@@ -24334,7 +24334,7 @@ public struct IndirectCommandsLayoutCreateInfoEXT: ChainableBase {
     public let pipelineLayout: PipelineLayout?
     public let tokens: Array<IndirectCommandsLayoutTokenEXT>
 
-    public init(flags: IndirectCommandsLayoutUsageFlagsEXT, shaderStages: ShaderStageFlags, indirectStride: UInt32, pipelineLayout: PipelineLayout?, tokens: Array<IndirectCommandsLayoutTokenEXT>) {
+    public init(flags: IndirectCommandsLayoutUsageFlagsEXT = [], shaderStages: ShaderStageFlags, indirectStride: UInt32, pipelineLayout: PipelineLayout? = nil, tokens: Array<IndirectCommandsLayoutTokenEXT>) {
         self.flags = flags
         self.shaderStages = shaderStages
         self.indirectStride = indirectStride
@@ -24613,7 +24613,7 @@ public struct PipelineViewportDepthClampControlCreateInfoEXT: ChainableBase, Pip
     public let depthClampMode: DepthClampModeEXT
     public let depthClampRange: DepthClampRangeEXT?
 
-    public init(depthClampMode: DepthClampModeEXT, depthClampRange: DepthClampRangeEXT?) {
+    public init(depthClampMode: DepthClampModeEXT, depthClampRange: DepthClampRangeEXT? = nil) {
         self.depthClampMode = depthClampMode
         self.depthClampRange = depthClampRange
     }
@@ -24803,7 +24803,7 @@ public struct PipelineColorWriteCreateInfoEXT: ChainableBase, PipelineColorBlend
 
     public let colorWriteEnables: Array<Bool>
 
-    public init(colorWriteEnables: Array<Bool>) {
+    public init(colorWriteEnables: Array<Bool> = []) {
         self.colorWriteEnables = colorWriteEnables
     }
 
@@ -24832,7 +24832,7 @@ public struct MemoryBarrier2: ChainableBase, SubpassDependency2Extension {
     public let dstStageMask: PipelineStageFlags2
     public let dstAccessMask: AccessFlags2
 
-    public init(srcStageMask: PipelineStageFlags2, srcAccessMask: AccessFlags2, dstStageMask: PipelineStageFlags2, dstAccessMask: AccessFlags2) {
+    public init(srcStageMask: PipelineStageFlags2 = [], srcAccessMask: AccessFlags2 = [], dstStageMask: PipelineStageFlags2 = [], dstAccessMask: AccessFlags2 = []) {
         self.srcStageMask = srcStageMask
         self.srcAccessMask = srcAccessMask
         self.dstStageMask = dstStageMask
@@ -24873,7 +24873,7 @@ public struct ImageMemoryBarrier2: ChainableBase {
     public let image: Image
     public let subresourceRange: ImageSubresourceRange
 
-    public init(srcStageMask: PipelineStageFlags2, srcAccessMask: AccessFlags2, dstStageMask: PipelineStageFlags2, dstAccessMask: AccessFlags2, oldLayout: ImageLayout, newLayout: ImageLayout, srcQueueFamilyIndex: UInt32, dstQueueFamilyIndex: UInt32, image: Image, subresourceRange: ImageSubresourceRange) {
+    public init(srcStageMask: PipelineStageFlags2 = [], srcAccessMask: AccessFlags2 = [], dstStageMask: PipelineStageFlags2 = [], dstAccessMask: AccessFlags2 = [], oldLayout: ImageLayout, newLayout: ImageLayout, srcQueueFamilyIndex: UInt32, dstQueueFamilyIndex: UInt32, image: Image, subresourceRange: ImageSubresourceRange) {
         self.srcStageMask = srcStageMask
         self.srcAccessMask = srcAccessMask
         self.dstStageMask = dstStageMask
@@ -24933,7 +24933,7 @@ public struct BufferMemoryBarrier2: ChainableBase {
     public let offset: VkDeviceSize
     public let size: VkDeviceSize
 
-    public init(srcStageMask: PipelineStageFlags2, srcAccessMask: AccessFlags2, dstStageMask: PipelineStageFlags2, dstAccessMask: AccessFlags2, srcQueueFamilyIndex: UInt32, dstQueueFamilyIndex: UInt32, buffer: Buffer, offset: VkDeviceSize, size: VkDeviceSize) {
+    public init(srcStageMask: PipelineStageFlags2 = [], srcAccessMask: AccessFlags2 = [], dstStageMask: PipelineStageFlags2 = [], dstAccessMask: AccessFlags2 = [], srcQueueFamilyIndex: UInt32, dstQueueFamilyIndex: UInt32, buffer: Buffer, offset: VkDeviceSize, size: VkDeviceSize) {
         self.srcStageMask = srcStageMask
         self.srcAccessMask = srcAccessMask
         self.dstStageMask = dstStageMask
@@ -24981,7 +24981,7 @@ public struct MemoryBarrierAccessFlags3KHR: ChainableBase, SubpassDependency2Ext
     public let srcAccessMask3: AccessFlags3KHR
     public let dstAccessMask3: AccessFlags3KHR
 
-    public init(srcAccessMask3: AccessFlags3KHR, dstAccessMask3: AccessFlags3KHR) {
+    public init(srcAccessMask3: AccessFlags3KHR = [], dstAccessMask3: AccessFlags3KHR = []) {
         self.srcAccessMask3 = srcAccessMask3
         self.dstAccessMask3 = dstAccessMask3
     }
@@ -25010,7 +25010,7 @@ public struct DependencyInfo: ChainableBase {
     public let bufferMemoryBarriers: Array<BufferMemoryBarrier2>
     public let imageMemoryBarriers: Array<ImageMemoryBarrier2>
 
-    public init(dependencyFlags: DependencyFlags, memoryBarriers: Array<MemoryBarrier2>, bufferMemoryBarriers: Array<BufferMemoryBarrier2>, imageMemoryBarriers: Array<ImageMemoryBarrier2>) {
+    public init(dependencyFlags: DependencyFlags = [], memoryBarriers: Array<MemoryBarrier2> = [], bufferMemoryBarriers: Array<BufferMemoryBarrier2> = [], imageMemoryBarriers: Array<ImageMemoryBarrier2> = []) {
         self.dependencyFlags = dependencyFlags
         self.memoryBarriers = memoryBarriers
         self.bufferMemoryBarriers = bufferMemoryBarriers
@@ -25054,7 +25054,7 @@ public struct SemaphoreSubmitInfo: ChainableBase {
     public let stageMask: PipelineStageFlags2
     public let deviceIndex: UInt32
 
-    public init(semaphore: Semaphore, value: UInt64, stageMask: PipelineStageFlags2, deviceIndex: UInt32) {
+    public init(semaphore: Semaphore, value: UInt64, stageMask: PipelineStageFlags2 = [], deviceIndex: UInt32) {
         self.semaphore = semaphore
         self.value = value
         self.stageMask = stageMask
@@ -25116,14 +25116,14 @@ public struct SubmitInfo2: ChainableBase {
     public let commandBufferInfos: Array<CommandBufferSubmitInfo>
     public let signalSemaphoreInfos: Array<SemaphoreSubmitInfo>
 
-    public init(flags: SubmitFlags, waitSemaphoreInfos: Array<SemaphoreSubmitInfo>, commandBufferInfos: Array<CommandBufferSubmitInfo>, signalSemaphoreInfos: Array<SemaphoreSubmitInfo>) {
+    public init(flags: SubmitFlags = [], waitSemaphoreInfos: Array<SemaphoreSubmitInfo> = [], commandBufferInfos: Array<CommandBufferSubmitInfo> = [], signalSemaphoreInfos: Array<SemaphoreSubmitInfo> = []) {
         self.flags = flags
         self.waitSemaphoreInfos = waitSemaphoreInfos
         self.commandBufferInfos = commandBufferInfos
         self.signalSemaphoreInfos = signalSemaphoreInfos
     }
 
-    init(cStruct: VkSubmitInfo2, device: Device, commandPool: CommandPool) {
+    init(cStruct: VkSubmitInfo2, commandPool: CommandPool, device: Device) {
         self.flags = SubmitFlags(rawValue: cStruct.flags)
         self.waitSemaphoreInfos = UnsafeBufferPointer(start: cStruct.pWaitSemaphoreInfos, count: Int(cStruct.waitSemaphoreInfoCount)).map{ SemaphoreSubmitInfo(cStruct: $0, device: device) }
         self.commandBufferInfos = UnsafeBufferPointer(start: cStruct.pCommandBufferInfos, count: Int(cStruct.commandBufferInfoCount)).map{ CommandBufferSubmitInfo(cStruct: $0, commandPool: commandPool) }
@@ -25276,7 +25276,7 @@ public struct PhysicalDeviceHostImageCopyProperties: ChainableBase, PhysicalDevi
     public let optimalTilingLayoutUUID: (UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8)
     public let identicalMemoryTypeRequirements: Bool
 
-    public init(copySrcLayoutCount: UInt32, copySrcLayouts: UnsafeMutablePointer<VkImageLayout>?, copyDstLayoutCount: UInt32, copyDstLayouts: UnsafeMutablePointer<VkImageLayout>?, optimalTilingLayoutUUID: (UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8), identicalMemoryTypeRequirements: Bool) {
+    public init(copySrcLayoutCount: UInt32 = 0, copySrcLayouts: UnsafeMutablePointer<VkImageLayout>?, copyDstLayoutCount: UInt32 = 0, copyDstLayouts: UnsafeMutablePointer<VkImageLayout>?, optimalTilingLayoutUUID: (UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8), identicalMemoryTypeRequirements: Bool) {
         self.copySrcLayoutCount = copySrcLayoutCount
         self.copySrcLayouts = copySrcLayouts
         self.copyDstLayoutCount = copyDstLayoutCount
@@ -25415,7 +25415,7 @@ public struct CopyMemoryToImageInfo: ChainableBase {
     public let dstImageLayout: ImageLayout
     public let regions: Array<MemoryToImageCopy>
 
-    public init(flags: HostImageCopyFlags, dstImage: Image, dstImageLayout: ImageLayout, regions: Array<MemoryToImageCopy>) {
+    public init(flags: HostImageCopyFlags = [], dstImage: Image, dstImageLayout: ImageLayout, regions: Array<MemoryToImageCopy>) {
         self.flags = flags
         self.dstImage = dstImage
         self.dstImageLayout = dstImageLayout
@@ -25453,7 +25453,7 @@ public struct CopyImageToMemoryInfo: ChainableBase {
     public let srcImageLayout: ImageLayout
     public let regions: Array<ImageToMemoryCopy>
 
-    public init(flags: HostImageCopyFlags, srcImage: Image, srcImageLayout: ImageLayout, regions: Array<ImageToMemoryCopy>) {
+    public init(flags: HostImageCopyFlags = [], srcImage: Image, srcImageLayout: ImageLayout, regions: Array<ImageToMemoryCopy>) {
         self.flags = flags
         self.srcImage = srcImage
         self.srcImageLayout = srcImageLayout
@@ -25493,7 +25493,7 @@ public struct CopyImageToImageInfo: ChainableBase {
     public let dstImageLayout: ImageLayout
     public let regions: Array<ImageCopy2>
 
-    public init(flags: HostImageCopyFlags, srcImage: Image, srcImageLayout: ImageLayout, dstImage: Image, dstImageLayout: ImageLayout, regions: Array<ImageCopy2>) {
+    public init(flags: HostImageCopyFlags = [], srcImage: Image, srcImageLayout: ImageLayout, dstImage: Image, dstImageLayout: ImageLayout, regions: Array<ImageCopy2>) {
         self.flags = flags
         self.srcImage = srcImage
         self.srcImageLayout = srcImageLayout
@@ -25845,7 +25845,7 @@ public struct VideoProfileInfoKHR: ChainableBase, QueryPoolCreateInfoExtension {
     public let lumaBitDepth: VideoComponentBitDepthFlagsKHR
     public let chromaBitDepth: VideoComponentBitDepthFlagsKHR
 
-    public init(videoCodecOperation: VideoCodecOperationFlagsKHR, chromaSubsampling: VideoChromaSubsamplingFlagsKHR, lumaBitDepth: VideoComponentBitDepthFlagsKHR, chromaBitDepth: VideoComponentBitDepthFlagsKHR) {
+    public init(videoCodecOperation: VideoCodecOperationFlagsKHR, chromaSubsampling: VideoChromaSubsamplingFlagsKHR, lumaBitDepth: VideoComponentBitDepthFlagsKHR, chromaBitDepth: VideoComponentBitDepthFlagsKHR = []) {
         self.videoCodecOperation = videoCodecOperation
         self.chromaSubsampling = chromaSubsampling
         self.lumaBitDepth = lumaBitDepth
@@ -25877,7 +25877,7 @@ public struct VideoProfileListInfoKHR: ChainableBase, PhysicalDeviceImageFormatI
 
     public let profiles: Array<VideoProfileInfoKHR>
 
-    public init(profiles: Array<VideoProfileInfoKHR>) {
+    public init(profiles: Array<VideoProfileInfoKHR> = []) {
         self.profiles = profiles
     }
 
@@ -26258,7 +26258,7 @@ public struct VideoReferenceSlotInfoKHR: ChainableBase {
     public let slotIndex: Int32
     public let pictureResource: VideoPictureResourceInfoKHR?
 
-    public init(slotIndex: Int32, pictureResource: VideoPictureResourceInfoKHR?) {
+    public init(slotIndex: Int32, pictureResource: VideoPictureResourceInfoKHR? = nil) {
         self.slotIndex = slotIndex
         self.pictureResource = pictureResource
     }
@@ -26305,7 +26305,7 @@ public struct VideoDecodeUsageInfoKHR: ChainableBase, VideoProfileInfoKHRExtensi
 
     public let videoUsageHints: VideoDecodeUsageFlagsKHR
 
-    public init(videoUsageHints: VideoDecodeUsageFlagsKHR) {
+    public init(videoUsageHints: VideoDecodeUsageFlagsKHR = []) {
         self.videoUsageHints = videoUsageHints
     }
 
@@ -26334,7 +26334,7 @@ public struct VideoDecodeInfoKHR: ChainableBase {
     public let setupReferenceSlot: VideoReferenceSlotInfoKHR?
     public let referenceSlots: Array<VideoReferenceSlotInfoKHR>
 
-    public init(flags: VideoDecodeFlagsKHR, srcBuffer: Buffer, srcBufferOffset: VkDeviceSize, srcBufferRange: VkDeviceSize, dstPictureResource: VideoPictureResourceInfoKHR, setupReferenceSlot: VideoReferenceSlotInfoKHR?, referenceSlots: Array<VideoReferenceSlotInfoKHR>) {
+    public init(flags: VideoDecodeFlagsKHR = [], srcBuffer: Buffer, srcBufferOffset: VkDeviceSize, srcBufferRange: VkDeviceSize, dstPictureResource: VideoPictureResourceInfoKHR, setupReferenceSlot: VideoReferenceSlotInfoKHR? = nil, referenceSlots: Array<VideoReferenceSlotInfoKHR> = []) {
         self.flags = flags
         self.srcBuffer = srcBuffer
         self.srcBufferOffset = srcBufferOffset
@@ -26430,7 +26430,7 @@ public struct VideoInlineQueryInfoKHR: ChainableBase, VideoDecodeInfoKHRExtensio
     public let firstQuery: UInt32
     public let queryCount: UInt32
 
-    public init(queryPool: QueryPool?, firstQuery: UInt32, queryCount: UInt32) {
+    public init(queryPool: QueryPool? = nil, firstQuery: UInt32, queryCount: UInt32) {
         self.queryPool = queryPool
         self.firstQuery = firstQuery
         self.queryCount = queryCount
@@ -26511,7 +26511,7 @@ public struct VideoDecodeH264SessionParametersAddInfoKHR: ChainableBase, VideoSe
     public let stdSPSs: Array<StdVideoH264SequenceParameterSet>
     public let stdPPSs: Array<StdVideoH264PictureParameterSet>
 
-    public init(stdSPSs: Array<StdVideoH264SequenceParameterSet>, stdPPSs: Array<StdVideoH264PictureParameterSet>) {
+    public init(stdSPSs: Array<StdVideoH264SequenceParameterSet> = [], stdPPSs: Array<StdVideoH264PictureParameterSet> = []) {
         self.stdSPSs = stdSPSs
         self.stdPPSs = stdPPSs
     }
@@ -26545,7 +26545,7 @@ public struct VideoDecodeH264SessionParametersCreateInfoKHR: ChainableBase, Vide
     public let maxStdPPSCount: UInt32
     public let parametersAddInfo: VideoDecodeH264SessionParametersAddInfoKHR?
 
-    public init(maxStdSPSCount: UInt32, maxStdPPSCount: UInt32, parametersAddInfo: VideoDecodeH264SessionParametersAddInfoKHR?) {
+    public init(maxStdSPSCount: UInt32, maxStdPPSCount: UInt32, parametersAddInfo: VideoDecodeH264SessionParametersAddInfoKHR? = nil) {
         self.maxStdSPSCount = maxStdSPSCount
         self.maxStdPPSCount = maxStdPPSCount
         self.parametersAddInfo = parametersAddInfo
@@ -26577,7 +26577,7 @@ public struct VideoDecodeH264InlineSessionParametersInfoKHR: ChainableBase, Vide
     public let stdSPS: UnsafePointer<StdVideoH264SequenceParameterSet>?
     public let stdPPS: UnsafePointer<StdVideoH264PictureParameterSet>?
 
-    public init(stdSPS: UnsafePointer<StdVideoH264SequenceParameterSet>?, stdPPS: UnsafePointer<StdVideoH264PictureParameterSet>?) {
+    public init(stdSPS: UnsafePointer<StdVideoH264SequenceParameterSet>? = nil, stdPPS: UnsafePointer<StdVideoH264PictureParameterSet>? = nil) {
         self.stdSPS = stdSPS
         self.stdPPS = stdPPS
     }
@@ -26700,7 +26700,7 @@ public struct VideoDecodeH265SessionParametersAddInfoKHR: ChainableBase, VideoSe
     public let stdSPSs: Array<StdVideoH265SequenceParameterSet>
     public let stdPPSs: Array<StdVideoH265PictureParameterSet>
 
-    public init(stdVPSs: Array<StdVideoH265VideoParameterSet>, stdSPSs: Array<StdVideoH265SequenceParameterSet>, stdPPSs: Array<StdVideoH265PictureParameterSet>) {
+    public init(stdVPSs: Array<StdVideoH265VideoParameterSet> = [], stdSPSs: Array<StdVideoH265SequenceParameterSet> = [], stdPPSs: Array<StdVideoH265PictureParameterSet> = []) {
         self.stdVPSs = stdVPSs
         self.stdSPSs = stdSPSs
         self.stdPPSs = stdPPSs
@@ -26741,7 +26741,7 @@ public struct VideoDecodeH265SessionParametersCreateInfoKHR: ChainableBase, Vide
     public let maxStdPPSCount: UInt32
     public let parametersAddInfo: VideoDecodeH265SessionParametersAddInfoKHR?
 
-    public init(maxStdVPSCount: UInt32, maxStdSPSCount: UInt32, maxStdPPSCount: UInt32, parametersAddInfo: VideoDecodeH265SessionParametersAddInfoKHR?) {
+    public init(maxStdVPSCount: UInt32, maxStdSPSCount: UInt32, maxStdPPSCount: UInt32, parametersAddInfo: VideoDecodeH265SessionParametersAddInfoKHR? = nil) {
         self.maxStdVPSCount = maxStdVPSCount
         self.maxStdSPSCount = maxStdSPSCount
         self.maxStdPPSCount = maxStdPPSCount
@@ -26777,7 +26777,7 @@ public struct VideoDecodeH265InlineSessionParametersInfoKHR: ChainableBase, Vide
     public let stdSPS: UnsafePointer<StdVideoH265SequenceParameterSet>?
     public let stdPPS: UnsafePointer<StdVideoH265PictureParameterSet>?
 
-    public init(stdVPS: UnsafePointer<StdVideoH265VideoParameterSet>?, stdSPS: UnsafePointer<StdVideoH265SequenceParameterSet>?, stdPPS: UnsafePointer<StdVideoH265PictureParameterSet>?) {
+    public init(stdVPS: UnsafePointer<StdVideoH265VideoParameterSet>? = nil, stdSPS: UnsafePointer<StdVideoH265SequenceParameterSet>? = nil, stdPPS: UnsafePointer<StdVideoH265PictureParameterSet>? = nil) {
         self.stdVPS = stdVPS
         self.stdSPS = stdSPS
         self.stdPPS = stdPPS
@@ -27032,7 +27032,7 @@ public struct VideoDecodeAV1InlineSessionParametersInfoKHR: ChainableBase, Video
 
     public let stdSequenceHeader: UnsafePointer<StdVideoAV1SequenceHeader>?
 
-    public init(stdSequenceHeader: UnsafePointer<StdVideoAV1SequenceHeader>?) {
+    public init(stdSequenceHeader: UnsafePointer<StdVideoAV1SequenceHeader>? = nil) {
         self.stdSequenceHeader = stdSequenceHeader
     }
 
@@ -27130,7 +27130,7 @@ public struct VideoSessionCreateInfoKHR: ChainableBase {
     public let maxActiveReferencePictures: UInt32
     public let stdHeaderVersion: ExtensionProperties
 
-    public init(queueFamilyIndex: UInt32, flags: VideoSessionCreateFlagsKHR, videoProfile: VideoProfileInfoKHR, pictureFormat: Format, maxCodedExtent: Extent2D, referencePictureFormat: Format, maxDpbSlots: UInt32, maxActiveReferencePictures: UInt32, stdHeaderVersion: ExtensionProperties) {
+    public init(queueFamilyIndex: UInt32, flags: VideoSessionCreateFlagsKHR = [], videoProfile: VideoProfileInfoKHR, pictureFormat: Format, maxCodedExtent: Extent2D, referencePictureFormat: Format, maxDpbSlots: UInt32, maxActiveReferencePictures: UInt32, stdHeaderVersion: ExtensionProperties) {
         self.queueFamilyIndex = queueFamilyIndex
         self.flags = flags
         self.videoProfile = videoProfile
@@ -27185,7 +27185,7 @@ public struct VideoSessionParametersCreateInfoKHR: ChainableBase {
     public let videoSessionParametersTemplate: VideoSessionParametersKHR?
     public let videoSession: VideoSessionKHR
 
-    public init(flags: VideoSessionParametersCreateFlagsKHR, videoSessionParametersTemplate: VideoSessionParametersKHR?, videoSession: VideoSessionKHR) {
+    public init(flags: VideoSessionParametersCreateFlagsKHR = [], videoSessionParametersTemplate: VideoSessionParametersKHR? = nil, videoSession: VideoSessionKHR) {
         self.flags = flags
         self.videoSessionParametersTemplate = videoSessionParametersTemplate
         self.videoSession = videoSession
@@ -27282,7 +27282,7 @@ public struct VideoBeginCodingInfoKHR: ChainableBase {
     public let videoSessionParameters: VideoSessionParametersKHR?
     public let referenceSlots: Array<VideoReferenceSlotInfoKHR>
 
-    public init(flags: VideoBeginCodingFlagsKHR, videoSession: VideoSessionKHR, videoSessionParameters: VideoSessionParametersKHR?, referenceSlots: Array<VideoReferenceSlotInfoKHR>) {
+    public init(flags: VideoBeginCodingFlagsKHR = [], videoSession: VideoSessionKHR, videoSessionParameters: VideoSessionParametersKHR? = nil, referenceSlots: Array<VideoReferenceSlotInfoKHR> = []) {
         self.flags = flags
         self.videoSession = videoSession
         self.videoSessionParameters = videoSessionParameters
@@ -27317,7 +27317,7 @@ public struct VideoEndCodingInfoKHR: ChainableBase {
 
     public let flags: VideoEndCodingFlagsKHR
 
-    public init(flags: VideoEndCodingFlagsKHR) {
+    public init(flags: VideoEndCodingFlagsKHR = []) {
         self.flags = flags
     }
 
@@ -27365,7 +27365,7 @@ public struct VideoEncodeUsageInfoKHR: ChainableBase, VideoProfileInfoKHRExtensi
     public let videoContentHints: VideoEncodeContentFlagsKHR
     public let tuningMode: VideoEncodeTuningModeKHR
 
-    public init(videoUsageHints: VideoEncodeUsageFlagsKHR, videoContentHints: VideoEncodeContentFlagsKHR, tuningMode: VideoEncodeTuningModeKHR) {
+    public init(videoUsageHints: VideoEncodeUsageFlagsKHR = [], videoContentHints: VideoEncodeContentFlagsKHR = [], tuningMode: VideoEncodeTuningModeKHR = .init(rawValue: 0)!) {
         self.videoUsageHints = videoUsageHints
         self.videoContentHints = videoContentHints
         self.tuningMode = tuningMode
@@ -27401,7 +27401,7 @@ public struct VideoEncodeInfoKHR: ChainableBase {
     public let referenceSlots: Array<VideoReferenceSlotInfoKHR>
     public let precedingExternallyEncodedBytes: UInt32
 
-    public init(flags: VideoEncodeFlagsKHR, dstBuffer: Buffer, dstBufferOffset: VkDeviceSize, dstBufferRange: VkDeviceSize, srcPictureResource: VideoPictureResourceInfoKHR, setupReferenceSlot: VideoReferenceSlotInfoKHR?, referenceSlots: Array<VideoReferenceSlotInfoKHR>, precedingExternallyEncodedBytes: UInt32) {
+    public init(flags: VideoEncodeFlagsKHR = [], dstBuffer: Buffer, dstBufferOffset: VkDeviceSize, dstBufferRange: VkDeviceSize, srcPictureResource: VideoPictureResourceInfoKHR, setupReferenceSlot: VideoReferenceSlotInfoKHR? = nil, referenceSlots: Array<VideoReferenceSlotInfoKHR> = [], precedingExternallyEncodedBytes: UInt32) {
         self.flags = flags
         self.dstBuffer = dstBuffer
         self.dstBufferOffset = dstBufferOffset
@@ -27453,7 +27453,7 @@ public struct VideoEncodeQuantizationMapInfoKHR: ChainableBase, VideoEncodeInfoK
     public let quantizationMap: ImageView?
     public let quantizationMapExtent: Extent2D
 
-    public init(quantizationMap: ImageView?, quantizationMapExtent: Extent2D) {
+    public init(quantizationMap: ImageView? = nil, quantizationMapExtent: Extent2D) {
         self.quantizationMap = quantizationMap
         self.quantizationMapExtent = quantizationMapExtent
     }
@@ -27665,7 +27665,7 @@ public struct VideoEncodeRateControlInfoKHR: ChainableBase, VideoCodingControlIn
     public let virtualBufferSizeInMs: UInt32
     public let initialVirtualBufferSizeInMs: UInt32
 
-    public init(flags: VideoEncodeRateControlFlagsKHR, rateControlMode: VideoEncodeRateControlModeFlagsKHR, layers: Array<VideoEncodeRateControlLayerInfoKHR>, virtualBufferSizeInMs: UInt32, initialVirtualBufferSizeInMs: UInt32) {
+    public init(flags: VideoEncodeRateControlFlagsKHR = [], rateControlMode: VideoEncodeRateControlModeFlagsKHR, layers: Array<VideoEncodeRateControlLayerInfoKHR> = [], virtualBufferSizeInMs: UInt32, initialVirtualBufferSizeInMs: UInt32) {
         self.flags = flags
         self.rateControlMode = rateControlMode
         self.layers = layers
@@ -27898,7 +27898,7 @@ public struct VideoEncodeH264SessionParametersAddInfoKHR: ChainableBase, VideoSe
     public let stdSPSs: Array<StdVideoH264SequenceParameterSet>?
     public let stdPPSs: Array<StdVideoH264PictureParameterSet>?
 
-    public init(stdSPSs: Array<StdVideoH264SequenceParameterSet>?, stdPPSs: Array<StdVideoH264PictureParameterSet>?) {
+    public init(stdSPSs: Array<StdVideoH264SequenceParameterSet>? = [], stdPPSs: Array<StdVideoH264PictureParameterSet>? = []) {
         self.stdSPSs = stdSPSs
         self.stdPPSs = stdPPSs
     }
@@ -27932,7 +27932,7 @@ public struct VideoEncodeH264SessionParametersCreateInfoKHR: ChainableBase, Vide
     public let maxStdPPSCount: UInt32
     public let parametersAddInfo: VideoEncodeH264SessionParametersAddInfoKHR?
 
-    public init(maxStdSPSCount: UInt32, maxStdPPSCount: UInt32, parametersAddInfo: VideoEncodeH264SessionParametersAddInfoKHR?) {
+    public init(maxStdSPSCount: UInt32, maxStdPPSCount: UInt32, parametersAddInfo: VideoEncodeH264SessionParametersAddInfoKHR? = nil) {
         self.maxStdSPSCount = maxStdSPSCount
         self.maxStdPPSCount = maxStdPPSCount
         self.parametersAddInfo = parametersAddInfo
@@ -28131,7 +28131,7 @@ public struct VideoEncodeH264RateControlInfoKHR: ChainableBase, VideoCodingContr
     public let consecutiveBFrameCount: UInt32
     public let temporalLayerCount: UInt32
 
-    public init(flags: VideoEncodeH264RateControlFlagsKHR, gopFrameCount: UInt32, idrPeriod: UInt32, consecutiveBFrameCount: UInt32, temporalLayerCount: UInt32) {
+    public init(flags: VideoEncodeH264RateControlFlagsKHR = [], gopFrameCount: UInt32, idrPeriod: UInt32, consecutiveBFrameCount: UInt32, temporalLayerCount: UInt32) {
         self.flags = flags
         self.gopFrameCount = gopFrameCount
         self.idrPeriod = idrPeriod
@@ -28443,7 +28443,7 @@ public struct VideoEncodeH265SessionParametersAddInfoKHR: ChainableBase, VideoSe
     public let stdSPSs: Array<StdVideoH265SequenceParameterSet>?
     public let stdPPSs: Array<StdVideoH265PictureParameterSet>?
 
-    public init(stdVPSs: Array<StdVideoH265VideoParameterSet>?, stdSPSs: Array<StdVideoH265SequenceParameterSet>?, stdPPSs: Array<StdVideoH265PictureParameterSet>?) {
+    public init(stdVPSs: Array<StdVideoH265VideoParameterSet>? = [], stdSPSs: Array<StdVideoH265SequenceParameterSet>? = [], stdPPSs: Array<StdVideoH265PictureParameterSet>? = []) {
         self.stdVPSs = stdVPSs
         self.stdSPSs = stdSPSs
         self.stdPPSs = stdPPSs
@@ -28484,7 +28484,7 @@ public struct VideoEncodeH265SessionParametersCreateInfoKHR: ChainableBase, Vide
     public let maxStdPPSCount: UInt32
     public let parametersAddInfo: VideoEncodeH265SessionParametersAddInfoKHR?
 
-    public init(maxStdVPSCount: UInt32, maxStdSPSCount: UInt32, maxStdPPSCount: UInt32, parametersAddInfo: VideoEncodeH265SessionParametersAddInfoKHR?) {
+    public init(maxStdVPSCount: UInt32, maxStdSPSCount: UInt32, maxStdPPSCount: UInt32, parametersAddInfo: VideoEncodeH265SessionParametersAddInfoKHR? = nil) {
         self.maxStdVPSCount = maxStdVPSCount
         self.maxStdSPSCount = maxStdSPSCount
         self.maxStdPPSCount = maxStdPPSCount
@@ -28647,7 +28647,7 @@ public struct VideoEncodeH265RateControlInfoKHR: ChainableBase, VideoCodingContr
     public let consecutiveBFrameCount: UInt32
     public let subLayerCount: UInt32
 
-    public init(flags: VideoEncodeH265RateControlFlagsKHR, gopFrameCount: UInt32, idrPeriod: UInt32, consecutiveBFrameCount: UInt32, subLayerCount: UInt32) {
+    public init(flags: VideoEncodeH265RateControlFlagsKHR = [], gopFrameCount: UInt32, idrPeriod: UInt32, consecutiveBFrameCount: UInt32, subLayerCount: UInt32) {
         self.flags = flags
         self.gopFrameCount = gopFrameCount
         self.idrPeriod = idrPeriod
@@ -29079,7 +29079,7 @@ public struct VideoEncodeAV1SessionParametersCreateInfoKHR: ChainableBase, Video
     public let stdDecoderModelInfo: UnsafePointer<StdVideoEncodeAV1DecoderModelInfo>?
     public let stdOperatingPoints: Array<StdVideoEncodeAV1OperatingPointInfo>?
 
-    public init(stdSequenceHeader: UnsafePointer<StdVideoAV1SequenceHeader>, stdDecoderModelInfo: UnsafePointer<StdVideoEncodeAV1DecoderModelInfo>?, stdOperatingPoints: Array<StdVideoEncodeAV1OperatingPointInfo>?) {
+    public init(stdSequenceHeader: UnsafePointer<StdVideoAV1SequenceHeader>, stdDecoderModelInfo: UnsafePointer<StdVideoEncodeAV1DecoderModelInfo>? = nil, stdOperatingPoints: Array<StdVideoEncodeAV1OperatingPointInfo>? = []) {
         self.stdSequenceHeader = stdSequenceHeader
         self.stdDecoderModelInfo = stdDecoderModelInfo
         self.stdOperatingPoints = stdOperatingPoints
@@ -29208,7 +29208,7 @@ public struct VideoEncodeAV1RateControlInfoKHR: ChainableBase, VideoCodingContro
     public let consecutiveBipredictiveFrameCount: UInt32
     public let temporalLayerCount: UInt32
 
-    public init(flags: VideoEncodeAV1RateControlFlagsKHR, gopFrameCount: UInt32, keyFramePeriod: UInt32, consecutiveBipredictiveFrameCount: UInt32, temporalLayerCount: UInt32) {
+    public init(flags: VideoEncodeAV1RateControlFlagsKHR = [], gopFrameCount: UInt32, keyFramePeriod: UInt32, consecutiveBipredictiveFrameCount: UInt32, temporalLayerCount: UInt32) {
         self.flags = flags
         self.gopFrameCount = gopFrameCount
         self.keyFramePeriod = keyFramePeriod
@@ -29634,7 +29634,7 @@ public struct CuModuleCreateInfoNVX: ChainableBase {
     public let dataSize: Int
     public let data: UnsafeRawPointer
 
-    public init(dataSize: Int, data: UnsafeRawPointer) {
+    public init(dataSize: Int = 0, data: UnsafeRawPointer) {
         self.dataSize = dataSize
         self.data = data
     }
@@ -29723,7 +29723,7 @@ public struct CuLaunchInfoNVX: ChainableBase {
     public let extraCount: Int
     public let extras: UnsafePointer<UnsafeRawPointer?>
 
-    public init(function: CuFunctionNVX, gridDimX: UInt32, gridDimY: UInt32, gridDimZ: UInt32, blockDimX: UInt32, blockDimY: UInt32, blockDimZ: UInt32, sharedMemBytes: UInt32, paramCount: Int, arams: UnsafePointer<UnsafeRawPointer?>, extraCount: Int, extras: UnsafePointer<UnsafeRawPointer?>) {
+    public init(function: CuFunctionNVX, gridDimX: UInt32, gridDimY: UInt32, gridDimZ: UInt32, blockDimX: UInt32, blockDimY: UInt32, blockDimZ: UInt32, sharedMemBytes: UInt32, paramCount: Int = 0, arams: UnsafePointer<UnsafeRawPointer?>, extraCount: Int = 0, extras: UnsafePointer<UnsafeRawPointer?>) {
         self.function = function
         self.gridDimX = gridDimX
         self.gridDimY = gridDimY
@@ -29980,7 +29980,7 @@ public struct DescriptorBufferBindingInfoEXT: ChainableBase {
     public let address: VkDeviceAddress
     public let usage: BufferUsageFlags
 
-    public init(address: VkDeviceAddress, usage: BufferUsageFlags) {
+    public init(address: VkDeviceAddress, usage: BufferUsageFlags = []) {
         self.address = address
         self.usage = usage
     }
@@ -30149,7 +30149,7 @@ public struct AccelerationStructureCaptureDescriptorDataInfoEXT: ChainableBase {
     public let accelerationStructure: AccelerationStructureKHR?
     public let accelerationStructureNV: AccelerationStructureNV?
 
-    public init(accelerationStructure: AccelerationStructureKHR?, accelerationStructureNV: AccelerationStructureNV?) {
+    public init(accelerationStructure: AccelerationStructureKHR? = nil, accelerationStructureNV: AccelerationStructureNV? = nil) {
         self.accelerationStructure = accelerationStructure
         self.accelerationStructureNV = accelerationStructureNV
     }
@@ -30535,7 +30535,7 @@ public struct AccelerationStructureMotionInfoNV: ChainableBase, AccelerationStru
     public let maxInstances: UInt32
     public let flags: AccelerationStructureMotionInfoFlagsNV
 
-    public init(maxInstances: UInt32, flags: AccelerationStructureMotionInfoFlagsNV) {
+    public init(maxInstances: UInt32, flags: AccelerationStructureMotionInfoFlagsNV = []) {
         self.maxInstances = maxInstances
         self.flags = flags
     }
@@ -30647,7 +30647,7 @@ public struct AccelerationStructureSRTMotionInstanceNV: CStructConvertible {
     public let flags: GeometryInstanceFlagsKHR
     public let accelerationStructureReference: UInt64
 
-    public init(transformT0: SRTDataNV, transformT1: SRTDataNV, instanceCustomIndex: UInt32, mask: UInt32, instanceShaderBindingTableRecordOffset: UInt32, flags: GeometryInstanceFlagsKHR, accelerationStructureReference: UInt64) {
+    public init(transformT0: SRTDataNV, transformT1: SRTDataNV, instanceCustomIndex: UInt32, mask: UInt32, instanceShaderBindingTableRecordOffset: UInt32, flags: GeometryInstanceFlagsKHR = [], accelerationStructureReference: UInt64) {
         self.transformT0 = transformT0
         self.transformT1 = transformT1
         self.instanceCustomIndex = instanceCustomIndex
@@ -30695,7 +30695,7 @@ public struct AccelerationStructureMatrixMotionInstanceNV: CStructConvertible {
     public let flags: GeometryInstanceFlagsKHR
     public let accelerationStructureReference: UInt64
 
-    public init(transformT0: TransformMatrixKHR, transformT1: TransformMatrixKHR, instanceCustomIndex: UInt32, mask: UInt32, instanceShaderBindingTableRecordOffset: UInt32, flags: GeometryInstanceFlagsKHR, accelerationStructureReference: UInt64) {
+    public init(transformT0: TransformMatrixKHR, transformT1: TransformMatrixKHR, instanceCustomIndex: UInt32, mask: UInt32, instanceShaderBindingTableRecordOffset: UInt32, flags: GeometryInstanceFlagsKHR = [], accelerationStructureReference: UInt64) {
         self.transformT0 = transformT0
         self.transformT1 = transformT1
         self.instanceCustomIndex = instanceCustomIndex
@@ -30739,7 +30739,7 @@ public struct AccelerationStructureMotionInstanceNV: CStructConvertible {
     public let flags: AccelerationStructureMotionInstanceFlagsNV
     public let data: VkAccelerationStructureMotionInstanceDataNV
 
-    public init(type: AccelerationStructureMotionInstanceTypeNV, flags: AccelerationStructureMotionInstanceFlagsNV, data: VkAccelerationStructureMotionInstanceDataNV) {
+    public init(type: AccelerationStructureMotionInstanceTypeNV, flags: AccelerationStructureMotionInstanceFlagsNV = [], data: VkAccelerationStructureMotionInstanceDataNV) {
         self.type = type
         self.flags = flags
         self.data = data
@@ -31028,7 +31028,7 @@ public struct BufferConstraintsInfoFUCHSIA: ChainableBase {
     public let requiredFormatFeatures: FormatFeatureFlags
     public let bufferCollectionConstraints: BufferCollectionConstraintsInfoFUCHSIA
 
-    public init(createInfo: BufferCreateInfo, requiredFormatFeatures: FormatFeatureFlags, bufferCollectionConstraints: BufferCollectionConstraintsInfoFUCHSIA) {
+    public init(createInfo: BufferCreateInfo, requiredFormatFeatures: FormatFeatureFlags = [], bufferCollectionConstraints: BufferCollectionConstraintsInfoFUCHSIA) {
         self.createInfo = createInfo
         self.requiredFormatFeatures = requiredFormatFeatures
         self.bufferCollectionConstraints = bufferCollectionConstraints
@@ -31067,7 +31067,7 @@ public struct ImageFormatConstraintsInfoFUCHSIA: ChainableBase {
     public let sysmemPixelFormat: UInt64
     public let colorSpaces: Array<SysmemColorSpaceFUCHSIA>
 
-    public init(imageCreateInfo: ImageCreateInfo, requiredFormatFeatures: FormatFeatureFlags, flags: ImageFormatConstraintsFlagsFUCHSIA, sysmemPixelFormat: UInt64, colorSpaces: Array<SysmemColorSpaceFUCHSIA>) {
+    public init(imageCreateInfo: ImageCreateInfo, requiredFormatFeatures: FormatFeatureFlags, flags: ImageFormatConstraintsFlagsFUCHSIA = [], sysmemPixelFormat: UInt64 = 0, colorSpaces: Array<SysmemColorSpaceFUCHSIA>) {
         self.imageCreateInfo = imageCreateInfo
         self.requiredFormatFeatures = requiredFormatFeatures
         self.flags = flags
@@ -31111,7 +31111,7 @@ public struct ImageConstraintsInfoFUCHSIA: ChainableBase {
     public let bufferCollectionConstraints: BufferCollectionConstraintsInfoFUCHSIA
     public let flags: ImageConstraintsInfoFlagsFUCHSIA
 
-    public init(formatConstraints: Array<ImageFormatConstraintsInfoFUCHSIA>, bufferCollectionConstraints: BufferCollectionConstraintsInfoFUCHSIA, flags: ImageConstraintsInfoFlagsFUCHSIA) {
+    public init(formatConstraints: Array<ImageFormatConstraintsInfoFUCHSIA>, bufferCollectionConstraints: BufferCollectionConstraintsInfoFUCHSIA, flags: ImageConstraintsInfoFlagsFUCHSIA = []) {
         self.formatConstraints = formatConstraints
         self.bufferCollectionConstraints = bufferCollectionConstraints
         self.flags = flags
@@ -31218,7 +31218,7 @@ public struct CudaLaunchInfoNV: ChainableBase {
     public let extraCount: Int
     public let extras: UnsafePointer<UnsafeRawPointer?>
 
-    public init(function: CudaFunctionNV, gridDimX: UInt32, gridDimY: UInt32, gridDimZ: UInt32, blockDimX: UInt32, blockDimY: UInt32, blockDimZ: UInt32, sharedMemBytes: UInt32, paramCount: Int, arams: UnsafePointer<UnsafeRawPointer?>, extraCount: Int, extras: UnsafePointer<UnsafeRawPointer?>) {
+    public init(function: CudaFunctionNV, gridDimX: UInt32, gridDimY: UInt32, gridDimZ: UInt32, blockDimX: UInt32, blockDimY: UInt32, blockDimZ: UInt32, sharedMemBytes: UInt32, paramCount: Int = 0, arams: UnsafePointer<UnsafeRawPointer?>, extraCount: Int = 0, extras: UnsafePointer<UnsafeRawPointer?>) {
         self.function = function
         self.gridDimX = gridDimX
         self.gridDimY = gridDimY
@@ -31414,7 +31414,7 @@ public struct PipelineRenderingCreateInfo: ChainableBase, GraphicsPipelineCreate
     public let depthAttachmentFormat: Format
     public let stencilAttachmentFormat: Format
 
-    public init(viewMask: UInt32, colorAttachmentFormats: Array<Format>, depthAttachmentFormat: Format, stencilAttachmentFormat: Format) {
+    public init(viewMask: UInt32, colorAttachmentFormats: Array<Format> = [], depthAttachmentFormat: Format, stencilAttachmentFormat: Format) {
         self.viewMask = viewMask
         self.colorAttachmentFormats = colorAttachmentFormats
         self.depthAttachmentFormat = depthAttachmentFormat
@@ -31456,7 +31456,7 @@ public struct RenderingAttachmentInfo: ChainableBase {
     public let storeOp: AttachmentStoreOp
     public let clearValue: VkClearValue
 
-    public init(imageView: ImageView?, imageLayout: ImageLayout, resolveMode: ResolveModeFlags, resolveImageView: ImageView?, resolveImageLayout: ImageLayout, loadOp: AttachmentLoadOp, storeOp: AttachmentStoreOp, clearValue: VkClearValue) {
+    public init(imageView: ImageView? = nil, imageLayout: ImageLayout, resolveMode: ResolveModeFlags, resolveImageView: ImageView? = nil, resolveImageLayout: ImageLayout, loadOp: AttachmentLoadOp, storeOp: AttachmentStoreOp, clearValue: VkClearValue) {
         self.imageView = imageView
         self.imageLayout = imageLayout
         self.resolveMode = resolveMode
@@ -31506,7 +31506,7 @@ public struct RenderingInfo: ChainableBase {
     public let depthAttachment: RenderingAttachmentInfo?
     public let stencilAttachment: RenderingAttachmentInfo?
 
-    public init(flags: RenderingFlags, renderArea: Rect2D, layerCount: UInt32, viewMask: UInt32, colorAttachments: Array<RenderingAttachmentInfo>, depthAttachment: RenderingAttachmentInfo?, stencilAttachment: RenderingAttachmentInfo?) {
+    public init(flags: RenderingFlags = [], renderArea: Rect2D, layerCount: UInt32, viewMask: UInt32, colorAttachments: Array<RenderingAttachmentInfo> = [], depthAttachment: RenderingAttachmentInfo? = nil, stencilAttachment: RenderingAttachmentInfo? = nil) {
         self.flags = flags
         self.renderArea = renderArea
         self.layerCount = layerCount
@@ -31577,7 +31577,7 @@ public struct RenderingFragmentShadingRateAttachmentInfoKHR: ChainableBase, Rend
     public let imageLayout: ImageLayout
     public let shadingRateAttachmentTexelSize: Extent2D
 
-    public init(imageView: ImageView?, imageLayout: ImageLayout, shadingRateAttachmentTexelSize: Extent2D) {
+    public init(imageView: ImageView? = nil, imageLayout: ImageLayout, shadingRateAttachmentTexelSize: Extent2D) {
         self.imageView = imageView
         self.imageLayout = imageLayout
         self.shadingRateAttachmentTexelSize = shadingRateAttachmentTexelSize
@@ -31663,7 +31663,7 @@ public struct CommandBufferInheritanceRenderingInfo: ChainableBase, CommandBuffe
     public let stencilAttachmentFormat: Format
     public let rasterizationSamples: SampleCountFlags
 
-    public init(flags: RenderingFlags, viewMask: UInt32, colorAttachmentFormats: Array<Format>, depthAttachmentFormat: Format, stencilAttachmentFormat: Format, rasterizationSamples: SampleCountFlags) {
+    public init(flags: RenderingFlags = [], viewMask: UInt32, colorAttachmentFormats: Array<Format> = [], depthAttachmentFormat: Format, stencilAttachmentFormat: Format, rasterizationSamples: SampleCountFlags) {
         self.flags = flags
         self.viewMask = viewMask
         self.colorAttachmentFormats = colorAttachmentFormats
@@ -31705,7 +31705,7 @@ public struct AttachmentSampleCountInfoAMD: ChainableBase, CommandBufferInherita
     public let colorAttachmentSamples: Array<SampleCountFlags>
     public let depthStencilAttachmentSamples: SampleCountFlags
 
-    public init(colorAttachmentSamples: Array<SampleCountFlags>, depthStencilAttachmentSamples: SampleCountFlags) {
+    public init(colorAttachmentSamples: Array<SampleCountFlags> = [], depthStencilAttachmentSamples: SampleCountFlags) {
         self.colorAttachmentSamples = colorAttachmentSamples
         self.depthStencilAttachmentSamples = depthStencilAttachmentSamples
     }
@@ -32244,7 +32244,7 @@ public struct PipelineShaderStageModuleIdentifierCreateInfoEXT: ChainableBase, P
 
     public let identifier: Array<UInt8>
 
-    public init(identifier: Array<UInt8>) {
+    public init(identifier: Array<UInt8> = []) {
         self.identifier = identifier
     }
 
@@ -32294,7 +32294,7 @@ public struct ImageCompressionControlEXT: ChainableBase, ImageCreateInfoExtensio
     public let compressionControlPlaneCount: UInt32
     public let fixedRateFlags: UnsafeMutablePointer<VkImageCompressionFixedRateFlagsEXT>
 
-    public init(flags: ImageCompressionFlagsEXT, compressionControlPlaneCount: UInt32, fixedRateFlags: UnsafeMutablePointer<VkImageCompressionFixedRateFlagsEXT>) {
+    public init(flags: ImageCompressionFlagsEXT, compressionControlPlaneCount: UInt32 = 0, fixedRateFlags: UnsafeMutablePointer<VkImageCompressionFixedRateFlagsEXT>) {
         self.flags = flags
         self.compressionControlPlaneCount = compressionControlPlaneCount
         self.fixedRateFlags = fixedRateFlags
@@ -32628,7 +32628,7 @@ public struct AccelerationStructureTrianglesDisplacementMicromapNV: ChainableBas
     public let usageCounts2: Array<UnsafePointer<VkMicromapUsageEXT>?>?
     public let micromap: VkMicromapEXT
 
-    public init(displacementBiasAndScaleFormat: Format, displacementVectorFormat: Format, displacementBiasAndScaleBuffer: VkDeviceOrHostAddressConstKHR, displacementBiasAndScaleStride: VkDeviceSize, displacementVectorBuffer: VkDeviceOrHostAddressConstKHR, displacementVectorStride: VkDeviceSize, displacedMicromapPrimitiveFlags: VkDeviceOrHostAddressConstKHR, displacedMicromapPrimitiveFlagsStride: VkDeviceSize, indexType: IndexType, indexBuffer: VkDeviceOrHostAddressConstKHR, indexStride: VkDeviceSize, baseTriangle: UInt32, usageCounts: Array<VkMicromapUsageEXT>?, usageCounts2: Array<UnsafePointer<VkMicromapUsageEXT>?>?, micromap: VkMicromapEXT) {
+    public init(displacementBiasAndScaleFormat: Format, displacementVectorFormat: Format, displacementBiasAndScaleBuffer: VkDeviceOrHostAddressConstKHR, displacementBiasAndScaleStride: VkDeviceSize, displacementVectorBuffer: VkDeviceOrHostAddressConstKHR, displacementVectorStride: VkDeviceSize, displacedMicromapPrimitiveFlags: VkDeviceOrHostAddressConstKHR, displacedMicromapPrimitiveFlagsStride: VkDeviceSize, indexType: IndexType, indexBuffer: VkDeviceOrHostAddressConstKHR, indexStride: VkDeviceSize, baseTriangle: UInt32, usageCounts: Array<VkMicromapUsageEXT>? = [], usageCounts2: Array<UnsafePointer<VkMicromapUsageEXT>?>? = [], micromap: VkMicromapEXT) {
         self.displacementBiasAndScaleFormat = displacementBiasAndScaleFormat
         self.displacementVectorFormat = displacementVectorFormat
         self.displacementBiasAndScaleBuffer = displacementBiasAndScaleBuffer
@@ -32946,7 +32946,7 @@ public struct ExportMetalTextureInfoEXT: ChainableBase, ExportMetalObjectsInfoEX
     public let plane: ImageAspectFlags
     public let mtlTexture: MTLTexture_id
 
-    public init(image: Image?, imageView: ImageView?, bufferView: BufferView?, plane: ImageAspectFlags, mtlTexture: MTLTexture_id) {
+    public init(image: Image? = nil, imageView: ImageView? = nil, bufferView: BufferView? = nil, plane: ImageAspectFlags, mtlTexture: MTLTexture_id) {
         self.image = image
         self.imageView = imageView
         self.bufferView = bufferView
@@ -33068,7 +33068,7 @@ public struct ExportMetalSharedEventInfoEXT: ChainableBase, ExportMetalObjectsIn
     public let event: Event?
     public let mtlSharedEvent: MTLSharedEvent_id
 
-    public init(semaphore: Semaphore?, event: Event?, mtlSharedEvent: MTLSharedEvent_id) {
+    public init(semaphore: Semaphore? = nil, event: Event? = nil, mtlSharedEvent: MTLSharedEvent_id) {
         self.semaphore = semaphore
         self.event = event
         self.mtlSharedEvent = mtlSharedEvent
@@ -33534,7 +33534,7 @@ public struct RenderingAttachmentFlagsInfoKHR: ChainableBase, RenderingAttachmen
 
     public let flags: RenderingAttachmentFlagsKHR
 
-    public init(flags: RenderingAttachmentFlagsKHR) {
+    public init(flags: RenderingAttachmentFlagsKHR = []) {
         self.flags = flags
     }
 
@@ -33559,7 +33559,7 @@ public struct ResolveImageModeInfoKHR: ChainableBase, ResolveImageInfo2Extension
     public let resolveMode: ResolveModeFlags
     public let stencilResolveMode: ResolveModeFlags
 
-    public init(flags: ResolveImageFlagsKHR, resolveMode: ResolveModeFlags, stencilResolveMode: ResolveModeFlags) {
+    public init(flags: ResolveImageFlagsKHR = [], resolveMode: ResolveModeFlags, stencilResolveMode: ResolveModeFlags) {
         self.flags = flags
         self.resolveMode = resolveMode
         self.stencilResolveMode = stencilResolveMode
@@ -33591,7 +33591,7 @@ public struct DeviceAddressBindingCallbackDataEXT: ChainableBase, DebugUtilsMess
     public let size: VkDeviceSize
     public let bindingType: DeviceAddressBindingTypeEXT
 
-    public init(flags: DeviceAddressBindingFlagsEXT, baseAddress: VkDeviceAddress, size: VkDeviceSize, bindingType: DeviceAddressBindingTypeEXT) {
+    public init(flags: DeviceAddressBindingFlagsEXT = [], baseAddress: VkDeviceAddress, size: VkDeviceSize, bindingType: DeviceAddressBindingTypeEXT) {
         self.flags = flags
         self.baseAddress = baseAddress
         self.size = size
@@ -33745,7 +33745,7 @@ public struct OpticalFlowSessionCreateInfoNV: ChainableBase {
     public let performanceLevel: OpticalFlowPerformanceLevelNV
     public let flags: OpticalFlowSessionCreateFlagsNV
 
-    public init(width: UInt32, height: UInt32, imageFormat: Format, flowVectorFormat: Format, costFormat: Format, outputGridSize: OpticalFlowGridSizeFlagsNV, hintGridSize: OpticalFlowGridSizeFlagsNV, performanceLevel: OpticalFlowPerformanceLevelNV, flags: OpticalFlowSessionCreateFlagsNV) {
+    public init(width: UInt32, height: UInt32, imageFormat: Format, flowVectorFormat: Format, costFormat: Format = .init(rawValue: 0)!, outputGridSize: OpticalFlowGridSizeFlagsNV, hintGridSize: OpticalFlowGridSizeFlagsNV = [], performanceLevel: OpticalFlowPerformanceLevelNV = .init(rawValue: 0)!, flags: OpticalFlowSessionCreateFlagsNV = []) {
         self.width = width
         self.height = height
         self.imageFormat = imageFormat
@@ -33824,7 +33824,7 @@ public struct OpticalFlowExecuteInfoNV: ChainableBase {
     public let flags: OpticalFlowExecuteFlagsNV
     public let regions: Array<Rect2D>
 
-    public init(flags: OpticalFlowExecuteFlagsNV, regions: Array<Rect2D>) {
+    public init(flags: OpticalFlowExecuteFlagsNV = [], regions: Array<Rect2D> = []) {
         self.flags = flags
         self.regions = regions
     }
@@ -33988,7 +33988,7 @@ public struct DeviceFaultCountsEXT: ChainableBase {
     public let vendorInfoCount: UInt32
     public let vendorBinarySize: VkDeviceSize
 
-    public init(addressInfoCount: UInt32, vendorInfoCount: UInt32, vendorBinarySize: VkDeviceSize) {
+    public init(addressInfoCount: UInt32 = 0, vendorInfoCount: UInt32 = 0, vendorBinarySize: VkDeviceSize) {
         self.addressInfoCount = addressInfoCount
         self.vendorInfoCount = vendorInfoCount
         self.vendorBinarySize = vendorBinarySize
@@ -34392,7 +34392,7 @@ public struct FrameBoundaryEXT: ChainableBase, SubmitInfoExtension, SubmitInfo2E
     public let tagSize: Int
     public let tag: UnsafeRawPointer?
 
-    public init(flags: FrameBoundaryFlagsEXT, frameID: UInt64, images: Array<Image>?, buffers: Array<Buffer>?, tagName: UInt64, tagSize: Int, tag: UnsafeRawPointer?) {
+    public init(flags: FrameBoundaryFlagsEXT = [], frameID: UInt64, images: Array<Image>? = [], buffers: Array<Buffer>? = [], tagName: UInt64 = 0, tagSize: Int = 0, tag: UnsafeRawPointer?) {
         self.flags = flags
         self.frameID = frameID
         self.images = images
@@ -34535,7 +34535,7 @@ public struct SurfacePresentScalingCapabilitiesKHR: ChainableBase, SurfaceCapabi
     public let minScaledImageExtent: Extent2D
     public let maxScaledImageExtent: Extent2D
 
-    public init(supportedPresentScaling: PresentScalingFlagsKHR, supportedPresentGravityX: PresentGravityFlagsKHR, supportedPresentGravityY: PresentGravityFlagsKHR, minScaledImageExtent: Extent2D, maxScaledImageExtent: Extent2D) {
+    public init(supportedPresentScaling: PresentScalingFlagsKHR = [], supportedPresentGravityX: PresentGravityFlagsKHR = [], supportedPresentGravityY: PresentGravityFlagsKHR = [], minScaledImageExtent: Extent2D, maxScaledImageExtent: Extent2D) {
         self.supportedPresentScaling = supportedPresentScaling
         self.supportedPresentGravityX = supportedPresentGravityX
         self.supportedPresentGravityY = supportedPresentGravityY
@@ -34575,7 +34575,7 @@ public struct SurfacePresentModeCompatibilityKHR: ChainableBase, SurfaceCapabili
     public let presentModeCount: UInt32
     public let presentModes: UnsafeMutablePointer<VkPresentModeKHR>?
 
-    public init(presentModeCount: UInt32, presentModes: UnsafeMutablePointer<VkPresentModeKHR>?) {
+    public init(presentModeCount: UInt32 = 0, presentModes: UnsafeMutablePointer<VkPresentModeKHR>?) {
         self.presentModeCount = presentModeCount
         self.presentModes = presentModes
     }
@@ -34704,7 +34704,7 @@ public struct SwapchainPresentScalingCreateInfoKHR: ChainableBase, SwapchainCrea
     public let presentGravityX: PresentGravityFlagsKHR
     public let presentGravityY: PresentGravityFlagsKHR
 
-    public init(scalingBehavior: PresentScalingFlagsKHR, presentGravityX: PresentGravityFlagsKHR, presentGravityY: PresentGravityFlagsKHR) {
+    public init(scalingBehavior: PresentScalingFlagsKHR = [], presentGravityX: PresentGravityFlagsKHR = [], presentGravityY: PresentGravityFlagsKHR = []) {
         self.scalingBehavior = scalingBehavior
         self.presentGravityX = presentGravityX
         self.presentGravityY = presentGravityY
@@ -35115,7 +35115,7 @@ public struct MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM: ChainableBase,
 
     public let perViewRenderAreas: Array<Rect2D>
 
-    public init(perViewRenderAreas: Array<Rect2D>) {
+    public init(perViewRenderAreas: Array<Rect2D> = []) {
         self.perViewRenderAreas = perViewRenderAreas
     }
 
@@ -35167,7 +35167,7 @@ public struct MemoryMapInfo: ChainableBase {
     public let offset: VkDeviceSize
     public let size: VkDeviceSize
 
-    public init(flags: MemoryMapFlags, memory: DeviceMemory, offset: VkDeviceSize, size: VkDeviceSize) {
+    public init(flags: MemoryMapFlags = [], memory: DeviceMemory, offset: VkDeviceSize, size: VkDeviceSize) {
         self.flags = flags
         self.memory = memory
         self.offset = offset
@@ -35200,7 +35200,7 @@ public struct MemoryUnmapInfo: ChainableBase {
     public let flags: MemoryUnmapFlags
     public let memory: DeviceMemory
 
-    public init(flags: MemoryUnmapFlags, memory: DeviceMemory) {
+    public init(flags: MemoryUnmapFlags = [], memory: DeviceMemory) {
         self.flags = flags
         self.memory = memory
     }
@@ -35280,7 +35280,7 @@ public struct ShaderCreateInfoEXT: ChainableBase {
     public let pushConstantRanges: Array<PushConstantRange>?
     public let specializationInfo: SpecializationInfo?
 
-    public init(flags: ShaderCreateFlagsEXT, stage: ShaderStageFlags, nextStage: ShaderStageFlags, codeType: ShaderCodeTypeEXT, codeSize: Int, code: UnsafeRawPointer, name: String?, setLayouts: Array<DescriptorSetLayout>?, pushConstantRanges: Array<PushConstantRange>?, specializationInfo: SpecializationInfo?) {
+    public init(flags: ShaderCreateFlagsEXT = [], stage: ShaderStageFlags, nextStage: ShaderStageFlags = [], codeType: ShaderCodeTypeEXT, codeSize: Int, code: UnsafeRawPointer, name: String?, setLayouts: Array<DescriptorSetLayout>? = [], pushConstantRanges: Array<PushConstantRange>? = [], specializationInfo: SpecializationInfo? = nil) {
         self.flags = flags
         self.stage = stage
         self.nextStage = nextStage
@@ -35728,7 +35728,7 @@ public struct ExecutionGraphPipelineCreateInfoAMDX: ChainableBase {
     public let basePipelineHandle: Pipeline?
     public let basePipelineIndex: Int32
 
-    public init(flags: PipelineCreateFlags, stages: Array<PipelineShaderStageCreateInfo>?, libraryInfo: PipelineLibraryCreateInfoKHR?, layout: PipelineLayout?, basePipelineHandle: Pipeline?, basePipelineIndex: Int32) {
+    public init(flags: PipelineCreateFlags = [], stages: Array<PipelineShaderStageCreateInfo>? = [], libraryInfo: PipelineLibraryCreateInfoKHR? = nil, layout: PipelineLayout? = nil, basePipelineHandle: Pipeline? = nil, basePipelineIndex: Int32) {
         self.flags = flags
         self.stages = stages
         self.libraryInfo = libraryInfo
@@ -35840,7 +35840,7 @@ public struct DispatchGraphInfoAMDX: CStructConvertible {
     public let payloads: VkDeviceOrHostAddressConstAMDX
     public let payloadStride: UInt64
 
-    public init(nodeIndex: UInt32, payloadCount: UInt32, payloads: VkDeviceOrHostAddressConstAMDX, payloadStride: UInt64) {
+    public init(nodeIndex: UInt32, payloadCount: UInt32 = 0, payloads: VkDeviceOrHostAddressConstAMDX, payloadStride: UInt64) {
         self.nodeIndex = nodeIndex
         self.payloadCount = payloadCount
         self.payloads = payloads
@@ -35873,7 +35873,7 @@ public struct DispatchGraphCountInfoAMDX: CStructConvertible {
     public let infos: VkDeviceOrHostAddressConstAMDX
     public let stride: UInt64
 
-    public init(count: UInt32, infos: VkDeviceOrHostAddressConstAMDX, stride: UInt64) {
+    public init(count: UInt32 = 0, infos: VkDeviceOrHostAddressConstAMDX, stride: UInt64) {
         self.count = count
         self.infos = infos
         self.stride = stride
@@ -35952,7 +35952,7 @@ public struct AntiLagDataAMD: ChainableBase {
     public let maxFPS: UInt32
     public let presentationInfo: AntiLagPresentationInfoAMD?
 
-    public init(mode: AntiLagModeAMD, maxFPS: UInt32, presentationInfo: AntiLagPresentationInfoAMD?) {
+    public init(mode: AntiLagModeAMD, maxFPS: UInt32, presentationInfo: AntiLagPresentationInfoAMD? = nil) {
         self.mode = mode
         self.maxFPS = maxFPS
         self.presentationInfo = presentationInfo
@@ -36110,7 +36110,7 @@ public struct BindDescriptorSetsInfo: ChainableBase {
     public let descriptorSets: Array<DescriptorSet>
     public let dynamicOffsets: Array<UInt32>?
 
-    public init(stageFlags: ShaderStageFlags, layout: PipelineLayout?, firstSet: UInt32, descriptorSets: Array<DescriptorSet>, dynamicOffsets: Array<UInt32>?) {
+    public init(stageFlags: ShaderStageFlags, layout: PipelineLayout? = nil, firstSet: UInt32 = 0, descriptorSets: Array<DescriptorSet>, dynamicOffsets: Array<UInt32>? = []) {
         self.stageFlags = stageFlags
         self.layout = layout
         self.firstSet = firstSet
@@ -36118,7 +36118,7 @@ public struct BindDescriptorSetsInfo: ChainableBase {
         self.dynamicOffsets = dynamicOffsets
     }
 
-    init(cStruct: VkBindDescriptorSetsInfo, device: Device, descriptorPool: DescriptorPool) {
+    init(cStruct: VkBindDescriptorSetsInfo, descriptorPool: DescriptorPool, device: Device) {
         self.stageFlags = ShaderStageFlags(rawValue: cStruct.stageFlags)
         self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout, device: device) : nil
         self.firstSet = cStruct.firstSet
@@ -36155,7 +36155,7 @@ public struct PushConstantsInfo: ChainableBase {
     public let size: UInt32
     public let values: UnsafeRawPointer
 
-    public init(layout: PipelineLayout?, stageFlags: ShaderStageFlags, offset: UInt32, size: UInt32, values: UnsafeRawPointer) {
+    public init(layout: PipelineLayout? = nil, stageFlags: ShaderStageFlags, offset: UInt32 = 0, size: UInt32, values: UnsafeRawPointer) {
         self.layout = layout
         self.stageFlags = stageFlags
         self.offset = offset
@@ -36193,18 +36193,18 @@ public struct PushDescriptorSetInfo: ChainableBase {
     public let set: UInt32
     public let descriptorWrites: Array<WriteDescriptorSet>
 
-    public init(stageFlags: ShaderStageFlags, layout: PipelineLayout?, set: UInt32, descriptorWrites: Array<WriteDescriptorSet>) {
+    public init(stageFlags: ShaderStageFlags, layout: PipelineLayout? = nil, set: UInt32 = 0, descriptorWrites: Array<WriteDescriptorSet>) {
         self.stageFlags = stageFlags
         self.layout = layout
         self.set = set
         self.descriptorWrites = descriptorWrites
     }
 
-    init(cStruct: VkPushDescriptorSetInfo, device: Device, descriptorPool: DescriptorPool) {
+    init(cStruct: VkPushDescriptorSetInfo, descriptorPool: DescriptorPool, device: Device) {
         self.stageFlags = ShaderStageFlags(rawValue: cStruct.stageFlags)
         self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout, device: device) : nil
         self.set = cStruct.set
-        self.descriptorWrites = UnsafeBufferPointer(start: cStruct.pDescriptorWrites, count: Int(cStruct.descriptorWriteCount)).map{ WriteDescriptorSet(cStruct: $0, device: device, descriptorPool: descriptorPool) }
+        self.descriptorWrites = UnsafeBufferPointer(start: cStruct.pDescriptorWrites, count: Int(cStruct.descriptorWriteCount)).map{ WriteDescriptorSet(cStruct: $0, descriptorPool: descriptorPool, device: device) }
     }
 
     public func withCStruct<R>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPushDescriptorSetInfo>) throws -> R) rethrows -> R {
@@ -36231,7 +36231,7 @@ public struct PushDescriptorSetWithTemplateInfo: ChainableBase {
     public let set: UInt32
     public let data: UnsafeRawPointer
 
-    public init(descriptorUpdateTemplate: DescriptorUpdateTemplate, layout: PipelineLayout?, set: UInt32, data: UnsafeRawPointer) {
+    public init(descriptorUpdateTemplate: DescriptorUpdateTemplate, layout: PipelineLayout? = nil, set: UInt32 = 0, data: UnsafeRawPointer) {
         self.descriptorUpdateTemplate = descriptorUpdateTemplate
         self.layout = layout
         self.set = set
@@ -36267,7 +36267,7 @@ public struct SetDescriptorBufferOffsetsInfoEXT: ChainableBase {
     public let bufferIndices: Array<UInt32>
     public let offsets: Array<VkDeviceSize>
 
-    public init(stageFlags: ShaderStageFlags, layout: PipelineLayout?, firstSet: UInt32, bufferIndices: Array<UInt32>, offsets: Array<VkDeviceSize>) {
+    public init(stageFlags: ShaderStageFlags, layout: PipelineLayout? = nil, firstSet: UInt32 = 0, bufferIndices: Array<UInt32>, offsets: Array<VkDeviceSize>) {
         self.stageFlags = stageFlags
         self.layout = layout
         self.firstSet = firstSet
@@ -36309,7 +36309,7 @@ public struct BindDescriptorBufferEmbeddedSamplersInfoEXT: ChainableBase {
     public let layout: PipelineLayout?
     public let set: UInt32
 
-    public init(stageFlags: ShaderStageFlags, layout: PipelineLayout?, set: UInt32) {
+    public init(stageFlags: ShaderStageFlags, layout: PipelineLayout? = nil, set: UInt32 = 0) {
         self.stageFlags = stageFlags
         self.layout = layout
         self.set = set
@@ -36839,7 +36839,7 @@ public struct GetLatencyMarkerInfoNV: ChainableBase {
     public let timingCount: UInt32
     public let timings: UnsafeMutablePointer<VkLatencyTimingsFrameReportNV>?
 
-    public init(timingCount: UInt32, timings: UnsafeMutablePointer<VkLatencyTimingsFrameReportNV>?) {
+    public init(timingCount: UInt32 = 0, timings: UnsafeMutablePointer<VkLatencyTimingsFrameReportNV>?) {
         self.timingCount = timingCount
         self.timings = timings
     }
@@ -36911,7 +36911,7 @@ public struct SwapchainLatencyCreateInfoNV: ChainableBase, SwapchainCreateInfoKH
 
     public let latencyModeEnable: Bool
 
-    public init(latencyModeEnable: Bool) {
+    public init(latencyModeEnable: Bool = false) {
         self.latencyModeEnable = latencyModeEnable
     }
 
@@ -36935,7 +36935,7 @@ public struct LatencySurfaceCapabilitiesNV: ChainableBase, SurfaceCapabilities2K
     public let presentModeCount: UInt32
     public let presentModes: UnsafeMutablePointer<VkPresentModeKHR>?
 
-    public init(presentModeCount: UInt32, presentModes: UnsafeMutablePointer<VkPresentModeKHR>?) {
+    public init(presentModeCount: UInt32 = 0, presentModes: UnsafeMutablePointer<VkPresentModeKHR>?) {
         self.presentModeCount = presentModeCount
         self.presentModes = presentModes
     }
@@ -37102,7 +37102,7 @@ public struct DispatchParametersARM: ChainableBase {
     public let maxQueuedWorkGroupBatches: UInt32
     public let maxWarpsPerShaderCore: UInt32
 
-    public init(workGroupBatchSize: UInt32, maxQueuedWorkGroupBatches: UInt32, maxWarpsPerShaderCore: UInt32) {
+    public init(workGroupBatchSize: UInt32 = 0, maxQueuedWorkGroupBatches: UInt32 = 0, maxWarpsPerShaderCore: UInt32 = 0) {
         self.workGroupBatchSize = workGroupBatchSize
         self.maxQueuedWorkGroupBatches = maxQueuedWorkGroupBatches
         self.maxWarpsPerShaderCore = maxWarpsPerShaderCore
@@ -37420,7 +37420,7 @@ public struct RenderingAttachmentLocationInfo: ChainableBase, GraphicsPipelineCr
 
     public let colorAttachmentLocations: Array<UInt32>
 
-    public init(colorAttachmentLocations: Array<UInt32>) {
+    public init(colorAttachmentLocations: Array<UInt32> = []) {
         self.colorAttachmentLocations = colorAttachmentLocations
     }
 
@@ -37448,7 +37448,7 @@ public struct RenderingInputAttachmentIndexInfo: ChainableBase, GraphicsPipeline
     public let depthInputAttachmentIndex: UnsafePointer<UInt32>?
     public let stencilInputAttachmentIndex: UnsafePointer<UInt32>?
 
-    public init(colorAttachmentInputIndices: Array<UInt32>?, depthInputAttachmentIndex: UnsafePointer<UInt32>?, stencilInputAttachmentIndex: UnsafePointer<UInt32>?) {
+    public init(colorAttachmentInputIndices: Array<UInt32>? = [], depthInputAttachmentIndex: UnsafePointer<UInt32>? = nil, stencilInputAttachmentIndex: UnsafePointer<UInt32>? = nil) {
         self.colorAttachmentInputIndices = colorAttachmentInputIndices
         self.depthInputAttachmentIndex = depthInputAttachmentIndex
         self.stencilInputAttachmentIndex = stencilInputAttachmentIndex
@@ -38321,7 +38321,7 @@ public struct RenderPassTileShadingCreateInfoQCOM: ChainableBase, RenderPassCrea
     public let flags: TileShadingRenderPassFlagsQCOM
     public let tileApronSize: Extent2D
 
-    public init(flags: TileShadingRenderPassFlagsQCOM, tileApronSize: Extent2D) {
+    public init(flags: TileShadingRenderPassFlagsQCOM = [], tileApronSize: Extent2D) {
         self.flags = flags
         self.tileApronSize = tileApronSize
     }
@@ -38809,7 +38809,7 @@ public struct TensorCreateInfoARM: ChainableBase {
     public let sharingMode: SharingMode
     public let queueFamilyIndices: Array<UInt32>
 
-    public init(flags: TensorCreateFlagsARM, description: TensorDescriptionARM, sharingMode: SharingMode, queueFamilyIndices: Array<UInt32>) {
+    public init(flags: TensorCreateFlagsARM = [], description: TensorDescriptionARM, sharingMode: SharingMode, queueFamilyIndices: Array<UInt32> = []) {
         self.flags = flags
         self.description = description
         self.sharingMode = sharingMode
@@ -38848,7 +38848,7 @@ public struct TensorViewCreateInfoARM: ChainableBase {
     public let tensor: TensorARM
     public let format: Format
 
-    public init(flags: TensorViewCreateFlagsARM, tensor: TensorARM, format: Format) {
+    public init(flags: TensorViewCreateFlagsARM = [], tensor: TensorARM, format: Format) {
         self.flags = flags
         self.tensor = tensor
         self.format = format
@@ -39040,7 +39040,7 @@ public struct TensorMemoryBarrierARM: ChainableBase, DependencyInfoExtension {
     public let dstQueueFamilyIndex: UInt32
     public let tensor: TensorARM
 
-    public init(srcStageMask: PipelineStageFlags2, srcAccessMask: AccessFlags2, dstStageMask: PipelineStageFlags2, dstAccessMask: AccessFlags2, srcQueueFamilyIndex: UInt32, dstQueueFamilyIndex: UInt32, tensor: TensorARM) {
+    public init(srcStageMask: PipelineStageFlags2 = [], srcAccessMask: AccessFlags2 = [], dstStageMask: PipelineStageFlags2 = [], dstAccessMask: AccessFlags2 = [], srcQueueFamilyIndex: UInt32, dstQueueFamilyIndex: UInt32, tensor: TensorARM) {
         self.srcStageMask = srcStageMask
         self.srcAccessMask = srcAccessMask
         self.dstStageMask = dstStageMask
@@ -39177,7 +39177,7 @@ public struct TensorCopyARM: ChainableBase {
     public let dstOffset: Array<UInt64>?
     public let extent: Array<UInt64>?
 
-    public init(srcOffset: Array<UInt64>?, dstOffset: Array<UInt64>?, extent: Array<UInt64>?) {
+    public init(srcOffset: Array<UInt64>? = [], dstOffset: Array<UInt64>? = [], extent: Array<UInt64>? = []) {
         self.srcOffset = srcOffset
         self.dstOffset = dstOffset
         self.extent = extent
@@ -39370,7 +39370,7 @@ public struct DescriptorGetTensorInfoARM: ChainableBase, DescriptorGetInfoEXTExt
 
     public let tensorView: TensorViewARM?
 
-    public init(tensorView: TensorViewARM?) {
+    public init(tensorView: TensorViewARM? = nil) {
         self.tensorView = tensorView
     }
 
@@ -39421,7 +39421,7 @@ public struct PhysicalDeviceExternalTensorInfoARM: ChainableBase {
     public let description: TensorDescriptionARM
     public let handleType: ExternalMemoryHandleTypeFlags
 
-    public init(flags: TensorCreateFlagsARM, description: TensorDescriptionARM, handleType: ExternalMemoryHandleTypeFlags) {
+    public init(flags: TensorCreateFlagsARM = [], description: TensorDescriptionARM, handleType: ExternalMemoryHandleTypeFlags) {
         self.flags = flags
         self.description = description
         self.handleType = handleType
@@ -39477,7 +39477,7 @@ public struct ExternalMemoryTensorCreateInfoARM: ChainableBase, TensorCreateInfo
 
     public let handleTypes: ExternalMemoryHandleTypeFlags
 
-    public init(handleTypes: ExternalMemoryHandleTypeFlags) {
+    public init(handleTypes: ExternalMemoryHandleTypeFlags = []) {
         self.handleTypes = handleTypes
     }
 
@@ -39529,7 +39529,7 @@ public struct SurfaceCreateInfoOHOS: ChainableBase {
     public let flags: SurfaceCreateFlagsOHOS
     public let window: UnsafeMutablePointer<OHNativeWindow>
 
-    public init(flags: SurfaceCreateFlagsOHOS, window: UnsafeMutablePointer<OHNativeWindow>) {
+    public init(flags: SurfaceCreateFlagsOHOS = [], window: UnsafeMutablePointer<OHNativeWindow>) {
         self.flags = flags
         self.window = window
     }
@@ -39655,7 +39655,7 @@ public struct DataGraphPipelineResourceInfoARM: ChainableBase {
     public let binding: UInt32
     public let arrayElement: UInt32
 
-    public init(descriptorSet: UInt32, binding: UInt32, arrayElement: UInt32) {
+    public init(descriptorSet: UInt32, binding: UInt32, arrayElement: UInt32 = 0) {
         self.descriptorSet = descriptorSet
         self.binding = binding
         self.arrayElement = arrayElement
@@ -39734,7 +39734,7 @@ public struct DataGraphPipelineCreateInfoARM: ChainableBase {
     public let layout: PipelineLayout
     public let resourceInfos: Array<DataGraphPipelineResourceInfoARM>
 
-    public init(flags: PipelineCreateFlags2, layout: PipelineLayout, resourceInfos: Array<DataGraphPipelineResourceInfoARM>) {
+    public init(flags: PipelineCreateFlags2 = [], layout: PipelineLayout, resourceInfos: Array<DataGraphPipelineResourceInfoARM> = []) {
         self.flags = flags
         self.layout = layout
         self.resourceInfos = resourceInfos
@@ -39769,7 +39769,7 @@ public struct DataGraphPipelineShaderModuleCreateInfoARM: ChainableBase, DataGra
     public let specializationInfo: SpecializationInfo?
     public let constants: Array<DataGraphPipelineConstantARM>?
 
-    public init(module: ShaderModule?, name: String, specializationInfo: SpecializationInfo?, constants: Array<DataGraphPipelineConstantARM>?) {
+    public init(module: ShaderModule? = nil, name: String, specializationInfo: SpecializationInfo? = nil, constants: Array<DataGraphPipelineConstantARM>? = []) {
         self.module = module
         self.name = name
         self.specializationInfo = specializationInfo
@@ -39809,7 +39809,7 @@ public struct DataGraphPipelineSessionCreateInfoARM: ChainableBase {
     public let flags: DataGraphPipelineSessionCreateFlagsARM
     public let dataGraphPipeline: Pipeline
 
-    public init(flags: DataGraphPipelineSessionCreateFlagsARM, dataGraphPipeline: Pipeline) {
+    public init(flags: DataGraphPipelineSessionCreateFlagsARM = [], dataGraphPipeline: Pipeline) {
         self.flags = flags
         self.dataGraphPipeline = dataGraphPipeline
     }
@@ -39979,7 +39979,7 @@ public struct DataGraphPipelinePropertyQueryResultARM: ChainableBase {
     public let dataSize: Int
     public let data: UnsafeMutableRawPointer?
 
-    public init(property: DataGraphPipelinePropertyARM, isText: Bool, dataSize: Int, data: UnsafeMutableRawPointer?) {
+    public init(property: DataGraphPipelinePropertyARM, isText: Bool, dataSize: Int = 0, data: UnsafeMutableRawPointer?) {
         self.property = property
         self.isText = isText
         self.dataSize = dataSize
@@ -40037,7 +40037,7 @@ public struct DataGraphPipelineDispatchInfoARM: ChainableBase {
 
     public let flags: DataGraphPipelineDispatchFlagsARM
 
-    public init(flags: DataGraphPipelineDispatchFlagsARM) {
+    public init(flags: DataGraphPipelineDispatchFlagsARM = []) {
         self.flags = flags
     }
 
@@ -41141,7 +41141,7 @@ public struct DescriptorMappingSourceConstantOffsetEXT: CStructConvertible {
     public let samplerHeapOffset: UInt32
     public let samplerHeapArrayStride: UInt32
 
-    public init(heapOffset: UInt32, heapArrayStride: UInt32, embeddedSampler: SamplerCreateInfo?, samplerHeapOffset: UInt32, samplerHeapArrayStride: UInt32) {
+    public init(heapOffset: UInt32, heapArrayStride: UInt32, embeddedSampler: SamplerCreateInfo? = nil, samplerHeapOffset: UInt32, samplerHeapArrayStride: UInt32) {
         self.heapOffset = heapOffset
         self.heapArrayStride = heapArrayStride
         self.embeddedSampler = embeddedSampler
@@ -41184,7 +41184,7 @@ public struct DescriptorMappingSourcePushIndexEXT: CStructConvertible {
     public let samplerHeapIndexStride: UInt32
     public let samplerHeapArrayStride: UInt32
 
-    public init(heapOffset: UInt32, pushOffset: UInt32, heapIndexStride: UInt32, heapArrayStride: UInt32, embeddedSampler: SamplerCreateInfo?, useCombinedImageSamplerIndex: Bool, samplerHeapOffset: UInt32, samplerPushOffset: UInt32, samplerHeapIndexStride: UInt32, samplerHeapArrayStride: UInt32) {
+    public init(heapOffset: UInt32, pushOffset: UInt32, heapIndexStride: UInt32, heapArrayStride: UInt32, embeddedSampler: SamplerCreateInfo? = nil, useCombinedImageSamplerIndex: Bool, samplerHeapOffset: UInt32, samplerPushOffset: UInt32, samplerHeapIndexStride: UInt32, samplerHeapArrayStride: UInt32) {
         self.heapOffset = heapOffset
         self.pushOffset = pushOffset
         self.heapIndexStride = heapIndexStride
@@ -41244,7 +41244,7 @@ public struct DescriptorMappingSourceIndirectIndexEXT: CStructConvertible {
     public let samplerHeapIndexStride: UInt32
     public let samplerHeapArrayStride: UInt32
 
-    public init(heapOffset: UInt32, pushOffset: UInt32, addressOffset: UInt32, heapIndexStride: UInt32, heapArrayStride: UInt32, embeddedSampler: SamplerCreateInfo?, useCombinedImageSamplerIndex: Bool, samplerHeapOffset: UInt32, samplerPushOffset: UInt32, samplerAddressOffset: UInt32, samplerHeapIndexStride: UInt32, samplerHeapArrayStride: UInt32) {
+    public init(heapOffset: UInt32, pushOffset: UInt32, addressOffset: UInt32, heapIndexStride: UInt32, heapArrayStride: UInt32, embeddedSampler: SamplerCreateInfo? = nil, useCombinedImageSamplerIndex: Bool, samplerHeapOffset: UInt32, samplerPushOffset: UInt32, samplerAddressOffset: UInt32, samplerHeapIndexStride: UInt32, samplerHeapArrayStride: UInt32) {
         self.heapOffset = heapOffset
         self.pushOffset = pushOffset
         self.addressOffset = addressOffset
@@ -41308,7 +41308,7 @@ public struct DescriptorMappingSourceIndirectIndexArrayEXT: CStructConvertible {
     public let samplerAddressOffset: UInt32
     public let samplerHeapIndexStride: UInt32
 
-    public init(heapOffset: UInt32, pushOffset: UInt32, addressOffset: UInt32, heapIndexStride: UInt32, embeddedSampler: SamplerCreateInfo?, useCombinedImageSamplerIndex: Bool, samplerHeapOffset: UInt32, samplerPushOffset: UInt32, samplerAddressOffset: UInt32, samplerHeapIndexStride: UInt32) {
+    public init(heapOffset: UInt32, pushOffset: UInt32, addressOffset: UInt32, heapIndexStride: UInt32, embeddedSampler: SamplerCreateInfo? = nil, useCombinedImageSamplerIndex: Bool, samplerHeapOffset: UInt32, samplerPushOffset: UInt32, samplerAddressOffset: UInt32, samplerHeapIndexStride: UInt32) {
         self.heapOffset = heapOffset
         self.pushOffset = pushOffset
         self.addressOffset = addressOffset
@@ -41390,7 +41390,7 @@ public struct DescriptorMappingSourceShaderRecordIndexEXT: CStructConvertible {
     public let samplerHeapIndexStride: UInt32
     public let samplerHeapArrayStride: UInt32
 
-    public init(heapOffset: UInt32, shaderRecordOffset: UInt32, heapIndexStride: UInt32, heapArrayStride: UInt32, embeddedSampler: SamplerCreateInfo?, useCombinedImageSamplerIndex: Bool, samplerHeapOffset: UInt32, samplerShaderRecordOffset: UInt32, samplerHeapIndexStride: UInt32, samplerHeapArrayStride: UInt32) {
+    public init(heapOffset: UInt32, shaderRecordOffset: UInt32, heapIndexStride: UInt32, heapArrayStride: UInt32, embeddedSampler: SamplerCreateInfo? = nil, useCombinedImageSamplerIndex: Bool, samplerHeapOffset: UInt32, samplerShaderRecordOffset: UInt32, samplerHeapIndexStride: UInt32, samplerHeapArrayStride: UInt32) {
         self.heapOffset = heapOffset
         self.shaderRecordOffset = shaderRecordOffset
         self.heapIndexStride = heapIndexStride
@@ -41506,7 +41506,7 @@ public struct ShaderDescriptorSetAndBindingMappingInfoEXT: ChainableBase, Pipeli
 
     public let mappings: Array<DescriptorSetAndBindingMappingEXT>
 
-    public init(mappings: Array<DescriptorSetAndBindingMappingEXT>) {
+    public init(mappings: Array<DescriptorSetAndBindingMappingEXT> = []) {
         self.mappings = mappings
     }
 
@@ -41555,7 +41555,7 @@ public struct OpaqueCaptureDataCreateInfoEXT: ChainableBase, ImageCreateInfoExte
 
     public let data: HostAddressRangeConstEXT?
 
-    public init(data: HostAddressRangeConstEXT?) {
+    public init(data: HostAddressRangeConstEXT? = nil) {
         self.data = data
     }
 
@@ -41731,7 +41731,7 @@ public struct CommandBufferInheritanceDescriptorHeapInfoEXT: ChainableBase, Comm
     public let samplerHeapBindInfo: BindHeapInfoEXT?
     public let resourceHeapBindInfo: BindHeapInfoEXT?
 
-    public init(samplerHeapBindInfo: BindHeapInfoEXT?, resourceHeapBindInfo: BindHeapInfoEXT?) {
+    public init(samplerHeapBindInfo: BindHeapInfoEXT? = nil, resourceHeapBindInfo: BindHeapInfoEXT? = nil) {
         self.samplerHeapBindInfo = samplerHeapBindInfo
         self.resourceHeapBindInfo = resourceHeapBindInfo
     }
@@ -41936,7 +41936,7 @@ public struct DeviceMemoryCopyKHR: ChainableBase {
     public let dstRange: DeviceAddressRangeKHR
     public let dstFlags: AddressCommandFlagsKHR
 
-    public init(srcRange: DeviceAddressRangeKHR, srcFlags: AddressCommandFlagsKHR, dstRange: DeviceAddressRangeKHR, dstFlags: AddressCommandFlagsKHR) {
+    public init(srcRange: DeviceAddressRangeKHR, srcFlags: AddressCommandFlagsKHR = [], dstRange: DeviceAddressRangeKHR, dstFlags: AddressCommandFlagsKHR = []) {
         self.srcRange = srcRange
         self.srcFlags = srcFlags
         self.dstRange = dstRange
@@ -42005,7 +42005,7 @@ public struct DeviceMemoryImageCopyKHR: ChainableBase {
     public let imageOffset: Offset3D
     public let imageExtent: Extent3D
 
-    public init(addressRange: DeviceAddressRangeKHR, addressFlags: AddressCommandFlagsKHR, addressRowLength: UInt32, addressImageHeight: UInt32, imageSubresource: ImageSubresourceLayers, imageLayout: ImageLayout, imageOffset: Offset3D, imageExtent: Extent3D) {
+    public init(addressRange: DeviceAddressRangeKHR, addressFlags: AddressCommandFlagsKHR = [], addressRowLength: UInt32, addressImageHeight: UInt32, imageSubresource: ImageSubresourceLayers, imageLayout: ImageLayout, imageOffset: Offset3D, imageExtent: Extent3D) {
         self.addressRange = addressRange
         self.addressFlags = addressFlags
         self.addressRowLength = addressRowLength
@@ -42094,7 +42094,7 @@ public struct MemoryRangeBarrierKHR: ChainableBase {
     public let addressRange: DeviceAddressRangeKHR
     public let addressFlags: AddressCommandFlagsKHR
 
-    public init(srcStageMask: PipelineStageFlags2, srcAccessMask: AccessFlags2, dstStageMask: PipelineStageFlags2, dstAccessMask: AccessFlags2, srcQueueFamilyIndex: UInt32, dstQueueFamilyIndex: UInt32, addressRange: DeviceAddressRangeKHR, addressFlags: AddressCommandFlagsKHR) {
+    public init(srcStageMask: PipelineStageFlags2 = [], srcAccessMask: AccessFlags2 = [], dstStageMask: PipelineStageFlags2 = [], dstAccessMask: AccessFlags2 = [], srcQueueFamilyIndex: UInt32, dstQueueFamilyIndex: UInt32, addressRange: DeviceAddressRangeKHR, addressFlags: AddressCommandFlagsKHR = []) {
         self.srcStageMask = srcStageMask
         self.srcAccessMask = srcAccessMask
         self.dstStageMask = dstStageMask
@@ -42140,7 +42140,7 @@ public struct MemoryRangeBarriersInfoKHR: ChainableBase, DependencyInfoExtension
 
     public let memoryRangeBarriers: Array<MemoryRangeBarrierKHR>
 
-    public init(memoryRangeBarriers: Array<MemoryRangeBarrierKHR>) {
+    public init(memoryRangeBarriers: Array<MemoryRangeBarrierKHR> = []) {
         self.memoryRangeBarriers = memoryRangeBarriers
     }
 
@@ -42191,7 +42191,7 @@ public struct ConditionalRenderingBeginInfo2EXT: ChainableBase {
     public let addressFlags: AddressCommandFlagsKHR
     public let flags: ConditionalRenderingFlagsEXT
 
-    public init(addressRange: DeviceAddressRangeKHR, addressFlags: AddressCommandFlagsKHR, flags: ConditionalRenderingFlagsEXT) {
+    public init(addressRange: DeviceAddressRangeKHR, addressFlags: AddressCommandFlagsKHR = [], flags: ConditionalRenderingFlagsEXT = []) {
         self.addressRange = addressRange
         self.addressFlags = addressFlags
         self.flags = flags
@@ -42225,7 +42225,7 @@ public struct AccelerationStructureCreateInfo2KHR: ChainableBase {
     public let addressFlags: AddressCommandFlagsKHR
     public let type: AccelerationStructureTypeKHR
 
-    public init(createFlags: AccelerationStructureCreateFlagsKHR, addressRange: DeviceAddressRangeKHR, addressFlags: AddressCommandFlagsKHR, type: AccelerationStructureTypeKHR) {
+    public init(createFlags: AccelerationStructureCreateFlagsKHR = [], addressRange: DeviceAddressRangeKHR, addressFlags: AddressCommandFlagsKHR = [], type: AccelerationStructureTypeKHR) {
         self.createFlags = createFlags
         self.addressRange = addressRange
         self.addressFlags = addressFlags
@@ -42261,7 +42261,7 @@ public struct BindIndexBuffer3InfoKHR: ChainableBase {
     public let addressFlags: AddressCommandFlagsKHR
     public let indexType: IndexType
 
-    public init(addressRange: DeviceAddressRangeKHR, addressFlags: AddressCommandFlagsKHR, indexType: IndexType) {
+    public init(addressRange: DeviceAddressRangeKHR, addressFlags: AddressCommandFlagsKHR = [], indexType: IndexType) {
         self.addressRange = addressRange
         self.addressFlags = addressFlags
         self.indexType = indexType
@@ -42294,7 +42294,7 @@ public struct BindVertexBuffer3InfoKHR: ChainableBase {
     public let addressRange: StridedDeviceAddressRangeKHR
     public let addressFlags: AddressCommandFlagsKHR
 
-    public init(setStride: Bool, addressRange: StridedDeviceAddressRangeKHR, addressFlags: AddressCommandFlagsKHR) {
+    public init(setStride: Bool, addressRange: StridedDeviceAddressRangeKHR, addressFlags: AddressCommandFlagsKHR = []) {
         self.setStride = setStride
         self.addressRange = addressRange
         self.addressFlags = addressFlags
@@ -42327,7 +42327,7 @@ public struct DrawIndirect2InfoKHR: ChainableBase {
     public let addressFlags: AddressCommandFlagsKHR
     public let drawCount: UInt32
 
-    public init(addressRange: StridedDeviceAddressRangeKHR, addressFlags: AddressCommandFlagsKHR, drawCount: UInt32) {
+    public init(addressRange: StridedDeviceAddressRangeKHR, addressFlags: AddressCommandFlagsKHR = [], drawCount: UInt32) {
         self.addressRange = addressRange
         self.addressFlags = addressFlags
         self.drawCount = drawCount
@@ -42362,7 +42362,7 @@ public struct DrawIndirectCount2InfoKHR: ChainableBase {
     public let countAddressFlags: AddressCommandFlagsKHR
     public let maxDrawCount: UInt32
 
-    public init(addressRange: StridedDeviceAddressRangeKHR, addressFlags: AddressCommandFlagsKHR, countAddressRange: DeviceAddressRangeKHR, countAddressFlags: AddressCommandFlagsKHR, maxDrawCount: UInt32) {
+    public init(addressRange: StridedDeviceAddressRangeKHR, addressFlags: AddressCommandFlagsKHR = [], countAddressRange: DeviceAddressRangeKHR, countAddressFlags: AddressCommandFlagsKHR = [], maxDrawCount: UInt32) {
         self.addressRange = addressRange
         self.addressFlags = addressFlags
         self.countAddressRange = countAddressRange
@@ -42402,7 +42402,7 @@ public struct DispatchIndirect2InfoKHR: ChainableBase {
     public let addressRange: DeviceAddressRangeKHR
     public let addressFlags: AddressCommandFlagsKHR
 
-    public init(addressRange: DeviceAddressRangeKHR, addressFlags: AddressCommandFlagsKHR) {
+    public init(addressRange: DeviceAddressRangeKHR, addressFlags: AddressCommandFlagsKHR = []) {
         self.addressRange = addressRange
         self.addressFlags = addressFlags
     }
@@ -42431,7 +42431,7 @@ public struct BindTransformFeedbackBuffer2InfoEXT: ChainableBase {
     public let addressRange: DeviceAddressRangeKHR
     public let addressFlags: AddressCommandFlagsKHR
 
-    public init(addressRange: DeviceAddressRangeKHR, addressFlags: AddressCommandFlagsKHR) {
+    public init(addressRange: DeviceAddressRangeKHR, addressFlags: AddressCommandFlagsKHR = []) {
         self.addressRange = addressRange
         self.addressFlags = addressFlags
     }
@@ -42462,7 +42462,7 @@ public struct MemoryMarkerInfoAMD: ChainableBase {
     public let dstFlags: AddressCommandFlagsKHR
     public let marker: UInt32
 
-    public init(stage: VkPipelineStageFlags2KHR, dstRange: DeviceAddressRangeKHR, dstFlags: AddressCommandFlagsKHR, marker: UInt32) {
+    public init(stage: VkPipelineStageFlags2KHR, dstRange: DeviceAddressRangeKHR, dstFlags: AddressCommandFlagsKHR = [], marker: UInt32) {
         self.stage = stage
         self.dstRange = dstRange
         self.dstFlags = dstFlags
@@ -42811,7 +42811,7 @@ public struct DataGraphPipelineOpticalFlowCreateInfoARM: ChainableBase, DataGrap
     public let performanceLevel: DataGraphOpticalFlowPerformanceLevelARM
     public let flags: DataGraphOpticalFlowCreateFlagsARM
 
-    public init(width: UInt32, height: UInt32, imageFormat: Format, flowVectorFormat: Format, costFormat: Format, outputGridSize: DataGraphOpticalFlowGridSizeFlagsARM, hintGridSize: DataGraphOpticalFlowGridSizeFlagsARM, performanceLevel: DataGraphOpticalFlowPerformanceLevelARM, flags: DataGraphOpticalFlowCreateFlagsARM) {
+    public init(width: UInt32, height: UInt32, imageFormat: Format, flowVectorFormat: Format, costFormat: Format = .init(rawValue: 0)!, outputGridSize: DataGraphOpticalFlowGridSizeFlagsARM, hintGridSize: DataGraphOpticalFlowGridSizeFlagsARM, performanceLevel: DataGraphOpticalFlowPerformanceLevelARM = .init(rawValue: 0)!, flags: DataGraphOpticalFlowCreateFlagsARM = []) {
         self.width = width
         self.height = height
         self.imageFormat = imageFormat
@@ -42859,7 +42859,7 @@ public struct DataGraphPipelineOpticalFlowDispatchInfoARM: ChainableBase, DataGr
     public let flags: DataGraphOpticalFlowExecuteFlagsARM
     public let meanFlowL1NormHint: UInt32
 
-    public init(flags: DataGraphOpticalFlowExecuteFlagsARM, meanFlowL1NormHint: UInt32) {
+    public init(flags: DataGraphOpticalFlowExecuteFlagsARM = [], meanFlowL1NormHint: UInt32 = 0) {
         self.flags = flags
         self.meanFlowL1NormHint = meanFlowL1NormHint
     }

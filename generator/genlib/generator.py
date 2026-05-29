@@ -113,7 +113,9 @@ class Generator(BaseGenerator):
         params = []
         for member in struct.members:
             escaping = '@escaping ' if member.is_closure else ''
-            params.append(f'{member.name}: {escaping}{member.type}')
+            default_value = f' = {member.default_value}' if member.default_value else ''
+            params.append(
+                f'{member.name}: {escaping}{member.type}{default_value}')
 
         with self.indent(f'public init({", ".join(params)}) {{', '}'):
             for member in struct.members:
@@ -221,12 +223,15 @@ class Generator(BaseGenerator):
 
         param_strings: list[str] = []
         for index, param in enumerate(command.params):
+            default_value = f' = {param.default_value}' if param.default_value and 'Chainable<' not in param.type else ''
             if index == 0 and param.name.endswith("Info"):
-                param_strings.append(f'_ {param.name}: {param.type}')
+                param_strings.append(
+                    f'_ {param.name}: {param.type}{default_value}')
             else:
-                param_strings.append(f'{param.name}: {param.type}')
+                param_strings.append(
+                    f'{param.name}: {param.type}{default_value}')
         param_string = ', '.join(param_strings)
-        
+
         throws_string = ' throws' if command.throws else ''
 
         with self.indent(f'public func {command.name}({param_string})'

@@ -16,6 +16,19 @@ IMPLICIT_TYPE_MAP = {
     'int': 'Int32'
 }
 
+NUMERIC_TYPE = {
+    'float',
+    'double',
+    'uint8_t',
+    'uint16_t',
+    'uint32_t',
+    'uint64_t',
+    'int32_t',
+    'int64_t',
+    'size_t',
+    'int'
+}
+
 
 def _substitute(template: str, values: Dict[str, str], safe: bool = False):
     if safe:

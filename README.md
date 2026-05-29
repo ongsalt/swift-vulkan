@@ -10,7 +10,7 @@ Its aim is to be a lightweight wrapper around Vulkan, yet remove many of the com
 - Classes used to organise commands and handles
 - Native error handling (do/try/catch) for failable commands
 - Commands loaded automatically
-- Support for Vulkan 1.0 / 1.1 / 1.2, plus many extensions
+- Support for Vulkan 1.0 / 1.1 / 1.2 / 1.3 / 1.4, plus many extensions
 
 
 ## Example Usage
@@ -52,6 +52,7 @@ Swift-vulkan is a relatively new project, and there are still some important mil
 ## Todos
 - generate `push(_:)` per each ChainableBase
 - result enum extension
+- fix parent class
 
 - generate overload for Chainable out param
     - discrete type: fill sType for out param
