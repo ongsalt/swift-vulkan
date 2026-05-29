@@ -29,14 +29,14 @@ class SwiftMember:
 class SwiftStruct:
     def __init__(self, c_struct: CStruct, name: str,
                  members: List[SwiftMember], member_conversions: tc.MemberConversions,
-                 convertible_from_c_struct: bool = True, parent_class: 'SwiftClass' = None, 
+                 convertible_from_c_struct: bool = True, parent_classes: 'List[SwiftClass] | None' = None,
                  protocols: List[str] = None):
         self.name = name
         self.members = members
         self.member_conversions: tc.MemberConversions = member_conversions
         self.c_struct = c_struct
         self.convertible_from_c_struct = convertible_from_c_struct
-        self.parent_class = parent_class
+        self.parent_classes = parent_classes or []
         self.protocols = protocols or []
 
 
@@ -44,7 +44,7 @@ class SwiftCommand:
     def __init__(self, c_command: CCommand, name: str, return_type: str, throws: bool,
                  class_params: Dict[str, 'SwiftClass'], params: List[SwiftMember],
                  param_conversions: tc.MemberConversions, return_conversion: tc.Conversion,
-                 output_param: str = None, output_param_implicit_type: str = None, unwrap_output_param: bool = False,
+                 output_param: str = None, output_param_implicit_type: str = None, output_param_custom_initializer: str | None = None, unwrap_output_param: bool = False,
                  enumeration_pointer_param: str = None, enumeration_count_param: str = None,
                  dispatcher: 'SwiftClass' = None):
         self.c_command = c_command
@@ -57,6 +57,7 @@ class SwiftCommand:
         self.return_conversion = return_conversion
         self.output_param = output_param
         self.output_param_implicit_type = output_param_implicit_type
+        self.output_param_custom_initializer = output_param_custom_initializer
         self.unwrap_output_param = unwrap_output_param
         self.enumeration_pointer_param = enumeration_pointer_param
         self.enumeration_count_param = enumeration_count_param
@@ -121,8 +122,10 @@ class Importer:
         self.imported_structs: Dict[str, SwiftStruct] = {}
         self.imported_classes: Dict[str, SwiftClass] = {}
         self.imported_aliases: Dict[str, SwiftAlias] = {}
-        self.pointer_types = [handle.name for handle in c_context.handles] + [alias.name for alias in c_context.aliases]
-        self.c_structs = {c_struct.name: c_struct for c_struct in c_context.structs}
+        self.pointer_types = [handle.name for handle in c_context.handles] + \
+            [alias.name for alias in c_context.aliases]
+        self.c_structs = {
+            c_struct.name: c_struct for c_struct in c_context.structs}
 
     def import_all(self) -> SwiftContext:
         for enum in self.c_context.enums:
@@ -184,7 +187,8 @@ class Importer:
             except ValueError:
                 pass
 
-            swift_enum.cases.append(SwiftEnum.Case(name=name, value=case.value))
+            swift_enum.cases.append(
+                SwiftEnum.Case(name=name, value=case.value))
 
         if starts_with_digit:
             for case in swift_enum.cases:
@@ -199,7 +203,7 @@ class Importer:
             name=remove_vk_prefix(c_bitmask.name),
             cases=[],
             c_bitmask=c_bitmask,
-            raw_type='UInt32'
+            raw_type='UInt64' if c_bitmask.is64 else 'UInt32'
         )
 
         if c_bitmask.enum:
@@ -229,7 +233,8 @@ class Importer:
                 if name[0].isdigit():
                     starts_with_digit = True
 
-                option_set.cases.append(SwiftOptionSet.Case(name=name, value=case.value))
+                option_set.cases.append(
+                    SwiftOptionSet.Case(name=name, value=case.value))
 
             if starts_with_digit:
                 for case in option_set.cases:
@@ -248,37 +253,38 @@ class Importer:
         name = remove_vk_prefix(c_struct.name)
 
         convertible_from_c_struct = True
-        parent_class: SwiftClass | None = None
+        parent_classes: set[SwiftClass] = set()
         for member in c_struct.members:
             type_name = member.type.type_name
             if type_name in self.c_structs:
                 child_struct = self.import_struct(self.c_structs[type_name])
                 if convertible_from_c_struct:
                     convertible_from_c_struct = child_struct.convertible_from_c_struct
-                    if child_struct.parent_class:
-                        parent_class = child_struct.parent_class
+                    parent_classes.update(child_struct.parent_classes)
             elif convertible_from_c_struct:
                 if type_name in self.imported_aliases:
                     type_name = self.imported_aliases[type_name].c_alias.alias
-                if type_name in ('VkPhysicalDevice', 'VkDisplayKHR', 'VkDisplayModeKHR'):
-                    parent_class = self.imported_classes[type_name].parent
+                # if type_name in ('VkPhysicalDevice', 'VkDisplayKHR', 'VkDisplayModeKHR'):
                 elif type_name in self.imported_classes:
+                    parent_classes.add(self.imported_classes[type_name].parent)
+
                     # TODO: cant we just do Global.getHandleClass() or some shi
                     # vulkan wont return an existing handle which mean we can create this
                     # convertible_from_c_struct = False
-                    pass
-        
+                    # pass
+
         protocols: List[str] = []
         for base in c_struct.struct_extends:
             protocols.append(f"{remove_vk_prefix(base)}.Extension")
 
-        members, conversions = self.get_member_conversions(c_struct.members, c_struct=c_struct)
+        members, conversions = self.get_member_conversions(
+            c_struct.members, c_struct=c_struct)
         struct = SwiftStruct(c_struct=c_struct,
                              name=name,
                              members=members,
                              member_conversions=conversions,
                              convertible_from_c_struct=convertible_from_c_struct,
-                             parent_class=parent_class,
+                             parent_classes=list(parent_classes),
                              protocols=protocols)
         self.swift_context.structs.append(struct)
         self.imported_structs[c_struct.name] = struct
@@ -288,7 +294,8 @@ class Importer:
         if 'entry' in self.imported_classes:
             return self.imported_classes['entry']
 
-        dispatch_table = DispatchTable('EntryDispatchTable', ('vkGetInstanceProcAddr', 'PFN_vkGetInstanceProcAddr'))
+        dispatch_table = DispatchTable(
+            'EntryDispatchTable', ('vkGetInstanceProcAddr', 'PFN_vkGetInstanceProcAddr'))
         loader = SwiftClass(name='Loader', reference_name='loader')
         entry = SwiftClass(name='Entry', reference_name='entry', parent=loader,
                            dispatch_table=dispatch_table, dispatcher=loader)
@@ -311,16 +318,19 @@ class Importer:
         elif handle.name == 'VkSwapchainKHR':
             parent = self.imported_classes['VkDevice']
         else:
-            parent = self.import_handle(handle.parent) if handle.parent else None
+            parent = self.import_handle(
+                handle.parent) if handle.parent else None
 
         if handle.name == 'VkInstance':
             dispatch_table = DispatchTable('InstanceDispatchTable',
-                                           ('vkGetInstanceProcAddr', 'PFN_vkGetInstanceProcAddr'),
+                                           ('vkGetInstanceProcAddr',
+                                            'PFN_vkGetInstanceProcAddr'),
                                            ('instance', 'VkInstance'))
             dispatcher = self.imported_classes['entry'].parent
         elif handle.name == 'VkDevice':
             dispatch_table = DispatchTable('DeviceDispatchTable',
-                                           ('vkGetDeviceProcAddr', 'PFN_vkGetDeviceProcAddr'),
+                                           ('vkGetDeviceProcAddr',
+                                            'PFN_vkGetDeviceProcAddr'),
                                            ('device', 'VkDevice'))
             dispatcher = self.imported_classes['VkInstance']
         else:
@@ -343,14 +353,17 @@ class Importer:
         return cls
 
     def import_command(self, c_command: CCommand) -> SwiftCommand:
-        class_params_and_classes = self.get_class_params(c_command)
+        class_params_and_classes: List[Tuple[CMember,
+                                             SwiftClass]] = self.get_class_params(c_command)
         current_class = class_params_and_classes[-1][1] if class_params_and_classes \
             else self.imported_classes['entry']
 
-        class_name_without_extension, _ = self.pop_extension_tag(current_class.name)
+        class_name_without_extension, _ = self.pop_extension_tag(
+            current_class.name)
 
         name = remove_vk_prefix(c_command.name)
-        name = re.sub(f'({class_name_without_extension})([A-Z]\w*)?$', r'\2', name)
+        name = re.sub(
+            f'({class_name_without_extension})([A-Z]\w*)?$', r'\2', name)
         name = name[0].lower() + name[1:]
         if name.startswith('enumerate'):
             name = 'get' + name[9:]
@@ -361,27 +374,28 @@ class Importer:
             throws = True
             c_return_type = CType(name='void')
 
-        return_type, return_conversion = self.get_type_conversion(c_return_type, force_optional=True)
+        return_type, return_conversion = self.get_type_conversion(
+            c_return_type, force_optional=True)
 
         output_param: str = None
         output_param_implicit_type: str = None
+        output_param_custom_initializer: str | None = None
         unwrap_output_param = False
         enumeration_pointer_params: List[str] = []
         enumeration_count_param: str = None
         if c_return_type.name == 'void':
             output_params = get_output_params(c_command)
-            # if len(output_params) > 2:
-            #     print(c_command.name)
-            #     print(output_params)
-            
+
             if len(output_params) == 1:
                 if c_command.name == 'vkEnumerateInstanceVersion':
                     output_param = output_params[0].name
                     return_type, return_conversion = 'Version', tc.version_conversion
                     output_param_implicit_type = 'UInt32'
+
                 elif is_array_convertible(output_params[0].type, ignore_const=True):
                     output_param = output_params[0].name
-                    return_type, return_conversion = self.get_array_conversion(output_params[0].type)
+                    return_type, return_conversion = self.get_array_conversion(
+                        output_params[0].type)
                     output_param_implicit_type, _ = self.get_type_conversion(output_params[0].type.pointer_to,
                                                                              implicit_only=True, force_optional=True)
                 elif not output_params[0].type.length:
@@ -390,38 +404,77 @@ class Importer:
                                                                               force_optional=False)
                     output_param_implicit_type, _ = self.get_type_conversion(output_params[0].type.pointer_to,
                                                                              implicit_only=True, force_optional=False)
-                    unwrap_output_param = self.is_pointer_type(output_params[0].type.pointer_to)
+                    unwrap_output_param = self.is_pointer_type(
+                        output_params[0].type.pointer_to)
+
+                    if output_params[0].type.pointer_to.name in self.imported_enums:
+                        output_param_custom_initializer = f'{output_param_implicit_type}(rawValue: 0)'
+
+                if c_command.name == 'vkGetMemoryRemoteAddressNV':
+                    # we can make it fall into branch above by telling it somehow that VkRemoteAddressNV is a pointer (void*)
+                    unwrap_output_param = True
 
             elif len(output_params) == 2 and output_params[1].type.length == output_params[0].name:
                 enumeration_pointer_params = output_params[1].name
                 enumeration_count_param = output_params[0].name
-                return_type, return_conversion = self.get_array_conversion(output_params[1].type, force_optional=False)
+                return_type, return_conversion = self.get_array_conversion(
+                    output_params[1].type, force_optional=False)
 
         class_params = [param for param, _ in class_params_and_classes]
-        output_params = (output_param, enumeration_pointer_params, enumeration_count_param)
-        # if output_params[1] != None:
-        #     print(output_params)
-        c_input_params = [param for param in c_command.params if param.name not in output_params]
+        output_params = (
+            output_param, enumeration_pointer_params, enumeration_count_param)
+        c_input_params = [
+            param for param in c_command.params if param.name not in output_params]
         c_input_params = class_params + c_input_params[len(class_params):]
-
-        # we need to generate an overload in case of param with Chainable<...> is optional
-        params, conversions = self.get_member_conversions(c_input_params, c_command=c_command)
 
         dispatcher = self.get_dispatcher(c_command)
         if dispatcher.dispatch_table:
             dispatcher.dispatch_table.commands.append(c_command)
+
+        # we need to generate an overload in case of param with Chainable<...> is optional
+        shuold_generate_overload = self.shuold_generate_chainable_overload(
+            c_command, c_input_params)
+
+        if shuold_generate_overload:
+            params, conversions = self.get_member_conversions(
+                c_input_params, c_command=c_command, transform_chainable=False)
+
+            command = SwiftCommand(
+                c_command=c_command,
+                name=remove_vk_prefix(name),
+                return_type=return_type,
+                throws=throws,
+                class_params={param.name: cls for param,
+                              cls in class_params_and_classes},
+                params=params[len(class_params):],
+                param_conversions=conversions,
+                return_conversion=return_conversion,
+                output_param=output_param,
+                output_param_implicit_type=output_param_implicit_type,
+                output_param_custom_initializer=output_param_custom_initializer,
+                unwrap_output_param=unwrap_output_param,
+                enumeration_pointer_param=enumeration_pointer_params,
+                enumeration_count_param=enumeration_count_param,
+                dispatcher=dispatcher
+            )
+            current_class.commands.append(command)
+
+        params, conversions = self.get_member_conversions(
+            c_input_params, c_command=c_command, transform_chainable=True)
 
         command = SwiftCommand(
             c_command=c_command,
             name=remove_vk_prefix(name),
             return_type=return_type,
             throws=throws,
-            class_params={param.name: cls for param, cls in class_params_and_classes},
+            class_params={param.name: cls for param,
+                          cls in class_params_and_classes},
             params=params[len(class_params):],
             param_conversions=conversions,
             return_conversion=return_conversion,
             output_param=output_param,
             output_param_implicit_type=output_param_implicit_type,
+            output_param_custom_initializer=output_param_custom_initializer,
             unwrap_output_param=unwrap_output_param,
             enumeration_pointer_param=enumeration_pointer_params,
             enumeration_count_param=enumeration_count_param,
@@ -429,10 +482,13 @@ class Importer:
         )
 
         current_class.commands.append(command)
+
+        # unused return
         return command
 
     def import_alias(self, c_alias: CAlias) -> SwiftAlias:
-        alias = SwiftAlias(c_alias, remove_vk_prefix(c_alias.name), self.imported_classes[c_alias.alias].name)
+        alias = SwiftAlias(c_alias, remove_vk_prefix(
+            c_alias.name), self.imported_classes[c_alias.alias].name)
         self.swift_context.aliases.append(alias)
         self.imported_aliases[c_alias.name] = alias
         return alias
@@ -461,13 +517,14 @@ class Importer:
                     cls = self.imported_classes[param.type.name]
                     if not previous_class or previous_class in cls.ancestors:
                         previous_class = cls
-                        class_params.append((CMember(param.name, CType(param.type.name)), cls))
+                        class_params.append(
+                            (CMember(param.name, CType(param.type.name)), cls))
                         continue
             break
         return class_params
 
-    def get_member_conversions(self, c_members: List[CMember], c_struct: CStruct = None, c_command: CCommand = None
-                               ) -> Tuple[List[SwiftMember], tc.MemberConversions]:
+    def get_member_conversions(self, c_members: List[CMember], c_struct: CStruct = None, c_command: CCommand = None,
+                               transform_chainable: bool = False) -> Tuple[List[SwiftMember], tc.MemberConversions]:
         members: List[SwiftMember] = []
         conversions = tc.MemberConversions()
         lengths: List[str] = []
@@ -496,7 +553,8 @@ class Importer:
 
             if c_struct and c_member.name == 'pNext':
                 # some pNext is mutable, some is not. And the header dont really follows the spec.
-                conversions.add_static_value(c_member.name, 'maybeMutable(pNext)')
+                conversions.add_static_value(
+                    c_member.name, 'maybeMutable(pNext)')
                 continue
 
             if (c_struct and (
@@ -517,26 +575,50 @@ class Importer:
             elif c_struct and c_struct.name == 'VkPhysicalDeviceGroupProperties' and c_member.name == 'physicalDevices':
                 swift_type, conversion = 'Array<PhysicalDevice>', tc.tuple_array_conversion(
                     tc.array_mapped_conversion(
-                        tc.class_conversion('PhysicalDevice', 'instance'), 'physicalDeviceCount'
+                        tc.class_conversion(
+                            'PhysicalDevice', 'instance'), 'physicalDeviceCount'
                     ), 'VkPhysicalDevice?', c_member.type.length
                 )
 
             else:
                 swift_type, conversion = self.get_type_conversion(c_member.type,
                                                                   convert_array_to_pointer=c_command is not None,
-                                                                  transform_chainable=c_command is not None)
+                                                                  transform_chainable=c_command is not None and transform_chainable)
 
             swift_name = get_member_name(c_member.name, c_member.type)
-            is_closure = c_member.type.name and c_member.type.name.startswith('PFN_') and not c_member.type.optional
-            
-            member = SwiftMember(name=swift_name, type_=swift_type, is_closure=is_closure)
+            # VkAccelerationStructureBuildGeometryInfoKHR.{pGeometries, ppGeometries} both got translated to `geometries`
+            for m in members:
+                if m.name == swift_name:
+                    # TODO: better naming maybe
+                    swift_name = f"{swift_name}2"
+
+            is_closure = c_member.type.name and c_member.type.name.startswith(
+                'PFN_') and not c_member.type.optional
+
+            member = SwiftMember(
+                name=swift_name, type_=swift_type, is_closure=is_closure)
             members.append(member)
             conversions.add_conversion(c_member.name, swift_name, conversion)
 
         return members, conversions
 
+    def shuold_generate_chainable_overload(self, c_command: CCommand, c_input_params: list[CMember]):
+        out = False
+        for p in c_input_params:
+            name = p.type.type_name
+            if name in self.imported_structs and p.type.pointer_to and p.type.pointer_to.const and not p.type.name:
+                swift_struct = self.imported_structs[name]
+                if swift_struct.c_struct.is_chainable_base and p.type.optional and not p.type.length:
+                    if out == True:
+                        print(
+                            f"warning: {c_command.name} contains multiple chainable parameter")
+                        return False
+                    out = True
+
+        return out
+
     def get_type_conversion(self, c_type: CType, implicit_only: bool = False, force_optional: bool = None,
-                            convert_array_to_pointer: bool = False, transform_chainable = False) -> Tuple[str, tc.Conversion]:
+                            convert_array_to_pointer: bool = False, transform_chainable=False) -> Tuple[str, tc.Conversion]:
         optional = force_optional if force_optional is not None else c_type.optional
         if c_type.name:
             if c_type.name in tc.IMPLICIT_TYPE_MAP:
@@ -555,8 +637,9 @@ class Importer:
                     return option_set, tc.option_set_bit_conversion(c_type.name, option_set)
                 if c_type.name in self.imported_structs:
                     swift_struct = self.imported_structs[c_type.name]
-                    parent_name = swift_struct.parent_class.reference_name if swift_struct.parent_class else None
-                    return swift_struct.name, tc.struct_conversion(swift_struct.name, parent_name)
+                    parent_names = [
+                        p.reference_name for p in swift_struct.parent_classes] if swift_struct.parent_classes else None
+                    return swift_struct.name, tc.struct_conversion(swift_struct.name, parent_names)
 
                 alias = self.imported_aliases.get(c_type.name)
                 c_name = alias.c_alias.alias if alias else c_type.name
@@ -594,17 +677,23 @@ class Importer:
 
                 if c_type.pointer_to.name and not c_type.length and c_type.pointer_to.name in self.imported_structs:
                     swift_struct = self.imported_structs[c_type.pointer_to.name]
-                    parent_name = swift_struct.parent_class.reference_name if swift_struct.parent_class else None
-                    
-                    name = swift_struct.name 
-                    if transform_chainable:
-                        name = f"some Chainable<{name}>"
-                    if optional:
-                        return name + '?', tc.optional_struct_conversion(swift_struct.name, parent_name, chainable=transform_chainable)
-                    else:
-                        return name, tc.struct_pointer_conversion(swift_struct.name, parent_name, chainable=transform_chainable)
+                    parent_names = [
+                        p.reference_name for p in swift_struct.parent_classes] if swift_struct.parent_classes else None
 
-            to_type, _ = self.get_type_conversion(c_type.pointer_to, implicit_only=True, force_optional=True)
+                    name = swift_struct.name
+                    if transform_chainable:
+                        # if optional:
+                        #     raise Exception(
+                        #         f"cannot generate (some Chainable<{name}>)?, use overloading instead")
+                        # else:
+                        name = f"(some Chainable<{name}>)"
+                    if optional and not transform_chainable:
+                        return name + '?', tc.optional_struct_conversion(swift_struct.name, parent_names)
+                    else:
+                        return name, tc.struct_pointer_conversion(swift_struct.name, parent_names)
+
+            to_type, _ = self.get_type_conversion(
+                c_type.pointer_to, implicit_only=True, force_optional=True)
             swift_type = f'UnsafePointer<{to_type}>' if c_type.pointer_to.const else f'UnsafeMutablePointer<{to_type}>'
             if optional:
                 swift_type += '?'
@@ -613,8 +702,15 @@ class Importer:
         elif c_type.array_of:
             if c_type.array_of.name == 'char':
                 return 'String', tc.char_array_conversion
-            of_type, _ = self.get_type_conversion(c_type.array_of, implicit_only=True, force_optional=True)
-            swift_type = f'({", ".join([of_type] * c_type.length)})'
+            of_type, _ = self.get_type_conversion(
+                c_type.array_of, implicit_only=True, force_optional=True)
+
+            swift_type = of_type
+            lenghts = [c_type.length] if type(
+                c_type.length) == int else c_type.length
+            for size in reversed(lenghts):
+                swift_type = f'({", ".join([swift_type] * size)})'
+
             if convert_array_to_pointer:
                 return swift_type, tc.tuple_pointer_conversion(of_type)
             else:
@@ -628,25 +724,32 @@ class Importer:
 
         if c_type.pointer_to.name and c_type.pointer_to.name in self.imported_structs:
             swift_struct = self.imported_structs[c_type.pointer_to.name]
-            parent_name = swift_struct.parent_class.reference_name if swift_struct.parent_class else None
+            parent_names = [
+                p.reference_name for p in swift_struct.parent_classes] if swift_struct.parent_classes else None
             if not optional:
                 return f'Array<{swift_struct.name}>', \
-                       tc.struct_array_conversion(swift_struct.name, c_type.length, parent_name)
+                    tc.struct_array_conversion(
+                        swift_struct.name, c_type.length, parent_names)
             else:
                 return f'Array<{swift_struct.name}>?', \
-                       tc.optional_struct_array_conversion(swift_struct.name, c_type.length, parent_name)
+                    tc.optional_struct_array_conversion(
+                        swift_struct.name, c_type.length, parent_names)
 
         if c_type.pointer_to.name:
-            element_type, element_conversion = self.get_type_conversion(c_type.pointer_to)
+            element_type, element_conversion = self.get_type_conversion(
+                c_type.pointer_to)
             if element_conversion != tc.implicit_conversion:
                 if not optional:
                     return f'Array<{element_type}>', \
-                           tc.array_mapped_conversion(element_conversion, c_type.length)
+                        tc.array_mapped_conversion(
+                            element_conversion, c_type.length)
                 else:
                     return f'Array<{element_type}>?', \
-                       tc.optional_array_mapped_conversion(element_conversion, c_type.length)
+                        tc.optional_array_mapped_conversion(
+                            element_conversion, c_type.length)
 
-        element_type, _ = self.get_type_conversion(c_type.pointer_to, implicit_only=True, force_optional=True)
+        element_type, _ = self.get_type_conversion(
+            c_type.pointer_to, implicit_only=True, force_optional=True)
         if not optional:
             return f'Array<{element_type}>', tc.array_conversion(c_type.length)
         else:

@@ -236,3 +236,10 @@ extension _HandleContainer {
         return try body(handle)
     }
 }
+
+
+public struct EmptyEnum<T: BinaryInteger> {}
+extension EmptyEnum: RawRepresentable {
+    public var rawValue: T { 0 }
+    public init?(rawValue: T) {}
+}

@@ -50,26 +50,36 @@ Swift-vulkan is a relatively new project, and there are still some important mil
 
 
 ## Todos
-- No return type 
-- nuke handle class. just do newtype
+- remove system `vulkan.h` dependency
+
+- namespace platform specific header?
+- handle `api`, currently i nuked everything `vulkansc`
+- proper extension support
+
+- Parent classs fix
+- alias fix
+- result enum extension
+
 - multiple out array
     - is multiple out array of pNext chain possible?
-- assert(array1.count == array2.count)
-- proper extension support
-- typed throws
-- handle `api`, currently i nuked everything `vulkansc`
+- PipelineBinaryHandlesInfoKHR should become array of handle?
+    - it should not take in `device`
+- assert(array1.count == array2.count)?
 - generate `push(_:)` per each ChainableBase
-- namespace platform specific header?
-- why do some struct not have `init(cStruct: Self.CStruct)` 
 - explicitly type `enumerate()`
-- some flag is UInt64 (BufferUsageFlags2)
 - `some Chainable<...>` can not be wrapped in an optional
+    - just use any for now
+    - then generate an overload for default structure
+    - or use swift 6.4 `MutableRef<T>`
+- typed throws
+- rename `createX(createInfo:)` to `createX(_:)`
+- fill sType for out param (must generate overload for an `inout` param with pNext)
+- remove some hardcode fix
 
-# Design
-## Signature transformation
-- map simple types
-- return types:
-    - VkResult -> throws(VulkanResult)
+
+DataGraphPipelineNodeConnectionTypeARM
+error: an enum with no cases cannot declare a raw type (UInt32)
+
 
 ## Chaining
 - `[inout] some Chainable<Base>`. (maybe we can provide some `extension` `.0` `.1`...)

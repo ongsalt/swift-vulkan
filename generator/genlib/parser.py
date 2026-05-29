@@ -16,14 +16,15 @@ class CEnum:
 
 
 class CBitmask:
-    def __init__(self, name: str, enum: CEnum = None):
+    def __init__(self, name: str, enum: CEnum = None, is64: bool = False):
         self.name = name
         self.enum = enum
+        self.is64 = is64
 
 
 class CType:
     def __init__(self, name: str = None, pointer_to: 'CType' = None, array_of: 'CType' = None,
-                 const: bool = False, length: Union[str, int] = None, optional: bool = False):
+                 const: bool = False, length: Union[str, int, list[int]] = None, optional: bool = False):
         self.name = name
         self.pointer_to = pointer_to
         self.array_of = array_of
@@ -38,7 +39,6 @@ class CType:
         if self.array_of:
             return self.array_of.type_name
         return self.name
-    
 
 
 class CMember:
@@ -73,7 +73,9 @@ class CCommand:
 
 class CExtension:
     def __init__(self, name: str, supported: str = None, platform: str = None, protect: str = None,
-                 types: List[str] = None, enums: List[CEnum] = None, commands: List[str] = None):
+                 types: List[str] = None, enums: List[CEnum] = None, commands: List[str] = None,
+                 ignored_names: list[str] | None = None,
+                 supported_apis: List[str] | None = None):
         self.name = name
         self.supported = supported
         self.platform = platform
@@ -81,6 +83,28 @@ class CExtension:
         self.types = types or []
         self.enums = enums or []
         self.commands = commands or []
+        self.supported_apis = supported_apis or []
+        self.ignored_names = ignored_names or []
+
+
+blacklisted_extensions = set([
+    "VK_AMD_gpa_interface",  # not presented in the header, lunarg sdk?
+    "VK_QCOM_elapsed_timer_query",
+    "VK_KHR_opacity_micromap",
+    "VK_EXT_opacity_micromap",
+    "VK_QCOM_shader_multiple_wait_queues",
+    "VK_QCOM_image_processing3",
+    "VK_EXT_shader_split_barrier",
+])
+
+
+class CFeature:
+    def __init__(self, name: str, api: list[str], type_names: list[str], command_names: list[str], apitype: str | None = None,):
+        self.name = name
+        self.api = api or "public"
+        self.apitype = apitype
+        self.type_names = set(type_names)
+        self.command_names = set(command_names)
 
 
 class CAlias:
@@ -93,8 +117,9 @@ class CAlias:
 class CContext:
     def __init__(self):
         self.platform_protects: Dict[str, str] = {}
-        self.extensions: List[CExtension] = []
         self.extension_tags: List[str] = []
+        self.extensions: List[CExtension] = []
+        self.features: list[CFeature] = []
         self.handles: List[CHandle] = []
         self.enums: List[CEnum] = []
         self.bitmasks: List[CBitmask] = []
@@ -104,54 +129,110 @@ class CContext:
 
     def parse(self, source):
         tree = ElementTree.parse(source)
-        self._filter_vulkansc(tree.getroot())
+        # TODO: parse feature block instead of doing this
+        # self._filter_vulkansc(tree.getroot())
         self.parse_tree(tree)
 
-    def _filter_vulkansc(self, element: ElementTree.Element):
-        for child in list(element):
-            if 'api' in child.attrib:
-                apis = child.attrib['api'].split(',')
-                if 'vulkansc' in apis and 'vulkan' not in apis:
-                    element.remove(child)
-                    continue
-            self._filter_vulkansc(child)
+    # def _filter_vulkansc(self, element: ElementTree.Element):
+    #     for child in list(element):
+    #         if 'api' in child.attrib:
+    #             apis = child.attrib['api'].split(',')
+    #             if 'vulkansc' in apis and 'vulkan' not in apis:
+    #                 element.remove(child)
+    #                 continue
+    #         self._filter_vulkansc(child)
 
     def parse_tree(self, tree: ElementTree):
         self.parse_platforms(tree)
-        self.parse_extensions(tree)
         self.parse_extension_tags(tree)
+        self.parse_extensions(tree)
+
+        self.parse_features(tree)
+        # types
+        # not seen here: include, define, funcpointer
         self.parse_handles(tree)
         self.parse_enums(tree)
         self.parse_bitmasks(tree)
         self.parse_structs(tree)
         self.parse_commands(tree)
 
-
     def parse_platforms(self, tree: ElementTree):
         for platform in tree.findall('./platforms/platform'):
-            self.platform_protects[platform.attrib['name']] = platform.attrib['protect']
+            self.platform_protects[platform.attrib['name']
+                                   ] = platform.attrib['protect']
+
+    def parse_features(self, tree: ElementTree):
+        for feature in tree.findall('./feature'):
+            type_names: list[str] = []
+            command_names: list[str] = []
+
+            for type in feature.findall('./require/type'):
+                name = type.attrib['name']
+                type_names.append(name)
+
+            for command in feature.findall('./require/command'):
+                name = command.attrib['name']
+                command_names.append(name)
+
+            apitype = None
+            if apitype in feature.attrib:
+                apitype = feature.attrib['apitype']
+
+            c_feature = CFeature(
+                name=feature.attrib['name'],
+                api=feature.attrib['api'].split(","),
+                type_names=type_names,
+                command_names=command_names,
+                apitype=apitype
+            )
+            self.features.append(c_feature)
 
     def parse_extensions(self, tree: ElementTree):
         for e_extension in tree.findall('./extensions/extension'):
             extension_number = int(e_extension.attrib['number'])
 
-            enums: Dict[str, List[CEnum.Case]] = {}
-            for e_enum in e_extension.findall('./require/enum[@extends]'):
-                if 'alias' in e_enum.attrib:
-                    continue
-                c_case = CEnum.Case(e_enum.attrib['name'], parse_enum_value(e_enum, extension_number))
-                enums.setdefault(e_enum.attrib['extends'], []).append(c_case)
-
+            name = e_extension.attrib['name']
             platform = e_extension.get('platform')
 
+            enums: Dict[str, List[CEnum.Case]] = {}
+            types: List[str] = []
+            commands: List[str] = []
+            ignored_names: List[str] = []
+
+            for e_require in e_extension.findall('./require'):
+                if self.should_ignore(api=parse_api(e_require)):
+                    ignored_names.extend(t.attrib['name']
+                                         for t in e_require.findall('./type'))
+                    ignored_names.extend(t.attrib['name']
+                                         for t in e_require.findall('./command'))
+                    ignored_names.extend(t.attrib['name']
+                                         for t in e_require.findall('./enum'))
+
+                types.extend(t.attrib['name']
+                             for t in e_require.findall('./type'))
+                commands.extend(t.attrib['name']
+                                for t in e_require.findall('./command'))
+                for e_enum in e_require.findall('./require/enum[@extends]'):
+                    if 'alias' in e_enum.attrib:
+                        continue
+                    c_case = CEnum.Case(
+                        e_enum.attrib['name'], parse_enum_value(e_enum, extension_number))
+                    enums.setdefault(
+                        e_enum.attrib['extends'], []).append(c_case)
+
+                # supported_apis = e_require.attrib['supported'].split(",")
+
             c_extension = CExtension(
-                name=e_extension.attrib['name'],
-                supported=e_extension.get('supported'),
+                name=name,
+                supported=e_extension.attrib['supported'],
                 platform=platform,
                 protect=self.platform_protects[platform] if platform else None,
-                types=[t.attrib['name'] for t in e_extension.findall('./require/type')],
-                enums=[CEnum(enum_name, cases) for enum_name, cases in enums.items()],
-                commands=[c.attrib['name'] for c in e_extension.findall('./require/command')],
+                types=types,
+                enums=[CEnum(enum_name, cases)
+                       for enum_name, cases in enums.items()],
+                commands=commands,
+                ignored_names=ignored_names,
+                # supported_apis=supported_apis
             )
             self.extensions.append(c_extension)
 
@@ -174,7 +255,11 @@ class CContext:
                 continue
 
             handle_name = e_handle.find('./name').text
-            handle = CHandle(handle_name, protect=self.find_protect(type_=handle_name))
+            if self.should_ignore(type_=handle_name, api=parse_api(e_handle)):
+                continue
+
+            handle = CHandle(
+                handle_name, protect=self.find_protect(type_=handle_name))
             self.handles.append(handle)
             handles[handle_name] = handle
             parents[handle_name] = e_handle.get('parent')
@@ -189,7 +274,7 @@ class CContext:
         for e_enum in tree.findall('./enums[@type="enum"]'):
             enum_name = e_enum.attrib['name']
 
-            if self.should_ignore(type_=enum_name):
+            if self.should_ignore(type_=enum_name, api=parse_api(e_enum)):
                 continue
 
             cases = {}
@@ -199,14 +284,15 @@ class CContext:
                 cases[e_case.attrib['name']] = parse_enum_value(e_case)
 
             for extension in self.extensions:
-                if extension.supported == 'disabled' or extension.platform:
+                if extension.supported in ('vulkansc', 'disabled') or extension.platform:
                     continue
                 for ext_enum in extension.enums:
                     if ext_enum.name == enum_name:
                         for ext_case in ext_enum.cases:
                             cases[ext_case.name] = ext_case.value
 
-            c_enum = CEnum(enum_name, [CEnum.Case(name, value) for name, value in cases.items()])
+            c_enum = CEnum(enum_name, [CEnum.Case(name, value)
+                           for name, value in cases.items()])
             self.enums.append(c_enum)
 
     def parse_bitmasks(self, tree: ElementTree):
@@ -216,10 +302,11 @@ class CContext:
 
             bitmask_name = e_bitmask.find('./name').text
 
-            if self.should_ignore(type_=bitmask_name):
+            if self.should_ignore(type_=bitmask_name, api=parse_api(e_bitmask)):
                 continue
 
-            c_bitmask = CBitmask(bitmask_name)
+            c_bitmask = CBitmask(bitmask_name, is64=e_bitmask.find('./type').text == "VkFlags64")
+
 
             requires = e_bitmask.get('requires')
             if requires:
@@ -231,17 +318,17 @@ class CContext:
                     cases[e_case.attrib['name']] = parse_enum_value(e_case)
 
                 for extension in self.extensions:
-                    if extension.supported == 'disabled' or extension.platform:
+                    if extension.supported in ('vulkansc', 'disabled') or extension.platform:
                         continue
                     for ext_enum in extension.enums:
                         if ext_enum.name == requires:
                             for ext_case in ext_enum.cases:
                                 cases[ext_case.name] = ext_case.value
 
-                c_bitmask.enum = CEnum(requires, [CEnum.Case(name, value) for name, value in cases.items()])
+                c_bitmask.enum = CEnum(requires, [CEnum.Case(
+                    name, value) for name, value in cases.items()])
 
             self.bitmasks.append(c_bitmask)
-
 
     def parse_structs(self, tree: ElementTree):
         bases: List[str] = []
@@ -249,27 +336,29 @@ class CContext:
             if 'alias' in struct.attrib:
                 continue
 
-            if self.should_ignore(type_=struct.attrib['name']):
+            if self.should_ignore(type_=struct.attrib['name'], api=parse_api(struct)):
                 continue
 
             extends: List[str] = []
             if 'structextends' in struct.attrib:
                 for name in struct.attrib['structextends'].split(","):
-                    if self.should_ignore(type_=name):
+                    if self.should_ignore(type_=name):  # wtf is this
                         continue
                     extends.append(name)
-                
-            c_struct = CStruct(struct.attrib['name'], returned_only=struct.get('returnedonly') == 'true', struct_extends=extends)
+
+            c_struct = CStruct(struct.attrib['name'], returned_only=struct.get(
+                'returnedonly') == 'true', struct_extends=extends)
 
             for member in struct.findall('./member'):
+                if self.should_ignore(api=parse_api(member)):
+                    continue
                 member = parse_member(member, tree)
                 c_struct.members.append(member)
                 # TODO: checl pNext type, maybe
-                if member.name == "pNext": 
+                if member.name == "pNext":
                     c_struct.is_chainable_base = True
 
             self.structs.append(c_struct)
-        
 
     def parse_commands(self, tree: ElementTree):
         for e_command in tree.findall('./commands/command'):
@@ -278,11 +367,13 @@ class CContext:
 
             proto = parse_member(e_command.find('./proto'), tree)
 
-            if self.should_ignore(command=proto.name):
+            if self.should_ignore(command=proto.name, api=parse_api(e_command)):
                 continue
 
             c_command = CCommand(proto.name, proto.type)
             for e_param in e_command.findall('./param'):
+                if self.should_ignore(api=parse_api(e_param)):
+                    continue
                 c_command.params.append(parse_member(e_param, tree))
 
             self.commands.append(c_command)
@@ -292,15 +383,27 @@ class CContext:
             if (type_ and type_ in extension.types) or (command and command in extension.commands):
                 return extension
 
+    def find_features(self, type_: str = None, command: str = None) -> list[CFeature]:
+        features: list[CFeature] = []
+        for feature in self.features:
+            if (type_ and type_ in feature.type_names) or (command and command in feature.command_names):
+                features.append(feature)
+        return features
+
     def find_protect(self, type_: str = None, command: str = None) -> Optional[str]:
         extension = self.find_extension(type_, command)
         if extension:
             return extension.protect
 
-    def should_ignore(self, type_: str = None, command: str = None) -> bool:
-        # return False
+    def should_ignore(self, type_: str = None, command: str = None, api: str | None = None) -> bool:
+        if api == 'vulkansc':
+            return True
         extension = self.find_extension(type_, command)
-        if extension and (extension.supported == 'disabled' or extension.platform):
+        if extension and ((type_ or command) in extension.ignored_names or extension.name in blacklisted_extensions or extension.supported in ('disabled', 'vulkansc') or extension.platform):
+            return True
+
+        features = self.find_features(type_, command)
+        if len(features) == 1 and len(features[0].api) == 1 and 'vulkansc' in features[0].api:
             return True
         return False
 
@@ -309,7 +412,8 @@ def parse_enum_value(e_enum: ElementTree, extension_number: int = None) -> str:
     if 'offset' in e_enum.attrib:
         if 'extnumber' in e_enum.attrib:
             extension_number = int(e_enum.attrib['extnumber'])
-        value = 1000000000 + (extension_number - 1) * 1000 + int(e_enum.attrib['offset'])
+        value = 1000000000 + (extension_number - 1) * \
+            1000 + int(e_enum.attrib['offset'])
         if e_enum.get('dir') == '-':
             value *= -1
         return str(value)
@@ -318,6 +422,7 @@ def parse_enum_value(e_enum: ElementTree, extension_number: int = None) -> str:
     else:
         return e_enum.attrib['value']
 
+
 def parse_member(member: ElementTree, tree: ElementTree) -> CMember:
     e_type = member.find('./type')
     type_string = (member.text or '') + e_type.text + (e_type.tail or '')
@@ -325,14 +430,18 @@ def parse_member(member: ElementTree, tree: ElementTree) -> CMember:
     e_name = member.find('./name')
     name = e_name.text
 
-    array_size: int = None
+    array_size: int | list[int] = None
     if e_name.tail and e_name.tail.startswith('['):
-        match = re.match('\[\s*(\d+)\s*\]', e_name.tail)
+        match = re.findall('\[\s*(\d+)\s*\]', e_name.tail)
         if match:
-            array_size = int(match.group(1))
+            if len(match) == 1:
+                array_size = int(match[0])
+            else:
+                array_size = [int(i) for i in match]
         else:
             e_enum = member.find('./enum')
-            array_size = int(tree.find(f'./enums/enum[@name="{e_enum.text}"]').attrib['value'])
+            array_size = int(
+                tree.find(f'./enums/enum[@name="{e_enum.text}"]').attrib['value'])
 
     type_strings = type_string.split('*')
 
@@ -346,8 +455,10 @@ def parse_member(member: ElementTree, tree: ElementTree) -> CMember:
     c_type = CType(name=' '.join(first_type), const=is_const)
 
     pointers = type_strings[1:]
-    lengths = member.attrib['len'].split(',') if 'len' in member.attrib and member.attrib['len'] != '1' else []
-    optionals = member.attrib['optional'].split(',') if 'optional' in member.attrib else []
+    lengths = member.attrib['len'].split(
+        ',') if 'len' in member.attrib and member.attrib['len'] != '1' else []
+    optionals = member.attrib['optional'].split(
+        ',') if 'optional' in member.attrib else []
 
     if len(optionals) > len(pointers):
         c_type.optional = optionals.pop(-1) == 'true'
@@ -357,7 +468,11 @@ def parse_member(member: ElementTree, tree: ElementTree) -> CMember:
 
     for pointer, length, optional in zip_longest(pointers, lengths, optionals):
         c_type = CType(pointer_to=c_type, length=length, const='const' in pointer,
-                    optional=optional == 'true')
+                       optional=optional == 'true')
+
+    # if name == "pPipelineBinaries":
+    if name == "resolveAttachments":
+        print(f"{name}: {list(lengths)} : {type_strings}")
 
     if array_size is not None:
         c_type = CType(array_of=c_type, length=array_size)
@@ -366,3 +481,9 @@ def parse_member(member: ElementTree, tree: ElementTree) -> CMember:
     values = values_string.split(',') if values_string else []
 
     return CMember(name, c_type, values)
+
+
+def parse_api(element: ElementTree) -> Optional[str]:
+    if 'api' in element.attrib:
+        return element.attrib['api']
+    return None

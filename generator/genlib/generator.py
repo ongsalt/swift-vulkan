@@ -38,7 +38,13 @@ class Generator(BaseGenerator):
         self.linebreak()
 
     def generate_enum(self, enum: SwiftEnum):
-        types = [enum.raw_type]
+        # an enum with no cases cannot declare a raw type
+        if len(enum.cases) == 0:
+            self << f'public typealias {enum.name} = EmptyEnum<{enum.raw_type}>'
+            # There are no error enum with 0 case, in fact there is only one error enum
+            self.linebreak()
+            return
+        types = [enum.raw_type] if len(enum.cases) != 0 else []
         if enum.error:
             types.append('Error')
         with self.indent(f'public enum {enum.name}: {", ".join(types)} {{', '}'):
@@ -52,7 +58,11 @@ class Generator(BaseGenerator):
             self.linebreak()
             if option_set.cases:
                 for case in option_set.cases:
-                    self << f'public static let {safe_name(case.name)} = {option_set.name}(rawValue: {case.value})'
+                    # to silence compiler warning
+                    if int(case.value, base=16 if 'x' in case.value else 10) == 0:
+                        self << f'public static let {safe_name(case.name)}: {option_set.name}  = []'
+                    else:
+                        self << f'public static let {safe_name(case.name)} = {option_set.name}(rawValue: {case.value})'
                 self.linebreak()
             with self.indent(f'public init(rawValue: {option_set.raw_type}) {{', '}'):
                 self << 'self.rawValue = rawValue'
@@ -76,9 +86,10 @@ class Generator(BaseGenerator):
             if not struct.c_struct.returned_only:
                 self.generate_struct_init(struct)
                 self.linebreak()
-            if struct.convertible_from_c_struct:
-                # TODO: update generate_struct_c_to_swift_method
-                self.generate_struct_c_to_swift_method(struct)
+            # if struct.convertible_from_c_struct:
+            self.generate_struct_c_to_swift_method(struct)
+            # print(f"ignoring convertible_from_c_struct for {struct.c_struct.name}")
+            # TODO: update generate_struct_c_to_swift_method
             self.linebreak()
             self.generate_struct_swift_to_c_method(
                 struct, is_chainable_base=struct.c_struct.is_chainable_base)
@@ -96,18 +107,23 @@ class Generator(BaseGenerator):
 
     def generate_struct_c_to_swift_method(self, struct: SwiftStruct):
         params = [f'cStruct: {struct.c_struct.name}']
-        parent_class = struct.parent_class
-        if parent_class:
-            params.append(
-                f'{parent_class.reference_name}: {parent_class.name}')
+        parent_classes = struct.parent_classes
+        # if len(parent_classes) > 0:
+        #     print(struct.name, [p.name for p in parent_classes])
+
+        for p in parent_classes:
+            params.append(f'{p.reference_name}: {p.name}')
+
+        c_values = {
+            member.name: f'cStruct.{member.name}' for member in struct.c_struct.members}
+        # print(struct.name)
+        classes = {p.reference_name: p.reference_name for p in parent_classes}
+        # print(classes)
+        # print(f"c_values = {c_values}")
+        swift_values = struct.member_conversions.get_swift_values(
+            c_values, classes)
 
         with self.indent(f'init({", ".join(params)}) {{', '}'):
-            c_values = {
-                member.name: f'cStruct.{member.name}' for member in struct.c_struct.members}
-            classes = {
-                parent_class.reference_name: parent_class.reference_name} if parent_class else None
-            swift_values = struct.member_conversions.get_swift_values(
-                c_values, classes)
             for member in struct.members:
                 self << f'self.{member.name} = {swift_values[member.name]}'
 
@@ -238,6 +254,8 @@ class Generator(BaseGenerator):
                     else:
                         if command.unwrap_output_param:
                             self << f'var out: {command.output_param_implicit_type}!'
+                        elif command.output_param_custom_initializer:
+                            self << f'var out = {command.output_param_custom_initializer}'
                         else:
                             self << f'var out = {command.output_param_implicit_type}()'
                         if command.throws:
@@ -308,7 +326,7 @@ class Generator(BaseGenerator):
 
 
 def safe_name(name: str) -> str:
-    if name in ('repeat', 'default'):
+    if name in ('repeat', 'default', 'static', 'import'):
         return f'`{name}`'
     return name
 
