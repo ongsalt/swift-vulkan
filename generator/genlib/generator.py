@@ -103,12 +103,15 @@ class Generator(BaseGenerator):
             self.linebreak()
             self.generate_struct_swift_to_c_method(
                 struct, is_chainable_base=struct.c_struct.is_chainable_base)
+            if struct.c_struct.is_chainable_base:
+                self.generate_struct_chain_push_method(struct)
         if struct.protect:
             self << '#endif'
         if struct.c_struct.is_chainable_base:
-            self << f'protocol {struct.name}Extension: Chainable {{}}'
+            self.linebreak()
+            self << f'public protocol {struct.extension_name}: Chainable {{}}'
         self.linebreak()
-
+    
     def generate_struct_init(self, struct: SwiftStruct):
         params = []
         for member in struct.members:
@@ -159,6 +162,11 @@ class Generator(BaseGenerator):
                 for member in struct.c_struct.members:
                     self << f'cStruct.{member.name} = {c_values[member.name]}'
                 self << 'return try body(&cStruct)'
+
+    def generate_struct_chain_push_method(self, struct: SwiftStruct):
+        with self.indent(f'public func push<Extension: {struct.extension_name}>(_ ext: Extension) -> Chain<Self, Extension> {{', '}'):
+            self << 'Chain(base: base, next: ext)'
+
 
     def generate_class(self, cls: SwiftClass):
         if cls.protect:
@@ -354,6 +362,16 @@ class Generator(BaseGenerator):
                         f'({loader_name}({param_name}, "{command.name}"), to: PFN_{command.name}?.self)'
                     if command.protect:
                         self << '#endif'
+        self.linebreak()
+
+    def generate_chain_extension(self, struct: SwiftStruct):
+        if struct.protect:
+            self << f'#if {struct.protect}'
+        with self.indent(f'extension Chain where Base == {struct.name} {{', '}'): 
+            with self.indent(f'public func push<NewValue: {struct.extension_name}>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {{', '}'): 
+                self << 'Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))'
+        if struct.protect:
+            self << '#endif'
         self.linebreak()
 
     @contextmanager

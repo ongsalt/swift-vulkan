@@ -721,8 +721,12 @@ public struct ApplicationInfo: ChainableBase {
             }
         }
     }
+    public func push<Extension: ApplicationInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ApplicationInfoExtension: Chainable {}
+
+public protocol ApplicationInfoExtension: Chainable {}
 
 public struct AllocationCallbacks: CStructConvertible {
     public typealias CStruct = VkAllocationCallbacks
@@ -795,8 +799,12 @@ public struct DeviceQueueCreateInfo: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: DeviceQueueCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DeviceQueueCreateInfoExtension: Chainable {}
+
+public protocol DeviceQueueCreateInfoExtension: Chainable {}
 
 public struct PhysicalDeviceFeatures: CStructConvertible {
     public typealias CStruct = VkPhysicalDeviceFeatures
@@ -1081,8 +1089,12 @@ public struct DeviceCreateInfo: ChainableBase {
             }
         }
     }
+    public func push<Extension: DeviceCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DeviceCreateInfoExtension: Chainable {}
+
+public protocol DeviceCreateInfoExtension: Chainable {}
 
 public struct InstanceCreateInfo: ChainableBase {
     public typealias CStruct = VkInstanceCreateInfo
@@ -1124,8 +1136,12 @@ public struct InstanceCreateInfo: ChainableBase {
             }
         }
     }
+    public func push<Extension: InstanceCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol InstanceCreateInfoExtension: Chainable {}
+
+public protocol InstanceCreateInfoExtension: Chainable {}
 
 public struct QueueFamilyProperties: CStructConvertible {
     public typealias CStruct = VkQueueFamilyProperties
@@ -1245,8 +1261,12 @@ public struct MemoryAllocateInfo: ChainableBase {
         cStruct.memoryTypeIndex = self.memoryTypeIndex
         return try body(&cStruct)
     }
+    public func push<Extension: MemoryAllocateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol MemoryAllocateInfoExtension: Chainable {}
+
+public protocol MemoryAllocateInfoExtension: Chainable {}
 
 public struct MemoryRequirements: CStructConvertible {
     public typealias CStruct = VkMemoryRequirements
@@ -1352,8 +1372,12 @@ public struct MappedMemoryRange: ChainableBase {
         cStruct.size = self.size
         return try body(&cStruct)
     }
+    public func push<Extension: MappedMemoryRangeExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol MappedMemoryRangeExtension: Chainable {}
+
+public protocol MappedMemoryRangeExtension: Chainable {}
 
 public struct FormatProperties: CStructConvertible {
     public typealias CStruct = VkFormatProperties
@@ -1514,8 +1538,12 @@ public struct WriteDescriptorSet: ChainableBase {
             }
         }
     }
+    public func push<Extension: WriteDescriptorSetExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol WriteDescriptorSetExtension: Chainable {}
+
+public protocol WriteDescriptorSetExtension: Chainable {}
 
 public struct CopyDescriptorSet: ChainableBase {
     public typealias CStruct = VkCopyDescriptorSet
@@ -1561,8 +1589,12 @@ public struct CopyDescriptorSet: ChainableBase {
         cStruct.descriptorCount = self.descriptorCount
         return try body(&cStruct)
     }
+    public func push<Extension: CopyDescriptorSetExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CopyDescriptorSetExtension: Chainable {}
+
+public protocol CopyDescriptorSetExtension: Chainable {}
 
 public struct BufferUsageFlags2CreateInfo: ChainableBase, BufferViewCreateInfoExtension, BufferCreateInfoExtension, PhysicalDeviceExternalBufferInfoExtension, DescriptorBufferBindingInfoEXTExtension {
     public typealias CStruct = VkBufferUsageFlags2CreateInfo
@@ -1584,8 +1616,12 @@ public struct BufferUsageFlags2CreateInfo: ChainableBase, BufferViewCreateInfoEx
         cStruct.usage = self.usage.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: BufferUsageFlags2CreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol BufferUsageFlags2CreateInfoExtension: Chainable {}
+
+public protocol BufferUsageFlags2CreateInfoExtension: Chainable {}
 
 public struct BufferCreateInfo: ChainableBase {
     public typealias CStruct = VkBufferCreateInfo
@@ -1626,8 +1662,12 @@ public struct BufferCreateInfo: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: BufferCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol BufferCreateInfoExtension: Chainable {}
+
+public protocol BufferCreateInfoExtension: Chainable {}
 
 public struct BufferViewCreateInfo: ChainableBase {
     public typealias CStruct = VkBufferViewCreateInfo
@@ -1665,8 +1705,12 @@ public struct BufferViewCreateInfo: ChainableBase {
         cStruct.range = self.range
         return try body(&cStruct)
     }
+    public func push<Extension: BufferViewCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol BufferViewCreateInfoExtension: Chainable {}
+
+public protocol BufferViewCreateInfoExtension: Chainable {}
 
 public struct ImageSubresource: CStructConvertible {
     public typealias CStruct = VkImageSubresource
@@ -1788,8 +1832,12 @@ public struct MemoryBarrier: ChainableBase {
         cStruct.dstAccessMask = self.dstAccessMask.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: MemoryBarrierExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol MemoryBarrierExtension: Chainable {}
+
+public protocol MemoryBarrierExtension: Chainable {}
 
 public struct BufferMemoryBarrier: ChainableBase {
     public typealias CStruct = VkBufferMemoryBarrier
@@ -1835,8 +1883,12 @@ public struct BufferMemoryBarrier: ChainableBase {
         cStruct.size = self.size
         return try body(&cStruct)
     }
+    public func push<Extension: BufferMemoryBarrierExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol BufferMemoryBarrierExtension: Chainable {}
+
+public protocol BufferMemoryBarrierExtension: Chainable {}
 
 public struct ImageMemoryBarrier: ChainableBase {
     public typealias CStruct = VkImageMemoryBarrier
@@ -1888,8 +1940,12 @@ public struct ImageMemoryBarrier: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: ImageMemoryBarrierExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ImageMemoryBarrierExtension: Chainable {}
+
+public protocol ImageMemoryBarrierExtension: Chainable {}
 
 public struct ImageCreateInfo: ChainableBase {
     public typealias CStruct = VkImageCreateInfo
@@ -1960,8 +2016,12 @@ public struct ImageCreateInfo: ChainableBase {
             }
         }
     }
+    public func push<Extension: ImageCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ImageCreateInfoExtension: Chainable {}
+
+public protocol ImageCreateInfoExtension: Chainable {}
 
 public struct SubresourceLayout: CStructConvertible {
     public typealias CStruct = VkSubresourceLayout
@@ -2043,8 +2103,12 @@ public struct ImageViewCreateInfo: ChainableBase {
             }
         }
     }
+    public func push<Extension: ImageViewCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ImageViewCreateInfoExtension: Chainable {}
+
+public protocol ImageViewCreateInfoExtension: Chainable {}
 
 public struct BufferCopy: CStructConvertible {
     public typealias CStruct = VkBufferCopy
@@ -2288,8 +2352,12 @@ public struct BindSparseInfo: ChainableBase {
             }
         }
     }
+    public func push<Extension: BindSparseInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol BindSparseInfoExtension: Chainable {}
+
+public protocol BindSparseInfoExtension: Chainable {}
 
 public struct ImageCopy: CStructConvertible {
     public typealias CStruct = VkImageCopy
@@ -2509,8 +2577,12 @@ public struct CopyMemoryIndirectInfoKHR: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: CopyMemoryIndirectInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CopyMemoryIndirectInfoKHRExtension: Chainable {}
+
+public protocol CopyMemoryIndirectInfoKHRExtension: Chainable {}
 
 public struct CopyMemoryToImageIndirectCommandKHR: CStructConvertible {
     public typealias CStruct = VkCopyMemoryToImageIndirectCommandKHR
@@ -2599,8 +2671,12 @@ public struct CopyMemoryToImageIndirectInfoKHR: ChainableBase {
             }
         }
     }
+    public func push<Extension: CopyMemoryToImageIndirectInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CopyMemoryToImageIndirectInfoKHRExtension: Chainable {}
+
+public protocol CopyMemoryToImageIndirectInfoKHRExtension: Chainable {}
 
 public struct ImageResolve: CStructConvertible {
     public typealias CStruct = VkImageResolve
@@ -2676,8 +2752,12 @@ public struct ShaderModuleCreateInfo: ChainableBase, PipelineShaderStageCreateIn
         cStruct.pCode = self.code
         return try body(&cStruct)
     }
+    public func push<Extension: ShaderModuleCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ShaderModuleCreateInfoExtension: Chainable {}
+
+public protocol ShaderModuleCreateInfoExtension: Chainable {}
 
 public struct DescriptorSetLayoutBinding: CStructConvertible {
     public typealias CStruct = VkDescriptorSetLayoutBinding
@@ -2741,8 +2821,12 @@ public struct DescriptorSetLayoutCreateInfo: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: DescriptorSetLayoutCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DescriptorSetLayoutCreateInfoExtension: Chainable {}
+
+public protocol DescriptorSetLayoutCreateInfoExtension: Chainable {}
 
 public struct DescriptorPoolSize: CStructConvertible {
     public typealias CStruct = VkDescriptorPoolSize
@@ -2799,8 +2883,12 @@ public struct DescriptorPoolCreateInfo: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: DescriptorPoolCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DescriptorPoolCreateInfoExtension: Chainable {}
+
+public protocol DescriptorPoolCreateInfoExtension: Chainable {}
 
 public struct DescriptorSetAllocateInfo: ChainableBase {
     public typealias CStruct = VkDescriptorSetAllocateInfo
@@ -2829,8 +2917,12 @@ public struct DescriptorSetAllocateInfo: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: DescriptorSetAllocateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DescriptorSetAllocateInfoExtension: Chainable {}
+
+public protocol DescriptorSetAllocateInfoExtension: Chainable {}
 
 public struct SpecializationMapEntry: CStructConvertible {
     public typealias CStruct = VkSpecializationMapEntry
@@ -2931,8 +3023,12 @@ public struct PipelineShaderStageCreateInfo: ChainableBase {
             }
         }
     }
+    public func push<Extension: PipelineShaderStageCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineShaderStageCreateInfoExtension: Chainable {}
+
+public protocol PipelineShaderStageCreateInfoExtension: Chainable {}
 
 public struct ComputePipelineCreateInfo: ChainableBase {
     public typealias CStruct = VkComputePipelineCreateInfo
@@ -2972,8 +3068,12 @@ public struct ComputePipelineCreateInfo: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: ComputePipelineCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ComputePipelineCreateInfoExtension: Chainable {}
+
+public protocol ComputePipelineCreateInfoExtension: Chainable {}
 
 public struct ComputePipelineIndirectBufferInfoNV: ChainableBase, ComputePipelineCreateInfoExtension {
     public typealias CStruct = VkComputePipelineIndirectBufferInfoNV
@@ -3003,8 +3103,12 @@ public struct ComputePipelineIndirectBufferInfoNV: ChainableBase, ComputePipelin
         cStruct.pipelineDeviceAddressCaptureReplay = self.pipelineDeviceAddressCaptureReplay
         return try body(&cStruct)
     }
+    public func push<Extension: ComputePipelineIndirectBufferInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ComputePipelineIndirectBufferInfoNVExtension: Chainable {}
+
+public protocol ComputePipelineIndirectBufferInfoNVExtension: Chainable {}
 
 public struct PipelineCreateFlags2CreateInfo: ChainableBase, ComputePipelineCreateInfoExtension, GraphicsPipelineCreateInfoExtension, RayTracingPipelineCreateInfoNVExtension, RayTracingPipelineCreateInfoKHRExtension {
     public typealias CStruct = VkPipelineCreateFlags2CreateInfo
@@ -3026,8 +3130,12 @@ public struct PipelineCreateFlags2CreateInfo: ChainableBase, ComputePipelineCrea
         cStruct.flags = self.flags.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: PipelineCreateFlags2CreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineCreateFlags2CreateInfoExtension: Chainable {}
+
+public protocol PipelineCreateFlags2CreateInfoExtension: Chainable {}
 
 public struct VertexInputBindingDescription: CStructConvertible {
     public typealias CStruct = VkVertexInputBindingDescription
@@ -3123,8 +3231,12 @@ public struct PipelineVertexInputStateCreateInfo: ChainableBase {
             }
         }
     }
+    public func push<Extension: PipelineVertexInputStateCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineVertexInputStateCreateInfoExtension: Chainable {}
+
+public protocol PipelineVertexInputStateCreateInfoExtension: Chainable {}
 
 public struct PipelineInputAssemblyStateCreateInfo: ChainableBase {
     public typealias CStruct = VkPipelineInputAssemblyStateCreateInfo
@@ -3154,8 +3266,12 @@ public struct PipelineInputAssemblyStateCreateInfo: ChainableBase {
         cStruct.primitiveRestartEnable = VkBool32(self.primitiveRestartEnable ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PipelineInputAssemblyStateCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineInputAssemblyStateCreateInfoExtension: Chainable {}
+
+public protocol PipelineInputAssemblyStateCreateInfoExtension: Chainable {}
 
 public struct PipelineTessellationStateCreateInfo: ChainableBase {
     public typealias CStruct = VkPipelineTessellationStateCreateInfo
@@ -3181,8 +3297,12 @@ public struct PipelineTessellationStateCreateInfo: ChainableBase {
         cStruct.patchControlPoints = self.patchControlPoints
         return try body(&cStruct)
     }
+    public func push<Extension: PipelineTessellationStateCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineTessellationStateCreateInfoExtension: Chainable {}
+
+public protocol PipelineTessellationStateCreateInfoExtension: Chainable {}
 
 public struct PipelineViewportStateCreateInfo: ChainableBase {
     public typealias CStruct = VkPipelineViewportStateCreateInfo
@@ -3218,8 +3338,12 @@ public struct PipelineViewportStateCreateInfo: ChainableBase {
             }
         }
     }
+    public func push<Extension: PipelineViewportStateCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineViewportStateCreateInfoExtension: Chainable {}
+
+public protocol PipelineViewportStateCreateInfoExtension: Chainable {}
 
 public struct PipelineRasterizationStateCreateInfo: ChainableBase {
     public typealias CStruct = VkPipelineRasterizationStateCreateInfo
@@ -3281,8 +3405,12 @@ public struct PipelineRasterizationStateCreateInfo: ChainableBase {
         cStruct.lineWidth = self.lineWidth
         return try body(&cStruct)
     }
+    public func push<Extension: PipelineRasterizationStateCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineRasterizationStateCreateInfoExtension: Chainable {}
+
+public protocol PipelineRasterizationStateCreateInfoExtension: Chainable {}
 
 public struct PipelineMultisampleStateCreateInfo: ChainableBase {
     public typealias CStruct = VkPipelineMultisampleStateCreateInfo
@@ -3328,8 +3456,12 @@ public struct PipelineMultisampleStateCreateInfo: ChainableBase {
         cStruct.alphaToOneEnable = VkBool32(self.alphaToOneEnable ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PipelineMultisampleStateCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineMultisampleStateCreateInfoExtension: Chainable {}
+
+public protocol PipelineMultisampleStateCreateInfoExtension: Chainable {}
 
 public struct PipelineColorBlendAttachmentState: CStructConvertible {
     public typealias CStruct = VkPipelineColorBlendAttachmentState
@@ -3418,8 +3550,12 @@ public struct PipelineColorBlendStateCreateInfo: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PipelineColorBlendStateCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineColorBlendStateCreateInfoExtension: Chainable {}
+
+public protocol PipelineColorBlendStateCreateInfoExtension: Chainable {}
 
 public struct PipelineDynamicStateCreateInfo: ChainableBase {
     public typealias CStruct = VkPipelineDynamicStateCreateInfo
@@ -3448,8 +3584,12 @@ public struct PipelineDynamicStateCreateInfo: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PipelineDynamicStateCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineDynamicStateCreateInfoExtension: Chainable {}
+
+public protocol PipelineDynamicStateCreateInfoExtension: Chainable {}
 
 public struct StencilOpState: CStructConvertible {
     public typealias CStruct = VkStencilOpState
@@ -3555,8 +3695,12 @@ public struct PipelineDepthStencilStateCreateInfo: ChainableBase {
             }
         }
     }
+    public func push<Extension: PipelineDepthStencilStateCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineDepthStencilStateCreateInfoExtension: Chainable {}
+
+public protocol PipelineDepthStencilStateCreateInfoExtension: Chainable {}
 
 public struct GraphicsPipelineCreateInfo: ChainableBase {
     public typealias CStruct = VkGraphicsPipelineCreateInfo
@@ -3659,8 +3803,12 @@ public struct GraphicsPipelineCreateInfo: ChainableBase {
             }
         }
     }
+    public func push<Extension: GraphicsPipelineCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol GraphicsPipelineCreateInfoExtension: Chainable {}
+
+public protocol GraphicsPipelineCreateInfoExtension: Chainable {}
 
 public struct PipelineCacheCreateInfo: ChainableBase {
     public typealias CStruct = VkPipelineCacheCreateInfo
@@ -3690,8 +3838,12 @@ public struct PipelineCacheCreateInfo: ChainableBase {
         cStruct.pInitialData = self.initialData
         return try body(&cStruct)
     }
+    public func push<Extension: PipelineCacheCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineCacheCreateInfoExtension: Chainable {}
+
+public protocol PipelineCacheCreateInfoExtension: Chainable {}
 
 public struct PipelineCacheHeaderVersionOne: CStructConvertible {
     public typealias CStruct = VkPipelineCacheHeaderVersionOne
@@ -3817,8 +3969,12 @@ public struct PipelineBinaryKeyKHR: ChainableBase {
         cStruct.key = self.key
         return try body(&cStruct)
     }
+    public func push<Extension: PipelineBinaryKeyKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineBinaryKeyKHRExtension: Chainable {}
+
+public protocol PipelineBinaryKeyKHRExtension: Chainable {}
 
 public struct PipelineBinaryDataKHR: CStructConvertible {
     public typealias CStruct = VkPipelineBinaryDataKHR
@@ -3889,8 +4045,12 @@ public struct PipelineCreateInfoKHR: ChainableBase {
         cStruct.pNext = maybeMutable(pNext)
         return try body(&cStruct)
     }
+    public func push<Extension: PipelineCreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineCreateInfoKHRExtension: Chainable {}
+
+public protocol PipelineCreateInfoKHRExtension: Chainable {}
 
 public struct PipelineBinaryCreateInfoKHR: ChainableBase {
     public typealias CStruct = VkPipelineBinaryCreateInfoKHR
@@ -3924,8 +4084,12 @@ public struct PipelineBinaryCreateInfoKHR: ChainableBase {
             }
         }
     }
+    public func push<Extension: PipelineBinaryCreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineBinaryCreateInfoKHRExtension: Chainable {}
+
+public protocol PipelineBinaryCreateInfoKHRExtension: Chainable {}
 
 public struct PipelineBinaryHandlesInfoKHR: ChainableBase {
     public typealias CStruct = VkPipelineBinaryHandlesInfoKHR
@@ -3951,8 +4115,12 @@ public struct PipelineBinaryHandlesInfoKHR: ChainableBase {
         cStruct.pPipelineBinaries = self.pipelineBinaries
         return try body(&cStruct)
     }
+    public func push<Extension: PipelineBinaryHandlesInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineBinaryHandlesInfoKHRExtension: Chainable {}
+
+public protocol PipelineBinaryHandlesInfoKHRExtension: Chainable {}
 
 public struct PipelineBinaryInfoKHR: ChainableBase, GraphicsPipelineCreateInfoExtension, ComputePipelineCreateInfoExtension, RayTracingPipelineCreateInfoKHRExtension {
     public typealias CStruct = VkPipelineBinaryInfoKHR
@@ -3977,8 +4145,12 @@ public struct PipelineBinaryInfoKHR: ChainableBase, GraphicsPipelineCreateInfoEx
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PipelineBinaryInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineBinaryInfoKHRExtension: Chainable {}
+
+public protocol PipelineBinaryInfoKHRExtension: Chainable {}
 
 public struct ReleaseCapturedPipelineDataInfoKHR: ChainableBase {
     public typealias CStruct = VkReleaseCapturedPipelineDataInfoKHR
@@ -4000,8 +4172,12 @@ public struct ReleaseCapturedPipelineDataInfoKHR: ChainableBase {
         cStruct.pipeline = self.pipeline.handle
         return try body(&cStruct)
     }
+    public func push<Extension: ReleaseCapturedPipelineDataInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ReleaseCapturedPipelineDataInfoKHRExtension: Chainable {}
+
+public protocol ReleaseCapturedPipelineDataInfoKHRExtension: Chainable {}
 
 public struct PipelineBinaryDataInfoKHR: ChainableBase {
     public typealias CStruct = VkPipelineBinaryDataInfoKHR
@@ -4023,8 +4199,12 @@ public struct PipelineBinaryDataInfoKHR: ChainableBase {
         cStruct.pipelineBinary = self.pipelineBinary.handle
         return try body(&cStruct)
     }
+    public func push<Extension: PipelineBinaryDataInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineBinaryDataInfoKHRExtension: Chainable {}
+
+public protocol PipelineBinaryDataInfoKHRExtension: Chainable {}
 
 public struct PipelineLayoutCreateInfo: ChainableBase, BindDescriptorSetsInfoExtension, PushConstantsInfoExtension, PushDescriptorSetInfoExtension, PushDescriptorSetWithTemplateInfoExtension, SetDescriptorBufferOffsetsInfoEXTExtension, BindDescriptorBufferEmbeddedSamplersInfoEXTExtension, IndirectCommandsLayoutCreateInfoEXTExtension {
     public typealias CStruct = VkPipelineLayoutCreateInfo
@@ -4060,8 +4240,12 @@ public struct PipelineLayoutCreateInfo: ChainableBase, BindDescriptorSetsInfoExt
             }
         }
     }
+    public func push<Extension: PipelineLayoutCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineLayoutCreateInfoExtension: Chainable {}
+
+public protocol PipelineLayoutCreateInfoExtension: Chainable {}
 
 public struct SamplerCreateInfo: ChainableBase {
     public typealias CStruct = VkSamplerCreateInfo
@@ -4143,8 +4327,12 @@ public struct SamplerCreateInfo: ChainableBase {
         cStruct.unnormalizedCoordinates = VkBool32(self.unnormalizedCoordinates ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: SamplerCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SamplerCreateInfoExtension: Chainable {}
+
+public protocol SamplerCreateInfoExtension: Chainable {}
 
 public struct CommandPoolCreateInfo: ChainableBase {
     public typealias CStruct = VkCommandPoolCreateInfo
@@ -4170,8 +4358,12 @@ public struct CommandPoolCreateInfo: ChainableBase {
         cStruct.queueFamilyIndex = self.queueFamilyIndex
         return try body(&cStruct)
     }
+    public func push<Extension: CommandPoolCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CommandPoolCreateInfoExtension: Chainable {}
+
+public protocol CommandPoolCreateInfoExtension: Chainable {}
 
 public struct CommandBufferAllocateInfo: ChainableBase {
     public typealias CStruct = VkCommandBufferAllocateInfo
@@ -4201,8 +4393,12 @@ public struct CommandBufferAllocateInfo: ChainableBase {
         cStruct.commandBufferCount = self.commandBufferCount
         return try body(&cStruct)
     }
+    public func push<Extension: CommandBufferAllocateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CommandBufferAllocateInfoExtension: Chainable {}
+
+public protocol CommandBufferAllocateInfoExtension: Chainable {}
 
 public struct CommandBufferInheritanceInfo: ChainableBase {
     public typealias CStruct = VkCommandBufferInheritanceInfo
@@ -4244,8 +4440,12 @@ public struct CommandBufferInheritanceInfo: ChainableBase {
         cStruct.pipelineStatistics = self.pipelineStatistics.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: CommandBufferInheritanceInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CommandBufferInheritanceInfoExtension: Chainable {}
+
+public protocol CommandBufferInheritanceInfoExtension: Chainable {}
 
 public struct CommandBufferBeginInfo: ChainableBase {
     public typealias CStruct = VkCommandBufferBeginInfo
@@ -4273,8 +4473,12 @@ public struct CommandBufferBeginInfo: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: CommandBufferBeginInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CommandBufferBeginInfoExtension: Chainable {}
+
+public protocol CommandBufferBeginInfoExtension: Chainable {}
 
 public struct RenderPassBeginInfo: ChainableBase {
     public typealias CStruct = VkRenderPassBeginInfo
@@ -4313,8 +4517,12 @@ public struct RenderPassBeginInfo: ChainableBase {
             }
         }
     }
+    public func push<Extension: RenderPassBeginInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol RenderPassBeginInfoExtension: Chainable {}
+
+public protocol RenderPassBeginInfoExtension: Chainable {}
 
 public struct ClearDepthStencilValue: CStructConvertible {
     public typealias CStruct = VkClearDepthStencilValue
@@ -4586,8 +4794,12 @@ public struct RenderPassCreateInfo: ChainableBase {
             }
         }
     }
+    public func push<Extension: RenderPassCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol RenderPassCreateInfoExtension: Chainable {}
+
+public protocol RenderPassCreateInfoExtension: Chainable {}
 
 public struct EventCreateInfo: ChainableBase {
     public typealias CStruct = VkEventCreateInfo
@@ -4609,8 +4821,12 @@ public struct EventCreateInfo: ChainableBase {
         cStruct.flags = self.flags.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: EventCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol EventCreateInfoExtension: Chainable {}
+
+public protocol EventCreateInfoExtension: Chainable {}
 
 public struct FenceCreateInfo: ChainableBase {
     public typealias CStruct = VkFenceCreateInfo
@@ -4632,8 +4848,12 @@ public struct FenceCreateInfo: ChainableBase {
         cStruct.flags = self.flags.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: FenceCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol FenceCreateInfoExtension: Chainable {}
+
+public protocol FenceCreateInfoExtension: Chainable {}
 
 public struct SemaphoreCreateInfo: ChainableBase {
     public typealias CStruct = VkSemaphoreCreateInfo
@@ -4655,8 +4875,12 @@ public struct SemaphoreCreateInfo: ChainableBase {
         cStruct.flags = self.flags.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: SemaphoreCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SemaphoreCreateInfoExtension: Chainable {}
+
+public protocol SemaphoreCreateInfoExtension: Chainable {}
 
 public struct QueryPoolCreateInfo: ChainableBase {
     public typealias CStruct = VkQueryPoolCreateInfo
@@ -4690,8 +4914,12 @@ public struct QueryPoolCreateInfo: ChainableBase {
         cStruct.pipelineStatistics = self.pipelineStatistics.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: QueryPoolCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol QueryPoolCreateInfoExtension: Chainable {}
+
+public protocol QueryPoolCreateInfoExtension: Chainable {}
 
 public struct FramebufferCreateInfo: ChainableBase {
     public typealias CStruct = VkFramebufferCreateInfo
@@ -4736,8 +4964,12 @@ public struct FramebufferCreateInfo: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: FramebufferCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol FramebufferCreateInfoExtension: Chainable {}
+
+public protocol FramebufferCreateInfoExtension: Chainable {}
 
 public struct DrawIndirectCommand: CStructConvertible {
     public typealias CStruct = VkDrawIndirectCommand
@@ -4930,8 +5162,12 @@ public struct SubmitInfo: ChainableBase {
             }
         }
     }
+    public func push<Extension: SubmitInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SubmitInfoExtension: Chainable {}
+
+public protocol SubmitInfoExtension: Chainable {}
 
 public struct DisplayPropertiesKHR: CStructConvertible {
     public typealias CStruct = VkDisplayPropertiesKHR
@@ -5065,8 +5301,12 @@ public struct DisplayModeCreateInfoKHR: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: DisplayModeCreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DisplayModeCreateInfoKHRExtension: Chainable {}
+
+public protocol DisplayModeCreateInfoKHRExtension: Chainable {}
 
 public struct DisplayPlaneCapabilitiesKHR: CStructConvertible {
     public typealias CStruct = VkDisplayPlaneCapabilitiesKHR
@@ -5174,8 +5414,12 @@ public struct DisplaySurfaceCreateInfoKHR: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: DisplaySurfaceCreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DisplaySurfaceCreateInfoKHRExtension: Chainable {}
+
+public protocol DisplaySurfaceCreateInfoKHRExtension: Chainable {}
 
 public struct DisplaySurfaceStereoCreateInfoNV: ChainableBase, DisplaySurfaceCreateInfoKHRExtension {
     public typealias CStruct = VkDisplaySurfaceStereoCreateInfoNV
@@ -5197,8 +5441,12 @@ public struct DisplaySurfaceStereoCreateInfoNV: ChainableBase, DisplaySurfaceCre
         cStruct.stereoType = VkDisplaySurfaceStereoTypeNV(rawValue: VkDisplaySurfaceStereoTypeNV.RawValue(bitPattern: self.stereoType.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: DisplaySurfaceStereoCreateInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DisplaySurfaceStereoCreateInfoNVExtension: Chainable {}
+
+public protocol DisplaySurfaceStereoCreateInfoNVExtension: Chainable {}
 
 public struct DisplayPresentInfoKHR: ChainableBase, PresentInfoKHRExtension {
     public typealias CStruct = VkDisplayPresentInfoKHR
@@ -5232,8 +5480,12 @@ public struct DisplayPresentInfoKHR: ChainableBase, PresentInfoKHRExtension {
             }
         }
     }
+    public func push<Extension: DisplayPresentInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DisplayPresentInfoKHRExtension: Chainable {}
+
+public protocol DisplayPresentInfoKHRExtension: Chainable {}
 
 public struct SurfaceCapabilitiesKHR: CStructConvertible {
     public typealias CStruct = VkSurfaceCapabilitiesKHR
@@ -5309,9 +5561,13 @@ public struct AndroidSurfaceCreateInfoKHR: ChainableBase {
         cStruct.window = self.window
         return try body(&cStruct)
     }
+    public func push<Extension: AndroidSurfaceCreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol AndroidSurfaceCreateInfoKHRExtension: Chainable {}
+
+public protocol AndroidSurfaceCreateInfoKHRExtension: Chainable {}
 
 #if VK_USE_PLATFORM_VI_NN
 public struct ViSurfaceCreateInfoNN: ChainableBase {
@@ -5338,9 +5594,13 @@ public struct ViSurfaceCreateInfoNN: ChainableBase {
         cStruct.window = self.window
         return try body(&cStruct)
     }
+    public func push<Extension: ViSurfaceCreateInfoNNExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ViSurfaceCreateInfoNNExtension: Chainable {}
+
+public protocol ViSurfaceCreateInfoNNExtension: Chainable {}
 
 #if VK_USE_PLATFORM_WAYLAND_KHR
 public struct WaylandSurfaceCreateInfoKHR: ChainableBase {
@@ -5371,9 +5631,13 @@ public struct WaylandSurfaceCreateInfoKHR: ChainableBase {
         cStruct.surface = self.surface
         return try body(&cStruct)
     }
+    public func push<Extension: WaylandSurfaceCreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol WaylandSurfaceCreateInfoKHRExtension: Chainable {}
+
+public protocol WaylandSurfaceCreateInfoKHRExtension: Chainable {}
 
 #if VK_USE_PLATFORM_UBM_SEC
 public struct UbmSurfaceCreateInfoSEC: ChainableBase {
@@ -5404,9 +5668,13 @@ public struct UbmSurfaceCreateInfoSEC: ChainableBase {
         cStruct.surface = self.surface
         return try body(&cStruct)
     }
+    public func push<Extension: UbmSurfaceCreateInfoSECExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol UbmSurfaceCreateInfoSECExtension: Chainable {}
+
+public protocol UbmSurfaceCreateInfoSECExtension: Chainable {}
 
 #if VK_USE_PLATFORM_WIN32_KHR
 public struct Win32SurfaceCreateInfoKHR: ChainableBase {
@@ -5437,9 +5705,13 @@ public struct Win32SurfaceCreateInfoKHR: ChainableBase {
         cStruct.hwnd = self.hwnd
         return try body(&cStruct)
     }
+    public func push<Extension: Win32SurfaceCreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol Win32SurfaceCreateInfoKHRExtension: Chainable {}
+
+public protocol Win32SurfaceCreateInfoKHRExtension: Chainable {}
 
 #if VK_USE_PLATFORM_XLIB_KHR
 public struct XlibSurfaceCreateInfoKHR: ChainableBase {
@@ -5470,9 +5742,13 @@ public struct XlibSurfaceCreateInfoKHR: ChainableBase {
         cStruct.window = self.window
         return try body(&cStruct)
     }
+    public func push<Extension: XlibSurfaceCreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol XlibSurfaceCreateInfoKHRExtension: Chainable {}
+
+public protocol XlibSurfaceCreateInfoKHRExtension: Chainable {}
 
 #if VK_USE_PLATFORM_XCB_KHR
 public struct XcbSurfaceCreateInfoKHR: ChainableBase {
@@ -5503,9 +5779,13 @@ public struct XcbSurfaceCreateInfoKHR: ChainableBase {
         cStruct.window = self.window
         return try body(&cStruct)
     }
+    public func push<Extension: XcbSurfaceCreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol XcbSurfaceCreateInfoKHRExtension: Chainable {}
+
+public protocol XcbSurfaceCreateInfoKHRExtension: Chainable {}
 
 #if VK_USE_PLATFORM_DIRECTFB_EXT
 public struct DirectFBSurfaceCreateInfoEXT: ChainableBase {
@@ -5536,9 +5816,13 @@ public struct DirectFBSurfaceCreateInfoEXT: ChainableBase {
         cStruct.surface = self.surface
         return try body(&cStruct)
     }
+    public func push<Extension: DirectFBSurfaceCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol DirectFBSurfaceCreateInfoEXTExtension: Chainable {}
+
+public protocol DirectFBSurfaceCreateInfoEXTExtension: Chainable {}
 
 #if VK_USE_PLATFORM_FUCHSIA
 public struct ImagePipeSurfaceCreateInfoFUCHSIA: ChainableBase {
@@ -5565,9 +5849,13 @@ public struct ImagePipeSurfaceCreateInfoFUCHSIA: ChainableBase {
         cStruct.imagePipeHandle = self.imagePipeHandle
         return try body(&cStruct)
     }
+    public func push<Extension: ImagePipeSurfaceCreateInfoFUCHSIAExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ImagePipeSurfaceCreateInfoFUCHSIAExtension: Chainable {}
+
+public protocol ImagePipeSurfaceCreateInfoFUCHSIAExtension: Chainable {}
 
 #if VK_USE_PLATFORM_GGP
 public struct StreamDescriptorSurfaceCreateInfoGGP: ChainableBase {
@@ -5594,9 +5882,13 @@ public struct StreamDescriptorSurfaceCreateInfoGGP: ChainableBase {
         cStruct.streamDescriptor = self.streamDescriptor
         return try body(&cStruct)
     }
+    public func push<Extension: StreamDescriptorSurfaceCreateInfoGGPExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol StreamDescriptorSurfaceCreateInfoGGPExtension: Chainable {}
+
+public protocol StreamDescriptorSurfaceCreateInfoGGPExtension: Chainable {}
 
 #if VK_USE_PLATFORM_SCREEN_QNX
 public struct ScreenSurfaceCreateInfoQNX: ChainableBase {
@@ -5627,9 +5919,13 @@ public struct ScreenSurfaceCreateInfoQNX: ChainableBase {
         cStruct.window = self.window
         return try body(&cStruct)
     }
+    public func push<Extension: ScreenSurfaceCreateInfoQNXExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ScreenSurfaceCreateInfoQNXExtension: Chainable {}
+
+public protocol ScreenSurfaceCreateInfoQNXExtension: Chainable {}
 
 public struct SurfaceFormatKHR: CStructConvertible {
     public typealias CStruct = VkSurfaceFormatKHR
@@ -5687,7 +5983,7 @@ public struct SwapchainCreateInfoKHR: ChainableBase {
         self.oldSwapchain = oldSwapchain
     }
 
-    init(cStruct: VkSwapchainCreateInfoKHR, device: Device, instance: Instance) {
+    init(cStruct: VkSwapchainCreateInfoKHR, instance: Instance, device: Device) {
         self.flags = SwapchainCreateFlagsKHR(rawValue: cStruct.flags)
         self.surface = SurfaceKHR(handle: cStruct.surface, instance: instance)
         self.minImageCount = cStruct.minImageCount
@@ -5731,8 +6027,12 @@ public struct SwapchainCreateInfoKHR: ChainableBase {
             }
         }
     }
+    public func push<Extension: SwapchainCreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SwapchainCreateInfoKHRExtension: Chainable {}
+
+public protocol SwapchainCreateInfoKHRExtension: Chainable {}
 
 public struct PresentInfoKHR: ChainableBase {
     public typealias CStruct = VkPresentInfoKHR
@@ -5774,8 +6074,12 @@ public struct PresentInfoKHR: ChainableBase {
             }
         }
     }
+    public func push<Extension: PresentInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PresentInfoKHRExtension: Chainable {}
+
+public protocol PresentInfoKHRExtension: Chainable {}
 
 public struct DebugReportCallbackCreateInfoEXT: ChainableBase, InstanceCreateInfoExtension {
     public typealias CStruct = VkDebugReportCallbackCreateInfoEXT
@@ -5805,8 +6109,12 @@ public struct DebugReportCallbackCreateInfoEXT: ChainableBase, InstanceCreateInf
         cStruct.pUserData = self.userData
         return try body(&cStruct)
     }
+    public func push<Extension: DebugReportCallbackCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DebugReportCallbackCreateInfoEXTExtension: Chainable {}
+
+public protocol DebugReportCallbackCreateInfoEXTExtension: Chainable {}
 
 public struct ValidationFlagsEXT: ChainableBase, InstanceCreateInfoExtension {
     public typealias CStruct = VkValidationFlagsEXT
@@ -5831,8 +6139,12 @@ public struct ValidationFlagsEXT: ChainableBase, InstanceCreateInfoExtension {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: ValidationFlagsEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ValidationFlagsEXTExtension: Chainable {}
+
+public protocol ValidationFlagsEXTExtension: Chainable {}
 
 public struct ValidationFeaturesEXT: ChainableBase, InstanceCreateInfoExtension, ShaderModuleCreateInfoExtension, ShaderCreateInfoEXTExtension {
     public typealias CStruct = VkValidationFeaturesEXT
@@ -5864,8 +6176,12 @@ public struct ValidationFeaturesEXT: ChainableBase, InstanceCreateInfoExtension,
             }
         }
     }
+    public func push<Extension: ValidationFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ValidationFeaturesEXTExtension: Chainable {}
+
+public protocol ValidationFeaturesEXTExtension: Chainable {}
 
 public struct LayerSettingEXT: CStructConvertible {
     public typealias CStruct = VkLayerSettingEXT
@@ -5930,8 +6246,12 @@ public struct LayerSettingsCreateInfoEXT: ChainableBase, InstanceCreateInfoExten
             return try body(&cStruct)
         }
     }
+    public func push<Extension: LayerSettingsCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol LayerSettingsCreateInfoEXTExtension: Chainable {}
+
+public protocol LayerSettingsCreateInfoEXTExtension: Chainable {}
 
 public struct PipelineRasterizationStateRasterizationOrderAMD: ChainableBase, PipelineRasterizationStateCreateInfoExtension {
     public typealias CStruct = VkPipelineRasterizationStateRasterizationOrderAMD
@@ -5953,8 +6273,12 @@ public struct PipelineRasterizationStateRasterizationOrderAMD: ChainableBase, Pi
         cStruct.rasterizationOrder = VkRasterizationOrderAMD(rawValue: VkRasterizationOrderAMD.RawValue(bitPattern: self.rasterizationOrder.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: PipelineRasterizationStateRasterizationOrderAMDExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineRasterizationStateRasterizationOrderAMDExtension: Chainable {}
+
+public protocol PipelineRasterizationStateRasterizationOrderAMDExtension: Chainable {}
 
 public struct DebugMarkerObjectNameInfoEXT: ChainableBase {
     public typealias CStruct = VkDebugMarkerObjectNameInfoEXT
@@ -5986,8 +6310,12 @@ public struct DebugMarkerObjectNameInfoEXT: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: DebugMarkerObjectNameInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DebugMarkerObjectNameInfoEXTExtension: Chainable {}
+
+public protocol DebugMarkerObjectNameInfoEXTExtension: Chainable {}
 
 public struct DebugMarkerObjectTagInfoEXT: ChainableBase {
     public typealias CStruct = VkDebugMarkerObjectTagInfoEXT
@@ -6025,8 +6353,12 @@ public struct DebugMarkerObjectTagInfoEXT: ChainableBase {
         cStruct.pTag = self.tag
         return try body(&cStruct)
     }
+    public func push<Extension: DebugMarkerObjectTagInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DebugMarkerObjectTagInfoEXTExtension: Chainable {}
+
+public protocol DebugMarkerObjectTagInfoEXTExtension: Chainable {}
 
 public struct DebugMarkerMarkerInfoEXT: ChainableBase {
     public typealias CStruct = VkDebugMarkerMarkerInfoEXT
@@ -6054,8 +6386,12 @@ public struct DebugMarkerMarkerInfoEXT: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: DebugMarkerMarkerInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DebugMarkerMarkerInfoEXTExtension: Chainable {}
+
+public protocol DebugMarkerMarkerInfoEXTExtension: Chainable {}
 
 public struct DedicatedAllocationImageCreateInfoNV: ChainableBase, ImageCreateInfoExtension {
     public typealias CStruct = VkDedicatedAllocationImageCreateInfoNV
@@ -6077,8 +6413,12 @@ public struct DedicatedAllocationImageCreateInfoNV: ChainableBase, ImageCreateIn
         cStruct.dedicatedAllocation = VkBool32(self.dedicatedAllocation ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: DedicatedAllocationImageCreateInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DedicatedAllocationImageCreateInfoNVExtension: Chainable {}
+
+public protocol DedicatedAllocationImageCreateInfoNVExtension: Chainable {}
 
 public struct DedicatedAllocationBufferCreateInfoNV: ChainableBase, BufferCreateInfoExtension {
     public typealias CStruct = VkDedicatedAllocationBufferCreateInfoNV
@@ -6100,8 +6440,12 @@ public struct DedicatedAllocationBufferCreateInfoNV: ChainableBase, BufferCreate
         cStruct.dedicatedAllocation = VkBool32(self.dedicatedAllocation ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: DedicatedAllocationBufferCreateInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DedicatedAllocationBufferCreateInfoNVExtension: Chainable {}
+
+public protocol DedicatedAllocationBufferCreateInfoNVExtension: Chainable {}
 
 public struct DedicatedAllocationMemoryAllocateInfoNV: ChainableBase, MemoryAllocateInfoExtension {
     public typealias CStruct = VkDedicatedAllocationMemoryAllocateInfoNV
@@ -6127,8 +6471,12 @@ public struct DedicatedAllocationMemoryAllocateInfoNV: ChainableBase, MemoryAllo
         cStruct.buffer = self.buffer?.handle
         return try body(&cStruct)
     }
+    public func push<Extension: DedicatedAllocationMemoryAllocateInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DedicatedAllocationMemoryAllocateInfoNVExtension: Chainable {}
+
+public protocol DedicatedAllocationMemoryAllocateInfoNVExtension: Chainable {}
 
 public struct ExternalImageFormatPropertiesNV: CStructConvertible {
     public typealias CStruct = VkExternalImageFormatPropertiesNV
@@ -6177,8 +6525,12 @@ public struct ExternalMemoryImageCreateInfoNV: ChainableBase, ImageCreateInfoExt
         cStruct.handleTypes = self.handleTypes.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: ExternalMemoryImageCreateInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ExternalMemoryImageCreateInfoNVExtension: Chainable {}
+
+public protocol ExternalMemoryImageCreateInfoNVExtension: Chainable {}
 
 public struct ExportMemoryAllocateInfoNV: ChainableBase, MemoryAllocateInfoExtension {
     public typealias CStruct = VkExportMemoryAllocateInfoNV
@@ -6200,8 +6552,12 @@ public struct ExportMemoryAllocateInfoNV: ChainableBase, MemoryAllocateInfoExten
         cStruct.handleTypes = self.handleTypes.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: ExportMemoryAllocateInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ExportMemoryAllocateInfoNVExtension: Chainable {}
+
+public protocol ExportMemoryAllocateInfoNVExtension: Chainable {}
 
 #if VK_USE_PLATFORM_WIN32_KHR
 public struct ImportMemoryWin32HandleInfoNV: ChainableBase, MemoryAllocateInfoExtension {
@@ -6228,9 +6584,13 @@ public struct ImportMemoryWin32HandleInfoNV: ChainableBase, MemoryAllocateInfoEx
         cStruct.handle = self.handle
         return try body(&cStruct)
     }
+    public func push<Extension: ImportMemoryWin32HandleInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ImportMemoryWin32HandleInfoNVExtension: Chainable {}
+
+public protocol ImportMemoryWin32HandleInfoNVExtension: Chainable {}
 
 #if VK_USE_PLATFORM_WIN32_KHR
 public struct ExportMemoryWin32HandleInfoNV: ChainableBase, MemoryAllocateInfoExtension {
@@ -6257,9 +6617,13 @@ public struct ExportMemoryWin32HandleInfoNV: ChainableBase, MemoryAllocateInfoEx
         cStruct.dwAccess = self.dwAccess
         return try body(&cStruct)
     }
+    public func push<Extension: ExportMemoryWin32HandleInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ExportMemoryWin32HandleInfoNVExtension: Chainable {}
+
+public protocol ExportMemoryWin32HandleInfoNVExtension: Chainable {}
 
 #if VK_USE_PLATFORM_WIN32_KHR
 public struct Win32KeyedMutexAcquireReleaseInfoNV: ChainableBase, SubmitInfoExtension, SubmitInfo2Extension {
@@ -6310,9 +6674,13 @@ public struct Win32KeyedMutexAcquireReleaseInfoNV: ChainableBase, SubmitInfoExte
             }
         }
     }
+    public func push<Extension: Win32KeyedMutexAcquireReleaseInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol Win32KeyedMutexAcquireReleaseInfoNVExtension: Chainable {}
+
+public protocol Win32KeyedMutexAcquireReleaseInfoNVExtension: Chainable {}
 
 public struct PhysicalDeviceDeviceGeneratedCommandsFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDeviceGeneratedCommandsFeaturesNV
@@ -6334,8 +6702,12 @@ public struct PhysicalDeviceDeviceGeneratedCommandsFeaturesNV: ChainableBase, Ph
         cStruct.deviceGeneratedCommands = VkBool32(self.deviceGeneratedCommands ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDeviceGeneratedCommandsFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceDeviceGeneratedCommandsFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceDeviceGeneratedCommandsFeaturesNVExtension: Chainable {}
 
 public struct PushConstantBankInfoNV: ChainableBase, DescriptorSetAndBindingMappingEXTExtension, PushDataInfoEXTExtension, PushConstantsInfoExtension, IndirectCommandsLayoutTokenEXTExtension {
     public typealias CStruct = VkPushConstantBankInfoNV
@@ -6357,8 +6729,12 @@ public struct PushConstantBankInfoNV: ChainableBase, DescriptorSetAndBindingMapp
         cStruct.bank = self.bank
         return try body(&cStruct)
     }
+    public func push<Extension: PushConstantBankInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PushConstantBankInfoNVExtension: Chainable {}
+
+public protocol PushConstantBankInfoNVExtension: Chainable {}
 
 public struct PhysicalDevicePushConstantBankFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePushConstantBankFeaturesNV
@@ -6380,8 +6756,12 @@ public struct PhysicalDevicePushConstantBankFeaturesNV: ChainableBase, PhysicalD
         cStruct.pushConstantBank = VkBool32(self.pushConstantBank ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevicePushConstantBankFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevicePushConstantBankFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDevicePushConstantBankFeaturesNVExtension: Chainable {}
 
 public struct PhysicalDevicePushConstantBankPropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDevicePushConstantBankPropertiesNV
@@ -6408,8 +6788,12 @@ public struct PhysicalDevicePushConstantBankPropertiesNV: ChainableBase, Physica
         cStruct.maxComputePushDataBanks = self.maxComputePushDataBanks
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevicePushConstantBankPropertiesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevicePushConstantBankPropertiesNVExtension: Chainable {}
+
+public protocol PhysicalDevicePushConstantBankPropertiesNVExtension: Chainable {}
 
 public struct PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV
@@ -6439,8 +6823,12 @@ public struct PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV: ChainableB
         cStruct.deviceGeneratedComputeCaptureReplay = VkBool32(self.deviceGeneratedComputeCaptureReplay ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNVExtension: Chainable {}
 
 public struct DevicePrivateDataCreateInfo: ChainableBase, DeviceCreateInfoExtension {
     public typealias CStruct = VkDevicePrivateDataCreateInfo
@@ -6462,8 +6850,12 @@ public struct DevicePrivateDataCreateInfo: ChainableBase, DeviceCreateInfoExtens
         cStruct.privateDataSlotRequestCount = self.privateDataSlotRequestCount
         return try body(&cStruct)
     }
+    public func push<Extension: DevicePrivateDataCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DevicePrivateDataCreateInfoExtension: Chainable {}
+
+public protocol DevicePrivateDataCreateInfoExtension: Chainable {}
 
 public struct PrivateDataSlotCreateInfo: ChainableBase {
     public typealias CStruct = VkPrivateDataSlotCreateInfo
@@ -6485,8 +6877,12 @@ public struct PrivateDataSlotCreateInfo: ChainableBase {
         cStruct.flags = self.flags.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: PrivateDataSlotCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PrivateDataSlotCreateInfoExtension: Chainable {}
+
+public protocol PrivateDataSlotCreateInfoExtension: Chainable {}
 
 public struct PhysicalDevicePrivateDataFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePrivateDataFeatures
@@ -6508,8 +6904,12 @@ public struct PhysicalDevicePrivateDataFeatures: ChainableBase, PhysicalDeviceFe
         cStruct.privateData = VkBool32(self.privateData ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevicePrivateDataFeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevicePrivateDataFeaturesExtension: Chainable {}
+
+public protocol PhysicalDevicePrivateDataFeaturesExtension: Chainable {}
 
 public struct PhysicalDeviceDeviceGeneratedCommandsPropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceDeviceGeneratedCommandsPropertiesNV
@@ -6551,8 +6951,12 @@ public struct PhysicalDeviceDeviceGeneratedCommandsPropertiesNV: ChainableBase, 
         cStruct.minIndirectCommandsBufferOffsetAlignment = self.minIndirectCommandsBufferOffsetAlignment
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDeviceGeneratedCommandsPropertiesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceDeviceGeneratedCommandsPropertiesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceDeviceGeneratedCommandsPropertiesNVExtension: Chainable {}
 
 public struct PhysicalDeviceClusterAccelerationStructureFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceClusterAccelerationStructureFeaturesNV
@@ -6574,8 +6978,12 @@ public struct PhysicalDeviceClusterAccelerationStructureFeaturesNV: ChainableBas
         cStruct.clusterAccelerationStructure = VkBool32(self.clusterAccelerationStructure ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceClusterAccelerationStructureFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceClusterAccelerationStructureFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceClusterAccelerationStructureFeaturesNVExtension: Chainable {}
 
 public struct PhysicalDeviceClusterAccelerationStructurePropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceClusterAccelerationStructurePropertiesNV
@@ -6614,8 +7022,12 @@ public struct PhysicalDeviceClusterAccelerationStructurePropertiesNV: ChainableB
         cStruct.maxClusterGeometryIndex = self.maxClusterGeometryIndex
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceClusterAccelerationStructurePropertiesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceClusterAccelerationStructurePropertiesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceClusterAccelerationStructurePropertiesNVExtension: Chainable {}
 
 public struct StridedDeviceAddressNV: CStructConvertible {
     public typealias CStruct = VkStridedDeviceAddressNV
@@ -6661,8 +7073,12 @@ public struct RayTracingPipelineClusterAccelerationStructureCreateInfoNV: Chaina
         cStruct.allowClusterAccelerationStructure = VkBool32(self.allowClusterAccelerationStructure ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: RayTracingPipelineClusterAccelerationStructureCreateInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol RayTracingPipelineClusterAccelerationStructureCreateInfoNVExtension: Chainable {}
+
+public protocol RayTracingPipelineClusterAccelerationStructureCreateInfoNVExtension: Chainable {}
 
 public struct ClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV: CStructConvertible {
     public typealias CStruct = VkClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV
@@ -6998,8 +7414,12 @@ public struct ClusterAccelerationStructureClustersBottomLevelInputNV: ChainableB
         cStruct.maxClusterCountPerAccelerationStructure = self.maxClusterCountPerAccelerationStructure
         return try body(&cStruct)
     }
+    public func push<Extension: ClusterAccelerationStructureClustersBottomLevelInputNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ClusterAccelerationStructureClustersBottomLevelInputNVExtension: Chainable {}
+
+public protocol ClusterAccelerationStructureClustersBottomLevelInputNVExtension: Chainable {}
 
 public struct ClusterAccelerationStructureTriangleClusterInputNV: ChainableBase {
     public typealias CStruct = VkClusterAccelerationStructureTriangleClusterInputNV
@@ -7049,8 +7469,12 @@ public struct ClusterAccelerationStructureTriangleClusterInputNV: ChainableBase 
         cStruct.minPositionTruncateBitCount = self.minPositionTruncateBitCount
         return try body(&cStruct)
     }
+    public func push<Extension: ClusterAccelerationStructureTriangleClusterInputNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ClusterAccelerationStructureTriangleClusterInputNVExtension: Chainable {}
+
+public protocol ClusterAccelerationStructureTriangleClusterInputNVExtension: Chainable {}
 
 public struct ClusterAccelerationStructureMoveObjectsInputNV: ChainableBase {
     public typealias CStruct = VkClusterAccelerationStructureMoveObjectsInputNV
@@ -7080,8 +7504,12 @@ public struct ClusterAccelerationStructureMoveObjectsInputNV: ChainableBase {
         cStruct.maxMovedBytes = self.maxMovedBytes
         return try body(&cStruct)
     }
+    public func push<Extension: ClusterAccelerationStructureMoveObjectsInputNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ClusterAccelerationStructureMoveObjectsInputNVExtension: Chainable {}
+
+public protocol ClusterAccelerationStructureMoveObjectsInputNVExtension: Chainable {}
 
 public struct ClusterAccelerationStructureInputInfoNV: ChainableBase {
     public typealias CStruct = VkClusterAccelerationStructureInputInfoNV
@@ -7119,8 +7547,12 @@ public struct ClusterAccelerationStructureInputInfoNV: ChainableBase {
         cStruct.opInput = self.opInput
         return try body(&cStruct)
     }
+    public func push<Extension: ClusterAccelerationStructureInputInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ClusterAccelerationStructureInputInfoNVExtension: Chainable {}
+
+public protocol ClusterAccelerationStructureInputInfoNVExtension: Chainable {}
 
 public struct StridedDeviceAddressRegionKHR: CStructConvertible {
     public typealias CStruct = VkStridedDeviceAddressRegionKHR
@@ -7206,8 +7638,12 @@ public struct ClusterAccelerationStructureCommandsInfoNV: ChainableBase {
             }
         }
     }
+    public func push<Extension: ClusterAccelerationStructureCommandsInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ClusterAccelerationStructureCommandsInfoNVExtension: Chainable {}
+
+public protocol ClusterAccelerationStructureCommandsInfoNVExtension: Chainable {}
 
 public struct PhysicalDeviceMultiDrawPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceMultiDrawPropertiesEXT
@@ -7225,8 +7661,12 @@ public struct PhysicalDeviceMultiDrawPropertiesEXT: ChainableBase, PhysicalDevic
         cStruct.maxMultiDrawCount = self.maxMultiDrawCount
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceMultiDrawPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceMultiDrawPropertiesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceMultiDrawPropertiesEXTExtension: Chainable {}
 
 public struct GraphicsShaderGroupCreateInfoNV: ChainableBase {
     public typealias CStruct = VkGraphicsShaderGroupCreateInfoNV
@@ -7263,8 +7703,12 @@ public struct GraphicsShaderGroupCreateInfoNV: ChainableBase {
             }
         }
     }
+    public func push<Extension: GraphicsShaderGroupCreateInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol GraphicsShaderGroupCreateInfoNVExtension: Chainable {}
+
+public protocol GraphicsShaderGroupCreateInfoNVExtension: Chainable {}
 
 public struct GraphicsPipelineShaderGroupsCreateInfoNV: ChainableBase, GraphicsPipelineCreateInfoExtension {
     public typealias CStruct = VkGraphicsPipelineShaderGroupsCreateInfoNV
@@ -7296,8 +7740,12 @@ public struct GraphicsPipelineShaderGroupsCreateInfoNV: ChainableBase, GraphicsP
             }
         }
     }
+    public func push<Extension: GraphicsPipelineShaderGroupsCreateInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol GraphicsPipelineShaderGroupsCreateInfoNVExtension: Chainable {}
+
+public protocol GraphicsPipelineShaderGroupsCreateInfoNVExtension: Chainable {}
 
 public struct BindShaderGroupIndirectCommandNV: CStructConvertible {
     public typealias CStruct = VkBindShaderGroupIndirectCommandNV
@@ -7488,8 +7936,12 @@ public struct IndirectCommandsLayoutTokenNV: ChainableBase {
             }
         }
     }
+    public func push<Extension: IndirectCommandsLayoutTokenNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol IndirectCommandsLayoutTokenNVExtension: Chainable {}
+
+public protocol IndirectCommandsLayoutTokenNVExtension: Chainable {}
 
 public struct IndirectCommandsLayoutCreateInfoNV: ChainableBase {
     public typealias CStruct = VkIndirectCommandsLayoutCreateInfoNV
@@ -7529,8 +7981,12 @@ public struct IndirectCommandsLayoutCreateInfoNV: ChainableBase {
             }
         }
     }
+    public func push<Extension: IndirectCommandsLayoutCreateInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol IndirectCommandsLayoutCreateInfoNVExtension: Chainable {}
+
+public protocol IndirectCommandsLayoutCreateInfoNVExtension: Chainable {}
 
 public struct GeneratedCommandsInfoNV: ChainableBase {
     public typealias CStruct = VkGeneratedCommandsInfoNV
@@ -7599,8 +8055,12 @@ public struct GeneratedCommandsInfoNV: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: GeneratedCommandsInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol GeneratedCommandsInfoNVExtension: Chainable {}
+
+public protocol GeneratedCommandsInfoNVExtension: Chainable {}
 
 public struct GeneratedCommandsMemoryRequirementsInfoNV: ChainableBase {
     public typealias CStruct = VkGeneratedCommandsMemoryRequirementsInfoNV
@@ -7634,8 +8094,12 @@ public struct GeneratedCommandsMemoryRequirementsInfoNV: ChainableBase {
         cStruct.maxSequencesCount = self.maxSequencesCount
         return try body(&cStruct)
     }
+    public func push<Extension: GeneratedCommandsMemoryRequirementsInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol GeneratedCommandsMemoryRequirementsInfoNVExtension: Chainable {}
+
+public protocol GeneratedCommandsMemoryRequirementsInfoNVExtension: Chainable {}
 
 public struct PipelineIndirectDeviceAddressInfoNV: ChainableBase {
     public typealias CStruct = VkPipelineIndirectDeviceAddressInfoNV
@@ -7661,8 +8125,12 @@ public struct PipelineIndirectDeviceAddressInfoNV: ChainableBase {
         cStruct.pipeline = self.pipeline.handle
         return try body(&cStruct)
     }
+    public func push<Extension: PipelineIndirectDeviceAddressInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineIndirectDeviceAddressInfoNVExtension: Chainable {}
+
+public protocol PipelineIndirectDeviceAddressInfoNVExtension: Chainable {}
 
 public struct BindPipelineIndirectCommandNV: CStructConvertible {
     public typealias CStruct = VkBindPipelineIndirectCommandNV
@@ -7706,8 +8174,12 @@ public struct PhysicalDeviceFeatures2: ChainableBase, DeviceCreateInfoExtension 
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PhysicalDeviceFeatures2Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceFeatures2Extension: Chainable {}
+
+public protocol PhysicalDeviceFeatures2Extension: Chainable {}
 
 public struct PhysicalDeviceProperties2: ChainableBase {
     public typealias CStruct = VkPhysicalDeviceProperties2
@@ -7727,8 +8199,12 @@ public struct PhysicalDeviceProperties2: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PhysicalDeviceProperties2Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceProperties2Extension: Chainable {}
+
+public protocol PhysicalDeviceProperties2Extension: Chainable {}
 
 public struct FormatProperties2: ChainableBase {
     public typealias CStruct = VkFormatProperties2
@@ -7748,8 +8224,12 @@ public struct FormatProperties2: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: FormatProperties2Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol FormatProperties2Extension: Chainable {}
+
+public protocol FormatProperties2Extension: Chainable {}
 
 public struct ImageFormatProperties2: ChainableBase {
     public typealias CStruct = VkImageFormatProperties2
@@ -7769,8 +8249,12 @@ public struct ImageFormatProperties2: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: ImageFormatProperties2Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ImageFormatProperties2Extension: Chainable {}
+
+public protocol ImageFormatProperties2Extension: Chainable {}
 
 public struct PhysicalDeviceImageFormatInfo2: ChainableBase {
     public typealias CStruct = VkPhysicalDeviceImageFormatInfo2
@@ -7808,8 +8292,12 @@ public struct PhysicalDeviceImageFormatInfo2: ChainableBase {
         cStruct.flags = self.flags.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceImageFormatInfo2Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceImageFormatInfo2Extension: Chainable {}
+
+public protocol PhysicalDeviceImageFormatInfo2Extension: Chainable {}
 
 public struct QueueFamilyProperties2: ChainableBase {
     public typealias CStruct = VkQueueFamilyProperties2
@@ -7829,8 +8317,12 @@ public struct QueueFamilyProperties2: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: QueueFamilyProperties2Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol QueueFamilyProperties2Extension: Chainable {}
+
+public protocol QueueFamilyProperties2Extension: Chainable {}
 
 public struct PhysicalDeviceMemoryProperties2: ChainableBase {
     public typealias CStruct = VkPhysicalDeviceMemoryProperties2
@@ -7850,8 +8342,12 @@ public struct PhysicalDeviceMemoryProperties2: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PhysicalDeviceMemoryProperties2Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceMemoryProperties2Extension: Chainable {}
+
+public protocol PhysicalDeviceMemoryProperties2Extension: Chainable {}
 
 public struct SparseImageFormatProperties2: ChainableBase {
     public typealias CStruct = VkSparseImageFormatProperties2
@@ -7871,8 +8367,12 @@ public struct SparseImageFormatProperties2: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: SparseImageFormatProperties2Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SparseImageFormatProperties2Extension: Chainable {}
+
+public protocol SparseImageFormatProperties2Extension: Chainable {}
 
 public struct PhysicalDeviceSparseImageFormatInfo2: ChainableBase {
     public typealias CStruct = VkPhysicalDeviceSparseImageFormatInfo2
@@ -7910,8 +8410,12 @@ public struct PhysicalDeviceSparseImageFormatInfo2: ChainableBase {
         cStruct.tiling = VkImageTiling(rawValue: VkImageTiling.RawValue(bitPattern: self.tiling.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceSparseImageFormatInfo2Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceSparseImageFormatInfo2Extension: Chainable {}
+
+public protocol PhysicalDeviceSparseImageFormatInfo2Extension: Chainable {}
 
 public struct PhysicalDevicePushDescriptorProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDevicePushDescriptorProperties
@@ -7929,8 +8433,12 @@ public struct PhysicalDevicePushDescriptorProperties: ChainableBase, PhysicalDev
         cStruct.maxPushDescriptors = self.maxPushDescriptors
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevicePushDescriptorPropertiesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevicePushDescriptorPropertiesExtension: Chainable {}
+
+public protocol PhysicalDevicePushDescriptorPropertiesExtension: Chainable {}
 
 public struct ConformanceVersion: CStructConvertible {
     public typealias CStruct = VkConformanceVersion
@@ -7991,8 +8499,12 @@ public struct PhysicalDeviceDriverProperties: ChainableBase, PhysicalDevicePrope
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PhysicalDeviceDriverPropertiesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceDriverPropertiesExtension: Chainable {}
+
+public protocol PhysicalDeviceDriverPropertiesExtension: Chainable {}
 
 public struct RectLayerKHR: CStructConvertible {
     public typealias CStruct = VkRectLayerKHR
@@ -8072,8 +8584,12 @@ public struct PresentRegionsKHR: ChainableBase, PresentInfoKHRExtension {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PresentRegionsKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PresentRegionsKHRExtension: Chainable {}
+
+public protocol PresentRegionsKHRExtension: Chainable {}
 
 public struct PhysicalDeviceVariablePointersFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceVariablePointersFeatures
@@ -8099,8 +8615,12 @@ public struct PhysicalDeviceVariablePointersFeatures: ChainableBase, PhysicalDev
         cStruct.variablePointers = VkBool32(self.variablePointers ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceVariablePointersFeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceVariablePointersFeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceVariablePointersFeaturesExtension: Chainable {}
 
 public struct ExternalMemoryProperties: CStructConvertible {
     public typealias CStruct = VkExternalMemoryProperties
@@ -8144,8 +8664,12 @@ public struct PhysicalDeviceExternalImageFormatInfo: ChainableBase, PhysicalDevi
         cStruct.handleType = VkExternalMemoryHandleTypeFlagBits(rawValue: VkExternalMemoryHandleTypeFlagBits.RawValue(bitPattern: self.handleType.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceExternalImageFormatInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceExternalImageFormatInfoExtension: Chainable {}
+
+public protocol PhysicalDeviceExternalImageFormatInfoExtension: Chainable {}
 
 public struct ExternalImageFormatProperties: ChainableBase, ImageFormatProperties2Extension {
     public typealias CStruct = VkExternalImageFormatProperties
@@ -8165,8 +8689,12 @@ public struct ExternalImageFormatProperties: ChainableBase, ImageFormatPropertie
             return try body(&cStruct)
         }
     }
+    public func push<Extension: ExternalImageFormatPropertiesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ExternalImageFormatPropertiesExtension: Chainable {}
+
+public protocol ExternalImageFormatPropertiesExtension: Chainable {}
 
 public struct PhysicalDeviceExternalBufferInfo: ChainableBase {
     public typealias CStruct = VkPhysicalDeviceExternalBufferInfo
@@ -8196,8 +8724,12 @@ public struct PhysicalDeviceExternalBufferInfo: ChainableBase {
         cStruct.handleType = VkExternalMemoryHandleTypeFlagBits(rawValue: VkExternalMemoryHandleTypeFlagBits.RawValue(bitPattern: self.handleType.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceExternalBufferInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceExternalBufferInfoExtension: Chainable {}
+
+public protocol PhysicalDeviceExternalBufferInfoExtension: Chainable {}
 
 public struct ExternalBufferProperties: ChainableBase {
     public typealias CStruct = VkExternalBufferProperties
@@ -8217,8 +8749,12 @@ public struct ExternalBufferProperties: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: ExternalBufferPropertiesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ExternalBufferPropertiesExtension: Chainable {}
+
+public protocol ExternalBufferPropertiesExtension: Chainable {}
 
 public struct PhysicalDeviceIDProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceIDProperties
@@ -8248,8 +8784,12 @@ public struct PhysicalDeviceIDProperties: ChainableBase, PhysicalDevicePropertie
         cStruct.deviceLUIDValid = VkBool32(self.deviceLUIDValid ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceIDPropertiesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceIDPropertiesExtension: Chainable {}
+
+public protocol PhysicalDeviceIDPropertiesExtension: Chainable {}
 
 public struct ExternalMemoryImageCreateInfo: ChainableBase, ImageCreateInfoExtension {
     public typealias CStruct = VkExternalMemoryImageCreateInfo
@@ -8271,8 +8811,12 @@ public struct ExternalMemoryImageCreateInfo: ChainableBase, ImageCreateInfoExten
         cStruct.handleTypes = self.handleTypes.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: ExternalMemoryImageCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ExternalMemoryImageCreateInfoExtension: Chainable {}
+
+public protocol ExternalMemoryImageCreateInfoExtension: Chainable {}
 
 public struct ExternalMemoryBufferCreateInfo: ChainableBase, BufferCreateInfoExtension {
     public typealias CStruct = VkExternalMemoryBufferCreateInfo
@@ -8294,8 +8838,12 @@ public struct ExternalMemoryBufferCreateInfo: ChainableBase, BufferCreateInfoExt
         cStruct.handleTypes = self.handleTypes.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: ExternalMemoryBufferCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ExternalMemoryBufferCreateInfoExtension: Chainable {}
+
+public protocol ExternalMemoryBufferCreateInfoExtension: Chainable {}
 
 public struct ExportMemoryAllocateInfo: ChainableBase, MemoryAllocateInfoExtension {
     public typealias CStruct = VkExportMemoryAllocateInfo
@@ -8317,8 +8865,12 @@ public struct ExportMemoryAllocateInfo: ChainableBase, MemoryAllocateInfoExtensi
         cStruct.handleTypes = self.handleTypes.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: ExportMemoryAllocateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ExportMemoryAllocateInfoExtension: Chainable {}
+
+public protocol ExportMemoryAllocateInfoExtension: Chainable {}
 
 #if VK_USE_PLATFORM_WIN32_KHR
 public struct ImportMemoryWin32HandleInfoKHR: ChainableBase, MemoryAllocateInfoExtension {
@@ -8349,9 +8901,13 @@ public struct ImportMemoryWin32HandleInfoKHR: ChainableBase, MemoryAllocateInfoE
         cStruct.name = self.name
         return try body(&cStruct)
     }
+    public func push<Extension: ImportMemoryWin32HandleInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ImportMemoryWin32HandleInfoKHRExtension: Chainable {}
+
+public protocol ImportMemoryWin32HandleInfoKHRExtension: Chainable {}
 
 #if VK_USE_PLATFORM_WIN32_KHR
 public struct ExportMemoryWin32HandleInfoKHR: ChainableBase, MemoryAllocateInfoExtension {
@@ -8382,9 +8938,13 @@ public struct ExportMemoryWin32HandleInfoKHR: ChainableBase, MemoryAllocateInfoE
         cStruct.name = self.name
         return try body(&cStruct)
     }
+    public func push<Extension: ExportMemoryWin32HandleInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ExportMemoryWin32HandleInfoKHRExtension: Chainable {}
+
+public protocol ExportMemoryWin32HandleInfoKHRExtension: Chainable {}
 
 #if VK_USE_PLATFORM_FUCHSIA
 public struct ImportMemoryZirconHandleInfoFUCHSIA: ChainableBase, MemoryAllocateInfoExtension {
@@ -8411,9 +8971,13 @@ public struct ImportMemoryZirconHandleInfoFUCHSIA: ChainableBase, MemoryAllocate
         cStruct.handle = self.handle
         return try body(&cStruct)
     }
+    public func push<Extension: ImportMemoryZirconHandleInfoFUCHSIAExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ImportMemoryZirconHandleInfoFUCHSIAExtension: Chainable {}
+
+public protocol ImportMemoryZirconHandleInfoFUCHSIAExtension: Chainable {}
 
 #if VK_USE_PLATFORM_FUCHSIA
 public struct MemoryZirconHandlePropertiesFUCHSIA: ChainableBase {
@@ -8432,9 +8996,13 @@ public struct MemoryZirconHandlePropertiesFUCHSIA: ChainableBase {
         cStruct.memoryTypeBits = self.memoryTypeBits
         return try body(&cStruct)
     }
+    public func push<Extension: MemoryZirconHandlePropertiesFUCHSIAExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol MemoryZirconHandlePropertiesFUCHSIAExtension: Chainable {}
+
+public protocol MemoryZirconHandlePropertiesFUCHSIAExtension: Chainable {}
 
 #if VK_USE_PLATFORM_FUCHSIA
 public struct MemoryGetZirconHandleInfoFUCHSIA: ChainableBase {
@@ -8461,9 +9029,13 @@ public struct MemoryGetZirconHandleInfoFUCHSIA: ChainableBase {
         cStruct.handleType = VkExternalMemoryHandleTypeFlagBits(rawValue: VkExternalMemoryHandleTypeFlagBits.RawValue(bitPattern: self.handleType.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: MemoryGetZirconHandleInfoFUCHSIAExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol MemoryGetZirconHandleInfoFUCHSIAExtension: Chainable {}
+
+public protocol MemoryGetZirconHandleInfoFUCHSIAExtension: Chainable {}
 
 #if VK_USE_PLATFORM_WIN32_KHR
 public struct MemoryWin32HandlePropertiesKHR: ChainableBase {
@@ -8482,9 +9054,13 @@ public struct MemoryWin32HandlePropertiesKHR: ChainableBase {
         cStruct.memoryTypeBits = self.memoryTypeBits
         return try body(&cStruct)
     }
+    public func push<Extension: MemoryWin32HandlePropertiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol MemoryWin32HandlePropertiesKHRExtension: Chainable {}
+
+public protocol MemoryWin32HandlePropertiesKHRExtension: Chainable {}
 
 #if VK_USE_PLATFORM_WIN32_KHR
 public struct MemoryGetWin32HandleInfoKHR: ChainableBase {
@@ -8511,9 +9087,13 @@ public struct MemoryGetWin32HandleInfoKHR: ChainableBase {
         cStruct.handleType = VkExternalMemoryHandleTypeFlagBits(rawValue: VkExternalMemoryHandleTypeFlagBits.RawValue(bitPattern: self.handleType.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: MemoryGetWin32HandleInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol MemoryGetWin32HandleInfoKHRExtension: Chainable {}
+
+public protocol MemoryGetWin32HandleInfoKHRExtension: Chainable {}
 
 public struct ImportMemoryFdInfoKHR: ChainableBase, MemoryAllocateInfoExtension {
     public typealias CStruct = VkImportMemoryFdInfoKHR
@@ -8539,8 +9119,12 @@ public struct ImportMemoryFdInfoKHR: ChainableBase, MemoryAllocateInfoExtension 
         cStruct.fd = self.fd
         return try body(&cStruct)
     }
+    public func push<Extension: ImportMemoryFdInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ImportMemoryFdInfoKHRExtension: Chainable {}
+
+public protocol ImportMemoryFdInfoKHRExtension: Chainable {}
 
 public struct MemoryFdPropertiesKHR: ChainableBase {
     public typealias CStruct = VkMemoryFdPropertiesKHR
@@ -8558,8 +9142,12 @@ public struct MemoryFdPropertiesKHR: ChainableBase {
         cStruct.memoryTypeBits = self.memoryTypeBits
         return try body(&cStruct)
     }
+    public func push<Extension: MemoryFdPropertiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol MemoryFdPropertiesKHRExtension: Chainable {}
+
+public protocol MemoryFdPropertiesKHRExtension: Chainable {}
 
 public struct MemoryGetFdInfoKHR: ChainableBase {
     public typealias CStruct = VkMemoryGetFdInfoKHR
@@ -8585,8 +9173,12 @@ public struct MemoryGetFdInfoKHR: ChainableBase {
         cStruct.handleType = VkExternalMemoryHandleTypeFlagBits(rawValue: VkExternalMemoryHandleTypeFlagBits.RawValue(bitPattern: self.handleType.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: MemoryGetFdInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol MemoryGetFdInfoKHRExtension: Chainable {}
+
+public protocol MemoryGetFdInfoKHRExtension: Chainable {}
 
 #if VK_USE_PLATFORM_WIN32_KHR
 public struct Win32KeyedMutexAcquireReleaseInfoKHR: ChainableBase, SubmitInfoExtension, SubmitInfo2Extension {
@@ -8637,9 +9229,13 @@ public struct Win32KeyedMutexAcquireReleaseInfoKHR: ChainableBase, SubmitInfoExt
             }
         }
     }
+    public func push<Extension: Win32KeyedMutexAcquireReleaseInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol Win32KeyedMutexAcquireReleaseInfoKHRExtension: Chainable {}
+
+public protocol Win32KeyedMutexAcquireReleaseInfoKHRExtension: Chainable {}
 
 #if VK_USE_PLATFORM_METAL_EXT
 public struct ImportMemoryMetalHandleInfoEXT: ChainableBase, MemoryAllocateInfoExtension {
@@ -8666,9 +9262,13 @@ public struct ImportMemoryMetalHandleInfoEXT: ChainableBase, MemoryAllocateInfoE
         cStruct.handle = self.handle
         return try body(&cStruct)
     }
+    public func push<Extension: ImportMemoryMetalHandleInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ImportMemoryMetalHandleInfoEXTExtension: Chainable {}
+
+public protocol ImportMemoryMetalHandleInfoEXTExtension: Chainable {}
 
 #if VK_USE_PLATFORM_METAL_EXT
 public struct MemoryMetalHandlePropertiesEXT: ChainableBase {
@@ -8687,9 +9287,13 @@ public struct MemoryMetalHandlePropertiesEXT: ChainableBase {
         cStruct.memoryTypeBits = self.memoryTypeBits
         return try body(&cStruct)
     }
+    public func push<Extension: MemoryMetalHandlePropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol MemoryMetalHandlePropertiesEXTExtension: Chainable {}
+
+public protocol MemoryMetalHandlePropertiesEXTExtension: Chainable {}
 
 #if VK_USE_PLATFORM_METAL_EXT
 public struct MemoryGetMetalHandleInfoEXT: ChainableBase {
@@ -8716,9 +9320,13 @@ public struct MemoryGetMetalHandleInfoEXT: ChainableBase {
         cStruct.handleType = VkExternalMemoryHandleTypeFlagBits(rawValue: VkExternalMemoryHandleTypeFlagBits.RawValue(bitPattern: self.handleType.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: MemoryGetMetalHandleInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol MemoryGetMetalHandleInfoEXTExtension: Chainable {}
+
+public protocol MemoryGetMetalHandleInfoEXTExtension: Chainable {}
 
 public struct PhysicalDeviceExternalSemaphoreInfo: ChainableBase {
     public typealias CStruct = VkPhysicalDeviceExternalSemaphoreInfo
@@ -8740,8 +9348,12 @@ public struct PhysicalDeviceExternalSemaphoreInfo: ChainableBase {
         cStruct.handleType = VkExternalSemaphoreHandleTypeFlagBits(rawValue: VkExternalSemaphoreHandleTypeFlagBits.RawValue(bitPattern: self.handleType.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceExternalSemaphoreInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceExternalSemaphoreInfoExtension: Chainable {}
+
+public protocol PhysicalDeviceExternalSemaphoreInfoExtension: Chainable {}
 
 public struct ExternalSemaphoreProperties: ChainableBase {
     public typealias CStruct = VkExternalSemaphoreProperties
@@ -8765,8 +9377,12 @@ public struct ExternalSemaphoreProperties: ChainableBase {
         cStruct.externalSemaphoreFeatures = self.externalSemaphoreFeatures.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: ExternalSemaphorePropertiesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ExternalSemaphorePropertiesExtension: Chainable {}
+
+public protocol ExternalSemaphorePropertiesExtension: Chainable {}
 
 public struct ExportSemaphoreCreateInfo: ChainableBase, SemaphoreCreateInfoExtension {
     public typealias CStruct = VkExportSemaphoreCreateInfo
@@ -8788,8 +9404,12 @@ public struct ExportSemaphoreCreateInfo: ChainableBase, SemaphoreCreateInfoExten
         cStruct.handleTypes = self.handleTypes.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: ExportSemaphoreCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ExportSemaphoreCreateInfoExtension: Chainable {}
+
+public protocol ExportSemaphoreCreateInfoExtension: Chainable {}
 
 #if VK_USE_PLATFORM_WIN32_KHR
 public struct ImportSemaphoreWin32HandleInfoKHR: ChainableBase {
@@ -8828,9 +9448,13 @@ public struct ImportSemaphoreWin32HandleInfoKHR: ChainableBase {
         cStruct.name = self.name
         return try body(&cStruct)
     }
+    public func push<Extension: ImportSemaphoreWin32HandleInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ImportSemaphoreWin32HandleInfoKHRExtension: Chainable {}
+
+public protocol ImportSemaphoreWin32HandleInfoKHRExtension: Chainable {}
 
 #if VK_USE_PLATFORM_WIN32_KHR
 public struct ExportSemaphoreWin32HandleInfoKHR: ChainableBase, SemaphoreCreateInfoExtension {
@@ -8861,9 +9485,13 @@ public struct ExportSemaphoreWin32HandleInfoKHR: ChainableBase, SemaphoreCreateI
         cStruct.name = self.name
         return try body(&cStruct)
     }
+    public func push<Extension: ExportSemaphoreWin32HandleInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ExportSemaphoreWin32HandleInfoKHRExtension: Chainable {}
+
+public protocol ExportSemaphoreWin32HandleInfoKHRExtension: Chainable {}
 
 #if VK_USE_PLATFORM_WIN32_KHR
 public struct D3D12FenceSubmitInfoKHR: ChainableBase, SubmitInfoExtension {
@@ -8896,9 +9524,13 @@ public struct D3D12FenceSubmitInfoKHR: ChainableBase, SubmitInfoExtension {
             }
         }
     }
+    public func push<Extension: D3D12FenceSubmitInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol D3D12FenceSubmitInfoKHRExtension: Chainable {}
+
+public protocol D3D12FenceSubmitInfoKHRExtension: Chainable {}
 
 #if VK_USE_PLATFORM_WIN32_KHR
 public struct SemaphoreGetWin32HandleInfoKHR: ChainableBase {
@@ -8925,9 +9557,13 @@ public struct SemaphoreGetWin32HandleInfoKHR: ChainableBase {
         cStruct.handleType = VkExternalSemaphoreHandleTypeFlagBits(rawValue: VkExternalSemaphoreHandleTypeFlagBits.RawValue(bitPattern: self.handleType.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: SemaphoreGetWin32HandleInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol SemaphoreGetWin32HandleInfoKHRExtension: Chainable {}
+
+public protocol SemaphoreGetWin32HandleInfoKHRExtension: Chainable {}
 
 public struct ImportSemaphoreFdInfoKHR: ChainableBase {
     public typealias CStruct = VkImportSemaphoreFdInfoKHR
@@ -8961,8 +9597,12 @@ public struct ImportSemaphoreFdInfoKHR: ChainableBase {
         cStruct.fd = self.fd
         return try body(&cStruct)
     }
+    public func push<Extension: ImportSemaphoreFdInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ImportSemaphoreFdInfoKHRExtension: Chainable {}
+
+public protocol ImportSemaphoreFdInfoKHRExtension: Chainable {}
 
 public struct SemaphoreGetFdInfoKHR: ChainableBase {
     public typealias CStruct = VkSemaphoreGetFdInfoKHR
@@ -8988,8 +9628,12 @@ public struct SemaphoreGetFdInfoKHR: ChainableBase {
         cStruct.handleType = VkExternalSemaphoreHandleTypeFlagBits(rawValue: VkExternalSemaphoreHandleTypeFlagBits.RawValue(bitPattern: self.handleType.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: SemaphoreGetFdInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SemaphoreGetFdInfoKHRExtension: Chainable {}
+
+public protocol SemaphoreGetFdInfoKHRExtension: Chainable {}
 
 #if VK_USE_PLATFORM_FUCHSIA
 public struct ImportSemaphoreZirconHandleInfoFUCHSIA: ChainableBase {
@@ -9024,9 +9668,13 @@ public struct ImportSemaphoreZirconHandleInfoFUCHSIA: ChainableBase {
         cStruct.zirconHandle = self.zirconHandle
         return try body(&cStruct)
     }
+    public func push<Extension: ImportSemaphoreZirconHandleInfoFUCHSIAExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ImportSemaphoreZirconHandleInfoFUCHSIAExtension: Chainable {}
+
+public protocol ImportSemaphoreZirconHandleInfoFUCHSIAExtension: Chainable {}
 
 #if VK_USE_PLATFORM_FUCHSIA
 public struct SemaphoreGetZirconHandleInfoFUCHSIA: ChainableBase {
@@ -9053,9 +9701,13 @@ public struct SemaphoreGetZirconHandleInfoFUCHSIA: ChainableBase {
         cStruct.handleType = VkExternalSemaphoreHandleTypeFlagBits(rawValue: VkExternalSemaphoreHandleTypeFlagBits.RawValue(bitPattern: self.handleType.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: SemaphoreGetZirconHandleInfoFUCHSIAExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol SemaphoreGetZirconHandleInfoFUCHSIAExtension: Chainable {}
+
+public protocol SemaphoreGetZirconHandleInfoFUCHSIAExtension: Chainable {}
 
 public struct PhysicalDeviceExternalFenceInfo: ChainableBase {
     public typealias CStruct = VkPhysicalDeviceExternalFenceInfo
@@ -9077,8 +9729,12 @@ public struct PhysicalDeviceExternalFenceInfo: ChainableBase {
         cStruct.handleType = VkExternalFenceHandleTypeFlagBits(rawValue: VkExternalFenceHandleTypeFlagBits.RawValue(bitPattern: self.handleType.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceExternalFenceInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceExternalFenceInfoExtension: Chainable {}
+
+public protocol PhysicalDeviceExternalFenceInfoExtension: Chainable {}
 
 public struct ExternalFenceProperties: ChainableBase {
     public typealias CStruct = VkExternalFenceProperties
@@ -9102,8 +9758,12 @@ public struct ExternalFenceProperties: ChainableBase {
         cStruct.externalFenceFeatures = self.externalFenceFeatures.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: ExternalFencePropertiesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ExternalFencePropertiesExtension: Chainable {}
+
+public protocol ExternalFencePropertiesExtension: Chainable {}
 
 public struct ExportFenceCreateInfo: ChainableBase, FenceCreateInfoExtension {
     public typealias CStruct = VkExportFenceCreateInfo
@@ -9125,8 +9785,12 @@ public struct ExportFenceCreateInfo: ChainableBase, FenceCreateInfoExtension {
         cStruct.handleTypes = self.handleTypes.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: ExportFenceCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ExportFenceCreateInfoExtension: Chainable {}
+
+public protocol ExportFenceCreateInfoExtension: Chainable {}
 
 #if VK_USE_PLATFORM_WIN32_KHR
 public struct ImportFenceWin32HandleInfoKHR: ChainableBase {
@@ -9165,9 +9829,13 @@ public struct ImportFenceWin32HandleInfoKHR: ChainableBase {
         cStruct.name = self.name
         return try body(&cStruct)
     }
+    public func push<Extension: ImportFenceWin32HandleInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ImportFenceWin32HandleInfoKHRExtension: Chainable {}
+
+public protocol ImportFenceWin32HandleInfoKHRExtension: Chainable {}
 
 #if VK_USE_PLATFORM_WIN32_KHR
 public struct ExportFenceWin32HandleInfoKHR: ChainableBase, FenceCreateInfoExtension {
@@ -9198,9 +9866,13 @@ public struct ExportFenceWin32HandleInfoKHR: ChainableBase, FenceCreateInfoExten
         cStruct.name = self.name
         return try body(&cStruct)
     }
+    public func push<Extension: ExportFenceWin32HandleInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ExportFenceWin32HandleInfoKHRExtension: Chainable {}
+
+public protocol ExportFenceWin32HandleInfoKHRExtension: Chainable {}
 
 #if VK_USE_PLATFORM_WIN32_KHR
 public struct FenceGetWin32HandleInfoKHR: ChainableBase {
@@ -9227,9 +9899,13 @@ public struct FenceGetWin32HandleInfoKHR: ChainableBase {
         cStruct.handleType = VkExternalFenceHandleTypeFlagBits(rawValue: VkExternalFenceHandleTypeFlagBits.RawValue(bitPattern: self.handleType.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: FenceGetWin32HandleInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol FenceGetWin32HandleInfoKHRExtension: Chainable {}
+
+public protocol FenceGetWin32HandleInfoKHRExtension: Chainable {}
 
 public struct ImportFenceFdInfoKHR: ChainableBase {
     public typealias CStruct = VkImportFenceFdInfoKHR
@@ -9263,8 +9939,12 @@ public struct ImportFenceFdInfoKHR: ChainableBase {
         cStruct.fd = self.fd
         return try body(&cStruct)
     }
+    public func push<Extension: ImportFenceFdInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ImportFenceFdInfoKHRExtension: Chainable {}
+
+public protocol ImportFenceFdInfoKHRExtension: Chainable {}
 
 public struct FenceGetFdInfoKHR: ChainableBase {
     public typealias CStruct = VkFenceGetFdInfoKHR
@@ -9290,8 +9970,12 @@ public struct FenceGetFdInfoKHR: ChainableBase {
         cStruct.handleType = VkExternalFenceHandleTypeFlagBits(rawValue: VkExternalFenceHandleTypeFlagBits.RawValue(bitPattern: self.handleType.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: FenceGetFdInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol FenceGetFdInfoKHRExtension: Chainable {}
+
+public protocol FenceGetFdInfoKHRExtension: Chainable {}
 
 public struct PhysicalDeviceMultiviewFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceMultiviewFeatures
@@ -9321,8 +10005,12 @@ public struct PhysicalDeviceMultiviewFeatures: ChainableBase, PhysicalDeviceFeat
         cStruct.multiviewTessellationShader = VkBool32(self.multiviewTessellationShader ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceMultiviewFeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceMultiviewFeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceMultiviewFeaturesExtension: Chainable {}
 
 public struct PhysicalDeviceMultiviewProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceMultiviewProperties
@@ -9343,8 +10031,12 @@ public struct PhysicalDeviceMultiviewProperties: ChainableBase, PhysicalDevicePr
         cStruct.maxMultiviewInstanceIndex = self.maxMultiviewInstanceIndex
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceMultiviewPropertiesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceMultiviewPropertiesExtension: Chainable {}
+
+public protocol PhysicalDeviceMultiviewPropertiesExtension: Chainable {}
 
 public struct RenderPassMultiviewCreateInfo: ChainableBase, RenderPassCreateInfoExtension {
     public typealias CStruct = VkRenderPassMultiviewCreateInfo
@@ -9383,8 +10075,12 @@ public struct RenderPassMultiviewCreateInfo: ChainableBase, RenderPassCreateInfo
             }
         }
     }
+    public func push<Extension: RenderPassMultiviewCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol RenderPassMultiviewCreateInfoExtension: Chainable {}
+
+public protocol RenderPassMultiviewCreateInfoExtension: Chainable {}
 
 public struct SurfaceCapabilities2EXT: ChainableBase {
     public typealias CStruct = VkSurfaceCapabilities2EXT
@@ -9438,8 +10134,12 @@ public struct SurfaceCapabilities2EXT: ChainableBase {
             }
         }
     }
+    public func push<Extension: SurfaceCapabilities2EXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SurfaceCapabilities2EXTExtension: Chainable {}
+
+public protocol SurfaceCapabilities2EXTExtension: Chainable {}
 
 public struct DisplayPowerInfoEXT: ChainableBase {
     public typealias CStruct = VkDisplayPowerInfoEXT
@@ -9461,8 +10161,12 @@ public struct DisplayPowerInfoEXT: ChainableBase {
         cStruct.powerState = VkDisplayPowerStateEXT(rawValue: VkDisplayPowerStateEXT.RawValue(bitPattern: self.powerState.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: DisplayPowerInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DisplayPowerInfoEXTExtension: Chainable {}
+
+public protocol DisplayPowerInfoEXTExtension: Chainable {}
 
 public struct DeviceEventInfoEXT: ChainableBase {
     public typealias CStruct = VkDeviceEventInfoEXT
@@ -9484,8 +10188,12 @@ public struct DeviceEventInfoEXT: ChainableBase {
         cStruct.deviceEvent = VkDeviceEventTypeEXT(rawValue: VkDeviceEventTypeEXT.RawValue(bitPattern: self.deviceEvent.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: DeviceEventInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DeviceEventInfoEXTExtension: Chainable {}
+
+public protocol DeviceEventInfoEXTExtension: Chainable {}
 
 public struct DisplayEventInfoEXT: ChainableBase {
     public typealias CStruct = VkDisplayEventInfoEXT
@@ -9507,8 +10215,12 @@ public struct DisplayEventInfoEXT: ChainableBase {
         cStruct.displayEvent = VkDisplayEventTypeEXT(rawValue: VkDisplayEventTypeEXT.RawValue(bitPattern: self.displayEvent.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: DisplayEventInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DisplayEventInfoEXTExtension: Chainable {}
+
+public protocol DisplayEventInfoEXTExtension: Chainable {}
 
 public struct SwapchainCounterCreateInfoEXT: ChainableBase, SwapchainCreateInfoKHRExtension {
     public typealias CStruct = VkSwapchainCounterCreateInfoEXT
@@ -9530,8 +10242,12 @@ public struct SwapchainCounterCreateInfoEXT: ChainableBase, SwapchainCreateInfoK
         cStruct.surfaceCounters = self.surfaceCounters.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: SwapchainCounterCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SwapchainCounterCreateInfoEXTExtension: Chainable {}
+
+public protocol SwapchainCounterCreateInfoEXTExtension: Chainable {}
 
 public struct PhysicalDeviceGroupProperties: ChainableBase {
     public typealias CStruct = VkPhysicalDeviceGroupProperties
@@ -9557,8 +10273,12 @@ public struct PhysicalDeviceGroupProperties: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PhysicalDeviceGroupPropertiesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceGroupPropertiesExtension: Chainable {}
+
+public protocol PhysicalDeviceGroupPropertiesExtension: Chainable {}
 
 public struct MemoryAllocateFlagsInfo: ChainableBase, MemoryAllocateInfoExtension {
     public typealias CStruct = VkMemoryAllocateFlagsInfo
@@ -9584,8 +10304,12 @@ public struct MemoryAllocateFlagsInfo: ChainableBase, MemoryAllocateInfoExtensio
         cStruct.deviceMask = self.deviceMask
         return try body(&cStruct)
     }
+    public func push<Extension: MemoryAllocateFlagsInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol MemoryAllocateFlagsInfoExtension: Chainable {}
+
+public protocol MemoryAllocateFlagsInfoExtension: Chainable {}
 
 public struct BindBufferMemoryInfo: ChainableBase {
     public typealias CStruct = VkBindBufferMemoryInfo
@@ -9615,8 +10339,12 @@ public struct BindBufferMemoryInfo: ChainableBase {
         cStruct.memoryOffset = self.memoryOffset
         return try body(&cStruct)
     }
+    public func push<Extension: BindBufferMemoryInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol BindBufferMemoryInfoExtension: Chainable {}
+
+public protocol BindBufferMemoryInfoExtension: Chainable {}
 
 public struct BindBufferMemoryDeviceGroupInfo: ChainableBase, BindBufferMemoryInfoExtension {
     public typealias CStruct = VkBindBufferMemoryDeviceGroupInfo
@@ -9641,8 +10369,12 @@ public struct BindBufferMemoryDeviceGroupInfo: ChainableBase, BindBufferMemoryIn
             return try body(&cStruct)
         }
     }
+    public func push<Extension: BindBufferMemoryDeviceGroupInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol BindBufferMemoryDeviceGroupInfoExtension: Chainable {}
+
+public protocol BindBufferMemoryDeviceGroupInfoExtension: Chainable {}
 
 public struct BindImageMemoryInfo: ChainableBase {
     public typealias CStruct = VkBindImageMemoryInfo
@@ -9672,8 +10404,12 @@ public struct BindImageMemoryInfo: ChainableBase {
         cStruct.memoryOffset = self.memoryOffset
         return try body(&cStruct)
     }
+    public func push<Extension: BindImageMemoryInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol BindImageMemoryInfoExtension: Chainable {}
+
+public protocol BindImageMemoryInfoExtension: Chainable {}
 
 public struct BindImageMemoryDeviceGroupInfo: ChainableBase, BindImageMemoryInfoExtension {
     public typealias CStruct = VkBindImageMemoryDeviceGroupInfo
@@ -9705,8 +10441,12 @@ public struct BindImageMemoryDeviceGroupInfo: ChainableBase, BindImageMemoryInfo
             }
         }
     }
+    public func push<Extension: BindImageMemoryDeviceGroupInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol BindImageMemoryDeviceGroupInfoExtension: Chainable {}
+
+public protocol BindImageMemoryDeviceGroupInfoExtension: Chainable {}
 
 public struct DeviceGroupRenderPassBeginInfo: ChainableBase, RenderPassBeginInfoExtension, RenderingInfoExtension {
     public typealias CStruct = VkDeviceGroupRenderPassBeginInfo
@@ -9735,8 +10475,12 @@ public struct DeviceGroupRenderPassBeginInfo: ChainableBase, RenderPassBeginInfo
             return try body(&cStruct)
         }
     }
+    public func push<Extension: DeviceGroupRenderPassBeginInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DeviceGroupRenderPassBeginInfoExtension: Chainable {}
+
+public protocol DeviceGroupRenderPassBeginInfoExtension: Chainable {}
 
 public struct DeviceGroupCommandBufferBeginInfo: ChainableBase, CommandBufferBeginInfoExtension {
     public typealias CStruct = VkDeviceGroupCommandBufferBeginInfo
@@ -9758,8 +10502,12 @@ public struct DeviceGroupCommandBufferBeginInfo: ChainableBase, CommandBufferBeg
         cStruct.deviceMask = self.deviceMask
         return try body(&cStruct)
     }
+    public func push<Extension: DeviceGroupCommandBufferBeginInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DeviceGroupCommandBufferBeginInfoExtension: Chainable {}
+
+public protocol DeviceGroupCommandBufferBeginInfoExtension: Chainable {}
 
 public struct DeviceGroupSubmitInfo: ChainableBase, SubmitInfoExtension {
     public typealias CStruct = VkDeviceGroupSubmitInfo
@@ -9798,8 +10546,12 @@ public struct DeviceGroupSubmitInfo: ChainableBase, SubmitInfoExtension {
             }
         }
     }
+    public func push<Extension: DeviceGroupSubmitInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DeviceGroupSubmitInfoExtension: Chainable {}
+
+public protocol DeviceGroupSubmitInfoExtension: Chainable {}
 
 public struct DeviceGroupBindSparseInfo: ChainableBase, BindSparseInfoExtension {
     public typealias CStruct = VkDeviceGroupBindSparseInfo
@@ -9825,8 +10577,12 @@ public struct DeviceGroupBindSparseInfo: ChainableBase, BindSparseInfoExtension 
         cStruct.memoryDeviceIndex = self.memoryDeviceIndex
         return try body(&cStruct)
     }
+    public func push<Extension: DeviceGroupBindSparseInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DeviceGroupBindSparseInfoExtension: Chainable {}
+
+public protocol DeviceGroupBindSparseInfoExtension: Chainable {}
 
 public struct DeviceGroupPresentCapabilitiesKHR: ChainableBase {
     public typealias CStruct = VkDeviceGroupPresentCapabilitiesKHR
@@ -9847,8 +10603,12 @@ public struct DeviceGroupPresentCapabilitiesKHR: ChainableBase {
         cStruct.modes = self.modes.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: DeviceGroupPresentCapabilitiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DeviceGroupPresentCapabilitiesKHRExtension: Chainable {}
+
+public protocol DeviceGroupPresentCapabilitiesKHRExtension: Chainable {}
 
 public struct ImageSwapchainCreateInfoKHR: ChainableBase, ImageCreateInfoExtension {
     public typealias CStruct = VkImageSwapchainCreateInfoKHR
@@ -9870,8 +10630,12 @@ public struct ImageSwapchainCreateInfoKHR: ChainableBase, ImageCreateInfoExtensi
         cStruct.swapchain = self.swapchain?.handle
         return try body(&cStruct)
     }
+    public func push<Extension: ImageSwapchainCreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ImageSwapchainCreateInfoKHRExtension: Chainable {}
+
+public protocol ImageSwapchainCreateInfoKHRExtension: Chainable {}
 
 public struct BindImageMemorySwapchainInfoKHR: ChainableBase, BindImageMemoryInfoExtension {
     public typealias CStruct = VkBindImageMemorySwapchainInfoKHR
@@ -9897,8 +10661,12 @@ public struct BindImageMemorySwapchainInfoKHR: ChainableBase, BindImageMemoryInf
         cStruct.imageIndex = self.imageIndex
         return try body(&cStruct)
     }
+    public func push<Extension: BindImageMemorySwapchainInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol BindImageMemorySwapchainInfoKHRExtension: Chainable {}
+
+public protocol BindImageMemorySwapchainInfoKHRExtension: Chainable {}
 
 public struct AcquireNextImageInfoKHR: ChainableBase {
     public typealias CStruct = VkAcquireNextImageInfoKHR
@@ -9936,8 +10704,12 @@ public struct AcquireNextImageInfoKHR: ChainableBase {
         cStruct.deviceMask = self.deviceMask
         return try body(&cStruct)
     }
+    public func push<Extension: AcquireNextImageInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol AcquireNextImageInfoKHRExtension: Chainable {}
+
+public protocol AcquireNextImageInfoKHRExtension: Chainable {}
 
 public struct DeviceGroupPresentInfoKHR: ChainableBase, PresentInfoKHRExtension {
     public typealias CStruct = VkDeviceGroupPresentInfoKHR
@@ -9966,8 +10738,12 @@ public struct DeviceGroupPresentInfoKHR: ChainableBase, PresentInfoKHRExtension 
             return try body(&cStruct)
         }
     }
+    public func push<Extension: DeviceGroupPresentInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DeviceGroupPresentInfoKHRExtension: Chainable {}
+
+public protocol DeviceGroupPresentInfoKHRExtension: Chainable {}
 
 public struct DeviceGroupDeviceCreateInfo: ChainableBase, DeviceCreateInfoExtension {
     public typealias CStruct = VkDeviceGroupDeviceCreateInfo
@@ -9992,8 +10768,12 @@ public struct DeviceGroupDeviceCreateInfo: ChainableBase, DeviceCreateInfoExtens
             return try body(&cStruct)
         }
     }
+    public func push<Extension: DeviceGroupDeviceCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DeviceGroupDeviceCreateInfoExtension: Chainable {}
+
+public protocol DeviceGroupDeviceCreateInfoExtension: Chainable {}
 
 public struct DeviceGroupSwapchainCreateInfoKHR: ChainableBase, SwapchainCreateInfoKHRExtension {
     public typealias CStruct = VkDeviceGroupSwapchainCreateInfoKHR
@@ -10015,8 +10795,12 @@ public struct DeviceGroupSwapchainCreateInfoKHR: ChainableBase, SwapchainCreateI
         cStruct.modes = self.modes.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: DeviceGroupSwapchainCreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DeviceGroupSwapchainCreateInfoKHRExtension: Chainable {}
+
+public protocol DeviceGroupSwapchainCreateInfoKHRExtension: Chainable {}
 
 public struct DescriptorUpdateTemplateEntry: CStructConvertible {
     public typealias CStruct = VkDescriptorUpdateTemplateEntry
@@ -10105,8 +10889,12 @@ public struct DescriptorUpdateTemplateCreateInfo: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: DescriptorUpdateTemplateCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DescriptorUpdateTemplateCreateInfoExtension: Chainable {}
+
+public protocol DescriptorUpdateTemplateCreateInfoExtension: Chainable {}
 
 public struct XYColorEXT: CStructConvertible {
     public typealias CStruct = VkXYColorEXT
@@ -10152,8 +10940,12 @@ public struct PhysicalDevicePresentIdFeaturesKHR: ChainableBase, PhysicalDeviceF
         cStruct.presentId = VkBool32(self.presentId ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevicePresentIdFeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevicePresentIdFeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDevicePresentIdFeaturesKHRExtension: Chainable {}
 
 public struct PresentIdKHR: ChainableBase, PresentInfoKHRExtension {
     public typealias CStruct = VkPresentIdKHR
@@ -10178,8 +10970,12 @@ public struct PresentIdKHR: ChainableBase, PresentInfoKHRExtension {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PresentIdKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PresentIdKHRExtension: Chainable {}
+
+public protocol PresentIdKHRExtension: Chainable {}
 
 public struct PhysicalDevicePresentId2FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePresentId2FeaturesKHR
@@ -10201,8 +10997,12 @@ public struct PhysicalDevicePresentId2FeaturesKHR: ChainableBase, PhysicalDevice
         cStruct.presentId2 = VkBool32(self.presentId2 ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevicePresentId2FeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevicePresentId2FeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDevicePresentId2FeaturesKHRExtension: Chainable {}
 
 public struct PresentId2KHR: ChainableBase, PresentInfoKHRExtension {
     public typealias CStruct = VkPresentId2KHR
@@ -10227,8 +11027,12 @@ public struct PresentId2KHR: ChainableBase, PresentInfoKHRExtension {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PresentId2KHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PresentId2KHRExtension: Chainable {}
+
+public protocol PresentId2KHRExtension: Chainable {}
 
 public struct PresentWait2InfoKHR: ChainableBase {
     public typealias CStruct = VkPresentWait2InfoKHR
@@ -10254,8 +11058,12 @@ public struct PresentWait2InfoKHR: ChainableBase {
         cStruct.timeout = self.timeout
         return try body(&cStruct)
     }
+    public func push<Extension: PresentWait2InfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PresentWait2InfoKHRExtension: Chainable {}
+
+public protocol PresentWait2InfoKHRExtension: Chainable {}
 
 public struct PhysicalDevicePresentWaitFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePresentWaitFeaturesKHR
@@ -10277,8 +11085,12 @@ public struct PhysicalDevicePresentWaitFeaturesKHR: ChainableBase, PhysicalDevic
         cStruct.presentWait = VkBool32(self.presentWait ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevicePresentWaitFeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevicePresentWaitFeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDevicePresentWaitFeaturesKHRExtension: Chainable {}
 
 public struct PhysicalDevicePresentWait2FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePresentWait2FeaturesKHR
@@ -10300,8 +11112,12 @@ public struct PhysicalDevicePresentWait2FeaturesKHR: ChainableBase, PhysicalDevi
         cStruct.presentWait2 = VkBool32(self.presentWait2 ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevicePresentWait2FeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevicePresentWait2FeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDevicePresentWait2FeaturesKHRExtension: Chainable {}
 
 public struct PhysicalDevicePresentTimingFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePresentTimingFeaturesEXT
@@ -10331,8 +11147,12 @@ public struct PhysicalDevicePresentTimingFeaturesEXT: ChainableBase, PhysicalDev
         cStruct.presentAtRelativeTime = VkBool32(self.presentAtRelativeTime ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevicePresentTimingFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevicePresentTimingFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDevicePresentTimingFeaturesEXTExtension: Chainable {}
 
 public struct PresentTimingSurfaceCapabilitiesEXT: ChainableBase, SurfaceCapabilities2KHRExtension {
     public typealias CStruct = VkPresentTimingSurfaceCapabilitiesEXT
@@ -10359,8 +11179,12 @@ public struct PresentTimingSurfaceCapabilitiesEXT: ChainableBase, SurfaceCapabil
         cStruct.presentStageQueries = self.presentStageQueries.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: PresentTimingSurfaceCapabilitiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PresentTimingSurfaceCapabilitiesEXTExtension: Chainable {}
+
+public protocol PresentTimingSurfaceCapabilitiesEXTExtension: Chainable {}
 
 public struct SwapchainTimingPropertiesEXT: ChainableBase {
     public typealias CStruct = VkSwapchainTimingPropertiesEXT
@@ -10381,8 +11205,12 @@ public struct SwapchainTimingPropertiesEXT: ChainableBase {
         cStruct.refreshInterval = self.refreshInterval
         return try body(&cStruct)
     }
+    public func push<Extension: SwapchainTimingPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SwapchainTimingPropertiesEXTExtension: Chainable {}
+
+public protocol SwapchainTimingPropertiesEXTExtension: Chainable {}
 
 public struct SwapchainTimeDomainPropertiesEXT: ChainableBase {
     public typealias CStruct = VkSwapchainTimeDomainPropertiesEXT
@@ -10406,8 +11234,12 @@ public struct SwapchainTimeDomainPropertiesEXT: ChainableBase {
         cStruct.pTimeDomainIds = self.timeDomainIds
         return try body(&cStruct)
     }
+    public func push<Extension: SwapchainTimeDomainPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SwapchainTimeDomainPropertiesEXTExtension: Chainable {}
+
+public protocol SwapchainTimeDomainPropertiesEXTExtension: Chainable {}
 
 public struct PresentStageTimeEXT: CStructConvertible {
     public typealias CStruct = VkPresentStageTimeEXT
@@ -10452,8 +11284,12 @@ public struct PastPresentationTimingInfoEXT: ChainableBase {
         cStruct.swapchain = self.swapchain.handle
         return try body(&cStruct)
     }
+    public func push<Extension: PastPresentationTimingInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PastPresentationTimingInfoEXTExtension: Chainable {}
+
+public protocol PastPresentationTimingInfoEXTExtension: Chainable {}
 
 public struct PastPresentationTimingEXT: ChainableBase {
     public typealias CStruct = VkPastPresentationTimingEXT
@@ -10489,8 +11325,12 @@ public struct PastPresentationTimingEXT: ChainableBase {
         cStruct.reportComplete = VkBool32(self.reportComplete ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PastPresentationTimingEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PastPresentationTimingEXTExtension: Chainable {}
+
+public protocol PastPresentationTimingEXTExtension: Chainable {}
 
 public struct PastPresentationTimingPropertiesEXT: ChainableBase {
     public typealias CStruct = VkPastPresentationTimingPropertiesEXT
@@ -10517,8 +11357,12 @@ public struct PastPresentationTimingPropertiesEXT: ChainableBase {
         cStruct.pPresentationTimings = self.presentationTimings
         return try body(&cStruct)
     }
+    public func push<Extension: PastPresentationTimingPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PastPresentationTimingPropertiesEXTExtension: Chainable {}
+
+public protocol PastPresentationTimingPropertiesEXTExtension: Chainable {}
 
 public struct PresentTimingInfoEXT: ChainableBase {
     public typealias CStruct = VkPresentTimingInfoEXT
@@ -10556,8 +11400,12 @@ public struct PresentTimingInfoEXT: ChainableBase {
         cStruct.targetTimeDomainPresentStage = self.targetTimeDomainPresentStage.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: PresentTimingInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PresentTimingInfoEXTExtension: Chainable {}
+
+public protocol PresentTimingInfoEXTExtension: Chainable {}
 
 public struct PresentTimingsInfoEXT: ChainableBase, PresentInfoKHRExtension {
     public typealias CStruct = VkPresentTimingsInfoEXT
@@ -10582,8 +11430,12 @@ public struct PresentTimingsInfoEXT: ChainableBase, PresentInfoKHRExtension {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PresentTimingsInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PresentTimingsInfoEXTExtension: Chainable {}
+
+public protocol PresentTimingsInfoEXTExtension: Chainable {}
 
 public struct SwapchainCalibratedTimestampInfoEXT: ChainableBase, CalibratedTimestampInfoKHRExtension {
     public typealias CStruct = VkSwapchainCalibratedTimestampInfoEXT
@@ -10613,8 +11465,12 @@ public struct SwapchainCalibratedTimestampInfoEXT: ChainableBase, CalibratedTime
         cStruct.timeDomainId = self.timeDomainId
         return try body(&cStruct)
     }
+    public func push<Extension: SwapchainCalibratedTimestampInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SwapchainCalibratedTimestampInfoEXTExtension: Chainable {}
+
+public protocol SwapchainCalibratedTimestampInfoEXTExtension: Chainable {}
 
 public struct HdrMetadataEXT: ChainableBase {
     public typealias CStruct = VkHdrMetadataEXT
@@ -10672,8 +11528,12 @@ public struct HdrMetadataEXT: ChainableBase {
             }
         }
     }
+    public func push<Extension: HdrMetadataEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol HdrMetadataEXTExtension: Chainable {}
+
+public protocol HdrMetadataEXTExtension: Chainable {}
 
 public struct HdrVividDynamicMetadataHUAWEI: ChainableBase, HdrMetadataEXTExtension {
     public typealias CStruct = VkHdrVividDynamicMetadataHUAWEI
@@ -10699,8 +11559,12 @@ public struct HdrVividDynamicMetadataHUAWEI: ChainableBase, HdrMetadataEXTExtens
         cStruct.pDynamicMetadata = self.dynamicMetadata
         return try body(&cStruct)
     }
+    public func push<Extension: HdrVividDynamicMetadataHUAWEIExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol HdrVividDynamicMetadataHUAWEIExtension: Chainable {}
+
+public protocol HdrVividDynamicMetadataHUAWEIExtension: Chainable {}
 
 public struct DisplayNativeHdrSurfaceCapabilitiesAMD: ChainableBase, SurfaceCapabilities2KHRExtension {
     public typealias CStruct = VkDisplayNativeHdrSurfaceCapabilitiesAMD
@@ -10718,8 +11582,12 @@ public struct DisplayNativeHdrSurfaceCapabilitiesAMD: ChainableBase, SurfaceCapa
         cStruct.localDimmingSupport = VkBool32(self.localDimmingSupport ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: DisplayNativeHdrSurfaceCapabilitiesAMDExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DisplayNativeHdrSurfaceCapabilitiesAMDExtension: Chainable {}
+
+public protocol DisplayNativeHdrSurfaceCapabilitiesAMDExtension: Chainable {}
 
 public struct SwapchainDisplayNativeHdrCreateInfoAMD: ChainableBase, SwapchainCreateInfoKHRExtension {
     public typealias CStruct = VkSwapchainDisplayNativeHdrCreateInfoAMD
@@ -10741,8 +11609,12 @@ public struct SwapchainDisplayNativeHdrCreateInfoAMD: ChainableBase, SwapchainCr
         cStruct.localDimmingEnable = VkBool32(self.localDimmingEnable ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: SwapchainDisplayNativeHdrCreateInfoAMDExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SwapchainDisplayNativeHdrCreateInfoAMDExtension: Chainable {}
+
+public protocol SwapchainDisplayNativeHdrCreateInfoAMDExtension: Chainable {}
 
 public struct RefreshCycleDurationGOOGLE: CStructConvertible {
     public typealias CStruct = VkRefreshCycleDurationGOOGLE
@@ -10835,8 +11707,12 @@ public struct PresentTimesInfoGOOGLE: ChainableBase, PresentInfoKHRExtension {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PresentTimesInfoGOOGLEExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PresentTimesInfoGOOGLEExtension: Chainable {}
+
+public protocol PresentTimesInfoGOOGLEExtension: Chainable {}
 
 #if VK_USE_PLATFORM_IOS_MVK
 public struct IOSSurfaceCreateInfoMVK: ChainableBase {
@@ -10863,9 +11739,13 @@ public struct IOSSurfaceCreateInfoMVK: ChainableBase {
         cStruct.pView = self.view
         return try body(&cStruct)
     }
+    public func push<Extension: IOSSurfaceCreateInfoMVKExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol IOSSurfaceCreateInfoMVKExtension: Chainable {}
+
+public protocol IOSSurfaceCreateInfoMVKExtension: Chainable {}
 
 #if VK_USE_PLATFORM_MACOS_MVK
 public struct MacOSSurfaceCreateInfoMVK: ChainableBase {
@@ -10892,9 +11772,13 @@ public struct MacOSSurfaceCreateInfoMVK: ChainableBase {
         cStruct.pView = self.view
         return try body(&cStruct)
     }
+    public func push<Extension: MacOSSurfaceCreateInfoMVKExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol MacOSSurfaceCreateInfoMVKExtension: Chainable {}
+
+public protocol MacOSSurfaceCreateInfoMVKExtension: Chainable {}
 
 #if VK_USE_PLATFORM_METAL_EXT
 public struct MetalSurfaceCreateInfoEXT: ChainableBase {
@@ -10921,9 +11805,13 @@ public struct MetalSurfaceCreateInfoEXT: ChainableBase {
         cStruct.pLayer = self.layer
         return try body(&cStruct)
     }
+    public func push<Extension: MetalSurfaceCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol MetalSurfaceCreateInfoEXTExtension: Chainable {}
+
+public protocol MetalSurfaceCreateInfoEXTExtension: Chainable {}
 
 public struct ViewportWScalingNV: CStructConvertible {
     public typealias CStruct = VkViewportWScalingNV
@@ -10976,8 +11864,12 @@ public struct PipelineViewportWScalingStateCreateInfoNV: ChainableBase, Pipeline
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PipelineViewportWScalingStateCreateInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineViewportWScalingStateCreateInfoNVExtension: Chainable {}
+
+public protocol PipelineViewportWScalingStateCreateInfoNVExtension: Chainable {}
 
 public struct ViewportSwizzleNV: CStructConvertible {
     public typealias CStruct = VkViewportSwizzleNV
@@ -11038,8 +11930,12 @@ public struct PipelineViewportSwizzleStateCreateInfoNV: ChainableBase, PipelineV
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PipelineViewportSwizzleStateCreateInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineViewportSwizzleStateCreateInfoNVExtension: Chainable {}
+
+public protocol PipelineViewportSwizzleStateCreateInfoNVExtension: Chainable {}
 
 public struct PhysicalDeviceDiscardRectanglePropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceDiscardRectanglePropertiesEXT
@@ -11057,8 +11953,12 @@ public struct PhysicalDeviceDiscardRectanglePropertiesEXT: ChainableBase, Physic
         cStruct.maxDiscardRectangles = self.maxDiscardRectangles
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDiscardRectanglePropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceDiscardRectanglePropertiesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceDiscardRectanglePropertiesEXTExtension: Chainable {}
 
 public struct PipelineDiscardRectangleStateCreateInfoEXT: ChainableBase, GraphicsPipelineCreateInfoExtension {
     public typealias CStruct = VkPipelineDiscardRectangleStateCreateInfoEXT
@@ -11091,8 +11991,12 @@ public struct PipelineDiscardRectangleStateCreateInfoEXT: ChainableBase, Graphic
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PipelineDiscardRectangleStateCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineDiscardRectangleStateCreateInfoEXTExtension: Chainable {}
+
+public protocol PipelineDiscardRectangleStateCreateInfoEXTExtension: Chainable {}
 
 public struct PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
@@ -11110,8 +12014,12 @@ public struct PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX: ChainableBa
         cStruct.perViewPositionAllComponents = VkBool32(self.perViewPositionAllComponents ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceMultiviewPerViewAttributesPropertiesNVXExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceMultiviewPerViewAttributesPropertiesNVXExtension: Chainable {}
+
+public protocol PhysicalDeviceMultiviewPerViewAttributesPropertiesNVXExtension: Chainable {}
 
 public struct InputAttachmentAspectReference: CStructConvertible {
     public typealias CStruct = VkInputAttachmentAspectReference
@@ -11164,8 +12072,12 @@ public struct RenderPassInputAttachmentAspectCreateInfo: ChainableBase, RenderPa
             return try body(&cStruct)
         }
     }
+    public func push<Extension: RenderPassInputAttachmentAspectCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol RenderPassInputAttachmentAspectCreateInfoExtension: Chainable {}
+
+public protocol RenderPassInputAttachmentAspectCreateInfoExtension: Chainable {}
 
 public struct PhysicalDeviceSurfaceInfo2KHR: ChainableBase {
     public typealias CStruct = VkPhysicalDeviceSurfaceInfo2KHR
@@ -11187,8 +12099,12 @@ public struct PhysicalDeviceSurfaceInfo2KHR: ChainableBase {
         cStruct.surface = self.surface?.handle
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceSurfaceInfo2KHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceSurfaceInfo2KHRExtension: Chainable {}
+
+public protocol PhysicalDeviceSurfaceInfo2KHRExtension: Chainable {}
 
 public struct SurfaceCapabilities2KHR: ChainableBase {
     public typealias CStruct = VkSurfaceCapabilities2KHR
@@ -11208,8 +12124,12 @@ public struct SurfaceCapabilities2KHR: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: SurfaceCapabilities2KHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SurfaceCapabilities2KHRExtension: Chainable {}
+
+public protocol SurfaceCapabilities2KHRExtension: Chainable {}
 
 public struct SurfaceFormat2KHR: ChainableBase {
     public typealias CStruct = VkSurfaceFormat2KHR
@@ -11229,8 +12149,12 @@ public struct SurfaceFormat2KHR: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: SurfaceFormat2KHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SurfaceFormat2KHRExtension: Chainable {}
+
+public protocol SurfaceFormat2KHRExtension: Chainable {}
 
 public struct DisplayProperties2KHR: ChainableBase {
     public typealias CStruct = VkDisplayProperties2KHR
@@ -11250,8 +12174,12 @@ public struct DisplayProperties2KHR: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: DisplayProperties2KHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DisplayProperties2KHRExtension: Chainable {}
+
+public protocol DisplayProperties2KHRExtension: Chainable {}
 
 public struct DisplayPlaneProperties2KHR: ChainableBase {
     public typealias CStruct = VkDisplayPlaneProperties2KHR
@@ -11271,8 +12199,12 @@ public struct DisplayPlaneProperties2KHR: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: DisplayPlaneProperties2KHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DisplayPlaneProperties2KHRExtension: Chainable {}
+
+public protocol DisplayPlaneProperties2KHRExtension: Chainable {}
 
 public struct DisplayModeProperties2KHR: ChainableBase {
     public typealias CStruct = VkDisplayModeProperties2KHR
@@ -11292,8 +12224,12 @@ public struct DisplayModeProperties2KHR: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: DisplayModeProperties2KHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DisplayModeProperties2KHRExtension: Chainable {}
+
+public protocol DisplayModeProperties2KHRExtension: Chainable {}
 
 public struct DisplayModeStereoPropertiesNV: ChainableBase, DisplayModeProperties2KHRExtension {
     public typealias CStruct = VkDisplayModeStereoPropertiesNV
@@ -11311,8 +12247,12 @@ public struct DisplayModeStereoPropertiesNV: ChainableBase, DisplayModePropertie
         cStruct.hdmi3DSupported = VkBool32(self.hdmi3DSupported ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: DisplayModeStereoPropertiesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DisplayModeStereoPropertiesNVExtension: Chainable {}
+
+public protocol DisplayModeStereoPropertiesNVExtension: Chainable {}
 
 public struct DisplayPlaneInfo2KHR: ChainableBase {
     public typealias CStruct = VkDisplayPlaneInfo2KHR
@@ -11338,8 +12278,12 @@ public struct DisplayPlaneInfo2KHR: ChainableBase {
         cStruct.planeIndex = self.planeIndex
         return try body(&cStruct)
     }
+    public func push<Extension: DisplayPlaneInfo2KHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DisplayPlaneInfo2KHRExtension: Chainable {}
+
+public protocol DisplayPlaneInfo2KHRExtension: Chainable {}
 
 public struct DisplayPlaneCapabilities2KHR: ChainableBase {
     public typealias CStruct = VkDisplayPlaneCapabilities2KHR
@@ -11359,8 +12303,12 @@ public struct DisplayPlaneCapabilities2KHR: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: DisplayPlaneCapabilities2KHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DisplayPlaneCapabilities2KHRExtension: Chainable {}
+
+public protocol DisplayPlaneCapabilities2KHRExtension: Chainable {}
 
 public struct SharedPresentSurfaceCapabilitiesKHR: ChainableBase, SurfaceCapabilities2KHRExtension {
     public typealias CStruct = VkSharedPresentSurfaceCapabilitiesKHR
@@ -11378,8 +12326,12 @@ public struct SharedPresentSurfaceCapabilitiesKHR: ChainableBase, SurfaceCapabil
         cStruct.sharedPresentSupportedUsageFlags = self.sharedPresentSupportedUsageFlags.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: SharedPresentSurfaceCapabilitiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SharedPresentSurfaceCapabilitiesKHRExtension: Chainable {}
+
+public protocol SharedPresentSurfaceCapabilitiesKHRExtension: Chainable {}
 
 public struct PhysicalDevice16BitStorageFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevice16BitStorageFeatures
@@ -11413,8 +12365,12 @@ public struct PhysicalDevice16BitStorageFeatures: ChainableBase, PhysicalDeviceF
         cStruct.storageInputOutput16 = VkBool32(self.storageInputOutput16 ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevice16BitStorageFeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevice16BitStorageFeaturesExtension: Chainable {}
+
+public protocol PhysicalDevice16BitStorageFeaturesExtension: Chainable {}
 
 public struct PhysicalDeviceSubgroupProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceSubgroupProperties
@@ -11441,8 +12397,12 @@ public struct PhysicalDeviceSubgroupProperties: ChainableBase, PhysicalDevicePro
         cStruct.quadOperationsInAllStages = VkBool32(self.quadOperationsInAllStages ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceSubgroupPropertiesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceSubgroupPropertiesExtension: Chainable {}
+
+public protocol PhysicalDeviceSubgroupPropertiesExtension: Chainable {}
 
 public struct PhysicalDeviceShaderSubgroupExtendedTypesFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderSubgroupExtendedTypesFeatures
@@ -11464,8 +12424,12 @@ public struct PhysicalDeviceShaderSubgroupExtendedTypesFeatures: ChainableBase, 
         cStruct.shaderSubgroupExtendedTypes = VkBool32(self.shaderSubgroupExtendedTypes ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderSubgroupExtendedTypesFeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderSubgroupExtendedTypesFeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderSubgroupExtendedTypesFeaturesExtension: Chainable {}
 
 public struct BufferMemoryRequirementsInfo2: ChainableBase {
     public typealias CStruct = VkBufferMemoryRequirementsInfo2
@@ -11487,8 +12451,12 @@ public struct BufferMemoryRequirementsInfo2: ChainableBase {
         cStruct.buffer = self.buffer.handle
         return try body(&cStruct)
     }
+    public func push<Extension: BufferMemoryRequirementsInfo2Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol BufferMemoryRequirementsInfo2Extension: Chainable {}
+
+public protocol BufferMemoryRequirementsInfo2Extension: Chainable {}
 
 public struct DeviceBufferMemoryRequirements: ChainableBase {
     public typealias CStruct = VkDeviceBufferMemoryRequirements
@@ -11512,8 +12480,12 @@ public struct DeviceBufferMemoryRequirements: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: DeviceBufferMemoryRequirementsExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DeviceBufferMemoryRequirementsExtension: Chainable {}
+
+public protocol DeviceBufferMemoryRequirementsExtension: Chainable {}
 
 public struct ImageMemoryRequirementsInfo2: ChainableBase {
     public typealias CStruct = VkImageMemoryRequirementsInfo2
@@ -11535,8 +12507,12 @@ public struct ImageMemoryRequirementsInfo2: ChainableBase {
         cStruct.image = self.image.handle
         return try body(&cStruct)
     }
+    public func push<Extension: ImageMemoryRequirementsInfo2Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ImageMemoryRequirementsInfo2Extension: Chainable {}
+
+public protocol ImageMemoryRequirementsInfo2Extension: Chainable {}
 
 public struct ImageSparseMemoryRequirementsInfo2: ChainableBase {
     public typealias CStruct = VkImageSparseMemoryRequirementsInfo2
@@ -11558,8 +12534,12 @@ public struct ImageSparseMemoryRequirementsInfo2: ChainableBase {
         cStruct.image = self.image.handle
         return try body(&cStruct)
     }
+    public func push<Extension: ImageSparseMemoryRequirementsInfo2Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ImageSparseMemoryRequirementsInfo2Extension: Chainable {}
+
+public protocol ImageSparseMemoryRequirementsInfo2Extension: Chainable {}
 
 public struct DeviceImageMemoryRequirements: ChainableBase {
     public typealias CStruct = VkDeviceImageMemoryRequirements
@@ -11587,8 +12567,12 @@ public struct DeviceImageMemoryRequirements: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: DeviceImageMemoryRequirementsExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DeviceImageMemoryRequirementsExtension: Chainable {}
+
+public protocol DeviceImageMemoryRequirementsExtension: Chainable {}
 
 public struct MemoryRequirements2: ChainableBase {
     public typealias CStruct = VkMemoryRequirements2
@@ -11608,8 +12592,12 @@ public struct MemoryRequirements2: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: MemoryRequirements2Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol MemoryRequirements2Extension: Chainable {}
+
+public protocol MemoryRequirements2Extension: Chainable {}
 
 public struct SparseImageMemoryRequirements2: ChainableBase {
     public typealias CStruct = VkSparseImageMemoryRequirements2
@@ -11629,8 +12617,12 @@ public struct SparseImageMemoryRequirements2: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: SparseImageMemoryRequirements2Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SparseImageMemoryRequirements2Extension: Chainable {}
+
+public protocol SparseImageMemoryRequirements2Extension: Chainable {}
 
 public struct PhysicalDevicePointClippingProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDevicePointClippingProperties
@@ -11648,8 +12640,12 @@ public struct PhysicalDevicePointClippingProperties: ChainableBase, PhysicalDevi
         cStruct.pointClippingBehavior = VkPointClippingBehavior(rawValue: VkPointClippingBehavior.RawValue(bitPattern: self.pointClippingBehavior.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevicePointClippingPropertiesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevicePointClippingPropertiesExtension: Chainable {}
+
+public protocol PhysicalDevicePointClippingPropertiesExtension: Chainable {}
 
 public struct MemoryDedicatedRequirements: ChainableBase, MemoryRequirements2Extension {
     public typealias CStruct = VkMemoryDedicatedRequirements
@@ -11670,8 +12666,12 @@ public struct MemoryDedicatedRequirements: ChainableBase, MemoryRequirements2Ext
         cStruct.requiresDedicatedAllocation = VkBool32(self.requiresDedicatedAllocation ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: MemoryDedicatedRequirementsExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol MemoryDedicatedRequirementsExtension: Chainable {}
+
+public protocol MemoryDedicatedRequirementsExtension: Chainable {}
 
 public struct MemoryDedicatedAllocateInfo: ChainableBase, MemoryAllocateInfoExtension {
     public typealias CStruct = VkMemoryDedicatedAllocateInfo
@@ -11697,8 +12697,12 @@ public struct MemoryDedicatedAllocateInfo: ChainableBase, MemoryAllocateInfoExte
         cStruct.buffer = self.buffer?.handle
         return try body(&cStruct)
     }
+    public func push<Extension: MemoryDedicatedAllocateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol MemoryDedicatedAllocateInfoExtension: Chainable {}
+
+public protocol MemoryDedicatedAllocateInfoExtension: Chainable {}
 
 public struct ImageViewUsageCreateInfo: ChainableBase, ImageViewCreateInfoExtension {
     public typealias CStruct = VkImageViewUsageCreateInfo
@@ -11720,8 +12724,12 @@ public struct ImageViewUsageCreateInfo: ChainableBase, ImageViewCreateInfoExtens
         cStruct.usage = self.usage.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: ImageViewUsageCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ImageViewUsageCreateInfoExtension: Chainable {}
+
+public protocol ImageViewUsageCreateInfoExtension: Chainable {}
 
 public struct ImageViewSlicedCreateInfoEXT: ChainableBase, ImageViewCreateInfoExtension {
     public typealias CStruct = VkImageViewSlicedCreateInfoEXT
@@ -11747,8 +12755,12 @@ public struct ImageViewSlicedCreateInfoEXT: ChainableBase, ImageViewCreateInfoEx
         cStruct.sliceCount = self.sliceCount
         return try body(&cStruct)
     }
+    public func push<Extension: ImageViewSlicedCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ImageViewSlicedCreateInfoEXTExtension: Chainable {}
+
+public protocol ImageViewSlicedCreateInfoEXTExtension: Chainable {}
 
 public struct PipelineTessellationDomainOriginStateCreateInfo: ChainableBase, PipelineTessellationStateCreateInfoExtension {
     public typealias CStruct = VkPipelineTessellationDomainOriginStateCreateInfo
@@ -11770,8 +12782,12 @@ public struct PipelineTessellationDomainOriginStateCreateInfo: ChainableBase, Pi
         cStruct.domainOrigin = VkTessellationDomainOrigin(rawValue: VkTessellationDomainOrigin.RawValue(bitPattern: self.domainOrigin.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: PipelineTessellationDomainOriginStateCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineTessellationDomainOriginStateCreateInfoExtension: Chainable {}
+
+public protocol PipelineTessellationDomainOriginStateCreateInfoExtension: Chainable {}
 
 public struct SamplerYcbcrConversionInfo: ChainableBase, SamplerCreateInfoExtension, ImageViewCreateInfoExtension {
     public typealias CStruct = VkSamplerYcbcrConversionInfo
@@ -11793,8 +12809,12 @@ public struct SamplerYcbcrConversionInfo: ChainableBase, SamplerCreateInfoExtens
         cStruct.conversion = self.conversion.handle
         return try body(&cStruct)
     }
+    public func push<Extension: SamplerYcbcrConversionInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SamplerYcbcrConversionInfoExtension: Chainable {}
+
+public protocol SamplerYcbcrConversionInfoExtension: Chainable {}
 
 public struct SamplerYcbcrConversionCreateInfo: ChainableBase {
     public typealias CStruct = VkSamplerYcbcrConversionCreateInfo
@@ -11846,8 +12866,12 @@ public struct SamplerYcbcrConversionCreateInfo: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: SamplerYcbcrConversionCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SamplerYcbcrConversionCreateInfoExtension: Chainable {}
+
+public protocol SamplerYcbcrConversionCreateInfoExtension: Chainable {}
 
 public struct BindImagePlaneMemoryInfo: ChainableBase, BindImageMemoryInfoExtension {
     public typealias CStruct = VkBindImagePlaneMemoryInfo
@@ -11869,8 +12893,12 @@ public struct BindImagePlaneMemoryInfo: ChainableBase, BindImageMemoryInfoExtens
         cStruct.planeAspect = VkImageAspectFlagBits(rawValue: VkImageAspectFlagBits.RawValue(bitPattern: self.planeAspect.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: BindImagePlaneMemoryInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol BindImagePlaneMemoryInfoExtension: Chainable {}
+
+public protocol BindImagePlaneMemoryInfoExtension: Chainable {}
 
 public struct ImagePlaneMemoryRequirementsInfo: ChainableBase, ImageMemoryRequirementsInfo2Extension {
     public typealias CStruct = VkImagePlaneMemoryRequirementsInfo
@@ -11892,8 +12920,12 @@ public struct ImagePlaneMemoryRequirementsInfo: ChainableBase, ImageMemoryRequir
         cStruct.planeAspect = VkImageAspectFlagBits(rawValue: VkImageAspectFlagBits.RawValue(bitPattern: self.planeAspect.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: ImagePlaneMemoryRequirementsInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ImagePlaneMemoryRequirementsInfoExtension: Chainable {}
+
+public protocol ImagePlaneMemoryRequirementsInfoExtension: Chainable {}
 
 public struct PhysicalDeviceSamplerYcbcrConversionFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceSamplerYcbcrConversionFeatures
@@ -11915,8 +12947,12 @@ public struct PhysicalDeviceSamplerYcbcrConversionFeatures: ChainableBase, Physi
         cStruct.samplerYcbcrConversion = VkBool32(self.samplerYcbcrConversion ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceSamplerYcbcrConversionFeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceSamplerYcbcrConversionFeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceSamplerYcbcrConversionFeaturesExtension: Chainable {}
 
 public struct SamplerYcbcrConversionImageFormatProperties: ChainableBase, ImageFormatProperties2Extension {
     public typealias CStruct = VkSamplerYcbcrConversionImageFormatProperties
@@ -11934,8 +12970,12 @@ public struct SamplerYcbcrConversionImageFormatProperties: ChainableBase, ImageF
         cStruct.combinedImageSamplerDescriptorCount = self.combinedImageSamplerDescriptorCount
         return try body(&cStruct)
     }
+    public func push<Extension: SamplerYcbcrConversionImageFormatPropertiesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SamplerYcbcrConversionImageFormatPropertiesExtension: Chainable {}
+
+public protocol SamplerYcbcrConversionImageFormatPropertiesExtension: Chainable {}
 
 public struct TextureLODGatherFormatPropertiesAMD: ChainableBase, ImageFormatProperties2Extension {
     public typealias CStruct = VkTextureLODGatherFormatPropertiesAMD
@@ -11953,8 +12993,12 @@ public struct TextureLODGatherFormatPropertiesAMD: ChainableBase, ImageFormatPro
         cStruct.supportsTextureGatherLODBiasAMD = VkBool32(self.supportsTextureGatherLODBiasAMD ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: TextureLODGatherFormatPropertiesAMDExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol TextureLODGatherFormatPropertiesAMDExtension: Chainable {}
+
+public protocol TextureLODGatherFormatPropertiesAMDExtension: Chainable {}
 
 public struct ConditionalRenderingBeginInfoEXT: ChainableBase {
     public typealias CStruct = VkConditionalRenderingBeginInfoEXT
@@ -11984,8 +13028,12 @@ public struct ConditionalRenderingBeginInfoEXT: ChainableBase {
         cStruct.flags = self.flags.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: ConditionalRenderingBeginInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ConditionalRenderingBeginInfoEXTExtension: Chainable {}
+
+public protocol ConditionalRenderingBeginInfoEXTExtension: Chainable {}
 
 public struct ProtectedSubmitInfo: ChainableBase, SubmitInfoExtension {
     public typealias CStruct = VkProtectedSubmitInfo
@@ -12007,8 +13055,12 @@ public struct ProtectedSubmitInfo: ChainableBase, SubmitInfoExtension {
         cStruct.protectedSubmit = VkBool32(self.protectedSubmit ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: ProtectedSubmitInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ProtectedSubmitInfoExtension: Chainable {}
+
+public protocol ProtectedSubmitInfoExtension: Chainable {}
 
 public struct PhysicalDeviceProtectedMemoryFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceProtectedMemoryFeatures
@@ -12030,8 +13082,12 @@ public struct PhysicalDeviceProtectedMemoryFeatures: ChainableBase, PhysicalDevi
         cStruct.protectedMemory = VkBool32(self.protectedMemory ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceProtectedMemoryFeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceProtectedMemoryFeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceProtectedMemoryFeaturesExtension: Chainable {}
 
 public struct PhysicalDeviceProtectedMemoryProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceProtectedMemoryProperties
@@ -12049,8 +13105,12 @@ public struct PhysicalDeviceProtectedMemoryProperties: ChainableBase, PhysicalDe
         cStruct.protectedNoFault = VkBool32(self.protectedNoFault ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceProtectedMemoryPropertiesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceProtectedMemoryPropertiesExtension: Chainable {}
+
+public protocol PhysicalDeviceProtectedMemoryPropertiesExtension: Chainable {}
 
 public struct DeviceQueueInfo2: ChainableBase {
     public typealias CStruct = VkDeviceQueueInfo2
@@ -12080,8 +13140,12 @@ public struct DeviceQueueInfo2: ChainableBase {
         cStruct.queueIndex = self.queueIndex
         return try body(&cStruct)
     }
+    public func push<Extension: DeviceQueueInfo2Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DeviceQueueInfo2Extension: Chainable {}
+
+public protocol DeviceQueueInfo2Extension: Chainable {}
 
 public struct PipelineCoverageToColorStateCreateInfoNV: ChainableBase, PipelineMultisampleStateCreateInfoExtension {
     public typealias CStruct = VkPipelineCoverageToColorStateCreateInfoNV
@@ -12111,8 +13175,12 @@ public struct PipelineCoverageToColorStateCreateInfoNV: ChainableBase, PipelineM
         cStruct.coverageToColorLocation = self.coverageToColorLocation
         return try body(&cStruct)
     }
+    public func push<Extension: PipelineCoverageToColorStateCreateInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineCoverageToColorStateCreateInfoNVExtension: Chainable {}
+
+public protocol PipelineCoverageToColorStateCreateInfoNVExtension: Chainable {}
 
 public struct PhysicalDeviceSamplerFilterMinmaxProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceSamplerFilterMinmaxProperties
@@ -12133,8 +13201,12 @@ public struct PhysicalDeviceSamplerFilterMinmaxProperties: ChainableBase, Physic
         cStruct.filterMinmaxImageComponentMapping = VkBool32(self.filterMinmaxImageComponentMapping ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceSamplerFilterMinmaxPropertiesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceSamplerFilterMinmaxPropertiesExtension: Chainable {}
+
+public protocol PhysicalDeviceSamplerFilterMinmaxPropertiesExtension: Chainable {}
 
 public struct SampleLocationEXT: CStructConvertible {
     public typealias CStruct = VkSampleLocationEXT
@@ -12193,8 +13265,12 @@ public struct SampleLocationsInfoEXT: ChainableBase, ImageMemoryBarrierExtension
             }
         }
     }
+    public func push<Extension: SampleLocationsInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SampleLocationsInfoEXTExtension: Chainable {}
+
+public protocol SampleLocationsInfoEXTExtension: Chainable {}
 
 public struct AttachmentSampleLocationsEXT: CStructConvertible {
     public typealias CStruct = VkAttachmentSampleLocationsEXT
@@ -12278,8 +13354,12 @@ public struct RenderPassSampleLocationsBeginInfoEXT: ChainableBase, RenderPassBe
             }
         }
     }
+    public func push<Extension: RenderPassSampleLocationsBeginInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol RenderPassSampleLocationsBeginInfoEXTExtension: Chainable {}
+
+public protocol RenderPassSampleLocationsBeginInfoEXTExtension: Chainable {}
 
 public struct PipelineSampleLocationsStateCreateInfoEXT: ChainableBase, PipelineMultisampleStateCreateInfoExtension {
     public typealias CStruct = VkPipelineSampleLocationsStateCreateInfoEXT
@@ -12307,8 +13387,12 @@ public struct PipelineSampleLocationsStateCreateInfoEXT: ChainableBase, Pipeline
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PipelineSampleLocationsStateCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineSampleLocationsStateCreateInfoEXTExtension: Chainable {}
+
+public protocol PipelineSampleLocationsStateCreateInfoEXTExtension: Chainable {}
 
 public struct PhysicalDeviceSampleLocationsPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceSampleLocationsPropertiesEXT
@@ -12340,8 +13424,12 @@ public struct PhysicalDeviceSampleLocationsPropertiesEXT: ChainableBase, Physica
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PhysicalDeviceSampleLocationsPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceSampleLocationsPropertiesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceSampleLocationsPropertiesEXTExtension: Chainable {}
 
 public struct MultisamplePropertiesEXT: ChainableBase {
     public typealias CStruct = VkMultisamplePropertiesEXT
@@ -12361,8 +13449,12 @@ public struct MultisamplePropertiesEXT: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: MultisamplePropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol MultisamplePropertiesEXTExtension: Chainable {}
+
+public protocol MultisamplePropertiesEXTExtension: Chainable {}
 
 public struct SamplerReductionModeCreateInfo: ChainableBase, SamplerCreateInfoExtension {
     public typealias CStruct = VkSamplerReductionModeCreateInfo
@@ -12384,8 +13476,12 @@ public struct SamplerReductionModeCreateInfo: ChainableBase, SamplerCreateInfoEx
         cStruct.reductionMode = VkSamplerReductionMode(rawValue: VkSamplerReductionMode.RawValue(bitPattern: self.reductionMode.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: SamplerReductionModeCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SamplerReductionModeCreateInfoExtension: Chainable {}
+
+public protocol SamplerReductionModeCreateInfoExtension: Chainable {}
 
 public struct PhysicalDeviceBlendOperationAdvancedFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
@@ -12407,8 +13503,12 @@ public struct PhysicalDeviceBlendOperationAdvancedFeaturesEXT: ChainableBase, Ph
         cStruct.advancedBlendCoherentOperations = VkBool32(self.advancedBlendCoherentOperations ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceBlendOperationAdvancedFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceBlendOperationAdvancedFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceBlendOperationAdvancedFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceMultiDrawFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceMultiDrawFeaturesEXT
@@ -12430,8 +13530,12 @@ public struct PhysicalDeviceMultiDrawFeaturesEXT: ChainableBase, PhysicalDeviceF
         cStruct.multiDraw = VkBool32(self.multiDraw ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceMultiDrawFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceMultiDrawFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceMultiDrawFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceBlendOperationAdvancedPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
@@ -12464,8 +13568,12 @@ public struct PhysicalDeviceBlendOperationAdvancedPropertiesEXT: ChainableBase, 
         cStruct.advancedBlendAllOperations = VkBool32(self.advancedBlendAllOperations ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceBlendOperationAdvancedPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceBlendOperationAdvancedPropertiesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceBlendOperationAdvancedPropertiesEXTExtension: Chainable {}
 
 public struct PipelineColorBlendAdvancedStateCreateInfoEXT: ChainableBase, PipelineColorBlendStateCreateInfoExtension {
     public typealias CStruct = VkPipelineColorBlendAdvancedStateCreateInfoEXT
@@ -12495,8 +13603,12 @@ public struct PipelineColorBlendAdvancedStateCreateInfoEXT: ChainableBase, Pipel
         cStruct.blendOverlap = VkBlendOverlapEXT(rawValue: VkBlendOverlapEXT.RawValue(bitPattern: self.blendOverlap.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: PipelineColorBlendAdvancedStateCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineColorBlendAdvancedStateCreateInfoEXTExtension: Chainable {}
+
+public protocol PipelineColorBlendAdvancedStateCreateInfoEXTExtension: Chainable {}
 
 public struct PhysicalDeviceInlineUniformBlockFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceInlineUniformBlockFeatures
@@ -12522,8 +13634,12 @@ public struct PhysicalDeviceInlineUniformBlockFeatures: ChainableBase, PhysicalD
         cStruct.descriptorBindingInlineUniformBlockUpdateAfterBind = VkBool32(self.descriptorBindingInlineUniformBlockUpdateAfterBind ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceInlineUniformBlockFeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceInlineUniformBlockFeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceInlineUniformBlockFeaturesExtension: Chainable {}
 
 public struct PhysicalDeviceInlineUniformBlockProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceInlineUniformBlockProperties
@@ -12553,8 +13669,12 @@ public struct PhysicalDeviceInlineUniformBlockProperties: ChainableBase, Physica
         cStruct.maxDescriptorSetUpdateAfterBindInlineUniformBlocks = self.maxDescriptorSetUpdateAfterBindInlineUniformBlocks
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceInlineUniformBlockPropertiesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceInlineUniformBlockPropertiesExtension: Chainable {}
+
+public protocol PhysicalDeviceInlineUniformBlockPropertiesExtension: Chainable {}
 
 public struct WriteDescriptorSetInlineUniformBlock: ChainableBase, WriteDescriptorSetExtension {
     public typealias CStruct = VkWriteDescriptorSetInlineUniformBlock
@@ -12580,8 +13700,12 @@ public struct WriteDescriptorSetInlineUniformBlock: ChainableBase, WriteDescript
         cStruct.pData = self.data
         return try body(&cStruct)
     }
+    public func push<Extension: WriteDescriptorSetInlineUniformBlockExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol WriteDescriptorSetInlineUniformBlockExtension: Chainable {}
+
+public protocol WriteDescriptorSetInlineUniformBlockExtension: Chainable {}
 
 public struct DescriptorPoolInlineUniformBlockCreateInfo: ChainableBase, DescriptorPoolCreateInfoExtension {
     public typealias CStruct = VkDescriptorPoolInlineUniformBlockCreateInfo
@@ -12603,8 +13727,12 @@ public struct DescriptorPoolInlineUniformBlockCreateInfo: ChainableBase, Descrip
         cStruct.maxInlineUniformBlockBindings = self.maxInlineUniformBlockBindings
         return try body(&cStruct)
     }
+    public func push<Extension: DescriptorPoolInlineUniformBlockCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DescriptorPoolInlineUniformBlockCreateInfoExtension: Chainable {}
+
+public protocol DescriptorPoolInlineUniformBlockCreateInfoExtension: Chainable {}
 
 public struct PipelineCoverageModulationStateCreateInfoNV: ChainableBase, PipelineMultisampleStateCreateInfoExtension {
     public typealias CStruct = VkPipelineCoverageModulationStateCreateInfoNV
@@ -12641,8 +13769,12 @@ public struct PipelineCoverageModulationStateCreateInfoNV: ChainableBase, Pipeli
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PipelineCoverageModulationStateCreateInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineCoverageModulationStateCreateInfoNVExtension: Chainable {}
+
+public protocol PipelineCoverageModulationStateCreateInfoNVExtension: Chainable {}
 
 public struct ImageFormatListCreateInfo: ChainableBase, ImageCreateInfoExtension, SwapchainCreateInfoKHRExtension, PhysicalDeviceImageFormatInfo2Extension {
     public typealias CStruct = VkImageFormatListCreateInfo
@@ -12667,8 +13799,12 @@ public struct ImageFormatListCreateInfo: ChainableBase, ImageCreateInfoExtension
             return try body(&cStruct)
         }
     }
+    public func push<Extension: ImageFormatListCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ImageFormatListCreateInfoExtension: Chainable {}
+
+public protocol ImageFormatListCreateInfoExtension: Chainable {}
 
 public struct ValidationCacheCreateInfoEXT: ChainableBase {
     public typealias CStruct = VkValidationCacheCreateInfoEXT
@@ -12698,8 +13834,12 @@ public struct ValidationCacheCreateInfoEXT: ChainableBase {
         cStruct.pInitialData = self.initialData
         return try body(&cStruct)
     }
+    public func push<Extension: ValidationCacheCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ValidationCacheCreateInfoEXTExtension: Chainable {}
+
+public protocol ValidationCacheCreateInfoEXTExtension: Chainable {}
 
 public struct ShaderModuleValidationCacheCreateInfoEXT: ChainableBase, ShaderModuleCreateInfoExtension, PipelineShaderStageCreateInfoExtension {
     public typealias CStruct = VkShaderModuleValidationCacheCreateInfoEXT
@@ -12721,8 +13861,12 @@ public struct ShaderModuleValidationCacheCreateInfoEXT: ChainableBase, ShaderMod
         cStruct.validationCache = self.validationCache.handle
         return try body(&cStruct)
     }
+    public func push<Extension: ShaderModuleValidationCacheCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ShaderModuleValidationCacheCreateInfoEXTExtension: Chainable {}
+
+public protocol ShaderModuleValidationCacheCreateInfoEXTExtension: Chainable {}
 
 public struct PhysicalDeviceMaintenance3Properties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceMaintenance3Properties
@@ -12743,8 +13887,12 @@ public struct PhysicalDeviceMaintenance3Properties: ChainableBase, PhysicalDevic
         cStruct.maxMemoryAllocationSize = self.maxMemoryAllocationSize
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceMaintenance3PropertiesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceMaintenance3PropertiesExtension: Chainable {}
+
+public protocol PhysicalDeviceMaintenance3PropertiesExtension: Chainable {}
 
 public struct PhysicalDeviceMaintenance4Features: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceMaintenance4Features
@@ -12766,8 +13914,12 @@ public struct PhysicalDeviceMaintenance4Features: ChainableBase, PhysicalDeviceF
         cStruct.maintenance4 = VkBool32(self.maintenance4 ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceMaintenance4FeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceMaintenance4FeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceMaintenance4FeaturesExtension: Chainable {}
 
 public struct PhysicalDeviceMaintenance4Properties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceMaintenance4Properties
@@ -12785,8 +13937,12 @@ public struct PhysicalDeviceMaintenance4Properties: ChainableBase, PhysicalDevic
         cStruct.maxBufferSize = self.maxBufferSize
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceMaintenance4PropertiesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceMaintenance4PropertiesExtension: Chainable {}
+
+public protocol PhysicalDeviceMaintenance4PropertiesExtension: Chainable {}
 
 public struct PhysicalDeviceMaintenance5Features: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceMaintenance5Features
@@ -12808,8 +13964,12 @@ public struct PhysicalDeviceMaintenance5Features: ChainableBase, PhysicalDeviceF
         cStruct.maintenance5 = VkBool32(self.maintenance5 ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceMaintenance5FeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceMaintenance5FeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceMaintenance5FeaturesExtension: Chainable {}
 
 public struct PhysicalDeviceMaintenance5Properties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceMaintenance5Properties
@@ -12842,8 +14002,12 @@ public struct PhysicalDeviceMaintenance5Properties: ChainableBase, PhysicalDevic
         cStruct.nonStrictWideLinesUseParallelogram = VkBool32(self.nonStrictWideLinesUseParallelogram ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceMaintenance5PropertiesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceMaintenance5PropertiesExtension: Chainable {}
+
+public protocol PhysicalDeviceMaintenance5PropertiesExtension: Chainable {}
 
 public struct PhysicalDeviceMaintenance6Features: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceMaintenance6Features
@@ -12865,8 +14029,12 @@ public struct PhysicalDeviceMaintenance6Features: ChainableBase, PhysicalDeviceF
         cStruct.maintenance6 = VkBool32(self.maintenance6 ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceMaintenance6FeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceMaintenance6FeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceMaintenance6FeaturesExtension: Chainable {}
 
 public struct PhysicalDeviceMaintenance6Properties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceMaintenance6Properties
@@ -12890,8 +14058,12 @@ public struct PhysicalDeviceMaintenance6Properties: ChainableBase, PhysicalDevic
         cStruct.fragmentShadingRateClampCombinerInputs = VkBool32(self.fragmentShadingRateClampCombinerInputs ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceMaintenance6PropertiesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceMaintenance6PropertiesExtension: Chainable {}
+
+public protocol PhysicalDeviceMaintenance6PropertiesExtension: Chainable {}
 
 public struct PhysicalDeviceMaintenance7FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceMaintenance7FeaturesKHR
@@ -12913,8 +14085,12 @@ public struct PhysicalDeviceMaintenance7FeaturesKHR: ChainableBase, PhysicalDevi
         cStruct.maintenance7 = VkBool32(self.maintenance7 ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceMaintenance7FeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceMaintenance7FeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceMaintenance7FeaturesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceMaintenance7PropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceMaintenance7PropertiesKHR
@@ -12953,8 +14129,12 @@ public struct PhysicalDeviceMaintenance7PropertiesKHR: ChainableBase, PhysicalDe
         cStruct.maxDescriptorSetUpdateAfterBindTotalBuffersDynamic = self.maxDescriptorSetUpdateAfterBindTotalBuffersDynamic
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceMaintenance7PropertiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceMaintenance7PropertiesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceMaintenance7PropertiesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceLayeredApiPropertiesKHR: ChainableBase {
     public typealias CStruct = VkPhysicalDeviceLayeredApiPropertiesKHR
@@ -12981,8 +14161,12 @@ public struct PhysicalDeviceLayeredApiPropertiesKHR: ChainableBase {
         cStruct.deviceName = self.deviceName.unsafeBytesCopy()
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceLayeredApiPropertiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceLayeredApiPropertiesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceLayeredApiPropertiesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceLayeredApiPropertiesListKHR: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceLayeredApiPropertiesListKHR
@@ -13008,8 +14192,12 @@ public struct PhysicalDeviceLayeredApiPropertiesListKHR: ChainableBase, Physical
         cStruct.pLayeredApis = self.layeredApis
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceLayeredApiPropertiesListKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceLayeredApiPropertiesListKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceLayeredApiPropertiesListKHRExtension: Chainable {}
 
 public struct PhysicalDeviceLayeredApiVulkanPropertiesKHR: ChainableBase, PhysicalDeviceLayeredApiPropertiesKHRExtension {
     public typealias CStruct = VkPhysicalDeviceLayeredApiVulkanPropertiesKHR
@@ -13029,8 +14217,12 @@ public struct PhysicalDeviceLayeredApiVulkanPropertiesKHR: ChainableBase, Physic
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PhysicalDeviceLayeredApiVulkanPropertiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceLayeredApiVulkanPropertiesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceLayeredApiVulkanPropertiesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceMaintenance8FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceMaintenance8FeaturesKHR
@@ -13052,8 +14244,12 @@ public struct PhysicalDeviceMaintenance8FeaturesKHR: ChainableBase, PhysicalDevi
         cStruct.maintenance8 = VkBool32(self.maintenance8 ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceMaintenance8FeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceMaintenance8FeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceMaintenance8FeaturesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceMaintenance9FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceMaintenance9FeaturesKHR
@@ -13075,8 +14271,12 @@ public struct PhysicalDeviceMaintenance9FeaturesKHR: ChainableBase, PhysicalDevi
         cStruct.maintenance9 = VkBool32(self.maintenance9 ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceMaintenance9FeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceMaintenance9FeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceMaintenance9FeaturesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceMaintenance9PropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceMaintenance9PropertiesKHR
@@ -13097,8 +14297,12 @@ public struct PhysicalDeviceMaintenance9PropertiesKHR: ChainableBase, PhysicalDe
         cStruct.defaultVertexAttributeValue = VkDefaultVertexAttributeValueKHR(rawValue: VkDefaultVertexAttributeValueKHR.RawValue(bitPattern: self.defaultVertexAttributeValue.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceMaintenance9PropertiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceMaintenance9PropertiesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceMaintenance9PropertiesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceMaintenance11FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceMaintenance11FeaturesKHR
@@ -13120,8 +14324,12 @@ public struct PhysicalDeviceMaintenance11FeaturesKHR: ChainableBase, PhysicalDev
         cStruct.maintenance11 = VkBool32(self.maintenance11 ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceMaintenance11FeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceMaintenance11FeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceMaintenance11FeaturesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceMaintenance10PropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceMaintenance10PropertiesKHR
@@ -13145,8 +14353,12 @@ public struct PhysicalDeviceMaintenance10PropertiesKHR: ChainableBase, PhysicalD
         cStruct.resolveSrgbFormatSupportsTransferFunctionControl = VkBool32(self.resolveSrgbFormatSupportsTransferFunctionControl ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceMaintenance10PropertiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceMaintenance10PropertiesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceMaintenance10PropertiesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceMaintenance10FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceMaintenance10FeaturesKHR
@@ -13168,8 +14380,12 @@ public struct PhysicalDeviceMaintenance10FeaturesKHR: ChainableBase, PhysicalDev
         cStruct.maintenance10 = VkBool32(self.maintenance10 ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceMaintenance10FeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceMaintenance10FeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceMaintenance10FeaturesKHRExtension: Chainable {}
 
 public struct QueueFamilyOwnershipTransferPropertiesKHR: ChainableBase, QueueFamilyProperties2Extension {
     public typealias CStruct = VkQueueFamilyOwnershipTransferPropertiesKHR
@@ -13187,8 +14403,12 @@ public struct QueueFamilyOwnershipTransferPropertiesKHR: ChainableBase, QueueFam
         cStruct.optimalImageTransferToQueueFamilies = self.optimalImageTransferToQueueFamilies
         return try body(&cStruct)
     }
+    public func push<Extension: QueueFamilyOwnershipTransferPropertiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol QueueFamilyOwnershipTransferPropertiesKHRExtension: Chainable {}
+
+public protocol QueueFamilyOwnershipTransferPropertiesKHRExtension: Chainable {}
 
 public struct QueueFamilyOptimalImageTransferGranularityPropertiesKHR: ChainableBase, QueueFamilyProperties2Extension {
     public typealias CStruct = VkQueueFamilyOptimalImageTransferGranularityPropertiesKHR
@@ -13208,8 +14428,12 @@ public struct QueueFamilyOptimalImageTransferGranularityPropertiesKHR: Chainable
             return try body(&cStruct)
         }
     }
+    public func push<Extension: QueueFamilyOptimalImageTransferGranularityPropertiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol QueueFamilyOptimalImageTransferGranularityPropertiesKHRExtension: Chainable {}
+
+public protocol QueueFamilyOptimalImageTransferGranularityPropertiesKHRExtension: Chainable {}
 
 public struct RenderingAreaInfo: ChainableBase {
     public typealias CStruct = VkRenderingAreaInfo
@@ -13246,8 +14470,12 @@ public struct RenderingAreaInfo: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: RenderingAreaInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol RenderingAreaInfoExtension: Chainable {}
+
+public protocol RenderingAreaInfoExtension: Chainable {}
 
 public struct DescriptorSetLayoutSupport: ChainableBase {
     public typealias CStruct = VkDescriptorSetLayoutSupport
@@ -13265,8 +14493,12 @@ public struct DescriptorSetLayoutSupport: ChainableBase {
         cStruct.supported = VkBool32(self.supported ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: DescriptorSetLayoutSupportExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DescriptorSetLayoutSupportExtension: Chainable {}
+
+public protocol DescriptorSetLayoutSupportExtension: Chainable {}
 
 public struct PhysicalDeviceShaderDrawParametersFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderDrawParametersFeatures
@@ -13288,8 +14520,12 @@ public struct PhysicalDeviceShaderDrawParametersFeatures: ChainableBase, Physica
         cStruct.shaderDrawParameters = VkBool32(self.shaderDrawParameters ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderDrawParametersFeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderDrawParametersFeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderDrawParametersFeaturesExtension: Chainable {}
 
 public struct PhysicalDeviceShaderFloat16Int8Features: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderFloat16Int8Features
@@ -13315,8 +14551,12 @@ public struct PhysicalDeviceShaderFloat16Int8Features: ChainableBase, PhysicalDe
         cStruct.shaderInt8 = VkBool32(self.shaderInt8 ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderFloat16Int8FeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderFloat16Int8FeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderFloat16Int8FeaturesExtension: Chainable {}
 
 public struct PhysicalDeviceFloatControlsProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceFloatControlsProperties
@@ -13382,8 +14622,12 @@ public struct PhysicalDeviceFloatControlsProperties: ChainableBase, PhysicalDevi
         cStruct.shaderRoundingModeRTZFloat64 = VkBool32(self.shaderRoundingModeRTZFloat64 ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceFloatControlsPropertiesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceFloatControlsPropertiesExtension: Chainable {}
+
+public protocol PhysicalDeviceFloatControlsPropertiesExtension: Chainable {}
 
 public struct PhysicalDeviceHostQueryResetFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceHostQueryResetFeatures
@@ -13405,8 +14649,12 @@ public struct PhysicalDeviceHostQueryResetFeatures: ChainableBase, PhysicalDevic
         cStruct.hostQueryReset = VkBool32(self.hostQueryReset ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceHostQueryResetFeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceHostQueryResetFeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceHostQueryResetFeaturesExtension: Chainable {}
 
 public struct ShaderResourceUsageAMD: CStructConvertible {
     public typealias CStruct = VkShaderResourceUsageAMD
@@ -13492,8 +14740,12 @@ public struct DeviceQueueGlobalPriorityCreateInfo: ChainableBase, DeviceQueueCre
         cStruct.globalPriority = VkQueueGlobalPriority(rawValue: VkQueueGlobalPriority.RawValue(bitPattern: self.globalPriority.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: DeviceQueueGlobalPriorityCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DeviceQueueGlobalPriorityCreateInfoExtension: Chainable {}
+
+public protocol DeviceQueueGlobalPriorityCreateInfoExtension: Chainable {}
 
 public struct PhysicalDeviceGlobalPriorityQueryFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceGlobalPriorityQueryFeatures
@@ -13515,8 +14767,12 @@ public struct PhysicalDeviceGlobalPriorityQueryFeatures: ChainableBase, Physical
         cStruct.globalPriorityQuery = VkBool32(self.globalPriorityQuery ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceGlobalPriorityQueryFeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceGlobalPriorityQueryFeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceGlobalPriorityQueryFeaturesExtension: Chainable {}
 
 public struct QueueFamilyGlobalPriorityProperties: ChainableBase, QueueFamilyProperties2Extension {
     public typealias CStruct = VkQueueFamilyGlobalPriorityProperties
@@ -13537,8 +14793,12 @@ public struct QueueFamilyGlobalPriorityProperties: ChainableBase, QueueFamilyPro
         cStruct.priorities = self.priorities
         return try body(&cStruct)
     }
+    public func push<Extension: QueueFamilyGlobalPriorityPropertiesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol QueueFamilyGlobalPriorityPropertiesExtension: Chainable {}
+
+public protocol QueueFamilyGlobalPriorityPropertiesExtension: Chainable {}
 
 public struct DebugUtilsObjectNameInfoEXT: ChainableBase, PipelineShaderStageCreateInfoExtension, ResourceDescriptorInfoEXTExtension, SamplerCreateInfoExtension {
     public typealias CStruct = VkDebugUtilsObjectNameInfoEXT
@@ -13570,8 +14830,12 @@ public struct DebugUtilsObjectNameInfoEXT: ChainableBase, PipelineShaderStageCre
             return try body(&cStruct)
         }
     }
+    public func push<Extension: DebugUtilsObjectNameInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DebugUtilsObjectNameInfoEXTExtension: Chainable {}
+
+public protocol DebugUtilsObjectNameInfoEXTExtension: Chainable {}
 
 public struct DebugUtilsObjectTagInfoEXT: ChainableBase {
     public typealias CStruct = VkDebugUtilsObjectTagInfoEXT
@@ -13609,8 +14873,12 @@ public struct DebugUtilsObjectTagInfoEXT: ChainableBase {
         cStruct.pTag = self.tag
         return try body(&cStruct)
     }
+    public func push<Extension: DebugUtilsObjectTagInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DebugUtilsObjectTagInfoEXTExtension: Chainable {}
+
+public protocol DebugUtilsObjectTagInfoEXTExtension: Chainable {}
 
 public struct DebugUtilsLabelEXT: ChainableBase {
     public typealias CStruct = VkDebugUtilsLabelEXT
@@ -13638,8 +14906,12 @@ public struct DebugUtilsLabelEXT: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: DebugUtilsLabelEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DebugUtilsLabelEXTExtension: Chainable {}
+
+public protocol DebugUtilsLabelEXTExtension: Chainable {}
 
 public struct DebugUtilsMessengerCreateInfoEXT: ChainableBase, InstanceCreateInfoExtension {
     public typealias CStruct = VkDebugUtilsMessengerCreateInfoEXT
@@ -13677,8 +14949,12 @@ public struct DebugUtilsMessengerCreateInfoEXT: ChainableBase, InstanceCreateInf
         cStruct.pUserData = self.userData
         return try body(&cStruct)
     }
+    public func push<Extension: DebugUtilsMessengerCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DebugUtilsMessengerCreateInfoEXTExtension: Chainable {}
+
+public protocol DebugUtilsMessengerCreateInfoEXTExtension: Chainable {}
 
 public struct DebugUtilsMessengerCallbackDataEXT: ChainableBase {
     public typealias CStruct = VkDebugUtilsMessengerCallbackDataEXT
@@ -13737,8 +15013,12 @@ public struct DebugUtilsMessengerCallbackDataEXT: ChainableBase {
             }
         }
     }
+    public func push<Extension: DebugUtilsMessengerCallbackDataEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DebugUtilsMessengerCallbackDataEXTExtension: Chainable {}
+
+public protocol DebugUtilsMessengerCallbackDataEXTExtension: Chainable {}
 
 public struct PhysicalDeviceDeviceMemoryReportFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDeviceMemoryReportFeaturesEXT
@@ -13760,8 +15040,12 @@ public struct PhysicalDeviceDeviceMemoryReportFeaturesEXT: ChainableBase, Physic
         cStruct.deviceMemoryReport = VkBool32(self.deviceMemoryReport ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDeviceMemoryReportFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceDeviceMemoryReportFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceDeviceMemoryReportFeaturesEXTExtension: Chainable {}
 
 public struct DeviceDeviceMemoryReportCreateInfoEXT: ChainableBase, DeviceCreateInfoExtension {
     public typealias CStruct = VkDeviceDeviceMemoryReportCreateInfoEXT
@@ -13791,8 +15075,12 @@ public struct DeviceDeviceMemoryReportCreateInfoEXT: ChainableBase, DeviceCreate
         cStruct.pUserData = self.userData
         return try body(&cStruct)
     }
+    public func push<Extension: DeviceDeviceMemoryReportCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DeviceDeviceMemoryReportCreateInfoEXTExtension: Chainable {}
+
+public protocol DeviceDeviceMemoryReportCreateInfoEXTExtension: Chainable {}
 
 public struct DeviceMemoryReportCallbackDataEXT: ChainableBase {
     public typealias CStruct = VkDeviceMemoryReportCallbackDataEXT
@@ -13828,8 +15116,12 @@ public struct DeviceMemoryReportCallbackDataEXT: ChainableBase {
         cStruct.heapIndex = self.heapIndex
         return try body(&cStruct)
     }
+    public func push<Extension: DeviceMemoryReportCallbackDataEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DeviceMemoryReportCallbackDataEXTExtension: Chainable {}
+
+public protocol DeviceMemoryReportCallbackDataEXTExtension: Chainable {}
 
 public struct ImportMemoryHostPointerInfoEXT: ChainableBase, MemoryAllocateInfoExtension {
     public typealias CStruct = VkImportMemoryHostPointerInfoEXT
@@ -13855,8 +15147,12 @@ public struct ImportMemoryHostPointerInfoEXT: ChainableBase, MemoryAllocateInfoE
         cStruct.pHostPointer = self.hostPointer
         return try body(&cStruct)
     }
+    public func push<Extension: ImportMemoryHostPointerInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ImportMemoryHostPointerInfoEXTExtension: Chainable {}
+
+public protocol ImportMemoryHostPointerInfoEXTExtension: Chainable {}
 
 public struct MemoryHostPointerPropertiesEXT: ChainableBase {
     public typealias CStruct = VkMemoryHostPointerPropertiesEXT
@@ -13874,8 +15170,12 @@ public struct MemoryHostPointerPropertiesEXT: ChainableBase {
         cStruct.memoryTypeBits = self.memoryTypeBits
         return try body(&cStruct)
     }
+    public func push<Extension: MemoryHostPointerPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol MemoryHostPointerPropertiesEXTExtension: Chainable {}
+
+public protocol MemoryHostPointerPropertiesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceExternalMemoryHostPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceExternalMemoryHostPropertiesEXT
@@ -13893,8 +15193,12 @@ public struct PhysicalDeviceExternalMemoryHostPropertiesEXT: ChainableBase, Phys
         cStruct.minImportedHostPointerAlignment = self.minImportedHostPointerAlignment
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceExternalMemoryHostPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceExternalMemoryHostPropertiesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceExternalMemoryHostPropertiesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceConservativeRasterizationPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceConservativeRasterizationPropertiesEXT
@@ -13936,8 +15240,12 @@ public struct PhysicalDeviceConservativeRasterizationPropertiesEXT: ChainableBas
         cStruct.conservativeRasterizationPostDepthCoverage = VkBool32(self.conservativeRasterizationPostDepthCoverage ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceConservativeRasterizationPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceConservativeRasterizationPropertiesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceConservativeRasterizationPropertiesEXTExtension: Chainable {}
 
 public struct CalibratedTimestampInfoKHR: ChainableBase {
     public typealias CStruct = VkCalibratedTimestampInfoKHR
@@ -13959,8 +15267,12 @@ public struct CalibratedTimestampInfoKHR: ChainableBase {
         cStruct.timeDomain = VkTimeDomainKHR(rawValue: VkTimeDomainKHR.RawValue(bitPattern: self.timeDomain.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: CalibratedTimestampInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CalibratedTimestampInfoKHRExtension: Chainable {}
+
+public protocol CalibratedTimestampInfoKHRExtension: Chainable {}
 
 public struct PhysicalDeviceShaderCorePropertiesAMD: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceShaderCorePropertiesAMD
@@ -14017,8 +15329,12 @@ public struct PhysicalDeviceShaderCorePropertiesAMD: ChainableBase, PhysicalDevi
         cStruct.vgprAllocationGranularity = self.vgprAllocationGranularity
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderCorePropertiesAMDExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderCorePropertiesAMDExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderCorePropertiesAMDExtension: Chainable {}
 
 public struct PhysicalDeviceShaderCoreProperties2AMD: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceShaderCoreProperties2AMD
@@ -14039,8 +15355,12 @@ public struct PhysicalDeviceShaderCoreProperties2AMD: ChainableBase, PhysicalDev
         cStruct.activeComputeUnitCount = self.activeComputeUnitCount
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderCoreProperties2AMDExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderCoreProperties2AMDExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderCoreProperties2AMDExtension: Chainable {}
 
 public struct PipelineRasterizationConservativeStateCreateInfoEXT: ChainableBase, PipelineRasterizationStateCreateInfoExtension {
     public typealias CStruct = VkPipelineRasterizationConservativeStateCreateInfoEXT
@@ -14070,8 +15390,12 @@ public struct PipelineRasterizationConservativeStateCreateInfoEXT: ChainableBase
         cStruct.extraPrimitiveOverestimationSize = self.extraPrimitiveOverestimationSize
         return try body(&cStruct)
     }
+    public func push<Extension: PipelineRasterizationConservativeStateCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineRasterizationConservativeStateCreateInfoEXTExtension: Chainable {}
+
+public protocol PipelineRasterizationConservativeStateCreateInfoEXTExtension: Chainable {}
 
 public struct PhysicalDeviceDescriptorIndexingFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDescriptorIndexingFeatures
@@ -14169,8 +15493,12 @@ public struct PhysicalDeviceDescriptorIndexingFeatures: ChainableBase, PhysicalD
         cStruct.runtimeDescriptorArray = VkBool32(self.runtimeDescriptorArray ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDescriptorIndexingFeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceDescriptorIndexingFeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceDescriptorIndexingFeaturesExtension: Chainable {}
 
 public struct PhysicalDeviceDescriptorIndexingProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceDescriptorIndexingProperties
@@ -14254,8 +15582,12 @@ public struct PhysicalDeviceDescriptorIndexingProperties: ChainableBase, Physica
         cStruct.maxDescriptorSetUpdateAfterBindInputAttachments = self.maxDescriptorSetUpdateAfterBindInputAttachments
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDescriptorIndexingPropertiesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceDescriptorIndexingPropertiesExtension: Chainable {}
+
+public protocol PhysicalDeviceDescriptorIndexingPropertiesExtension: Chainable {}
 
 public struct DescriptorSetLayoutBindingFlagsCreateInfo: ChainableBase, DescriptorSetLayoutCreateInfoExtension {
     public typealias CStruct = VkDescriptorSetLayoutBindingFlagsCreateInfo
@@ -14280,8 +15612,12 @@ public struct DescriptorSetLayoutBindingFlagsCreateInfo: ChainableBase, Descript
             return try body(&cStruct)
         }
     }
+    public func push<Extension: DescriptorSetLayoutBindingFlagsCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DescriptorSetLayoutBindingFlagsCreateInfoExtension: Chainable {}
+
+public protocol DescriptorSetLayoutBindingFlagsCreateInfoExtension: Chainable {}
 
 public struct DescriptorSetVariableDescriptorCountAllocateInfo: ChainableBase, DescriptorSetAllocateInfoExtension {
     public typealias CStruct = VkDescriptorSetVariableDescriptorCountAllocateInfo
@@ -14306,8 +15642,12 @@ public struct DescriptorSetVariableDescriptorCountAllocateInfo: ChainableBase, D
             return try body(&cStruct)
         }
     }
+    public func push<Extension: DescriptorSetVariableDescriptorCountAllocateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DescriptorSetVariableDescriptorCountAllocateInfoExtension: Chainable {}
+
+public protocol DescriptorSetVariableDescriptorCountAllocateInfoExtension: Chainable {}
 
 public struct DescriptorSetVariableDescriptorCountLayoutSupport: ChainableBase, DescriptorSetLayoutSupportExtension {
     public typealias CStruct = VkDescriptorSetVariableDescriptorCountLayoutSupport
@@ -14325,8 +15665,12 @@ public struct DescriptorSetVariableDescriptorCountLayoutSupport: ChainableBase, 
         cStruct.maxVariableDescriptorCount = self.maxVariableDescriptorCount
         return try body(&cStruct)
     }
+    public func push<Extension: DescriptorSetVariableDescriptorCountLayoutSupportExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DescriptorSetVariableDescriptorCountLayoutSupportExtension: Chainable {}
+
+public protocol DescriptorSetVariableDescriptorCountLayoutSupportExtension: Chainable {}
 
 public struct AttachmentDescription2: ChainableBase {
     public typealias CStruct = VkAttachmentDescription2
@@ -14380,8 +15724,12 @@ public struct AttachmentDescription2: ChainableBase {
         cStruct.finalLayout = VkImageLayout(rawValue: VkImageLayout.RawValue(bitPattern: self.finalLayout.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: AttachmentDescription2Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol AttachmentDescription2Extension: Chainable {}
+
+public protocol AttachmentDescription2Extension: Chainable {}
 
 public struct AttachmentReference2: ChainableBase {
     public typealias CStruct = VkAttachmentReference2
@@ -14411,8 +15759,12 @@ public struct AttachmentReference2: ChainableBase {
         cStruct.aspectMask = self.aspectMask.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: AttachmentReference2Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol AttachmentReference2Extension: Chainable {}
+
+public protocol AttachmentReference2Extension: Chainable {}
 
 public struct SubpassDescription2: ChainableBase {
     public typealias CStruct = VkSubpassDescription2
@@ -14475,8 +15827,12 @@ public struct SubpassDescription2: ChainableBase {
             }
         }
     }
+    public func push<Extension: SubpassDescription2Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SubpassDescription2Extension: Chainable {}
+
+public protocol SubpassDescription2Extension: Chainable {}
 
 public struct SubpassDependency2: ChainableBase {
     public typealias CStruct = VkSubpassDependency2
@@ -14526,8 +15882,12 @@ public struct SubpassDependency2: ChainableBase {
         cStruct.viewOffset = self.viewOffset
         return try body(&cStruct)
     }
+    public func push<Extension: SubpassDependency2Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SubpassDependency2Extension: Chainable {}
+
+public protocol SubpassDependency2Extension: Chainable {}
 
 public struct RenderPassCreateInfo2: ChainableBase {
     public typealias CStruct = VkRenderPassCreateInfo2
@@ -14577,8 +15937,12 @@ public struct RenderPassCreateInfo2: ChainableBase {
             }
         }
     }
+    public func push<Extension: RenderPassCreateInfo2Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol RenderPassCreateInfo2Extension: Chainable {}
+
+public protocol RenderPassCreateInfo2Extension: Chainable {}
 
 public struct SubpassBeginInfo: ChainableBase {
     public typealias CStruct = VkSubpassBeginInfo
@@ -14600,8 +15964,12 @@ public struct SubpassBeginInfo: ChainableBase {
         cStruct.contents = VkSubpassContents(rawValue: VkSubpassContents.RawValue(bitPattern: self.contents.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: SubpassBeginInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SubpassBeginInfoExtension: Chainable {}
+
+public protocol SubpassBeginInfoExtension: Chainable {}
 
 public struct SubpassEndInfo: ChainableBase {
     public typealias CStruct = VkSubpassEndInfo
@@ -14619,8 +15987,12 @@ public struct SubpassEndInfo: ChainableBase {
         cStruct.pNext = maybeMutable(pNext)
         return try body(&cStruct)
     }
+    public func push<Extension: SubpassEndInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SubpassEndInfoExtension: Chainable {}
+
+public protocol SubpassEndInfoExtension: Chainable {}
 
 public struct PhysicalDeviceTimelineSemaphoreFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceTimelineSemaphoreFeatures
@@ -14642,8 +16014,12 @@ public struct PhysicalDeviceTimelineSemaphoreFeatures: ChainableBase, PhysicalDe
         cStruct.timelineSemaphore = VkBool32(self.timelineSemaphore ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceTimelineSemaphoreFeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceTimelineSemaphoreFeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceTimelineSemaphoreFeaturesExtension: Chainable {}
 
 public struct PhysicalDeviceTimelineSemaphoreProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceTimelineSemaphoreProperties
@@ -14661,8 +16037,12 @@ public struct PhysicalDeviceTimelineSemaphoreProperties: ChainableBase, Physical
         cStruct.maxTimelineSemaphoreValueDifference = self.maxTimelineSemaphoreValueDifference
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceTimelineSemaphorePropertiesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceTimelineSemaphorePropertiesExtension: Chainable {}
+
+public protocol PhysicalDeviceTimelineSemaphorePropertiesExtension: Chainable {}
 
 public struct SemaphoreTypeCreateInfo: ChainableBase, SemaphoreCreateInfoExtension, PhysicalDeviceExternalSemaphoreInfoExtension {
     public typealias CStruct = VkSemaphoreTypeCreateInfo
@@ -14688,8 +16068,12 @@ public struct SemaphoreTypeCreateInfo: ChainableBase, SemaphoreCreateInfoExtensi
         cStruct.initialValue = self.initialValue
         return try body(&cStruct)
     }
+    public func push<Extension: SemaphoreTypeCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SemaphoreTypeCreateInfoExtension: Chainable {}
+
+public protocol SemaphoreTypeCreateInfoExtension: Chainable {}
 
 public struct TimelineSemaphoreSubmitInfo: ChainableBase, SubmitInfoExtension, BindSparseInfoExtension {
     public typealias CStruct = VkTimelineSemaphoreSubmitInfo
@@ -14721,8 +16105,12 @@ public struct TimelineSemaphoreSubmitInfo: ChainableBase, SubmitInfoExtension, B
             }
         }
     }
+    public func push<Extension: TimelineSemaphoreSubmitInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol TimelineSemaphoreSubmitInfoExtension: Chainable {}
+
+public protocol TimelineSemaphoreSubmitInfoExtension: Chainable {}
 
 public struct SemaphoreWaitInfo: ChainableBase {
     public typealias CStruct = VkSemaphoreWaitInfo
@@ -14757,8 +16145,12 @@ public struct SemaphoreWaitInfo: ChainableBase {
             }
         }
     }
+    public func push<Extension: SemaphoreWaitInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SemaphoreWaitInfoExtension: Chainable {}
+
+public protocol SemaphoreWaitInfoExtension: Chainable {}
 
 public struct SemaphoreSignalInfo: ChainableBase {
     public typealias CStruct = VkSemaphoreSignalInfo
@@ -14784,8 +16176,12 @@ public struct SemaphoreSignalInfo: ChainableBase {
         cStruct.value = self.value
         return try body(&cStruct)
     }
+    public func push<Extension: SemaphoreSignalInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SemaphoreSignalInfoExtension: Chainable {}
+
+public protocol SemaphoreSignalInfoExtension: Chainable {}
 
 public struct VertexInputBindingDivisorDescription: CStructConvertible {
     public typealias CStruct = VkVertexInputBindingDivisorDescription
@@ -14834,8 +16230,12 @@ public struct PipelineVertexInputDivisorStateCreateInfo: ChainableBase, Pipeline
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PipelineVertexInputDivisorStateCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineVertexInputDivisorStateCreateInfoExtension: Chainable {}
+
+public protocol PipelineVertexInputDivisorStateCreateInfoExtension: Chainable {}
 
 public struct PhysicalDeviceVertexAttributeDivisorPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT
@@ -14853,8 +16253,12 @@ public struct PhysicalDeviceVertexAttributeDivisorPropertiesEXT: ChainableBase, 
         cStruct.maxVertexAttribDivisor = self.maxVertexAttribDivisor
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceVertexAttributeDivisorPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceVertexAttributeDivisorPropertiesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceVertexAttributeDivisorPropertiesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceVertexAttributeDivisorProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceVertexAttributeDivisorProperties
@@ -14875,8 +16279,12 @@ public struct PhysicalDeviceVertexAttributeDivisorProperties: ChainableBase, Phy
         cStruct.supportsNonZeroFirstInstance = VkBool32(self.supportsNonZeroFirstInstance ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceVertexAttributeDivisorPropertiesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceVertexAttributeDivisorPropertiesExtension: Chainable {}
+
+public protocol PhysicalDeviceVertexAttributeDivisorPropertiesExtension: Chainable {}
 
 public struct PhysicalDevicePCIBusInfoPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDevicePCIBusInfoPropertiesEXT
@@ -14903,8 +16311,12 @@ public struct PhysicalDevicePCIBusInfoPropertiesEXT: ChainableBase, PhysicalDevi
         cStruct.pciFunction = self.pciFunction
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevicePCIBusInfoPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevicePCIBusInfoPropertiesEXTExtension: Chainable {}
+
+public protocol PhysicalDevicePCIBusInfoPropertiesEXTExtension: Chainable {}
 
 #if VK_USE_PLATFORM_ANDROID_KHR
 public struct ImportAndroidHardwareBufferInfoANDROID: ChainableBase, MemoryAllocateInfoExtension {
@@ -14927,9 +16339,13 @@ public struct ImportAndroidHardwareBufferInfoANDROID: ChainableBase, MemoryAlloc
         cStruct.buffer = self.buffer
         return try body(&cStruct)
     }
+    public func push<Extension: ImportAndroidHardwareBufferInfoANDROIDExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ImportAndroidHardwareBufferInfoANDROIDExtension: Chainable {}
+
+public protocol ImportAndroidHardwareBufferInfoANDROIDExtension: Chainable {}
 
 #if VK_USE_PLATFORM_ANDROID_KHR
 public struct AndroidHardwareBufferUsageANDROID: ChainableBase, ImageFormatProperties2Extension {
@@ -14948,9 +16364,13 @@ public struct AndroidHardwareBufferUsageANDROID: ChainableBase, ImageFormatPrope
         cStruct.androidHardwareBufferUsage = self.androidHardwareBufferUsage
         return try body(&cStruct)
     }
+    public func push<Extension: AndroidHardwareBufferUsageANDROIDExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol AndroidHardwareBufferUsageANDROIDExtension: Chainable {}
+
+public protocol AndroidHardwareBufferUsageANDROIDExtension: Chainable {}
 
 #if VK_USE_PLATFORM_ANDROID_KHR
 public struct AndroidHardwareBufferPropertiesANDROID: ChainableBase {
@@ -14972,9 +16392,13 @@ public struct AndroidHardwareBufferPropertiesANDROID: ChainableBase {
         cStruct.memoryTypeBits = self.memoryTypeBits
         return try body(&cStruct)
     }
+    public func push<Extension: AndroidHardwareBufferPropertiesANDROIDExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol AndroidHardwareBufferPropertiesANDROIDExtension: Chainable {}
+
+public protocol AndroidHardwareBufferPropertiesANDROIDExtension: Chainable {}
 
 #if VK_USE_PLATFORM_ANDROID_KHR
 public struct MemoryGetAndroidHardwareBufferInfoANDROID: ChainableBase {
@@ -14997,9 +16421,13 @@ public struct MemoryGetAndroidHardwareBufferInfoANDROID: ChainableBase {
         cStruct.memory = self.memory.handle
         return try body(&cStruct)
     }
+    public func push<Extension: MemoryGetAndroidHardwareBufferInfoANDROIDExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol MemoryGetAndroidHardwareBufferInfoANDROIDExtension: Chainable {}
+
+public protocol MemoryGetAndroidHardwareBufferInfoANDROIDExtension: Chainable {}
 
 #if VK_USE_PLATFORM_ANDROID_KHR
 public struct AndroidHardwareBufferFormatPropertiesANDROID: ChainableBase, AndroidHardwareBufferPropertiesANDROIDExtension {
@@ -15041,9 +16469,13 @@ public struct AndroidHardwareBufferFormatPropertiesANDROID: ChainableBase, Andro
             return try body(&cStruct)
         }
     }
+    public func push<Extension: AndroidHardwareBufferFormatPropertiesANDROIDExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol AndroidHardwareBufferFormatPropertiesANDROIDExtension: Chainable {}
+
+public protocol AndroidHardwareBufferFormatPropertiesANDROIDExtension: Chainable {}
 
 public struct CommandBufferInheritanceConditionalRenderingInfoEXT: ChainableBase, CommandBufferInheritanceInfoExtension {
     public typealias CStruct = VkCommandBufferInheritanceConditionalRenderingInfoEXT
@@ -15065,8 +16497,12 @@ public struct CommandBufferInheritanceConditionalRenderingInfoEXT: ChainableBase
         cStruct.conditionalRenderingEnable = VkBool32(self.conditionalRenderingEnable ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: CommandBufferInheritanceConditionalRenderingInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CommandBufferInheritanceConditionalRenderingInfoEXTExtension: Chainable {}
+
+public protocol CommandBufferInheritanceConditionalRenderingInfoEXTExtension: Chainable {}
 
 #if VK_USE_PLATFORM_ANDROID_KHR
 public struct ExternalFormatANDROID: ChainableBase, ImageCreateInfoExtension, SamplerYcbcrConversionCreateInfoExtension, AttachmentDescription2Extension, GraphicsPipelineCreateInfoExtension, CommandBufferInheritanceInfoExtension {
@@ -15089,9 +16525,13 @@ public struct ExternalFormatANDROID: ChainableBase, ImageCreateInfoExtension, Sa
         cStruct.externalFormat = self.externalFormat
         return try body(&cStruct)
     }
+    public func push<Extension: ExternalFormatANDROIDExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ExternalFormatANDROIDExtension: Chainable {}
+
+public protocol ExternalFormatANDROIDExtension: Chainable {}
 
 public struct PhysicalDevice8BitStorageFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevice8BitStorageFeatures
@@ -15121,8 +16561,12 @@ public struct PhysicalDevice8BitStorageFeatures: ChainableBase, PhysicalDeviceFe
         cStruct.storagePushConstant8 = VkBool32(self.storagePushConstant8 ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevice8BitStorageFeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevice8BitStorageFeaturesExtension: Chainable {}
+
+public protocol PhysicalDevice8BitStorageFeaturesExtension: Chainable {}
 
 public struct PhysicalDeviceConditionalRenderingFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceConditionalRenderingFeaturesEXT
@@ -15148,8 +16592,12 @@ public struct PhysicalDeviceConditionalRenderingFeaturesEXT: ChainableBase, Phys
         cStruct.inheritedConditionalRendering = VkBool32(self.inheritedConditionalRendering ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceConditionalRenderingFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceConditionalRenderingFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceConditionalRenderingFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceVulkanMemoryModelFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceVulkanMemoryModelFeatures
@@ -15179,8 +16627,12 @@ public struct PhysicalDeviceVulkanMemoryModelFeatures: ChainableBase, PhysicalDe
         cStruct.vulkanMemoryModelAvailabilityVisibilityChains = VkBool32(self.vulkanMemoryModelAvailabilityVisibilityChains ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceVulkanMemoryModelFeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceVulkanMemoryModelFeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceVulkanMemoryModelFeaturesExtension: Chainable {}
 
 public struct PhysicalDeviceShaderAtomicInt64Features: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderAtomicInt64Features
@@ -15206,8 +16658,12 @@ public struct PhysicalDeviceShaderAtomicInt64Features: ChainableBase, PhysicalDe
         cStruct.shaderSharedInt64Atomics = VkBool32(self.shaderSharedInt64Atomics ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderAtomicInt64FeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderAtomicInt64FeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderAtomicInt64FeaturesExtension: Chainable {}
 
 public struct PhysicalDeviceShaderAtomicFloatFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderAtomicFloatFeaturesEXT
@@ -15273,8 +16729,12 @@ public struct PhysicalDeviceShaderAtomicFloatFeaturesEXT: ChainableBase, Physica
         cStruct.sparseImageFloat32AtomicAdd = VkBool32(self.sparseImageFloat32AtomicAdd ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderAtomicFloatFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderAtomicFloatFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderAtomicFloatFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceShaderAtomicFloat2FeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderAtomicFloat2FeaturesEXT
@@ -15340,8 +16800,12 @@ public struct PhysicalDeviceShaderAtomicFloat2FeaturesEXT: ChainableBase, Physic
         cStruct.sparseImageFloat32AtomicMinMax = VkBool32(self.sparseImageFloat32AtomicMinMax ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderAtomicFloat2FeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderAtomicFloat2FeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderAtomicFloat2FeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceVertexAttributeDivisorFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceVertexAttributeDivisorFeatures
@@ -15367,8 +16831,12 @@ public struct PhysicalDeviceVertexAttributeDivisorFeatures: ChainableBase, Physi
         cStruct.vertexAttributeInstanceRateZeroDivisor = VkBool32(self.vertexAttributeInstanceRateZeroDivisor ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceVertexAttributeDivisorFeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceVertexAttributeDivisorFeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceVertexAttributeDivisorFeaturesExtension: Chainable {}
 
 public struct QueueFamilyCheckpointPropertiesNV: ChainableBase, QueueFamilyProperties2Extension {
     public typealias CStruct = VkQueueFamilyCheckpointPropertiesNV
@@ -15386,8 +16854,12 @@ public struct QueueFamilyCheckpointPropertiesNV: ChainableBase, QueueFamilyPrope
         cStruct.checkpointExecutionStageMask = self.checkpointExecutionStageMask.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: QueueFamilyCheckpointPropertiesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol QueueFamilyCheckpointPropertiesNVExtension: Chainable {}
+
+public protocol QueueFamilyCheckpointPropertiesNVExtension: Chainable {}
 
 public struct CheckpointDataNV: ChainableBase {
     public typealias CStruct = VkCheckpointDataNV
@@ -15408,8 +16880,12 @@ public struct CheckpointDataNV: ChainableBase {
         cStruct.pCheckpointMarker = self.checkpointMarker
         return try body(&cStruct)
     }
+    public func push<Extension: CheckpointDataNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CheckpointDataNVExtension: Chainable {}
+
+public protocol CheckpointDataNVExtension: Chainable {}
 
 public struct PhysicalDeviceDepthStencilResolveProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceDepthStencilResolveProperties
@@ -15436,8 +16912,12 @@ public struct PhysicalDeviceDepthStencilResolveProperties: ChainableBase, Physic
         cStruct.independentResolve = VkBool32(self.independentResolve ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDepthStencilResolvePropertiesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceDepthStencilResolvePropertiesExtension: Chainable {}
+
+public protocol PhysicalDeviceDepthStencilResolvePropertiesExtension: Chainable {}
 
 public struct SubpassDescriptionDepthStencilResolve: ChainableBase, SubpassDescription2Extension {
     public typealias CStruct = VkSubpassDescriptionDepthStencilResolve
@@ -15469,8 +16949,12 @@ public struct SubpassDescriptionDepthStencilResolve: ChainableBase, SubpassDescr
             return try body(&cStruct)
         }
     }
+    public func push<Extension: SubpassDescriptionDepthStencilResolveExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SubpassDescriptionDepthStencilResolveExtension: Chainable {}
+
+public protocol SubpassDescriptionDepthStencilResolveExtension: Chainable {}
 
 public struct ImageViewASTCDecodeModeEXT: ChainableBase, ImageViewCreateInfoExtension {
     public typealias CStruct = VkImageViewASTCDecodeModeEXT
@@ -15492,8 +16976,12 @@ public struct ImageViewASTCDecodeModeEXT: ChainableBase, ImageViewCreateInfoExte
         cStruct.decodeMode = VkFormat(rawValue: VkFormat.RawValue(bitPattern: self.decodeMode.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: ImageViewASTCDecodeModeEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ImageViewASTCDecodeModeEXTExtension: Chainable {}
+
+public protocol ImageViewASTCDecodeModeEXTExtension: Chainable {}
 
 public struct PhysicalDeviceASTCDecodeFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceASTCDecodeFeaturesEXT
@@ -15515,8 +17003,12 @@ public struct PhysicalDeviceASTCDecodeFeaturesEXT: ChainableBase, PhysicalDevice
         cStruct.decodeModeSharedExponent = VkBool32(self.decodeModeSharedExponent ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceASTCDecodeFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceASTCDecodeFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceASTCDecodeFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceTransformFeedbackFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceTransformFeedbackFeaturesEXT
@@ -15542,8 +17034,12 @@ public struct PhysicalDeviceTransformFeedbackFeaturesEXT: ChainableBase, Physica
         cStruct.geometryStreams = VkBool32(self.geometryStreams ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceTransformFeedbackFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceTransformFeedbackFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceTransformFeedbackFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceTransformFeedbackPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceTransformFeedbackPropertiesEXT
@@ -15588,8 +17084,12 @@ public struct PhysicalDeviceTransformFeedbackPropertiesEXT: ChainableBase, Physi
         cStruct.transformFeedbackDraw = VkBool32(self.transformFeedbackDraw ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceTransformFeedbackPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceTransformFeedbackPropertiesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceTransformFeedbackPropertiesEXTExtension: Chainable {}
 
 public struct PipelineRasterizationStateStreamCreateInfoEXT: ChainableBase, PipelineRasterizationStateCreateInfoExtension {
     public typealias CStruct = VkPipelineRasterizationStateStreamCreateInfoEXT
@@ -15615,8 +17115,12 @@ public struct PipelineRasterizationStateStreamCreateInfoEXT: ChainableBase, Pipe
         cStruct.rasterizationStream = self.rasterizationStream
         return try body(&cStruct)
     }
+    public func push<Extension: PipelineRasterizationStateStreamCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineRasterizationStateStreamCreateInfoEXTExtension: Chainable {}
+
+public protocol PipelineRasterizationStateStreamCreateInfoEXTExtension: Chainable {}
 
 public struct PhysicalDeviceRepresentativeFragmentTestFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceRepresentativeFragmentTestFeaturesNV
@@ -15638,8 +17142,12 @@ public struct PhysicalDeviceRepresentativeFragmentTestFeaturesNV: ChainableBase,
         cStruct.representativeFragmentTest = VkBool32(self.representativeFragmentTest ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceRepresentativeFragmentTestFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceRepresentativeFragmentTestFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceRepresentativeFragmentTestFeaturesNVExtension: Chainable {}
 
 public struct PipelineRepresentativeFragmentTestStateCreateInfoNV: ChainableBase, GraphicsPipelineCreateInfoExtension {
     public typealias CStruct = VkPipelineRepresentativeFragmentTestStateCreateInfoNV
@@ -15661,8 +17169,12 @@ public struct PipelineRepresentativeFragmentTestStateCreateInfoNV: ChainableBase
         cStruct.representativeFragmentTestEnable = VkBool32(self.representativeFragmentTestEnable ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PipelineRepresentativeFragmentTestStateCreateInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineRepresentativeFragmentTestStateCreateInfoNVExtension: Chainable {}
+
+public protocol PipelineRepresentativeFragmentTestStateCreateInfoNVExtension: Chainable {}
 
 public struct PhysicalDeviceExclusiveScissorFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceExclusiveScissorFeaturesNV
@@ -15684,8 +17196,12 @@ public struct PhysicalDeviceExclusiveScissorFeaturesNV: ChainableBase, PhysicalD
         cStruct.exclusiveScissor = VkBool32(self.exclusiveScissor ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceExclusiveScissorFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceExclusiveScissorFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceExclusiveScissorFeaturesNVExtension: Chainable {}
 
 public struct PipelineViewportExclusiveScissorStateCreateInfoNV: ChainableBase, PipelineViewportStateCreateInfoExtension {
     public typealias CStruct = VkPipelineViewportExclusiveScissorStateCreateInfoNV
@@ -15710,8 +17226,12 @@ public struct PipelineViewportExclusiveScissorStateCreateInfoNV: ChainableBase, 
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PipelineViewportExclusiveScissorStateCreateInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineViewportExclusiveScissorStateCreateInfoNVExtension: Chainable {}
+
+public protocol PipelineViewportExclusiveScissorStateCreateInfoNVExtension: Chainable {}
 
 public struct PhysicalDeviceCornerSampledImageFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceCornerSampledImageFeaturesNV
@@ -15733,8 +17253,12 @@ public struct PhysicalDeviceCornerSampledImageFeaturesNV: ChainableBase, Physica
         cStruct.cornerSampledImage = VkBool32(self.cornerSampledImage ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceCornerSampledImageFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceCornerSampledImageFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceCornerSampledImageFeaturesNVExtension: Chainable {}
 
 public struct PhysicalDeviceComputeShaderDerivativesFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceComputeShaderDerivativesFeaturesKHR
@@ -15760,8 +17284,12 @@ public struct PhysicalDeviceComputeShaderDerivativesFeaturesKHR: ChainableBase, 
         cStruct.computeDerivativeGroupLinear = VkBool32(self.computeDerivativeGroupLinear ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceComputeShaderDerivativesFeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceComputeShaderDerivativesFeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceComputeShaderDerivativesFeaturesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceComputeShaderDerivativesPropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceComputeShaderDerivativesPropertiesKHR
@@ -15779,8 +17307,12 @@ public struct PhysicalDeviceComputeShaderDerivativesPropertiesKHR: ChainableBase
         cStruct.meshAndTaskShaderDerivatives = VkBool32(self.meshAndTaskShaderDerivatives ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceComputeShaderDerivativesPropertiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceComputeShaderDerivativesPropertiesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceComputeShaderDerivativesPropertiesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceShaderImageFootprintFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderImageFootprintFeaturesNV
@@ -15802,8 +17334,12 @@ public struct PhysicalDeviceShaderImageFootprintFeaturesNV: ChainableBase, Physi
         cStruct.imageFootprint = VkBool32(self.imageFootprint ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderImageFootprintFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderImageFootprintFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderImageFootprintFeaturesNVExtension: Chainable {}
 
 public struct PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV
@@ -15825,8 +17361,12 @@ public struct PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV: Chainabl
         cStruct.dedicatedAllocationImageAliasing = VkBool32(self.dedicatedAllocationImageAliasing ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNVExtension: Chainable {}
 
 public struct PhysicalDeviceCopyMemoryIndirectFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceCopyMemoryIndirectFeaturesKHR
@@ -15852,8 +17392,12 @@ public struct PhysicalDeviceCopyMemoryIndirectFeaturesKHR: ChainableBase, Physic
         cStruct.indirectMemoryToImageCopy = VkBool32(self.indirectMemoryToImageCopy ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceCopyMemoryIndirectFeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceCopyMemoryIndirectFeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceCopyMemoryIndirectFeaturesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceCopyMemoryIndirectFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceCopyMemoryIndirectFeaturesNV
@@ -15875,8 +17419,12 @@ public struct PhysicalDeviceCopyMemoryIndirectFeaturesNV: ChainableBase, Physica
         cStruct.indirectCopy = VkBool32(self.indirectCopy ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceCopyMemoryIndirectFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceCopyMemoryIndirectFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceCopyMemoryIndirectFeaturesNVExtension: Chainable {}
 
 public struct PhysicalDeviceCopyMemoryIndirectPropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceCopyMemoryIndirectPropertiesKHR
@@ -15894,8 +17442,12 @@ public struct PhysicalDeviceCopyMemoryIndirectPropertiesKHR: ChainableBase, Phys
         cStruct.supportedQueues = self.supportedQueues.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceCopyMemoryIndirectPropertiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceCopyMemoryIndirectPropertiesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceCopyMemoryIndirectPropertiesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceMemoryDecompressionFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceMemoryDecompressionFeaturesEXT
@@ -15917,8 +17469,12 @@ public struct PhysicalDeviceMemoryDecompressionFeaturesEXT: ChainableBase, Physi
         cStruct.memoryDecompression = VkBool32(self.memoryDecompression ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceMemoryDecompressionFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceMemoryDecompressionFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceMemoryDecompressionFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceMemoryDecompressionPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceMemoryDecompressionPropertiesEXT
@@ -15939,8 +17495,12 @@ public struct PhysicalDeviceMemoryDecompressionPropertiesEXT: ChainableBase, Phy
         cStruct.maxDecompressionIndirectCount = self.maxDecompressionIndirectCount
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceMemoryDecompressionPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceMemoryDecompressionPropertiesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceMemoryDecompressionPropertiesEXTExtension: Chainable {}
 
 public struct ShadingRatePaletteNV: CStructConvertible {
     public typealias CStruct = VkShadingRatePaletteNV
@@ -15992,8 +17552,12 @@ public struct PipelineViewportShadingRateImageStateCreateInfoNV: ChainableBase, 
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PipelineViewportShadingRateImageStateCreateInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineViewportShadingRateImageStateCreateInfoNVExtension: Chainable {}
+
+public protocol PipelineViewportShadingRateImageStateCreateInfoNVExtension: Chainable {}
 
 public struct PhysicalDeviceShadingRateImageFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShadingRateImageFeaturesNV
@@ -16019,8 +17583,12 @@ public struct PhysicalDeviceShadingRateImageFeaturesNV: ChainableBase, PhysicalD
         cStruct.shadingRateCoarseSampleOrder = VkBool32(self.shadingRateCoarseSampleOrder ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShadingRateImageFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShadingRateImageFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceShadingRateImageFeaturesNVExtension: Chainable {}
 
 public struct PhysicalDeviceShadingRateImagePropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceShadingRateImagePropertiesNV
@@ -16046,8 +17614,12 @@ public struct PhysicalDeviceShadingRateImagePropertiesNV: ChainableBase, Physica
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PhysicalDeviceShadingRateImagePropertiesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShadingRateImagePropertiesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceShadingRateImagePropertiesNVExtension: Chainable {}
 
 public struct PhysicalDeviceInvocationMaskFeaturesHUAWEI: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceInvocationMaskFeaturesHUAWEI
@@ -16069,8 +17641,12 @@ public struct PhysicalDeviceInvocationMaskFeaturesHUAWEI: ChainableBase, Physica
         cStruct.invocationMask = VkBool32(self.invocationMask ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceInvocationMaskFeaturesHUAWEIExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceInvocationMaskFeaturesHUAWEIExtension: Chainable {}
+
+public protocol PhysicalDeviceInvocationMaskFeaturesHUAWEIExtension: Chainable {}
 
 public struct CoarseSampleLocationNV: CStructConvertible {
     public typealias CStruct = VkCoarseSampleLocationNV
@@ -16158,8 +17734,12 @@ public struct PipelineViewportCoarseSampleOrderStateCreateInfoNV: ChainableBase,
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PipelineViewportCoarseSampleOrderStateCreateInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineViewportCoarseSampleOrderStateCreateInfoNVExtension: Chainable {}
+
+public protocol PipelineViewportCoarseSampleOrderStateCreateInfoNVExtension: Chainable {}
 
 public struct PhysicalDeviceMeshShaderFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceMeshShaderFeaturesNV
@@ -16185,8 +17765,12 @@ public struct PhysicalDeviceMeshShaderFeaturesNV: ChainableBase, PhysicalDeviceF
         cStruct.meshShader = VkBool32(self.meshShader ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceMeshShaderFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceMeshShaderFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceMeshShaderFeaturesNVExtension: Chainable {}
 
 public struct PhysicalDeviceMeshShaderPropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceMeshShaderPropertiesNV
@@ -16240,8 +17824,12 @@ public struct PhysicalDeviceMeshShaderPropertiesNV: ChainableBase, PhysicalDevic
         cStruct.meshOutputPerPrimitiveGranularity = self.meshOutputPerPrimitiveGranularity
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceMeshShaderPropertiesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceMeshShaderPropertiesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceMeshShaderPropertiesNVExtension: Chainable {}
 
 public struct DrawMeshTasksIndirectCommandNV: CStructConvertible {
     public typealias CStruct = VkDrawMeshTasksIndirectCommandNV
@@ -16303,8 +17891,12 @@ public struct PhysicalDeviceMeshShaderFeaturesEXT: ChainableBase, PhysicalDevice
         cStruct.meshShaderQueries = VkBool32(self.meshShaderQueries ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceMeshShaderFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceMeshShaderFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceMeshShaderFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceMeshShaderPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceMeshShaderPropertiesEXT
@@ -16403,8 +17995,12 @@ public struct PhysicalDeviceMeshShaderPropertiesEXT: ChainableBase, PhysicalDevi
         cStruct.prefersCompactPrimitiveOutput = VkBool32(self.prefersCompactPrimitiveOutput ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceMeshShaderPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceMeshShaderPropertiesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceMeshShaderPropertiesEXTExtension: Chainable {}
 
 public struct DrawMeshTasksIndirectCommandEXT: CStructConvertible {
     public typealias CStruct = VkDrawMeshTasksIndirectCommandEXT
@@ -16470,8 +18066,12 @@ public struct RayTracingShaderGroupCreateInfoNV: ChainableBase {
         cStruct.intersectionShader = self.intersectionShader
         return try body(&cStruct)
     }
+    public func push<Extension: RayTracingShaderGroupCreateInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol RayTracingShaderGroupCreateInfoNVExtension: Chainable {}
+
+public protocol RayTracingShaderGroupCreateInfoNVExtension: Chainable {}
 
 public struct RayTracingShaderGroupCreateInfoKHR: ChainableBase {
     public typealias CStruct = VkRayTracingShaderGroupCreateInfoKHR
@@ -16513,8 +18113,12 @@ public struct RayTracingShaderGroupCreateInfoKHR: ChainableBase {
         cStruct.pShaderGroupCaptureReplayHandle = self.shaderGroupCaptureReplayHandle
         return try body(&cStruct)
     }
+    public func push<Extension: RayTracingShaderGroupCreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol RayTracingShaderGroupCreateInfoKHRExtension: Chainable {}
+
+public protocol RayTracingShaderGroupCreateInfoKHRExtension: Chainable {}
 
 public struct RayTracingPipelineCreateInfoNV: ChainableBase {
     public typealias CStruct = VkRayTracingPipelineCreateInfoNV
@@ -16566,8 +18170,12 @@ public struct RayTracingPipelineCreateInfoNV: ChainableBase {
             }
         }
     }
+    public func push<Extension: RayTracingPipelineCreateInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol RayTracingPipelineCreateInfoNVExtension: Chainable {}
+
+public protocol RayTracingPipelineCreateInfoNVExtension: Chainable {}
 
 public struct PipelineLibraryCreateInfoKHR: ChainableBase, GraphicsPipelineCreateInfoExtension {
     public typealias CStruct = VkPipelineLibraryCreateInfoKHR
@@ -16592,8 +18200,12 @@ public struct PipelineLibraryCreateInfoKHR: ChainableBase, GraphicsPipelineCreat
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PipelineLibraryCreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineLibraryCreateInfoKHRExtension: Chainable {}
+
+public protocol PipelineLibraryCreateInfoKHRExtension: Chainable {}
 
 public struct RayTracingPipelineInterfaceCreateInfoKHR: ChainableBase {
     public typealias CStruct = VkRayTracingPipelineInterfaceCreateInfoKHR
@@ -16619,8 +18231,12 @@ public struct RayTracingPipelineInterfaceCreateInfoKHR: ChainableBase {
         cStruct.maxPipelineRayHitAttributeSize = self.maxPipelineRayHitAttributeSize
         return try body(&cStruct)
     }
+    public func push<Extension: RayTracingPipelineInterfaceCreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol RayTracingPipelineInterfaceCreateInfoKHRExtension: Chainable {}
+
+public protocol RayTracingPipelineInterfaceCreateInfoKHRExtension: Chainable {}
 
 public struct RayTracingPipelineCreateInfoKHR: ChainableBase {
     public typealias CStruct = VkRayTracingPipelineCreateInfoKHR
@@ -16690,8 +18306,12 @@ public struct RayTracingPipelineCreateInfoKHR: ChainableBase {
             }
         }
     }
+    public func push<Extension: RayTracingPipelineCreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol RayTracingPipelineCreateInfoKHRExtension: Chainable {}
+
+public protocol RayTracingPipelineCreateInfoKHRExtension: Chainable {}
 
 public struct GeometryTrianglesNV: ChainableBase {
     public typealias CStruct = VkGeometryTrianglesNV
@@ -16753,8 +18373,12 @@ public struct GeometryTrianglesNV: ChainableBase {
         cStruct.transformOffset = self.transformOffset
         return try body(&cStruct)
     }
+    public func push<Extension: GeometryTrianglesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol GeometryTrianglesNVExtension: Chainable {}
+
+public protocol GeometryTrianglesNVExtension: Chainable {}
 
 public struct GeometryAABBNV: ChainableBase {
     public typealias CStruct = VkGeometryAABBNV
@@ -16788,8 +18412,12 @@ public struct GeometryAABBNV: ChainableBase {
         cStruct.offset = self.offset
         return try body(&cStruct)
     }
+    public func push<Extension: GeometryAABBNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol GeometryAABBNVExtension: Chainable {}
+
+public protocol GeometryAABBNVExtension: Chainable {}
 
 public struct GeometryDataNV: CStructConvertible {
     public typealias CStruct = VkGeometryDataNV
@@ -16849,8 +18477,12 @@ public struct GeometryNV: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: GeometryNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol GeometryNVExtension: Chainable {}
+
+public protocol GeometryNVExtension: Chainable {}
 
 public struct AccelerationStructureInfoNV: ChainableBase {
     public typealias CStruct = VkAccelerationStructureInfoNV
@@ -16887,8 +18519,12 @@ public struct AccelerationStructureInfoNV: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: AccelerationStructureInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol AccelerationStructureInfoNVExtension: Chainable {}
+
+public protocol AccelerationStructureInfoNVExtension: Chainable {}
 
 public struct AccelerationStructureCreateInfoNV: ChainableBase {
     public typealias CStruct = VkAccelerationStructureCreateInfoNV
@@ -16916,8 +18552,12 @@ public struct AccelerationStructureCreateInfoNV: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: AccelerationStructureCreateInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol AccelerationStructureCreateInfoNVExtension: Chainable {}
+
+public protocol AccelerationStructureCreateInfoNVExtension: Chainable {}
 
 public struct BindAccelerationStructureMemoryInfoNV: ChainableBase {
     public typealias CStruct = VkBindAccelerationStructureMemoryInfoNV
@@ -16954,8 +18594,12 @@ public struct BindAccelerationStructureMemoryInfoNV: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: BindAccelerationStructureMemoryInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol BindAccelerationStructureMemoryInfoNVExtension: Chainable {}
+
+public protocol BindAccelerationStructureMemoryInfoNVExtension: Chainable {}
 
 public struct WriteDescriptorSetAccelerationStructureKHR: ChainableBase, WriteDescriptorSetExtension {
     public typealias CStruct = VkWriteDescriptorSetAccelerationStructureKHR
@@ -16980,8 +18624,12 @@ public struct WriteDescriptorSetAccelerationStructureKHR: ChainableBase, WriteDe
             return try body(&cStruct)
         }
     }
+    public func push<Extension: WriteDescriptorSetAccelerationStructureKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol WriteDescriptorSetAccelerationStructureKHRExtension: Chainable {}
+
+public protocol WriteDescriptorSetAccelerationStructureKHRExtension: Chainable {}
 
 public struct WriteDescriptorSetAccelerationStructureNV: ChainableBase, WriteDescriptorSetExtension {
     public typealias CStruct = VkWriteDescriptorSetAccelerationStructureNV
@@ -17006,8 +18654,12 @@ public struct WriteDescriptorSetAccelerationStructureNV: ChainableBase, WriteDes
             return try body(&cStruct)
         }
     }
+    public func push<Extension: WriteDescriptorSetAccelerationStructureNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol WriteDescriptorSetAccelerationStructureNVExtension: Chainable {}
+
+public protocol WriteDescriptorSetAccelerationStructureNVExtension: Chainable {}
 
 public struct AccelerationStructureMemoryRequirementsInfoNV: ChainableBase {
     public typealias CStruct = VkAccelerationStructureMemoryRequirementsInfoNV
@@ -17033,8 +18685,12 @@ public struct AccelerationStructureMemoryRequirementsInfoNV: ChainableBase {
         cStruct.accelerationStructure = self.accelerationStructure.handle
         return try body(&cStruct)
     }
+    public func push<Extension: AccelerationStructureMemoryRequirementsInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol AccelerationStructureMemoryRequirementsInfoNVExtension: Chainable {}
+
+public protocol AccelerationStructureMemoryRequirementsInfoNVExtension: Chainable {}
 
 public struct PhysicalDeviceAccelerationStructureFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceAccelerationStructureFeaturesKHR
@@ -17072,8 +18728,12 @@ public struct PhysicalDeviceAccelerationStructureFeaturesKHR: ChainableBase, Phy
         cStruct.descriptorBindingAccelerationStructureUpdateAfterBind = VkBool32(self.descriptorBindingAccelerationStructureUpdateAfterBind ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceAccelerationStructureFeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceAccelerationStructureFeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceAccelerationStructureFeaturesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceRayTracingPipelineFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceRayTracingPipelineFeaturesKHR
@@ -17111,8 +18771,12 @@ public struct PhysicalDeviceRayTracingPipelineFeaturesKHR: ChainableBase, Physic
         cStruct.rayTraversalPrimitiveCulling = VkBool32(self.rayTraversalPrimitiveCulling ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceRayTracingPipelineFeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceRayTracingPipelineFeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceRayTracingPipelineFeaturesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceRayQueryFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceRayQueryFeaturesKHR
@@ -17134,8 +18798,12 @@ public struct PhysicalDeviceRayQueryFeaturesKHR: ChainableBase, PhysicalDeviceFe
         cStruct.rayQuery = VkBool32(self.rayQuery ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceRayQueryFeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceRayQueryFeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceRayQueryFeaturesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceAccelerationStructurePropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceAccelerationStructurePropertiesKHR
@@ -17174,8 +18842,12 @@ public struct PhysicalDeviceAccelerationStructurePropertiesKHR: ChainableBase, P
         cStruct.minAccelerationStructureScratchOffsetAlignment = self.minAccelerationStructureScratchOffsetAlignment
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceAccelerationStructurePropertiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceAccelerationStructurePropertiesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceAccelerationStructurePropertiesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceRayTracingPipelinePropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceRayTracingPipelinePropertiesKHR
@@ -17214,8 +18886,12 @@ public struct PhysicalDeviceRayTracingPipelinePropertiesKHR: ChainableBase, Phys
         cStruct.maxRayHitAttributeSize = self.maxRayHitAttributeSize
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceRayTracingPipelinePropertiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceRayTracingPipelinePropertiesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceRayTracingPipelinePropertiesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceRayTracingPropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceRayTracingPropertiesNV
@@ -17254,8 +18930,12 @@ public struct PhysicalDeviceRayTracingPropertiesNV: ChainableBase, PhysicalDevic
         cStruct.maxDescriptorSetAccelerationStructures = self.maxDescriptorSetAccelerationStructures
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceRayTracingPropertiesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceRayTracingPropertiesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceRayTracingPropertiesNVExtension: Chainable {}
 
 public struct TraceRaysIndirectCommandKHR: CStructConvertible {
     public typealias CStruct = VkTraceRaysIndirectCommandKHR
@@ -17381,8 +19061,12 @@ public struct PhysicalDeviceRayTracingMaintenance1FeaturesKHR: ChainableBase, Ph
         cStruct.rayTracingPipelineTraceRaysIndirect2 = VkBool32(self.rayTracingPipelineTraceRaysIndirect2 ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceRayTracingMaintenance1FeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceRayTracingMaintenance1FeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceRayTracingMaintenance1FeaturesKHRExtension: Chainable {}
 
 public struct DrmFormatModifierPropertiesEXT: CStructConvertible {
     public typealias CStruct = VkDrmFormatModifierPropertiesEXT
@@ -17425,8 +19109,12 @@ public struct DrmFormatModifierPropertiesListEXT: ChainableBase, FormatPropertie
         cStruct.pDrmFormatModifierProperties = self.drmFormatModifierProperties
         return try body(&cStruct)
     }
+    public func push<Extension: DrmFormatModifierPropertiesListEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DrmFormatModifierPropertiesListEXTExtension: Chainable {}
+
+public protocol DrmFormatModifierPropertiesListEXTExtension: Chainable {}
 
 public struct PhysicalDeviceImageDrmFormatModifierInfoEXT: ChainableBase, PhysicalDeviceImageFormatInfo2Extension {
     public typealias CStruct = VkPhysicalDeviceImageDrmFormatModifierInfoEXT
@@ -17459,8 +19147,12 @@ public struct PhysicalDeviceImageDrmFormatModifierInfoEXT: ChainableBase, Physic
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PhysicalDeviceImageDrmFormatModifierInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceImageDrmFormatModifierInfoEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceImageDrmFormatModifierInfoEXTExtension: Chainable {}
 
 public struct ImageDrmFormatModifierListCreateInfoEXT: ChainableBase, ImageCreateInfoExtension {
     public typealias CStruct = VkImageDrmFormatModifierListCreateInfoEXT
@@ -17485,8 +19177,12 @@ public struct ImageDrmFormatModifierListCreateInfoEXT: ChainableBase, ImageCreat
             return try body(&cStruct)
         }
     }
+    public func push<Extension: ImageDrmFormatModifierListCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ImageDrmFormatModifierListCreateInfoEXTExtension: Chainable {}
+
+public protocol ImageDrmFormatModifierListCreateInfoEXTExtension: Chainable {}
 
 public struct ImageDrmFormatModifierExplicitCreateInfoEXT: ChainableBase, ImageCreateInfoExtension {
     public typealias CStruct = VkImageDrmFormatModifierExplicitCreateInfoEXT
@@ -17515,8 +19211,12 @@ public struct ImageDrmFormatModifierExplicitCreateInfoEXT: ChainableBase, ImageC
             return try body(&cStruct)
         }
     }
+    public func push<Extension: ImageDrmFormatModifierExplicitCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ImageDrmFormatModifierExplicitCreateInfoEXTExtension: Chainable {}
+
+public protocol ImageDrmFormatModifierExplicitCreateInfoEXTExtension: Chainable {}
 
 public struct ImageDrmFormatModifierPropertiesEXT: ChainableBase {
     public typealias CStruct = VkImageDrmFormatModifierPropertiesEXT
@@ -17534,8 +19234,12 @@ public struct ImageDrmFormatModifierPropertiesEXT: ChainableBase {
         cStruct.drmFormatModifier = self.drmFormatModifier
         return try body(&cStruct)
     }
+    public func push<Extension: ImageDrmFormatModifierPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ImageDrmFormatModifierPropertiesEXTExtension: Chainable {}
+
+public protocol ImageDrmFormatModifierPropertiesEXTExtension: Chainable {}
 
 public struct ImageStencilUsageCreateInfo: ChainableBase, ImageCreateInfoExtension, PhysicalDeviceImageFormatInfo2Extension {
     public typealias CStruct = VkImageStencilUsageCreateInfo
@@ -17557,8 +19261,12 @@ public struct ImageStencilUsageCreateInfo: ChainableBase, ImageCreateInfoExtensi
         cStruct.stencilUsage = self.stencilUsage.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: ImageStencilUsageCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ImageStencilUsageCreateInfoExtension: Chainable {}
+
+public protocol ImageStencilUsageCreateInfoExtension: Chainable {}
 
 public struct DeviceMemoryOverallocationCreateInfoAMD: ChainableBase, DeviceCreateInfoExtension {
     public typealias CStruct = VkDeviceMemoryOverallocationCreateInfoAMD
@@ -17580,8 +19288,12 @@ public struct DeviceMemoryOverallocationCreateInfoAMD: ChainableBase, DeviceCrea
         cStruct.overallocationBehavior = VkMemoryOverallocationBehaviorAMD(rawValue: VkMemoryOverallocationBehaviorAMD.RawValue(bitPattern: self.overallocationBehavior.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: DeviceMemoryOverallocationCreateInfoAMDExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DeviceMemoryOverallocationCreateInfoAMDExtension: Chainable {}
+
+public protocol DeviceMemoryOverallocationCreateInfoAMDExtension: Chainable {}
 
 public struct PhysicalDeviceFragmentDensityMapFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceFragmentDensityMapFeaturesEXT
@@ -17611,8 +19323,12 @@ public struct PhysicalDeviceFragmentDensityMapFeaturesEXT: ChainableBase, Physic
         cStruct.fragmentDensityMapNonSubsampledImages = VkBool32(self.fragmentDensityMapNonSubsampledImages ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceFragmentDensityMapFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceFragmentDensityMapFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceFragmentDensityMapFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceFragmentDensityMap2FeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceFragmentDensityMap2FeaturesEXT
@@ -17634,8 +19350,12 @@ public struct PhysicalDeviceFragmentDensityMap2FeaturesEXT: ChainableBase, Physi
         cStruct.fragmentDensityMapDeferred = VkBool32(self.fragmentDensityMapDeferred ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceFragmentDensityMap2FeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceFragmentDensityMap2FeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceFragmentDensityMap2FeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceFragmentDensityMapOffsetFeaturesEXT
@@ -17657,8 +19377,12 @@ public struct PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT: ChainableBase, 
         cStruct.fragmentDensityMapOffset = VkBool32(self.fragmentDensityMapOffset ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceFragmentDensityMapOffsetFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceFragmentDensityMapOffsetFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceFragmentDensityMapOffsetFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceFragmentDensityMapPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceFragmentDensityMapPropertiesEXT
@@ -17686,8 +19410,12 @@ public struct PhysicalDeviceFragmentDensityMapPropertiesEXT: ChainableBase, Phys
             }
         }
     }
+    public func push<Extension: PhysicalDeviceFragmentDensityMapPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceFragmentDensityMapPropertiesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceFragmentDensityMapPropertiesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceFragmentDensityMap2PropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceFragmentDensityMap2PropertiesEXT
@@ -17714,8 +19442,12 @@ public struct PhysicalDeviceFragmentDensityMap2PropertiesEXT: ChainableBase, Phy
         cStruct.maxDescriptorSetSubsampledSamplers = self.maxDescriptorSetSubsampledSamplers
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceFragmentDensityMap2PropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceFragmentDensityMap2PropertiesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceFragmentDensityMap2PropertiesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceFragmentDensityMapOffsetPropertiesEXT
@@ -17735,8 +19467,12 @@ public struct PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT: ChainableBase
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PhysicalDeviceFragmentDensityMapOffsetPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceFragmentDensityMapOffsetPropertiesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceFragmentDensityMapOffsetPropertiesEXTExtension: Chainable {}
 
 public struct RenderPassFragmentDensityMapCreateInfoEXT: ChainableBase, RenderPassCreateInfoExtension, RenderPassCreateInfo2Extension {
     public typealias CStruct = VkRenderPassFragmentDensityMapCreateInfoEXT
@@ -17760,8 +19496,12 @@ public struct RenderPassFragmentDensityMapCreateInfoEXT: ChainableBase, RenderPa
             return try body(&cStruct)
         }
     }
+    public func push<Extension: RenderPassFragmentDensityMapCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol RenderPassFragmentDensityMapCreateInfoEXTExtension: Chainable {}
+
+public protocol RenderPassFragmentDensityMapCreateInfoEXTExtension: Chainable {}
 
 public struct RenderPassFragmentDensityMapOffsetEndInfoEXT: ChainableBase, SubpassEndInfoExtension, RenderingEndInfoKHRExtension {
     public typealias CStruct = VkRenderPassFragmentDensityMapOffsetEndInfoEXT
@@ -17786,8 +19526,12 @@ public struct RenderPassFragmentDensityMapOffsetEndInfoEXT: ChainableBase, Subpa
             return try body(&cStruct)
         }
     }
+    public func push<Extension: RenderPassFragmentDensityMapOffsetEndInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol RenderPassFragmentDensityMapOffsetEndInfoEXTExtension: Chainable {}
+
+public protocol RenderPassFragmentDensityMapOffsetEndInfoEXTExtension: Chainable {}
 
 public struct PhysicalDeviceScalarBlockLayoutFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceScalarBlockLayoutFeatures
@@ -17809,8 +19553,12 @@ public struct PhysicalDeviceScalarBlockLayoutFeatures: ChainableBase, PhysicalDe
         cStruct.scalarBlockLayout = VkBool32(self.scalarBlockLayout ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceScalarBlockLayoutFeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceScalarBlockLayoutFeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceScalarBlockLayoutFeaturesExtension: Chainable {}
 
 public struct SurfaceProtectedCapabilitiesKHR: ChainableBase, SurfaceCapabilities2KHRExtension {
     public typealias CStruct = VkSurfaceProtectedCapabilitiesKHR
@@ -17828,8 +19576,12 @@ public struct SurfaceProtectedCapabilitiesKHR: ChainableBase, SurfaceCapabilitie
         cStruct.supportsProtected = VkBool32(self.supportsProtected ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: SurfaceProtectedCapabilitiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SurfaceProtectedCapabilitiesKHRExtension: Chainable {}
+
+public protocol SurfaceProtectedCapabilitiesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceUniformBufferStandardLayoutFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceUniformBufferStandardLayoutFeatures
@@ -17851,8 +19603,12 @@ public struct PhysicalDeviceUniformBufferStandardLayoutFeatures: ChainableBase, 
         cStruct.uniformBufferStandardLayout = VkBool32(self.uniformBufferStandardLayout ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceUniformBufferStandardLayoutFeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceUniformBufferStandardLayoutFeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceUniformBufferStandardLayoutFeaturesExtension: Chainable {}
 
 public struct PhysicalDeviceDepthClipEnableFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDepthClipEnableFeaturesEXT
@@ -17874,8 +19630,12 @@ public struct PhysicalDeviceDepthClipEnableFeaturesEXT: ChainableBase, PhysicalD
         cStruct.depthClipEnable = VkBool32(self.depthClipEnable ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDepthClipEnableFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceDepthClipEnableFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceDepthClipEnableFeaturesEXTExtension: Chainable {}
 
 public struct PipelineRasterizationDepthClipStateCreateInfoEXT: ChainableBase, PipelineRasterizationStateCreateInfoExtension {
     public typealias CStruct = VkPipelineRasterizationDepthClipStateCreateInfoEXT
@@ -17901,8 +19661,12 @@ public struct PipelineRasterizationDepthClipStateCreateInfoEXT: ChainableBase, P
         cStruct.depthClipEnable = VkBool32(self.depthClipEnable ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PipelineRasterizationDepthClipStateCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineRasterizationDepthClipStateCreateInfoEXTExtension: Chainable {}
+
+public protocol PipelineRasterizationDepthClipStateCreateInfoEXTExtension: Chainable {}
 
 public struct PhysicalDeviceMemoryBudgetPropertiesEXT: ChainableBase, PhysicalDeviceMemoryProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceMemoryBudgetPropertiesEXT
@@ -17923,8 +19687,12 @@ public struct PhysicalDeviceMemoryBudgetPropertiesEXT: ChainableBase, PhysicalDe
         cStruct.heapUsage = self.heapUsage
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceMemoryBudgetPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceMemoryBudgetPropertiesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceMemoryBudgetPropertiesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceMemoryPriorityFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceMemoryPriorityFeaturesEXT
@@ -17946,8 +19714,12 @@ public struct PhysicalDeviceMemoryPriorityFeaturesEXT: ChainableBase, PhysicalDe
         cStruct.memoryPriority = VkBool32(self.memoryPriority ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceMemoryPriorityFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceMemoryPriorityFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceMemoryPriorityFeaturesEXTExtension: Chainable {}
 
 public struct MemoryPriorityAllocateInfoEXT: ChainableBase, MemoryAllocateInfoExtension {
     public typealias CStruct = VkMemoryPriorityAllocateInfoEXT
@@ -17969,8 +19741,12 @@ public struct MemoryPriorityAllocateInfoEXT: ChainableBase, MemoryAllocateInfoEx
         cStruct.priority = self.priority
         return try body(&cStruct)
     }
+    public func push<Extension: MemoryPriorityAllocateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol MemoryPriorityAllocateInfoEXTExtension: Chainable {}
+
+public protocol MemoryPriorityAllocateInfoEXTExtension: Chainable {}
 
 public struct PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePageableDeviceLocalMemoryFeaturesEXT
@@ -17992,8 +19768,12 @@ public struct PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT: ChainableBase,
         cStruct.pageableDeviceLocalMemory = VkBool32(self.pageableDeviceLocalMemory ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevicePageableDeviceLocalMemoryFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevicePageableDeviceLocalMemoryFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDevicePageableDeviceLocalMemoryFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceBufferDeviceAddressFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceBufferDeviceAddressFeatures
@@ -18023,8 +19803,12 @@ public struct PhysicalDeviceBufferDeviceAddressFeatures: ChainableBase, Physical
         cStruct.bufferDeviceAddressMultiDevice = VkBool32(self.bufferDeviceAddressMultiDevice ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceBufferDeviceAddressFeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceBufferDeviceAddressFeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceBufferDeviceAddressFeaturesExtension: Chainable {}
 
 public struct PhysicalDeviceBufferDeviceAddressFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceBufferDeviceAddressFeaturesEXT
@@ -18054,8 +19838,12 @@ public struct PhysicalDeviceBufferDeviceAddressFeaturesEXT: ChainableBase, Physi
         cStruct.bufferDeviceAddressMultiDevice = VkBool32(self.bufferDeviceAddressMultiDevice ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceBufferDeviceAddressFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceBufferDeviceAddressFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceBufferDeviceAddressFeaturesEXTExtension: Chainable {}
 
 public struct BufferDeviceAddressInfo: ChainableBase {
     public typealias CStruct = VkBufferDeviceAddressInfo
@@ -18077,8 +19865,12 @@ public struct BufferDeviceAddressInfo: ChainableBase {
         cStruct.buffer = self.buffer.handle
         return try body(&cStruct)
     }
+    public func push<Extension: BufferDeviceAddressInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol BufferDeviceAddressInfoExtension: Chainable {}
+
+public protocol BufferDeviceAddressInfoExtension: Chainable {}
 
 public struct BufferOpaqueCaptureAddressCreateInfo: ChainableBase, BufferCreateInfoExtension {
     public typealias CStruct = VkBufferOpaqueCaptureAddressCreateInfo
@@ -18100,8 +19892,12 @@ public struct BufferOpaqueCaptureAddressCreateInfo: ChainableBase, BufferCreateI
         cStruct.opaqueCaptureAddress = self.opaqueCaptureAddress
         return try body(&cStruct)
     }
+    public func push<Extension: BufferOpaqueCaptureAddressCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol BufferOpaqueCaptureAddressCreateInfoExtension: Chainable {}
+
+public protocol BufferOpaqueCaptureAddressCreateInfoExtension: Chainable {}
 
 public struct BufferDeviceAddressCreateInfoEXT: ChainableBase, BufferCreateInfoExtension {
     public typealias CStruct = VkBufferDeviceAddressCreateInfoEXT
@@ -18123,8 +19919,12 @@ public struct BufferDeviceAddressCreateInfoEXT: ChainableBase, BufferCreateInfoE
         cStruct.deviceAddress = self.deviceAddress
         return try body(&cStruct)
     }
+    public func push<Extension: BufferDeviceAddressCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol BufferDeviceAddressCreateInfoEXTExtension: Chainable {}
+
+public protocol BufferDeviceAddressCreateInfoEXTExtension: Chainable {}
 
 public struct PhysicalDeviceImageViewImageFormatInfoEXT: ChainableBase, PhysicalDeviceImageFormatInfo2Extension {
     public typealias CStruct = VkPhysicalDeviceImageViewImageFormatInfoEXT
@@ -18146,8 +19946,12 @@ public struct PhysicalDeviceImageViewImageFormatInfoEXT: ChainableBase, Physical
         cStruct.imageViewType = VkImageViewType(rawValue: VkImageViewType.RawValue(bitPattern: self.imageViewType.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceImageViewImageFormatInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceImageViewImageFormatInfoEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceImageViewImageFormatInfoEXTExtension: Chainable {}
 
 public struct FilterCubicImageViewImageFormatPropertiesEXT: ChainableBase, ImageFormatProperties2Extension {
     public typealias CStruct = VkFilterCubicImageViewImageFormatPropertiesEXT
@@ -18168,8 +19972,12 @@ public struct FilterCubicImageViewImageFormatPropertiesEXT: ChainableBase, Image
         cStruct.filterCubicMinmax = VkBool32(self.filterCubicMinmax ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: FilterCubicImageViewImageFormatPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol FilterCubicImageViewImageFormatPropertiesEXTExtension: Chainable {}
+
+public protocol FilterCubicImageViewImageFormatPropertiesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceImagelessFramebufferFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceImagelessFramebufferFeatures
@@ -18191,8 +19999,12 @@ public struct PhysicalDeviceImagelessFramebufferFeatures: ChainableBase, Physica
         cStruct.imagelessFramebuffer = VkBool32(self.imagelessFramebuffer ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceImagelessFramebufferFeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceImagelessFramebufferFeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceImagelessFramebufferFeaturesExtension: Chainable {}
 
 public struct FramebufferAttachmentImageInfo: ChainableBase {
     public typealias CStruct = VkFramebufferAttachmentImageInfo
@@ -18237,8 +20049,12 @@ public struct FramebufferAttachmentImageInfo: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: FramebufferAttachmentImageInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol FramebufferAttachmentImageInfoExtension: Chainable {}
+
+public protocol FramebufferAttachmentImageInfoExtension: Chainable {}
 
 public struct FramebufferAttachmentsCreateInfo: ChainableBase, FramebufferCreateInfoExtension {
     public typealias CStruct = VkFramebufferAttachmentsCreateInfo
@@ -18263,8 +20079,12 @@ public struct FramebufferAttachmentsCreateInfo: ChainableBase, FramebufferCreate
             return try body(&cStruct)
         }
     }
+    public func push<Extension: FramebufferAttachmentsCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol FramebufferAttachmentsCreateInfoExtension: Chainable {}
+
+public protocol FramebufferAttachmentsCreateInfoExtension: Chainable {}
 
 public struct RenderPassAttachmentBeginInfo: ChainableBase, RenderPassBeginInfoExtension {
     public typealias CStruct = VkRenderPassAttachmentBeginInfo
@@ -18289,8 +20109,12 @@ public struct RenderPassAttachmentBeginInfo: ChainableBase, RenderPassBeginInfoE
             return try body(&cStruct)
         }
     }
+    public func push<Extension: RenderPassAttachmentBeginInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol RenderPassAttachmentBeginInfoExtension: Chainable {}
+
+public protocol RenderPassAttachmentBeginInfoExtension: Chainable {}
 
 public struct PhysicalDeviceTextureCompressionASTCHDRFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceTextureCompressionASTCHDRFeatures
@@ -18312,8 +20136,12 @@ public struct PhysicalDeviceTextureCompressionASTCHDRFeatures: ChainableBase, Ph
         cStruct.textureCompressionASTC_HDR = VkBool32(self.textureCompressionASTC_HDR ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceTextureCompressionASTCHDRFeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceTextureCompressionASTCHDRFeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceTextureCompressionASTCHDRFeaturesExtension: Chainable {}
 
 public struct PhysicalDeviceCooperativeMatrixFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceCooperativeMatrixFeaturesNV
@@ -18339,8 +20167,12 @@ public struct PhysicalDeviceCooperativeMatrixFeaturesNV: ChainableBase, Physical
         cStruct.cooperativeMatrixRobustBufferAccess = VkBool32(self.cooperativeMatrixRobustBufferAccess ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceCooperativeMatrixFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceCooperativeMatrixFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceCooperativeMatrixFeaturesNVExtension: Chainable {}
 
 public struct PhysicalDeviceCooperativeMatrixPropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceCooperativeMatrixPropertiesNV
@@ -18358,8 +20190,12 @@ public struct PhysicalDeviceCooperativeMatrixPropertiesNV: ChainableBase, Physic
         cStruct.cooperativeMatrixSupportedStages = self.cooperativeMatrixSupportedStages.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceCooperativeMatrixPropertiesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceCooperativeMatrixPropertiesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceCooperativeMatrixPropertiesNVExtension: Chainable {}
 
 public struct CooperativeMatrixPropertiesNV: ChainableBase {
     public typealias CStruct = VkCooperativeMatrixPropertiesNV
@@ -18398,8 +20234,12 @@ public struct CooperativeMatrixPropertiesNV: ChainableBase {
         cStruct.scope = self.scope
         return try body(&cStruct)
     }
+    public func push<Extension: CooperativeMatrixPropertiesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CooperativeMatrixPropertiesNVExtension: Chainable {}
+
+public protocol CooperativeMatrixPropertiesNVExtension: Chainable {}
 
 public struct PhysicalDeviceYcbcrImageArraysFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceYcbcrImageArraysFeaturesEXT
@@ -18421,8 +20261,12 @@ public struct PhysicalDeviceYcbcrImageArraysFeaturesEXT: ChainableBase, Physical
         cStruct.ycbcrImageArrays = VkBool32(self.ycbcrImageArrays ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceYcbcrImageArraysFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceYcbcrImageArraysFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceYcbcrImageArraysFeaturesEXTExtension: Chainable {}
 
 public struct ImageViewHandleInfoNVX: ChainableBase {
     public typealias CStruct = VkImageViewHandleInfoNVX
@@ -18452,8 +20296,12 @@ public struct ImageViewHandleInfoNVX: ChainableBase {
         cStruct.sampler = self.sampler?.handle
         return try body(&cStruct)
     }
+    public func push<Extension: ImageViewHandleInfoNVXExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ImageViewHandleInfoNVXExtension: Chainable {}
+
+public protocol ImageViewHandleInfoNVXExtension: Chainable {}
 
 public struct ImageViewAddressPropertiesNVX: ChainableBase {
     public typealias CStruct = VkImageViewAddressPropertiesNVX
@@ -18474,8 +20322,12 @@ public struct ImageViewAddressPropertiesNVX: ChainableBase {
         cStruct.size = self.size
         return try body(&cStruct)
     }
+    public func push<Extension: ImageViewAddressPropertiesNVXExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ImageViewAddressPropertiesNVXExtension: Chainable {}
+
+public protocol ImageViewAddressPropertiesNVXExtension: Chainable {}
 
 #if VK_USE_PLATFORM_GGP
 public struct PresentFrameTokenGGP: ChainableBase, PresentInfoKHRExtension {
@@ -18498,9 +20350,13 @@ public struct PresentFrameTokenGGP: ChainableBase, PresentInfoKHRExtension {
         cStruct.frameToken = self.frameToken
         return try body(&cStruct)
     }
+    public func push<Extension: PresentFrameTokenGGPExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol PresentFrameTokenGGPExtension: Chainable {}
+
+public protocol PresentFrameTokenGGPExtension: Chainable {}
 
 public struct PipelineCreationFeedback: CStructConvertible {
     public typealias CStruct = VkPipelineCreationFeedback
@@ -18549,8 +20405,12 @@ public struct PipelineCreationFeedbackCreateInfo: ChainableBase, GraphicsPipelin
         cStruct.pPipelineStageCreationFeedbacks = self.pipelineStageCreationFeedbacks
         return try body(&cStruct)
     }
+    public func push<Extension: PipelineCreationFeedbackCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineCreationFeedbackCreateInfoExtension: Chainable {}
+
+public protocol PipelineCreationFeedbackCreateInfoExtension: Chainable {}
 
 #if VK_USE_PLATFORM_WIN32_KHR
 public struct SurfaceFullScreenExclusiveInfoEXT: ChainableBase, PhysicalDeviceSurfaceInfo2KHRExtension, SwapchainCreateInfoKHRExtension {
@@ -18573,9 +20433,13 @@ public struct SurfaceFullScreenExclusiveInfoEXT: ChainableBase, PhysicalDeviceSu
         cStruct.fullScreenExclusive = VkFullScreenExclusiveEXT(rawValue: VkFullScreenExclusiveEXT.RawValue(bitPattern: self.fullScreenExclusive.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: SurfaceFullScreenExclusiveInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol SurfaceFullScreenExclusiveInfoEXTExtension: Chainable {}
+
+public protocol SurfaceFullScreenExclusiveInfoEXTExtension: Chainable {}
 
 #if VK_USE_PLATFORM_WIN32_KHR
 public struct SurfaceFullScreenExclusiveWin32InfoEXT: ChainableBase, PhysicalDeviceSurfaceInfo2KHRExtension, SwapchainCreateInfoKHRExtension {
@@ -18598,9 +20462,13 @@ public struct SurfaceFullScreenExclusiveWin32InfoEXT: ChainableBase, PhysicalDev
         cStruct.hmonitor = self.hmonitor
         return try body(&cStruct)
     }
+    public func push<Extension: SurfaceFullScreenExclusiveWin32InfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol SurfaceFullScreenExclusiveWin32InfoEXTExtension: Chainable {}
+
+public protocol SurfaceFullScreenExclusiveWin32InfoEXTExtension: Chainable {}
 
 #if VK_USE_PLATFORM_WIN32_KHR
 public struct SurfaceCapabilitiesFullScreenExclusiveEXT: ChainableBase, SurfaceCapabilities2KHRExtension {
@@ -18619,9 +20487,13 @@ public struct SurfaceCapabilitiesFullScreenExclusiveEXT: ChainableBase, SurfaceC
         cStruct.fullScreenExclusiveSupported = VkBool32(self.fullScreenExclusiveSupported ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: SurfaceCapabilitiesFullScreenExclusiveEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol SurfaceCapabilitiesFullScreenExclusiveEXTExtension: Chainable {}
+
+public protocol SurfaceCapabilitiesFullScreenExclusiveEXTExtension: Chainable {}
 
 public struct PhysicalDevicePresentBarrierFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePresentBarrierFeaturesNV
@@ -18643,8 +20515,12 @@ public struct PhysicalDevicePresentBarrierFeaturesNV: ChainableBase, PhysicalDev
         cStruct.presentBarrier = VkBool32(self.presentBarrier ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevicePresentBarrierFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevicePresentBarrierFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDevicePresentBarrierFeaturesNVExtension: Chainable {}
 
 public struct SurfaceCapabilitiesPresentBarrierNV: ChainableBase, SurfaceCapabilities2KHRExtension {
     public typealias CStruct = VkSurfaceCapabilitiesPresentBarrierNV
@@ -18662,8 +20538,12 @@ public struct SurfaceCapabilitiesPresentBarrierNV: ChainableBase, SurfaceCapabil
         cStruct.presentBarrierSupported = VkBool32(self.presentBarrierSupported ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: SurfaceCapabilitiesPresentBarrierNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SurfaceCapabilitiesPresentBarrierNVExtension: Chainable {}
+
+public protocol SurfaceCapabilitiesPresentBarrierNVExtension: Chainable {}
 
 public struct SwapchainPresentBarrierCreateInfoNV: ChainableBase, SwapchainCreateInfoKHRExtension {
     public typealias CStruct = VkSwapchainPresentBarrierCreateInfoNV
@@ -18685,8 +20565,12 @@ public struct SwapchainPresentBarrierCreateInfoNV: ChainableBase, SwapchainCreat
         cStruct.presentBarrierEnable = VkBool32(self.presentBarrierEnable ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: SwapchainPresentBarrierCreateInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SwapchainPresentBarrierCreateInfoNVExtension: Chainable {}
+
+public protocol SwapchainPresentBarrierCreateInfoNVExtension: Chainable {}
 
 public struct PhysicalDevicePerformanceQueryFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePerformanceQueryFeaturesKHR
@@ -18712,8 +20596,12 @@ public struct PhysicalDevicePerformanceQueryFeaturesKHR: ChainableBase, Physical
         cStruct.performanceCounterMultipleQueryPools = VkBool32(self.performanceCounterMultipleQueryPools ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevicePerformanceQueryFeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevicePerformanceQueryFeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDevicePerformanceQueryFeaturesKHRExtension: Chainable {}
 
 public struct PhysicalDevicePerformanceQueryPropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDevicePerformanceQueryPropertiesKHR
@@ -18731,8 +20619,12 @@ public struct PhysicalDevicePerformanceQueryPropertiesKHR: ChainableBase, Physic
         cStruct.allowCommandBufferQueryCopies = VkBool32(self.allowCommandBufferQueryCopies ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevicePerformanceQueryPropertiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevicePerformanceQueryPropertiesKHRExtension: Chainable {}
+
+public protocol PhysicalDevicePerformanceQueryPropertiesKHRExtension: Chainable {}
 
 public struct PerformanceCounterKHR: ChainableBase {
     public typealias CStruct = VkPerformanceCounterKHR
@@ -18759,8 +20651,12 @@ public struct PerformanceCounterKHR: ChainableBase {
         cStruct.uuid = self.uuid
         return try body(&cStruct)
     }
+    public func push<Extension: PerformanceCounterKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PerformanceCounterKHRExtension: Chainable {}
+
+public protocol PerformanceCounterKHRExtension: Chainable {}
 
 public struct PerformanceCounterDescriptionKHR: ChainableBase {
     public typealias CStruct = VkPerformanceCounterDescriptionKHR
@@ -18787,8 +20683,12 @@ public struct PerformanceCounterDescriptionKHR: ChainableBase {
         cStruct.description = self.description.unsafeBytesCopy()
         return try body(&cStruct)
     }
+    public func push<Extension: PerformanceCounterDescriptionKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PerformanceCounterDescriptionKHRExtension: Chainable {}
+
+public protocol PerformanceCounterDescriptionKHRExtension: Chainable {}
 
 public struct QueryPoolPerformanceCreateInfoKHR: ChainableBase, QueryPoolCreateInfoExtension {
     public typealias CStruct = VkQueryPoolPerformanceCreateInfoKHR
@@ -18817,8 +20717,12 @@ public struct QueryPoolPerformanceCreateInfoKHR: ChainableBase, QueryPoolCreateI
             return try body(&cStruct)
         }
     }
+    public func push<Extension: QueryPoolPerformanceCreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol QueryPoolPerformanceCreateInfoKHRExtension: Chainable {}
+
+public protocol QueryPoolPerformanceCreateInfoKHRExtension: Chainable {}
 
 public struct AcquireProfilingLockInfoKHR: ChainableBase {
     public typealias CStruct = VkAcquireProfilingLockInfoKHR
@@ -18844,8 +20748,12 @@ public struct AcquireProfilingLockInfoKHR: ChainableBase {
         cStruct.timeout = self.timeout
         return try body(&cStruct)
     }
+    public func push<Extension: AcquireProfilingLockInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol AcquireProfilingLockInfoKHRExtension: Chainable {}
+
+public protocol AcquireProfilingLockInfoKHRExtension: Chainable {}
 
 public struct PerformanceQuerySubmitInfoKHR: ChainableBase, SubmitInfoExtension, SubmitInfo2Extension {
     public typealias CStruct = VkPerformanceQuerySubmitInfoKHR
@@ -18867,8 +20775,12 @@ public struct PerformanceQuerySubmitInfoKHR: ChainableBase, SubmitInfoExtension,
         cStruct.counterPassIndex = self.counterPassIndex
         return try body(&cStruct)
     }
+    public func push<Extension: PerformanceQuerySubmitInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PerformanceQuerySubmitInfoKHRExtension: Chainable {}
+
+public protocol PerformanceQuerySubmitInfoKHRExtension: Chainable {}
 
 public struct HeadlessSurfaceCreateInfoEXT: ChainableBase {
     public typealias CStruct = VkHeadlessSurfaceCreateInfoEXT
@@ -18890,8 +20802,12 @@ public struct HeadlessSurfaceCreateInfoEXT: ChainableBase {
         cStruct.flags = self.flags.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: HeadlessSurfaceCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol HeadlessSurfaceCreateInfoEXTExtension: Chainable {}
+
+public protocol HeadlessSurfaceCreateInfoEXTExtension: Chainable {}
 
 public struct PhysicalDeviceCoverageReductionModeFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceCoverageReductionModeFeaturesNV
@@ -18913,8 +20829,12 @@ public struct PhysicalDeviceCoverageReductionModeFeaturesNV: ChainableBase, Phys
         cStruct.coverageReductionMode = VkBool32(self.coverageReductionMode ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceCoverageReductionModeFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceCoverageReductionModeFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceCoverageReductionModeFeaturesNVExtension: Chainable {}
 
 public struct PipelineCoverageReductionStateCreateInfoNV: ChainableBase, PipelineMultisampleStateCreateInfoExtension {
     public typealias CStruct = VkPipelineCoverageReductionStateCreateInfoNV
@@ -18940,8 +20860,12 @@ public struct PipelineCoverageReductionStateCreateInfoNV: ChainableBase, Pipelin
         cStruct.coverageReductionMode = VkCoverageReductionModeNV(rawValue: VkCoverageReductionModeNV.RawValue(bitPattern: self.coverageReductionMode.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: PipelineCoverageReductionStateCreateInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineCoverageReductionStateCreateInfoNVExtension: Chainable {}
+
+public protocol PipelineCoverageReductionStateCreateInfoNVExtension: Chainable {}
 
 public struct FramebufferMixedSamplesCombinationNV: ChainableBase {
     public typealias CStruct = VkFramebufferMixedSamplesCombinationNV
@@ -18968,8 +20892,12 @@ public struct FramebufferMixedSamplesCombinationNV: ChainableBase {
         cStruct.colorSamples = self.colorSamples.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: FramebufferMixedSamplesCombinationNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol FramebufferMixedSamplesCombinationNVExtension: Chainable {}
+
+public protocol FramebufferMixedSamplesCombinationNVExtension: Chainable {}
 
 public struct PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderIntegerFunctions2FeaturesINTEL
@@ -18991,8 +20919,12 @@ public struct PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL: ChainableBase,
         cStruct.shaderIntegerFunctions2 = VkBool32(self.shaderIntegerFunctions2 ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderIntegerFunctions2FeaturesINTELExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderIntegerFunctions2FeaturesINTELExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderIntegerFunctions2FeaturesINTELExtension: Chainable {}
 
 public struct PerformanceValueINTEL: CStructConvertible {
     public typealias CStruct = VkPerformanceValueINTEL
@@ -19033,8 +20965,12 @@ public struct InitializePerformanceApiInfoINTEL: ChainableBase {
         cStruct.pUserData = self.userData
         return try body(&cStruct)
     }
+    public func push<Extension: InitializePerformanceApiInfoINTELExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol InitializePerformanceApiInfoINTELExtension: Chainable {}
+
+public protocol InitializePerformanceApiInfoINTELExtension: Chainable {}
 
 public struct QueryPoolPerformanceQueryCreateInfoINTEL: ChainableBase, QueryPoolCreateInfoExtension {
     public typealias CStruct = VkQueryPoolPerformanceQueryCreateInfoINTEL
@@ -19056,8 +20992,12 @@ public struct QueryPoolPerformanceQueryCreateInfoINTEL: ChainableBase, QueryPool
         cStruct.performanceCountersSampling = VkQueryPoolSamplingModeINTEL(rawValue: VkQueryPoolSamplingModeINTEL.RawValue(bitPattern: self.performanceCountersSampling.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: QueryPoolPerformanceQueryCreateInfoINTELExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol QueryPoolPerformanceQueryCreateInfoINTELExtension: Chainable {}
+
+public protocol QueryPoolPerformanceQueryCreateInfoINTELExtension: Chainable {}
 
 public struct PerformanceMarkerInfoINTEL: ChainableBase {
     public typealias CStruct = VkPerformanceMarkerInfoINTEL
@@ -19079,8 +21019,12 @@ public struct PerformanceMarkerInfoINTEL: ChainableBase {
         cStruct.marker = self.marker
         return try body(&cStruct)
     }
+    public func push<Extension: PerformanceMarkerInfoINTELExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PerformanceMarkerInfoINTELExtension: Chainable {}
+
+public protocol PerformanceMarkerInfoINTELExtension: Chainable {}
 
 public struct PerformanceStreamMarkerInfoINTEL: ChainableBase {
     public typealias CStruct = VkPerformanceStreamMarkerInfoINTEL
@@ -19102,8 +21046,12 @@ public struct PerformanceStreamMarkerInfoINTEL: ChainableBase {
         cStruct.marker = self.marker
         return try body(&cStruct)
     }
+    public func push<Extension: PerformanceStreamMarkerInfoINTELExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PerformanceStreamMarkerInfoINTELExtension: Chainable {}
+
+public protocol PerformanceStreamMarkerInfoINTELExtension: Chainable {}
 
 public struct PerformanceOverrideInfoINTEL: ChainableBase {
     public typealias CStruct = VkPerformanceOverrideInfoINTEL
@@ -19133,8 +21081,12 @@ public struct PerformanceOverrideInfoINTEL: ChainableBase {
         cStruct.parameter = self.parameter
         return try body(&cStruct)
     }
+    public func push<Extension: PerformanceOverrideInfoINTELExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PerformanceOverrideInfoINTELExtension: Chainable {}
+
+public protocol PerformanceOverrideInfoINTELExtension: Chainable {}
 
 public struct PerformanceConfigurationAcquireInfoINTEL: ChainableBase {
     public typealias CStruct = VkPerformanceConfigurationAcquireInfoINTEL
@@ -19156,8 +21108,12 @@ public struct PerformanceConfigurationAcquireInfoINTEL: ChainableBase {
         cStruct.type = VkPerformanceConfigurationTypeINTEL(rawValue: VkPerformanceConfigurationTypeINTEL.RawValue(bitPattern: self.type.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: PerformanceConfigurationAcquireInfoINTELExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PerformanceConfigurationAcquireInfoINTELExtension: Chainable {}
+
+public protocol PerformanceConfigurationAcquireInfoINTELExtension: Chainable {}
 
 public struct PhysicalDeviceShaderClockFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderClockFeaturesKHR
@@ -19183,8 +21139,12 @@ public struct PhysicalDeviceShaderClockFeaturesKHR: ChainableBase, PhysicalDevic
         cStruct.shaderDeviceClock = VkBool32(self.shaderDeviceClock ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderClockFeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderClockFeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderClockFeaturesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceIndexTypeUint8Features: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceIndexTypeUint8Features
@@ -19206,8 +21166,12 @@ public struct PhysicalDeviceIndexTypeUint8Features: ChainableBase, PhysicalDevic
         cStruct.indexTypeUint8 = VkBool32(self.indexTypeUint8 ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceIndexTypeUint8FeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceIndexTypeUint8FeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceIndexTypeUint8FeaturesExtension: Chainable {}
 
 public struct PhysicalDeviceShaderSMBuiltinsPropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceShaderSMBuiltinsPropertiesNV
@@ -19228,8 +21192,12 @@ public struct PhysicalDeviceShaderSMBuiltinsPropertiesNV: ChainableBase, Physica
         cStruct.shaderWarpsPerSM = self.shaderWarpsPerSM
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderSMBuiltinsPropertiesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderSMBuiltinsPropertiesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderSMBuiltinsPropertiesNVExtension: Chainable {}
 
 public struct PhysicalDeviceShaderSMBuiltinsFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderSMBuiltinsFeaturesNV
@@ -19251,8 +21219,12 @@ public struct PhysicalDeviceShaderSMBuiltinsFeaturesNV: ChainableBase, PhysicalD
         cStruct.shaderSMBuiltins = VkBool32(self.shaderSMBuiltins ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderSMBuiltinsFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderSMBuiltinsFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderSMBuiltinsFeaturesNVExtension: Chainable {}
 
 public struct PhysicalDeviceFragmentShaderInterlockFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceFragmentShaderInterlockFeaturesEXT
@@ -19282,8 +21254,12 @@ public struct PhysicalDeviceFragmentShaderInterlockFeaturesEXT: ChainableBase, P
         cStruct.fragmentShaderShadingRateInterlock = VkBool32(self.fragmentShaderShadingRateInterlock ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceFragmentShaderInterlockFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceFragmentShaderInterlockFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceFragmentShaderInterlockFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceSeparateDepthStencilLayoutsFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceSeparateDepthStencilLayoutsFeatures
@@ -19305,8 +21281,12 @@ public struct PhysicalDeviceSeparateDepthStencilLayoutsFeatures: ChainableBase, 
         cStruct.separateDepthStencilLayouts = VkBool32(self.separateDepthStencilLayouts ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceSeparateDepthStencilLayoutsFeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceSeparateDepthStencilLayoutsFeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceSeparateDepthStencilLayoutsFeaturesExtension: Chainable {}
 
 public struct AttachmentReferenceStencilLayout: ChainableBase, AttachmentReference2Extension {
     public typealias CStruct = VkAttachmentReferenceStencilLayout
@@ -19328,8 +21308,12 @@ public struct AttachmentReferenceStencilLayout: ChainableBase, AttachmentReferen
         cStruct.stencilLayout = VkImageLayout(rawValue: VkImageLayout.RawValue(bitPattern: self.stencilLayout.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: AttachmentReferenceStencilLayoutExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol AttachmentReferenceStencilLayoutExtension: Chainable {}
+
+public protocol AttachmentReferenceStencilLayoutExtension: Chainable {}
 
 public struct PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePrimitiveTopologyListRestartFeaturesEXT
@@ -19355,8 +21339,12 @@ public struct PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT: ChainableBa
         cStruct.primitiveTopologyPatchListRestart = VkBool32(self.primitiveTopologyPatchListRestart ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevicePrimitiveTopologyListRestartFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevicePrimitiveTopologyListRestartFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDevicePrimitiveTopologyListRestartFeaturesEXTExtension: Chainable {}
 
 public struct AttachmentDescriptionStencilLayout: ChainableBase, AttachmentDescription2Extension {
     public typealias CStruct = VkAttachmentDescriptionStencilLayout
@@ -19382,8 +21370,12 @@ public struct AttachmentDescriptionStencilLayout: ChainableBase, AttachmentDescr
         cStruct.stencilFinalLayout = VkImageLayout(rawValue: VkImageLayout.RawValue(bitPattern: self.stencilFinalLayout.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: AttachmentDescriptionStencilLayoutExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol AttachmentDescriptionStencilLayoutExtension: Chainable {}
+
+public protocol AttachmentDescriptionStencilLayoutExtension: Chainable {}
 
 public struct PhysicalDevicePipelineExecutablePropertiesFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePipelineExecutablePropertiesFeaturesKHR
@@ -19405,8 +21397,12 @@ public struct PhysicalDevicePipelineExecutablePropertiesFeaturesKHR: ChainableBa
         cStruct.pipelineExecutableInfo = VkBool32(self.pipelineExecutableInfo ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevicePipelineExecutablePropertiesFeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevicePipelineExecutablePropertiesFeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDevicePipelineExecutablePropertiesFeaturesKHRExtension: Chainable {}
 
 public struct PipelineInfoKHR: ChainableBase {
     public typealias CStruct = VkPipelineInfoKHR
@@ -19428,8 +21424,12 @@ public struct PipelineInfoKHR: ChainableBase {
         cStruct.pipeline = self.pipeline.handle
         return try body(&cStruct)
     }
+    public func push<Extension: PipelineInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineInfoKHRExtension: Chainable {}
+
+public protocol PipelineInfoKHRExtension: Chainable {}
 
 public struct PipelineExecutablePropertiesKHR: ChainableBase {
     public typealias CStruct = VkPipelineExecutablePropertiesKHR
@@ -19456,8 +21456,12 @@ public struct PipelineExecutablePropertiesKHR: ChainableBase {
         cStruct.subgroupSize = self.subgroupSize
         return try body(&cStruct)
     }
+    public func push<Extension: PipelineExecutablePropertiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineExecutablePropertiesKHRExtension: Chainable {}
+
+public protocol PipelineExecutablePropertiesKHRExtension: Chainable {}
 
 public struct PipelineExecutableInfoKHR: ChainableBase {
     public typealias CStruct = VkPipelineExecutableInfoKHR
@@ -19483,8 +21487,12 @@ public struct PipelineExecutableInfoKHR: ChainableBase {
         cStruct.executableIndex = self.executableIndex
         return try body(&cStruct)
     }
+    public func push<Extension: PipelineExecutableInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineExecutableInfoKHRExtension: Chainable {}
+
+public protocol PipelineExecutableInfoKHRExtension: Chainable {}
 
 public struct PipelineExecutableStatisticKHR: ChainableBase {
     public typealias CStruct = VkPipelineExecutableStatisticKHR
@@ -19511,8 +21519,12 @@ public struct PipelineExecutableStatisticKHR: ChainableBase {
         cStruct.value = self.value
         return try body(&cStruct)
     }
+    public func push<Extension: PipelineExecutableStatisticKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineExecutableStatisticKHRExtension: Chainable {}
+
+public protocol PipelineExecutableStatisticKHRExtension: Chainable {}
 
 public struct PipelineExecutableInternalRepresentationKHR: ChainableBase {
     public typealias CStruct = VkPipelineExecutableInternalRepresentationKHR
@@ -19542,8 +21554,12 @@ public struct PipelineExecutableInternalRepresentationKHR: ChainableBase {
         cStruct.pData = self.data
         return try body(&cStruct)
     }
+    public func push<Extension: PipelineExecutableInternalRepresentationKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineExecutableInternalRepresentationKHRExtension: Chainable {}
+
+public protocol PipelineExecutableInternalRepresentationKHRExtension: Chainable {}
 
 public struct PhysicalDeviceShaderDemoteToHelperInvocationFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderDemoteToHelperInvocationFeatures
@@ -19565,8 +21581,12 @@ public struct PhysicalDeviceShaderDemoteToHelperInvocationFeatures: ChainableBas
         cStruct.shaderDemoteToHelperInvocation = VkBool32(self.shaderDemoteToHelperInvocation ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderDemoteToHelperInvocationFeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderDemoteToHelperInvocationFeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderDemoteToHelperInvocationFeaturesExtension: Chainable {}
 
 public struct PhysicalDeviceTexelBufferAlignmentFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceTexelBufferAlignmentFeaturesEXT
@@ -19588,8 +21608,12 @@ public struct PhysicalDeviceTexelBufferAlignmentFeaturesEXT: ChainableBase, Phys
         cStruct.texelBufferAlignment = VkBool32(self.texelBufferAlignment ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceTexelBufferAlignmentFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceTexelBufferAlignmentFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceTexelBufferAlignmentFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceTexelBufferAlignmentProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceTexelBufferAlignmentProperties
@@ -19616,8 +21640,12 @@ public struct PhysicalDeviceTexelBufferAlignmentProperties: ChainableBase, Physi
         cStruct.uniformTexelBufferOffsetSingleTexelAlignment = VkBool32(self.uniformTexelBufferOffsetSingleTexelAlignment ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceTexelBufferAlignmentPropertiesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceTexelBufferAlignmentPropertiesExtension: Chainable {}
+
+public protocol PhysicalDeviceTexelBufferAlignmentPropertiesExtension: Chainable {}
 
 public struct PhysicalDeviceSubgroupSizeControlFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceSubgroupSizeControlFeatures
@@ -19643,8 +21671,12 @@ public struct PhysicalDeviceSubgroupSizeControlFeatures: ChainableBase, Physical
         cStruct.computeFullSubgroups = VkBool32(self.computeFullSubgroups ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceSubgroupSizeControlFeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceSubgroupSizeControlFeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceSubgroupSizeControlFeaturesExtension: Chainable {}
 
 public struct PhysicalDeviceSubgroupSizeControlProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceSubgroupSizeControlProperties
@@ -19671,8 +21703,12 @@ public struct PhysicalDeviceSubgroupSizeControlProperties: ChainableBase, Physic
         cStruct.requiredSubgroupSizeStages = self.requiredSubgroupSizeStages.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceSubgroupSizeControlPropertiesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceSubgroupSizeControlPropertiesExtension: Chainable {}
+
+public protocol PhysicalDeviceSubgroupSizeControlPropertiesExtension: Chainable {}
 
 public struct PipelineShaderStageRequiredSubgroupSizeCreateInfo: ChainableBase, PipelineShaderStageCreateInfoExtension, ShaderCreateInfoEXTExtension {
     public typealias CStruct = VkPipelineShaderStageRequiredSubgroupSizeCreateInfo
@@ -19694,8 +21730,12 @@ public struct PipelineShaderStageRequiredSubgroupSizeCreateInfo: ChainableBase, 
         cStruct.requiredSubgroupSize = self.requiredSubgroupSize
         return try body(&cStruct)
     }
+    public func push<Extension: PipelineShaderStageRequiredSubgroupSizeCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineShaderStageRequiredSubgroupSizeCreateInfoExtension: Chainable {}
+
+public protocol PipelineShaderStageRequiredSubgroupSizeCreateInfoExtension: Chainable {}
 
 public struct SubpassShadingPipelineCreateInfoHUAWEI: ChainableBase, ComputePipelineCreateInfoExtension {
     public typealias CStruct = VkSubpassShadingPipelineCreateInfoHUAWEI
@@ -19721,8 +21761,12 @@ public struct SubpassShadingPipelineCreateInfoHUAWEI: ChainableBase, ComputePipe
         cStruct.subpass = self.subpass
         return try body(&cStruct)
     }
+    public func push<Extension: SubpassShadingPipelineCreateInfoHUAWEIExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SubpassShadingPipelineCreateInfoHUAWEIExtension: Chainable {}
+
+public protocol SubpassShadingPipelineCreateInfoHUAWEIExtension: Chainable {}
 
 public struct PhysicalDeviceSubpassShadingPropertiesHUAWEI: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceSubpassShadingPropertiesHUAWEI
@@ -19740,8 +21784,12 @@ public struct PhysicalDeviceSubpassShadingPropertiesHUAWEI: ChainableBase, Physi
         cStruct.maxSubpassShadingWorkgroupSizeAspectRatio = self.maxSubpassShadingWorkgroupSizeAspectRatio
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceSubpassShadingPropertiesHUAWEIExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceSubpassShadingPropertiesHUAWEIExtension: Chainable {}
+
+public protocol PhysicalDeviceSubpassShadingPropertiesHUAWEIExtension: Chainable {}
 
 public struct PhysicalDeviceClusterCullingShaderPropertiesHUAWEI: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceClusterCullingShaderPropertiesHUAWEI
@@ -19768,8 +21816,12 @@ public struct PhysicalDeviceClusterCullingShaderPropertiesHUAWEI: ChainableBase,
         cStruct.indirectBufferOffsetAlignment = self.indirectBufferOffsetAlignment
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceClusterCullingShaderPropertiesHUAWEIExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceClusterCullingShaderPropertiesHUAWEIExtension: Chainable {}
+
+public protocol PhysicalDeviceClusterCullingShaderPropertiesHUAWEIExtension: Chainable {}
 
 public struct MemoryOpaqueCaptureAddressAllocateInfo: ChainableBase, MemoryAllocateInfoExtension {
     public typealias CStruct = VkMemoryOpaqueCaptureAddressAllocateInfo
@@ -19791,8 +21843,12 @@ public struct MemoryOpaqueCaptureAddressAllocateInfo: ChainableBase, MemoryAlloc
         cStruct.opaqueCaptureAddress = self.opaqueCaptureAddress
         return try body(&cStruct)
     }
+    public func push<Extension: MemoryOpaqueCaptureAddressAllocateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol MemoryOpaqueCaptureAddressAllocateInfoExtension: Chainable {}
+
+public protocol MemoryOpaqueCaptureAddressAllocateInfoExtension: Chainable {}
 
 public struct DeviceMemoryOpaqueCaptureAddressInfo: ChainableBase {
     public typealias CStruct = VkDeviceMemoryOpaqueCaptureAddressInfo
@@ -19814,8 +21870,12 @@ public struct DeviceMemoryOpaqueCaptureAddressInfo: ChainableBase {
         cStruct.memory = self.memory.handle
         return try body(&cStruct)
     }
+    public func push<Extension: DeviceMemoryOpaqueCaptureAddressInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DeviceMemoryOpaqueCaptureAddressInfoExtension: Chainable {}
+
+public protocol DeviceMemoryOpaqueCaptureAddressInfoExtension: Chainable {}
 
 public struct PhysicalDeviceLineRasterizationFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceLineRasterizationFeatures
@@ -19857,8 +21917,12 @@ public struct PhysicalDeviceLineRasterizationFeatures: ChainableBase, PhysicalDe
         cStruct.stippledSmoothLines = VkBool32(self.stippledSmoothLines ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceLineRasterizationFeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceLineRasterizationFeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceLineRasterizationFeaturesExtension: Chainable {}
 
 public struct PhysicalDeviceLineRasterizationProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceLineRasterizationProperties
@@ -19876,8 +21940,12 @@ public struct PhysicalDeviceLineRasterizationProperties: ChainableBase, Physical
         cStruct.lineSubPixelPrecisionBits = self.lineSubPixelPrecisionBits
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceLineRasterizationPropertiesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceLineRasterizationPropertiesExtension: Chainable {}
+
+public protocol PhysicalDeviceLineRasterizationPropertiesExtension: Chainable {}
 
 public struct PipelineRasterizationLineStateCreateInfo: ChainableBase, PipelineRasterizationStateCreateInfoExtension {
     public typealias CStruct = VkPipelineRasterizationLineStateCreateInfo
@@ -19911,8 +21979,12 @@ public struct PipelineRasterizationLineStateCreateInfo: ChainableBase, PipelineR
         cStruct.lineStipplePattern = self.lineStipplePattern
         return try body(&cStruct)
     }
+    public func push<Extension: PipelineRasterizationLineStateCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineRasterizationLineStateCreateInfoExtension: Chainable {}
+
+public protocol PipelineRasterizationLineStateCreateInfoExtension: Chainable {}
 
 public struct PhysicalDevicePipelineCreationCacheControlFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePipelineCreationCacheControlFeatures
@@ -19934,8 +22006,12 @@ public struct PhysicalDevicePipelineCreationCacheControlFeatures: ChainableBase,
         cStruct.pipelineCreationCacheControl = VkBool32(self.pipelineCreationCacheControl ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevicePipelineCreationCacheControlFeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevicePipelineCreationCacheControlFeaturesExtension: Chainable {}
+
+public protocol PhysicalDevicePipelineCreationCacheControlFeaturesExtension: Chainable {}
 
 public struct PhysicalDeviceVulkan11Features: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceVulkan11Features
@@ -20001,8 +22077,12 @@ public struct PhysicalDeviceVulkan11Features: ChainableBase, PhysicalDeviceFeatu
         cStruct.shaderDrawParameters = VkBool32(self.shaderDrawParameters ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceVulkan11FeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceVulkan11FeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceVulkan11FeaturesExtension: Chainable {}
 
 public struct PhysicalDeviceVulkan11Properties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceVulkan11Properties
@@ -20062,8 +22142,12 @@ public struct PhysicalDeviceVulkan11Properties: ChainableBase, PhysicalDevicePro
         cStruct.maxMemoryAllocationSize = self.maxMemoryAllocationSize
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceVulkan11PropertiesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceVulkan11PropertiesExtension: Chainable {}
+
+public protocol PhysicalDeviceVulkan11PropertiesExtension: Chainable {}
 
 public struct PhysicalDeviceVulkan12Features: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceVulkan12Features
@@ -20269,8 +22353,12 @@ public struct PhysicalDeviceVulkan12Features: ChainableBase, PhysicalDeviceFeatu
         cStruct.subgroupBroadcastDynamicId = VkBool32(self.subgroupBroadcastDynamicId ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceVulkan12FeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceVulkan12FeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceVulkan12FeaturesExtension: Chainable {}
 
 public struct PhysicalDeviceVulkan12Properties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceVulkan12Properties
@@ -20443,8 +22531,12 @@ public struct PhysicalDeviceVulkan12Properties: ChainableBase, PhysicalDevicePro
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PhysicalDeviceVulkan12PropertiesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceVulkan12PropertiesExtension: Chainable {}
+
+public protocol PhysicalDeviceVulkan12PropertiesExtension: Chainable {}
 
 public struct PhysicalDeviceVulkan13Features: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceVulkan13Features
@@ -20522,8 +22614,12 @@ public struct PhysicalDeviceVulkan13Features: ChainableBase, PhysicalDeviceFeatu
         cStruct.maintenance4 = VkBool32(self.maintenance4 ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceVulkan13FeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceVulkan13FeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceVulkan13FeaturesExtension: Chainable {}
 
 public struct PhysicalDeviceVulkan13Properties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceVulkan13Properties
@@ -20673,8 +22769,12 @@ public struct PhysicalDeviceVulkan13Properties: ChainableBase, PhysicalDevicePro
         cStruct.maxBufferSize = self.maxBufferSize
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceVulkan13PropertiesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceVulkan13PropertiesExtension: Chainable {}
+
+public protocol PhysicalDeviceVulkan13PropertiesExtension: Chainable {}
 
 public struct PhysicalDeviceVulkan14Features: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceVulkan14Features
@@ -20776,8 +22876,12 @@ public struct PhysicalDeviceVulkan14Features: ChainableBase, PhysicalDeviceFeatu
         cStruct.pushDescriptor = VkBool32(self.pushDescriptor ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceVulkan14FeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceVulkan14FeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceVulkan14FeaturesExtension: Chainable {}
 
 public struct PhysicalDeviceVulkan14Properties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceVulkan14Properties
@@ -20867,8 +22971,12 @@ public struct PhysicalDeviceVulkan14Properties: ChainableBase, PhysicalDevicePro
         cStruct.identicalMemoryTypeRequirements = VkBool32(self.identicalMemoryTypeRequirements ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceVulkan14PropertiesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceVulkan14PropertiesExtension: Chainable {}
+
+public protocol PhysicalDeviceVulkan14PropertiesExtension: Chainable {}
 
 public struct PipelineCompilerControlCreateInfoAMD: ChainableBase, GraphicsPipelineCreateInfoExtension, ComputePipelineCreateInfoExtension, ExecutionGraphPipelineCreateInfoAMDXExtension {
     public typealias CStruct = VkPipelineCompilerControlCreateInfoAMD
@@ -20890,8 +22998,12 @@ public struct PipelineCompilerControlCreateInfoAMD: ChainableBase, GraphicsPipel
         cStruct.compilerControlFlags = self.compilerControlFlags.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: PipelineCompilerControlCreateInfoAMDExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineCompilerControlCreateInfoAMDExtension: Chainable {}
+
+public protocol PipelineCompilerControlCreateInfoAMDExtension: Chainable {}
 
 public struct PhysicalDeviceCoherentMemoryFeaturesAMD: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceCoherentMemoryFeaturesAMD
@@ -20913,8 +23025,12 @@ public struct PhysicalDeviceCoherentMemoryFeaturesAMD: ChainableBase, PhysicalDe
         cStruct.deviceCoherentMemory = VkBool32(self.deviceCoherentMemory ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceCoherentMemoryFeaturesAMDExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceCoherentMemoryFeaturesAMDExtension: Chainable {}
+
+public protocol PhysicalDeviceCoherentMemoryFeaturesAMDExtension: Chainable {}
 
 public struct PhysicalDeviceToolProperties: ChainableBase {
     public typealias CStruct = VkPhysicalDeviceToolProperties
@@ -20944,8 +23060,12 @@ public struct PhysicalDeviceToolProperties: ChainableBase {
         cStruct.layer = self.layer.unsafeBytesCopy()
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceToolPropertiesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceToolPropertiesExtension: Chainable {}
+
+public protocol PhysicalDeviceToolPropertiesExtension: Chainable {}
 
 public struct SamplerCustomBorderColorCreateInfoEXT: ChainableBase, SamplerCreateInfoExtension {
     public typealias CStruct = VkSamplerCustomBorderColorCreateInfoEXT
@@ -20971,8 +23091,12 @@ public struct SamplerCustomBorderColorCreateInfoEXT: ChainableBase, SamplerCreat
         cStruct.format = VkFormat(rawValue: VkFormat.RawValue(bitPattern: self.format.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: SamplerCustomBorderColorCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SamplerCustomBorderColorCreateInfoEXTExtension: Chainable {}
+
+public protocol SamplerCustomBorderColorCreateInfoEXTExtension: Chainable {}
 
 public struct PhysicalDeviceCustomBorderColorPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceCustomBorderColorPropertiesEXT
@@ -20990,8 +23114,12 @@ public struct PhysicalDeviceCustomBorderColorPropertiesEXT: ChainableBase, Physi
         cStruct.maxCustomBorderColorSamplers = self.maxCustomBorderColorSamplers
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceCustomBorderColorPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceCustomBorderColorPropertiesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceCustomBorderColorPropertiesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceCustomBorderColorFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceCustomBorderColorFeaturesEXT
@@ -21017,8 +23145,12 @@ public struct PhysicalDeviceCustomBorderColorFeaturesEXT: ChainableBase, Physica
         cStruct.customBorderColorWithoutFormat = VkBool32(self.customBorderColorWithoutFormat ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceCustomBorderColorFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceCustomBorderColorFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceCustomBorderColorFeaturesEXTExtension: Chainable {}
 
 public struct SamplerBorderColorComponentMappingCreateInfoEXT: ChainableBase, SamplerCreateInfoExtension {
     public typealias CStruct = VkSamplerBorderColorComponentMappingCreateInfoEXT
@@ -21046,8 +23178,12 @@ public struct SamplerBorderColorComponentMappingCreateInfoEXT: ChainableBase, Sa
             return try body(&cStruct)
         }
     }
+    public func push<Extension: SamplerBorderColorComponentMappingCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SamplerBorderColorComponentMappingCreateInfoEXTExtension: Chainable {}
+
+public protocol SamplerBorderColorComponentMappingCreateInfoEXTExtension: Chainable {}
 
 public struct PhysicalDeviceBorderColorSwizzleFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceBorderColorSwizzleFeaturesEXT
@@ -21073,8 +23209,12 @@ public struct PhysicalDeviceBorderColorSwizzleFeaturesEXT: ChainableBase, Physic
         cStruct.borderColorSwizzleFromImage = VkBool32(self.borderColorSwizzleFromImage ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceBorderColorSwizzleFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceBorderColorSwizzleFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceBorderColorSwizzleFeaturesEXTExtension: Chainable {}
 
 public struct AccelerationStructureGeometryTrianglesDataKHR: ChainableBase {
     public typealias CStruct = VkAccelerationStructureGeometryTrianglesDataKHR
@@ -21120,8 +23260,12 @@ public struct AccelerationStructureGeometryTrianglesDataKHR: ChainableBase {
         cStruct.transformData = self.transformData
         return try body(&cStruct)
     }
+    public func push<Extension: AccelerationStructureGeometryTrianglesDataKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol AccelerationStructureGeometryTrianglesDataKHRExtension: Chainable {}
+
+public protocol AccelerationStructureGeometryTrianglesDataKHRExtension: Chainable {}
 
 public struct AccelerationStructureGeometryAabbsDataKHR: ChainableBase {
     public typealias CStruct = VkAccelerationStructureGeometryAabbsDataKHR
@@ -21147,8 +23291,12 @@ public struct AccelerationStructureGeometryAabbsDataKHR: ChainableBase {
         cStruct.stride = self.stride
         return try body(&cStruct)
     }
+    public func push<Extension: AccelerationStructureGeometryAabbsDataKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol AccelerationStructureGeometryAabbsDataKHRExtension: Chainable {}
+
+public protocol AccelerationStructureGeometryAabbsDataKHRExtension: Chainable {}
 
 public struct AccelerationStructureGeometryInstancesDataKHR: ChainableBase {
     public typealias CStruct = VkAccelerationStructureGeometryInstancesDataKHR
@@ -21174,8 +23322,12 @@ public struct AccelerationStructureGeometryInstancesDataKHR: ChainableBase {
         cStruct.data = self.data
         return try body(&cStruct)
     }
+    public func push<Extension: AccelerationStructureGeometryInstancesDataKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol AccelerationStructureGeometryInstancesDataKHRExtension: Chainable {}
+
+public protocol AccelerationStructureGeometryInstancesDataKHRExtension: Chainable {}
 
 public struct AccelerationStructureGeometryLinearSweptSpheresDataNV: ChainableBase, AccelerationStructureGeometryKHRExtension {
     public typealias CStruct = VkAccelerationStructureGeometryLinearSweptSpheresDataNV
@@ -21237,8 +23389,12 @@ public struct AccelerationStructureGeometryLinearSweptSpheresDataNV: ChainableBa
         cStruct.endCapsMode = VkRayTracingLssPrimitiveEndCapsModeNV(rawValue: VkRayTracingLssPrimitiveEndCapsModeNV.RawValue(bitPattern: self.endCapsMode.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: AccelerationStructureGeometryLinearSweptSpheresDataNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol AccelerationStructureGeometryLinearSweptSpheresDataNVExtension: Chainable {}
+
+public protocol AccelerationStructureGeometryLinearSweptSpheresDataNVExtension: Chainable {}
 
 public struct AccelerationStructureGeometrySpheresDataNV: ChainableBase, AccelerationStructureGeometryKHRExtension {
     public typealias CStruct = VkAccelerationStructureGeometrySpheresDataNV
@@ -21292,8 +23448,12 @@ public struct AccelerationStructureGeometrySpheresDataNV: ChainableBase, Acceler
         cStruct.indexStride = self.indexStride
         return try body(&cStruct)
     }
+    public func push<Extension: AccelerationStructureGeometrySpheresDataNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol AccelerationStructureGeometrySpheresDataNVExtension: Chainable {}
+
+public protocol AccelerationStructureGeometrySpheresDataNVExtension: Chainable {}
 
 public struct AccelerationStructureGeometryKHR: ChainableBase {
     public typealias CStruct = VkAccelerationStructureGeometryKHR
@@ -21323,8 +23483,12 @@ public struct AccelerationStructureGeometryKHR: ChainableBase {
         cStruct.flags = self.flags.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: AccelerationStructureGeometryKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol AccelerationStructureGeometryKHRExtension: Chainable {}
+
+public protocol AccelerationStructureGeometryKHRExtension: Chainable {}
 
 public struct AccelerationStructureBuildGeometryInfoKHR: ChainableBase {
     public typealias CStruct = VkAccelerationStructureBuildGeometryInfoKHR
@@ -21379,8 +23543,12 @@ public struct AccelerationStructureBuildGeometryInfoKHR: ChainableBase {
             }
         }
     }
+    public func push<Extension: AccelerationStructureBuildGeometryInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol AccelerationStructureBuildGeometryInfoKHRExtension: Chainable {}
+
+public protocol AccelerationStructureBuildGeometryInfoKHRExtension: Chainable {}
 
 public struct AccelerationStructureBuildRangeInfoKHR: CStructConvertible {
     public typealias CStruct = VkAccelerationStructureBuildRangeInfoKHR
@@ -21454,8 +23622,12 @@ public struct AccelerationStructureCreateInfoKHR: ChainableBase {
         cStruct.deviceAddress = self.deviceAddress
         return try body(&cStruct)
     }
+    public func push<Extension: AccelerationStructureCreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol AccelerationStructureCreateInfoKHRExtension: Chainable {}
+
+public protocol AccelerationStructureCreateInfoKHRExtension: Chainable {}
 
 public struct AabbPositionsKHR: CStructConvertible {
     public typealias CStruct = VkAabbPositionsKHR
@@ -21579,8 +23751,12 @@ public struct AccelerationStructureDeviceAddressInfoKHR: ChainableBase {
         cStruct.accelerationStructure = self.accelerationStructure.handle
         return try body(&cStruct)
     }
+    public func push<Extension: AccelerationStructureDeviceAddressInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol AccelerationStructureDeviceAddressInfoKHRExtension: Chainable {}
+
+public protocol AccelerationStructureDeviceAddressInfoKHRExtension: Chainable {}
 
 public struct AccelerationStructureVersionInfoKHR: ChainableBase {
     public typealias CStruct = VkAccelerationStructureVersionInfoKHR
@@ -21602,8 +23778,12 @@ public struct AccelerationStructureVersionInfoKHR: ChainableBase {
         cStruct.pVersionData = self.versionData
         return try body(&cStruct)
     }
+    public func push<Extension: AccelerationStructureVersionInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol AccelerationStructureVersionInfoKHRExtension: Chainable {}
+
+public protocol AccelerationStructureVersionInfoKHRExtension: Chainable {}
 
 public struct CopyAccelerationStructureInfoKHR: ChainableBase {
     public typealias CStruct = VkCopyAccelerationStructureInfoKHR
@@ -21633,8 +23813,12 @@ public struct CopyAccelerationStructureInfoKHR: ChainableBase {
         cStruct.mode = VkCopyAccelerationStructureModeKHR(rawValue: VkCopyAccelerationStructureModeKHR.RawValue(bitPattern: self.mode.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: CopyAccelerationStructureInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CopyAccelerationStructureInfoKHRExtension: Chainable {}
+
+public protocol CopyAccelerationStructureInfoKHRExtension: Chainable {}
 
 public struct CopyAccelerationStructureToMemoryInfoKHR: ChainableBase {
     public typealias CStruct = VkCopyAccelerationStructureToMemoryInfoKHR
@@ -21664,8 +23848,12 @@ public struct CopyAccelerationStructureToMemoryInfoKHR: ChainableBase {
         cStruct.mode = VkCopyAccelerationStructureModeKHR(rawValue: VkCopyAccelerationStructureModeKHR.RawValue(bitPattern: self.mode.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: CopyAccelerationStructureToMemoryInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CopyAccelerationStructureToMemoryInfoKHRExtension: Chainable {}
+
+public protocol CopyAccelerationStructureToMemoryInfoKHRExtension: Chainable {}
 
 public struct CopyMemoryToAccelerationStructureInfoKHR: ChainableBase {
     public typealias CStruct = VkCopyMemoryToAccelerationStructureInfoKHR
@@ -21695,8 +23883,12 @@ public struct CopyMemoryToAccelerationStructureInfoKHR: ChainableBase {
         cStruct.mode = VkCopyAccelerationStructureModeKHR(rawValue: VkCopyAccelerationStructureModeKHR.RawValue(bitPattern: self.mode.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: CopyMemoryToAccelerationStructureInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CopyMemoryToAccelerationStructureInfoKHRExtension: Chainable {}
+
+public protocol CopyMemoryToAccelerationStructureInfoKHRExtension: Chainable {}
 
 public struct PhysicalDeviceExtendedDynamicStateFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceExtendedDynamicStateFeaturesEXT
@@ -21718,8 +23910,12 @@ public struct PhysicalDeviceExtendedDynamicStateFeaturesEXT: ChainableBase, Phys
         cStruct.extendedDynamicState = VkBool32(self.extendedDynamicState ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceExtendedDynamicStateFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceExtendedDynamicStateFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceExtendedDynamicStateFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceExtendedDynamicState2FeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceExtendedDynamicState2FeaturesEXT
@@ -21749,8 +23945,12 @@ public struct PhysicalDeviceExtendedDynamicState2FeaturesEXT: ChainableBase, Phy
         cStruct.extendedDynamicState2PatchControlPoints = VkBool32(self.extendedDynamicState2PatchControlPoints ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceExtendedDynamicState2FeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceExtendedDynamicState2FeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceExtendedDynamicState2FeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceExtendedDynamicState3FeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceExtendedDynamicState3FeaturesEXT
@@ -21892,8 +24092,12 @@ public struct PhysicalDeviceExtendedDynamicState3FeaturesEXT: ChainableBase, Phy
         cStruct.extendedDynamicState3ShadingRateImageEnable = VkBool32(self.extendedDynamicState3ShadingRateImageEnable ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceExtendedDynamicState3FeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceExtendedDynamicState3FeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceExtendedDynamicState3FeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceExtendedDynamicState3PropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceExtendedDynamicState3PropertiesEXT
@@ -21911,8 +24115,12 @@ public struct PhysicalDeviceExtendedDynamicState3PropertiesEXT: ChainableBase, P
         cStruct.dynamicPrimitiveTopologyUnrestricted = VkBool32(self.dynamicPrimitiveTopologyUnrestricted ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceExtendedDynamicState3PropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceExtendedDynamicState3PropertiesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceExtendedDynamicState3PropertiesEXTExtension: Chainable {}
 
 public struct ColorBlendEquationEXT: CStructConvertible {
     public typealias CStruct = VkColorBlendEquationEXT
@@ -22010,8 +24218,12 @@ public struct RenderPassTransformBeginInfoQCOM: ChainableBase, RenderPassBeginIn
         cStruct.transform = VkSurfaceTransformFlagBitsKHR(rawValue: VkSurfaceTransformFlagBitsKHR.RawValue(bitPattern: self.transform.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: RenderPassTransformBeginInfoQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol RenderPassTransformBeginInfoQCOMExtension: Chainable {}
+
+public protocol RenderPassTransformBeginInfoQCOMExtension: Chainable {}
 
 public struct CopyCommandTransformInfoQCOM: ChainableBase, BufferImageCopy2Extension, ImageBlit2Extension, DeviceMemoryImageCopyKHRExtension {
     public typealias CStruct = VkCopyCommandTransformInfoQCOM
@@ -22033,8 +24245,12 @@ public struct CopyCommandTransformInfoQCOM: ChainableBase, BufferImageCopy2Exten
         cStruct.transform = VkSurfaceTransformFlagBitsKHR(rawValue: VkSurfaceTransformFlagBitsKHR.RawValue(bitPattern: self.transform.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: CopyCommandTransformInfoQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CopyCommandTransformInfoQCOMExtension: Chainable {}
+
+public protocol CopyCommandTransformInfoQCOMExtension: Chainable {}
 
 public struct CommandBufferInheritanceRenderPassTransformInfoQCOM: ChainableBase, CommandBufferInheritanceInfoExtension {
     public typealias CStruct = VkCommandBufferInheritanceRenderPassTransformInfoQCOM
@@ -22062,8 +24278,12 @@ public struct CommandBufferInheritanceRenderPassTransformInfoQCOM: ChainableBase
             return try body(&cStruct)
         }
     }
+    public func push<Extension: CommandBufferInheritanceRenderPassTransformInfoQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CommandBufferInheritanceRenderPassTransformInfoQCOMExtension: Chainable {}
+
+public protocol CommandBufferInheritanceRenderPassTransformInfoQCOMExtension: Chainable {}
 
 public struct PhysicalDevicePartitionedAccelerationStructureFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePartitionedAccelerationStructureFeaturesNV
@@ -22085,8 +24305,12 @@ public struct PhysicalDevicePartitionedAccelerationStructureFeaturesNV: Chainabl
         cStruct.partitionedAccelerationStructure = VkBool32(self.partitionedAccelerationStructure ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevicePartitionedAccelerationStructureFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevicePartitionedAccelerationStructureFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDevicePartitionedAccelerationStructureFeaturesNVExtension: Chainable {}
 
 public struct PhysicalDevicePartitionedAccelerationStructurePropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDevicePartitionedAccelerationStructurePropertiesNV
@@ -22104,8 +24328,12 @@ public struct PhysicalDevicePartitionedAccelerationStructurePropertiesNV: Chaina
         cStruct.maxPartitionCount = self.maxPartitionCount
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevicePartitionedAccelerationStructurePropertiesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevicePartitionedAccelerationStructurePropertiesNVExtension: Chainable {}
+
+public protocol PhysicalDevicePartitionedAccelerationStructurePropertiesNVExtension: Chainable {}
 
 public struct BuildPartitionedAccelerationStructureIndirectCommandNV: CStructConvertible {
     public typealias CStruct = VkBuildPartitionedAccelerationStructureIndirectCommandNV
@@ -22157,8 +24385,12 @@ public struct PartitionedAccelerationStructureFlagsNV: ChainableBase, Partitione
         cStruct.enablePartitionTranslation = VkBool32(self.enablePartitionTranslation ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PartitionedAccelerationStructureFlagsNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PartitionedAccelerationStructureFlagsNVExtension: Chainable {}
+
+public protocol PartitionedAccelerationStructureFlagsNVExtension: Chainable {}
 
 public struct PartitionedAccelerationStructureWriteInstanceDataNV: CStructConvertible {
     public typealias CStruct = VkPartitionedAccelerationStructureWriteInstanceDataNV
@@ -22289,8 +24521,12 @@ public struct WriteDescriptorSetPartitionedAccelerationStructureNV: ChainableBas
             return try body(&cStruct)
         }
     }
+    public func push<Extension: WriteDescriptorSetPartitionedAccelerationStructureNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol WriteDescriptorSetPartitionedAccelerationStructureNVExtension: Chainable {}
+
+public protocol WriteDescriptorSetPartitionedAccelerationStructureNVExtension: Chainable {}
 
 public struct PartitionedAccelerationStructureInstancesInputNV: ChainableBase {
     public typealias CStruct = VkPartitionedAccelerationStructureInstancesInputNV
@@ -22328,8 +24564,12 @@ public struct PartitionedAccelerationStructureInstancesInputNV: ChainableBase {
         cStruct.maxInstanceInGlobalPartitionCount = self.maxInstanceInGlobalPartitionCount
         return try body(&cStruct)
     }
+    public func push<Extension: PartitionedAccelerationStructureInstancesInputNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PartitionedAccelerationStructureInstancesInputNVExtension: Chainable {}
+
+public protocol PartitionedAccelerationStructureInstancesInputNVExtension: Chainable {}
 
 public struct BuildPartitionedAccelerationStructureInfoNV: ChainableBase {
     public typealias CStruct = VkBuildPartitionedAccelerationStructureInfoNV
@@ -22373,8 +24613,12 @@ public struct BuildPartitionedAccelerationStructureInfoNV: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: BuildPartitionedAccelerationStructureInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol BuildPartitionedAccelerationStructureInfoNVExtension: Chainable {}
+
+public protocol BuildPartitionedAccelerationStructureInfoNVExtension: Chainable {}
 
 public struct PhysicalDeviceDiagnosticsConfigFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDiagnosticsConfigFeaturesNV
@@ -22396,8 +24640,12 @@ public struct PhysicalDeviceDiagnosticsConfigFeaturesNV: ChainableBase, Physical
         cStruct.diagnosticsConfig = VkBool32(self.diagnosticsConfig ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDiagnosticsConfigFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceDiagnosticsConfigFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceDiagnosticsConfigFeaturesNVExtension: Chainable {}
 
 public struct DeviceDiagnosticsConfigCreateInfoNV: ChainableBase, DeviceCreateInfoExtension {
     public typealias CStruct = VkDeviceDiagnosticsConfigCreateInfoNV
@@ -22419,8 +24667,12 @@ public struct DeviceDiagnosticsConfigCreateInfoNV: ChainableBase, DeviceCreateIn
         cStruct.flags = self.flags.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: DeviceDiagnosticsConfigCreateInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DeviceDiagnosticsConfigCreateInfoNVExtension: Chainable {}
+
+public protocol DeviceDiagnosticsConfigCreateInfoNVExtension: Chainable {}
 
 public struct PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceZeroInitializeWorkgroupMemoryFeatures
@@ -22442,8 +24694,12 @@ public struct PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures: ChainableBase
         cStruct.shaderZeroInitializeWorkgroupMemory = VkBool32(self.shaderZeroInitializeWorkgroupMemory ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesExtension: Chainable {}
 
 public struct PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR
@@ -22465,8 +24721,12 @@ public struct PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR: Chainab
         cStruct.shaderSubgroupUniformControlFlow = VkBool32(self.shaderSubgroupUniformControlFlow ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceRobustness2FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceRobustness2FeaturesKHR
@@ -22496,8 +24756,12 @@ public struct PhysicalDeviceRobustness2FeaturesKHR: ChainableBase, PhysicalDevic
         cStruct.nullDescriptor = VkBool32(self.nullDescriptor ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceRobustness2FeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceRobustness2FeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceRobustness2FeaturesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceRobustness2PropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceRobustness2PropertiesKHR
@@ -22518,8 +24782,12 @@ public struct PhysicalDeviceRobustness2PropertiesKHR: ChainableBase, PhysicalDev
         cStruct.robustUniformBufferAccessSizeAlignment = self.robustUniformBufferAccessSizeAlignment
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceRobustness2PropertiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceRobustness2PropertiesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceRobustness2PropertiesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceImageRobustnessFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceImageRobustnessFeatures
@@ -22541,8 +24809,12 @@ public struct PhysicalDeviceImageRobustnessFeatures: ChainableBase, PhysicalDevi
         cStruct.robustImageAccess = VkBool32(self.robustImageAccess ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceImageRobustnessFeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceImageRobustnessFeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceImageRobustnessFeaturesExtension: Chainable {}
 
 public struct PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR
@@ -22576,8 +24848,12 @@ public struct PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR: ChainableB
         cStruct.workgroupMemoryExplicitLayout16BitAccess = VkBool32(self.workgroupMemoryExplicitLayout16BitAccess ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHRExtension: Chainable {}
 
 #if VK_ENABLE_BETA_EXTENSIONS
 public struct PhysicalDevicePortabilitySubsetFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
@@ -22656,9 +24932,13 @@ public struct PhysicalDevicePortabilitySubsetFeaturesKHR: ChainableBase, Physica
         cStruct.vertexAttributeAccessBeyondStride = VkBool32(self.vertexAttributeAccessBeyondStride ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevicePortabilitySubsetFeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol PhysicalDevicePortabilitySubsetFeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDevicePortabilitySubsetFeaturesKHRExtension: Chainable {}
 
 #if VK_ENABLE_BETA_EXTENSIONS
 public struct PhysicalDevicePortabilitySubsetPropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension {
@@ -22677,9 +24957,13 @@ public struct PhysicalDevicePortabilitySubsetPropertiesKHR: ChainableBase, Physi
         cStruct.minVertexInputBindingStrideAlignment = self.minVertexInputBindingStrideAlignment
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevicePortabilitySubsetPropertiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol PhysicalDevicePortabilitySubsetPropertiesKHRExtension: Chainable {}
+
+public protocol PhysicalDevicePortabilitySubsetPropertiesKHRExtension: Chainable {}
 
 public struct PhysicalDevice4444FormatsFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevice4444FormatsFeaturesEXT
@@ -22705,8 +24989,12 @@ public struct PhysicalDevice4444FormatsFeaturesEXT: ChainableBase, PhysicalDevic
         cStruct.formatA4B4G4R4 = VkBool32(self.formatA4B4G4R4 ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevice4444FormatsFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevice4444FormatsFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDevice4444FormatsFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceSubpassShadingFeaturesHUAWEI: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceSubpassShadingFeaturesHUAWEI
@@ -22728,8 +25016,12 @@ public struct PhysicalDeviceSubpassShadingFeaturesHUAWEI: ChainableBase, Physica
         cStruct.subpassShading = VkBool32(self.subpassShading ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceSubpassShadingFeaturesHUAWEIExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceSubpassShadingFeaturesHUAWEIExtension: Chainable {}
+
+public protocol PhysicalDeviceSubpassShadingFeaturesHUAWEIExtension: Chainable {}
 
 public struct PhysicalDeviceClusterCullingShaderFeaturesHUAWEI: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceClusterCullingShaderFeaturesHUAWEI
@@ -22755,8 +25047,12 @@ public struct PhysicalDeviceClusterCullingShaderFeaturesHUAWEI: ChainableBase, P
         cStruct.multiviewClusterCullingShader = VkBool32(self.multiviewClusterCullingShader ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceClusterCullingShaderFeaturesHUAWEIExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceClusterCullingShaderFeaturesHUAWEIExtension: Chainable {}
+
+public protocol PhysicalDeviceClusterCullingShaderFeaturesHUAWEIExtension: Chainable {}
 
 public struct PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI: ChainableBase, PhysicalDeviceClusterCullingShaderFeaturesHUAWEIExtension {
     public typealias CStruct = VkPhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI
@@ -22778,8 +25074,12 @@ public struct PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI: ChainableBase
         cStruct.clusterShadingRate = VkBool32(self.clusterShadingRate ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEIExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEIExtension: Chainable {}
+
+public protocol PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEIExtension: Chainable {}
 
 public struct BufferCopy2: ChainableBase {
     public typealias CStruct = VkBufferCopy2
@@ -22809,8 +25109,12 @@ public struct BufferCopy2: ChainableBase {
         cStruct.size = self.size
         return try body(&cStruct)
     }
+    public func push<Extension: BufferCopy2Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol BufferCopy2Extension: Chainable {}
+
+public protocol BufferCopy2Extension: Chainable {}
 
 public struct ImageCopy2: ChainableBase {
     public typealias CStruct = VkImageCopy2
@@ -22858,8 +25162,12 @@ public struct ImageCopy2: ChainableBase {
             }
         }
     }
+    public func push<Extension: ImageCopy2Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ImageCopy2Extension: Chainable {}
+
+public protocol ImageCopy2Extension: Chainable {}
 
 public struct ImageBlit2: ChainableBase {
     public typealias CStruct = VkImageBlit2
@@ -22897,8 +25205,12 @@ public struct ImageBlit2: ChainableBase {
             }
         }
     }
+    public func push<Extension: ImageBlit2Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ImageBlit2Extension: Chainable {}
+
+public protocol ImageBlit2Extension: Chainable {}
 
 public struct BufferImageCopy2: ChainableBase {
     public typealias CStruct = VkBufferImageCopy2
@@ -22946,8 +25258,12 @@ public struct BufferImageCopy2: ChainableBase {
             }
         }
     }
+    public func push<Extension: BufferImageCopy2Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol BufferImageCopy2Extension: Chainable {}
+
+public protocol BufferImageCopy2Extension: Chainable {}
 
 public struct ImageResolve2: ChainableBase {
     public typealias CStruct = VkImageResolve2
@@ -22995,8 +25311,12 @@ public struct ImageResolve2: ChainableBase {
             }
         }
     }
+    public func push<Extension: ImageResolve2Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ImageResolve2Extension: Chainable {}
+
+public protocol ImageResolve2Extension: Chainable {}
 
 public struct CopyBufferInfo2: ChainableBase {
     public typealias CStruct = VkCopyBufferInfo2
@@ -23029,8 +25349,12 @@ public struct CopyBufferInfo2: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: CopyBufferInfo2Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CopyBufferInfo2Extension: Chainable {}
+
+public protocol CopyBufferInfo2Extension: Chainable {}
 
 public struct CopyImageInfo2: ChainableBase {
     public typealias CStruct = VkCopyImageInfo2
@@ -23071,8 +25395,12 @@ public struct CopyImageInfo2: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: CopyImageInfo2Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CopyImageInfo2Extension: Chainable {}
+
+public protocol CopyImageInfo2Extension: Chainable {}
 
 public struct BlitImageInfo2: ChainableBase {
     public typealias CStruct = VkBlitImageInfo2
@@ -23117,8 +25445,12 @@ public struct BlitImageInfo2: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: BlitImageInfo2Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol BlitImageInfo2Extension: Chainable {}
+
+public protocol BlitImageInfo2Extension: Chainable {}
 
 public struct CopyBufferToImageInfo2: ChainableBase {
     public typealias CStruct = VkCopyBufferToImageInfo2
@@ -23155,8 +25487,12 @@ public struct CopyBufferToImageInfo2: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: CopyBufferToImageInfo2Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CopyBufferToImageInfo2Extension: Chainable {}
+
+public protocol CopyBufferToImageInfo2Extension: Chainable {}
 
 public struct CopyImageToBufferInfo2: ChainableBase {
     public typealias CStruct = VkCopyImageToBufferInfo2
@@ -23193,8 +25529,12 @@ public struct CopyImageToBufferInfo2: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: CopyImageToBufferInfo2Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CopyImageToBufferInfo2Extension: Chainable {}
+
+public protocol CopyImageToBufferInfo2Extension: Chainable {}
 
 public struct ResolveImageInfo2: ChainableBase {
     public typealias CStruct = VkResolveImageInfo2
@@ -23235,8 +25575,12 @@ public struct ResolveImageInfo2: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: ResolveImageInfo2Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ResolveImageInfo2Extension: Chainable {}
+
+public protocol ResolveImageInfo2Extension: Chainable {}
 
 public struct PhysicalDeviceShaderImageAtomicInt64FeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderImageAtomicInt64FeaturesEXT
@@ -23262,8 +25606,12 @@ public struct PhysicalDeviceShaderImageAtomicInt64FeaturesEXT: ChainableBase, Ph
         cStruct.sparseImageInt64Atomics = VkBool32(self.sparseImageInt64Atomics ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderImageAtomicInt64FeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderImageAtomicInt64FeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderImageAtomicInt64FeaturesEXTExtension: Chainable {}
 
 public struct FragmentShadingRateAttachmentInfoKHR: ChainableBase, SubpassDescription2Extension {
     public typealias CStruct = VkFragmentShadingRateAttachmentInfoKHR
@@ -23293,8 +25641,12 @@ public struct FragmentShadingRateAttachmentInfoKHR: ChainableBase, SubpassDescri
             }
         }
     }
+    public func push<Extension: FragmentShadingRateAttachmentInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol FragmentShadingRateAttachmentInfoKHRExtension: Chainable {}
+
+public protocol FragmentShadingRateAttachmentInfoKHRExtension: Chainable {}
 
 public struct PipelineFragmentShadingRateStateCreateInfoKHR: ChainableBase, GraphicsPipelineCreateInfoExtension {
     public typealias CStruct = VkPipelineFragmentShadingRateStateCreateInfoKHR
@@ -23322,8 +25674,12 @@ public struct PipelineFragmentShadingRateStateCreateInfoKHR: ChainableBase, Grap
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PipelineFragmentShadingRateStateCreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineFragmentShadingRateStateCreateInfoKHRExtension: Chainable {}
+
+public protocol PipelineFragmentShadingRateStateCreateInfoKHRExtension: Chainable {}
 
 public struct PhysicalDeviceFragmentShadingRateFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceFragmentShadingRateFeaturesKHR
@@ -23353,8 +25709,12 @@ public struct PhysicalDeviceFragmentShadingRateFeaturesKHR: ChainableBase, Physi
         cStruct.attachmentFragmentShadingRate = VkBool32(self.attachmentFragmentShadingRate ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceFragmentShadingRateFeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceFragmentShadingRateFeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceFragmentShadingRateFeaturesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceFragmentShadingRatePropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceFragmentShadingRatePropertiesKHR
@@ -23426,8 +25786,12 @@ public struct PhysicalDeviceFragmentShadingRatePropertiesKHR: ChainableBase, Phy
             }
         }
     }
+    public func push<Extension: PhysicalDeviceFragmentShadingRatePropertiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceFragmentShadingRatePropertiesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceFragmentShadingRatePropertiesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceFragmentShadingRateKHR: ChainableBase {
     public typealias CStruct = VkPhysicalDeviceFragmentShadingRateKHR
@@ -23450,8 +25814,12 @@ public struct PhysicalDeviceFragmentShadingRateKHR: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PhysicalDeviceFragmentShadingRateKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceFragmentShadingRateKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceFragmentShadingRateKHRExtension: Chainable {}
 
 public struct PhysicalDeviceShaderTerminateInvocationFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderTerminateInvocationFeatures
@@ -23473,8 +25841,12 @@ public struct PhysicalDeviceShaderTerminateInvocationFeatures: ChainableBase, Ph
         cStruct.shaderTerminateInvocation = VkBool32(self.shaderTerminateInvocation ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderTerminateInvocationFeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderTerminateInvocationFeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderTerminateInvocationFeaturesExtension: Chainable {}
 
 public struct PhysicalDeviceFragmentShadingRateEnumsFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceFragmentShadingRateEnumsFeaturesNV
@@ -23504,8 +25876,12 @@ public struct PhysicalDeviceFragmentShadingRateEnumsFeaturesNV: ChainableBase, P
         cStruct.noInvocationFragmentShadingRates = VkBool32(self.noInvocationFragmentShadingRates ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceFragmentShadingRateEnumsFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceFragmentShadingRateEnumsFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceFragmentShadingRateEnumsFeaturesNVExtension: Chainable {}
 
 public struct PhysicalDeviceFragmentShadingRateEnumsPropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceFragmentShadingRateEnumsPropertiesNV
@@ -23523,8 +25899,12 @@ public struct PhysicalDeviceFragmentShadingRateEnumsPropertiesNV: ChainableBase,
         cStruct.maxFragmentShadingRateInvocationCount = VkSampleCountFlagBits(rawValue: VkSampleCountFlagBits.RawValue(bitPattern: self.maxFragmentShadingRateInvocationCount.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceFragmentShadingRateEnumsPropertiesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceFragmentShadingRateEnumsPropertiesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceFragmentShadingRateEnumsPropertiesNVExtension: Chainable {}
 
 public struct PipelineFragmentShadingRateEnumStateCreateInfoNV: ChainableBase, GraphicsPipelineCreateInfoExtension {
     public typealias CStruct = VkPipelineFragmentShadingRateEnumStateCreateInfoNV
@@ -23554,8 +25934,12 @@ public struct PipelineFragmentShadingRateEnumStateCreateInfoNV: ChainableBase, G
         cStruct.combinerOps = self.combinerOps
         return try body(&cStruct)
     }
+    public func push<Extension: PipelineFragmentShadingRateEnumStateCreateInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineFragmentShadingRateEnumStateCreateInfoNVExtension: Chainable {}
+
+public protocol PipelineFragmentShadingRateEnumStateCreateInfoNVExtension: Chainable {}
 
 public struct AccelerationStructureBuildSizesInfoKHR: ChainableBase {
     public typealias CStruct = VkAccelerationStructureBuildSizesInfoKHR
@@ -23579,8 +25963,12 @@ public struct AccelerationStructureBuildSizesInfoKHR: ChainableBase {
         cStruct.buildScratchSize = self.buildScratchSize
         return try body(&cStruct)
     }
+    public func push<Extension: AccelerationStructureBuildSizesInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol AccelerationStructureBuildSizesInfoKHRExtension: Chainable {}
+
+public protocol AccelerationStructureBuildSizesInfoKHRExtension: Chainable {}
 
 public struct PhysicalDeviceImage2DViewOf3DFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceImage2DViewOf3DFeaturesEXT
@@ -23606,8 +25994,12 @@ public struct PhysicalDeviceImage2DViewOf3DFeaturesEXT: ChainableBase, PhysicalD
         cStruct.sampler2DViewOf3D = VkBool32(self.sampler2DViewOf3D ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceImage2DViewOf3DFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceImage2DViewOf3DFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceImage2DViewOf3DFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceImageSlicedViewOf3DFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceImageSlicedViewOf3DFeaturesEXT
@@ -23629,8 +26021,12 @@ public struct PhysicalDeviceImageSlicedViewOf3DFeaturesEXT: ChainableBase, Physi
         cStruct.imageSlicedViewOf3D = VkBool32(self.imageSlicedViewOf3D ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceImageSlicedViewOf3DFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceImageSlicedViewOf3DFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceImageSlicedViewOf3DFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT
@@ -23652,8 +26048,12 @@ public struct PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT: Chain
         cStruct.attachmentFeedbackLoopDynamicState = VkBool32(self.attachmentFeedbackLoopDynamicState ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceLegacyVertexAttributesFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceLegacyVertexAttributesFeaturesEXT
@@ -23675,8 +26075,12 @@ public struct PhysicalDeviceLegacyVertexAttributesFeaturesEXT: ChainableBase, Ph
         cStruct.legacyVertexAttributes = VkBool32(self.legacyVertexAttributes ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceLegacyVertexAttributesFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceLegacyVertexAttributesFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceLegacyVertexAttributesFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceLegacyVertexAttributesPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceLegacyVertexAttributesPropertiesEXT
@@ -23694,8 +26098,12 @@ public struct PhysicalDeviceLegacyVertexAttributesPropertiesEXT: ChainableBase, 
         cStruct.nativeUnalignedPerformance = VkBool32(self.nativeUnalignedPerformance ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceLegacyVertexAttributesPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceLegacyVertexAttributesPropertiesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceLegacyVertexAttributesPropertiesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceMutableDescriptorTypeFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceMutableDescriptorTypeFeaturesEXT
@@ -23717,8 +26125,12 @@ public struct PhysicalDeviceMutableDescriptorTypeFeaturesEXT: ChainableBase, Phy
         cStruct.mutableDescriptorType = VkBool32(self.mutableDescriptorType ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceMutableDescriptorTypeFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceMutableDescriptorTypeFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceMutableDescriptorTypeFeaturesEXTExtension: Chainable {}
 
 public struct MutableDescriptorTypeListEXT: CStructConvertible {
     public typealias CStruct = VkMutableDescriptorTypeListEXT
@@ -23766,8 +26178,12 @@ public struct MutableDescriptorTypeCreateInfoEXT: ChainableBase, DescriptorSetLa
             return try body(&cStruct)
         }
     }
+    public func push<Extension: MutableDescriptorTypeCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol MutableDescriptorTypeCreateInfoEXTExtension: Chainable {}
+
+public protocol MutableDescriptorTypeCreateInfoEXTExtension: Chainable {}
 
 public struct PhysicalDeviceDepthClipControlFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDepthClipControlFeaturesEXT
@@ -23789,8 +26205,12 @@ public struct PhysicalDeviceDepthClipControlFeaturesEXT: ChainableBase, Physical
         cStruct.depthClipControl = VkBool32(self.depthClipControl ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDepthClipControlFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceDepthClipControlFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceDepthClipControlFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT
@@ -23812,8 +26232,12 @@ public struct PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT: ChainableBase
         cStruct.zeroInitializeDeviceMemory = VkBool32(self.zeroInitializeDeviceMemory ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXTExtension: Chainable {}
 
 public struct BeginCustomResolveInfoEXT: ChainableBase {
     public typealias CStruct = VkBeginCustomResolveInfoEXT
@@ -23831,8 +26255,12 @@ public struct BeginCustomResolveInfoEXT: ChainableBase {
         cStruct.pNext = maybeMutable(pNext)
         return try body(&cStruct)
     }
+    public func push<Extension: BeginCustomResolveInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol BeginCustomResolveInfoEXTExtension: Chainable {}
+
+public protocol BeginCustomResolveInfoEXTExtension: Chainable {}
 
 public struct PhysicalDeviceCustomResolveFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceCustomResolveFeaturesEXT
@@ -23854,8 +26282,12 @@ public struct PhysicalDeviceCustomResolveFeaturesEXT: ChainableBase, PhysicalDev
         cStruct.customResolve = VkBool32(self.customResolve ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceCustomResolveFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceCustomResolveFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceCustomResolveFeaturesEXTExtension: Chainable {}
 
 public struct CustomResolveCreateInfoEXT: ChainableBase, GraphicsPipelineCreateInfoExtension, CommandBufferInheritanceInfoExtension, ShaderCreateInfoEXTExtension {
     public typealias CStruct = VkCustomResolveCreateInfoEXT
@@ -23892,8 +26324,12 @@ public struct CustomResolveCreateInfoEXT: ChainableBase, GraphicsPipelineCreateI
             return try body(&cStruct)
         }
     }
+    public func push<Extension: CustomResolveCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CustomResolveCreateInfoEXTExtension: Chainable {}
+
+public protocol CustomResolveCreateInfoEXTExtension: Chainable {}
 
 public struct PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDeviceGeneratedCommandsFeaturesEXT
@@ -23919,8 +26355,12 @@ public struct PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT: ChainableBase, P
         cStruct.dynamicGeneratedPipelineLayout = VkBool32(self.dynamicGeneratedPipelineLayout ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDeviceGeneratedCommandsFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceDeviceGeneratedCommandsFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceDeviceGeneratedCommandsFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceDeviceGeneratedCommandsPropertiesEXT
@@ -23971,8 +26411,12 @@ public struct PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT: ChainableBase,
         cStruct.deviceGeneratedCommandsMultiDrawIndirectCount = VkBool32(self.deviceGeneratedCommandsMultiDrawIndirectCount ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDeviceGeneratedCommandsPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceDeviceGeneratedCommandsPropertiesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceDeviceGeneratedCommandsPropertiesEXTExtension: Chainable {}
 
 public struct GeneratedCommandsPipelineInfoEXT: ChainableBase, GeneratedCommandsInfoEXTExtension, GeneratedCommandsMemoryRequirementsInfoEXTExtension {
     public typealias CStruct = VkGeneratedCommandsPipelineInfoEXT
@@ -23994,8 +26438,12 @@ public struct GeneratedCommandsPipelineInfoEXT: ChainableBase, GeneratedCommands
         cStruct.pipeline = self.pipeline.handle
         return try body(&cStruct)
     }
+    public func push<Extension: GeneratedCommandsPipelineInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol GeneratedCommandsPipelineInfoEXTExtension: Chainable {}
+
+public protocol GeneratedCommandsPipelineInfoEXTExtension: Chainable {}
 
 public struct GeneratedCommandsShaderInfoEXT: ChainableBase, GeneratedCommandsInfoEXTExtension, GeneratedCommandsMemoryRequirementsInfoEXTExtension {
     public typealias CStruct = VkGeneratedCommandsShaderInfoEXT
@@ -24020,8 +26468,12 @@ public struct GeneratedCommandsShaderInfoEXT: ChainableBase, GeneratedCommandsIn
             return try body(&cStruct)
         }
     }
+    public func push<Extension: GeneratedCommandsShaderInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol GeneratedCommandsShaderInfoEXTExtension: Chainable {}
+
+public protocol GeneratedCommandsShaderInfoEXTExtension: Chainable {}
 
 public struct GeneratedCommandsMemoryRequirementsInfoEXT: ChainableBase {
     public typealias CStruct = VkGeneratedCommandsMemoryRequirementsInfoEXT
@@ -24055,8 +26507,12 @@ public struct GeneratedCommandsMemoryRequirementsInfoEXT: ChainableBase {
         cStruct.maxDrawCount = self.maxDrawCount
         return try body(&cStruct)
     }
+    public func push<Extension: GeneratedCommandsMemoryRequirementsInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol GeneratedCommandsMemoryRequirementsInfoEXTExtension: Chainable {}
+
+public protocol GeneratedCommandsMemoryRequirementsInfoEXTExtension: Chainable {}
 
 public struct IndirectExecutionSetPipelineInfoEXT: ChainableBase {
     public typealias CStruct = VkIndirectExecutionSetPipelineInfoEXT
@@ -24082,8 +26538,12 @@ public struct IndirectExecutionSetPipelineInfoEXT: ChainableBase {
         cStruct.maxPipelineCount = self.maxPipelineCount
         return try body(&cStruct)
     }
+    public func push<Extension: IndirectExecutionSetPipelineInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol IndirectExecutionSetPipelineInfoEXTExtension: Chainable {}
+
+public protocol IndirectExecutionSetPipelineInfoEXTExtension: Chainable {}
 
 public struct IndirectExecutionSetShaderLayoutInfoEXT: ChainableBase {
     public typealias CStruct = VkIndirectExecutionSetShaderLayoutInfoEXT
@@ -24108,8 +26568,12 @@ public struct IndirectExecutionSetShaderLayoutInfoEXT: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: IndirectExecutionSetShaderLayoutInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol IndirectExecutionSetShaderLayoutInfoEXTExtension: Chainable {}
+
+public protocol IndirectExecutionSetShaderLayoutInfoEXTExtension: Chainable {}
 
 public struct IndirectExecutionSetShaderInfoEXT: ChainableBase {
     public typealias CStruct = VkIndirectExecutionSetShaderInfoEXT
@@ -24151,8 +26615,12 @@ public struct IndirectExecutionSetShaderInfoEXT: ChainableBase {
             }
         }
     }
+    public func push<Extension: IndirectExecutionSetShaderInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol IndirectExecutionSetShaderInfoEXTExtension: Chainable {}
+
+public protocol IndirectExecutionSetShaderInfoEXTExtension: Chainable {}
 
 public struct IndirectExecutionSetCreateInfoEXT: ChainableBase {
     public typealias CStruct = VkIndirectExecutionSetCreateInfoEXT
@@ -24178,8 +26646,12 @@ public struct IndirectExecutionSetCreateInfoEXT: ChainableBase {
         cStruct.info = self.info
         return try body(&cStruct)
     }
+    public func push<Extension: IndirectExecutionSetCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol IndirectExecutionSetCreateInfoEXTExtension: Chainable {}
+
+public protocol IndirectExecutionSetCreateInfoEXTExtension: Chainable {}
 
 public struct GeneratedCommandsInfoEXT: ChainableBase {
     public typealias CStruct = VkGeneratedCommandsInfoEXT
@@ -24237,8 +26709,12 @@ public struct GeneratedCommandsInfoEXT: ChainableBase {
         cStruct.maxDrawCount = self.maxDrawCount
         return try body(&cStruct)
     }
+    public func push<Extension: GeneratedCommandsInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol GeneratedCommandsInfoEXTExtension: Chainable {}
+
+public protocol GeneratedCommandsInfoEXTExtension: Chainable {}
 
 public struct WriteIndirectExecutionSetPipelineEXT: ChainableBase {
     public typealias CStruct = VkWriteIndirectExecutionSetPipelineEXT
@@ -24264,8 +26740,12 @@ public struct WriteIndirectExecutionSetPipelineEXT: ChainableBase {
         cStruct.pipeline = self.pipeline.handle
         return try body(&cStruct)
     }
+    public func push<Extension: WriteIndirectExecutionSetPipelineEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol WriteIndirectExecutionSetPipelineEXTExtension: Chainable {}
+
+public protocol WriteIndirectExecutionSetPipelineEXTExtension: Chainable {}
 
 public struct WriteIndirectExecutionSetShaderEXT: ChainableBase {
     public typealias CStruct = VkWriteIndirectExecutionSetShaderEXT
@@ -24291,8 +26771,12 @@ public struct WriteIndirectExecutionSetShaderEXT: ChainableBase {
         cStruct.shader = self.shader.handle
         return try body(&cStruct)
     }
+    public func push<Extension: WriteIndirectExecutionSetShaderEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol WriteIndirectExecutionSetShaderEXTExtension: Chainable {}
+
+public protocol WriteIndirectExecutionSetShaderEXTExtension: Chainable {}
 
 public struct IndirectCommandsLayoutTokenEXT: ChainableBase {
     public typealias CStruct = VkIndirectCommandsLayoutTokenEXT
@@ -24322,8 +26806,12 @@ public struct IndirectCommandsLayoutTokenEXT: ChainableBase {
         cStruct.offset = self.offset
         return try body(&cStruct)
     }
+    public func push<Extension: IndirectCommandsLayoutTokenEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol IndirectCommandsLayoutTokenEXTExtension: Chainable {}
+
+public protocol IndirectCommandsLayoutTokenEXTExtension: Chainable {}
 
 public struct IndirectCommandsLayoutCreateInfoEXT: ChainableBase {
     public typealias CStruct = VkIndirectCommandsLayoutCreateInfoEXT
@@ -24364,8 +26852,12 @@ public struct IndirectCommandsLayoutCreateInfoEXT: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: IndirectCommandsLayoutCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol IndirectCommandsLayoutCreateInfoEXTExtension: Chainable {}
+
+public protocol IndirectCommandsLayoutCreateInfoEXTExtension: Chainable {}
 
 public struct DrawIndirectCountIndirectCommandEXT: CStructConvertible {
     public typealias CStruct = VkDrawIndirectCountIndirectCommandEXT
@@ -24557,8 +27049,12 @@ public struct PipelineViewportDepthClipControlCreateInfoEXT: ChainableBase, Pipe
         cStruct.negativeOneToOne = VkBool32(self.negativeOneToOne ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PipelineViewportDepthClipControlCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineViewportDepthClipControlCreateInfoEXTExtension: Chainable {}
+
+public protocol PipelineViewportDepthClipControlCreateInfoEXTExtension: Chainable {}
 
 public struct PhysicalDeviceDepthClampControlFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDepthClampControlFeaturesEXT
@@ -24580,8 +27076,12 @@ public struct PhysicalDeviceDepthClampControlFeaturesEXT: ChainableBase, Physica
         cStruct.depthClampControl = VkBool32(self.depthClampControl ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDepthClampControlFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceDepthClampControlFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceDepthClampControlFeaturesEXTExtension: Chainable {}
 
 public struct DepthClampRangeEXT: CStructConvertible {
     public typealias CStruct = VkDepthClampRangeEXT
@@ -24633,8 +27133,12 @@ public struct PipelineViewportDepthClampControlCreateInfoEXT: ChainableBase, Pip
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PipelineViewportDepthClampControlCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineViewportDepthClampControlCreateInfoEXTExtension: Chainable {}
+
+public protocol PipelineViewportDepthClampControlCreateInfoEXTExtension: Chainable {}
 
 public struct PhysicalDeviceVertexInputDynamicStateFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceVertexInputDynamicStateFeaturesEXT
@@ -24656,8 +27160,12 @@ public struct PhysicalDeviceVertexInputDynamicStateFeaturesEXT: ChainableBase, P
         cStruct.vertexInputDynamicState = VkBool32(self.vertexInputDynamicState ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceVertexInputDynamicStateFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceVertexInputDynamicStateFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceVertexInputDynamicStateFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceExternalMemoryRDMAFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceExternalMemoryRDMAFeaturesNV
@@ -24679,8 +27187,12 @@ public struct PhysicalDeviceExternalMemoryRDMAFeaturesNV: ChainableBase, Physica
         cStruct.externalMemoryRDMA = VkBool32(self.externalMemoryRDMA ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceExternalMemoryRDMAFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceExternalMemoryRDMAFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceExternalMemoryRDMAFeaturesNVExtension: Chainable {}
 
 public struct PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR
@@ -24702,8 +27214,12 @@ public struct PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR: Chainab
         cStruct.shaderRelaxedExtendedInstruction = VkBool32(self.shaderRelaxedExtendedInstruction ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHRExtension: Chainable {}
 
 public struct VertexInputBindingDescription2EXT: ChainableBase {
     public typealias CStruct = VkVertexInputBindingDescription2EXT
@@ -24737,8 +27253,12 @@ public struct VertexInputBindingDescription2EXT: ChainableBase {
         cStruct.divisor = self.divisor
         return try body(&cStruct)
     }
+    public func push<Extension: VertexInputBindingDescription2EXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VertexInputBindingDescription2EXTExtension: Chainable {}
+
+public protocol VertexInputBindingDescription2EXTExtension: Chainable {}
 
 public struct VertexInputAttributeDescription2EXT: ChainableBase {
     public typealias CStruct = VkVertexInputAttributeDescription2EXT
@@ -24772,8 +27292,12 @@ public struct VertexInputAttributeDescription2EXT: ChainableBase {
         cStruct.offset = self.offset
         return try body(&cStruct)
     }
+    public func push<Extension: VertexInputAttributeDescription2EXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VertexInputAttributeDescription2EXTExtension: Chainable {}
+
+public protocol VertexInputAttributeDescription2EXTExtension: Chainable {}
 
 public struct PhysicalDeviceColorWriteEnableFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceColorWriteEnableFeaturesEXT
@@ -24795,8 +27319,12 @@ public struct PhysicalDeviceColorWriteEnableFeaturesEXT: ChainableBase, Physical
         cStruct.colorWriteEnable = VkBool32(self.colorWriteEnable ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceColorWriteEnableFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceColorWriteEnableFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceColorWriteEnableFeaturesEXTExtension: Chainable {}
 
 public struct PipelineColorWriteCreateInfoEXT: ChainableBase, PipelineColorBlendStateCreateInfoExtension {
     public typealias CStruct = VkPipelineColorWriteCreateInfoEXT
@@ -24821,8 +27349,12 @@ public struct PipelineColorWriteCreateInfoEXT: ChainableBase, PipelineColorBlend
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PipelineColorWriteCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineColorWriteCreateInfoEXTExtension: Chainable {}
+
+public protocol PipelineColorWriteCreateInfoEXTExtension: Chainable {}
 
 public struct MemoryBarrier2: ChainableBase, SubpassDependency2Extension {
     public typealias CStruct = VkMemoryBarrier2
@@ -24856,8 +27388,12 @@ public struct MemoryBarrier2: ChainableBase, SubpassDependency2Extension {
         cStruct.dstAccessMask = self.dstAccessMask.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: MemoryBarrier2Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol MemoryBarrier2Extension: Chainable {}
+
+public protocol MemoryBarrier2Extension: Chainable {}
 
 public struct ImageMemoryBarrier2: ChainableBase {
     public typealias CStruct = VkImageMemoryBarrier2
@@ -24917,8 +27453,12 @@ public struct ImageMemoryBarrier2: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: ImageMemoryBarrier2Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ImageMemoryBarrier2Extension: Chainable {}
+
+public protocol ImageMemoryBarrier2Extension: Chainable {}
 
 public struct BufferMemoryBarrier2: ChainableBase {
     public typealias CStruct = VkBufferMemoryBarrier2
@@ -24972,8 +27512,12 @@ public struct BufferMemoryBarrier2: ChainableBase {
         cStruct.size = self.size
         return try body(&cStruct)
     }
+    public func push<Extension: BufferMemoryBarrier2Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol BufferMemoryBarrier2Extension: Chainable {}
+
+public protocol BufferMemoryBarrier2Extension: Chainable {}
 
 public struct MemoryBarrierAccessFlags3KHR: ChainableBase, SubpassDependency2Extension, BufferMemoryBarrier2Extension, ImageMemoryBarrier2Extension, MemoryRangeBarriersInfoKHRExtension {
     public typealias CStruct = VkMemoryBarrierAccessFlags3KHR
@@ -24999,8 +27543,12 @@ public struct MemoryBarrierAccessFlags3KHR: ChainableBase, SubpassDependency2Ext
         cStruct.dstAccessMask3 = self.dstAccessMask3.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: MemoryBarrierAccessFlags3KHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol MemoryBarrierAccessFlags3KHRExtension: Chainable {}
+
+public protocol MemoryBarrierAccessFlags3KHRExtension: Chainable {}
 
 public struct DependencyInfo: ChainableBase {
     public typealias CStruct = VkDependencyInfo
@@ -25043,8 +27591,12 @@ public struct DependencyInfo: ChainableBase {
             }
         }
     }
+    public func push<Extension: DependencyInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DependencyInfoExtension: Chainable {}
+
+public protocol DependencyInfoExtension: Chainable {}
 
 public struct SemaphoreSubmitInfo: ChainableBase {
     public typealias CStruct = VkSemaphoreSubmitInfo
@@ -25078,8 +27630,12 @@ public struct SemaphoreSubmitInfo: ChainableBase {
         cStruct.deviceIndex = self.deviceIndex
         return try body(&cStruct)
     }
+    public func push<Extension: SemaphoreSubmitInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SemaphoreSubmitInfoExtension: Chainable {}
+
+public protocol SemaphoreSubmitInfoExtension: Chainable {}
 
 public struct CommandBufferSubmitInfo: ChainableBase {
     public typealias CStruct = VkCommandBufferSubmitInfo
@@ -25105,8 +27661,12 @@ public struct CommandBufferSubmitInfo: ChainableBase {
         cStruct.deviceMask = self.deviceMask
         return try body(&cStruct)
     }
+    public func push<Extension: CommandBufferSubmitInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CommandBufferSubmitInfoExtension: Chainable {}
+
+public protocol CommandBufferSubmitInfoExtension: Chainable {}
 
 public struct SubmitInfo2: ChainableBase {
     public typealias CStruct = VkSubmitInfo2
@@ -25149,8 +27709,12 @@ public struct SubmitInfo2: ChainableBase {
             }
         }
     }
+    public func push<Extension: SubmitInfo2Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SubmitInfo2Extension: Chainable {}
+
+public protocol SubmitInfo2Extension: Chainable {}
 
 public struct QueueFamilyCheckpointProperties2NV: ChainableBase, QueueFamilyProperties2Extension {
     public typealias CStruct = VkQueueFamilyCheckpointProperties2NV
@@ -25168,8 +27732,12 @@ public struct QueueFamilyCheckpointProperties2NV: ChainableBase, QueueFamilyProp
         cStruct.checkpointExecutionStageMask = self.checkpointExecutionStageMask.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: QueueFamilyCheckpointProperties2NVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol QueueFamilyCheckpointProperties2NVExtension: Chainable {}
+
+public protocol QueueFamilyCheckpointProperties2NVExtension: Chainable {}
 
 public struct CheckpointData2NV: ChainableBase {
     public typealias CStruct = VkCheckpointData2NV
@@ -25190,8 +27758,12 @@ public struct CheckpointData2NV: ChainableBase {
         cStruct.pCheckpointMarker = self.checkpointMarker
         return try body(&cStruct)
     }
+    public func push<Extension: CheckpointData2NVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CheckpointData2NVExtension: Chainable {}
+
+public protocol CheckpointData2NVExtension: Chainable {}
 
 public struct PhysicalDeviceSynchronization2Features: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceSynchronization2Features
@@ -25213,8 +27785,12 @@ public struct PhysicalDeviceSynchronization2Features: ChainableBase, PhysicalDev
         cStruct.synchronization2 = VkBool32(self.synchronization2 ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceSynchronization2FeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceSynchronization2FeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceSynchronization2FeaturesExtension: Chainable {}
 
 public struct PhysicalDeviceUnifiedImageLayoutsFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceUnifiedImageLayoutsFeaturesKHR
@@ -25240,8 +27816,12 @@ public struct PhysicalDeviceUnifiedImageLayoutsFeaturesKHR: ChainableBase, Physi
         cStruct.unifiedImageLayoutsVideo = VkBool32(self.unifiedImageLayoutsVideo ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceUnifiedImageLayoutsFeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceUnifiedImageLayoutsFeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceUnifiedImageLayoutsFeaturesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceHostImageCopyFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceHostImageCopyFeatures
@@ -25263,8 +27843,12 @@ public struct PhysicalDeviceHostImageCopyFeatures: ChainableBase, PhysicalDevice
         cStruct.hostImageCopy = VkBool32(self.hostImageCopy ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceHostImageCopyFeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceHostImageCopyFeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceHostImageCopyFeaturesExtension: Chainable {}
 
 public struct PhysicalDeviceHostImageCopyProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceHostImageCopyProperties
@@ -25306,8 +27890,12 @@ public struct PhysicalDeviceHostImageCopyProperties: ChainableBase, PhysicalDevi
         cStruct.identicalMemoryTypeRequirements = VkBool32(self.identicalMemoryTypeRequirements ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceHostImageCopyPropertiesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceHostImageCopyPropertiesExtension: Chainable {}
+
+public protocol PhysicalDeviceHostImageCopyPropertiesExtension: Chainable {}
 
 public struct MemoryToImageCopy: ChainableBase {
     public typealias CStruct = VkMemoryToImageCopy
@@ -25355,8 +27943,12 @@ public struct MemoryToImageCopy: ChainableBase {
             }
         }
     }
+    public func push<Extension: MemoryToImageCopyExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol MemoryToImageCopyExtension: Chainable {}
+
+public protocol MemoryToImageCopyExtension: Chainable {}
 
 public struct ImageToMemoryCopy: ChainableBase {
     public typealias CStruct = VkImageToMemoryCopy
@@ -25404,8 +27996,12 @@ public struct ImageToMemoryCopy: ChainableBase {
             }
         }
     }
+    public func push<Extension: ImageToMemoryCopyExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ImageToMemoryCopyExtension: Chainable {}
+
+public protocol ImageToMemoryCopyExtension: Chainable {}
 
 public struct CopyMemoryToImageInfo: ChainableBase {
     public typealias CStruct = VkCopyMemoryToImageInfo
@@ -25442,8 +28038,12 @@ public struct CopyMemoryToImageInfo: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: CopyMemoryToImageInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CopyMemoryToImageInfoExtension: Chainable {}
+
+public protocol CopyMemoryToImageInfoExtension: Chainable {}
 
 public struct CopyImageToMemoryInfo: ChainableBase {
     public typealias CStruct = VkCopyImageToMemoryInfo
@@ -25480,8 +28080,12 @@ public struct CopyImageToMemoryInfo: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: CopyImageToMemoryInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CopyImageToMemoryInfoExtension: Chainable {}
+
+public protocol CopyImageToMemoryInfoExtension: Chainable {}
 
 public struct CopyImageToImageInfo: ChainableBase {
     public typealias CStruct = VkCopyImageToImageInfo
@@ -25526,8 +28130,12 @@ public struct CopyImageToImageInfo: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: CopyImageToImageInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CopyImageToImageInfoExtension: Chainable {}
+
+public protocol CopyImageToImageInfoExtension: Chainable {}
 
 public struct HostImageLayoutTransitionInfo: ChainableBase {
     public typealias CStruct = VkHostImageLayoutTransitionInfo
@@ -25563,8 +28171,12 @@ public struct HostImageLayoutTransitionInfo: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: HostImageLayoutTransitionInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol HostImageLayoutTransitionInfoExtension: Chainable {}
+
+public protocol HostImageLayoutTransitionInfoExtension: Chainable {}
 
 public struct SubresourceHostMemcpySize: ChainableBase, SubresourceLayout2Extension {
     public typealias CStruct = VkSubresourceHostMemcpySize
@@ -25582,8 +28194,12 @@ public struct SubresourceHostMemcpySize: ChainableBase, SubresourceLayout2Extens
         cStruct.size = self.size
         return try body(&cStruct)
     }
+    public func push<Extension: SubresourceHostMemcpySizeExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SubresourceHostMemcpySizeExtension: Chainable {}
+
+public protocol SubresourceHostMemcpySizeExtension: Chainable {}
 
 public struct HostImageCopyDevicePerformanceQuery: ChainableBase, ImageFormatProperties2Extension {
     public typealias CStruct = VkHostImageCopyDevicePerformanceQuery
@@ -25604,8 +28220,12 @@ public struct HostImageCopyDevicePerformanceQuery: ChainableBase, ImageFormatPro
         cStruct.identicalMemoryLayout = VkBool32(self.identicalMemoryLayout ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: HostImageCopyDevicePerformanceQueryExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol HostImageCopyDevicePerformanceQueryExtension: Chainable {}
+
+public protocol HostImageCopyDevicePerformanceQueryExtension: Chainable {}
 
 public struct PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePrimitivesGeneratedQueryFeaturesEXT
@@ -25635,8 +28255,12 @@ public struct PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT: ChainableBase, 
         cStruct.primitivesGeneratedQueryWithNonZeroStreams = VkBool32(self.primitivesGeneratedQueryWithNonZeroStreams ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevicePrimitivesGeneratedQueryFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevicePrimitivesGeneratedQueryFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDevicePrimitivesGeneratedQueryFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceLegacyDitheringFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceLegacyDitheringFeaturesEXT
@@ -25658,8 +28282,12 @@ public struct PhysicalDeviceLegacyDitheringFeaturesEXT: ChainableBase, PhysicalD
         cStruct.legacyDithering = VkBool32(self.legacyDithering ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceLegacyDitheringFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceLegacyDitheringFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceLegacyDitheringFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT
@@ -25681,8 +28309,12 @@ public struct PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT: Chaina
         cStruct.multisampledRenderToSingleSampled = VkBool32(self.multisampledRenderToSingleSampled ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXTExtension: Chainable {}
 
 public struct SurfaceCapabilitiesPresentId2KHR: ChainableBase, SurfaceCapabilities2KHRExtension {
     public typealias CStruct = VkSurfaceCapabilitiesPresentId2KHR
@@ -25704,8 +28336,12 @@ public struct SurfaceCapabilitiesPresentId2KHR: ChainableBase, SurfaceCapabiliti
         cStruct.presentId2Supported = VkBool32(self.presentId2Supported ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: SurfaceCapabilitiesPresentId2KHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SurfaceCapabilitiesPresentId2KHRExtension: Chainable {}
+
+public protocol SurfaceCapabilitiesPresentId2KHRExtension: Chainable {}
 
 public struct SurfaceCapabilitiesPresentWait2KHR: ChainableBase, SurfaceCapabilities2KHRExtension {
     public typealias CStruct = VkSurfaceCapabilitiesPresentWait2KHR
@@ -25727,8 +28363,12 @@ public struct SurfaceCapabilitiesPresentWait2KHR: ChainableBase, SurfaceCapabili
         cStruct.presentWait2Supported = VkBool32(self.presentWait2Supported ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: SurfaceCapabilitiesPresentWait2KHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SurfaceCapabilitiesPresentWait2KHRExtension: Chainable {}
+
+public protocol SurfaceCapabilitiesPresentWait2KHRExtension: Chainable {}
 
 public struct SubpassResolvePerformanceQueryEXT: ChainableBase, FormatProperties2Extension {
     public typealias CStruct = VkSubpassResolvePerformanceQueryEXT
@@ -25746,8 +28386,12 @@ public struct SubpassResolvePerformanceQueryEXT: ChainableBase, FormatProperties
         cStruct.optimal = VkBool32(self.optimal ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: SubpassResolvePerformanceQueryEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SubpassResolvePerformanceQueryEXTExtension: Chainable {}
+
+public protocol SubpassResolvePerformanceQueryEXTExtension: Chainable {}
 
 public struct MultisampledRenderToSingleSampledInfoEXT: ChainableBase, SubpassDescription2Extension, RenderingInfoExtension {
     public typealias CStruct = VkMultisampledRenderToSingleSampledInfoEXT
@@ -25773,8 +28417,12 @@ public struct MultisampledRenderToSingleSampledInfoEXT: ChainableBase, SubpassDe
         cStruct.rasterizationSamples = VkSampleCountFlagBits(rawValue: VkSampleCountFlagBits.RawValue(bitPattern: self.rasterizationSamples.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: MultisampledRenderToSingleSampledInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol MultisampledRenderToSingleSampledInfoEXTExtension: Chainable {}
+
+public protocol MultisampledRenderToSingleSampledInfoEXTExtension: Chainable {}
 
 public struct PhysicalDevicePipelineProtectedAccessFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePipelineProtectedAccessFeatures
@@ -25796,8 +28444,12 @@ public struct PhysicalDevicePipelineProtectedAccessFeatures: ChainableBase, Phys
         cStruct.pipelineProtectedAccess = VkBool32(self.pipelineProtectedAccess ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevicePipelineProtectedAccessFeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevicePipelineProtectedAccessFeaturesExtension: Chainable {}
+
+public protocol PhysicalDevicePipelineProtectedAccessFeaturesExtension: Chainable {}
 
 public struct QueueFamilyVideoPropertiesKHR: ChainableBase, QueueFamilyProperties2Extension {
     public typealias CStruct = VkQueueFamilyVideoPropertiesKHR
@@ -25815,8 +28467,12 @@ public struct QueueFamilyVideoPropertiesKHR: ChainableBase, QueueFamilyPropertie
         cStruct.videoCodecOperations = self.videoCodecOperations.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: QueueFamilyVideoPropertiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol QueueFamilyVideoPropertiesKHRExtension: Chainable {}
+
+public protocol QueueFamilyVideoPropertiesKHRExtension: Chainable {}
 
 public struct QueueFamilyQueryResultStatusPropertiesKHR: ChainableBase, QueueFamilyProperties2Extension {
     public typealias CStruct = VkQueueFamilyQueryResultStatusPropertiesKHR
@@ -25834,8 +28490,12 @@ public struct QueueFamilyQueryResultStatusPropertiesKHR: ChainableBase, QueueFam
         cStruct.queryResultStatusSupport = VkBool32(self.queryResultStatusSupport ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: QueueFamilyQueryResultStatusPropertiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol QueueFamilyQueryResultStatusPropertiesKHRExtension: Chainable {}
+
+public protocol QueueFamilyQueryResultStatusPropertiesKHRExtension: Chainable {}
 
 public struct VideoProfileInfoKHR: ChainableBase, QueryPoolCreateInfoExtension {
     public typealias CStruct = VkVideoProfileInfoKHR
@@ -25869,8 +28529,12 @@ public struct VideoProfileInfoKHR: ChainableBase, QueryPoolCreateInfoExtension {
         cStruct.chromaBitDepth = self.chromaBitDepth.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: VideoProfileInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoProfileInfoKHRExtension: Chainable {}
+
+public protocol VideoProfileInfoKHRExtension: Chainable {}
 
 public struct VideoProfileListInfoKHR: ChainableBase, PhysicalDeviceImageFormatInfo2Extension, PhysicalDeviceVideoFormatInfoKHRExtension, ImageCreateInfoExtension, BufferCreateInfoExtension {
     public typealias CStruct = VkVideoProfileListInfoKHR
@@ -25895,8 +28559,12 @@ public struct VideoProfileListInfoKHR: ChainableBase, PhysicalDeviceImageFormatI
             return try body(&cStruct)
         }
     }
+    public func push<Extension: VideoProfileListInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoProfileListInfoKHRExtension: Chainable {}
+
+public protocol VideoProfileListInfoKHRExtension: Chainable {}
 
 public struct PhysicalDeviceVideoFormatInfoKHR: ChainableBase {
     public typealias CStruct = VkPhysicalDeviceVideoFormatInfoKHR
@@ -25918,8 +28586,12 @@ public struct PhysicalDeviceVideoFormatInfoKHR: ChainableBase {
         cStruct.imageUsage = self.imageUsage.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceVideoFormatInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceVideoFormatInfoKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceVideoFormatInfoKHRExtension: Chainable {}
 
 public struct VideoFormatPropertiesKHR: ChainableBase {
     public typealias CStruct = VkVideoFormatPropertiesKHR
@@ -25954,8 +28626,12 @@ public struct VideoFormatPropertiesKHR: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: VideoFormatPropertiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoFormatPropertiesKHRExtension: Chainable {}
+
+public protocol VideoFormatPropertiesKHRExtension: Chainable {}
 
 public struct VideoEncodeQuantizationMapCapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension {
     public typealias CStruct = VkVideoEncodeQuantizationMapCapabilitiesKHR
@@ -25975,8 +28651,12 @@ public struct VideoEncodeQuantizationMapCapabilitiesKHR: ChainableBase, VideoCap
             return try body(&cStruct)
         }
     }
+    public func push<Extension: VideoEncodeQuantizationMapCapabilitiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeQuantizationMapCapabilitiesKHRExtension: Chainable {}
+
+public protocol VideoEncodeQuantizationMapCapabilitiesKHRExtension: Chainable {}
 
 public struct VideoEncodeH264QuantizationMapCapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension {
     public typealias CStruct = VkVideoEncodeH264QuantizationMapCapabilitiesKHR
@@ -25997,8 +28677,12 @@ public struct VideoEncodeH264QuantizationMapCapabilitiesKHR: ChainableBase, Vide
         cStruct.maxQpDelta = self.maxQpDelta
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeH264QuantizationMapCapabilitiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeH264QuantizationMapCapabilitiesKHRExtension: Chainable {}
+
+public protocol VideoEncodeH264QuantizationMapCapabilitiesKHRExtension: Chainable {}
 
 public struct VideoEncodeH265QuantizationMapCapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension {
     public typealias CStruct = VkVideoEncodeH265QuantizationMapCapabilitiesKHR
@@ -26019,8 +28703,12 @@ public struct VideoEncodeH265QuantizationMapCapabilitiesKHR: ChainableBase, Vide
         cStruct.maxQpDelta = self.maxQpDelta
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeH265QuantizationMapCapabilitiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeH265QuantizationMapCapabilitiesKHRExtension: Chainable {}
+
+public protocol VideoEncodeH265QuantizationMapCapabilitiesKHRExtension: Chainable {}
 
 public struct VideoEncodeAV1QuantizationMapCapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension {
     public typealias CStruct = VkVideoEncodeAV1QuantizationMapCapabilitiesKHR
@@ -26041,8 +28729,12 @@ public struct VideoEncodeAV1QuantizationMapCapabilitiesKHR: ChainableBase, Video
         cStruct.maxQIndexDelta = self.maxQIndexDelta
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeAV1QuantizationMapCapabilitiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeAV1QuantizationMapCapabilitiesKHRExtension: Chainable {}
+
+public protocol VideoEncodeAV1QuantizationMapCapabilitiesKHRExtension: Chainable {}
 
 public struct VideoFormatQuantizationMapPropertiesKHR: ChainableBase, VideoFormatPropertiesKHRExtension {
     public typealias CStruct = VkVideoFormatQuantizationMapPropertiesKHR
@@ -26062,8 +28754,12 @@ public struct VideoFormatQuantizationMapPropertiesKHR: ChainableBase, VideoForma
             return try body(&cStruct)
         }
     }
+    public func push<Extension: VideoFormatQuantizationMapPropertiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoFormatQuantizationMapPropertiesKHRExtension: Chainable {}
+
+public protocol VideoFormatQuantizationMapPropertiesKHRExtension: Chainable {}
 
 public struct VideoFormatH265QuantizationMapPropertiesKHR: ChainableBase, VideoFormatPropertiesKHRExtension {
     public typealias CStruct = VkVideoFormatH265QuantizationMapPropertiesKHR
@@ -26081,8 +28777,12 @@ public struct VideoFormatH265QuantizationMapPropertiesKHR: ChainableBase, VideoF
         cStruct.compatibleCtbSizes = self.compatibleCtbSizes.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: VideoFormatH265QuantizationMapPropertiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoFormatH265QuantizationMapPropertiesKHRExtension: Chainable {}
+
+public protocol VideoFormatH265QuantizationMapPropertiesKHRExtension: Chainable {}
 
 public struct VideoFormatAV1QuantizationMapPropertiesKHR: ChainableBase, VideoFormatPropertiesKHRExtension {
     public typealias CStruct = VkVideoFormatAV1QuantizationMapPropertiesKHR
@@ -26100,8 +28800,12 @@ public struct VideoFormatAV1QuantizationMapPropertiesKHR: ChainableBase, VideoFo
         cStruct.compatibleSuperblockSizes = self.compatibleSuperblockSizes.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: VideoFormatAV1QuantizationMapPropertiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoFormatAV1QuantizationMapPropertiesKHRExtension: Chainable {}
+
+public protocol VideoFormatAV1QuantizationMapPropertiesKHRExtension: Chainable {}
 
 public struct VideoCapabilitiesKHR: ChainableBase {
     public typealias CStruct = VkVideoCapabilitiesKHR
@@ -26151,8 +28855,12 @@ public struct VideoCapabilitiesKHR: ChainableBase {
             }
         }
     }
+    public func push<Extension: VideoCapabilitiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoCapabilitiesKHRExtension: Chainable {}
+
+public protocol VideoCapabilitiesKHRExtension: Chainable {}
 
 public struct VideoSessionMemoryRequirementsKHR: ChainableBase {
     public typealias CStruct = VkVideoSessionMemoryRequirementsKHR
@@ -26175,8 +28883,12 @@ public struct VideoSessionMemoryRequirementsKHR: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: VideoSessionMemoryRequirementsKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoSessionMemoryRequirementsKHRExtension: Chainable {}
+
+public protocol VideoSessionMemoryRequirementsKHRExtension: Chainable {}
 
 public struct BindVideoSessionMemoryInfoKHR: ChainableBase {
     public typealias CStruct = VkBindVideoSessionMemoryInfoKHR
@@ -26210,8 +28922,12 @@ public struct BindVideoSessionMemoryInfoKHR: ChainableBase {
         cStruct.memorySize = self.memorySize
         return try body(&cStruct)
     }
+    public func push<Extension: BindVideoSessionMemoryInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol BindVideoSessionMemoryInfoKHRExtension: Chainable {}
+
+public protocol BindVideoSessionMemoryInfoKHRExtension: Chainable {}
 
 public struct VideoPictureResourceInfoKHR: ChainableBase {
     public typealias CStruct = VkVideoPictureResourceInfoKHR
@@ -26249,8 +28965,12 @@ public struct VideoPictureResourceInfoKHR: ChainableBase {
             }
         }
     }
+    public func push<Extension: VideoPictureResourceInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoPictureResourceInfoKHRExtension: Chainable {}
+
+public protocol VideoPictureResourceInfoKHRExtension: Chainable {}
 
 public struct VideoReferenceSlotInfoKHR: ChainableBase {
     public typealias CStruct = VkVideoReferenceSlotInfoKHR
@@ -26278,8 +28998,12 @@ public struct VideoReferenceSlotInfoKHR: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: VideoReferenceSlotInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoReferenceSlotInfoKHRExtension: Chainable {}
+
+public protocol VideoReferenceSlotInfoKHRExtension: Chainable {}
 
 public struct VideoDecodeCapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension {
     public typealias CStruct = VkVideoDecodeCapabilitiesKHR
@@ -26297,8 +29021,12 @@ public struct VideoDecodeCapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExt
         cStruct.flags = self.flags.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: VideoDecodeCapabilitiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoDecodeCapabilitiesKHRExtension: Chainable {}
+
+public protocol VideoDecodeCapabilitiesKHRExtension: Chainable {}
 
 public struct VideoDecodeUsageInfoKHR: ChainableBase, VideoProfileInfoKHRExtension, QueryPoolCreateInfoExtension {
     public typealias CStruct = VkVideoDecodeUsageInfoKHR
@@ -26320,8 +29048,12 @@ public struct VideoDecodeUsageInfoKHR: ChainableBase, VideoProfileInfoKHRExtensi
         cStruct.videoUsageHints = self.videoUsageHints.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: VideoDecodeUsageInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoDecodeUsageInfoKHRExtension: Chainable {}
+
+public protocol VideoDecodeUsageInfoKHRExtension: Chainable {}
 
 public struct VideoDecodeInfoKHR: ChainableBase {
     public typealias CStruct = VkVideoDecodeInfoKHR
@@ -26374,8 +29106,12 @@ public struct VideoDecodeInfoKHR: ChainableBase {
             }
         }
     }
+    public func push<Extension: VideoDecodeInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoDecodeInfoKHRExtension: Chainable {}
+
+public protocol VideoDecodeInfoKHRExtension: Chainable {}
 
 public struct PhysicalDeviceVideoMaintenance1FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceVideoMaintenance1FeaturesKHR
@@ -26397,8 +29133,12 @@ public struct PhysicalDeviceVideoMaintenance1FeaturesKHR: ChainableBase, Physica
         cStruct.videoMaintenance1 = VkBool32(self.videoMaintenance1 ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceVideoMaintenance1FeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceVideoMaintenance1FeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceVideoMaintenance1FeaturesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceVideoMaintenance2FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceVideoMaintenance2FeaturesKHR
@@ -26420,8 +29160,12 @@ public struct PhysicalDeviceVideoMaintenance2FeaturesKHR: ChainableBase, Physica
         cStruct.videoMaintenance2 = VkBool32(self.videoMaintenance2 ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceVideoMaintenance2FeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceVideoMaintenance2FeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceVideoMaintenance2FeaturesKHRExtension: Chainable {}
 
 public struct VideoInlineQueryInfoKHR: ChainableBase, VideoDecodeInfoKHRExtension, VideoEncodeInfoKHRExtension {
     public typealias CStruct = VkVideoInlineQueryInfoKHR
@@ -26451,8 +29195,12 @@ public struct VideoInlineQueryInfoKHR: ChainableBase, VideoDecodeInfoKHRExtensio
         cStruct.queryCount = self.queryCount
         return try body(&cStruct)
     }
+    public func push<Extension: VideoInlineQueryInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoInlineQueryInfoKHRExtension: Chainable {}
+
+public protocol VideoInlineQueryInfoKHRExtension: Chainable {}
 
 public struct VideoDecodeH264ProfileInfoKHR: ChainableBase, VideoProfileInfoKHRExtension, QueryPoolCreateInfoExtension {
     public typealias CStruct = VkVideoDecodeH264ProfileInfoKHR
@@ -26478,8 +29226,12 @@ public struct VideoDecodeH264ProfileInfoKHR: ChainableBase, VideoProfileInfoKHRE
         cStruct.pictureLayout = VkVideoDecodeH264PictureLayoutFlagBitsKHR(rawValue: VkVideoDecodeH264PictureLayoutFlagBitsKHR.RawValue(bitPattern: self.pictureLayout.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: VideoDecodeH264ProfileInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoDecodeH264ProfileInfoKHRExtension: Chainable {}
+
+public protocol VideoDecodeH264ProfileInfoKHRExtension: Chainable {}
 
 public struct VideoDecodeH264CapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension {
     public typealias CStruct = VkVideoDecodeH264CapabilitiesKHR
@@ -26502,8 +29254,12 @@ public struct VideoDecodeH264CapabilitiesKHR: ChainableBase, VideoCapabilitiesKH
             return try body(&cStruct)
         }
     }
+    public func push<Extension: VideoDecodeH264CapabilitiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoDecodeH264CapabilitiesKHRExtension: Chainable {}
+
+public protocol VideoDecodeH264CapabilitiesKHRExtension: Chainable {}
 
 public struct VideoDecodeH264SessionParametersAddInfoKHR: ChainableBase, VideoSessionParametersUpdateInfoKHRExtension {
     public typealias CStruct = VkVideoDecodeH264SessionParametersAddInfoKHR
@@ -26535,8 +29291,12 @@ public struct VideoDecodeH264SessionParametersAddInfoKHR: ChainableBase, VideoSe
             }
         }
     }
+    public func push<Extension: VideoDecodeH264SessionParametersAddInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoDecodeH264SessionParametersAddInfoKHRExtension: Chainable {}
+
+public protocol VideoDecodeH264SessionParametersAddInfoKHRExtension: Chainable {}
 
 public struct VideoDecodeH264SessionParametersCreateInfoKHR: ChainableBase, VideoSessionParametersCreateInfoKHRExtension {
     public typealias CStruct = VkVideoDecodeH264SessionParametersCreateInfoKHR
@@ -26568,8 +29328,12 @@ public struct VideoDecodeH264SessionParametersCreateInfoKHR: ChainableBase, Vide
             return try body(&cStruct)
         }
     }
+    public func push<Extension: VideoDecodeH264SessionParametersCreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoDecodeH264SessionParametersCreateInfoKHRExtension: Chainable {}
+
+public protocol VideoDecodeH264SessionParametersCreateInfoKHRExtension: Chainable {}
 
 public struct VideoDecodeH264InlineSessionParametersInfoKHR: ChainableBase, VideoDecodeInfoKHRExtension {
     public typealias CStruct = VkVideoDecodeH264InlineSessionParametersInfoKHR
@@ -26595,8 +29359,12 @@ public struct VideoDecodeH264InlineSessionParametersInfoKHR: ChainableBase, Vide
         cStruct.pStdPPS = self.stdPPS
         return try body(&cStruct)
     }
+    public func push<Extension: VideoDecodeH264InlineSessionParametersInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoDecodeH264InlineSessionParametersInfoKHRExtension: Chainable {}
+
+public protocol VideoDecodeH264InlineSessionParametersInfoKHRExtension: Chainable {}
 
 public struct VideoDecodeH264PictureInfoKHR: ChainableBase, VideoDecodeInfoKHRExtension {
     public typealias CStruct = VkVideoDecodeH264PictureInfoKHR
@@ -26625,8 +29393,12 @@ public struct VideoDecodeH264PictureInfoKHR: ChainableBase, VideoDecodeInfoKHREx
             return try body(&cStruct)
         }
     }
+    public func push<Extension: VideoDecodeH264PictureInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoDecodeH264PictureInfoKHRExtension: Chainable {}
+
+public protocol VideoDecodeH264PictureInfoKHRExtension: Chainable {}
 
 public struct VideoDecodeH264DpbSlotInfoKHR: ChainableBase, VideoReferenceSlotInfoKHRExtension {
     public typealias CStruct = VkVideoDecodeH264DpbSlotInfoKHR
@@ -26648,8 +29420,12 @@ public struct VideoDecodeH264DpbSlotInfoKHR: ChainableBase, VideoReferenceSlotIn
         cStruct.pStdReferenceInfo = self.stdReferenceInfo
         return try body(&cStruct)
     }
+    public func push<Extension: VideoDecodeH264DpbSlotInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoDecodeH264DpbSlotInfoKHRExtension: Chainable {}
+
+public protocol VideoDecodeH264DpbSlotInfoKHRExtension: Chainable {}
 
 public struct VideoDecodeH265ProfileInfoKHR: ChainableBase, VideoProfileInfoKHRExtension, QueryPoolCreateInfoExtension {
     public typealias CStruct = VkVideoDecodeH265ProfileInfoKHR
@@ -26671,8 +29447,12 @@ public struct VideoDecodeH265ProfileInfoKHR: ChainableBase, VideoProfileInfoKHRE
         cStruct.stdProfileIdc = self.stdProfileIdc
         return try body(&cStruct)
     }
+    public func push<Extension: VideoDecodeH265ProfileInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoDecodeH265ProfileInfoKHRExtension: Chainable {}
+
+public protocol VideoDecodeH265ProfileInfoKHRExtension: Chainable {}
 
 public struct VideoDecodeH265CapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension {
     public typealias CStruct = VkVideoDecodeH265CapabilitiesKHR
@@ -26690,8 +29470,12 @@ public struct VideoDecodeH265CapabilitiesKHR: ChainableBase, VideoCapabilitiesKH
         cStruct.maxLevelIdc = self.maxLevelIdc
         return try body(&cStruct)
     }
+    public func push<Extension: VideoDecodeH265CapabilitiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoDecodeH265CapabilitiesKHRExtension: Chainable {}
+
+public protocol VideoDecodeH265CapabilitiesKHRExtension: Chainable {}
 
 public struct VideoDecodeH265SessionParametersAddInfoKHR: ChainableBase, VideoSessionParametersUpdateInfoKHRExtension {
     public typealias CStruct = VkVideoDecodeH265SessionParametersAddInfoKHR
@@ -26730,8 +29514,12 @@ public struct VideoDecodeH265SessionParametersAddInfoKHR: ChainableBase, VideoSe
             }
         }
     }
+    public func push<Extension: VideoDecodeH265SessionParametersAddInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoDecodeH265SessionParametersAddInfoKHRExtension: Chainable {}
+
+public protocol VideoDecodeH265SessionParametersAddInfoKHRExtension: Chainable {}
 
 public struct VideoDecodeH265SessionParametersCreateInfoKHR: ChainableBase, VideoSessionParametersCreateInfoKHRExtension {
     public typealias CStruct = VkVideoDecodeH265SessionParametersCreateInfoKHR
@@ -26767,8 +29555,12 @@ public struct VideoDecodeH265SessionParametersCreateInfoKHR: ChainableBase, Vide
             return try body(&cStruct)
         }
     }
+    public func push<Extension: VideoDecodeH265SessionParametersCreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoDecodeH265SessionParametersCreateInfoKHRExtension: Chainable {}
+
+public protocol VideoDecodeH265SessionParametersCreateInfoKHRExtension: Chainable {}
 
 public struct VideoDecodeH265InlineSessionParametersInfoKHR: ChainableBase, VideoDecodeInfoKHRExtension {
     public typealias CStruct = VkVideoDecodeH265InlineSessionParametersInfoKHR
@@ -26798,8 +29590,12 @@ public struct VideoDecodeH265InlineSessionParametersInfoKHR: ChainableBase, Vide
         cStruct.pStdPPS = self.stdPPS
         return try body(&cStruct)
     }
+    public func push<Extension: VideoDecodeH265InlineSessionParametersInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoDecodeH265InlineSessionParametersInfoKHRExtension: Chainable {}
+
+public protocol VideoDecodeH265InlineSessionParametersInfoKHRExtension: Chainable {}
 
 public struct VideoDecodeH265PictureInfoKHR: ChainableBase, VideoDecodeInfoKHRExtension {
     public typealias CStruct = VkVideoDecodeH265PictureInfoKHR
@@ -26828,8 +29624,12 @@ public struct VideoDecodeH265PictureInfoKHR: ChainableBase, VideoDecodeInfoKHREx
             return try body(&cStruct)
         }
     }
+    public func push<Extension: VideoDecodeH265PictureInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoDecodeH265PictureInfoKHRExtension: Chainable {}
+
+public protocol VideoDecodeH265PictureInfoKHRExtension: Chainable {}
 
 public struct VideoDecodeH265DpbSlotInfoKHR: ChainableBase, VideoReferenceSlotInfoKHRExtension {
     public typealias CStruct = VkVideoDecodeH265DpbSlotInfoKHR
@@ -26851,8 +29651,12 @@ public struct VideoDecodeH265DpbSlotInfoKHR: ChainableBase, VideoReferenceSlotIn
         cStruct.pStdReferenceInfo = self.stdReferenceInfo
         return try body(&cStruct)
     }
+    public func push<Extension: VideoDecodeH265DpbSlotInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoDecodeH265DpbSlotInfoKHRExtension: Chainable {}
+
+public protocol VideoDecodeH265DpbSlotInfoKHRExtension: Chainable {}
 
 public struct PhysicalDeviceVideoDecodeVP9FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceVideoDecodeVP9FeaturesKHR
@@ -26874,8 +29678,12 @@ public struct PhysicalDeviceVideoDecodeVP9FeaturesKHR: ChainableBase, PhysicalDe
         cStruct.videoDecodeVP9 = VkBool32(self.videoDecodeVP9 ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceVideoDecodeVP9FeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceVideoDecodeVP9FeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceVideoDecodeVP9FeaturesKHRExtension: Chainable {}
 
 public struct VideoDecodeVP9ProfileInfoKHR: ChainableBase, VideoProfileInfoKHRExtension, QueryPoolCreateInfoExtension {
     public typealias CStruct = VkVideoDecodeVP9ProfileInfoKHR
@@ -26897,8 +29705,12 @@ public struct VideoDecodeVP9ProfileInfoKHR: ChainableBase, VideoProfileInfoKHREx
         cStruct.stdProfile = self.stdProfile
         return try body(&cStruct)
     }
+    public func push<Extension: VideoDecodeVP9ProfileInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoDecodeVP9ProfileInfoKHRExtension: Chainable {}
+
+public protocol VideoDecodeVP9ProfileInfoKHRExtension: Chainable {}
 
 public struct VideoDecodeVP9CapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension {
     public typealias CStruct = VkVideoDecodeVP9CapabilitiesKHR
@@ -26916,8 +29728,12 @@ public struct VideoDecodeVP9CapabilitiesKHR: ChainableBase, VideoCapabilitiesKHR
         cStruct.maxLevel = self.maxLevel
         return try body(&cStruct)
     }
+    public func push<Extension: VideoDecodeVP9CapabilitiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoDecodeVP9CapabilitiesKHRExtension: Chainable {}
+
+public protocol VideoDecodeVP9CapabilitiesKHRExtension: Chainable {}
 
 public struct VideoDecodeVP9PictureInfoKHR: ChainableBase, VideoDecodeInfoKHRExtension {
     public typealias CStruct = VkVideoDecodeVP9PictureInfoKHR
@@ -26955,8 +29771,12 @@ public struct VideoDecodeVP9PictureInfoKHR: ChainableBase, VideoDecodeInfoKHRExt
         cStruct.tilesOffset = self.tilesOffset
         return try body(&cStruct)
     }
+    public func push<Extension: VideoDecodeVP9PictureInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoDecodeVP9PictureInfoKHRExtension: Chainable {}
+
+public protocol VideoDecodeVP9PictureInfoKHRExtension: Chainable {}
 
 public struct VideoDecodeAV1ProfileInfoKHR: ChainableBase, VideoProfileInfoKHRExtension, QueryPoolCreateInfoExtension {
     public typealias CStruct = VkVideoDecodeAV1ProfileInfoKHR
@@ -26982,8 +29802,12 @@ public struct VideoDecodeAV1ProfileInfoKHR: ChainableBase, VideoProfileInfoKHREx
         cStruct.filmGrainSupport = VkBool32(self.filmGrainSupport ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: VideoDecodeAV1ProfileInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoDecodeAV1ProfileInfoKHRExtension: Chainable {}
+
+public protocol VideoDecodeAV1ProfileInfoKHRExtension: Chainable {}
 
 public struct VideoDecodeAV1CapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension {
     public typealias CStruct = VkVideoDecodeAV1CapabilitiesKHR
@@ -27001,8 +29825,12 @@ public struct VideoDecodeAV1CapabilitiesKHR: ChainableBase, VideoCapabilitiesKHR
         cStruct.maxLevel = self.maxLevel
         return try body(&cStruct)
     }
+    public func push<Extension: VideoDecodeAV1CapabilitiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoDecodeAV1CapabilitiesKHRExtension: Chainable {}
+
+public protocol VideoDecodeAV1CapabilitiesKHRExtension: Chainable {}
 
 public struct VideoDecodeAV1SessionParametersCreateInfoKHR: ChainableBase, VideoSessionParametersCreateInfoKHRExtension {
     public typealias CStruct = VkVideoDecodeAV1SessionParametersCreateInfoKHR
@@ -27024,8 +29852,12 @@ public struct VideoDecodeAV1SessionParametersCreateInfoKHR: ChainableBase, Video
         cStruct.pStdSequenceHeader = self.stdSequenceHeader
         return try body(&cStruct)
     }
+    public func push<Extension: VideoDecodeAV1SessionParametersCreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoDecodeAV1SessionParametersCreateInfoKHRExtension: Chainable {}
+
+public protocol VideoDecodeAV1SessionParametersCreateInfoKHRExtension: Chainable {}
 
 public struct VideoDecodeAV1InlineSessionParametersInfoKHR: ChainableBase, VideoDecodeInfoKHRExtension {
     public typealias CStruct = VkVideoDecodeAV1InlineSessionParametersInfoKHR
@@ -27047,8 +29879,12 @@ public struct VideoDecodeAV1InlineSessionParametersInfoKHR: ChainableBase, Video
         cStruct.pStdSequenceHeader = self.stdSequenceHeader
         return try body(&cStruct)
     }
+    public func push<Extension: VideoDecodeAV1InlineSessionParametersInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoDecodeAV1InlineSessionParametersInfoKHRExtension: Chainable {}
+
+public protocol VideoDecodeAV1InlineSessionParametersInfoKHRExtension: Chainable {}
 
 public struct VideoDecodeAV1PictureInfoKHR: ChainableBase, VideoDecodeInfoKHRExtension {
     public typealias CStruct = VkVideoDecodeAV1PictureInfoKHR
@@ -27091,8 +29927,12 @@ public struct VideoDecodeAV1PictureInfoKHR: ChainableBase, VideoDecodeInfoKHRExt
             }
         }
     }
+    public func push<Extension: VideoDecodeAV1PictureInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoDecodeAV1PictureInfoKHRExtension: Chainable {}
+
+public protocol VideoDecodeAV1PictureInfoKHRExtension: Chainable {}
 
 public struct VideoDecodeAV1DpbSlotInfoKHR: ChainableBase, VideoReferenceSlotInfoKHRExtension {
     public typealias CStruct = VkVideoDecodeAV1DpbSlotInfoKHR
@@ -27114,8 +29954,12 @@ public struct VideoDecodeAV1DpbSlotInfoKHR: ChainableBase, VideoReferenceSlotInf
         cStruct.pStdReferenceInfo = self.stdReferenceInfo
         return try body(&cStruct)
     }
+    public func push<Extension: VideoDecodeAV1DpbSlotInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoDecodeAV1DpbSlotInfoKHRExtension: Chainable {}
+
+public protocol VideoDecodeAV1DpbSlotInfoKHRExtension: Chainable {}
 
 public struct VideoSessionCreateInfoKHR: ChainableBase {
     public typealias CStruct = VkVideoSessionCreateInfoKHR
@@ -27175,8 +30019,12 @@ public struct VideoSessionCreateInfoKHR: ChainableBase {
             }
         }
     }
+    public func push<Extension: VideoSessionCreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoSessionCreateInfoKHRExtension: Chainable {}
+
+public protocol VideoSessionCreateInfoKHRExtension: Chainable {}
 
 public struct VideoSessionParametersCreateInfoKHR: ChainableBase {
     public typealias CStruct = VkVideoSessionParametersCreateInfoKHR
@@ -27206,8 +30054,12 @@ public struct VideoSessionParametersCreateInfoKHR: ChainableBase {
         cStruct.videoSession = self.videoSession.handle
         return try body(&cStruct)
     }
+    public func push<Extension: VideoSessionParametersCreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoSessionParametersCreateInfoKHRExtension: Chainable {}
+
+public protocol VideoSessionParametersCreateInfoKHRExtension: Chainable {}
 
 public struct VideoSessionParametersUpdateInfoKHR: ChainableBase {
     public typealias CStruct = VkVideoSessionParametersUpdateInfoKHR
@@ -27229,8 +30081,12 @@ public struct VideoSessionParametersUpdateInfoKHR: ChainableBase {
         cStruct.updateSequenceCount = self.updateSequenceCount
         return try body(&cStruct)
     }
+    public func push<Extension: VideoSessionParametersUpdateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoSessionParametersUpdateInfoKHRExtension: Chainable {}
+
+public protocol VideoSessionParametersUpdateInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeSessionParametersGetInfoKHR: ChainableBase {
     public typealias CStruct = VkVideoEncodeSessionParametersGetInfoKHR
@@ -27252,8 +30108,12 @@ public struct VideoEncodeSessionParametersGetInfoKHR: ChainableBase {
         cStruct.videoSessionParameters = self.videoSessionParameters.handle
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeSessionParametersGetInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeSessionParametersGetInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeSessionParametersGetInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeSessionParametersFeedbackInfoKHR: ChainableBase {
     public typealias CStruct = VkVideoEncodeSessionParametersFeedbackInfoKHR
@@ -27271,8 +30131,12 @@ public struct VideoEncodeSessionParametersFeedbackInfoKHR: ChainableBase {
         cStruct.hasOverrides = VkBool32(self.hasOverrides ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeSessionParametersFeedbackInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeSessionParametersFeedbackInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeSessionParametersFeedbackInfoKHRExtension: Chainable {}
 
 public struct VideoBeginCodingInfoKHR: ChainableBase {
     public typealias CStruct = VkVideoBeginCodingInfoKHR
@@ -27309,8 +30173,12 @@ public struct VideoBeginCodingInfoKHR: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: VideoBeginCodingInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoBeginCodingInfoKHRExtension: Chainable {}
+
+public protocol VideoBeginCodingInfoKHRExtension: Chainable {}
 
 public struct VideoEndCodingInfoKHR: ChainableBase {
     public typealias CStruct = VkVideoEndCodingInfoKHR
@@ -27332,8 +30200,12 @@ public struct VideoEndCodingInfoKHR: ChainableBase {
         cStruct.flags = self.flags.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEndCodingInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEndCodingInfoKHRExtension: Chainable {}
+
+public protocol VideoEndCodingInfoKHRExtension: Chainable {}
 
 public struct VideoCodingControlInfoKHR: ChainableBase {
     public typealias CStruct = VkVideoCodingControlInfoKHR
@@ -27355,8 +30227,12 @@ public struct VideoCodingControlInfoKHR: ChainableBase {
         cStruct.flags = self.flags.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: VideoCodingControlInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoCodingControlInfoKHRExtension: Chainable {}
+
+public protocol VideoCodingControlInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeUsageInfoKHR: ChainableBase, VideoProfileInfoKHRExtension, QueryPoolCreateInfoExtension {
     public typealias CStruct = VkVideoEncodeUsageInfoKHR
@@ -27386,8 +30262,12 @@ public struct VideoEncodeUsageInfoKHR: ChainableBase, VideoProfileInfoKHRExtensi
         cStruct.tuningMode = VkVideoEncodeTuningModeKHR(rawValue: VkVideoEncodeTuningModeKHR.RawValue(bitPattern: self.tuningMode.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeUsageInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeUsageInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeUsageInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeInfoKHR: ChainableBase {
     public typealias CStruct = VkVideoEncodeInfoKHR
@@ -27444,8 +30324,12 @@ public struct VideoEncodeInfoKHR: ChainableBase {
             }
         }
     }
+    public func push<Extension: VideoEncodeInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeQuantizationMapInfoKHR: ChainableBase, VideoEncodeInfoKHRExtension {
     public typealias CStruct = VkVideoEncodeQuantizationMapInfoKHR
@@ -27473,8 +30357,12 @@ public struct VideoEncodeQuantizationMapInfoKHR: ChainableBase, VideoEncodeInfoK
             return try body(&cStruct)
         }
     }
+    public func push<Extension: VideoEncodeQuantizationMapInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeQuantizationMapInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeQuantizationMapInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeQuantizationMapSessionParametersCreateInfoKHR: ChainableBase, VideoSessionParametersCreateInfoKHRExtension {
     public typealias CStruct = VkVideoEncodeQuantizationMapSessionParametersCreateInfoKHR
@@ -27498,8 +30386,12 @@ public struct VideoEncodeQuantizationMapSessionParametersCreateInfoKHR: Chainabl
             return try body(&cStruct)
         }
     }
+    public func push<Extension: VideoEncodeQuantizationMapSessionParametersCreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeQuantizationMapSessionParametersCreateInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeQuantizationMapSessionParametersCreateInfoKHRExtension: Chainable {}
 
 public struct PhysicalDeviceVideoEncodeQuantizationMapFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceVideoEncodeQuantizationMapFeaturesKHR
@@ -27521,8 +30413,12 @@ public struct PhysicalDeviceVideoEncodeQuantizationMapFeaturesKHR: ChainableBase
         cStruct.videoEncodeQuantizationMap = VkBool32(self.videoEncodeQuantizationMap ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceVideoEncodeQuantizationMapFeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceVideoEncodeQuantizationMapFeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceVideoEncodeQuantizationMapFeaturesKHRExtension: Chainable {}
 
 public struct QueryPoolVideoEncodeFeedbackCreateInfoKHR: ChainableBase, QueryPoolCreateInfoExtension {
     public typealias CStruct = VkQueryPoolVideoEncodeFeedbackCreateInfoKHR
@@ -27544,8 +30440,12 @@ public struct QueryPoolVideoEncodeFeedbackCreateInfoKHR: ChainableBase, QueryPoo
         cStruct.encodeFeedbackFlags = self.encodeFeedbackFlags.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: QueryPoolVideoEncodeFeedbackCreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol QueryPoolVideoEncodeFeedbackCreateInfoKHRExtension: Chainable {}
+
+public protocol QueryPoolVideoEncodeFeedbackCreateInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeQualityLevelInfoKHR: ChainableBase, VideoCodingControlInfoKHRExtension, VideoSessionParametersCreateInfoKHRExtension {
     public typealias CStruct = VkVideoEncodeQualityLevelInfoKHR
@@ -27567,8 +30467,12 @@ public struct VideoEncodeQualityLevelInfoKHR: ChainableBase, VideoCodingControlI
         cStruct.qualityLevel = self.qualityLevel
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeQualityLevelInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeQualityLevelInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeQualityLevelInfoKHRExtension: Chainable {}
 
 public struct PhysicalDeviceVideoEncodeQualityLevelInfoKHR: ChainableBase {
     public typealias CStruct = VkPhysicalDeviceVideoEncodeQualityLevelInfoKHR
@@ -27596,8 +30500,12 @@ public struct PhysicalDeviceVideoEncodeQualityLevelInfoKHR: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PhysicalDeviceVideoEncodeQualityLevelInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceVideoEncodeQualityLevelInfoKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceVideoEncodeQualityLevelInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeQualityLevelPropertiesKHR: ChainableBase {
     public typealias CStruct = VkVideoEncodeQualityLevelPropertiesKHR
@@ -27618,8 +30526,12 @@ public struct VideoEncodeQualityLevelPropertiesKHR: ChainableBase {
         cStruct.preferredRateControlLayerCount = self.preferredRateControlLayerCount
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeQualityLevelPropertiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeQualityLevelPropertiesKHRExtension: Chainable {}
+
+public protocol VideoEncodeQualityLevelPropertiesKHRExtension: Chainable {}
 
 public struct VideoEncodeRateControlLayerInfoKHR: ChainableBase {
     public typealias CStruct = VkVideoEncodeRateControlLayerInfoKHR
@@ -27653,8 +30565,12 @@ public struct VideoEncodeRateControlLayerInfoKHR: ChainableBase {
         cStruct.frameRateDenominator = self.frameRateDenominator
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeRateControlLayerInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeRateControlLayerInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeRateControlLayerInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeRateControlInfoKHR: ChainableBase, VideoCodingControlInfoKHRExtension, VideoBeginCodingInfoKHRExtension {
     public typealias CStruct = VkVideoEncodeRateControlInfoKHR
@@ -27695,8 +30611,12 @@ public struct VideoEncodeRateControlInfoKHR: ChainableBase, VideoCodingControlIn
             return try body(&cStruct)
         }
     }
+    public func push<Extension: VideoEncodeRateControlInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeRateControlInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeRateControlInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeCapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension {
     public typealias CStruct = VkVideoEncodeCapabilitiesKHR
@@ -27734,8 +30654,12 @@ public struct VideoEncodeCapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExt
             return try body(&cStruct)
         }
     }
+    public func push<Extension: VideoEncodeCapabilitiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeCapabilitiesKHRExtension: Chainable {}
+
+public protocol VideoEncodeCapabilitiesKHRExtension: Chainable {}
 
 public struct VideoEncodeH264CapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension {
     public typealias CStruct = VkVideoEncodeH264CapabilitiesKHR
@@ -27789,8 +30713,12 @@ public struct VideoEncodeH264CapabilitiesKHR: ChainableBase, VideoCapabilitiesKH
         cStruct.stdSyntaxFlags = self.stdSyntaxFlags.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeH264CapabilitiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeH264CapabilitiesKHRExtension: Chainable {}
+
+public protocol VideoEncodeH264CapabilitiesKHRExtension: Chainable {}
 
 public struct VideoEncodeH264QpKHR: CStructConvertible {
     public typealias CStruct = VkVideoEncodeH264QpKHR
@@ -27862,8 +30790,12 @@ public struct VideoEncodeH264QualityLevelPropertiesKHR: ChainableBase, VideoEnco
             return try body(&cStruct)
         }
     }
+    public func push<Extension: VideoEncodeH264QualityLevelPropertiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeH264QualityLevelPropertiesKHRExtension: Chainable {}
+
+public protocol VideoEncodeH264QualityLevelPropertiesKHRExtension: Chainable {}
 
 public struct VideoEncodeH264SessionCreateInfoKHR: ChainableBase, VideoSessionCreateInfoKHRExtension {
     public typealias CStruct = VkVideoEncodeH264SessionCreateInfoKHR
@@ -27889,8 +30821,12 @@ public struct VideoEncodeH264SessionCreateInfoKHR: ChainableBase, VideoSessionCr
         cStruct.maxLevelIdc = self.maxLevelIdc
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeH264SessionCreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeH264SessionCreateInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeH264SessionCreateInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeH264SessionParametersAddInfoKHR: ChainableBase, VideoSessionParametersUpdateInfoKHRExtension {
     public typealias CStruct = VkVideoEncodeH264SessionParametersAddInfoKHR
@@ -27922,8 +30858,12 @@ public struct VideoEncodeH264SessionParametersAddInfoKHR: ChainableBase, VideoSe
             }
         }
     }
+    public func push<Extension: VideoEncodeH264SessionParametersAddInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeH264SessionParametersAddInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeH264SessionParametersAddInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeH264SessionParametersCreateInfoKHR: ChainableBase, VideoSessionParametersCreateInfoKHRExtension {
     public typealias CStruct = VkVideoEncodeH264SessionParametersCreateInfoKHR
@@ -27955,8 +30895,12 @@ public struct VideoEncodeH264SessionParametersCreateInfoKHR: ChainableBase, Vide
             return try body(&cStruct)
         }
     }
+    public func push<Extension: VideoEncodeH264SessionParametersCreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeH264SessionParametersCreateInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeH264SessionParametersCreateInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeH264SessionParametersGetInfoKHR: ChainableBase, VideoEncodeSessionParametersGetInfoKHRExtension {
     public typealias CStruct = VkVideoEncodeH264SessionParametersGetInfoKHR
@@ -27990,8 +30934,12 @@ public struct VideoEncodeH264SessionParametersGetInfoKHR: ChainableBase, VideoEn
         cStruct.stdPPSId = self.stdPPSId
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeH264SessionParametersGetInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeH264SessionParametersGetInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeH264SessionParametersGetInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeH264SessionParametersFeedbackInfoKHR: ChainableBase, VideoEncodeSessionParametersFeedbackInfoKHRExtension {
     public typealias CStruct = VkVideoEncodeH264SessionParametersFeedbackInfoKHR
@@ -28012,8 +30960,12 @@ public struct VideoEncodeH264SessionParametersFeedbackInfoKHR: ChainableBase, Vi
         cStruct.hasStdPPSOverrides = VkBool32(self.hasStdPPSOverrides ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeH264SessionParametersFeedbackInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeH264SessionParametersFeedbackInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeH264SessionParametersFeedbackInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeH264DpbSlotInfoKHR: ChainableBase, VideoReferenceSlotInfoKHRExtension {
     public typealias CStruct = VkVideoEncodeH264DpbSlotInfoKHR
@@ -28035,8 +30987,12 @@ public struct VideoEncodeH264DpbSlotInfoKHR: ChainableBase, VideoReferenceSlotIn
         cStruct.pStdReferenceInfo = self.stdReferenceInfo
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeH264DpbSlotInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeH264DpbSlotInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeH264DpbSlotInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeH264NaluSliceInfoKHR: ChainableBase {
     public typealias CStruct = VkVideoEncodeH264NaluSliceInfoKHR
@@ -28062,8 +31018,12 @@ public struct VideoEncodeH264NaluSliceInfoKHR: ChainableBase {
         cStruct.pStdSliceHeader = self.stdSliceHeader
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeH264NaluSliceInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeH264NaluSliceInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeH264NaluSliceInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeH264PictureInfoKHR: ChainableBase, VideoEncodeInfoKHRExtension {
     public typealias CStruct = VkVideoEncodeH264PictureInfoKHR
@@ -28096,8 +31056,12 @@ public struct VideoEncodeH264PictureInfoKHR: ChainableBase, VideoEncodeInfoKHREx
             return try body(&cStruct)
         }
     }
+    public func push<Extension: VideoEncodeH264PictureInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeH264PictureInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeH264PictureInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeH264ProfileInfoKHR: ChainableBase, VideoProfileInfoKHRExtension, QueryPoolCreateInfoExtension {
     public typealias CStruct = VkVideoEncodeH264ProfileInfoKHR
@@ -28119,8 +31083,12 @@ public struct VideoEncodeH264ProfileInfoKHR: ChainableBase, VideoProfileInfoKHRE
         cStruct.stdProfileIdc = self.stdProfileIdc
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeH264ProfileInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeH264ProfileInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeH264ProfileInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeH264RateControlInfoKHR: ChainableBase, VideoCodingControlInfoKHRExtension, VideoBeginCodingInfoKHRExtension {
     public typealias CStruct = VkVideoEncodeH264RateControlInfoKHR
@@ -28158,8 +31126,12 @@ public struct VideoEncodeH264RateControlInfoKHR: ChainableBase, VideoCodingContr
         cStruct.temporalLayerCount = self.temporalLayerCount
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeH264RateControlInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeH264RateControlInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeH264RateControlInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeH264FrameSizeKHR: CStructConvertible {
     public typealias CStruct = VkVideoEncodeH264FrameSizeKHR
@@ -28221,8 +31193,12 @@ public struct VideoEncodeH264GopRemainingFrameInfoKHR: ChainableBase, VideoBegin
         cStruct.gopRemainingB = self.gopRemainingB
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeH264GopRemainingFrameInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeH264GopRemainingFrameInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeH264GopRemainingFrameInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeH264RateControlLayerInfoKHR: ChainableBase, VideoEncodeRateControlLayerInfoKHRExtension {
     public typealias CStruct = VkVideoEncodeH264RateControlLayerInfoKHR
@@ -28270,8 +31246,12 @@ public struct VideoEncodeH264RateControlLayerInfoKHR: ChainableBase, VideoEncode
             }
         }
     }
+    public func push<Extension: VideoEncodeH264RateControlLayerInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeH264RateControlLayerInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeH264RateControlLayerInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeH265CapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension {
     public typealias CStruct = VkVideoEncodeH265CapabilitiesKHR
@@ -28336,8 +31316,12 @@ public struct VideoEncodeH265CapabilitiesKHR: ChainableBase, VideoCapabilitiesKH
             return try body(&cStruct)
         }
     }
+    public func push<Extension: VideoEncodeH265CapabilitiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeH265CapabilitiesKHRExtension: Chainable {}
+
+public protocol VideoEncodeH265CapabilitiesKHRExtension: Chainable {}
 
 public struct VideoEncodeH265QpKHR: CStructConvertible {
     public typealias CStruct = VkVideoEncodeH265QpKHR
@@ -28406,8 +31390,12 @@ public struct VideoEncodeH265QualityLevelPropertiesKHR: ChainableBase, VideoEnco
             return try body(&cStruct)
         }
     }
+    public func push<Extension: VideoEncodeH265QualityLevelPropertiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeH265QualityLevelPropertiesKHRExtension: Chainable {}
+
+public protocol VideoEncodeH265QualityLevelPropertiesKHRExtension: Chainable {}
 
 public struct VideoEncodeH265SessionCreateInfoKHR: ChainableBase, VideoSessionCreateInfoKHRExtension {
     public typealias CStruct = VkVideoEncodeH265SessionCreateInfoKHR
@@ -28433,8 +31421,12 @@ public struct VideoEncodeH265SessionCreateInfoKHR: ChainableBase, VideoSessionCr
         cStruct.maxLevelIdc = self.maxLevelIdc
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeH265SessionCreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeH265SessionCreateInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeH265SessionCreateInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeH265SessionParametersAddInfoKHR: ChainableBase, VideoSessionParametersUpdateInfoKHRExtension {
     public typealias CStruct = VkVideoEncodeH265SessionParametersAddInfoKHR
@@ -28473,8 +31465,12 @@ public struct VideoEncodeH265SessionParametersAddInfoKHR: ChainableBase, VideoSe
             }
         }
     }
+    public func push<Extension: VideoEncodeH265SessionParametersAddInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeH265SessionParametersAddInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeH265SessionParametersAddInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeH265SessionParametersCreateInfoKHR: ChainableBase, VideoSessionParametersCreateInfoKHRExtension {
     public typealias CStruct = VkVideoEncodeH265SessionParametersCreateInfoKHR
@@ -28510,8 +31506,12 @@ public struct VideoEncodeH265SessionParametersCreateInfoKHR: ChainableBase, Vide
             return try body(&cStruct)
         }
     }
+    public func push<Extension: VideoEncodeH265SessionParametersCreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeH265SessionParametersCreateInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeH265SessionParametersCreateInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeH265SessionParametersGetInfoKHR: ChainableBase, VideoEncodeSessionParametersGetInfoKHRExtension {
     public typealias CStruct = VkVideoEncodeH265SessionParametersGetInfoKHR
@@ -28553,8 +31553,12 @@ public struct VideoEncodeH265SessionParametersGetInfoKHR: ChainableBase, VideoEn
         cStruct.stdPPSId = self.stdPPSId
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeH265SessionParametersGetInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeH265SessionParametersGetInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeH265SessionParametersGetInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeH265SessionParametersFeedbackInfoKHR: ChainableBase, VideoEncodeSessionParametersFeedbackInfoKHRExtension {
     public typealias CStruct = VkVideoEncodeH265SessionParametersFeedbackInfoKHR
@@ -28578,8 +31582,12 @@ public struct VideoEncodeH265SessionParametersFeedbackInfoKHR: ChainableBase, Vi
         cStruct.hasStdPPSOverrides = VkBool32(self.hasStdPPSOverrides ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeH265SessionParametersFeedbackInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeH265SessionParametersFeedbackInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeH265SessionParametersFeedbackInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeH265NaluSliceSegmentInfoKHR: ChainableBase {
     public typealias CStruct = VkVideoEncodeH265NaluSliceSegmentInfoKHR
@@ -28605,8 +31613,12 @@ public struct VideoEncodeH265NaluSliceSegmentInfoKHR: ChainableBase {
         cStruct.pStdSliceSegmentHeader = self.stdSliceSegmentHeader
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeH265NaluSliceSegmentInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeH265NaluSliceSegmentInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeH265NaluSliceSegmentInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeH265PictureInfoKHR: ChainableBase, VideoEncodeInfoKHRExtension {
     public typealias CStruct = VkVideoEncodeH265PictureInfoKHR
@@ -28635,8 +31647,12 @@ public struct VideoEncodeH265PictureInfoKHR: ChainableBase, VideoEncodeInfoKHREx
             return try body(&cStruct)
         }
     }
+    public func push<Extension: VideoEncodeH265PictureInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeH265PictureInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeH265PictureInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeH265RateControlInfoKHR: ChainableBase, VideoCodingControlInfoKHRExtension, VideoBeginCodingInfoKHRExtension {
     public typealias CStruct = VkVideoEncodeH265RateControlInfoKHR
@@ -28674,8 +31690,12 @@ public struct VideoEncodeH265RateControlInfoKHR: ChainableBase, VideoCodingContr
         cStruct.subLayerCount = self.subLayerCount
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeH265RateControlInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeH265RateControlInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeH265RateControlInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeH265FrameSizeKHR: CStructConvertible {
     public typealias CStruct = VkVideoEncodeH265FrameSizeKHR
@@ -28737,8 +31757,12 @@ public struct VideoEncodeH265GopRemainingFrameInfoKHR: ChainableBase, VideoBegin
         cStruct.gopRemainingB = self.gopRemainingB
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeH265GopRemainingFrameInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeH265GopRemainingFrameInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeH265GopRemainingFrameInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeH265RateControlLayerInfoKHR: ChainableBase, VideoEncodeRateControlLayerInfoKHRExtension {
     public typealias CStruct = VkVideoEncodeH265RateControlLayerInfoKHR
@@ -28786,8 +31810,12 @@ public struct VideoEncodeH265RateControlLayerInfoKHR: ChainableBase, VideoEncode
             }
         }
     }
+    public func push<Extension: VideoEncodeH265RateControlLayerInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeH265RateControlLayerInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeH265RateControlLayerInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeH265ProfileInfoKHR: ChainableBase, VideoProfileInfoKHRExtension, QueryPoolCreateInfoExtension {
     public typealias CStruct = VkVideoEncodeH265ProfileInfoKHR
@@ -28809,8 +31837,12 @@ public struct VideoEncodeH265ProfileInfoKHR: ChainableBase, VideoProfileInfoKHRE
         cStruct.stdProfileIdc = self.stdProfileIdc
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeH265ProfileInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeH265ProfileInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeH265ProfileInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeH265DpbSlotInfoKHR: ChainableBase, VideoReferenceSlotInfoKHRExtension {
     public typealias CStruct = VkVideoEncodeH265DpbSlotInfoKHR
@@ -28832,8 +31864,12 @@ public struct VideoEncodeH265DpbSlotInfoKHR: ChainableBase, VideoReferenceSlotIn
         cStruct.pStdReferenceInfo = self.stdReferenceInfo
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeH265DpbSlotInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeH265DpbSlotInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeH265DpbSlotInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeAV1CapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension {
     public typealias CStruct = VkVideoEncodeAV1CapabilitiesKHR
@@ -28928,8 +31964,12 @@ public struct VideoEncodeAV1CapabilitiesKHR: ChainableBase, VideoCapabilitiesKHR
             }
         }
     }
+    public func push<Extension: VideoEncodeAV1CapabilitiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeAV1CapabilitiesKHRExtension: Chainable {}
+
+public protocol VideoEncodeAV1CapabilitiesKHRExtension: Chainable {}
 
 public struct VideoEncodeAV1QIndexKHR: CStructConvertible {
     public typealias CStruct = VkVideoEncodeAV1QIndexKHR
@@ -29019,8 +32059,12 @@ public struct VideoEncodeAV1QualityLevelPropertiesKHR: ChainableBase, VideoEncod
             return try body(&cStruct)
         }
     }
+    public func push<Extension: VideoEncodeAV1QualityLevelPropertiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeAV1QualityLevelPropertiesKHRExtension: Chainable {}
+
+public protocol VideoEncodeAV1QualityLevelPropertiesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceVideoEncodeAV1FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceVideoEncodeAV1FeaturesKHR
@@ -29042,8 +32086,12 @@ public struct PhysicalDeviceVideoEncodeAV1FeaturesKHR: ChainableBase, PhysicalDe
         cStruct.videoEncodeAV1 = VkBool32(self.videoEncodeAV1 ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceVideoEncodeAV1FeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceVideoEncodeAV1FeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceVideoEncodeAV1FeaturesKHRExtension: Chainable {}
 
 public struct VideoEncodeAV1SessionCreateInfoKHR: ChainableBase, VideoSessionCreateInfoKHRExtension {
     public typealias CStruct = VkVideoEncodeAV1SessionCreateInfoKHR
@@ -29069,8 +32117,12 @@ public struct VideoEncodeAV1SessionCreateInfoKHR: ChainableBase, VideoSessionCre
         cStruct.maxLevel = self.maxLevel
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeAV1SessionCreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeAV1SessionCreateInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeAV1SessionCreateInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeAV1SessionParametersCreateInfoKHR: ChainableBase, VideoSessionParametersCreateInfoKHRExtension {
     public typealias CStruct = VkVideoEncodeAV1SessionParametersCreateInfoKHR
@@ -29103,8 +32155,12 @@ public struct VideoEncodeAV1SessionParametersCreateInfoKHR: ChainableBase, Video
             return try body(&cStruct)
         }
     }
+    public func push<Extension: VideoEncodeAV1SessionParametersCreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeAV1SessionParametersCreateInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeAV1SessionParametersCreateInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeAV1DpbSlotInfoKHR: ChainableBase, VideoReferenceSlotInfoKHRExtension {
     public typealias CStruct = VkVideoEncodeAV1DpbSlotInfoKHR
@@ -29126,8 +32182,12 @@ public struct VideoEncodeAV1DpbSlotInfoKHR: ChainableBase, VideoReferenceSlotInf
         cStruct.pStdReferenceInfo = self.stdReferenceInfo
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeAV1DpbSlotInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeAV1DpbSlotInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeAV1DpbSlotInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeAV1PictureInfoKHR: ChainableBase, VideoEncodeInfoKHRExtension {
     public typealias CStruct = VkVideoEncodeAV1PictureInfoKHR
@@ -29173,8 +32233,12 @@ public struct VideoEncodeAV1PictureInfoKHR: ChainableBase, VideoEncodeInfoKHRExt
         cStruct.generateObuExtensionHeader = VkBool32(self.generateObuExtensionHeader ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeAV1PictureInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeAV1PictureInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeAV1PictureInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeAV1ProfileInfoKHR: ChainableBase, VideoProfileInfoKHRExtension, QueryPoolCreateInfoExtension {
     public typealias CStruct = VkVideoEncodeAV1ProfileInfoKHR
@@ -29196,8 +32260,12 @@ public struct VideoEncodeAV1ProfileInfoKHR: ChainableBase, VideoProfileInfoKHREx
         cStruct.stdProfile = self.stdProfile
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeAV1ProfileInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeAV1ProfileInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeAV1ProfileInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeAV1RateControlInfoKHR: ChainableBase, VideoCodingControlInfoKHRExtension, VideoBeginCodingInfoKHRExtension {
     public typealias CStruct = VkVideoEncodeAV1RateControlInfoKHR
@@ -29235,8 +32303,12 @@ public struct VideoEncodeAV1RateControlInfoKHR: ChainableBase, VideoCodingContro
         cStruct.temporalLayerCount = self.temporalLayerCount
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeAV1RateControlInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeAV1RateControlInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeAV1RateControlInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeAV1FrameSizeKHR: CStructConvertible {
     public typealias CStruct = VkVideoEncodeAV1FrameSizeKHR
@@ -29298,8 +32370,12 @@ public struct VideoEncodeAV1GopRemainingFrameInfoKHR: ChainableBase, VideoBeginC
         cStruct.gopRemainingBipredictive = self.gopRemainingBipredictive
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeAV1GopRemainingFrameInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeAV1GopRemainingFrameInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeAV1GopRemainingFrameInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeAV1RateControlLayerInfoKHR: ChainableBase, VideoEncodeRateControlLayerInfoKHRExtension {
     public typealias CStruct = VkVideoEncodeAV1RateControlLayerInfoKHR
@@ -29347,8 +32423,12 @@ public struct VideoEncodeAV1RateControlLayerInfoKHR: ChainableBase, VideoEncodeR
             }
         }
     }
+    public func push<Extension: VideoEncodeAV1RateControlLayerInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeAV1RateControlLayerInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeAV1RateControlLayerInfoKHRExtension: Chainable {}
 
 public struct PhysicalDeviceInheritedViewportScissorFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceInheritedViewportScissorFeaturesNV
@@ -29370,8 +32450,12 @@ public struct PhysicalDeviceInheritedViewportScissorFeaturesNV: ChainableBase, P
         cStruct.inheritedViewportScissor2D = VkBool32(self.inheritedViewportScissor2D ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceInheritedViewportScissorFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceInheritedViewportScissorFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceInheritedViewportScissorFeaturesNVExtension: Chainable {}
 
 public struct CommandBufferInheritanceViewportScissorInfoNV: ChainableBase, CommandBufferInheritanceInfoExtension {
     public typealias CStruct = VkCommandBufferInheritanceViewportScissorInfoNV
@@ -29403,8 +32487,12 @@ public struct CommandBufferInheritanceViewportScissorInfoNV: ChainableBase, Comm
             return try body(&cStruct)
         }
     }
+    public func push<Extension: CommandBufferInheritanceViewportScissorInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CommandBufferInheritanceViewportScissorInfoNVExtension: Chainable {}
+
+public protocol CommandBufferInheritanceViewportScissorInfoNVExtension: Chainable {}
 
 public struct PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT
@@ -29426,8 +32514,12 @@ public struct PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT: ChainableBase, Phy
         cStruct.ycbcr2plane444Formats = VkBool32(self.ycbcr2plane444Formats ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceProvokingVertexFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceProvokingVertexFeaturesEXT
@@ -29453,8 +32545,12 @@ public struct PhysicalDeviceProvokingVertexFeaturesEXT: ChainableBase, PhysicalD
         cStruct.transformFeedbackPreservesProvokingVertex = VkBool32(self.transformFeedbackPreservesProvokingVertex ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceProvokingVertexFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceProvokingVertexFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceProvokingVertexFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceProvokingVertexPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceProvokingVertexPropertiesEXT
@@ -29475,8 +32571,12 @@ public struct PhysicalDeviceProvokingVertexPropertiesEXT: ChainableBase, Physica
         cStruct.transformFeedbackPreservesTriangleFanProvokingVertex = VkBool32(self.transformFeedbackPreservesTriangleFanProvokingVertex ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceProvokingVertexPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceProvokingVertexPropertiesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceProvokingVertexPropertiesEXTExtension: Chainable {}
 
 public struct PipelineRasterizationProvokingVertexStateCreateInfoEXT: ChainableBase, PipelineRasterizationStateCreateInfoExtension {
     public typealias CStruct = VkPipelineRasterizationProvokingVertexStateCreateInfoEXT
@@ -29498,8 +32598,12 @@ public struct PipelineRasterizationProvokingVertexStateCreateInfoEXT: ChainableB
         cStruct.provokingVertexMode = VkProvokingVertexModeEXT(rawValue: VkProvokingVertexModeEXT.RawValue(bitPattern: self.provokingVertexMode.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: PipelineRasterizationProvokingVertexStateCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineRasterizationProvokingVertexStateCreateInfoEXTExtension: Chainable {}
+
+public protocol PipelineRasterizationProvokingVertexStateCreateInfoEXTExtension: Chainable {}
 
 public struct VideoEncodeIntraRefreshCapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension {
     public typealias CStruct = VkVideoEncodeIntraRefreshCapabilitiesKHR
@@ -29529,8 +32633,12 @@ public struct VideoEncodeIntraRefreshCapabilitiesKHR: ChainableBase, VideoCapabi
         cStruct.nonRectangularIntraRefreshRegions = VkBool32(self.nonRectangularIntraRefreshRegions ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeIntraRefreshCapabilitiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeIntraRefreshCapabilitiesKHRExtension: Chainable {}
+
+public protocol VideoEncodeIntraRefreshCapabilitiesKHRExtension: Chainable {}
 
 public struct VideoEncodeSessionIntraRefreshCreateInfoKHR: ChainableBase, VideoSessionCreateInfoKHRExtension {
     public typealias CStruct = VkVideoEncodeSessionIntraRefreshCreateInfoKHR
@@ -29552,8 +32660,12 @@ public struct VideoEncodeSessionIntraRefreshCreateInfoKHR: ChainableBase, VideoS
         cStruct.intraRefreshMode = VkVideoEncodeIntraRefreshModeFlagBitsKHR(rawValue: VkVideoEncodeIntraRefreshModeFlagBitsKHR.RawValue(bitPattern: self.intraRefreshMode.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeSessionIntraRefreshCreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeSessionIntraRefreshCreateInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeSessionIntraRefreshCreateInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeIntraRefreshInfoKHR: ChainableBase, VideoEncodeInfoKHRExtension {
     public typealias CStruct = VkVideoEncodeIntraRefreshInfoKHR
@@ -29579,8 +32691,12 @@ public struct VideoEncodeIntraRefreshInfoKHR: ChainableBase, VideoEncodeInfoKHRE
         cStruct.intraRefreshIndex = self.intraRefreshIndex
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeIntraRefreshInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeIntraRefreshInfoKHRExtension: Chainable {}
+
+public protocol VideoEncodeIntraRefreshInfoKHRExtension: Chainable {}
 
 public struct VideoReferenceIntraRefreshInfoKHR: ChainableBase, VideoReferenceSlotInfoKHRExtension {
     public typealias CStruct = VkVideoReferenceIntraRefreshInfoKHR
@@ -29602,8 +32718,12 @@ public struct VideoReferenceIntraRefreshInfoKHR: ChainableBase, VideoReferenceSl
         cStruct.dirtyIntraRefreshRegions = self.dirtyIntraRefreshRegions
         return try body(&cStruct)
     }
+    public func push<Extension: VideoReferenceIntraRefreshInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoReferenceIntraRefreshInfoKHRExtension: Chainable {}
+
+public protocol VideoReferenceIntraRefreshInfoKHRExtension: Chainable {}
 
 public struct PhysicalDeviceVideoEncodeIntraRefreshFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceVideoEncodeIntraRefreshFeaturesKHR
@@ -29625,8 +32745,12 @@ public struct PhysicalDeviceVideoEncodeIntraRefreshFeaturesKHR: ChainableBase, P
         cStruct.videoEncodeIntraRefresh = VkBool32(self.videoEncodeIntraRefresh ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceVideoEncodeIntraRefreshFeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceVideoEncodeIntraRefreshFeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceVideoEncodeIntraRefreshFeaturesKHRExtension: Chainable {}
 
 public struct CuModuleCreateInfoNVX: ChainableBase {
     public typealias CStruct = VkCuModuleCreateInfoNVX
@@ -29652,8 +32776,12 @@ public struct CuModuleCreateInfoNVX: ChainableBase {
         cStruct.pData = self.data
         return try body(&cStruct)
     }
+    public func push<Extension: CuModuleCreateInfoNVXExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CuModuleCreateInfoNVXExtension: Chainable {}
+
+public protocol CuModuleCreateInfoNVXExtension: Chainable {}
 
 public struct CuModuleTexturingModeCreateInfoNVX: ChainableBase, CuModuleCreateInfoNVXExtension {
     public typealias CStruct = VkCuModuleTexturingModeCreateInfoNVX
@@ -29675,8 +32803,12 @@ public struct CuModuleTexturingModeCreateInfoNVX: ChainableBase, CuModuleCreateI
         cStruct.use64bitTexturing = VkBool32(self.use64bitTexturing ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: CuModuleTexturingModeCreateInfoNVXExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CuModuleTexturingModeCreateInfoNVXExtension: Chainable {}
+
+public protocol CuModuleTexturingModeCreateInfoNVXExtension: Chainable {}
 
 public struct CuFunctionCreateInfoNVX: ChainableBase {
     public typealias CStruct = VkCuFunctionCreateInfoNVX
@@ -29704,8 +32836,12 @@ public struct CuFunctionCreateInfoNVX: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: CuFunctionCreateInfoNVXExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CuFunctionCreateInfoNVXExtension: Chainable {}
+
+public protocol CuFunctionCreateInfoNVXExtension: Chainable {}
 
 public struct CuLaunchInfoNVX: ChainableBase {
     public typealias CStruct = VkCuLaunchInfoNVX
@@ -29771,8 +32907,12 @@ public struct CuLaunchInfoNVX: ChainableBase {
         cStruct.pExtras = self.extras
         return try body(&cStruct)
     }
+    public func push<Extension: CuLaunchInfoNVXExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CuLaunchInfoNVXExtension: Chainable {}
+
+public protocol CuLaunchInfoNVXExtension: Chainable {}
 
 public struct PhysicalDeviceDescriptorBufferFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDescriptorBufferFeaturesEXT
@@ -29806,8 +32946,12 @@ public struct PhysicalDeviceDescriptorBufferFeaturesEXT: ChainableBase, Physical
         cStruct.descriptorBufferPushDescriptors = VkBool32(self.descriptorBufferPushDescriptors ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDescriptorBufferFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceDescriptorBufferFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceDescriptorBufferFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceDescriptorBufferPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceDescriptorBufferPropertiesEXT
@@ -29921,8 +33065,12 @@ public struct PhysicalDeviceDescriptorBufferPropertiesEXT: ChainableBase, Physic
         cStruct.descriptorBufferAddressSpaceSize = self.descriptorBufferAddressSpaceSize
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDescriptorBufferPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceDescriptorBufferPropertiesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceDescriptorBufferPropertiesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceDescriptorBufferDensityMapPropertiesEXT
@@ -29940,8 +33088,12 @@ public struct PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT: ChainableBa
         cStruct.combinedImageSamplerDensityMapDescriptorSize = self.combinedImageSamplerDensityMapDescriptorSize
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDescriptorBufferDensityMapPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceDescriptorBufferDensityMapPropertiesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceDescriptorBufferDensityMapPropertiesEXTExtension: Chainable {}
 
 public struct DescriptorAddressInfoEXT: ChainableBase {
     public typealias CStruct = VkDescriptorAddressInfoEXT
@@ -29971,8 +33123,12 @@ public struct DescriptorAddressInfoEXT: ChainableBase {
         cStruct.format = VkFormat(rawValue: VkFormat.RawValue(bitPattern: self.format.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: DescriptorAddressInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DescriptorAddressInfoEXTExtension: Chainable {}
+
+public protocol DescriptorAddressInfoEXTExtension: Chainable {}
 
 public struct DescriptorBufferBindingInfoEXT: ChainableBase {
     public typealias CStruct = VkDescriptorBufferBindingInfoEXT
@@ -29998,8 +33154,12 @@ public struct DescriptorBufferBindingInfoEXT: ChainableBase {
         cStruct.usage = self.usage.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: DescriptorBufferBindingInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DescriptorBufferBindingInfoEXTExtension: Chainable {}
+
+public protocol DescriptorBufferBindingInfoEXTExtension: Chainable {}
 
 public struct DescriptorBufferBindingPushDescriptorBufferHandleEXT: ChainableBase, DescriptorBufferBindingInfoEXTExtension {
     public typealias CStruct = VkDescriptorBufferBindingPushDescriptorBufferHandleEXT
@@ -30021,8 +33181,12 @@ public struct DescriptorBufferBindingPushDescriptorBufferHandleEXT: ChainableBas
         cStruct.buffer = self.buffer.handle
         return try body(&cStruct)
     }
+    public func push<Extension: DescriptorBufferBindingPushDescriptorBufferHandleEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DescriptorBufferBindingPushDescriptorBufferHandleEXTExtension: Chainable {}
+
+public protocol DescriptorBufferBindingPushDescriptorBufferHandleEXTExtension: Chainable {}
 
 public struct DescriptorGetInfoEXT: ChainableBase {
     public typealias CStruct = VkDescriptorGetInfoEXT
@@ -30048,8 +33212,12 @@ public struct DescriptorGetInfoEXT: ChainableBase {
         cStruct.data = self.data
         return try body(&cStruct)
     }
+    public func push<Extension: DescriptorGetInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DescriptorGetInfoEXTExtension: Chainable {}
+
+public protocol DescriptorGetInfoEXTExtension: Chainable {}
 
 public struct BufferCaptureDescriptorDataInfoEXT: ChainableBase {
     public typealias CStruct = VkBufferCaptureDescriptorDataInfoEXT
@@ -30071,8 +33239,12 @@ public struct BufferCaptureDescriptorDataInfoEXT: ChainableBase {
         cStruct.buffer = self.buffer.handle
         return try body(&cStruct)
     }
+    public func push<Extension: BufferCaptureDescriptorDataInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol BufferCaptureDescriptorDataInfoEXTExtension: Chainable {}
+
+public protocol BufferCaptureDescriptorDataInfoEXTExtension: Chainable {}
 
 public struct ImageCaptureDescriptorDataInfoEXT: ChainableBase {
     public typealias CStruct = VkImageCaptureDescriptorDataInfoEXT
@@ -30094,8 +33266,12 @@ public struct ImageCaptureDescriptorDataInfoEXT: ChainableBase {
         cStruct.image = self.image.handle
         return try body(&cStruct)
     }
+    public func push<Extension: ImageCaptureDescriptorDataInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ImageCaptureDescriptorDataInfoEXTExtension: Chainable {}
+
+public protocol ImageCaptureDescriptorDataInfoEXTExtension: Chainable {}
 
 public struct ImageViewCaptureDescriptorDataInfoEXT: ChainableBase {
     public typealias CStruct = VkImageViewCaptureDescriptorDataInfoEXT
@@ -30117,8 +33293,12 @@ public struct ImageViewCaptureDescriptorDataInfoEXT: ChainableBase {
         cStruct.imageView = self.imageView.handle
         return try body(&cStruct)
     }
+    public func push<Extension: ImageViewCaptureDescriptorDataInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ImageViewCaptureDescriptorDataInfoEXTExtension: Chainable {}
+
+public protocol ImageViewCaptureDescriptorDataInfoEXTExtension: Chainable {}
 
 public struct SamplerCaptureDescriptorDataInfoEXT: ChainableBase {
     public typealias CStruct = VkSamplerCaptureDescriptorDataInfoEXT
@@ -30140,8 +33320,12 @@ public struct SamplerCaptureDescriptorDataInfoEXT: ChainableBase {
         cStruct.sampler = self.sampler.handle
         return try body(&cStruct)
     }
+    public func push<Extension: SamplerCaptureDescriptorDataInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SamplerCaptureDescriptorDataInfoEXTExtension: Chainable {}
+
+public protocol SamplerCaptureDescriptorDataInfoEXTExtension: Chainable {}
 
 public struct AccelerationStructureCaptureDescriptorDataInfoEXT: ChainableBase {
     public typealias CStruct = VkAccelerationStructureCaptureDescriptorDataInfoEXT
@@ -30167,8 +33351,12 @@ public struct AccelerationStructureCaptureDescriptorDataInfoEXT: ChainableBase {
         cStruct.accelerationStructureNV = self.accelerationStructureNV?.handle
         return try body(&cStruct)
     }
+    public func push<Extension: AccelerationStructureCaptureDescriptorDataInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol AccelerationStructureCaptureDescriptorDataInfoEXTExtension: Chainable {}
+
+public protocol AccelerationStructureCaptureDescriptorDataInfoEXTExtension: Chainable {}
 
 public struct OpaqueCaptureDescriptorDataCreateInfoEXT: ChainableBase, BufferCreateInfoExtension, ImageCreateInfoExtension, ImageViewCreateInfoExtension, SamplerCreateInfoExtension, AccelerationStructureCreateInfoKHRExtension, AccelerationStructureCreateInfoNVExtension, TensorCreateInfoARMExtension, TensorViewCreateInfoARMExtension, AccelerationStructureCreateInfo2KHRExtension {
     public typealias CStruct = VkOpaqueCaptureDescriptorDataCreateInfoEXT
@@ -30190,8 +33378,12 @@ public struct OpaqueCaptureDescriptorDataCreateInfoEXT: ChainableBase, BufferCre
         cStruct.opaqueCaptureDescriptorData = self.opaqueCaptureDescriptorData
         return try body(&cStruct)
     }
+    public func push<Extension: OpaqueCaptureDescriptorDataCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol OpaqueCaptureDescriptorDataCreateInfoEXTExtension: Chainable {}
+
+public protocol OpaqueCaptureDescriptorDataCreateInfoEXTExtension: Chainable {}
 
 public struct PhysicalDeviceShaderIntegerDotProductFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderIntegerDotProductFeatures
@@ -30213,8 +33405,12 @@ public struct PhysicalDeviceShaderIntegerDotProductFeatures: ChainableBase, Phys
         cStruct.shaderIntegerDotProduct = VkBool32(self.shaderIntegerDotProduct ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderIntegerDotProductFeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderIntegerDotProductFeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderIntegerDotProductFeaturesExtension: Chainable {}
 
 public struct PhysicalDeviceShaderIntegerDotProductProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceShaderIntegerDotProductProperties
@@ -30319,8 +33515,12 @@ public struct PhysicalDeviceShaderIntegerDotProductProperties: ChainableBase, Ph
         cStruct.integerDotProductAccumulatingSaturating64BitMixedSignednessAccelerated = VkBool32(self.integerDotProductAccumulatingSaturating64BitMixedSignednessAccelerated ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderIntegerDotProductPropertiesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderIntegerDotProductPropertiesExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderIntegerDotProductPropertiesExtension: Chainable {}
 
 public struct PhysicalDeviceDrmPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceDrmPropertiesEXT
@@ -30353,8 +33553,12 @@ public struct PhysicalDeviceDrmPropertiesEXT: ChainableBase, PhysicalDevicePrope
         cStruct.renderMinor = self.renderMinor
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDrmPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceDrmPropertiesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceDrmPropertiesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceFragmentShaderBarycentricFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceFragmentShaderBarycentricFeaturesKHR
@@ -30376,8 +33580,12 @@ public struct PhysicalDeviceFragmentShaderBarycentricFeaturesKHR: ChainableBase,
         cStruct.fragmentShaderBarycentric = VkBool32(self.fragmentShaderBarycentric ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceFragmentShaderBarycentricFeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceFragmentShaderBarycentricFeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceFragmentShaderBarycentricFeaturesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceFragmentShaderBarycentricPropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceFragmentShaderBarycentricPropertiesKHR
@@ -30395,8 +33603,12 @@ public struct PhysicalDeviceFragmentShaderBarycentricPropertiesKHR: ChainableBas
         cStruct.triStripVertexOrderIndependentOfProvokingVertex = VkBool32(self.triStripVertexOrderIndependentOfProvokingVertex ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceFragmentShaderBarycentricPropertiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceFragmentShaderBarycentricPropertiesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceFragmentShaderBarycentricPropertiesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceShaderFmaFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderFmaFeaturesKHR
@@ -30426,8 +33638,12 @@ public struct PhysicalDeviceShaderFmaFeaturesKHR: ChainableBase, PhysicalDeviceF
         cStruct.shaderFmaFloat64 = VkBool32(self.shaderFmaFloat64 ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderFmaFeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderFmaFeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderFmaFeaturesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceRayTracingMotionBlurFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceRayTracingMotionBlurFeaturesNV
@@ -30453,8 +33669,12 @@ public struct PhysicalDeviceRayTracingMotionBlurFeaturesNV: ChainableBase, Physi
         cStruct.rayTracingMotionBlurPipelineTraceRaysIndirect = VkBool32(self.rayTracingMotionBlurPipelineTraceRaysIndirect ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceRayTracingMotionBlurFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceRayTracingMotionBlurFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceRayTracingMotionBlurFeaturesNVExtension: Chainable {}
 
 public struct PhysicalDeviceRayTracingValidationFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceRayTracingValidationFeaturesNV
@@ -30476,8 +33696,12 @@ public struct PhysicalDeviceRayTracingValidationFeaturesNV: ChainableBase, Physi
         cStruct.rayTracingValidation = VkBool32(self.rayTracingValidation ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceRayTracingValidationFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceRayTracingValidationFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceRayTracingValidationFeaturesNVExtension: Chainable {}
 
 public struct PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV
@@ -30503,8 +33727,12 @@ public struct PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV: ChainableBas
         cStruct.linearSweptSpheres = VkBool32(self.linearSweptSpheres ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNVExtension: Chainable {}
 
 public struct AccelerationStructureGeometryMotionTrianglesDataNV: ChainableBase, AccelerationStructureGeometryTrianglesDataKHRExtension {
     public typealias CStruct = VkAccelerationStructureGeometryMotionTrianglesDataNV
@@ -30526,8 +33754,12 @@ public struct AccelerationStructureGeometryMotionTrianglesDataNV: ChainableBase,
         cStruct.vertexData = self.vertexData
         return try body(&cStruct)
     }
+    public func push<Extension: AccelerationStructureGeometryMotionTrianglesDataNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol AccelerationStructureGeometryMotionTrianglesDataNVExtension: Chainable {}
+
+public protocol AccelerationStructureGeometryMotionTrianglesDataNVExtension: Chainable {}
 
 public struct AccelerationStructureMotionInfoNV: ChainableBase, AccelerationStructureCreateInfoKHRExtension {
     public typealias CStruct = VkAccelerationStructureMotionInfoNV
@@ -30553,8 +33785,12 @@ public struct AccelerationStructureMotionInfoNV: ChainableBase, AccelerationStru
         cStruct.flags = self.flags.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: AccelerationStructureMotionInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol AccelerationStructureMotionInfoNVExtension: Chainable {}
+
+public protocol AccelerationStructureMotionInfoNVExtension: Chainable {}
 
 public struct SRTDataNV: CStructConvertible {
     public typealias CStruct = VkSRTDataNV
@@ -30784,8 +34020,12 @@ public struct MemoryGetRemoteAddressInfoNV: ChainableBase {
         cStruct.handleType = VkExternalMemoryHandleTypeFlagBits(rawValue: VkExternalMemoryHandleTypeFlagBits.RawValue(bitPattern: self.handleType.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: MemoryGetRemoteAddressInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol MemoryGetRemoteAddressInfoNVExtension: Chainable {}
+
+public protocol MemoryGetRemoteAddressInfoNVExtension: Chainable {}
 
 #if VK_USE_PLATFORM_FUCHSIA
 public struct ImportMemoryBufferCollectionFUCHSIA: ChainableBase, MemoryAllocateInfoExtension {
@@ -30812,9 +34052,13 @@ public struct ImportMemoryBufferCollectionFUCHSIA: ChainableBase, MemoryAllocate
         cStruct.index = self.index
         return try body(&cStruct)
     }
+    public func push<Extension: ImportMemoryBufferCollectionFUCHSIAExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ImportMemoryBufferCollectionFUCHSIAExtension: Chainable {}
+
+public protocol ImportMemoryBufferCollectionFUCHSIAExtension: Chainable {}
 
 #if VK_USE_PLATFORM_FUCHSIA
 public struct BufferCollectionImageCreateInfoFUCHSIA: ChainableBase, ImageCreateInfoExtension {
@@ -30841,9 +34085,13 @@ public struct BufferCollectionImageCreateInfoFUCHSIA: ChainableBase, ImageCreate
         cStruct.index = self.index
         return try body(&cStruct)
     }
+    public func push<Extension: BufferCollectionImageCreateInfoFUCHSIAExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol BufferCollectionImageCreateInfoFUCHSIAExtension: Chainable {}
+
+public protocol BufferCollectionImageCreateInfoFUCHSIAExtension: Chainable {}
 
 #if VK_USE_PLATFORM_FUCHSIA
 public struct BufferCollectionBufferCreateInfoFUCHSIA: ChainableBase, BufferCreateInfoExtension {
@@ -30870,9 +34118,13 @@ public struct BufferCollectionBufferCreateInfoFUCHSIA: ChainableBase, BufferCrea
         cStruct.index = self.index
         return try body(&cStruct)
     }
+    public func push<Extension: BufferCollectionBufferCreateInfoFUCHSIAExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol BufferCollectionBufferCreateInfoFUCHSIAExtension: Chainable {}
+
+public protocol BufferCollectionBufferCreateInfoFUCHSIAExtension: Chainable {}
 
 #if VK_USE_PLATFORM_FUCHSIA
 public struct BufferCollectionCreateInfoFUCHSIA: ChainableBase {
@@ -30895,9 +34147,13 @@ public struct BufferCollectionCreateInfoFUCHSIA: ChainableBase {
         cStruct.collectionToken = self.collectionToken
         return try body(&cStruct)
     }
+    public func push<Extension: BufferCollectionCreateInfoFUCHSIAExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol BufferCollectionCreateInfoFUCHSIAExtension: Chainable {}
+
+public protocol BufferCollectionCreateInfoFUCHSIAExtension: Chainable {}
 
 #if VK_USE_PLATFORM_FUCHSIA
 public struct SysmemColorSpaceFUCHSIA: ChainableBase {
@@ -30920,9 +34176,13 @@ public struct SysmemColorSpaceFUCHSIA: ChainableBase {
         cStruct.colorSpace = self.colorSpace
         return try body(&cStruct)
     }
+    public func push<Extension: SysmemColorSpaceFUCHSIAExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol SysmemColorSpaceFUCHSIAExtension: Chainable {}
+
+public protocol SysmemColorSpaceFUCHSIAExtension: Chainable {}
 
 #if VK_USE_PLATFORM_FUCHSIA
 public struct BufferCollectionPropertiesFUCHSIA: ChainableBase {
@@ -30975,9 +34235,13 @@ public struct BufferCollectionPropertiesFUCHSIA: ChainableBase {
             }
         }
     }
+    public func push<Extension: BufferCollectionPropertiesFUCHSIAExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol BufferCollectionPropertiesFUCHSIAExtension: Chainable {}
+
+public protocol BufferCollectionPropertiesFUCHSIAExtension: Chainable {}
 
 #if VK_USE_PLATFORM_FUCHSIA
 public struct BufferCollectionConstraintsInfoFUCHSIA: ChainableBase {
@@ -31016,9 +34280,13 @@ public struct BufferCollectionConstraintsInfoFUCHSIA: ChainableBase {
         cStruct.minBufferCountForSharedSlack = self.minBufferCountForSharedSlack
         return try body(&cStruct)
     }
+    public func push<Extension: BufferCollectionConstraintsInfoFUCHSIAExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol BufferCollectionConstraintsInfoFUCHSIAExtension: Chainable {}
+
+public protocol BufferCollectionConstraintsInfoFUCHSIAExtension: Chainable {}
 
 #if VK_USE_PLATFORM_FUCHSIA
 public struct BufferConstraintsInfoFUCHSIA: ChainableBase {
@@ -31053,9 +34321,13 @@ public struct BufferConstraintsInfoFUCHSIA: ChainableBase {
             }
         }
     }
+    public func push<Extension: BufferConstraintsInfoFUCHSIAExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol BufferConstraintsInfoFUCHSIAExtension: Chainable {}
+
+public protocol BufferConstraintsInfoFUCHSIAExtension: Chainable {}
 
 #if VK_USE_PLATFORM_FUCHSIA
 public struct ImageFormatConstraintsInfoFUCHSIA: ChainableBase {
@@ -31099,9 +34371,13 @@ public struct ImageFormatConstraintsInfoFUCHSIA: ChainableBase {
             }
         }
     }
+    public func push<Extension: ImageFormatConstraintsInfoFUCHSIAExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ImageFormatConstraintsInfoFUCHSIAExtension: Chainable {}
+
+public protocol ImageFormatConstraintsInfoFUCHSIAExtension: Chainable {}
 
 #if VK_USE_PLATFORM_FUCHSIA
 public struct ImageConstraintsInfoFUCHSIA: ChainableBase {
@@ -31137,9 +34413,13 @@ public struct ImageConstraintsInfoFUCHSIA: ChainableBase {
             }
         }
     }
+    public func push<Extension: ImageConstraintsInfoFUCHSIAExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ImageConstraintsInfoFUCHSIAExtension: Chainable {}
+
+public protocol ImageConstraintsInfoFUCHSIAExtension: Chainable {}
 
 #if VK_ENABLE_BETA_EXTENSIONS
 public struct CudaModuleCreateInfoNV: ChainableBase {
@@ -31166,9 +34446,13 @@ public struct CudaModuleCreateInfoNV: ChainableBase {
         cStruct.pData = self.data
         return try body(&cStruct)
     }
+    public func push<Extension: CudaModuleCreateInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol CudaModuleCreateInfoNVExtension: Chainable {}
+
+public protocol CudaModuleCreateInfoNVExtension: Chainable {}
 
 #if VK_ENABLE_BETA_EXTENSIONS
 public struct CudaFunctionCreateInfoNV: ChainableBase {
@@ -31197,9 +34481,13 @@ public struct CudaFunctionCreateInfoNV: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: CudaFunctionCreateInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol CudaFunctionCreateInfoNVExtension: Chainable {}
+
+public protocol CudaFunctionCreateInfoNVExtension: Chainable {}
 
 #if VK_ENABLE_BETA_EXTENSIONS
 public struct CudaLaunchInfoNV: ChainableBase {
@@ -31266,9 +34554,13 @@ public struct CudaLaunchInfoNV: ChainableBase {
         cStruct.pExtras = self.extras
         return try body(&cStruct)
     }
+    public func push<Extension: CudaLaunchInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol CudaLaunchInfoNVExtension: Chainable {}
+
+public protocol CudaLaunchInfoNVExtension: Chainable {}
 
 public struct PhysicalDeviceRGBA10X6FormatsFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceRGBA10X6FormatsFeaturesEXT
@@ -31290,8 +34582,12 @@ public struct PhysicalDeviceRGBA10X6FormatsFeaturesEXT: ChainableBase, PhysicalD
         cStruct.formatRgba10x6WithoutYCbCrSampler = VkBool32(self.formatRgba10x6WithoutYCbCrSampler ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceRGBA10X6FormatsFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceRGBA10X6FormatsFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceRGBA10X6FormatsFeaturesEXTExtension: Chainable {}
 
 public struct FormatProperties3: ChainableBase, FormatProperties2Extension {
     public typealias CStruct = VkFormatProperties3
@@ -31315,8 +34611,12 @@ public struct FormatProperties3: ChainableBase, FormatProperties2Extension {
         cStruct.bufferFeatures = self.bufferFeatures.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: FormatProperties3Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol FormatProperties3Extension: Chainable {}
+
+public protocol FormatProperties3Extension: Chainable {}
 
 public struct DrmFormatModifierProperties2EXT: CStructConvertible {
     public typealias CStruct = VkDrmFormatModifierProperties2EXT
@@ -31359,8 +34659,12 @@ public struct DrmFormatModifierPropertiesList2EXT: ChainableBase, FormatProperti
         cStruct.pDrmFormatModifierProperties = self.drmFormatModifierProperties
         return try body(&cStruct)
     }
+    public func push<Extension: DrmFormatModifierPropertiesList2EXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DrmFormatModifierPropertiesList2EXTExtension: Chainable {}
+
+public protocol DrmFormatModifierPropertiesList2EXTExtension: Chainable {}
 
 #if VK_USE_PLATFORM_ANDROID_KHR
 public struct AndroidHardwareBufferFormatProperties2ANDROID: ChainableBase, AndroidHardwareBufferPropertiesANDROIDExtension {
@@ -31402,9 +34706,13 @@ public struct AndroidHardwareBufferFormatProperties2ANDROID: ChainableBase, Andr
             return try body(&cStruct)
         }
     }
+    public func push<Extension: AndroidHardwareBufferFormatProperties2ANDROIDExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol AndroidHardwareBufferFormatProperties2ANDROIDExtension: Chainable {}
+
+public protocol AndroidHardwareBufferFormatProperties2ANDROIDExtension: Chainable {}
 
 public struct PipelineRenderingCreateInfo: ChainableBase, GraphicsPipelineCreateInfoExtension {
     public typealias CStruct = VkPipelineRenderingCreateInfo
@@ -31441,8 +34749,12 @@ public struct PipelineRenderingCreateInfo: ChainableBase, GraphicsPipelineCreate
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PipelineRenderingCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineRenderingCreateInfoExtension: Chainable {}
+
+public protocol PipelineRenderingCreateInfoExtension: Chainable {}
 
 public struct RenderingAttachmentInfo: ChainableBase {
     public typealias CStruct = VkRenderingAttachmentInfo
@@ -31492,8 +34804,12 @@ public struct RenderingAttachmentInfo: ChainableBase {
         cStruct.clearValue = self.clearValue
         return try body(&cStruct)
     }
+    public func push<Extension: RenderingAttachmentInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol RenderingAttachmentInfoExtension: Chainable {}
+
+public protocol RenderingAttachmentInfoExtension: Chainable {}
 
 public struct RenderingInfo: ChainableBase {
     public typealias CStruct = VkRenderingInfo
@@ -31548,8 +34864,12 @@ public struct RenderingInfo: ChainableBase {
             }
         }
     }
+    public func push<Extension: RenderingInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol RenderingInfoExtension: Chainable {}
+
+public protocol RenderingInfoExtension: Chainable {}
 
 public struct RenderingEndInfoKHR: ChainableBase {
     public typealias CStruct = VkRenderingEndInfoKHR
@@ -31567,8 +34887,12 @@ public struct RenderingEndInfoKHR: ChainableBase {
         cStruct.pNext = maybeMutable(pNext)
         return try body(&cStruct)
     }
+    public func push<Extension: RenderingEndInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol RenderingEndInfoKHRExtension: Chainable {}
+
+public protocol RenderingEndInfoKHRExtension: Chainable {}
 
 public struct RenderingFragmentShadingRateAttachmentInfoKHR: ChainableBase, RenderingInfoExtension {
     public typealias CStruct = VkRenderingFragmentShadingRateAttachmentInfoKHR
@@ -31600,8 +34924,12 @@ public struct RenderingFragmentShadingRateAttachmentInfoKHR: ChainableBase, Rend
             return try body(&cStruct)
         }
     }
+    public func push<Extension: RenderingFragmentShadingRateAttachmentInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol RenderingFragmentShadingRateAttachmentInfoKHRExtension: Chainable {}
+
+public protocol RenderingFragmentShadingRateAttachmentInfoKHRExtension: Chainable {}
 
 public struct RenderingFragmentDensityMapAttachmentInfoEXT: ChainableBase, RenderingInfoExtension {
     public typealias CStruct = VkRenderingFragmentDensityMapAttachmentInfoEXT
@@ -31627,8 +34955,12 @@ public struct RenderingFragmentDensityMapAttachmentInfoEXT: ChainableBase, Rende
         cStruct.imageLayout = VkImageLayout(rawValue: VkImageLayout.RawValue(bitPattern: self.imageLayout.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: RenderingFragmentDensityMapAttachmentInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol RenderingFragmentDensityMapAttachmentInfoEXTExtension: Chainable {}
+
+public protocol RenderingFragmentDensityMapAttachmentInfoEXTExtension: Chainable {}
 
 public struct PhysicalDeviceDynamicRenderingFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDynamicRenderingFeatures
@@ -31650,8 +34982,12 @@ public struct PhysicalDeviceDynamicRenderingFeatures: ChainableBase, PhysicalDev
         cStruct.dynamicRendering = VkBool32(self.dynamicRendering ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDynamicRenderingFeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceDynamicRenderingFeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceDynamicRenderingFeaturesExtension: Chainable {}
 
 public struct CommandBufferInheritanceRenderingInfo: ChainableBase, CommandBufferInheritanceInfoExtension {
     public typealias CStruct = VkCommandBufferInheritanceRenderingInfo
@@ -31696,8 +35032,12 @@ public struct CommandBufferInheritanceRenderingInfo: ChainableBase, CommandBuffe
             return try body(&cStruct)
         }
     }
+    public func push<Extension: CommandBufferInheritanceRenderingInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CommandBufferInheritanceRenderingInfoExtension: Chainable {}
+
+public protocol CommandBufferInheritanceRenderingInfoExtension: Chainable {}
 
 public struct AttachmentSampleCountInfoAMD: ChainableBase, CommandBufferInheritanceInfoExtension, GraphicsPipelineCreateInfoExtension {
     public typealias CStruct = VkAttachmentSampleCountInfoAMD
@@ -31726,8 +35066,12 @@ public struct AttachmentSampleCountInfoAMD: ChainableBase, CommandBufferInherita
             return try body(&cStruct)
         }
     }
+    public func push<Extension: AttachmentSampleCountInfoAMDExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol AttachmentSampleCountInfoAMDExtension: Chainable {}
+
+public protocol AttachmentSampleCountInfoAMDExtension: Chainable {}
 
 public struct MultiviewPerViewAttributesInfoNVX: ChainableBase, CommandBufferInheritanceInfoExtension, GraphicsPipelineCreateInfoExtension, RenderingInfoExtension {
     public typealias CStruct = VkMultiviewPerViewAttributesInfoNVX
@@ -31753,8 +35097,12 @@ public struct MultiviewPerViewAttributesInfoNVX: ChainableBase, CommandBufferInh
         cStruct.perViewAttributesPositionXOnly = VkBool32(self.perViewAttributesPositionXOnly ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: MultiviewPerViewAttributesInfoNVXExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol MultiviewPerViewAttributesInfoNVXExtension: Chainable {}
+
+public protocol MultiviewPerViewAttributesInfoNVXExtension: Chainable {}
 
 public struct PhysicalDeviceImageViewMinLodFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceImageViewMinLodFeaturesEXT
@@ -31776,8 +35124,12 @@ public struct PhysicalDeviceImageViewMinLodFeaturesEXT: ChainableBase, PhysicalD
         cStruct.minLod = VkBool32(self.minLod ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceImageViewMinLodFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceImageViewMinLodFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceImageViewMinLodFeaturesEXTExtension: Chainable {}
 
 public struct ImageViewMinLodCreateInfoEXT: ChainableBase, ImageViewCreateInfoExtension {
     public typealias CStruct = VkImageViewMinLodCreateInfoEXT
@@ -31799,8 +35151,12 @@ public struct ImageViewMinLodCreateInfoEXT: ChainableBase, ImageViewCreateInfoEx
         cStruct.minLod = self.minLod
         return try body(&cStruct)
     }
+    public func push<Extension: ImageViewMinLodCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ImageViewMinLodCreateInfoEXTExtension: Chainable {}
+
+public protocol ImageViewMinLodCreateInfoEXTExtension: Chainable {}
 
 public struct PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT
@@ -31830,8 +35186,12 @@ public struct PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT: Chain
         cStruct.rasterizationOrderStencilAttachmentAccess = VkBool32(self.rasterizationOrderStencilAttachmentAccess ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceLinearColorAttachmentFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceLinearColorAttachmentFeaturesNV
@@ -31853,8 +35213,12 @@ public struct PhysicalDeviceLinearColorAttachmentFeaturesNV: ChainableBase, Phys
         cStruct.linearColorAttachment = VkBool32(self.linearColorAttachment ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceLinearColorAttachmentFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceLinearColorAttachmentFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceLinearColorAttachmentFeaturesNVExtension: Chainable {}
 
 public struct PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceGraphicsPipelineLibraryFeaturesEXT
@@ -31876,8 +35240,12 @@ public struct PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT: ChainableBase, P
         cStruct.graphicsPipelineLibrary = VkBool32(self.graphicsPipelineLibrary ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceGraphicsPipelineLibraryFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceGraphicsPipelineLibraryFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceGraphicsPipelineLibraryFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDevicePipelineBinaryFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePipelineBinaryFeaturesKHR
@@ -31899,8 +35267,12 @@ public struct PhysicalDevicePipelineBinaryFeaturesKHR: ChainableBase, PhysicalDe
         cStruct.pipelineBinaries = VkBool32(self.pipelineBinaries ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevicePipelineBinaryFeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevicePipelineBinaryFeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDevicePipelineBinaryFeaturesKHRExtension: Chainable {}
 
 public struct DevicePipelineBinaryInternalCacheControlKHR: ChainableBase, DeviceCreateInfoExtension {
     public typealias CStruct = VkDevicePipelineBinaryInternalCacheControlKHR
@@ -31922,8 +35294,12 @@ public struct DevicePipelineBinaryInternalCacheControlKHR: ChainableBase, Device
         cStruct.disableInternalCache = VkBool32(self.disableInternalCache ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: DevicePipelineBinaryInternalCacheControlKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DevicePipelineBinaryInternalCacheControlKHRExtension: Chainable {}
+
+public protocol DevicePipelineBinaryInternalCacheControlKHRExtension: Chainable {}
 
 public struct PhysicalDevicePipelineBinaryPropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDevicePipelineBinaryPropertiesKHR
@@ -31953,8 +35329,12 @@ public struct PhysicalDevicePipelineBinaryPropertiesKHR: ChainableBase, Physical
         cStruct.pipelineBinaryCompressedData = VkBool32(self.pipelineBinaryCompressedData ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevicePipelineBinaryPropertiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevicePipelineBinaryPropertiesKHRExtension: Chainable {}
+
+public protocol PhysicalDevicePipelineBinaryPropertiesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceGraphicsPipelineLibraryPropertiesEXT
@@ -31975,8 +35355,12 @@ public struct PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT: ChainableBase,
         cStruct.graphicsPipelineLibraryIndependentInterpolationDecoration = VkBool32(self.graphicsPipelineLibraryIndependentInterpolationDecoration ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceGraphicsPipelineLibraryPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceGraphicsPipelineLibraryPropertiesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceGraphicsPipelineLibraryPropertiesEXTExtension: Chainable {}
 
 public struct GraphicsPipelineLibraryCreateInfoEXT: ChainableBase, GraphicsPipelineCreateInfoExtension {
     public typealias CStruct = VkGraphicsPipelineLibraryCreateInfoEXT
@@ -31998,8 +35382,12 @@ public struct GraphicsPipelineLibraryCreateInfoEXT: ChainableBase, GraphicsPipel
         cStruct.flags = self.flags.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: GraphicsPipelineLibraryCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol GraphicsPipelineLibraryCreateInfoEXTExtension: Chainable {}
+
+public protocol GraphicsPipelineLibraryCreateInfoEXTExtension: Chainable {}
 
 public struct PhysicalDeviceDataGraphNeuralAcceleratorStatisticsFeaturesARM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDataGraphNeuralAcceleratorStatisticsFeaturesARM
@@ -32021,8 +35409,12 @@ public struct PhysicalDeviceDataGraphNeuralAcceleratorStatisticsFeaturesARM: Cha
         cStruct.dataGraphNeuralAcceleratorStatistics = VkBool32(self.dataGraphNeuralAcceleratorStatistics ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDataGraphNeuralAcceleratorStatisticsFeaturesARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceDataGraphNeuralAcceleratorStatisticsFeaturesARMExtension: Chainable {}
+
+public protocol PhysicalDeviceDataGraphNeuralAcceleratorStatisticsFeaturesARMExtension: Chainable {}
 
 public struct DataGraphPipelineNeuralStatisticsCreateInfoARM: ChainableBase, DataGraphPipelineCreateInfoARMExtension {
     public typealias CStruct = VkDataGraphPipelineNeuralStatisticsCreateInfoARM
@@ -32044,8 +35436,12 @@ public struct DataGraphPipelineNeuralStatisticsCreateInfoARM: ChainableBase, Dat
         cStruct.allowNeuralStatistics = VkBool32(self.allowNeuralStatistics ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: DataGraphPipelineNeuralStatisticsCreateInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DataGraphPipelineNeuralStatisticsCreateInfoARMExtension: Chainable {}
+
+public protocol DataGraphPipelineNeuralStatisticsCreateInfoARMExtension: Chainable {}
 
 public struct DataGraphPipelineSessionNeuralStatisticsCreateInfoARM: ChainableBase, DataGraphPipelineSessionCreateInfoARMExtension {
     public typealias CStruct = VkDataGraphPipelineSessionNeuralStatisticsCreateInfoARM
@@ -32067,8 +35463,12 @@ public struct DataGraphPipelineSessionNeuralStatisticsCreateInfoARM: ChainableBa
         cStruct.mode = VkNeuralAcceleratorStatisticsModeARM(rawValue: VkNeuralAcceleratorStatisticsModeARM.RawValue(bitPattern: self.mode.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: DataGraphPipelineSessionNeuralStatisticsCreateInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DataGraphPipelineSessionNeuralStatisticsCreateInfoARMExtension: Chainable {}
+
+public protocol DataGraphPipelineSessionNeuralStatisticsCreateInfoARMExtension: Chainable {}
 
 public struct PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDescriptorSetHostMappingFeaturesVALVE
@@ -32090,8 +35490,12 @@ public struct PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE: ChainableBase
         cStruct.descriptorSetHostMapping = VkBool32(self.descriptorSetHostMapping ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDescriptorSetHostMappingFeaturesVALVEExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceDescriptorSetHostMappingFeaturesVALVEExtension: Chainable {}
+
+public protocol PhysicalDeviceDescriptorSetHostMappingFeaturesVALVEExtension: Chainable {}
 
 public struct DescriptorSetBindingReferenceVALVE: ChainableBase {
     public typealias CStruct = VkDescriptorSetBindingReferenceVALVE
@@ -32117,8 +35521,12 @@ public struct DescriptorSetBindingReferenceVALVE: ChainableBase {
         cStruct.binding = self.binding
         return try body(&cStruct)
     }
+    public func push<Extension: DescriptorSetBindingReferenceVALVEExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DescriptorSetBindingReferenceVALVEExtension: Chainable {}
+
+public protocol DescriptorSetBindingReferenceVALVEExtension: Chainable {}
 
 public struct DescriptorSetLayoutHostMappingInfoVALVE: ChainableBase {
     public typealias CStruct = VkDescriptorSetLayoutHostMappingInfoVALVE
@@ -32144,8 +35552,12 @@ public struct DescriptorSetLayoutHostMappingInfoVALVE: ChainableBase {
         cStruct.descriptorSize = self.descriptorSize
         return try body(&cStruct)
     }
+    public func push<Extension: DescriptorSetLayoutHostMappingInfoVALVEExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DescriptorSetLayoutHostMappingInfoVALVEExtension: Chainable {}
+
+public protocol DescriptorSetLayoutHostMappingInfoVALVEExtension: Chainable {}
 
 public struct PhysicalDeviceNestedCommandBufferFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceNestedCommandBufferFeaturesEXT
@@ -32175,8 +35587,12 @@ public struct PhysicalDeviceNestedCommandBufferFeaturesEXT: ChainableBase, Physi
         cStruct.nestedCommandBufferSimultaneousUse = VkBool32(self.nestedCommandBufferSimultaneousUse ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceNestedCommandBufferFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceNestedCommandBufferFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceNestedCommandBufferFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceNestedCommandBufferPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceNestedCommandBufferPropertiesEXT
@@ -32194,8 +35610,12 @@ public struct PhysicalDeviceNestedCommandBufferPropertiesEXT: ChainableBase, Phy
         cStruct.maxCommandBufferNestingLevel = self.maxCommandBufferNestingLevel
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceNestedCommandBufferPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceNestedCommandBufferPropertiesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceNestedCommandBufferPropertiesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceShaderModuleIdentifierFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderModuleIdentifierFeaturesEXT
@@ -32217,8 +35637,12 @@ public struct PhysicalDeviceShaderModuleIdentifierFeaturesEXT: ChainableBase, Ph
         cStruct.shaderModuleIdentifier = VkBool32(self.shaderModuleIdentifier ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderModuleIdentifierFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderModuleIdentifierFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderModuleIdentifierFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceShaderModuleIdentifierPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceShaderModuleIdentifierPropertiesEXT
@@ -32236,8 +35660,12 @@ public struct PhysicalDeviceShaderModuleIdentifierPropertiesEXT: ChainableBase, 
         cStruct.shaderModuleIdentifierAlgorithmUUID = self.shaderModuleIdentifierAlgorithmUUID
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderModuleIdentifierPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderModuleIdentifierPropertiesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderModuleIdentifierPropertiesEXTExtension: Chainable {}
 
 public struct PipelineShaderStageModuleIdentifierCreateInfoEXT: ChainableBase, PipelineShaderStageCreateInfoExtension {
     public typealias CStruct = VkPipelineShaderStageModuleIdentifierCreateInfoEXT
@@ -32262,8 +35690,12 @@ public struct PipelineShaderStageModuleIdentifierCreateInfoEXT: ChainableBase, P
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PipelineShaderStageModuleIdentifierCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineShaderStageModuleIdentifierCreateInfoEXTExtension: Chainable {}
+
+public protocol PipelineShaderStageModuleIdentifierCreateInfoEXTExtension: Chainable {}
 
 public struct ShaderModuleIdentifierEXT: ChainableBase {
     public typealias CStruct = VkShaderModuleIdentifierEXT
@@ -32284,8 +35716,12 @@ public struct ShaderModuleIdentifierEXT: ChainableBase {
         cStruct.identifier = self.identifier
         return try body(&cStruct)
     }
+    public func push<Extension: ShaderModuleIdentifierEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ShaderModuleIdentifierEXTExtension: Chainable {}
+
+public protocol ShaderModuleIdentifierEXTExtension: Chainable {}
 
 public struct ImageCompressionControlEXT: ChainableBase, ImageCreateInfoExtension, SwapchainCreateInfoKHRExtension, PhysicalDeviceImageFormatInfo2Extension {
     public typealias CStruct = VkImageCompressionControlEXT
@@ -32315,8 +35751,12 @@ public struct ImageCompressionControlEXT: ChainableBase, ImageCreateInfoExtensio
         cStruct.pFixedRateFlags = self.fixedRateFlags
         return try body(&cStruct)
     }
+    public func push<Extension: ImageCompressionControlEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ImageCompressionControlEXTExtension: Chainable {}
+
+public protocol ImageCompressionControlEXTExtension: Chainable {}
 
 public struct PhysicalDeviceImageCompressionControlFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceImageCompressionControlFeaturesEXT
@@ -32338,8 +35778,12 @@ public struct PhysicalDeviceImageCompressionControlFeaturesEXT: ChainableBase, P
         cStruct.imageCompressionControl = VkBool32(self.imageCompressionControl ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceImageCompressionControlFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceImageCompressionControlFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceImageCompressionControlFeaturesEXTExtension: Chainable {}
 
 public struct ImageCompressionPropertiesEXT: ChainableBase, ImageFormatProperties2Extension, SurfaceFormat2KHRExtension, SubresourceLayout2Extension {
     public typealias CStruct = VkImageCompressionPropertiesEXT
@@ -32360,8 +35804,12 @@ public struct ImageCompressionPropertiesEXT: ChainableBase, ImageFormatPropertie
         cStruct.imageCompressionFixedRateFlags = self.imageCompressionFixedRateFlags.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: ImageCompressionPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ImageCompressionPropertiesEXTExtension: Chainable {}
+
+public protocol ImageCompressionPropertiesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT
@@ -32383,8 +35831,12 @@ public struct PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT: Chainab
         cStruct.imageCompressionControlSwapchain = VkBool32(self.imageCompressionControlSwapchain ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceImageCompressionControlSwapchainFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceImageCompressionControlSwapchainFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceImageCompressionControlSwapchainFeaturesEXTExtension: Chainable {}
 
 public struct ImageSubresource2: ChainableBase {
     public typealias CStruct = VkImageSubresource2
@@ -32408,8 +35860,12 @@ public struct ImageSubresource2: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: ImageSubresource2Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ImageSubresource2Extension: Chainable {}
+
+public protocol ImageSubresource2Extension: Chainable {}
 
 public struct SubresourceLayout2: ChainableBase {
     public typealias CStruct = VkSubresourceLayout2
@@ -32429,8 +35885,12 @@ public struct SubresourceLayout2: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: SubresourceLayout2Extension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SubresourceLayout2Extension: Chainable {}
+
+public protocol SubresourceLayout2Extension: Chainable {}
 
 public struct RenderPassCreationControlEXT: ChainableBase, RenderPassCreateInfo2Extension, SubpassDescription2Extension {
     public typealias CStruct = VkRenderPassCreationControlEXT
@@ -32452,8 +35912,12 @@ public struct RenderPassCreationControlEXT: ChainableBase, RenderPassCreateInfo2
         cStruct.disallowMerging = VkBool32(self.disallowMerging ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: RenderPassCreationControlEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol RenderPassCreationControlEXTExtension: Chainable {}
+
+public protocol RenderPassCreationControlEXTExtension: Chainable {}
 
 public struct RenderPassCreationFeedbackInfoEXT: CStructConvertible {
     public typealias CStruct = VkRenderPassCreationFeedbackInfoEXT
@@ -32491,8 +35955,12 @@ public struct RenderPassCreationFeedbackCreateInfoEXT: ChainableBase, RenderPass
         cStruct.pRenderPassFeedback = self.renderPassFeedback
         return try body(&cStruct)
     }
+    public func push<Extension: RenderPassCreationFeedbackCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol RenderPassCreationFeedbackCreateInfoEXTExtension: Chainable {}
+
+public protocol RenderPassCreationFeedbackCreateInfoEXTExtension: Chainable {}
 
 public struct RenderPassSubpassFeedbackInfoEXT: CStructConvertible {
     public typealias CStruct = VkRenderPassSubpassFeedbackInfoEXT
@@ -32536,8 +36004,12 @@ public struct RenderPassSubpassFeedbackCreateInfoEXT: ChainableBase, SubpassDesc
         cStruct.pSubpassFeedback = self.subpassFeedback
         return try body(&cStruct)
     }
+    public func push<Extension: RenderPassSubpassFeedbackCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol RenderPassSubpassFeedbackCreateInfoEXTExtension: Chainable {}
+
+public protocol RenderPassSubpassFeedbackCreateInfoEXTExtension: Chainable {}
 
 public struct PhysicalDeviceSubpassMergeFeedbackFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceSubpassMergeFeedbackFeaturesEXT
@@ -32559,8 +36031,12 @@ public struct PhysicalDeviceSubpassMergeFeedbackFeaturesEXT: ChainableBase, Phys
         cStruct.subpassMergeFeedback = VkBool32(self.subpassMergeFeedback ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceSubpassMergeFeedbackFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceSubpassMergeFeedbackFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceSubpassMergeFeedbackFeaturesEXTExtension: Chainable {}
 
 #if VK_ENABLE_BETA_EXTENSIONS
 public struct PhysicalDeviceDisplacementMicromapFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
@@ -32583,9 +36059,13 @@ public struct PhysicalDeviceDisplacementMicromapFeaturesNV: ChainableBase, Physi
         cStruct.displacementMicromap = VkBool32(self.displacementMicromap ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDisplacementMicromapFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol PhysicalDeviceDisplacementMicromapFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceDisplacementMicromapFeaturesNVExtension: Chainable {}
 
 #if VK_ENABLE_BETA_EXTENSIONS
 public struct PhysicalDeviceDisplacementMicromapPropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension {
@@ -32604,9 +36084,13 @@ public struct PhysicalDeviceDisplacementMicromapPropertiesNV: ChainableBase, Phy
         cStruct.maxDisplacementMicromapSubdivisionLevel = self.maxDisplacementMicromapSubdivisionLevel
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDisplacementMicromapPropertiesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol PhysicalDeviceDisplacementMicromapPropertiesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceDisplacementMicromapPropertiesNVExtension: Chainable {}
 
 #if VK_ENABLE_BETA_EXTENSIONS
 public struct AccelerationStructureTrianglesDisplacementMicromapNV: ChainableBase, AccelerationStructureGeometryTrianglesDataKHRExtension {
@@ -32690,9 +36174,13 @@ public struct AccelerationStructureTrianglesDisplacementMicromapNV: ChainableBas
             }
         }
     }
+    public func push<Extension: AccelerationStructureTrianglesDisplacementMicromapNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol AccelerationStructureTrianglesDisplacementMicromapNVExtension: Chainable {}
+
+public protocol AccelerationStructureTrianglesDisplacementMicromapNVExtension: Chainable {}
 
 public struct PipelinePropertiesIdentifierEXT: ChainableBase {
     public typealias CStruct = VkPipelinePropertiesIdentifierEXT
@@ -32710,8 +36198,12 @@ public struct PipelinePropertiesIdentifierEXT: ChainableBase {
         cStruct.pipelineIdentifier = self.pipelineIdentifier
         return try body(&cStruct)
     }
+    public func push<Extension: PipelinePropertiesIdentifierEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelinePropertiesIdentifierEXTExtension: Chainable {}
+
+public protocol PipelinePropertiesIdentifierEXTExtension: Chainable {}
 
 public struct PhysicalDevicePipelinePropertiesFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePipelinePropertiesFeaturesEXT
@@ -32733,8 +36225,12 @@ public struct PhysicalDevicePipelinePropertiesFeaturesEXT: ChainableBase, Physic
         cStruct.pipelinePropertiesIdentifier = VkBool32(self.pipelinePropertiesIdentifier ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevicePipelinePropertiesFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevicePipelinePropertiesFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDevicePipelinePropertiesFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD
@@ -32756,8 +36252,12 @@ public struct PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD: Chainabl
         cStruct.shaderEarlyAndLateFragmentTests = VkBool32(self.shaderEarlyAndLateFragmentTests ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMDExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMDExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMDExtension: Chainable {}
 
 public struct ExternalMemoryAcquireUnmodifiedEXT: ChainableBase, BufferMemoryBarrierExtension, BufferMemoryBarrier2Extension, ImageMemoryBarrierExtension, ImageMemoryBarrier2Extension {
     public typealias CStruct = VkExternalMemoryAcquireUnmodifiedEXT
@@ -32779,8 +36279,12 @@ public struct ExternalMemoryAcquireUnmodifiedEXT: ChainableBase, BufferMemoryBar
         cStruct.acquireUnmodifiedMemory = VkBool32(self.acquireUnmodifiedMemory ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: ExternalMemoryAcquireUnmodifiedEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ExternalMemoryAcquireUnmodifiedEXTExtension: Chainable {}
+
+public protocol ExternalMemoryAcquireUnmodifiedEXTExtension: Chainable {}
 
 #if VK_USE_PLATFORM_METAL_EXT
 public struct ExportMetalObjectCreateInfoEXT: ChainableBase, InstanceCreateInfoExtension, MemoryAllocateInfoExtension, ImageCreateInfoExtension, ImageViewCreateInfoExtension, BufferViewCreateInfoExtension, SemaphoreCreateInfoExtension, EventCreateInfoExtension {
@@ -32803,9 +36307,13 @@ public struct ExportMetalObjectCreateInfoEXT: ChainableBase, InstanceCreateInfoE
         cStruct.exportObjectType = VkExportMetalObjectTypeFlagBitsEXT(rawValue: VkExportMetalObjectTypeFlagBitsEXT.RawValue(bitPattern: self.exportObjectType.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: ExportMetalObjectCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ExportMetalObjectCreateInfoEXTExtension: Chainable {}
+
+public protocol ExportMetalObjectCreateInfoEXTExtension: Chainable {}
 
 #if VK_USE_PLATFORM_METAL_EXT
 public struct ExportMetalObjectsInfoEXT: ChainableBase {
@@ -32824,9 +36332,13 @@ public struct ExportMetalObjectsInfoEXT: ChainableBase {
         cStruct.pNext = maybeMutable(pNext)
         return try body(&cStruct)
     }
+    public func push<Extension: ExportMetalObjectsInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ExportMetalObjectsInfoEXTExtension: Chainable {}
+
+public protocol ExportMetalObjectsInfoEXTExtension: Chainable {}
 
 #if VK_USE_PLATFORM_METAL_EXT
 public struct ExportMetalDeviceInfoEXT: ChainableBase, ExportMetalObjectsInfoEXTExtension {
@@ -32849,9 +36361,13 @@ public struct ExportMetalDeviceInfoEXT: ChainableBase, ExportMetalObjectsInfoEXT
         cStruct.mtlDevice = self.mtlDevice
         return try body(&cStruct)
     }
+    public func push<Extension: ExportMetalDeviceInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ExportMetalDeviceInfoEXTExtension: Chainable {}
+
+public protocol ExportMetalDeviceInfoEXTExtension: Chainable {}
 
 #if VK_USE_PLATFORM_METAL_EXT
 public struct ExportMetalCommandQueueInfoEXT: ChainableBase, ExportMetalObjectsInfoEXTExtension {
@@ -32878,9 +36394,13 @@ public struct ExportMetalCommandQueueInfoEXT: ChainableBase, ExportMetalObjectsI
         cStruct.mtlCommandQueue = self.mtlCommandQueue
         return try body(&cStruct)
     }
+    public func push<Extension: ExportMetalCommandQueueInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ExportMetalCommandQueueInfoEXTExtension: Chainable {}
+
+public protocol ExportMetalCommandQueueInfoEXTExtension: Chainable {}
 
 #if VK_USE_PLATFORM_METAL_EXT
 public struct ExportMetalBufferInfoEXT: ChainableBase, ExportMetalObjectsInfoEXTExtension {
@@ -32907,9 +36427,13 @@ public struct ExportMetalBufferInfoEXT: ChainableBase, ExportMetalObjectsInfoEXT
         cStruct.mtlBuffer = self.mtlBuffer
         return try body(&cStruct)
     }
+    public func push<Extension: ExportMetalBufferInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ExportMetalBufferInfoEXTExtension: Chainable {}
+
+public protocol ExportMetalBufferInfoEXTExtension: Chainable {}
 
 #if VK_USE_PLATFORM_METAL_EXT
 public struct ImportMetalBufferInfoEXT: ChainableBase, MemoryAllocateInfoExtension {
@@ -32932,9 +36456,13 @@ public struct ImportMetalBufferInfoEXT: ChainableBase, MemoryAllocateInfoExtensi
         cStruct.mtlBuffer = self.mtlBuffer
         return try body(&cStruct)
     }
+    public func push<Extension: ImportMetalBufferInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ImportMetalBufferInfoEXTExtension: Chainable {}
+
+public protocol ImportMetalBufferInfoEXTExtension: Chainable {}
 
 #if VK_USE_PLATFORM_METAL_EXT
 public struct ExportMetalTextureInfoEXT: ChainableBase, ExportMetalObjectsInfoEXTExtension {
@@ -32973,9 +36501,13 @@ public struct ExportMetalTextureInfoEXT: ChainableBase, ExportMetalObjectsInfoEX
         cStruct.mtlTexture = self.mtlTexture
         return try body(&cStruct)
     }
+    public func push<Extension: ExportMetalTextureInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ExportMetalTextureInfoEXTExtension: Chainable {}
+
+public protocol ExportMetalTextureInfoEXTExtension: Chainable {}
 
 #if VK_USE_PLATFORM_METAL_EXT
 public struct ImportMetalTextureInfoEXT: ChainableBase, ImageCreateInfoExtension {
@@ -33002,9 +36534,13 @@ public struct ImportMetalTextureInfoEXT: ChainableBase, ImageCreateInfoExtension
         cStruct.mtlTexture = self.mtlTexture
         return try body(&cStruct)
     }
+    public func push<Extension: ImportMetalTextureInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ImportMetalTextureInfoEXTExtension: Chainable {}
+
+public protocol ImportMetalTextureInfoEXTExtension: Chainable {}
 
 #if VK_USE_PLATFORM_METAL_EXT
 public struct ExportMetalIOSurfaceInfoEXT: ChainableBase, ExportMetalObjectsInfoEXTExtension {
@@ -33031,9 +36567,13 @@ public struct ExportMetalIOSurfaceInfoEXT: ChainableBase, ExportMetalObjectsInfo
         cStruct.ioSurface = self.ioSurface
         return try body(&cStruct)
     }
+    public func push<Extension: ExportMetalIOSurfaceInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ExportMetalIOSurfaceInfoEXTExtension: Chainable {}
+
+public protocol ExportMetalIOSurfaceInfoEXTExtension: Chainable {}
 
 #if VK_USE_PLATFORM_METAL_EXT
 public struct ImportMetalIOSurfaceInfoEXT: ChainableBase, ImageCreateInfoExtension {
@@ -33056,9 +36596,13 @@ public struct ImportMetalIOSurfaceInfoEXT: ChainableBase, ImageCreateInfoExtensi
         cStruct.ioSurface = self.ioSurface
         return try body(&cStruct)
     }
+    public func push<Extension: ImportMetalIOSurfaceInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ImportMetalIOSurfaceInfoEXTExtension: Chainable {}
+
+public protocol ImportMetalIOSurfaceInfoEXTExtension: Chainable {}
 
 #if VK_USE_PLATFORM_METAL_EXT
 public struct ExportMetalSharedEventInfoEXT: ChainableBase, ExportMetalObjectsInfoEXTExtension {
@@ -33089,9 +36633,13 @@ public struct ExportMetalSharedEventInfoEXT: ChainableBase, ExportMetalObjectsIn
         cStruct.mtlSharedEvent = self.mtlSharedEvent
         return try body(&cStruct)
     }
+    public func push<Extension: ExportMetalSharedEventInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ExportMetalSharedEventInfoEXTExtension: Chainable {}
+
+public protocol ExportMetalSharedEventInfoEXTExtension: Chainable {}
 
 #if VK_USE_PLATFORM_METAL_EXT
 public struct ImportMetalSharedEventInfoEXT: ChainableBase, SemaphoreCreateInfoExtension, EventCreateInfoExtension {
@@ -33114,9 +36662,13 @@ public struct ImportMetalSharedEventInfoEXT: ChainableBase, SemaphoreCreateInfoE
         cStruct.mtlSharedEvent = self.mtlSharedEvent
         return try body(&cStruct)
     }
+    public func push<Extension: ImportMetalSharedEventInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ImportMetalSharedEventInfoEXTExtension: Chainable {}
+
+public protocol ImportMetalSharedEventInfoEXTExtension: Chainable {}
 
 public struct PhysicalDeviceNonSeamlessCubeMapFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceNonSeamlessCubeMapFeaturesEXT
@@ -33138,8 +36690,12 @@ public struct PhysicalDeviceNonSeamlessCubeMapFeaturesEXT: ChainableBase, Physic
         cStruct.nonSeamlessCubeMap = VkBool32(self.nonSeamlessCubeMap ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceNonSeamlessCubeMapFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceNonSeamlessCubeMapFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceNonSeamlessCubeMapFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDevicePipelineRobustnessFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePipelineRobustnessFeatures
@@ -33161,8 +36717,12 @@ public struct PhysicalDevicePipelineRobustnessFeatures: ChainableBase, PhysicalD
         cStruct.pipelineRobustness = VkBool32(self.pipelineRobustness ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevicePipelineRobustnessFeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevicePipelineRobustnessFeaturesExtension: Chainable {}
+
+public protocol PhysicalDevicePipelineRobustnessFeaturesExtension: Chainable {}
 
 public struct PipelineRobustnessCreateInfo: ChainableBase, GraphicsPipelineCreateInfoExtension, ComputePipelineCreateInfoExtension, PipelineShaderStageCreateInfoExtension, RayTracingPipelineCreateInfoKHRExtension {
     public typealias CStruct = VkPipelineRobustnessCreateInfo
@@ -33196,8 +36756,12 @@ public struct PipelineRobustnessCreateInfo: ChainableBase, GraphicsPipelineCreat
         cStruct.images = VkPipelineRobustnessImageBehavior(rawValue: VkPipelineRobustnessImageBehavior.RawValue(bitPattern: self.images.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: PipelineRobustnessCreateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineRobustnessCreateInfoExtension: Chainable {}
+
+public protocol PipelineRobustnessCreateInfoExtension: Chainable {}
 
 public struct PhysicalDevicePipelineRobustnessProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDevicePipelineRobustnessProperties
@@ -33224,8 +36788,12 @@ public struct PhysicalDevicePipelineRobustnessProperties: ChainableBase, Physica
         cStruct.defaultRobustnessImages = VkPipelineRobustnessImageBehavior(rawValue: VkPipelineRobustnessImageBehavior.RawValue(bitPattern: self.defaultRobustnessImages.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevicePipelineRobustnessPropertiesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevicePipelineRobustnessPropertiesExtension: Chainable {}
+
+public protocol PhysicalDevicePipelineRobustnessPropertiesExtension: Chainable {}
 
 public struct ImageViewSampleWeightCreateInfoQCOM: ChainableBase, ImageViewCreateInfoExtension {
     public typealias CStruct = VkImageViewSampleWeightCreateInfoQCOM
@@ -33259,8 +36827,12 @@ public struct ImageViewSampleWeightCreateInfoQCOM: ChainableBase, ImageViewCreat
             }
         }
     }
+    public func push<Extension: ImageViewSampleWeightCreateInfoQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ImageViewSampleWeightCreateInfoQCOMExtension: Chainable {}
+
+public protocol ImageViewSampleWeightCreateInfoQCOMExtension: Chainable {}
 
 public struct PhysicalDeviceImageProcessingFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceImageProcessingFeaturesQCOM
@@ -33290,8 +36862,12 @@ public struct PhysicalDeviceImageProcessingFeaturesQCOM: ChainableBase, Physical
         cStruct.textureBlockMatch = VkBool32(self.textureBlockMatch ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceImageProcessingFeaturesQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceImageProcessingFeaturesQCOMExtension: Chainable {}
+
+public protocol PhysicalDeviceImageProcessingFeaturesQCOMExtension: Chainable {}
 
 public struct PhysicalDeviceImageProcessingPropertiesQCOM: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceImageProcessingPropertiesQCOM
@@ -33324,8 +36900,12 @@ public struct PhysicalDeviceImageProcessingPropertiesQCOM: ChainableBase, Physic
             }
         }
     }
+    public func push<Extension: PhysicalDeviceImageProcessingPropertiesQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceImageProcessingPropertiesQCOMExtension: Chainable {}
+
+public protocol PhysicalDeviceImageProcessingPropertiesQCOMExtension: Chainable {}
 
 public struct PhysicalDeviceTilePropertiesFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceTilePropertiesFeaturesQCOM
@@ -33347,8 +36927,12 @@ public struct PhysicalDeviceTilePropertiesFeaturesQCOM: ChainableBase, PhysicalD
         cStruct.tileProperties = VkBool32(self.tileProperties ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceTilePropertiesFeaturesQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceTilePropertiesFeaturesQCOMExtension: Chainable {}
+
+public protocol PhysicalDeviceTilePropertiesFeaturesQCOMExtension: Chainable {}
 
 public struct TilePropertiesQCOM: ChainableBase {
     public typealias CStruct = VkTilePropertiesQCOM
@@ -33384,8 +36968,12 @@ public struct TilePropertiesQCOM: ChainableBase {
             }
         }
     }
+    public func push<Extension: TilePropertiesQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol TilePropertiesQCOMExtension: Chainable {}
+
+public protocol TilePropertiesQCOMExtension: Chainable {}
 
 public struct TileMemoryBindInfoQCOM: ChainableBase, CommandBufferInheritanceInfoExtension {
     public typealias CStruct = VkTileMemoryBindInfoQCOM
@@ -33407,8 +36995,12 @@ public struct TileMemoryBindInfoQCOM: ChainableBase, CommandBufferInheritanceInf
         cStruct.memory = self.memory.handle
         return try body(&cStruct)
     }
+    public func push<Extension: TileMemoryBindInfoQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol TileMemoryBindInfoQCOMExtension: Chainable {}
+
+public protocol TileMemoryBindInfoQCOMExtension: Chainable {}
 
 public struct PhysicalDeviceAmigoProfilingFeaturesSEC: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceAmigoProfilingFeaturesSEC
@@ -33430,8 +37022,12 @@ public struct PhysicalDeviceAmigoProfilingFeaturesSEC: ChainableBase, PhysicalDe
         cStruct.amigoProfiling = VkBool32(self.amigoProfiling ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceAmigoProfilingFeaturesSECExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceAmigoProfilingFeaturesSECExtension: Chainable {}
+
+public protocol PhysicalDeviceAmigoProfilingFeaturesSECExtension: Chainable {}
 
 public struct AmigoProfilingSubmitInfoSEC: ChainableBase, SubmitInfoExtension {
     public typealias CStruct = VkAmigoProfilingSubmitInfoSEC
@@ -33457,8 +37053,12 @@ public struct AmigoProfilingSubmitInfoSEC: ChainableBase, SubmitInfoExtension {
         cStruct.swapBufferTimestamp = self.swapBufferTimestamp
         return try body(&cStruct)
     }
+    public func push<Extension: AmigoProfilingSubmitInfoSECExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol AmigoProfilingSubmitInfoSECExtension: Chainable {}
+
+public protocol AmigoProfilingSubmitInfoSECExtension: Chainable {}
 
 public struct PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT
@@ -33480,8 +37080,12 @@ public struct PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT: ChainableBa
         cStruct.attachmentFeedbackLoopLayout = VkBool32(self.attachmentFeedbackLoopLayout ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXTExtension: Chainable {}
 
 public struct AttachmentFeedbackLoopInfoEXT: ChainableBase, RenderingAttachmentInfoExtension {
     public typealias CStruct = VkAttachmentFeedbackLoopInfoEXT
@@ -33503,8 +37107,12 @@ public struct AttachmentFeedbackLoopInfoEXT: ChainableBase, RenderingAttachmentI
         cStruct.feedbackLoopEnable = VkBool32(self.feedbackLoopEnable ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: AttachmentFeedbackLoopInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol AttachmentFeedbackLoopInfoEXTExtension: Chainable {}
+
+public protocol AttachmentFeedbackLoopInfoEXTExtension: Chainable {}
 
 public struct PhysicalDeviceAddressBindingReportFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceAddressBindingReportFeaturesEXT
@@ -33526,8 +37134,12 @@ public struct PhysicalDeviceAddressBindingReportFeaturesEXT: ChainableBase, Phys
         cStruct.reportAddressBinding = VkBool32(self.reportAddressBinding ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceAddressBindingReportFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceAddressBindingReportFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceAddressBindingReportFeaturesEXTExtension: Chainable {}
 
 public struct RenderingAttachmentFlagsInfoKHR: ChainableBase, RenderingAttachmentInfoExtension {
     public typealias CStruct = VkRenderingAttachmentFlagsInfoKHR
@@ -33549,8 +37161,12 @@ public struct RenderingAttachmentFlagsInfoKHR: ChainableBase, RenderingAttachmen
         cStruct.flags = self.flags.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: RenderingAttachmentFlagsInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol RenderingAttachmentFlagsInfoKHRExtension: Chainable {}
+
+public protocol RenderingAttachmentFlagsInfoKHRExtension: Chainable {}
 
 public struct ResolveImageModeInfoKHR: ChainableBase, ResolveImageInfo2Extension {
     public typealias CStruct = VkResolveImageModeInfoKHR
@@ -33580,8 +37196,12 @@ public struct ResolveImageModeInfoKHR: ChainableBase, ResolveImageInfo2Extension
         cStruct.stencilResolveMode = VkResolveModeFlagBits(rawValue: VkResolveModeFlagBits.RawValue(bitPattern: self.stencilResolveMode.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: ResolveImageModeInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ResolveImageModeInfoKHRExtension: Chainable {}
+
+public protocol ResolveImageModeInfoKHRExtension: Chainable {}
 
 public struct DeviceAddressBindingCallbackDataEXT: ChainableBase, DebugUtilsMessengerCallbackDataEXTExtension {
     public typealias CStruct = VkDeviceAddressBindingCallbackDataEXT
@@ -33615,8 +37235,12 @@ public struct DeviceAddressBindingCallbackDataEXT: ChainableBase, DebugUtilsMess
         cStruct.bindingType = VkDeviceAddressBindingTypeEXT(rawValue: VkDeviceAddressBindingTypeEXT.RawValue(bitPattern: self.bindingType.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: DeviceAddressBindingCallbackDataEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DeviceAddressBindingCallbackDataEXTExtension: Chainable {}
+
+public protocol DeviceAddressBindingCallbackDataEXTExtension: Chainable {}
 
 public struct PhysicalDeviceOpticalFlowFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceOpticalFlowFeaturesNV
@@ -33638,8 +37262,12 @@ public struct PhysicalDeviceOpticalFlowFeaturesNV: ChainableBase, PhysicalDevice
         cStruct.opticalFlow = VkBool32(self.opticalFlow ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceOpticalFlowFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceOpticalFlowFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceOpticalFlowFeaturesNVExtension: Chainable {}
 
 public struct PhysicalDeviceOpticalFlowPropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceOpticalFlowPropertiesNV
@@ -33687,8 +37315,12 @@ public struct PhysicalDeviceOpticalFlowPropertiesNV: ChainableBase, PhysicalDevi
         cStruct.maxNumRegionsOfInterest = self.maxNumRegionsOfInterest
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceOpticalFlowPropertiesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceOpticalFlowPropertiesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceOpticalFlowPropertiesNVExtension: Chainable {}
 
 public struct OpticalFlowImageFormatInfoNV: ChainableBase, PhysicalDeviceImageFormatInfo2Extension, ImageCreateInfoExtension {
     public typealias CStruct = VkOpticalFlowImageFormatInfoNV
@@ -33710,8 +37342,12 @@ public struct OpticalFlowImageFormatInfoNV: ChainableBase, PhysicalDeviceImageFo
         cStruct.usage = self.usage.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: OpticalFlowImageFormatInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol OpticalFlowImageFormatInfoNVExtension: Chainable {}
+
+public protocol OpticalFlowImageFormatInfoNVExtension: Chainable {}
 
 public struct OpticalFlowImageFormatPropertiesNV: ChainableBase {
     public typealias CStruct = VkOpticalFlowImageFormatPropertiesNV
@@ -33729,8 +37365,12 @@ public struct OpticalFlowImageFormatPropertiesNV: ChainableBase {
         cStruct.format = VkFormat(rawValue: VkFormat.RawValue(bitPattern: self.format.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: OpticalFlowImageFormatPropertiesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol OpticalFlowImageFormatPropertiesNVExtension: Chainable {}
+
+public protocol OpticalFlowImageFormatPropertiesNVExtension: Chainable {}
 
 public struct OpticalFlowSessionCreateInfoNV: ChainableBase {
     public typealias CStruct = VkOpticalFlowSessionCreateInfoNV
@@ -33784,8 +37424,12 @@ public struct OpticalFlowSessionCreateInfoNV: ChainableBase {
         cStruct.flags = self.flags.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: OpticalFlowSessionCreateInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol OpticalFlowSessionCreateInfoNVExtension: Chainable {}
+
+public protocol OpticalFlowSessionCreateInfoNVExtension: Chainable {}
 
 public struct OpticalFlowSessionCreatePrivateDataInfoNV: ChainableBase, OpticalFlowSessionCreateInfoNVExtension {
     public typealias CStruct = VkOpticalFlowSessionCreatePrivateDataInfoNV
@@ -33815,8 +37459,12 @@ public struct OpticalFlowSessionCreatePrivateDataInfoNV: ChainableBase, OpticalF
         cStruct.pPrivateData = self.privateData
         return try body(&cStruct)
     }
+    public func push<Extension: OpticalFlowSessionCreatePrivateDataInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol OpticalFlowSessionCreatePrivateDataInfoNVExtension: Chainable {}
+
+public protocol OpticalFlowSessionCreatePrivateDataInfoNVExtension: Chainable {}
 
 public struct OpticalFlowExecuteInfoNV: ChainableBase {
     public typealias CStruct = VkOpticalFlowExecuteInfoNV
@@ -33845,8 +37493,12 @@ public struct OpticalFlowExecuteInfoNV: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: OpticalFlowExecuteInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol OpticalFlowExecuteInfoNVExtension: Chainable {}
+
+public protocol OpticalFlowExecuteInfoNVExtension: Chainable {}
 
 public struct PhysicalDeviceFaultFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceFaultFeaturesEXT
@@ -33872,8 +37524,12 @@ public struct PhysicalDeviceFaultFeaturesEXT: ChainableBase, PhysicalDeviceFeatu
         cStruct.deviceFaultVendorBinary = VkBool32(self.deviceFaultVendorBinary ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceFaultFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceFaultFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceFaultFeaturesEXTExtension: Chainable {}
 
 public struct DeviceFaultAddressInfoKHR: CStructConvertible {
     public typealias CStruct = VkDeviceFaultAddressInfoKHR
@@ -33956,8 +37612,12 @@ public struct DeviceFaultInfoKHR: ChainableBase {
             }
         }
     }
+    public func push<Extension: DeviceFaultInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DeviceFaultInfoKHRExtension: Chainable {}
+
+public protocol DeviceFaultInfoKHRExtension: Chainable {}
 
 public struct DeviceFaultDebugInfoKHR: ChainableBase {
     public typealias CStruct = VkDeviceFaultDebugInfoKHR
@@ -33978,8 +37638,12 @@ public struct DeviceFaultDebugInfoKHR: ChainableBase {
         cStruct.pVendorBinaryData = self.vendorBinaryData
         return try body(&cStruct)
     }
+    public func push<Extension: DeviceFaultDebugInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DeviceFaultDebugInfoKHRExtension: Chainable {}
+
+public protocol DeviceFaultDebugInfoKHRExtension: Chainable {}
 
 public struct DeviceFaultCountsEXT: ChainableBase {
     public typealias CStruct = VkDeviceFaultCountsEXT
@@ -34009,8 +37673,12 @@ public struct DeviceFaultCountsEXT: ChainableBase {
         cStruct.vendorBinarySize = self.vendorBinarySize
         return try body(&cStruct)
     }
+    public func push<Extension: DeviceFaultCountsEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DeviceFaultCountsEXTExtension: Chainable {}
+
+public protocol DeviceFaultCountsEXTExtension: Chainable {}
 
 public struct DeviceFaultInfoEXT: ChainableBase {
     public typealias CStruct = VkDeviceFaultInfoEXT
@@ -34037,8 +37705,12 @@ public struct DeviceFaultInfoEXT: ChainableBase {
         cStruct.pVendorBinaryData = self.vendorBinaryData
         return try body(&cStruct)
     }
+    public func push<Extension: DeviceFaultInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DeviceFaultInfoEXTExtension: Chainable {}
+
+public protocol DeviceFaultInfoEXTExtension: Chainable {}
 
 public struct DeviceFaultVendorBinaryHeaderVersionOneKHR: CStructConvertible {
     public typealias CStruct = VkDeviceFaultVendorBinaryHeaderVersionOneKHR
@@ -34132,8 +37804,12 @@ public struct PhysicalDeviceFaultFeaturesKHR: ChainableBase, PhysicalDeviceFeatu
         cStruct.deviceFaultDeviceLostOnMasked = VkBool32(self.deviceFaultDeviceLostOnMasked ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceFaultFeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceFaultFeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceFaultFeaturesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceFaultPropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceFaultPropertiesKHR
@@ -34151,8 +37827,12 @@ public struct PhysicalDeviceFaultPropertiesKHR: ChainableBase, PhysicalDevicePro
         cStruct.maxDeviceFaultCount = self.maxDeviceFaultCount
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceFaultPropertiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceFaultPropertiesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceFaultPropertiesKHRExtension: Chainable {}
 
 public struct PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT
@@ -34174,8 +37854,12 @@ public struct PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT: ChainableBas
         cStruct.pipelineLibraryGroupHandles = VkBool32(self.pipelineLibraryGroupHandles ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXTExtension: Chainable {}
 
 public struct DepthBiasInfoEXT: ChainableBase {
     public typealias CStruct = VkDepthBiasInfoEXT
@@ -34205,8 +37889,12 @@ public struct DepthBiasInfoEXT: ChainableBase {
         cStruct.depthBiasSlopeFactor = self.depthBiasSlopeFactor
         return try body(&cStruct)
     }
+    public func push<Extension: DepthBiasInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DepthBiasInfoEXTExtension: Chainable {}
+
+public protocol DepthBiasInfoEXTExtension: Chainable {}
 
 public struct DepthBiasRepresentationInfoEXT: ChainableBase, DepthBiasInfoEXTExtension, PipelineRasterizationStateCreateInfoExtension {
     public typealias CStruct = VkDepthBiasRepresentationInfoEXT
@@ -34232,8 +37920,12 @@ public struct DepthBiasRepresentationInfoEXT: ChainableBase, DepthBiasInfoEXTExt
         cStruct.depthBiasExact = VkBool32(self.depthBiasExact ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: DepthBiasRepresentationInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DepthBiasRepresentationInfoEXTExtension: Chainable {}
+
+public protocol DepthBiasRepresentationInfoEXTExtension: Chainable {}
 
 public struct DecompressMemoryRegionNV: CStructConvertible {
     public typealias CStruct = VkDecompressMemoryRegionNV
@@ -34330,8 +38022,12 @@ public struct DecompressMemoryInfoEXT: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: DecompressMemoryInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DecompressMemoryInfoEXTExtension: Chainable {}
+
+public protocol DecompressMemoryInfoEXTExtension: Chainable {}
 
 public struct PhysicalDeviceShaderCoreBuiltinsPropertiesARM: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceShaderCoreBuiltinsPropertiesARM
@@ -34355,8 +38051,12 @@ public struct PhysicalDeviceShaderCoreBuiltinsPropertiesARM: ChainableBase, Phys
         cStruct.shaderWarpsPerCore = self.shaderWarpsPerCore
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderCoreBuiltinsPropertiesARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderCoreBuiltinsPropertiesARMExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderCoreBuiltinsPropertiesARMExtension: Chainable {}
 
 public struct PhysicalDeviceShaderCoreBuiltinsFeaturesARM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderCoreBuiltinsFeaturesARM
@@ -34378,8 +38078,12 @@ public struct PhysicalDeviceShaderCoreBuiltinsFeaturesARM: ChainableBase, Physic
         cStruct.shaderCoreBuiltins = VkBool32(self.shaderCoreBuiltins ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderCoreBuiltinsFeaturesARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderCoreBuiltinsFeaturesARMExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderCoreBuiltinsFeaturesARMExtension: Chainable {}
 
 public struct FrameBoundaryEXT: ChainableBase, SubmitInfoExtension, SubmitInfo2Extension, PresentInfoKHRExtension, BindSparseInfoExtension {
     public typealias CStruct = VkFrameBoundaryEXT
@@ -34431,8 +38135,12 @@ public struct FrameBoundaryEXT: ChainableBase, SubmitInfoExtension, SubmitInfo2E
             }
         }
     }
+    public func push<Extension: FrameBoundaryEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol FrameBoundaryEXTExtension: Chainable {}
+
+public protocol FrameBoundaryEXTExtension: Chainable {}
 
 public struct PhysicalDeviceFrameBoundaryFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceFrameBoundaryFeaturesEXT
@@ -34454,8 +38162,12 @@ public struct PhysicalDeviceFrameBoundaryFeaturesEXT: ChainableBase, PhysicalDev
         cStruct.frameBoundary = VkBool32(self.frameBoundary ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceFrameBoundaryFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceFrameBoundaryFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceFrameBoundaryFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT
@@ -34477,8 +38189,12 @@ public struct PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT: Chaina
         cStruct.dynamicRenderingUnusedAttachments = VkBool32(self.dynamicRenderingUnusedAttachments ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceInternallySynchronizedQueuesFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceInternallySynchronizedQueuesFeaturesKHR
@@ -34500,8 +38216,12 @@ public struct PhysicalDeviceInternallySynchronizedQueuesFeaturesKHR: ChainableBa
         cStruct.internallySynchronizedQueues = VkBool32(self.internallySynchronizedQueues ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceInternallySynchronizedQueuesFeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceInternallySynchronizedQueuesFeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceInternallySynchronizedQueuesFeaturesKHRExtension: Chainable {}
 
 public struct SurfacePresentModeKHR: ChainableBase, PhysicalDeviceSurfaceInfo2KHRExtension {
     public typealias CStruct = VkSurfacePresentModeKHR
@@ -34523,8 +38243,12 @@ public struct SurfacePresentModeKHR: ChainableBase, PhysicalDeviceSurfaceInfo2KH
         cStruct.presentMode = VkPresentModeKHR(rawValue: VkPresentModeKHR.RawValue(bitPattern: self.presentMode.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: SurfacePresentModeKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SurfacePresentModeKHRExtension: Chainable {}
+
+public protocol SurfacePresentModeKHRExtension: Chainable {}
 
 public struct SurfacePresentScalingCapabilitiesKHR: ChainableBase, SurfaceCapabilities2KHRExtension {
     public typealias CStruct = VkSurfacePresentScalingCapabilitiesKHR
@@ -34566,8 +38290,12 @@ public struct SurfacePresentScalingCapabilitiesKHR: ChainableBase, SurfaceCapabi
             }
         }
     }
+    public func push<Extension: SurfacePresentScalingCapabilitiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SurfacePresentScalingCapabilitiesKHRExtension: Chainable {}
+
+public protocol SurfacePresentScalingCapabilitiesKHRExtension: Chainable {}
 
 public struct SurfacePresentModeCompatibilityKHR: ChainableBase, SurfaceCapabilities2KHRExtension {
     public typealias CStruct = VkSurfacePresentModeCompatibilityKHR
@@ -34593,8 +38321,12 @@ public struct SurfacePresentModeCompatibilityKHR: ChainableBase, SurfaceCapabili
         cStruct.pPresentModes = self.presentModes
         return try body(&cStruct)
     }
+    public func push<Extension: SurfacePresentModeCompatibilityKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SurfacePresentModeCompatibilityKHRExtension: Chainable {}
+
+public protocol SurfacePresentModeCompatibilityKHRExtension: Chainable {}
 
 public struct PhysicalDeviceSwapchainMaintenance1FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceSwapchainMaintenance1FeaturesKHR
@@ -34616,8 +38348,12 @@ public struct PhysicalDeviceSwapchainMaintenance1FeaturesKHR: ChainableBase, Phy
         cStruct.swapchainMaintenance1 = VkBool32(self.swapchainMaintenance1 ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceSwapchainMaintenance1FeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceSwapchainMaintenance1FeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceSwapchainMaintenance1FeaturesKHRExtension: Chainable {}
 
 public struct SwapchainPresentFenceInfoKHR: ChainableBase, PresentInfoKHRExtension {
     public typealias CStruct = VkSwapchainPresentFenceInfoKHR
@@ -34642,8 +38378,12 @@ public struct SwapchainPresentFenceInfoKHR: ChainableBase, PresentInfoKHRExtensi
             return try body(&cStruct)
         }
     }
+    public func push<Extension: SwapchainPresentFenceInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SwapchainPresentFenceInfoKHRExtension: Chainable {}
+
+public protocol SwapchainPresentFenceInfoKHRExtension: Chainable {}
 
 public struct SwapchainPresentModesCreateInfoKHR: ChainableBase, SwapchainCreateInfoKHRExtension {
     public typealias CStruct = VkSwapchainPresentModesCreateInfoKHR
@@ -34668,8 +38408,12 @@ public struct SwapchainPresentModesCreateInfoKHR: ChainableBase, SwapchainCreate
             return try body(&cStruct)
         }
     }
+    public func push<Extension: SwapchainPresentModesCreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SwapchainPresentModesCreateInfoKHRExtension: Chainable {}
+
+public protocol SwapchainPresentModesCreateInfoKHRExtension: Chainable {}
 
 public struct SwapchainPresentModeInfoKHR: ChainableBase, PresentInfoKHRExtension {
     public typealias CStruct = VkSwapchainPresentModeInfoKHR
@@ -34694,8 +38438,12 @@ public struct SwapchainPresentModeInfoKHR: ChainableBase, PresentInfoKHRExtensio
             return try body(&cStruct)
         }
     }
+    public func push<Extension: SwapchainPresentModeInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SwapchainPresentModeInfoKHRExtension: Chainable {}
+
+public protocol SwapchainPresentModeInfoKHRExtension: Chainable {}
 
 public struct SwapchainPresentScalingCreateInfoKHR: ChainableBase, SwapchainCreateInfoKHRExtension {
     public typealias CStruct = VkSwapchainPresentScalingCreateInfoKHR
@@ -34725,8 +38473,12 @@ public struct SwapchainPresentScalingCreateInfoKHR: ChainableBase, SwapchainCrea
         cStruct.presentGravityY = self.presentGravityY.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: SwapchainPresentScalingCreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SwapchainPresentScalingCreateInfoKHRExtension: Chainable {}
+
+public protocol SwapchainPresentScalingCreateInfoKHRExtension: Chainable {}
 
 public struct ReleaseSwapchainImagesInfoKHR: ChainableBase {
     public typealias CStruct = VkReleaseSwapchainImagesInfoKHR
@@ -34755,8 +38507,12 @@ public struct ReleaseSwapchainImagesInfoKHR: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: ReleaseSwapchainImagesInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ReleaseSwapchainImagesInfoKHRExtension: Chainable {}
+
+public protocol ReleaseSwapchainImagesInfoKHRExtension: Chainable {}
 
 public struct PhysicalDeviceDepthBiasControlFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDepthBiasControlFeaturesEXT
@@ -34790,8 +38546,12 @@ public struct PhysicalDeviceDepthBiasControlFeaturesEXT: ChainableBase, Physical
         cStruct.depthBiasExact = VkBool32(self.depthBiasExact ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDepthBiasControlFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceDepthBiasControlFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceDepthBiasControlFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceRayTracingInvocationReorderFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceRayTracingInvocationReorderFeaturesEXT
@@ -34813,8 +38573,12 @@ public struct PhysicalDeviceRayTracingInvocationReorderFeaturesEXT: ChainableBas
         cStruct.rayTracingInvocationReorder = VkBool32(self.rayTracingInvocationReorder ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceRayTracingInvocationReorderFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceRayTracingInvocationReorderFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceRayTracingInvocationReorderFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceRayTracingInvocationReorderFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceRayTracingInvocationReorderFeaturesNV
@@ -34836,8 +38600,12 @@ public struct PhysicalDeviceRayTracingInvocationReorderFeaturesNV: ChainableBase
         cStruct.rayTracingInvocationReorder = VkBool32(self.rayTracingInvocationReorder ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceRayTracingInvocationReorderFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceRayTracingInvocationReorderFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceRayTracingInvocationReorderFeaturesNVExtension: Chainable {}
 
 public struct PhysicalDeviceRayTracingInvocationReorderPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceRayTracingInvocationReorderPropertiesEXT
@@ -34858,8 +38626,12 @@ public struct PhysicalDeviceRayTracingInvocationReorderPropertiesEXT: ChainableB
         cStruct.maxShaderBindingTableRecordIndex = self.maxShaderBindingTableRecordIndex
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceRayTracingInvocationReorderPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceRayTracingInvocationReorderPropertiesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceRayTracingInvocationReorderPropertiesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceRayTracingInvocationReorderPropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceRayTracingInvocationReorderPropertiesNV
@@ -34877,8 +38649,12 @@ public struct PhysicalDeviceRayTracingInvocationReorderPropertiesNV: ChainableBa
         cStruct.rayTracingInvocationReorderReorderingHint = VkRayTracingInvocationReorderModeEXT(rawValue: VkRayTracingInvocationReorderModeEXT.RawValue(bitPattern: self.rayTracingInvocationReorderReorderingHint.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceRayTracingInvocationReorderPropertiesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceRayTracingInvocationReorderPropertiesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceRayTracingInvocationReorderPropertiesNVExtension: Chainable {}
 
 public struct PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceExtendedSparseAddressSpaceFeaturesNV
@@ -34900,8 +38676,12 @@ public struct PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV: ChainableBase,
         cStruct.extendedSparseAddressSpace = VkBool32(self.extendedSparseAddressSpace ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceExtendedSparseAddressSpaceFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceExtendedSparseAddressSpaceFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceExtendedSparseAddressSpaceFeaturesNVExtension: Chainable {}
 
 public struct PhysicalDeviceExtendedSparseAddressSpacePropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceExtendedSparseAddressSpacePropertiesNV
@@ -34925,8 +38705,12 @@ public struct PhysicalDeviceExtendedSparseAddressSpacePropertiesNV: ChainableBas
         cStruct.extendedSparseBufferUsageFlags = self.extendedSparseBufferUsageFlags.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceExtendedSparseAddressSpacePropertiesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceExtendedSparseAddressSpacePropertiesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceExtendedSparseAddressSpacePropertiesNVExtension: Chainable {}
 
 public struct DirectDriverLoadingInfoLUNARG: ChainableBase {
     public typealias CStruct = VkDirectDriverLoadingInfoLUNARG
@@ -34952,8 +38736,12 @@ public struct DirectDriverLoadingInfoLUNARG: ChainableBase {
         cStruct.pfnGetInstanceProcAddr = self.pfnGetInstanceProcAddr
         return try body(&cStruct)
     }
+    public func push<Extension: DirectDriverLoadingInfoLUNARGExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DirectDriverLoadingInfoLUNARGExtension: Chainable {}
+
+public protocol DirectDriverLoadingInfoLUNARGExtension: Chainable {}
 
 public struct DirectDriverLoadingListLUNARG: ChainableBase, InstanceCreateInfoExtension {
     public typealias CStruct = VkDirectDriverLoadingListLUNARG
@@ -34982,8 +38770,12 @@ public struct DirectDriverLoadingListLUNARG: ChainableBase, InstanceCreateInfoEx
             return try body(&cStruct)
         }
     }
+    public func push<Extension: DirectDriverLoadingListLUNARGExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DirectDriverLoadingListLUNARGExtension: Chainable {}
+
+public protocol DirectDriverLoadingListLUNARGExtension: Chainable {}
 
 public struct PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM
@@ -35005,8 +38797,12 @@ public struct PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM: ChainableBase
         cStruct.multiviewPerViewViewports = VkBool32(self.multiviewPerViewViewports ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOMExtension: Chainable {}
+
+public protocol PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOMExtension: Chainable {}
 
 public struct PhysicalDeviceRayTracingPositionFetchFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceRayTracingPositionFetchFeaturesKHR
@@ -35028,8 +38824,12 @@ public struct PhysicalDeviceRayTracingPositionFetchFeaturesKHR: ChainableBase, P
         cStruct.rayTracingPositionFetch = VkBool32(self.rayTracingPositionFetch ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceRayTracingPositionFetchFeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceRayTracingPositionFetchFeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceRayTracingPositionFetchFeaturesKHRExtension: Chainable {}
 
 public struct DeviceImageSubresourceInfo: ChainableBase {
     public typealias CStruct = VkDeviceImageSubresourceInfo
@@ -35059,8 +38859,12 @@ public struct DeviceImageSubresourceInfo: ChainableBase {
             }
         }
     }
+    public func push<Extension: DeviceImageSubresourceInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DeviceImageSubresourceInfoExtension: Chainable {}
+
+public protocol DeviceImageSubresourceInfoExtension: Chainable {}
 
 public struct PhysicalDeviceShaderCorePropertiesARM: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceShaderCorePropertiesARM
@@ -35084,8 +38888,12 @@ public struct PhysicalDeviceShaderCorePropertiesARM: ChainableBase, PhysicalDevi
         cStruct.fmaRate = self.fmaRate
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderCorePropertiesARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderCorePropertiesARMExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderCorePropertiesARMExtension: Chainable {}
 
 public struct PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM
@@ -35107,8 +38915,12 @@ public struct PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM: ChainableBa
         cStruct.multiviewPerViewRenderAreas = VkBool32(self.multiviewPerViewRenderAreas ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOMExtension: Chainable {}
+
+public protocol PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOMExtension: Chainable {}
 
 public struct MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM: ChainableBase, RenderPassBeginInfoExtension, RenderingInfoExtension {
     public typealias CStruct = VkMultiviewPerViewRenderAreasRenderPassBeginInfoQCOM
@@ -35133,8 +38945,12 @@ public struct MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM: ChainableBase,
             return try body(&cStruct)
         }
     }
+    public func push<Extension: MultiviewPerViewRenderAreasRenderPassBeginInfoQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol MultiviewPerViewRenderAreasRenderPassBeginInfoQCOMExtension: Chainable {}
+
+public protocol MultiviewPerViewRenderAreasRenderPassBeginInfoQCOMExtension: Chainable {}
 
 public struct QueryLowLatencySupportNV: ChainableBase, SemaphoreCreateInfoExtension {
     public typealias CStruct = VkQueryLowLatencySupportNV
@@ -35156,8 +38972,12 @@ public struct QueryLowLatencySupportNV: ChainableBase, SemaphoreCreateInfoExtens
         cStruct.pQueriedLowLatencyData = self.queriedLowLatencyData
         return try body(&cStruct)
     }
+    public func push<Extension: QueryLowLatencySupportNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol QueryLowLatencySupportNVExtension: Chainable {}
+
+public protocol QueryLowLatencySupportNVExtension: Chainable {}
 
 public struct MemoryMapInfo: ChainableBase {
     public typealias CStruct = VkMemoryMapInfo
@@ -35191,8 +39011,12 @@ public struct MemoryMapInfo: ChainableBase {
         cStruct.size = self.size
         return try body(&cStruct)
     }
+    public func push<Extension: MemoryMapInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol MemoryMapInfoExtension: Chainable {}
+
+public protocol MemoryMapInfoExtension: Chainable {}
 
 public struct MemoryUnmapInfo: ChainableBase {
     public typealias CStruct = VkMemoryUnmapInfo
@@ -35218,8 +39042,12 @@ public struct MemoryUnmapInfo: ChainableBase {
         cStruct.memory = self.memory.handle
         return try body(&cStruct)
     }
+    public func push<Extension: MemoryUnmapInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol MemoryUnmapInfoExtension: Chainable {}
+
+public protocol MemoryUnmapInfoExtension: Chainable {}
 
 public struct PhysicalDeviceShaderObjectFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderObjectFeaturesEXT
@@ -35241,8 +39069,12 @@ public struct PhysicalDeviceShaderObjectFeaturesEXT: ChainableBase, PhysicalDevi
         cStruct.shaderObject = VkBool32(self.shaderObject ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderObjectFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderObjectFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderObjectFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceShaderObjectPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceShaderObjectPropertiesEXT
@@ -35263,8 +39095,12 @@ public struct PhysicalDeviceShaderObjectPropertiesEXT: ChainableBase, PhysicalDe
         cStruct.shaderBinaryVersion = self.shaderBinaryVersion
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderObjectPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderObjectPropertiesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderObjectPropertiesEXTExtension: Chainable {}
 
 public struct ShaderCreateInfoEXT: ChainableBase {
     public typealias CStruct = VkShaderCreateInfoEXT
@@ -35332,8 +39168,12 @@ public struct ShaderCreateInfoEXT: ChainableBase {
             }
         }
     }
+    public func push<Extension: ShaderCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ShaderCreateInfoEXTExtension: Chainable {}
+
+public protocol ShaderCreateInfoEXTExtension: Chainable {}
 
 public struct PhysicalDeviceShaderTileImageFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderTileImageFeaturesEXT
@@ -35363,8 +39203,12 @@ public struct PhysicalDeviceShaderTileImageFeaturesEXT: ChainableBase, PhysicalD
         cStruct.shaderTileImageStencilReadAccess = VkBool32(self.shaderTileImageStencilReadAccess ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderTileImageFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderTileImageFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderTileImageFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceShaderTileImagePropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceShaderTileImagePropertiesEXT
@@ -35388,8 +39232,12 @@ public struct PhysicalDeviceShaderTileImagePropertiesEXT: ChainableBase, Physica
         cStruct.shaderTileImageReadFromHelperInvocation = VkBool32(self.shaderTileImageReadFromHelperInvocation ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderTileImagePropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderTileImagePropertiesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderTileImagePropertiesEXTExtension: Chainable {}
 
 #if VK_USE_PLATFORM_SCREEN_QNX
 public struct ImportScreenBufferInfoQNX: ChainableBase, MemoryAllocateInfoExtension {
@@ -35412,9 +39260,13 @@ public struct ImportScreenBufferInfoQNX: ChainableBase, MemoryAllocateInfoExtens
         cStruct.buffer = self.buffer
         return try body(&cStruct)
     }
+    public func push<Extension: ImportScreenBufferInfoQNXExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ImportScreenBufferInfoQNXExtension: Chainable {}
+
+public protocol ImportScreenBufferInfoQNXExtension: Chainable {}
 
 #if VK_USE_PLATFORM_SCREEN_QNX
 public struct ScreenBufferPropertiesQNX: ChainableBase {
@@ -35436,9 +39288,13 @@ public struct ScreenBufferPropertiesQNX: ChainableBase {
         cStruct.memoryTypeBits = self.memoryTypeBits
         return try body(&cStruct)
     }
+    public func push<Extension: ScreenBufferPropertiesQNXExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ScreenBufferPropertiesQNXExtension: Chainable {}
+
+public protocol ScreenBufferPropertiesQNXExtension: Chainable {}
 
 #if VK_USE_PLATFORM_SCREEN_QNX
 public struct ScreenBufferFormatPropertiesQNX: ChainableBase, ScreenBufferPropertiesQNXExtension {
@@ -35483,9 +39339,13 @@ public struct ScreenBufferFormatPropertiesQNX: ChainableBase, ScreenBufferProper
             return try body(&cStruct)
         }
     }
+    public func push<Extension: ScreenBufferFormatPropertiesQNXExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ScreenBufferFormatPropertiesQNXExtension: Chainable {}
+
+public protocol ScreenBufferFormatPropertiesQNXExtension: Chainable {}
 
 #if VK_USE_PLATFORM_SCREEN_QNX
 public struct ExternalFormatQNX: ChainableBase, ImageCreateInfoExtension, SamplerYcbcrConversionCreateInfoExtension {
@@ -35508,9 +39368,13 @@ public struct ExternalFormatQNX: ChainableBase, ImageCreateInfoExtension, Sample
         cStruct.externalFormat = self.externalFormat
         return try body(&cStruct)
     }
+    public func push<Extension: ExternalFormatQNXExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ExternalFormatQNXExtension: Chainable {}
+
+public protocol ExternalFormatQNXExtension: Chainable {}
 
 #if VK_USE_PLATFORM_SCREEN_QNX
 public struct PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
@@ -35533,9 +39397,13 @@ public struct PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX: ChainableBase
         cStruct.screenBufferImport = VkBool32(self.screenBufferImport ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceExternalMemoryScreenBufferFeaturesQNXExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol PhysicalDeviceExternalMemoryScreenBufferFeaturesQNXExtension: Chainable {}
+
+public protocol PhysicalDeviceExternalMemoryScreenBufferFeaturesQNXExtension: Chainable {}
 
 public struct PhysicalDeviceCooperativeMatrixFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceCooperativeMatrixFeaturesKHR
@@ -35561,8 +39429,12 @@ public struct PhysicalDeviceCooperativeMatrixFeaturesKHR: ChainableBase, Physica
         cStruct.cooperativeMatrixRobustBufferAccess = VkBool32(self.cooperativeMatrixRobustBufferAccess ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceCooperativeMatrixFeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceCooperativeMatrixFeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceCooperativeMatrixFeaturesKHRExtension: Chainable {}
 
 public struct CooperativeMatrixPropertiesKHR: ChainableBase {
     public typealias CStruct = VkCooperativeMatrixPropertiesKHR
@@ -35604,8 +39476,12 @@ public struct CooperativeMatrixPropertiesKHR: ChainableBase {
         cStruct.scope = VkScopeKHR(rawValue: VkScopeKHR.RawValue(bitPattern: self.scope.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: CooperativeMatrixPropertiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CooperativeMatrixPropertiesKHRExtension: Chainable {}
+
+public protocol CooperativeMatrixPropertiesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceCooperativeMatrixPropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceCooperativeMatrixPropertiesKHR
@@ -35623,8 +39499,12 @@ public struct PhysicalDeviceCooperativeMatrixPropertiesKHR: ChainableBase, Physi
         cStruct.cooperativeMatrixSupportedStages = self.cooperativeMatrixSupportedStages.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceCooperativeMatrixPropertiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceCooperativeMatrixPropertiesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceCooperativeMatrixPropertiesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceCooperativeMatrixConversionFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceCooperativeMatrixConversionFeaturesQCOM
@@ -35646,8 +39526,12 @@ public struct PhysicalDeviceCooperativeMatrixConversionFeaturesQCOM: ChainableBa
         cStruct.cooperativeMatrixConversion = VkBool32(self.cooperativeMatrixConversion ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceCooperativeMatrixConversionFeaturesQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceCooperativeMatrixConversionFeaturesQCOMExtension: Chainable {}
+
+public protocol PhysicalDeviceCooperativeMatrixConversionFeaturesQCOMExtension: Chainable {}
 
 #if VK_ENABLE_BETA_EXTENSIONS
 public struct PhysicalDeviceShaderEnqueuePropertiesAMDX: ChainableBase, PhysicalDeviceProperties2Extension {
@@ -35684,9 +39568,13 @@ public struct PhysicalDeviceShaderEnqueuePropertiesAMDX: ChainableBase, Physical
         cStruct.maxExecutionGraphWorkgroups = self.maxExecutionGraphWorkgroups
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderEnqueuePropertiesAMDXExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol PhysicalDeviceShaderEnqueuePropertiesAMDXExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderEnqueuePropertiesAMDXExtension: Chainable {}
 
 #if VK_ENABLE_BETA_EXTENSIONS
 public struct PhysicalDeviceShaderEnqueueFeaturesAMDX: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
@@ -35713,9 +39601,13 @@ public struct PhysicalDeviceShaderEnqueueFeaturesAMDX: ChainableBase, PhysicalDe
         cStruct.shaderMeshEnqueue = VkBool32(self.shaderMeshEnqueue ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderEnqueueFeaturesAMDXExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol PhysicalDeviceShaderEnqueueFeaturesAMDXExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderEnqueueFeaturesAMDXExtension: Chainable {}
 
 #if VK_ENABLE_BETA_EXTENSIONS
 public struct ExecutionGraphPipelineCreateInfoAMDX: ChainableBase {
@@ -35763,9 +39655,13 @@ public struct ExecutionGraphPipelineCreateInfoAMDX: ChainableBase {
             }
         }
     }
+    public func push<Extension: ExecutionGraphPipelineCreateInfoAMDXExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ExecutionGraphPipelineCreateInfoAMDXExtension: Chainable {}
+
+public protocol ExecutionGraphPipelineCreateInfoAMDXExtension: Chainable {}
 
 #if VK_ENABLE_BETA_EXTENSIONS
 public struct PipelineShaderStageNodeCreateInfoAMDX: ChainableBase, PipelineShaderStageCreateInfoExtension {
@@ -35794,9 +39690,13 @@ public struct PipelineShaderStageNodeCreateInfoAMDX: ChainableBase, PipelineShad
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PipelineShaderStageNodeCreateInfoAMDXExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol PipelineShaderStageNodeCreateInfoAMDXExtension: Chainable {}
+
+public protocol PipelineShaderStageNodeCreateInfoAMDXExtension: Chainable {}
 
 #if VK_ENABLE_BETA_EXTENSIONS
 public struct ExecutionGraphPipelineScratchSizeAMDX: ChainableBase {
@@ -35827,9 +39727,13 @@ public struct ExecutionGraphPipelineScratchSizeAMDX: ChainableBase {
         cStruct.sizeGranularity = self.sizeGranularity
         return try body(&cStruct)
     }
+    public func push<Extension: ExecutionGraphPipelineScratchSizeAMDXExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ExecutionGraphPipelineScratchSizeAMDXExtension: Chainable {}
+
+public protocol ExecutionGraphPipelineScratchSizeAMDXExtension: Chainable {}
 
 #if VK_ENABLE_BETA_EXTENSIONS
 public struct DispatchGraphInfoAMDX: CStructConvertible {
@@ -35915,8 +39819,12 @@ public struct PhysicalDeviceAntiLagFeaturesAMD: ChainableBase, PhysicalDeviceFea
         cStruct.antiLag = VkBool32(self.antiLag ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceAntiLagFeaturesAMDExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceAntiLagFeaturesAMDExtension: Chainable {}
+
+public protocol PhysicalDeviceAntiLagFeaturesAMDExtension: Chainable {}
 
 public struct AntiLagPresentationInfoAMD: ChainableBase {
     public typealias CStruct = VkAntiLagPresentationInfoAMD
@@ -35942,8 +39850,12 @@ public struct AntiLagPresentationInfoAMD: ChainableBase {
         cStruct.frameIndex = self.frameIndex
         return try body(&cStruct)
     }
+    public func push<Extension: AntiLagPresentationInfoAMDExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol AntiLagPresentationInfoAMDExtension: Chainable {}
+
+public protocol AntiLagPresentationInfoAMDExtension: Chainable {}
 
 public struct AntiLagDataAMD: ChainableBase {
     public typealias CStruct = VkAntiLagDataAMD
@@ -35975,8 +39887,12 @@ public struct AntiLagDataAMD: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: AntiLagDataAMDExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol AntiLagDataAMDExtension: Chainable {}
+
+public protocol AntiLagDataAMDExtension: Chainable {}
 
 public struct BindMemoryStatus: ChainableBase, BindBufferMemoryInfoExtension, BindImageMemoryInfoExtension {
     public typealias CStruct = VkBindMemoryStatus
@@ -35998,8 +39914,12 @@ public struct BindMemoryStatus: ChainableBase, BindBufferMemoryInfoExtension, Bi
         cStruct.pResult = self.result
         return try body(&cStruct)
     }
+    public func push<Extension: BindMemoryStatusExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol BindMemoryStatusExtension: Chainable {}
+
+public protocol BindMemoryStatusExtension: Chainable {}
 
 public struct PhysicalDeviceTileMemoryHeapFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceTileMemoryHeapFeaturesQCOM
@@ -36021,8 +39941,12 @@ public struct PhysicalDeviceTileMemoryHeapFeaturesQCOM: ChainableBase, PhysicalD
         cStruct.tileMemoryHeap = VkBool32(self.tileMemoryHeap ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceTileMemoryHeapFeaturesQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceTileMemoryHeapFeaturesQCOMExtension: Chainable {}
+
+public protocol PhysicalDeviceTileMemoryHeapFeaturesQCOMExtension: Chainable {}
 
 public struct PhysicalDeviceTileMemoryHeapPropertiesQCOM: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceTileMemoryHeapPropertiesQCOM
@@ -36048,8 +39972,12 @@ public struct PhysicalDeviceTileMemoryHeapPropertiesQCOM: ChainableBase, Physica
         cStruct.tileBufferTransfers = VkBool32(self.tileBufferTransfers ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceTileMemoryHeapPropertiesQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceTileMemoryHeapPropertiesQCOMExtension: Chainable {}
+
+public protocol PhysicalDeviceTileMemoryHeapPropertiesQCOMExtension: Chainable {}
 
 public struct TileMemorySizeInfoQCOM: ChainableBase, RenderPassCreateInfoExtension, RenderPassCreateInfo2Extension, RenderingInfoExtension {
     public typealias CStruct = VkTileMemorySizeInfoQCOM
@@ -36071,8 +39999,12 @@ public struct TileMemorySizeInfoQCOM: ChainableBase, RenderPassCreateInfoExtensi
         cStruct.size = self.size
         return try body(&cStruct)
     }
+    public func push<Extension: TileMemorySizeInfoQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol TileMemorySizeInfoQCOMExtension: Chainable {}
+
+public protocol TileMemorySizeInfoQCOMExtension: Chainable {}
 
 public struct TileMemoryRequirementsQCOM: ChainableBase, MemoryRequirements2Extension {
     public typealias CStruct = VkTileMemoryRequirementsQCOM
@@ -36098,8 +40030,12 @@ public struct TileMemoryRequirementsQCOM: ChainableBase, MemoryRequirements2Exte
         cStruct.alignment = self.alignment
         return try body(&cStruct)
     }
+    public func push<Extension: TileMemoryRequirementsQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol TileMemoryRequirementsQCOMExtension: Chainable {}
+
+public protocol TileMemoryRequirementsQCOMExtension: Chainable {}
 
 public struct BindDescriptorSetsInfo: ChainableBase {
     public typealias CStruct = VkBindDescriptorSetsInfo
@@ -36143,8 +40079,12 @@ public struct BindDescriptorSetsInfo: ChainableBase {
             }
         }
     }
+    public func push<Extension: BindDescriptorSetsInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol BindDescriptorSetsInfoExtension: Chainable {}
+
+public protocol BindDescriptorSetsInfoExtension: Chainable {}
 
 public struct PushConstantsInfo: ChainableBase {
     public typealias CStruct = VkPushConstantsInfo
@@ -36182,8 +40122,12 @@ public struct PushConstantsInfo: ChainableBase {
         cStruct.pValues = self.values
         return try body(&cStruct)
     }
+    public func push<Extension: PushConstantsInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PushConstantsInfoExtension: Chainable {}
+
+public protocol PushConstantsInfoExtension: Chainable {}
 
 public struct PushDescriptorSetInfo: ChainableBase {
     public typealias CStruct = VkPushDescriptorSetInfo
@@ -36220,8 +40164,12 @@ public struct PushDescriptorSetInfo: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PushDescriptorSetInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PushDescriptorSetInfoExtension: Chainable {}
+
+public protocol PushDescriptorSetInfoExtension: Chainable {}
 
 public struct PushDescriptorSetWithTemplateInfo: ChainableBase {
     public typealias CStruct = VkPushDescriptorSetWithTemplateInfo
@@ -36255,8 +40203,12 @@ public struct PushDescriptorSetWithTemplateInfo: ChainableBase {
         cStruct.pData = self.data
         return try body(&cStruct)
     }
+    public func push<Extension: PushDescriptorSetWithTemplateInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PushDescriptorSetWithTemplateInfoExtension: Chainable {}
+
+public protocol PushDescriptorSetWithTemplateInfoExtension: Chainable {}
 
 public struct SetDescriptorBufferOffsetsInfoEXT: ChainableBase {
     public typealias CStruct = VkSetDescriptorBufferOffsetsInfoEXT
@@ -36299,8 +40251,12 @@ public struct SetDescriptorBufferOffsetsInfoEXT: ChainableBase {
             }
         }
     }
+    public func push<Extension: SetDescriptorBufferOffsetsInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SetDescriptorBufferOffsetsInfoEXTExtension: Chainable {}
+
+public protocol SetDescriptorBufferOffsetsInfoEXTExtension: Chainable {}
 
 public struct BindDescriptorBufferEmbeddedSamplersInfoEXT: ChainableBase {
     public typealias CStruct = VkBindDescriptorBufferEmbeddedSamplersInfoEXT
@@ -36330,8 +40286,12 @@ public struct BindDescriptorBufferEmbeddedSamplersInfoEXT: ChainableBase {
         cStruct.set = self.set
         return try body(&cStruct)
     }
+    public func push<Extension: BindDescriptorBufferEmbeddedSamplersInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol BindDescriptorBufferEmbeddedSamplersInfoEXTExtension: Chainable {}
+
+public protocol BindDescriptorBufferEmbeddedSamplersInfoEXTExtension: Chainable {}
 
 public struct PhysicalDeviceCubicClampFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceCubicClampFeaturesQCOM
@@ -36353,8 +40313,12 @@ public struct PhysicalDeviceCubicClampFeaturesQCOM: ChainableBase, PhysicalDevic
         cStruct.cubicRangeClamp = VkBool32(self.cubicRangeClamp ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceCubicClampFeaturesQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceCubicClampFeaturesQCOMExtension: Chainable {}
+
+public protocol PhysicalDeviceCubicClampFeaturesQCOMExtension: Chainable {}
 
 public struct PhysicalDeviceYcbcrDegammaFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceYcbcrDegammaFeaturesQCOM
@@ -36376,8 +40340,12 @@ public struct PhysicalDeviceYcbcrDegammaFeaturesQCOM: ChainableBase, PhysicalDev
         cStruct.ycbcrDegamma = VkBool32(self.ycbcrDegamma ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceYcbcrDegammaFeaturesQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceYcbcrDegammaFeaturesQCOMExtension: Chainable {}
+
+public protocol PhysicalDeviceYcbcrDegammaFeaturesQCOMExtension: Chainable {}
 
 public struct SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM: ChainableBase, SamplerYcbcrConversionCreateInfoExtension {
     public typealias CStruct = VkSamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM
@@ -36403,8 +40371,12 @@ public struct SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM: ChainableBase, S
         cStruct.enableCbCrDegamma = VkBool32(self.enableCbCrDegamma ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOMExtension: Chainable {}
+
+public protocol SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOMExtension: Chainable {}
 
 public struct PhysicalDeviceCubicWeightsFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceCubicWeightsFeaturesQCOM
@@ -36426,8 +40398,12 @@ public struct PhysicalDeviceCubicWeightsFeaturesQCOM: ChainableBase, PhysicalDev
         cStruct.selectableCubicWeights = VkBool32(self.selectableCubicWeights ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceCubicWeightsFeaturesQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceCubicWeightsFeaturesQCOMExtension: Chainable {}
+
+public protocol PhysicalDeviceCubicWeightsFeaturesQCOMExtension: Chainable {}
 
 public struct SamplerCubicWeightsCreateInfoQCOM: ChainableBase, SamplerCreateInfoExtension {
     public typealias CStruct = VkSamplerCubicWeightsCreateInfoQCOM
@@ -36449,8 +40425,12 @@ public struct SamplerCubicWeightsCreateInfoQCOM: ChainableBase, SamplerCreateInf
         cStruct.cubicWeights = VkCubicFilterWeightsQCOM(rawValue: VkCubicFilterWeightsQCOM.RawValue(bitPattern: self.cubicWeights.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: SamplerCubicWeightsCreateInfoQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SamplerCubicWeightsCreateInfoQCOMExtension: Chainable {}
+
+public protocol SamplerCubicWeightsCreateInfoQCOMExtension: Chainable {}
 
 public struct BlitImageCubicWeightsInfoQCOM: ChainableBase, BlitImageInfo2Extension {
     public typealias CStruct = VkBlitImageCubicWeightsInfoQCOM
@@ -36472,8 +40452,12 @@ public struct BlitImageCubicWeightsInfoQCOM: ChainableBase, BlitImageInfo2Extens
         cStruct.cubicWeights = VkCubicFilterWeightsQCOM(rawValue: VkCubicFilterWeightsQCOM.RawValue(bitPattern: self.cubicWeights.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: BlitImageCubicWeightsInfoQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol BlitImageCubicWeightsInfoQCOMExtension: Chainable {}
+
+public protocol BlitImageCubicWeightsInfoQCOMExtension: Chainable {}
 
 public struct PhysicalDeviceImageProcessing2FeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceImageProcessing2FeaturesQCOM
@@ -36495,8 +40479,12 @@ public struct PhysicalDeviceImageProcessing2FeaturesQCOM: ChainableBase, Physica
         cStruct.textureBlockMatch2 = VkBool32(self.textureBlockMatch2 ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceImageProcessing2FeaturesQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceImageProcessing2FeaturesQCOMExtension: Chainable {}
+
+public protocol PhysicalDeviceImageProcessing2FeaturesQCOMExtension: Chainable {}
 
 public struct PhysicalDeviceImageProcessing2PropertiesQCOM: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceImageProcessing2PropertiesQCOM
@@ -36516,8 +40504,12 @@ public struct PhysicalDeviceImageProcessing2PropertiesQCOM: ChainableBase, Physi
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PhysicalDeviceImageProcessing2PropertiesQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceImageProcessing2PropertiesQCOMExtension: Chainable {}
+
+public protocol PhysicalDeviceImageProcessing2PropertiesQCOMExtension: Chainable {}
 
 public struct SamplerBlockMatchWindowCreateInfoQCOM: ChainableBase, SamplerCreateInfoExtension {
     public typealias CStruct = VkSamplerBlockMatchWindowCreateInfoQCOM
@@ -36545,8 +40537,12 @@ public struct SamplerBlockMatchWindowCreateInfoQCOM: ChainableBase, SamplerCreat
             return try body(&cStruct)
         }
     }
+    public func push<Extension: SamplerBlockMatchWindowCreateInfoQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SamplerBlockMatchWindowCreateInfoQCOMExtension: Chainable {}
+
+public protocol SamplerBlockMatchWindowCreateInfoQCOMExtension: Chainable {}
 
 public struct PhysicalDeviceDescriptorPoolOverallocationFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDescriptorPoolOverallocationFeaturesNV
@@ -36568,8 +40564,12 @@ public struct PhysicalDeviceDescriptorPoolOverallocationFeaturesNV: ChainableBas
         cStruct.descriptorPoolOverallocation = VkBool32(self.descriptorPoolOverallocation ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDescriptorPoolOverallocationFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceDescriptorPoolOverallocationFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceDescriptorPoolOverallocationFeaturesNVExtension: Chainable {}
 
 public struct PhysicalDeviceLayeredDriverPropertiesMSFT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceLayeredDriverPropertiesMSFT
@@ -36587,8 +40587,12 @@ public struct PhysicalDeviceLayeredDriverPropertiesMSFT: ChainableBase, Physical
         cStruct.underlyingAPI = VkLayeredDriverUnderlyingApiMSFT(rawValue: VkLayeredDriverUnderlyingApiMSFT.RawValue(bitPattern: self.underlyingAPI.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceLayeredDriverPropertiesMSFTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceLayeredDriverPropertiesMSFTExtension: Chainable {}
+
+public protocol PhysicalDeviceLayeredDriverPropertiesMSFTExtension: Chainable {}
 
 public struct PhysicalDevicePerStageDescriptorSetFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePerStageDescriptorSetFeaturesNV
@@ -36614,8 +40618,12 @@ public struct PhysicalDevicePerStageDescriptorSetFeaturesNV: ChainableBase, Phys
         cStruct.dynamicPipelineLayout = VkBool32(self.dynamicPipelineLayout ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevicePerStageDescriptorSetFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevicePerStageDescriptorSetFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDevicePerStageDescriptorSetFeaturesNVExtension: Chainable {}
 
 #if VK_USE_PLATFORM_ANDROID_KHR
 public struct PhysicalDeviceExternalFormatResolveFeaturesANDROID: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
@@ -36638,9 +40646,13 @@ public struct PhysicalDeviceExternalFormatResolveFeaturesANDROID: ChainableBase,
         cStruct.externalFormatResolve = VkBool32(self.externalFormatResolve ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceExternalFormatResolveFeaturesANDROIDExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol PhysicalDeviceExternalFormatResolveFeaturesANDROIDExtension: Chainable {}
+
+public protocol PhysicalDeviceExternalFormatResolveFeaturesANDROIDExtension: Chainable {}
 
 #if VK_USE_PLATFORM_ANDROID_KHR
 public struct PhysicalDeviceExternalFormatResolvePropertiesANDROID: ChainableBase, PhysicalDeviceProperties2Extension {
@@ -36665,9 +40677,13 @@ public struct PhysicalDeviceExternalFormatResolvePropertiesANDROID: ChainableBas
         cStruct.externalFormatResolveChromaOffsetY = VkChromaLocation(rawValue: VkChromaLocation.RawValue(bitPattern: self.externalFormatResolveChromaOffsetY.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceExternalFormatResolvePropertiesANDROIDExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol PhysicalDeviceExternalFormatResolvePropertiesANDROIDExtension: Chainable {}
+
+public protocol PhysicalDeviceExternalFormatResolvePropertiesANDROIDExtension: Chainable {}
 
 #if VK_USE_PLATFORM_ANDROID_KHR
 public struct AndroidHardwareBufferFormatResolvePropertiesANDROID: ChainableBase, AndroidHardwareBufferPropertiesANDROIDExtension {
@@ -36686,9 +40702,13 @@ public struct AndroidHardwareBufferFormatResolvePropertiesANDROID: ChainableBase
         cStruct.colorAttachmentFormat = VkFormat(rawValue: VkFormat.RawValue(bitPattern: self.colorAttachmentFormat.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: AndroidHardwareBufferFormatResolvePropertiesANDROIDExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol AndroidHardwareBufferFormatResolvePropertiesANDROIDExtension: Chainable {}
+
+public protocol AndroidHardwareBufferFormatResolvePropertiesANDROIDExtension: Chainable {}
 
 public struct LatencySleepModeInfoNV: ChainableBase {
     public typealias CStruct = VkLatencySleepModeInfoNV
@@ -36718,8 +40738,12 @@ public struct LatencySleepModeInfoNV: ChainableBase {
         cStruct.minimumIntervalUs = self.minimumIntervalUs
         return try body(&cStruct)
     }
+    public func push<Extension: LatencySleepModeInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol LatencySleepModeInfoNVExtension: Chainable {}
+
+public protocol LatencySleepModeInfoNVExtension: Chainable {}
 
 public struct LatencySleepInfoNV: ChainableBase {
     public typealias CStruct = VkLatencySleepInfoNV
@@ -36745,8 +40769,12 @@ public struct LatencySleepInfoNV: ChainableBase {
         cStruct.value = self.value
         return try body(&cStruct)
     }
+    public func push<Extension: LatencySleepInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol LatencySleepInfoNVExtension: Chainable {}
+
+public protocol LatencySleepInfoNVExtension: Chainable {}
 
 public struct SetLatencyMarkerInfoNV: ChainableBase {
     public typealias CStruct = VkSetLatencyMarkerInfoNV
@@ -36772,8 +40800,12 @@ public struct SetLatencyMarkerInfoNV: ChainableBase {
         cStruct.marker = VkLatencyMarkerNV(rawValue: VkLatencyMarkerNV.RawValue(bitPattern: self.marker.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: SetLatencyMarkerInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SetLatencyMarkerInfoNVExtension: Chainable {}
+
+public protocol SetLatencyMarkerInfoNVExtension: Chainable {}
 
 public struct LatencyTimingsFrameReportNV: ChainableBase {
     public typealias CStruct = VkLatencyTimingsFrameReportNV
@@ -36830,8 +40862,12 @@ public struct LatencyTimingsFrameReportNV: ChainableBase {
         cStruct.gpuRenderEndTimeUs = self.gpuRenderEndTimeUs
         return try body(&cStruct)
     }
+    public func push<Extension: LatencyTimingsFrameReportNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol LatencyTimingsFrameReportNVExtension: Chainable {}
+
+public protocol LatencyTimingsFrameReportNVExtension: Chainable {}
 
 public struct GetLatencyMarkerInfoNV: ChainableBase {
     public typealias CStruct = VkGetLatencyMarkerInfoNV
@@ -36857,8 +40893,12 @@ public struct GetLatencyMarkerInfoNV: ChainableBase {
         cStruct.pTimings = self.timings
         return try body(&cStruct)
     }
+    public func push<Extension: GetLatencyMarkerInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol GetLatencyMarkerInfoNVExtension: Chainable {}
+
+public protocol GetLatencyMarkerInfoNVExtension: Chainable {}
 
 public struct OutOfBandQueueTypeInfoNV: ChainableBase {
     public typealias CStruct = VkOutOfBandQueueTypeInfoNV
@@ -36880,8 +40920,12 @@ public struct OutOfBandQueueTypeInfoNV: ChainableBase {
         cStruct.queueType = VkOutOfBandQueueTypeNV(rawValue: VkOutOfBandQueueTypeNV.RawValue(bitPattern: self.queueType.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: OutOfBandQueueTypeInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol OutOfBandQueueTypeInfoNVExtension: Chainable {}
+
+public protocol OutOfBandQueueTypeInfoNVExtension: Chainable {}
 
 public struct LatencySubmissionPresentIdNV: ChainableBase, SubmitInfoExtension, SubmitInfo2Extension {
     public typealias CStruct = VkLatencySubmissionPresentIdNV
@@ -36903,8 +40947,12 @@ public struct LatencySubmissionPresentIdNV: ChainableBase, SubmitInfoExtension, 
         cStruct.presentID = self.presentID
         return try body(&cStruct)
     }
+    public func push<Extension: LatencySubmissionPresentIdNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol LatencySubmissionPresentIdNVExtension: Chainable {}
+
+public protocol LatencySubmissionPresentIdNVExtension: Chainable {}
 
 public struct SwapchainLatencyCreateInfoNV: ChainableBase, SwapchainCreateInfoKHRExtension {
     public typealias CStruct = VkSwapchainLatencyCreateInfoNV
@@ -36926,8 +40974,12 @@ public struct SwapchainLatencyCreateInfoNV: ChainableBase, SwapchainCreateInfoKH
         cStruct.latencyModeEnable = VkBool32(self.latencyModeEnable ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: SwapchainLatencyCreateInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SwapchainLatencyCreateInfoNVExtension: Chainable {}
+
+public protocol SwapchainLatencyCreateInfoNVExtension: Chainable {}
 
 public struct LatencySurfaceCapabilitiesNV: ChainableBase, SurfaceCapabilities2KHRExtension {
     public typealias CStruct = VkLatencySurfaceCapabilitiesNV
@@ -36953,8 +41005,12 @@ public struct LatencySurfaceCapabilitiesNV: ChainableBase, SurfaceCapabilities2K
         cStruct.pPresentModes = self.presentModes
         return try body(&cStruct)
     }
+    public func push<Extension: LatencySurfaceCapabilitiesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol LatencySurfaceCapabilitiesNVExtension: Chainable {}
+
+public protocol LatencySurfaceCapabilitiesNVExtension: Chainable {}
 
 #if VK_ENABLE_BETA_EXTENSIONS
 public struct PhysicalDeviceCudaKernelLaunchFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
@@ -36977,9 +41033,13 @@ public struct PhysicalDeviceCudaKernelLaunchFeaturesNV: ChainableBase, PhysicalD
         cStruct.cudaKernelLaunchFeatures = VkBool32(self.cudaKernelLaunchFeatures ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceCudaKernelLaunchFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol PhysicalDeviceCudaKernelLaunchFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceCudaKernelLaunchFeaturesNVExtension: Chainable {}
 
 #if VK_ENABLE_BETA_EXTENSIONS
 public struct PhysicalDeviceCudaKernelLaunchPropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension {
@@ -37001,9 +41061,13 @@ public struct PhysicalDeviceCudaKernelLaunchPropertiesNV: ChainableBase, Physica
         cStruct.computeCapabilityMajor = self.computeCapabilityMajor
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceCudaKernelLaunchPropertiesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol PhysicalDeviceCudaKernelLaunchPropertiesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceCudaKernelLaunchPropertiesNVExtension: Chainable {}
 
 public struct DeviceQueueShaderCoreControlCreateInfoARM: ChainableBase, DeviceQueueCreateInfoExtension, DeviceCreateInfoExtension {
     public typealias CStruct = VkDeviceQueueShaderCoreControlCreateInfoARM
@@ -37025,8 +41089,12 @@ public struct DeviceQueueShaderCoreControlCreateInfoARM: ChainableBase, DeviceQu
         cStruct.shaderCoreCount = self.shaderCoreCount
         return try body(&cStruct)
     }
+    public func push<Extension: DeviceQueueShaderCoreControlCreateInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DeviceQueueShaderCoreControlCreateInfoARMExtension: Chainable {}
+
+public protocol DeviceQueueShaderCoreControlCreateInfoARMExtension: Chainable {}
 
 public struct PhysicalDeviceSchedulingControlsFeaturesARM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceSchedulingControlsFeaturesARM
@@ -37048,8 +41116,12 @@ public struct PhysicalDeviceSchedulingControlsFeaturesARM: ChainableBase, Physic
         cStruct.schedulingControls = VkBool32(self.schedulingControls ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceSchedulingControlsFeaturesARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceSchedulingControlsFeaturesARMExtension: Chainable {}
+
+public protocol PhysicalDeviceSchedulingControlsFeaturesARMExtension: Chainable {}
 
 public struct PhysicalDeviceSchedulingControlsPropertiesARM: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceSchedulingControlsPropertiesARM
@@ -37067,8 +41139,12 @@ public struct PhysicalDeviceSchedulingControlsPropertiesARM: ChainableBase, Phys
         cStruct.schedulingControlsFlags = self.schedulingControlsFlags.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceSchedulingControlsPropertiesARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceSchedulingControlsPropertiesARMExtension: Chainable {}
+
+public protocol PhysicalDeviceSchedulingControlsPropertiesARMExtension: Chainable {}
 
 public struct PhysicalDeviceSchedulingControlsDispatchParametersPropertiesARM: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceSchedulingControlsDispatchParametersPropertiesARM
@@ -37092,8 +41168,12 @@ public struct PhysicalDeviceSchedulingControlsDispatchParametersPropertiesARM: C
         cStruct.schedulingControlsMaxWorkGroupBatchSize = self.schedulingControlsMaxWorkGroupBatchSize
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceSchedulingControlsDispatchParametersPropertiesARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceSchedulingControlsDispatchParametersPropertiesARMExtension: Chainable {}
+
+public protocol PhysicalDeviceSchedulingControlsDispatchParametersPropertiesARMExtension: Chainable {}
 
 public struct DispatchParametersARM: ChainableBase {
     public typealias CStruct = VkDispatchParametersARM
@@ -37123,8 +41203,12 @@ public struct DispatchParametersARM: ChainableBase {
         cStruct.maxWarpsPerShaderCore = self.maxWarpsPerShaderCore
         return try body(&cStruct)
     }
+    public func push<Extension: DispatchParametersARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DispatchParametersARMExtension: Chainable {}
+
+public protocol DispatchParametersARMExtension: Chainable {}
 
 public struct PhysicalDeviceRelaxedLineRasterizationFeaturesIMG: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceRelaxedLineRasterizationFeaturesIMG
@@ -37146,8 +41230,12 @@ public struct PhysicalDeviceRelaxedLineRasterizationFeaturesIMG: ChainableBase, 
         cStruct.relaxedLineRasterization = VkBool32(self.relaxedLineRasterization ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceRelaxedLineRasterizationFeaturesIMGExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceRelaxedLineRasterizationFeaturesIMGExtension: Chainable {}
+
+public protocol PhysicalDeviceRelaxedLineRasterizationFeaturesIMGExtension: Chainable {}
 
 public struct PhysicalDeviceRenderPassStripedFeaturesARM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceRenderPassStripedFeaturesARM
@@ -37169,8 +41257,12 @@ public struct PhysicalDeviceRenderPassStripedFeaturesARM: ChainableBase, Physica
         cStruct.renderPassStriped = VkBool32(self.renderPassStriped ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceRenderPassStripedFeaturesARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceRenderPassStripedFeaturesARMExtension: Chainable {}
+
+public protocol PhysicalDeviceRenderPassStripedFeaturesARMExtension: Chainable {}
 
 public struct PhysicalDeviceRenderPassStripedPropertiesARM: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceRenderPassStripedPropertiesARM
@@ -37193,8 +41285,12 @@ public struct PhysicalDeviceRenderPassStripedPropertiesARM: ChainableBase, Physi
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PhysicalDeviceRenderPassStripedPropertiesARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceRenderPassStripedPropertiesARMExtension: Chainable {}
+
+public protocol PhysicalDeviceRenderPassStripedPropertiesARMExtension: Chainable {}
 
 public struct RenderPassStripeInfoARM: ChainableBase {
     public typealias CStruct = VkRenderPassStripeInfoARM
@@ -37218,8 +41314,12 @@ public struct RenderPassStripeInfoARM: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: RenderPassStripeInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol RenderPassStripeInfoARMExtension: Chainable {}
+
+public protocol RenderPassStripeInfoARMExtension: Chainable {}
 
 public struct RenderPassStripeBeginInfoARM: ChainableBase, RenderingInfoExtension, RenderPassBeginInfoExtension {
     public typealias CStruct = VkRenderPassStripeBeginInfoARM
@@ -37244,8 +41344,12 @@ public struct RenderPassStripeBeginInfoARM: ChainableBase, RenderingInfoExtensio
             return try body(&cStruct)
         }
     }
+    public func push<Extension: RenderPassStripeBeginInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol RenderPassStripeBeginInfoARMExtension: Chainable {}
+
+public protocol RenderPassStripeBeginInfoARMExtension: Chainable {}
 
 public struct RenderPassStripeSubmitInfoARM: ChainableBase, CommandBufferSubmitInfoExtension {
     public typealias CStruct = VkRenderPassStripeSubmitInfoARM
@@ -37270,8 +41374,12 @@ public struct RenderPassStripeSubmitInfoARM: ChainableBase, CommandBufferSubmitI
             return try body(&cStruct)
         }
     }
+    public func push<Extension: RenderPassStripeSubmitInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol RenderPassStripeSubmitInfoARMExtension: Chainable {}
+
+public protocol RenderPassStripeSubmitInfoARMExtension: Chainable {}
 
 public struct PhysicalDevicePipelineOpacityMicromapFeaturesARM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePipelineOpacityMicromapFeaturesARM
@@ -37293,8 +41401,12 @@ public struct PhysicalDevicePipelineOpacityMicromapFeaturesARM: ChainableBase, P
         cStruct.pipelineOpacityMicromap = VkBool32(self.pipelineOpacityMicromap ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevicePipelineOpacityMicromapFeaturesARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevicePipelineOpacityMicromapFeaturesARMExtension: Chainable {}
+
+public protocol PhysicalDevicePipelineOpacityMicromapFeaturesARMExtension: Chainable {}
 
 public struct PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderMaximalReconvergenceFeaturesKHR
@@ -37316,8 +41428,12 @@ public struct PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR: ChainableBase
         cStruct.shaderMaximalReconvergence = VkBool32(self.shaderMaximalReconvergence ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderMaximalReconvergenceFeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderMaximalReconvergenceFeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderMaximalReconvergenceFeaturesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceShaderSubgroupRotateFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderSubgroupRotateFeatures
@@ -37343,8 +41459,12 @@ public struct PhysicalDeviceShaderSubgroupRotateFeatures: ChainableBase, Physica
         cStruct.shaderSubgroupRotateClustered = VkBool32(self.shaderSubgroupRotateClustered ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderSubgroupRotateFeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderSubgroupRotateFeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderSubgroupRotateFeaturesExtension: Chainable {}
 
 public struct PhysicalDeviceShaderExpectAssumeFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderExpectAssumeFeatures
@@ -37366,8 +41486,12 @@ public struct PhysicalDeviceShaderExpectAssumeFeatures: ChainableBase, PhysicalD
         cStruct.shaderExpectAssume = VkBool32(self.shaderExpectAssume ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderExpectAssumeFeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderExpectAssumeFeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderExpectAssumeFeaturesExtension: Chainable {}
 
 public struct PhysicalDeviceShaderFloatControls2Features: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderFloatControls2Features
@@ -37389,8 +41513,12 @@ public struct PhysicalDeviceShaderFloatControls2Features: ChainableBase, Physica
         cStruct.shaderFloatControls2 = VkBool32(self.shaderFloatControls2 ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderFloatControls2FeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderFloatControls2FeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderFloatControls2FeaturesExtension: Chainable {}
 
 public struct PhysicalDeviceDynamicRenderingLocalReadFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDynamicRenderingLocalReadFeatures
@@ -37412,8 +41540,12 @@ public struct PhysicalDeviceDynamicRenderingLocalReadFeatures: ChainableBase, Ph
         cStruct.dynamicRenderingLocalRead = VkBool32(self.dynamicRenderingLocalRead ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDynamicRenderingLocalReadFeaturesExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceDynamicRenderingLocalReadFeaturesExtension: Chainable {}
+
+public protocol PhysicalDeviceDynamicRenderingLocalReadFeaturesExtension: Chainable {}
 
 public struct RenderingAttachmentLocationInfo: ChainableBase, GraphicsPipelineCreateInfoExtension, CommandBufferInheritanceInfoExtension {
     public typealias CStruct = VkRenderingAttachmentLocationInfo
@@ -37438,8 +41570,12 @@ public struct RenderingAttachmentLocationInfo: ChainableBase, GraphicsPipelineCr
             return try body(&cStruct)
         }
     }
+    public func push<Extension: RenderingAttachmentLocationInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol RenderingAttachmentLocationInfoExtension: Chainable {}
+
+public protocol RenderingAttachmentLocationInfoExtension: Chainable {}
 
 public struct RenderingInputAttachmentIndexInfo: ChainableBase, GraphicsPipelineCreateInfoExtension, CommandBufferInheritanceInfoExtension {
     public typealias CStruct = VkRenderingInputAttachmentIndexInfo
@@ -37472,8 +41608,12 @@ public struct RenderingInputAttachmentIndexInfo: ChainableBase, GraphicsPipeline
             return try body(&cStruct)
         }
     }
+    public func push<Extension: RenderingInputAttachmentIndexInfoExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol RenderingInputAttachmentIndexInfoExtension: Chainable {}
+
+public protocol RenderingInputAttachmentIndexInfoExtension: Chainable {}
 
 public struct PhysicalDeviceShaderQuadControlFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderQuadControlFeaturesKHR
@@ -37495,8 +41635,12 @@ public struct PhysicalDeviceShaderQuadControlFeaturesKHR: ChainableBase, Physica
         cStruct.shaderQuadControl = VkBool32(self.shaderQuadControl ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderQuadControlFeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderQuadControlFeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderQuadControlFeaturesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderAtomicFloat16VectorFeaturesNV
@@ -37518,8 +41662,12 @@ public struct PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV: ChainableBase, 
         cStruct.shaderFloat16VectorAtomics = VkBool32(self.shaderFloat16VectorAtomics ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderAtomicFloat16VectorFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderAtomicFloat16VectorFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderAtomicFloat16VectorFeaturesNVExtension: Chainable {}
 
 public struct PhysicalDeviceMapMemoryPlacedFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceMapMemoryPlacedFeaturesEXT
@@ -37549,8 +41697,12 @@ public struct PhysicalDeviceMapMemoryPlacedFeaturesEXT: ChainableBase, PhysicalD
         cStruct.memoryUnmapReserve = VkBool32(self.memoryUnmapReserve ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceMapMemoryPlacedFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceMapMemoryPlacedFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceMapMemoryPlacedFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceMapMemoryPlacedPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceMapMemoryPlacedPropertiesEXT
@@ -37568,8 +41720,12 @@ public struct PhysicalDeviceMapMemoryPlacedPropertiesEXT: ChainableBase, Physica
         cStruct.minPlacedMemoryMapAlignment = self.minPlacedMemoryMapAlignment
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceMapMemoryPlacedPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceMapMemoryPlacedPropertiesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceMapMemoryPlacedPropertiesEXTExtension: Chainable {}
 
 public struct MemoryMapPlacedInfoEXT: ChainableBase, MemoryMapInfoExtension {
     public typealias CStruct = VkMemoryMapPlacedInfoEXT
@@ -37591,8 +41747,12 @@ public struct MemoryMapPlacedInfoEXT: ChainableBase, MemoryMapInfoExtension {
         cStruct.pPlacedAddress = self.placedAddress
         return try body(&cStruct)
     }
+    public func push<Extension: MemoryMapPlacedInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol MemoryMapPlacedInfoEXTExtension: Chainable {}
+
+public protocol MemoryMapPlacedInfoEXTExtension: Chainable {}
 
 public struct PhysicalDeviceShaderBfloat16FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderBfloat16FeaturesKHR
@@ -37622,8 +41782,12 @@ public struct PhysicalDeviceShaderBfloat16FeaturesKHR: ChainableBase, PhysicalDe
         cStruct.shaderBFloat16CooperativeMatrix = VkBool32(self.shaderBFloat16CooperativeMatrix ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderBfloat16FeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderBfloat16FeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderBfloat16FeaturesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceRawAccessChainsFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceRawAccessChainsFeaturesNV
@@ -37645,8 +41809,12 @@ public struct PhysicalDeviceRawAccessChainsFeaturesNV: ChainableBase, PhysicalDe
         cStruct.shaderRawAccessChains = VkBool32(self.shaderRawAccessChains ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceRawAccessChainsFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceRawAccessChainsFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceRawAccessChainsFeaturesNVExtension: Chainable {}
 
 public struct PhysicalDeviceCommandBufferInheritanceFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceCommandBufferInheritanceFeaturesNV
@@ -37668,8 +41836,12 @@ public struct PhysicalDeviceCommandBufferInheritanceFeaturesNV: ChainableBase, P
         cStruct.commandBufferInheritance = VkBool32(self.commandBufferInheritance ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceCommandBufferInheritanceFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceCommandBufferInheritanceFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceCommandBufferInheritanceFeaturesNVExtension: Chainable {}
 
 public struct PhysicalDeviceImageAlignmentControlFeaturesMESA: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceImageAlignmentControlFeaturesMESA
@@ -37691,8 +41863,12 @@ public struct PhysicalDeviceImageAlignmentControlFeaturesMESA: ChainableBase, Ph
         cStruct.imageAlignmentControl = VkBool32(self.imageAlignmentControl ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceImageAlignmentControlFeaturesMESAExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceImageAlignmentControlFeaturesMESAExtension: Chainable {}
+
+public protocol PhysicalDeviceImageAlignmentControlFeaturesMESAExtension: Chainable {}
 
 public struct PhysicalDeviceImageAlignmentControlPropertiesMESA: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceImageAlignmentControlPropertiesMESA
@@ -37710,8 +41886,12 @@ public struct PhysicalDeviceImageAlignmentControlPropertiesMESA: ChainableBase, 
         cStruct.supportedImageAlignmentMask = self.supportedImageAlignmentMask
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceImageAlignmentControlPropertiesMESAExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceImageAlignmentControlPropertiesMESAExtension: Chainable {}
+
+public protocol PhysicalDeviceImageAlignmentControlPropertiesMESAExtension: Chainable {}
 
 public struct ImageAlignmentControlCreateInfoMESA: ChainableBase, ImageCreateInfoExtension {
     public typealias CStruct = VkImageAlignmentControlCreateInfoMESA
@@ -37733,8 +41913,12 @@ public struct ImageAlignmentControlCreateInfoMESA: ChainableBase, ImageCreateInf
         cStruct.maximumRequestedAlignment = self.maximumRequestedAlignment
         return try body(&cStruct)
     }
+    public func push<Extension: ImageAlignmentControlCreateInfoMESAExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ImageAlignmentControlCreateInfoMESAExtension: Chainable {}
+
+public protocol ImageAlignmentControlCreateInfoMESAExtension: Chainable {}
 
 public struct PhysicalDeviceShaderReplicatedCompositesFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderReplicatedCompositesFeaturesEXT
@@ -37756,8 +41940,12 @@ public struct PhysicalDeviceShaderReplicatedCompositesFeaturesEXT: ChainableBase
         cStruct.shaderReplicatedComposites = VkBool32(self.shaderReplicatedComposites ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderReplicatedCompositesFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderReplicatedCompositesFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderReplicatedCompositesFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePresentModeFifoLatestReadyFeaturesKHR
@@ -37779,8 +41967,12 @@ public struct PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR: ChainableBase
         cStruct.presentModeFifoLatestReady = VkBool32(self.presentModeFifoLatestReady ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevicePresentModeFifoLatestReadyFeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevicePresentModeFifoLatestReadyFeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDevicePresentModeFifoLatestReadyFeaturesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceCooperativeMatrix2FeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceCooperativeMatrix2FeaturesNV
@@ -37826,8 +42018,12 @@ public struct PhysicalDeviceCooperativeMatrix2FeaturesNV: ChainableBase, Physica
         cStruct.cooperativeMatrixBlockLoads = VkBool32(self.cooperativeMatrixBlockLoads ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceCooperativeMatrix2FeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceCooperativeMatrix2FeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceCooperativeMatrix2FeaturesNVExtension: Chainable {}
 
 public struct PhysicalDeviceCooperativeMatrix2PropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceCooperativeMatrix2PropertiesNV
@@ -37851,8 +42047,12 @@ public struct PhysicalDeviceCooperativeMatrix2PropertiesNV: ChainableBase, Physi
         cStruct.cooperativeMatrixWorkgroupScopeReservedSharedMemory = self.cooperativeMatrixWorkgroupScopeReservedSharedMemory
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceCooperativeMatrix2PropertiesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceCooperativeMatrix2PropertiesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceCooperativeMatrix2PropertiesNVExtension: Chainable {}
 
 public struct CooperativeMatrixFlexibleDimensionsPropertiesNV: ChainableBase {
     public typealias CStruct = VkCooperativeMatrixFlexibleDimensionsPropertiesNV
@@ -37897,8 +42097,12 @@ public struct CooperativeMatrixFlexibleDimensionsPropertiesNV: ChainableBase {
         cStruct.workgroupInvocations = self.workgroupInvocations
         return try body(&cStruct)
     }
+    public func push<Extension: CooperativeMatrixFlexibleDimensionsPropertiesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CooperativeMatrixFlexibleDimensionsPropertiesNVExtension: Chainable {}
+
+public protocol CooperativeMatrixFlexibleDimensionsPropertiesNVExtension: Chainable {}
 
 public struct PhysicalDeviceHdrVividFeaturesHUAWEI: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceHdrVividFeaturesHUAWEI
@@ -37920,8 +42124,12 @@ public struct PhysicalDeviceHdrVividFeaturesHUAWEI: ChainableBase, PhysicalDevic
         cStruct.hdrVivid = VkBool32(self.hdrVivid ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceHdrVividFeaturesHUAWEIExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceHdrVividFeaturesHUAWEIExtension: Chainable {}
+
+public protocol PhysicalDeviceHdrVividFeaturesHUAWEIExtension: Chainable {}
 
 public struct PhysicalDeviceVertexAttributeRobustnessFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceVertexAttributeRobustnessFeaturesEXT
@@ -37943,8 +42151,12 @@ public struct PhysicalDeviceVertexAttributeRobustnessFeaturesEXT: ChainableBase,
         cStruct.vertexAttributeRobustness = VkBool32(self.vertexAttributeRobustness ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceVertexAttributeRobustnessFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceVertexAttributeRobustnessFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceVertexAttributeRobustnessFeaturesEXTExtension: Chainable {}
 
 #if VK_ENABLE_BETA_EXTENSIONS
 public struct PhysicalDeviceDenseGeometryFormatFeaturesAMDX: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
@@ -37967,9 +42179,13 @@ public struct PhysicalDeviceDenseGeometryFormatFeaturesAMDX: ChainableBase, Phys
         cStruct.denseGeometryFormat = VkBool32(self.denseGeometryFormat ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDenseGeometryFormatFeaturesAMDXExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol PhysicalDeviceDenseGeometryFormatFeaturesAMDXExtension: Chainable {}
+
+public protocol PhysicalDeviceDenseGeometryFormatFeaturesAMDXExtension: Chainable {}
 
 #if VK_ENABLE_BETA_EXTENSIONS
 public struct AccelerationStructureDenseGeometryFormatTrianglesDataAMDX: ChainableBase, AccelerationStructureGeometryKHRExtension {
@@ -38016,9 +42232,13 @@ public struct AccelerationStructureDenseGeometryFormatTrianglesDataAMDX: Chainab
         cStruct.format = VkCompressedTriangleFormatAMDX(rawValue: VkCompressedTriangleFormatAMDX.RawValue(bitPattern: self.format.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: AccelerationStructureDenseGeometryFormatTrianglesDataAMDXExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol AccelerationStructureDenseGeometryFormatTrianglesDataAMDXExtension: Chainable {}
+
+public protocol AccelerationStructureDenseGeometryFormatTrianglesDataAMDXExtension: Chainable {}
 
 public struct PhysicalDeviceDepthClampZeroOneFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDepthClampZeroOneFeaturesKHR
@@ -38040,8 +42260,12 @@ public struct PhysicalDeviceDepthClampZeroOneFeaturesKHR: ChainableBase, Physica
         cStruct.depthClampZeroOne = VkBool32(self.depthClampZeroOne ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDepthClampZeroOneFeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceDepthClampZeroOneFeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceDepthClampZeroOneFeaturesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceCooperativeVectorFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceCooperativeVectorFeaturesNV
@@ -38067,8 +42291,12 @@ public struct PhysicalDeviceCooperativeVectorFeaturesNV: ChainableBase, Physical
         cStruct.cooperativeVectorTraining = VkBool32(self.cooperativeVectorTraining ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceCooperativeVectorFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceCooperativeVectorFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceCooperativeVectorFeaturesNVExtension: Chainable {}
 
 public struct CooperativeVectorPropertiesNV: ChainableBase {
     public typealias CStruct = VkCooperativeVectorPropertiesNV
@@ -38110,8 +42338,12 @@ public struct CooperativeVectorPropertiesNV: ChainableBase {
         cStruct.transpose = VkBool32(self.transpose ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: CooperativeVectorPropertiesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CooperativeVectorPropertiesNVExtension: Chainable {}
+
+public protocol CooperativeVectorPropertiesNVExtension: Chainable {}
 
 public struct PhysicalDeviceCooperativeVectorPropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceCooperativeVectorPropertiesNV
@@ -38138,8 +42370,12 @@ public struct PhysicalDeviceCooperativeVectorPropertiesNV: ChainableBase, Physic
         cStruct.maxCooperativeVectorComponents = self.maxCooperativeVectorComponents
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceCooperativeVectorPropertiesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceCooperativeVectorPropertiesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceCooperativeVectorPropertiesNVExtension: Chainable {}
 
 public struct ConvertCooperativeVectorMatrixInfoNV: ChainableBase {
     public typealias CStruct = VkConvertCooperativeVectorMatrixInfoNV
@@ -38205,8 +42441,12 @@ public struct ConvertCooperativeVectorMatrixInfoNV: ChainableBase {
         cStruct.dstStride = self.dstStride
         return try body(&cStruct)
     }
+    public func push<Extension: ConvertCooperativeVectorMatrixInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ConvertCooperativeVectorMatrixInfoNVExtension: Chainable {}
+
+public protocol ConvertCooperativeVectorMatrixInfoNVExtension: Chainable {}
 
 public struct PhysicalDeviceTileShadingFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceTileShadingFeaturesQCOM
@@ -38280,8 +42520,12 @@ public struct PhysicalDeviceTileShadingFeaturesQCOM: ChainableBase, PhysicalDevi
         cStruct.tileShadingImageProcessing = VkBool32(self.tileShadingImageProcessing ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceTileShadingFeaturesQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceTileShadingFeaturesQCOMExtension: Chainable {}
+
+public protocol PhysicalDeviceTileShadingFeaturesQCOMExtension: Chainable {}
 
 public struct PhysicalDeviceTileShadingPropertiesQCOM: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceTileShadingPropertiesQCOM
@@ -38312,8 +42556,12 @@ public struct PhysicalDeviceTileShadingPropertiesQCOM: ChainableBase, PhysicalDe
             }
         }
     }
+    public func push<Extension: PhysicalDeviceTileShadingPropertiesQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceTileShadingPropertiesQCOMExtension: Chainable {}
+
+public protocol PhysicalDeviceTileShadingPropertiesQCOMExtension: Chainable {}
 
 public struct RenderPassTileShadingCreateInfoQCOM: ChainableBase, RenderPassCreateInfoExtension, RenderPassCreateInfo2Extension, RenderingInfoExtension, CommandBufferInheritanceInfoExtension {
     public typealias CStruct = VkRenderPassTileShadingCreateInfoQCOM
@@ -38341,8 +42589,12 @@ public struct RenderPassTileShadingCreateInfoQCOM: ChainableBase, RenderPassCrea
             return try body(&cStruct)
         }
     }
+    public func push<Extension: RenderPassTileShadingCreateInfoQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol RenderPassTileShadingCreateInfoQCOMExtension: Chainable {}
+
+public protocol RenderPassTileShadingCreateInfoQCOMExtension: Chainable {}
 
 public struct PerTileBeginInfoQCOM: ChainableBase {
     public typealias CStruct = VkPerTileBeginInfoQCOM
@@ -38360,8 +42612,12 @@ public struct PerTileBeginInfoQCOM: ChainableBase {
         cStruct.pNext = maybeMutable(pNext)
         return try body(&cStruct)
     }
+    public func push<Extension: PerTileBeginInfoQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PerTileBeginInfoQCOMExtension: Chainable {}
+
+public protocol PerTileBeginInfoQCOMExtension: Chainable {}
 
 public struct PerTileEndInfoQCOM: ChainableBase {
     public typealias CStruct = VkPerTileEndInfoQCOM
@@ -38379,8 +42635,12 @@ public struct PerTileEndInfoQCOM: ChainableBase {
         cStruct.pNext = maybeMutable(pNext)
         return try body(&cStruct)
     }
+    public func push<Extension: PerTileEndInfoQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PerTileEndInfoQCOMExtension: Chainable {}
+
+public protocol PerTileEndInfoQCOMExtension: Chainable {}
 
 public struct DispatchTileInfoQCOM: ChainableBase {
     public typealias CStruct = VkDispatchTileInfoQCOM
@@ -38398,8 +42658,12 @@ public struct DispatchTileInfoQCOM: ChainableBase {
         cStruct.pNext = maybeMutable(pNext)
         return try body(&cStruct)
     }
+    public func push<Extension: DispatchTileInfoQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DispatchTileInfoQCOMExtension: Chainable {}
+
+public protocol DispatchTileInfoQCOMExtension: Chainable {}
 
 public struct PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE
@@ -38417,8 +42681,12 @@ public struct PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE: ChainableB
         cStruct.maxFragmentDensityMapLayers = self.maxFragmentDensityMapLayers
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVEExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVEExtension: Chainable {}
+
+public protocol PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVEExtension: Chainable {}
 
 public struct PhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE
@@ -38440,8 +42708,12 @@ public struct PhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE: ChainableBas
         cStruct.fragmentDensityMapLayered = VkBool32(self.fragmentDensityMapLayered ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceFragmentDensityMapLayeredFeaturesVALVEExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceFragmentDensityMapLayeredFeaturesVALVEExtension: Chainable {}
+
+public protocol PhysicalDeviceFragmentDensityMapLayeredFeaturesVALVEExtension: Chainable {}
 
 public struct PipelineFragmentDensityMapLayeredCreateInfoVALVE: ChainableBase, GraphicsPipelineCreateInfoExtension {
     public typealias CStruct = VkPipelineFragmentDensityMapLayeredCreateInfoVALVE
@@ -38463,8 +42735,12 @@ public struct PipelineFragmentDensityMapLayeredCreateInfoVALVE: ChainableBase, G
         cStruct.maxFragmentDensityMapLayers = self.maxFragmentDensityMapLayers
         return try body(&cStruct)
     }
+    public func push<Extension: PipelineFragmentDensityMapLayeredCreateInfoVALVEExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PipelineFragmentDensityMapLayeredCreateInfoVALVEExtension: Chainable {}
+
+public protocol PipelineFragmentDensityMapLayeredCreateInfoVALVEExtension: Chainable {}
 
 public struct SetPresentConfigNV: ChainableBase, PresentInfoKHRExtension {
     public typealias CStruct = VkSetPresentConfigNV
@@ -38490,8 +42766,12 @@ public struct SetPresentConfigNV: ChainableBase, PresentInfoKHRExtension {
         cStruct.presentConfigFeedback = self.presentConfigFeedback
         return try body(&cStruct)
     }
+    public func push<Extension: SetPresentConfigNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SetPresentConfigNVExtension: Chainable {}
+
+public protocol SetPresentConfigNVExtension: Chainable {}
 
 public struct PhysicalDevicePresentMeteringFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePresentMeteringFeaturesNV
@@ -38513,8 +42793,12 @@ public struct PhysicalDevicePresentMeteringFeaturesNV: ChainableBase, PhysicalDe
         cStruct.presentMetering = VkBool32(self.presentMetering ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevicePresentMeteringFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevicePresentMeteringFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDevicePresentMeteringFeaturesNVExtension: Chainable {}
 
 public struct ExternalComputeQueueDeviceCreateInfoNV: ChainableBase, DeviceCreateInfoExtension {
     public typealias CStruct = VkExternalComputeQueueDeviceCreateInfoNV
@@ -38536,8 +42820,12 @@ public struct ExternalComputeQueueDeviceCreateInfoNV: ChainableBase, DeviceCreat
         cStruct.reservedExternalQueues = self.reservedExternalQueues
         return try body(&cStruct)
     }
+    public func push<Extension: ExternalComputeQueueDeviceCreateInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ExternalComputeQueueDeviceCreateInfoNVExtension: Chainable {}
+
+public protocol ExternalComputeQueueDeviceCreateInfoNVExtension: Chainable {}
 
 public struct ExternalComputeQueueCreateInfoNV: ChainableBase {
     public typealias CStruct = VkExternalComputeQueueCreateInfoNV
@@ -38559,8 +42847,12 @@ public struct ExternalComputeQueueCreateInfoNV: ChainableBase {
         cStruct.preferredQueue = self.preferredQueue.handle
         return try body(&cStruct)
     }
+    public func push<Extension: ExternalComputeQueueCreateInfoNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ExternalComputeQueueCreateInfoNVExtension: Chainable {}
+
+public protocol ExternalComputeQueueCreateInfoNVExtension: Chainable {}
 
 public struct ExternalComputeQueueDataParamsNV: ChainableBase {
     public typealias CStruct = VkExternalComputeQueueDataParamsNV
@@ -38582,8 +42874,12 @@ public struct ExternalComputeQueueDataParamsNV: ChainableBase {
         cStruct.deviceIndex = self.deviceIndex
         return try body(&cStruct)
     }
+    public func push<Extension: ExternalComputeQueueDataParamsNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ExternalComputeQueueDataParamsNVExtension: Chainable {}
+
+public protocol ExternalComputeQueueDataParamsNVExtension: Chainable {}
 
 public struct PhysicalDeviceExternalComputeQueuePropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceExternalComputeQueuePropertiesNV
@@ -38604,8 +42900,12 @@ public struct PhysicalDeviceExternalComputeQueuePropertiesNV: ChainableBase, Phy
         cStruct.maxExternalQueues = self.maxExternalQueues
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceExternalComputeQueuePropertiesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceExternalComputeQueuePropertiesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceExternalComputeQueuePropertiesNVExtension: Chainable {}
 
 public struct PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT
@@ -38627,8 +42927,12 @@ public struct PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT: Chainabl
         cStruct.shaderUniformBufferUnsizedArray = VkBool32(self.shaderUniformBufferUnsizedArray ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceShaderMixedFloatDotProductFeaturesVALVE: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderMixedFloatDotProductFeaturesVALVE
@@ -38662,8 +42966,12 @@ public struct PhysicalDeviceShaderMixedFloatDotProductFeaturesVALVE: ChainableBa
         cStruct.shaderMixedFloatDotProductFloat8AccFloat32 = VkBool32(self.shaderMixedFloatDotProductFloat8AccFloat32 ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderMixedFloatDotProductFeaturesVALVEExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderMixedFloatDotProductFeaturesVALVEExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderMixedFloatDotProductFeaturesVALVEExtension: Chainable {}
 
 public struct PhysicalDevicePrimitiveRestartIndexFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePrimitiveRestartIndexFeaturesEXT
@@ -38685,8 +42993,12 @@ public struct PhysicalDevicePrimitiveRestartIndexFeaturesEXT: ChainableBase, Phy
         cStruct.primitiveRestartIndex = VkBool32(self.primitiveRestartIndex ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevicePrimitiveRestartIndexFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevicePrimitiveRestartIndexFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDevicePrimitiveRestartIndexFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceFormatPackFeaturesARM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceFormatPackFeaturesARM
@@ -38708,8 +43020,12 @@ public struct PhysicalDeviceFormatPackFeaturesARM: ChainableBase, PhysicalDevice
         cStruct.formatPack = VkBool32(self.formatPack ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceFormatPackFeaturesARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceFormatPackFeaturesARMExtension: Chainable {}
+
+public protocol PhysicalDeviceFormatPackFeaturesARMExtension: Chainable {}
 
 public struct PhysicalDeviceThrottleHintFeaturesSEC: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceThrottleHintFeaturesSEC
@@ -38731,8 +43047,12 @@ public struct PhysicalDeviceThrottleHintFeaturesSEC: ChainableBase, PhysicalDevi
         cStruct.throttleHint = VkBool32(self.throttleHint ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceThrottleHintFeaturesSECExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceThrottleHintFeaturesSECExtension: Chainable {}
+
+public protocol PhysicalDeviceThrottleHintFeaturesSECExtension: Chainable {}
 
 public struct ThrottleHintSubmitInfoSEC: ChainableBase, SubmitInfoExtension {
     public typealias CStruct = VkThrottleHintSubmitInfoSEC
@@ -38754,8 +43074,12 @@ public struct ThrottleHintSubmitInfoSEC: ChainableBase, SubmitInfoExtension {
         cStruct.throttleHint = VkThrottleHintTypeSEC(rawValue: VkThrottleHintTypeSEC.RawValue(bitPattern: self.throttleHint.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: ThrottleHintSubmitInfoSECExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ThrottleHintSubmitInfoSECExtension: Chainable {}
+
+public protocol ThrottleHintSubmitInfoSECExtension: Chainable {}
 
 public struct TensorDescriptionARM: ChainableBase, DataGraphPipelineResourceInfoARMExtension, DataGraphPipelineConstantARMExtension {
     public typealias CStruct = VkTensorDescriptionARM
@@ -38798,8 +43122,12 @@ public struct TensorDescriptionARM: ChainableBase, DataGraphPipelineResourceInfo
             }
         }
     }
+    public func push<Extension: TensorDescriptionARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol TensorDescriptionARMExtension: Chainable {}
+
+public protocol TensorDescriptionARMExtension: Chainable {}
 
 public struct TensorCreateInfoARM: ChainableBase {
     public typealias CStruct = VkTensorCreateInfoARM
@@ -38838,8 +43166,12 @@ public struct TensorCreateInfoARM: ChainableBase {
             }
         }
     }
+    public func push<Extension: TensorCreateInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol TensorCreateInfoARMExtension: Chainable {}
+
+public protocol TensorCreateInfoARMExtension: Chainable {}
 
 public struct TensorViewCreateInfoARM: ChainableBase {
     public typealias CStruct = VkTensorViewCreateInfoARM
@@ -38869,8 +43201,12 @@ public struct TensorViewCreateInfoARM: ChainableBase {
         cStruct.format = VkFormat(rawValue: VkFormat.RawValue(bitPattern: self.format.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: TensorViewCreateInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol TensorViewCreateInfoARMExtension: Chainable {}
+
+public protocol TensorViewCreateInfoARMExtension: Chainable {}
 
 public struct TensorMemoryRequirementsInfoARM: ChainableBase {
     public typealias CStruct = VkTensorMemoryRequirementsInfoARM
@@ -38892,8 +43228,12 @@ public struct TensorMemoryRequirementsInfoARM: ChainableBase {
         cStruct.tensor = self.tensor.handle
         return try body(&cStruct)
     }
+    public func push<Extension: TensorMemoryRequirementsInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol TensorMemoryRequirementsInfoARMExtension: Chainable {}
+
+public protocol TensorMemoryRequirementsInfoARMExtension: Chainable {}
 
 public struct BindTensorMemoryInfoARM: ChainableBase {
     public typealias CStruct = VkBindTensorMemoryInfoARM
@@ -38923,8 +43263,12 @@ public struct BindTensorMemoryInfoARM: ChainableBase {
         cStruct.memoryOffset = self.memoryOffset
         return try body(&cStruct)
     }
+    public func push<Extension: BindTensorMemoryInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol BindTensorMemoryInfoARMExtension: Chainable {}
+
+public protocol BindTensorMemoryInfoARMExtension: Chainable {}
 
 public struct WriteDescriptorSetTensorARM: ChainableBase, WriteDescriptorSetExtension {
     public typealias CStruct = VkWriteDescriptorSetTensorARM
@@ -38949,8 +43293,12 @@ public struct WriteDescriptorSetTensorARM: ChainableBase, WriteDescriptorSetExte
             return try body(&cStruct)
         }
     }
+    public func push<Extension: WriteDescriptorSetTensorARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol WriteDescriptorSetTensorARMExtension: Chainable {}
+
+public protocol WriteDescriptorSetTensorARMExtension: Chainable {}
 
 public struct TensorFormatPropertiesARM: ChainableBase, FormatProperties2Extension {
     public typealias CStruct = VkTensorFormatPropertiesARM
@@ -38971,8 +43319,12 @@ public struct TensorFormatPropertiesARM: ChainableBase, FormatProperties2Extensi
         cStruct.linearTilingTensorFeatures = self.linearTilingTensorFeatures.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: TensorFormatPropertiesARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol TensorFormatPropertiesARMExtension: Chainable {}
+
+public protocol TensorFormatPropertiesARMExtension: Chainable {}
 
 public struct PhysicalDeviceTensorPropertiesARM: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceTensorPropertiesARM
@@ -39026,8 +43378,12 @@ public struct PhysicalDeviceTensorPropertiesARM: ChainableBase, PhysicalDevicePr
         cStruct.shaderTensorSupportedStages = self.shaderTensorSupportedStages.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceTensorPropertiesARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceTensorPropertiesARMExtension: Chainable {}
+
+public protocol PhysicalDeviceTensorPropertiesARMExtension: Chainable {}
 
 public struct TensorMemoryBarrierARM: ChainableBase, DependencyInfoExtension {
     public typealias CStruct = VkTensorMemoryBarrierARM
@@ -39073,8 +43429,12 @@ public struct TensorMemoryBarrierARM: ChainableBase, DependencyInfoExtension {
         cStruct.tensor = self.tensor.handle
         return try body(&cStruct)
     }
+    public func push<Extension: TensorMemoryBarrierARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol TensorMemoryBarrierARMExtension: Chainable {}
+
+public protocol TensorMemoryBarrierARMExtension: Chainable {}
 
 public struct TensorDependencyInfoARM: ChainableBase, DependencyInfoExtension {
     public typealias CStruct = VkTensorDependencyInfoARM
@@ -39099,8 +43459,12 @@ public struct TensorDependencyInfoARM: ChainableBase, DependencyInfoExtension {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: TensorDependencyInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol TensorDependencyInfoARMExtension: Chainable {}
+
+public protocol TensorDependencyInfoARMExtension: Chainable {}
 
 public struct PhysicalDeviceTensorFeaturesARM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceTensorFeaturesARM
@@ -39142,8 +43506,12 @@ public struct PhysicalDeviceTensorFeaturesARM: ChainableBase, PhysicalDeviceFeat
         cStruct.tensors = VkBool32(self.tensors ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceTensorFeaturesARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceTensorFeaturesARMExtension: Chainable {}
+
+public protocol PhysicalDeviceTensorFeaturesARMExtension: Chainable {}
 
 public struct DeviceTensorMemoryRequirementsARM: ChainableBase {
     public typealias CStruct = VkDeviceTensorMemoryRequirementsARM
@@ -39167,8 +43535,12 @@ public struct DeviceTensorMemoryRequirementsARM: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: DeviceTensorMemoryRequirementsARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DeviceTensorMemoryRequirementsARMExtension: Chainable {}
+
+public protocol DeviceTensorMemoryRequirementsARMExtension: Chainable {}
 
 public struct TensorCopyARM: ChainableBase {
     public typealias CStruct = VkTensorCopyARM
@@ -39205,8 +43577,12 @@ public struct TensorCopyARM: ChainableBase {
             }
         }
     }
+    public func push<Extension: TensorCopyARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol TensorCopyARMExtension: Chainable {}
+
+public protocol TensorCopyARMExtension: Chainable {}
 
 public struct CopyTensorInfoARM: ChainableBase {
     public typealias CStruct = VkCopyTensorInfoARM
@@ -39239,8 +43615,12 @@ public struct CopyTensorInfoARM: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: CopyTensorInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CopyTensorInfoARMExtension: Chainable {}
+
+public protocol CopyTensorInfoARMExtension: Chainable {}
 
 public struct MemoryDedicatedAllocateInfoTensorARM: ChainableBase, MemoryAllocateInfoExtension {
     public typealias CStruct = VkMemoryDedicatedAllocateInfoTensorARM
@@ -39262,8 +43642,12 @@ public struct MemoryDedicatedAllocateInfoTensorARM: ChainableBase, MemoryAllocat
         cStruct.tensor = self.tensor.handle
         return try body(&cStruct)
     }
+    public func push<Extension: MemoryDedicatedAllocateInfoTensorARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol MemoryDedicatedAllocateInfoTensorARMExtension: Chainable {}
+
+public protocol MemoryDedicatedAllocateInfoTensorARMExtension: Chainable {}
 
 public struct PhysicalDeviceDescriptorBufferTensorPropertiesARM: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceDescriptorBufferTensorPropertiesARM
@@ -39293,8 +43677,12 @@ public struct PhysicalDeviceDescriptorBufferTensorPropertiesARM: ChainableBase, 
         cStruct.tensorDescriptorSize = self.tensorDescriptorSize
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDescriptorBufferTensorPropertiesARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceDescriptorBufferTensorPropertiesARMExtension: Chainable {}
+
+public protocol PhysicalDeviceDescriptorBufferTensorPropertiesARMExtension: Chainable {}
 
 public struct PhysicalDeviceDescriptorBufferTensorFeaturesARM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDescriptorBufferTensorFeaturesARM
@@ -39316,8 +43704,12 @@ public struct PhysicalDeviceDescriptorBufferTensorFeaturesARM: ChainableBase, Ph
         cStruct.descriptorBufferTensorDescriptors = VkBool32(self.descriptorBufferTensorDescriptors ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDescriptorBufferTensorFeaturesARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceDescriptorBufferTensorFeaturesARMExtension: Chainable {}
+
+public protocol PhysicalDeviceDescriptorBufferTensorFeaturesARMExtension: Chainable {}
 
 public struct TensorCaptureDescriptorDataInfoARM: ChainableBase {
     public typealias CStruct = VkTensorCaptureDescriptorDataInfoARM
@@ -39339,8 +43731,12 @@ public struct TensorCaptureDescriptorDataInfoARM: ChainableBase {
         cStruct.tensor = self.tensor.handle
         return try body(&cStruct)
     }
+    public func push<Extension: TensorCaptureDescriptorDataInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol TensorCaptureDescriptorDataInfoARMExtension: Chainable {}
+
+public protocol TensorCaptureDescriptorDataInfoARMExtension: Chainable {}
 
 public struct TensorViewCaptureDescriptorDataInfoARM: ChainableBase {
     public typealias CStruct = VkTensorViewCaptureDescriptorDataInfoARM
@@ -39362,8 +43758,12 @@ public struct TensorViewCaptureDescriptorDataInfoARM: ChainableBase {
         cStruct.tensorView = self.tensorView.handle
         return try body(&cStruct)
     }
+    public func push<Extension: TensorViewCaptureDescriptorDataInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol TensorViewCaptureDescriptorDataInfoARMExtension: Chainable {}
+
+public protocol TensorViewCaptureDescriptorDataInfoARMExtension: Chainable {}
 
 public struct DescriptorGetTensorInfoARM: ChainableBase, DescriptorGetInfoEXTExtension {
     public typealias CStruct = VkDescriptorGetTensorInfoARM
@@ -39385,8 +43785,12 @@ public struct DescriptorGetTensorInfoARM: ChainableBase, DescriptorGetInfoEXTExt
         cStruct.tensorView = self.tensorView?.handle
         return try body(&cStruct)
     }
+    public func push<Extension: DescriptorGetTensorInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DescriptorGetTensorInfoARMExtension: Chainable {}
+
+public protocol DescriptorGetTensorInfoARMExtension: Chainable {}
 
 public struct FrameBoundaryTensorsARM: ChainableBase, SubmitInfoExtension, SubmitInfo2Extension, PresentInfoKHRExtension, BindSparseInfoExtension {
     public typealias CStruct = VkFrameBoundaryTensorsARM
@@ -39411,8 +43815,12 @@ public struct FrameBoundaryTensorsARM: ChainableBase, SubmitInfoExtension, Submi
             return try body(&cStruct)
         }
     }
+    public func push<Extension: FrameBoundaryTensorsARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol FrameBoundaryTensorsARMExtension: Chainable {}
+
+public protocol FrameBoundaryTensorsARMExtension: Chainable {}
 
 public struct PhysicalDeviceExternalTensorInfoARM: ChainableBase {
     public typealias CStruct = VkPhysicalDeviceExternalTensorInfoARM
@@ -39444,8 +43852,12 @@ public struct PhysicalDeviceExternalTensorInfoARM: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PhysicalDeviceExternalTensorInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceExternalTensorInfoARMExtension: Chainable {}
+
+public protocol PhysicalDeviceExternalTensorInfoARMExtension: Chainable {}
 
 public struct ExternalTensorPropertiesARM: ChainableBase {
     public typealias CStruct = VkExternalTensorPropertiesARM
@@ -39469,8 +43881,12 @@ public struct ExternalTensorPropertiesARM: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: ExternalTensorPropertiesARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ExternalTensorPropertiesARMExtension: Chainable {}
+
+public protocol ExternalTensorPropertiesARMExtension: Chainable {}
 
 public struct ExternalMemoryTensorCreateInfoARM: ChainableBase, TensorCreateInfoARMExtension {
     public typealias CStruct = VkExternalMemoryTensorCreateInfoARM
@@ -39492,8 +43908,12 @@ public struct ExternalMemoryTensorCreateInfoARM: ChainableBase, TensorCreateInfo
         cStruct.handleTypes = self.handleTypes.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: ExternalMemoryTensorCreateInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ExternalMemoryTensorCreateInfoARMExtension: Chainable {}
+
+public protocol ExternalMemoryTensorCreateInfoARMExtension: Chainable {}
 
 public struct PhysicalDeviceShaderFloat8FeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderFloat8FeaturesEXT
@@ -39519,8 +43939,12 @@ public struct PhysicalDeviceShaderFloat8FeaturesEXT: ChainableBase, PhysicalDevi
         cStruct.shaderFloat8CooperativeMatrix = VkBool32(self.shaderFloat8CooperativeMatrix ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderFloat8FeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderFloat8FeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderFloat8FeaturesEXTExtension: Chainable {}
 
 #if VK_USE_PLATFORM_OHOS
 public struct SurfaceCreateInfoOHOS: ChainableBase {
@@ -39547,9 +43971,13 @@ public struct SurfaceCreateInfoOHOS: ChainableBase {
         cStruct.window = self.window
         return try body(&cStruct)
     }
+    public func push<Extension: SurfaceCreateInfoOHOSExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol SurfaceCreateInfoOHOSExtension: Chainable {}
+
+public protocol SurfaceCreateInfoOHOSExtension: Chainable {}
 
 public struct PhysicalDeviceDataGraphFeaturesARM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDataGraphFeaturesARM
@@ -39587,8 +44015,12 @@ public struct PhysicalDeviceDataGraphFeaturesARM: ChainableBase, PhysicalDeviceF
         cStruct.dataGraphShaderModule = VkBool32(self.dataGraphShaderModule ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDataGraphFeaturesARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceDataGraphFeaturesARMExtension: Chainable {}
+
+public protocol PhysicalDeviceDataGraphFeaturesARMExtension: Chainable {}
 
 public struct DataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM: ChainableBase, DataGraphPipelineConstantARMExtension {
     public typealias CStruct = VkDataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM
@@ -39618,8 +44050,12 @@ public struct DataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM: Chai
         cStruct.groupSize = self.groupSize
         return try body(&cStruct)
     }
+    public func push<Extension: DataGraphPipelineConstantTensorSemiStructuredSparsityInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DataGraphPipelineConstantTensorSemiStructuredSparsityInfoARMExtension: Chainable {}
+
+public protocol DataGraphPipelineConstantTensorSemiStructuredSparsityInfoARMExtension: Chainable {}
 
 public struct DataGraphPipelineConstantARM: ChainableBase {
     public typealias CStruct = VkDataGraphPipelineConstantARM
@@ -39645,8 +44081,12 @@ public struct DataGraphPipelineConstantARM: ChainableBase {
         cStruct.pConstantData = self.constantData
         return try body(&cStruct)
     }
+    public func push<Extension: DataGraphPipelineConstantARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DataGraphPipelineConstantARMExtension: Chainable {}
+
+public protocol DataGraphPipelineConstantARMExtension: Chainable {}
 
 public struct DataGraphPipelineResourceInfoARM: ChainableBase {
     public typealias CStruct = VkDataGraphPipelineResourceInfoARM
@@ -39676,8 +44116,12 @@ public struct DataGraphPipelineResourceInfoARM: ChainableBase {
         cStruct.arrayElement = self.arrayElement
         return try body(&cStruct)
     }
+    public func push<Extension: DataGraphPipelineResourceInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DataGraphPipelineResourceInfoARMExtension: Chainable {}
+
+public protocol DataGraphPipelineResourceInfoARMExtension: Chainable {}
 
 public struct DataGraphPipelineResourceInfoImageLayoutARM: ChainableBase, DataGraphPipelineResourceInfoARMExtension {
     public typealias CStruct = VkDataGraphPipelineResourceInfoImageLayoutARM
@@ -39699,8 +44143,12 @@ public struct DataGraphPipelineResourceInfoImageLayoutARM: ChainableBase, DataGr
         cStruct.layout = VkImageLayout(rawValue: VkImageLayout.RawValue(bitPattern: self.layout.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: DataGraphPipelineResourceInfoImageLayoutARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DataGraphPipelineResourceInfoImageLayoutARMExtension: Chainable {}
+
+public protocol DataGraphPipelineResourceInfoImageLayoutARMExtension: Chainable {}
 
 public struct DataGraphPipelineCompilerControlCreateInfoARM: ChainableBase, DataGraphPipelineCreateInfoARMExtension {
     public typealias CStruct = VkDataGraphPipelineCompilerControlCreateInfoARM
@@ -39724,8 +44172,12 @@ public struct DataGraphPipelineCompilerControlCreateInfoARM: ChainableBase, Data
             return try body(&cStruct)
         }
     }
+    public func push<Extension: DataGraphPipelineCompilerControlCreateInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DataGraphPipelineCompilerControlCreateInfoARMExtension: Chainable {}
+
+public protocol DataGraphPipelineCompilerControlCreateInfoARMExtension: Chainable {}
 
 public struct DataGraphPipelineCreateInfoARM: ChainableBase {
     public typealias CStruct = VkDataGraphPipelineCreateInfoARM
@@ -39758,8 +44210,12 @@ public struct DataGraphPipelineCreateInfoARM: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: DataGraphPipelineCreateInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DataGraphPipelineCreateInfoARMExtension: Chainable {}
+
+public protocol DataGraphPipelineCreateInfoARMExtension: Chainable {}
 
 public struct DataGraphPipelineShaderModuleCreateInfoARM: ChainableBase, DataGraphPipelineCreateInfoARMExtension {
     public typealias CStruct = VkDataGraphPipelineShaderModuleCreateInfoARM
@@ -39800,8 +44256,12 @@ public struct DataGraphPipelineShaderModuleCreateInfoARM: ChainableBase, DataGra
             }
         }
     }
+    public func push<Extension: DataGraphPipelineShaderModuleCreateInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DataGraphPipelineShaderModuleCreateInfoARMExtension: Chainable {}
+
+public protocol DataGraphPipelineShaderModuleCreateInfoARMExtension: Chainable {}
 
 public struct DataGraphPipelineSessionCreateInfoARM: ChainableBase {
     public typealias CStruct = VkDataGraphPipelineSessionCreateInfoARM
@@ -39827,8 +44287,12 @@ public struct DataGraphPipelineSessionCreateInfoARM: ChainableBase {
         cStruct.dataGraphPipeline = self.dataGraphPipeline.handle
         return try body(&cStruct)
     }
+    public func push<Extension: DataGraphPipelineSessionCreateInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DataGraphPipelineSessionCreateInfoARMExtension: Chainable {}
+
+public protocol DataGraphPipelineSessionCreateInfoARMExtension: Chainable {}
 
 public struct DataGraphPipelineSessionBindPointRequirementsInfoARM: ChainableBase {
     public typealias CStruct = VkDataGraphPipelineSessionBindPointRequirementsInfoARM
@@ -39850,8 +44314,12 @@ public struct DataGraphPipelineSessionBindPointRequirementsInfoARM: ChainableBas
         cStruct.session = self.session.handle
         return try body(&cStruct)
     }
+    public func push<Extension: DataGraphPipelineSessionBindPointRequirementsInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DataGraphPipelineSessionBindPointRequirementsInfoARMExtension: Chainable {}
+
+public protocol DataGraphPipelineSessionBindPointRequirementsInfoARMExtension: Chainable {}
 
 public struct DataGraphPipelineSessionBindPointRequirementARM: ChainableBase {
     public typealias CStruct = VkDataGraphPipelineSessionBindPointRequirementARM
@@ -39875,8 +44343,12 @@ public struct DataGraphPipelineSessionBindPointRequirementARM: ChainableBase {
         cStruct.numObjects = self.numObjects
         return try body(&cStruct)
     }
+    public func push<Extension: DataGraphPipelineSessionBindPointRequirementARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DataGraphPipelineSessionBindPointRequirementARMExtension: Chainable {}
+
+public protocol DataGraphPipelineSessionBindPointRequirementARMExtension: Chainable {}
 
 public struct DataGraphPipelineSessionMemoryRequirementsInfoARM: ChainableBase {
     public typealias CStruct = VkDataGraphPipelineSessionMemoryRequirementsInfoARM
@@ -39906,8 +44378,12 @@ public struct DataGraphPipelineSessionMemoryRequirementsInfoARM: ChainableBase {
         cStruct.objectIndex = self.objectIndex
         return try body(&cStruct)
     }
+    public func push<Extension: DataGraphPipelineSessionMemoryRequirementsInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DataGraphPipelineSessionMemoryRequirementsInfoARMExtension: Chainable {}
+
+public protocol DataGraphPipelineSessionMemoryRequirementsInfoARMExtension: Chainable {}
 
 public struct BindDataGraphPipelineSessionMemoryInfoARM: ChainableBase {
     public typealias CStruct = VkBindDataGraphPipelineSessionMemoryInfoARM
@@ -39945,8 +44421,12 @@ public struct BindDataGraphPipelineSessionMemoryInfoARM: ChainableBase {
         cStruct.memoryOffset = self.memoryOffset
         return try body(&cStruct)
     }
+    public func push<Extension: BindDataGraphPipelineSessionMemoryInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol BindDataGraphPipelineSessionMemoryInfoARMExtension: Chainable {}
+
+public protocol BindDataGraphPipelineSessionMemoryInfoARMExtension: Chainable {}
 
 public struct DataGraphPipelineInfoARM: ChainableBase {
     public typealias CStruct = VkDataGraphPipelineInfoARM
@@ -39968,8 +44448,12 @@ public struct DataGraphPipelineInfoARM: ChainableBase {
         cStruct.dataGraphPipeline = self.dataGraphPipeline.handle
         return try body(&cStruct)
     }
+    public func push<Extension: DataGraphPipelineInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DataGraphPipelineInfoARMExtension: Chainable {}
+
+public protocol DataGraphPipelineInfoARMExtension: Chainable {}
 
 public struct DataGraphPipelinePropertyQueryResultARM: ChainableBase {
     public typealias CStruct = VkDataGraphPipelinePropertyQueryResultARM
@@ -40003,8 +44487,12 @@ public struct DataGraphPipelinePropertyQueryResultARM: ChainableBase {
         cStruct.pData = self.data
         return try body(&cStruct)
     }
+    public func push<Extension: DataGraphPipelinePropertyQueryResultARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DataGraphPipelinePropertyQueryResultARMExtension: Chainable {}
+
+public protocol DataGraphPipelinePropertyQueryResultARMExtension: Chainable {}
 
 public struct DataGraphPipelineIdentifierCreateInfoARM: ChainableBase, DataGraphPipelineCreateInfoARMExtension {
     public typealias CStruct = VkDataGraphPipelineIdentifierCreateInfoARM
@@ -40029,8 +44517,12 @@ public struct DataGraphPipelineIdentifierCreateInfoARM: ChainableBase, DataGraph
             return try body(&cStruct)
         }
     }
+    public func push<Extension: DataGraphPipelineIdentifierCreateInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DataGraphPipelineIdentifierCreateInfoARMExtension: Chainable {}
+
+public protocol DataGraphPipelineIdentifierCreateInfoARMExtension: Chainable {}
 
 public struct DataGraphPipelineDispatchInfoARM: ChainableBase {
     public typealias CStruct = VkDataGraphPipelineDispatchInfoARM
@@ -40052,8 +44544,12 @@ public struct DataGraphPipelineDispatchInfoARM: ChainableBase {
         cStruct.flags = self.flags.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: DataGraphPipelineDispatchInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DataGraphPipelineDispatchInfoARMExtension: Chainable {}
+
+public protocol DataGraphPipelineDispatchInfoARMExtension: Chainable {}
 
 public struct PhysicalDeviceDataGraphProcessingEngineARM: CStructConvertible {
     public typealias CStruct = VkPhysicalDeviceDataGraphProcessingEngineARM
@@ -40130,8 +44626,12 @@ public struct QueueFamilyDataGraphPropertiesARM: ChainableBase {
             }
         }
     }
+    public func push<Extension: QueueFamilyDataGraphPropertiesARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol QueueFamilyDataGraphPropertiesARMExtension: Chainable {}
+
+public protocol QueueFamilyDataGraphPropertiesARMExtension: Chainable {}
 
 public struct PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM: ChainableBase {
     public typealias CStruct = VkPhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM
@@ -40157,8 +44657,12 @@ public struct PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM: Chainab
         cStruct.engineType = VkPhysicalDeviceDataGraphProcessingEngineTypeARM(rawValue: VkPhysicalDeviceDataGraphProcessingEngineTypeARM.RawValue(bitPattern: self.engineType.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARMExtension: Chainable {}
+
+public protocol PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARMExtension: Chainable {}
 
 public struct QueueFamilyDataGraphProcessingEnginePropertiesARM: ChainableBase {
     public typealias CStruct = VkQueueFamilyDataGraphProcessingEnginePropertiesARM
@@ -40179,8 +44683,12 @@ public struct QueueFamilyDataGraphProcessingEnginePropertiesARM: ChainableBase {
         cStruct.foreignMemoryHandleTypes = self.foreignMemoryHandleTypes.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: QueueFamilyDataGraphProcessingEnginePropertiesARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol QueueFamilyDataGraphProcessingEnginePropertiesARMExtension: Chainable {}
+
+public protocol QueueFamilyDataGraphProcessingEnginePropertiesARMExtension: Chainable {}
 
 public struct DataGraphProcessingEngineCreateInfoARM: ChainableBase, DataGraphPipelineCreateInfoARMExtension, DescriptorPoolCreateInfoExtension, CommandPoolCreateInfoExtension {
     public typealias CStruct = VkDataGraphProcessingEngineCreateInfoARM
@@ -40206,8 +44714,12 @@ public struct DataGraphProcessingEngineCreateInfoARM: ChainableBase, DataGraphPi
         cStruct.pProcessingEngines = self.processingEngines
         return try body(&cStruct)
     }
+    public func push<Extension: DataGraphProcessingEngineCreateInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DataGraphProcessingEngineCreateInfoARMExtension: Chainable {}
+
+public protocol DataGraphProcessingEngineCreateInfoARMExtension: Chainable {}
 
 public struct PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePipelineCacheIncrementalModeFeaturesSEC
@@ -40229,8 +44741,12 @@ public struct PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC: ChainableBa
         cStruct.pipelineCacheIncrementalMode = VkBool32(self.pipelineCacheIncrementalMode ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevicePipelineCacheIncrementalModeFeaturesSECExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevicePipelineCacheIncrementalModeFeaturesSECExtension: Chainable {}
+
+public protocol PhysicalDevicePipelineCacheIncrementalModeFeaturesSECExtension: Chainable {}
 
 public struct DataGraphPipelineBuiltinModelCreateInfoQCOM: ChainableBase, DataGraphPipelineCreateInfoARMExtension {
     public typealias CStruct = VkDataGraphPipelineBuiltinModelCreateInfoQCOM
@@ -40254,8 +44770,12 @@ public struct DataGraphPipelineBuiltinModelCreateInfoQCOM: ChainableBase, DataGr
             return try body(&cStruct)
         }
     }
+    public func push<Extension: DataGraphPipelineBuiltinModelCreateInfoQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DataGraphPipelineBuiltinModelCreateInfoQCOMExtension: Chainable {}
+
+public protocol DataGraphPipelineBuiltinModelCreateInfoQCOMExtension: Chainable {}
 
 public struct PhysicalDeviceDataGraphModelFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDataGraphModelFeaturesQCOM
@@ -40277,8 +44797,12 @@ public struct PhysicalDeviceDataGraphModelFeaturesQCOM: ChainableBase, PhysicalD
         cStruct.dataGraphModel = VkBool32(self.dataGraphModel ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDataGraphModelFeaturesQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceDataGraphModelFeaturesQCOMExtension: Chainable {}
+
+public protocol PhysicalDeviceDataGraphModelFeaturesQCOMExtension: Chainable {}
 
 public struct PhysicalDeviceShaderUntypedPointersFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderUntypedPointersFeaturesKHR
@@ -40300,8 +44824,12 @@ public struct PhysicalDeviceShaderUntypedPointersFeaturesKHR: ChainableBase, Phy
         cStruct.shaderUntypedPointers = VkBool32(self.shaderUntypedPointers ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderUntypedPointersFeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderUntypedPointersFeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderUntypedPointersFeaturesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceVideoEncodeRgbConversionFeaturesVALVE: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceVideoEncodeRgbConversionFeaturesVALVE
@@ -40323,8 +44851,12 @@ public struct PhysicalDeviceVideoEncodeRgbConversionFeaturesVALVE: ChainableBase
         cStruct.videoEncodeRgbConversion = VkBool32(self.videoEncodeRgbConversion ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceVideoEncodeRgbConversionFeaturesVALVEExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceVideoEncodeRgbConversionFeaturesVALVEExtension: Chainable {}
+
+public protocol PhysicalDeviceVideoEncodeRgbConversionFeaturesVALVEExtension: Chainable {}
 
 public struct VideoEncodeRgbConversionCapabilitiesVALVE: ChainableBase, VideoCapabilitiesKHRExtension {
     public typealias CStruct = VkVideoEncodeRgbConversionCapabilitiesVALVE
@@ -40351,8 +44883,12 @@ public struct VideoEncodeRgbConversionCapabilitiesVALVE: ChainableBase, VideoCap
         cStruct.yChromaOffsets = self.yChromaOffsets.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeRgbConversionCapabilitiesVALVEExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeRgbConversionCapabilitiesVALVEExtension: Chainable {}
+
+public protocol VideoEncodeRgbConversionCapabilitiesVALVEExtension: Chainable {}
 
 public struct VideoEncodeProfileRgbConversionInfoVALVE: ChainableBase, VideoProfileInfoKHRExtension {
     public typealias CStruct = VkVideoEncodeProfileRgbConversionInfoVALVE
@@ -40374,8 +44910,12 @@ public struct VideoEncodeProfileRgbConversionInfoVALVE: ChainableBase, VideoProf
         cStruct.performEncodeRgbConversion = VkBool32(self.performEncodeRgbConversion ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeProfileRgbConversionInfoVALVEExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeProfileRgbConversionInfoVALVEExtension: Chainable {}
+
+public protocol VideoEncodeProfileRgbConversionInfoVALVEExtension: Chainable {}
 
 public struct VideoEncodeSessionRgbConversionCreateInfoVALVE: ChainableBase, VideoSessionCreateInfoKHRExtension {
     public typealias CStruct = VkVideoEncodeSessionRgbConversionCreateInfoVALVE
@@ -40409,8 +44949,12 @@ public struct VideoEncodeSessionRgbConversionCreateInfoVALVE: ChainableBase, Vid
         cStruct.yChromaOffset = VkVideoEncodeRgbChromaOffsetFlagBitsVALVE(rawValue: VkVideoEncodeRgbChromaOffsetFlagBitsVALVE.RawValue(bitPattern: self.yChromaOffset.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: VideoEncodeSessionRgbConversionCreateInfoVALVEExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol VideoEncodeSessionRgbConversionCreateInfoVALVEExtension: Chainable {}
+
+public protocol VideoEncodeSessionRgbConversionCreateInfoVALVEExtension: Chainable {}
 
 public struct PhysicalDeviceShader64BitIndexingFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShader64BitIndexingFeaturesEXT
@@ -40432,8 +44976,12 @@ public struct PhysicalDeviceShader64BitIndexingFeaturesEXT: ChainableBase, Physi
         cStruct.shader64BitIndexing = VkBool32(self.shader64BitIndexing ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShader64BitIndexingFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShader64BitIndexingFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceShader64BitIndexingFeaturesEXTExtension: Chainable {}
 
 #if VK_USE_PLATFORM_OHOS
 public struct NativeBufferUsageOHOS: ChainableBase, ImageFormatProperties2Extension {
@@ -40452,9 +45000,13 @@ public struct NativeBufferUsageOHOS: ChainableBase, ImageFormatProperties2Extens
         cStruct.OHOSNativeBufferUsage = self.OHOSNativeBufferUsage
         return try body(&cStruct)
     }
+    public func push<Extension: NativeBufferUsageOHOSExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol NativeBufferUsageOHOSExtension: Chainable {}
+
+public protocol NativeBufferUsageOHOSExtension: Chainable {}
 
 #if VK_USE_PLATFORM_OHOS
 public struct NativeBufferPropertiesOHOS: ChainableBase {
@@ -40476,9 +45028,13 @@ public struct NativeBufferPropertiesOHOS: ChainableBase {
         cStruct.memoryTypeBits = self.memoryTypeBits
         return try body(&cStruct)
     }
+    public func push<Extension: NativeBufferPropertiesOHOSExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol NativeBufferPropertiesOHOSExtension: Chainable {}
+
+public protocol NativeBufferPropertiesOHOSExtension: Chainable {}
 
 #if VK_USE_PLATFORM_OHOS
 public struct NativeBufferFormatPropertiesOHOS: ChainableBase, NativeBufferPropertiesOHOSExtension {
@@ -40520,9 +45076,13 @@ public struct NativeBufferFormatPropertiesOHOS: ChainableBase, NativeBufferPrope
             return try body(&cStruct)
         }
     }
+    public func push<Extension: NativeBufferFormatPropertiesOHOSExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol NativeBufferFormatPropertiesOHOSExtension: Chainable {}
+
+public protocol NativeBufferFormatPropertiesOHOSExtension: Chainable {}
 
 #if VK_USE_PLATFORM_OHOS
 public struct ImportNativeBufferInfoOHOS: ChainableBase, MemoryAllocateInfoExtension {
@@ -40545,9 +45105,13 @@ public struct ImportNativeBufferInfoOHOS: ChainableBase, MemoryAllocateInfoExten
         cStruct.buffer = self.buffer
         return try body(&cStruct)
     }
+    public func push<Extension: ImportNativeBufferInfoOHOSExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ImportNativeBufferInfoOHOSExtension: Chainable {}
+
+public protocol ImportNativeBufferInfoOHOSExtension: Chainable {}
 
 #if VK_USE_PLATFORM_OHOS
 public struct MemoryGetNativeBufferInfoOHOS: ChainableBase {
@@ -40570,9 +45134,13 @@ public struct MemoryGetNativeBufferInfoOHOS: ChainableBase {
         cStruct.memory = self.memory.handle
         return try body(&cStruct)
     }
+    public func push<Extension: MemoryGetNativeBufferInfoOHOSExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol MemoryGetNativeBufferInfoOHOSExtension: Chainable {}
+
+public protocol MemoryGetNativeBufferInfoOHOSExtension: Chainable {}
 
 #if VK_USE_PLATFORM_OHOS
 public struct ExternalFormatOHOS: ChainableBase, ImageCreateInfoExtension, SamplerYcbcrConversionCreateInfoExtension, AttachmentDescription2Extension, GraphicsPipelineCreateInfoExtension, CommandBufferInheritanceInfoExtension {
@@ -40595,9 +45163,13 @@ public struct ExternalFormatOHOS: ChainableBase, ImageCreateInfoExtension, Sampl
         cStruct.externalFormat = self.externalFormat
         return try body(&cStruct)
     }
+    public func push<Extension: ExternalFormatOHOSExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
 #endif
-protocol ExternalFormatOHOSExtension: Chainable {}
+
+public protocol ExternalFormatOHOSExtension: Chainable {}
 
 public struct PerfHintInfoQCOM: ChainableBase {
     public typealias CStruct = VkPerfHintInfoQCOM
@@ -40623,8 +45195,12 @@ public struct PerfHintInfoQCOM: ChainableBase {
         cStruct.scale = self.scale
         return try body(&cStruct)
     }
+    public func push<Extension: PerfHintInfoQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PerfHintInfoQCOMExtension: Chainable {}
+
+public protocol PerfHintInfoQCOMExtension: Chainable {}
 
 public struct PhysicalDeviceQueuePerfHintFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceQueuePerfHintFeaturesQCOM
@@ -40646,8 +45222,12 @@ public struct PhysicalDeviceQueuePerfHintFeaturesQCOM: ChainableBase, PhysicalDe
         cStruct.queuePerfHint = VkBool32(self.queuePerfHint ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceQueuePerfHintFeaturesQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceQueuePerfHintFeaturesQCOMExtension: Chainable {}
+
+public protocol PhysicalDeviceQueuePerfHintFeaturesQCOMExtension: Chainable {}
 
 public struct PhysicalDeviceQueuePerfHintPropertiesQCOM: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceQueuePerfHintPropertiesQCOM
@@ -40665,8 +45245,12 @@ public struct PhysicalDeviceQueuePerfHintPropertiesQCOM: ChainableBase, Physical
         cStruct.supportedQueues = self.supportedQueues.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceQueuePerfHintPropertiesQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceQueuePerfHintPropertiesQCOMExtension: Chainable {}
+
+public protocol PhysicalDeviceQueuePerfHintPropertiesQCOMExtension: Chainable {}
 
 public struct PhysicalDevicePerformanceCountersByRegionFeaturesARM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePerformanceCountersByRegionFeaturesARM
@@ -40688,8 +45272,12 @@ public struct PhysicalDevicePerformanceCountersByRegionFeaturesARM: ChainableBas
         cStruct.performanceCountersByRegion = VkBool32(self.performanceCountersByRegion ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDevicePerformanceCountersByRegionFeaturesARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevicePerformanceCountersByRegionFeaturesARMExtension: Chainable {}
+
+public protocol PhysicalDevicePerformanceCountersByRegionFeaturesARMExtension: Chainable {}
 
 public struct PhysicalDevicePerformanceCountersByRegionPropertiesARM: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDevicePerformanceCountersByRegionPropertiesARM
@@ -40721,8 +45309,12 @@ public struct PhysicalDevicePerformanceCountersByRegionPropertiesARM: ChainableB
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PhysicalDevicePerformanceCountersByRegionPropertiesARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDevicePerformanceCountersByRegionPropertiesARMExtension: Chainable {}
+
+public protocol PhysicalDevicePerformanceCountersByRegionPropertiesARMExtension: Chainable {}
 
 public struct PerformanceCounterARM: ChainableBase {
     public typealias CStruct = VkPerformanceCounterARM
@@ -40740,8 +45332,12 @@ public struct PerformanceCounterARM: ChainableBase {
         cStruct.counterID = self.counterID
         return try body(&cStruct)
     }
+    public func push<Extension: PerformanceCounterARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PerformanceCounterARMExtension: Chainable {}
+
+public protocol PerformanceCounterARMExtension: Chainable {}
 
 public struct PerformanceCounterDescriptionARM: ChainableBase {
     public typealias CStruct = VkPerformanceCounterDescriptionARM
@@ -40762,8 +45358,12 @@ public struct PerformanceCounterDescriptionARM: ChainableBase {
         cStruct.name = self.name.unsafeBytesCopy()
         return try body(&cStruct)
     }
+    public func push<Extension: PerformanceCounterDescriptionARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PerformanceCounterDescriptionARMExtension: Chainable {}
+
+public protocol PerformanceCounterDescriptionARMExtension: Chainable {}
 
 public struct RenderPassPerformanceCountersByRegionBeginInfoARM: ChainableBase, RenderPassBeginInfoExtension, RenderingInfoExtension {
     public typealias CStruct = VkRenderPassPerformanceCountersByRegionBeginInfoARM
@@ -40800,8 +45400,12 @@ public struct RenderPassPerformanceCountersByRegionBeginInfoARM: ChainableBase, 
             return try body(&cStruct)
         }
     }
+    public func push<Extension: RenderPassPerformanceCountersByRegionBeginInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol RenderPassPerformanceCountersByRegionBeginInfoARMExtension: Chainable {}
+
+public protocol RenderPassPerformanceCountersByRegionBeginInfoARMExtension: Chainable {}
 
 public struct ComputeOccupancyPriorityParametersNV: ChainableBase {
     public typealias CStruct = VkComputeOccupancyPriorityParametersNV
@@ -40827,8 +45431,12 @@ public struct ComputeOccupancyPriorityParametersNV: ChainableBase {
         cStruct.occupancyThrottling = self.occupancyThrottling
         return try body(&cStruct)
     }
+    public func push<Extension: ComputeOccupancyPriorityParametersNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ComputeOccupancyPriorityParametersNVExtension: Chainable {}
+
+public protocol ComputeOccupancyPriorityParametersNVExtension: Chainable {}
 
 public struct PhysicalDeviceComputeOccupancyPriorityFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceComputeOccupancyPriorityFeaturesNV
@@ -40850,8 +45458,12 @@ public struct PhysicalDeviceComputeOccupancyPriorityFeaturesNV: ChainableBase, P
         cStruct.computeOccupancyPriority = VkBool32(self.computeOccupancyPriority ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceComputeOccupancyPriorityFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceComputeOccupancyPriorityFeaturesNVExtension: Chainable {}
+
+public protocol PhysicalDeviceComputeOccupancyPriorityFeaturesNVExtension: Chainable {}
 
 public struct PhysicalDeviceShaderLongVectorFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderLongVectorFeaturesEXT
@@ -40873,8 +45485,12 @@ public struct PhysicalDeviceShaderLongVectorFeaturesEXT: ChainableBase, Physical
         cStruct.longVector = VkBool32(self.longVector ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderLongVectorFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderLongVectorFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderLongVectorFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceShaderLongVectorPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceShaderLongVectorPropertiesEXT
@@ -40892,8 +45508,12 @@ public struct PhysicalDeviceShaderLongVectorPropertiesEXT: ChainableBase, Physic
         cStruct.maxVectorComponents = self.maxVectorComponents
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderLongVectorPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderLongVectorPropertiesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderLongVectorPropertiesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceTextureCompressionASTC3DFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceTextureCompressionASTC3DFeaturesEXT
@@ -40915,8 +45535,12 @@ public struct PhysicalDeviceTextureCompressionASTC3DFeaturesEXT: ChainableBase, 
         cStruct.textureCompressionASTC_3D = VkBool32(self.textureCompressionASTC_3D ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceTextureCompressionASTC3DFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceTextureCompressionASTC3DFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceTextureCompressionASTC3DFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceShaderSubgroupPartitionedFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderSubgroupPartitionedFeaturesEXT
@@ -40938,8 +45562,12 @@ public struct PhysicalDeviceShaderSubgroupPartitionedFeaturesEXT: ChainableBase,
         cStruct.shaderSubgroupPartitioned = VkBool32(self.shaderSubgroupPartitioned ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderSubgroupPartitionedFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderSubgroupPartitionedFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderSubgroupPartitionedFeaturesEXTExtension: Chainable {}
 
 public struct HostAddressRangeEXT: CStructConvertible {
     public typealias CStruct = VkHostAddressRangeEXT
@@ -41013,8 +45641,12 @@ public struct TexelBufferDescriptorInfoEXT: ChainableBase {
         cStruct.addressRange = self.addressRange
         return try body(&cStruct)
     }
+    public func push<Extension: TexelBufferDescriptorInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol TexelBufferDescriptorInfoEXTExtension: Chainable {}
+
+public protocol TexelBufferDescriptorInfoEXTExtension: Chainable {}
 
 public struct ImageDescriptorInfoEXT: ChainableBase {
     public typealias CStruct = VkImageDescriptorInfoEXT
@@ -41042,8 +45674,12 @@ public struct ImageDescriptorInfoEXT: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: ImageDescriptorInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ImageDescriptorInfoEXTExtension: Chainable {}
+
+public protocol ImageDescriptorInfoEXTExtension: Chainable {}
 
 public struct ResourceDescriptorInfoEXT: ChainableBase {
     public typealias CStruct = VkResourceDescriptorInfoEXT
@@ -41069,8 +45705,12 @@ public struct ResourceDescriptorInfoEXT: ChainableBase {
         cStruct.data = self.data
         return try body(&cStruct)
     }
+    public func push<Extension: ResourceDescriptorInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ResourceDescriptorInfoEXTExtension: Chainable {}
+
+public protocol ResourceDescriptorInfoEXTExtension: Chainable {}
 
 public struct BindHeapInfoEXT: ChainableBase {
     public typealias CStruct = VkBindHeapInfoEXT
@@ -41100,8 +45740,12 @@ public struct BindHeapInfoEXT: ChainableBase {
         cStruct.reservedRangeSize = self.reservedRangeSize
         return try body(&cStruct)
     }
+    public func push<Extension: BindHeapInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol BindHeapInfoEXTExtension: Chainable {}
+
+public protocol BindHeapInfoEXTExtension: Chainable {}
 
 public struct PushDataInfoEXT: ChainableBase {
     public typealias CStruct = VkPushDataInfoEXT
@@ -41129,8 +45773,12 @@ public struct PushDataInfoEXT: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: PushDataInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PushDataInfoEXTExtension: Chainable {}
+
+public protocol PushDataInfoEXTExtension: Chainable {}
 
 public struct DescriptorMappingSourceConstantOffsetEXT: CStructConvertible {
     public typealias CStruct = VkDescriptorMappingSourceConstantOffsetEXT
@@ -41498,8 +46146,12 @@ public struct DescriptorSetAndBindingMappingEXT: ChainableBase {
         cStruct.sourceData = self.sourceData
         return try body(&cStruct)
     }
+    public func push<Extension: DescriptorSetAndBindingMappingEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DescriptorSetAndBindingMappingEXTExtension: Chainable {}
+
+public protocol DescriptorSetAndBindingMappingEXTExtension: Chainable {}
 
 public struct ShaderDescriptorSetAndBindingMappingInfoEXT: ChainableBase, PipelineShaderStageCreateInfoExtension, ShaderCreateInfoEXTExtension {
     public typealias CStruct = VkShaderDescriptorSetAndBindingMappingInfoEXT
@@ -41524,8 +46176,12 @@ public struct ShaderDescriptorSetAndBindingMappingInfoEXT: ChainableBase, Pipeli
             return try body(&cStruct)
         }
     }
+    public func push<Extension: ShaderDescriptorSetAndBindingMappingInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ShaderDescriptorSetAndBindingMappingInfoEXTExtension: Chainable {}
+
+public protocol ShaderDescriptorSetAndBindingMappingInfoEXTExtension: Chainable {}
 
 public struct SamplerCustomBorderColorIndexCreateInfoEXT: ChainableBase, SamplerCreateInfoExtension {
     public typealias CStruct = VkSamplerCustomBorderColorIndexCreateInfoEXT
@@ -41547,8 +46203,12 @@ public struct SamplerCustomBorderColorIndexCreateInfoEXT: ChainableBase, Sampler
         cStruct.index = self.index
         return try body(&cStruct)
     }
+    public func push<Extension: SamplerCustomBorderColorIndexCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SamplerCustomBorderColorIndexCreateInfoEXTExtension: Chainable {}
+
+public protocol SamplerCustomBorderColorIndexCreateInfoEXTExtension: Chainable {}
 
 public struct OpaqueCaptureDataCreateInfoEXT: ChainableBase, ImageCreateInfoExtension, TensorCreateInfoARMExtension {
     public typealias CStruct = VkOpaqueCaptureDataCreateInfoEXT
@@ -41572,8 +46232,12 @@ public struct OpaqueCaptureDataCreateInfoEXT: ChainableBase, ImageCreateInfoExte
             return try body(&cStruct)
         }
     }
+    public func push<Extension: OpaqueCaptureDataCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol OpaqueCaptureDataCreateInfoEXTExtension: Chainable {}
+
+public protocol OpaqueCaptureDataCreateInfoEXTExtension: Chainable {}
 
 public struct IndirectCommandsLayoutPushDataTokenNV: ChainableBase, IndirectCommandsLayoutTokenNVExtension {
     public typealias CStruct = VkIndirectCommandsLayoutPushDataTokenNV
@@ -41599,8 +46263,12 @@ public struct IndirectCommandsLayoutPushDataTokenNV: ChainableBase, IndirectComm
         cStruct.pushDataSize = self.pushDataSize
         return try body(&cStruct)
     }
+    public func push<Extension: IndirectCommandsLayoutPushDataTokenNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol IndirectCommandsLayoutPushDataTokenNVExtension: Chainable {}
+
+public protocol IndirectCommandsLayoutPushDataTokenNVExtension: Chainable {}
 
 public struct SubsampledImageFormatPropertiesEXT: ChainableBase, ImageFormatProperties2Extension {
     public typealias CStruct = VkSubsampledImageFormatPropertiesEXT
@@ -41622,8 +46290,12 @@ public struct SubsampledImageFormatPropertiesEXT: ChainableBase, ImageFormatProp
         cStruct.subsampledImageDescriptorCount = self.subsampledImageDescriptorCount
         return try body(&cStruct)
     }
+    public func push<Extension: SubsampledImageFormatPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol SubsampledImageFormatPropertiesEXTExtension: Chainable {}
+
+public protocol SubsampledImageFormatPropertiesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceDescriptorHeapFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDescriptorHeapFeaturesEXT
@@ -41649,8 +46321,12 @@ public struct PhysicalDeviceDescriptorHeapFeaturesEXT: ChainableBase, PhysicalDe
         cStruct.descriptorHeapCaptureReplay = VkBool32(self.descriptorHeapCaptureReplay ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDescriptorHeapFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceDescriptorHeapFeaturesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceDescriptorHeapFeaturesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceDescriptorHeapPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceDescriptorHeapPropertiesEXT
@@ -41722,8 +46398,12 @@ public struct PhysicalDeviceDescriptorHeapPropertiesEXT: ChainableBase, Physical
         cStruct.protectedDescriptorHeaps = VkBool32(self.protectedDescriptorHeaps ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDescriptorHeapPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceDescriptorHeapPropertiesEXTExtension: Chainable {}
+
+public protocol PhysicalDeviceDescriptorHeapPropertiesEXTExtension: Chainable {}
 
 public struct CommandBufferInheritanceDescriptorHeapInfoEXT: ChainableBase, CommandBufferInheritanceInfoExtension {
     public typealias CStruct = VkCommandBufferInheritanceDescriptorHeapInfoEXT
@@ -41753,8 +46433,12 @@ public struct CommandBufferInheritanceDescriptorHeapInfoEXT: ChainableBase, Comm
             }
         }
     }
+    public func push<Extension: CommandBufferInheritanceDescriptorHeapInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CommandBufferInheritanceDescriptorHeapInfoEXTExtension: Chainable {}
+
+public protocol CommandBufferInheritanceDescriptorHeapInfoEXTExtension: Chainable {}
 
 public struct PhysicalDeviceDescriptorHeapTensorPropertiesARM: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceDescriptorHeapTensorPropertiesARM
@@ -41778,8 +46462,12 @@ public struct PhysicalDeviceDescriptorHeapTensorPropertiesARM: ChainableBase, Ph
         cStruct.tensorCaptureReplayOpaqueDataSize = self.tensorCaptureReplayOpaqueDataSize
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDescriptorHeapTensorPropertiesARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceDescriptorHeapTensorPropertiesARMExtension: Chainable {}
+
+public protocol PhysicalDeviceDescriptorHeapTensorPropertiesARMExtension: Chainable {}
 
 public struct PhysicalDeviceShaderInstrumentationFeaturesARM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderInstrumentationFeaturesARM
@@ -41801,8 +46489,12 @@ public struct PhysicalDeviceShaderInstrumentationFeaturesARM: ChainableBase, Phy
         cStruct.shaderInstrumentation = VkBool32(self.shaderInstrumentation ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderInstrumentationFeaturesARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderInstrumentationFeaturesARMExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderInstrumentationFeaturesARMExtension: Chainable {}
 
 public struct PhysicalDeviceShaderInstrumentationPropertiesARM: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceShaderInstrumentationPropertiesARM
@@ -41823,8 +46515,12 @@ public struct PhysicalDeviceShaderInstrumentationPropertiesARM: ChainableBase, P
         cStruct.perBasicBlockGranularity = VkBool32(self.perBasicBlockGranularity ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderInstrumentationPropertiesARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderInstrumentationPropertiesARMExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderInstrumentationPropertiesARMExtension: Chainable {}
 
 public struct ShaderInstrumentationCreateInfoARM: ChainableBase {
     public typealias CStruct = VkShaderInstrumentationCreateInfoARM
@@ -41842,8 +46538,12 @@ public struct ShaderInstrumentationCreateInfoARM: ChainableBase {
         cStruct.pNext = maybeMutable(pNext)
         return try body(&cStruct)
     }
+    public func push<Extension: ShaderInstrumentationCreateInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ShaderInstrumentationCreateInfoARMExtension: Chainable {}
+
+public protocol ShaderInstrumentationCreateInfoARMExtension: Chainable {}
 
 public struct ShaderInstrumentationMetricDescriptionARM: ChainableBase {
     public typealias CStruct = VkShaderInstrumentationMetricDescriptionARM
@@ -41869,8 +46569,12 @@ public struct ShaderInstrumentationMetricDescriptionARM: ChainableBase {
         cStruct.description = self.description.unsafeBytesCopy()
         return try body(&cStruct)
     }
+    public func push<Extension: ShaderInstrumentationMetricDescriptionARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ShaderInstrumentationMetricDescriptionARMExtension: Chainable {}
+
+public protocol ShaderInstrumentationMetricDescriptionARMExtension: Chainable {}
 
 public struct ShaderInstrumentationMetricDataHeaderARM: CStructConvertible {
     public typealias CStruct = VkShaderInstrumentationMetricDataHeaderARM
@@ -41964,8 +46668,12 @@ public struct DeviceMemoryCopyKHR: ChainableBase {
             }
         }
     }
+    public func push<Extension: DeviceMemoryCopyKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DeviceMemoryCopyKHRExtension: Chainable {}
+
+public protocol DeviceMemoryCopyKHRExtension: Chainable {}
 
 public struct CopyDeviceMemoryInfoKHR: ChainableBase {
     public typealias CStruct = VkCopyDeviceMemoryInfoKHR
@@ -41990,8 +46698,12 @@ public struct CopyDeviceMemoryInfoKHR: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: CopyDeviceMemoryInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CopyDeviceMemoryInfoKHRExtension: Chainable {}
+
+public protocol CopyDeviceMemoryInfoKHRExtension: Chainable {}
 
 public struct DeviceMemoryImageCopyKHR: ChainableBase {
     public typealias CStruct = VkDeviceMemoryImageCopyKHR
@@ -42049,8 +46761,12 @@ public struct DeviceMemoryImageCopyKHR: ChainableBase {
             }
         }
     }
+    public func push<Extension: DeviceMemoryImageCopyKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DeviceMemoryImageCopyKHRExtension: Chainable {}
+
+public protocol DeviceMemoryImageCopyKHRExtension: Chainable {}
 
 public struct CopyDeviceMemoryImageInfoKHR: ChainableBase {
     public typealias CStruct = VkCopyDeviceMemoryImageInfoKHR
@@ -42079,8 +46795,12 @@ public struct CopyDeviceMemoryImageInfoKHR: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: CopyDeviceMemoryImageInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol CopyDeviceMemoryImageInfoKHRExtension: Chainable {}
+
+public protocol CopyDeviceMemoryImageInfoKHRExtension: Chainable {}
 
 public struct MemoryRangeBarrierKHR: ChainableBase {
     public typealias CStruct = VkMemoryRangeBarrierKHR
@@ -42132,8 +46852,12 @@ public struct MemoryRangeBarrierKHR: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: MemoryRangeBarrierKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol MemoryRangeBarrierKHRExtension: Chainable {}
+
+public protocol MemoryRangeBarrierKHRExtension: Chainable {}
 
 public struct MemoryRangeBarriersInfoKHR: ChainableBase, DependencyInfoExtension {
     public typealias CStruct = VkMemoryRangeBarriersInfoKHR
@@ -42158,8 +46882,12 @@ public struct MemoryRangeBarriersInfoKHR: ChainableBase, DependencyInfoExtension
             return try body(&cStruct)
         }
     }
+    public func push<Extension: MemoryRangeBarriersInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol MemoryRangeBarriersInfoKHRExtension: Chainable {}
+
+public protocol MemoryRangeBarriersInfoKHRExtension: Chainable {}
 
 public struct PhysicalDeviceDeviceAddressCommandsFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDeviceAddressCommandsFeaturesKHR
@@ -42181,8 +46909,12 @@ public struct PhysicalDeviceDeviceAddressCommandsFeaturesKHR: ChainableBase, Phy
         cStruct.deviceAddressCommands = VkBool32(self.deviceAddressCommands ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDeviceAddressCommandsFeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceDeviceAddressCommandsFeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceDeviceAddressCommandsFeaturesKHRExtension: Chainable {}
 
 public struct ConditionalRenderingBeginInfo2EXT: ChainableBase {
     public typealias CStruct = VkConditionalRenderingBeginInfo2EXT
@@ -42214,8 +46946,12 @@ public struct ConditionalRenderingBeginInfo2EXT: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: ConditionalRenderingBeginInfo2EXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol ConditionalRenderingBeginInfo2EXTExtension: Chainable {}
+
+public protocol ConditionalRenderingBeginInfo2EXTExtension: Chainable {}
 
 public struct AccelerationStructureCreateInfo2KHR: ChainableBase {
     public typealias CStruct = VkAccelerationStructureCreateInfo2KHR
@@ -42251,8 +46987,12 @@ public struct AccelerationStructureCreateInfo2KHR: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: AccelerationStructureCreateInfo2KHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol AccelerationStructureCreateInfo2KHRExtension: Chainable {}
+
+public protocol AccelerationStructureCreateInfo2KHRExtension: Chainable {}
 
 public struct BindIndexBuffer3InfoKHR: ChainableBase {
     public typealias CStruct = VkBindIndexBuffer3InfoKHR
@@ -42284,8 +47024,12 @@ public struct BindIndexBuffer3InfoKHR: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: BindIndexBuffer3InfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol BindIndexBuffer3InfoKHRExtension: Chainable {}
+
+public protocol BindIndexBuffer3InfoKHRExtension: Chainable {}
 
 public struct BindVertexBuffer3InfoKHR: ChainableBase {
     public typealias CStruct = VkBindVertexBuffer3InfoKHR
@@ -42317,8 +47061,12 @@ public struct BindVertexBuffer3InfoKHR: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: BindVertexBuffer3InfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol BindVertexBuffer3InfoKHRExtension: Chainable {}
+
+public protocol BindVertexBuffer3InfoKHRExtension: Chainable {}
 
 public struct DrawIndirect2InfoKHR: ChainableBase {
     public typealias CStruct = VkDrawIndirect2InfoKHR
@@ -42350,8 +47098,12 @@ public struct DrawIndirect2InfoKHR: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: DrawIndirect2InfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DrawIndirect2InfoKHRExtension: Chainable {}
+
+public protocol DrawIndirect2InfoKHRExtension: Chainable {}
 
 public struct DrawIndirectCount2InfoKHR: ChainableBase {
     public typealias CStruct = VkDrawIndirectCount2InfoKHR
@@ -42393,8 +47145,12 @@ public struct DrawIndirectCount2InfoKHR: ChainableBase {
             }
         }
     }
+    public func push<Extension: DrawIndirectCount2InfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DrawIndirectCount2InfoKHRExtension: Chainable {}
+
+public protocol DrawIndirectCount2InfoKHRExtension: Chainable {}
 
 public struct DispatchIndirect2InfoKHR: ChainableBase {
     public typealias CStruct = VkDispatchIndirect2InfoKHR
@@ -42422,8 +47178,12 @@ public struct DispatchIndirect2InfoKHR: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: DispatchIndirect2InfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DispatchIndirect2InfoKHRExtension: Chainable {}
+
+public protocol DispatchIndirect2InfoKHRExtension: Chainable {}
 
 public struct BindTransformFeedbackBuffer2InfoEXT: ChainableBase {
     public typealias CStruct = VkBindTransformFeedbackBuffer2InfoEXT
@@ -42451,8 +47211,12 @@ public struct BindTransformFeedbackBuffer2InfoEXT: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: BindTransformFeedbackBuffer2InfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol BindTransformFeedbackBuffer2InfoEXTExtension: Chainable {}
+
+public protocol BindTransformFeedbackBuffer2InfoEXTExtension: Chainable {}
 
 public struct MemoryMarkerInfoAMD: ChainableBase {
     public typealias CStruct = VkMemoryMarkerInfoAMD
@@ -42488,8 +47252,12 @@ public struct MemoryMarkerInfoAMD: ChainableBase {
             return try body(&cStruct)
         }
     }
+    public func push<Extension: MemoryMarkerInfoAMDExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol MemoryMarkerInfoAMDExtension: Chainable {}
+
+public protocol MemoryMarkerInfoAMDExtension: Chainable {}
 
 public struct PhysicalDeviceShaderConstantDataFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderConstantDataFeaturesKHR
@@ -42511,8 +47279,12 @@ public struct PhysicalDeviceShaderConstantDataFeaturesKHR: ChainableBase, Physic
         cStruct.shaderConstantData = VkBool32(self.shaderConstantData ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderConstantDataFeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderConstantDataFeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderConstantDataFeaturesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceShaderAbortFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderAbortFeaturesKHR
@@ -42534,8 +47306,12 @@ public struct PhysicalDeviceShaderAbortFeaturesKHR: ChainableBase, PhysicalDevic
         cStruct.shaderAbort = VkBool32(self.shaderAbort ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderAbortFeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderAbortFeaturesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderAbortFeaturesKHRExtension: Chainable {}
 
 public struct PhysicalDeviceShaderAbortPropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceShaderAbortPropertiesKHR
@@ -42557,8 +47333,12 @@ public struct PhysicalDeviceShaderAbortPropertiesKHR: ChainableBase, PhysicalDev
         cStruct.maxShaderAbortMessageSize = self.maxShaderAbortMessageSize
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceShaderAbortPropertiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceShaderAbortPropertiesKHRExtension: Chainable {}
+
+public protocol PhysicalDeviceShaderAbortPropertiesKHRExtension: Chainable {}
 
 public struct DeviceFaultShaderAbortMessageInfoKHR: ChainableBase, DeviceFaultDebugInfoKHRExtension {
     public typealias CStruct = VkDeviceFaultShaderAbortMessageInfoKHR
@@ -42579,8 +47359,12 @@ public struct DeviceFaultShaderAbortMessageInfoKHR: ChainableBase, DeviceFaultDe
         cStruct.pMessageData = self.messageData
         return try body(&cStruct)
     }
+    public func push<Extension: DeviceFaultShaderAbortMessageInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DeviceFaultShaderAbortMessageInfoKHRExtension: Chainable {}
+
+public protocol DeviceFaultShaderAbortMessageInfoKHRExtension: Chainable {}
 
 public struct DataGraphTOSANameQualityARM: CStructConvertible {
     public typealias CStruct = VkDataGraphTOSANameQualityARM
@@ -42629,8 +47413,12 @@ public struct QueueFamilyDataGraphTOSAPropertiesARM: ChainableBase {
             }
         }
     }
+    public func push<Extension: QueueFamilyDataGraphTOSAPropertiesARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol QueueFamilyDataGraphTOSAPropertiesARMExtension: Chainable {}
+
+public protocol QueueFamilyDataGraphTOSAPropertiesARMExtension: Chainable {}
 
 public struct DataGraphPipelineSingleNodeConnectionARM: ChainableBase {
     public typealias CStruct = VkDataGraphPipelineSingleNodeConnectionARM
@@ -42660,8 +47448,12 @@ public struct DataGraphPipelineSingleNodeConnectionARM: ChainableBase {
         cStruct.connection = VkDataGraphPipelineNodeConnectionTypeARM(rawValue: VkDataGraphPipelineNodeConnectionTypeARM.RawValue(bitPattern: self.connection.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: DataGraphPipelineSingleNodeConnectionARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DataGraphPipelineSingleNodeConnectionARMExtension: Chainable {}
+
+public protocol DataGraphPipelineSingleNodeConnectionARMExtension: Chainable {}
 
 public struct PhysicalDeviceDataGraphOpticalFlowFeaturesARM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDataGraphOpticalFlowFeaturesARM
@@ -42683,8 +47475,12 @@ public struct PhysicalDeviceDataGraphOpticalFlowFeaturesARM: ChainableBase, Phys
         cStruct.dataGraphOpticalFlow = VkBool32(self.dataGraphOpticalFlow ? VK_TRUE : VK_FALSE)
         return try body(&cStruct)
     }
+    public func push<Extension: PhysicalDeviceDataGraphOpticalFlowFeaturesARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol PhysicalDeviceDataGraphOpticalFlowFeaturesARMExtension: Chainable {}
+
+public protocol PhysicalDeviceDataGraphOpticalFlowFeaturesARMExtension: Chainable {}
 
 public struct QueueFamilyDataGraphOpticalFlowPropertiesARM: ChainableBase {
     public typealias CStruct = VkQueueFamilyDataGraphOpticalFlowPropertiesARM
@@ -42723,8 +47519,12 @@ public struct QueueFamilyDataGraphOpticalFlowPropertiesARM: ChainableBase {
         cStruct.maxHeight = self.maxHeight
         return try body(&cStruct)
     }
+    public func push<Extension: QueueFamilyDataGraphOpticalFlowPropertiesARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol QueueFamilyDataGraphOpticalFlowPropertiesARMExtension: Chainable {}
+
+public protocol QueueFamilyDataGraphOpticalFlowPropertiesARMExtension: Chainable {}
 
 public struct DataGraphOpticalFlowImageFormatInfoARM: ChainableBase, PhysicalDeviceImageFormatInfo2Extension, ImageCreateInfoExtension {
     public typealias CStruct = VkDataGraphOpticalFlowImageFormatInfoARM
@@ -42746,8 +47546,12 @@ public struct DataGraphOpticalFlowImageFormatInfoARM: ChainableBase, PhysicalDev
         cStruct.usage = self.usage.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: DataGraphOpticalFlowImageFormatInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DataGraphOpticalFlowImageFormatInfoARMExtension: Chainable {}
+
+public protocol DataGraphOpticalFlowImageFormatInfoARMExtension: Chainable {}
 
 public struct DataGraphOpticalFlowImageFormatPropertiesARM: ChainableBase {
     public typealias CStruct = VkDataGraphOpticalFlowImageFormatPropertiesARM
@@ -42765,8 +47569,12 @@ public struct DataGraphOpticalFlowImageFormatPropertiesARM: ChainableBase {
         cStruct.format = VkFormat(rawValue: VkFormat.RawValue(bitPattern: self.format.rawValue))
         return try body(&cStruct)
     }
+    public func push<Extension: DataGraphOpticalFlowImageFormatPropertiesARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DataGraphOpticalFlowImageFormatPropertiesARMExtension: Chainable {}
+
+public protocol DataGraphOpticalFlowImageFormatPropertiesARMExtension: Chainable {}
 
 public struct DataGraphPipelineSingleNodeCreateInfoARM: ChainableBase, DataGraphPipelineCreateInfoARMExtension {
     public typealias CStruct = VkDataGraphPipelineSingleNodeCreateInfoARM
@@ -42795,8 +47603,12 @@ public struct DataGraphPipelineSingleNodeCreateInfoARM: ChainableBase, DataGraph
             return try body(&cStruct)
         }
     }
+    public func push<Extension: DataGraphPipelineSingleNodeCreateInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DataGraphPipelineSingleNodeCreateInfoARMExtension: Chainable {}
+
+public protocol DataGraphPipelineSingleNodeCreateInfoARMExtension: Chainable {}
 
 public struct DataGraphPipelineOpticalFlowCreateInfoARM: ChainableBase, DataGraphPipelineCreateInfoARMExtension {
     public typealias CStruct = VkDataGraphPipelineOpticalFlowCreateInfoARM
@@ -42850,8 +47662,12 @@ public struct DataGraphPipelineOpticalFlowCreateInfoARM: ChainableBase, DataGrap
         cStruct.flags = self.flags.rawValue
         return try body(&cStruct)
     }
+    public func push<Extension: DataGraphPipelineOpticalFlowCreateInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DataGraphPipelineOpticalFlowCreateInfoARMExtension: Chainable {}
+
+public protocol DataGraphPipelineOpticalFlowCreateInfoARMExtension: Chainable {}
 
 public struct DataGraphPipelineOpticalFlowDispatchInfoARM: ChainableBase, DataGraphPipelineDispatchInfoARMExtension {
     public typealias CStruct = VkDataGraphPipelineOpticalFlowDispatchInfoARM
@@ -42877,6 +47693,10 @@ public struct DataGraphPipelineOpticalFlowDispatchInfoARM: ChainableBase, DataGr
         cStruct.meanFlowL1NormHint = self.meanFlowL1NormHint
         return try body(&cStruct)
     }
+    public func push<Extension: DataGraphPipelineOpticalFlowDispatchInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
 }
-protocol DataGraphPipelineOpticalFlowDispatchInfoARMExtension: Chainable {}
+
+public protocol DataGraphPipelineOpticalFlowDispatchInfoARMExtension: Chainable {}
 

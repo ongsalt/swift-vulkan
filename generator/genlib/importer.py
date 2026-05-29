@@ -42,6 +42,9 @@ class SwiftStruct:
         self.protocols = protocols or []
         self.protect = protect
 
+    @property
+    def extension_name(self):
+        return f'{self.name}Extension'
 
 class SwiftCommand:
     def __init__(self, c_command: CCommand, name: str, return_type: str, throws: bool,

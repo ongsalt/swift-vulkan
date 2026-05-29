@@ -243,3 +243,11 @@ extension EmptyEnum: RawRepresentable {
     public var rawValue: T { 0 }
     public init?(rawValue: T) {}
 }
+
+func maybeMutable(_ ptr: UnsafeRawPointer?) -> UnsafeRawPointer? {
+  ptr
+}
+
+func maybeMutable(_ ptr: UnsafeRawPointer?) -> UnsafeMutableRawPointer? {
+  UnsafeMutableRawPointer(mutating: ptr)
+}

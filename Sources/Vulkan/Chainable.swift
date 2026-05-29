@@ -1,7 +1,9 @@
 public protocol Chainable<Base>: CStructConvertible where Self.CStruct == Base.CStruct {
   associatedtype Base: CStructConvertible
-
   var base: Base { get }
+
+  associatedtype NestedTuple
+  var asTuple: NestedTuple { get }
 
   func withCStruct<R>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<Base.CStruct>) throws -> R)
     rethrows -> R
@@ -18,6 +20,7 @@ extension Chainable where Base == Self {
   // this will include those that are not a base too
   // but we wont generate a `push(extension:)` for it
   public var base: Self { self }
+  public var asTuple: Self { self }
 }
 
 public protocol ChainableBase: Chainable {}
@@ -25,6 +28,13 @@ public protocol ChainableBase: Chainable {}
 public struct Chain<Base: Chainable, Next: Chainable> {
   public let base: Base
   public let next: Next
+}
+
+extension Chain {
+  public typealias NestedTuple = (Base, Next.NestedTuple)
+  public var asTuple: NestedTuple {
+      return (base, next.asTuple)
+  }
 }
 
 extension Chain: Chainable<Base> {
@@ -48,80 +58,101 @@ extension Optional where Wrapped: Chainable, Wrapped: CStructConvertible {
   }
 }
 
-// public struct BaseA: ChainableBase {
-//   public typealias CStruct = Int
-//   protocol Extension: Chainable {}
-
-//   public func withCStruct<R>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<Int>) throws -> R)
-//     rethrows -> R
-//   {
-//     var s = 0
-//     return try body(&s)
-//   }
-// }
-
-// extension BaseA {
-//   func push<Extension: BaseA.Extension>(_ ext: Extension)
-//     -> Chain<Self, Extension>
-//   {
-//     Chain(base: base, next: ext)
-//   }
-// }
-
-// private struct Chain2<Base: ChainableBase, each Next: Chainable> {
-//   public let base: Base
-//   public let next: (repeat each Next)
-// }
-
-// extension Chain where Base == BaseA {
-//   fileprivate func push<NewValue: BaseA.Extension>(_ newValue: NewValue)
-//     -> Chain<Base, Chain<NewValue, Next>>
-//   {
-//     Chain<Base, _>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
-//   }
-// }
-
-// private struct BaseB: ChainableBase {
-//   typealias CStruct = String
-//   protocol Extension: Chainable {}
-
-//   func withCStruct<R>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<String>) throws -> R)
-//     rethrows -> R
-//   {
-//     fatalError()
-//   }
-
-// }
-// private struct ABExt: BaseA.Extension, BaseB.Extension {
-//   func withCStruct<R>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<UInt32>) throws -> R)
-//     rethrows -> R
-//   {
-//     fatalError()
-//   }
-
-//   typealias CStruct = UInt32
-// }
-
-// // struct CExt: BaseC.Extension, Chainable {
-// //   func withCStruct<R>(_ body: (UnsafePointer<UInt32>) throws -> R) rethrows -> R {
-// //     fatalError()
-// //   }
-
-// //   typealias CStruct = UInt32
-// // }
-
-// private func example() {
-//   let a: Chain<BaseA, Chain<ABExt, ABExt>> = BaseA()
-//     .push(ABExt())
-//     .push(ABExt())
-
-//   let aa = BaseA().base
-// }
-
-func maybeMutable(_ ptr: UnsafeRawPointer?) -> UnsafeRawPointer? {
-  ptr
+public protocol ChainLink: Chainable {
+    associatedtype Tail: Chainable
+    var next: Tail { get }
 }
 
-func maybeMutable(_ ptr: UnsafeRawPointer?) -> UnsafeMutableRawPointer? {
-  UnsafeMutableRawPointer(mutating: ptr)
+extension Chain: ChainLink {
+    public typealias Tail = Next
+}
+
+extension Chain {
+    public var _0: Base { base }
+    public var _1: Next.Base { next.base }
+}
+
+extension Chain where Next: ChainLink {
+    public var _2: Next.Tail.Base { next.next.base }
+}
+
+extension Chain where Next: ChainLink, Next.Tail: ChainLink {
+    public var _3: Next.Tail.Tail.Base { next.next.next.base }
+}
+
+extension Chain where 
+    Next: ChainLink, 
+    Next.Tail: ChainLink, 
+    Next.Tail.Tail: ChainLink 
+{
+    public var _4: Next.Tail.Tail.Tail.Base { next.next.next.next.base }
+}
+
+extension Chain where 
+    Next: ChainLink, 
+    Next.Tail: ChainLink, 
+    Next.Tail.Tail: ChainLink, 
+    Next.Tail.Tail.Tail: ChainLink 
+{
+    public var _5: Next.Tail.Tail.Tail.Tail.Base { next.next.next.next.next.base }
+}
+
+extension Chain where 
+    Next: ChainLink, 
+    Next.Tail: ChainLink, 
+    Next.Tail.Tail: ChainLink, 
+    Next.Tail.Tail.Tail: ChainLink, 
+    Next.Tail.Tail.Tail.Tail: ChainLink 
+{
+    public var _6: Next.Tail.Tail.Tail.Tail.Tail.Base { next.next.next.next.next.next.base }
+}
+
+extension Chain where 
+    Next: ChainLink, 
+    Next.Tail: ChainLink, 
+    Next.Tail.Tail: ChainLink, 
+    Next.Tail.Tail.Tail: ChainLink, 
+    Next.Tail.Tail.Tail.Tail: ChainLink, 
+    Next.Tail.Tail.Tail.Tail.Tail: ChainLink 
+{
+    public var _7: Next.Tail.Tail.Tail.Tail.Tail.Tail.Base { next.next.next.next.next.next.next.base }
+}
+
+extension Chain where 
+    Next: ChainLink, 
+    Next.Tail: ChainLink, 
+    Next.Tail.Tail: ChainLink, 
+    Next.Tail.Tail.Tail: ChainLink, 
+    Next.Tail.Tail.Tail.Tail: ChainLink, 
+    Next.Tail.Tail.Tail.Tail.Tail: ChainLink, 
+    Next.Tail.Tail.Tail.Tail.Tail.Tail: ChainLink 
+{
+    public var _8: Next.Tail.Tail.Tail.Tail.Tail.Tail.Tail.Base { next.next.next.next.next.next.next.next.base }
+}
+
+extension Chain where 
+    Next: ChainLink, 
+    Next.Tail: ChainLink, 
+    Next.Tail.Tail: ChainLink, 
+    Next.Tail.Tail.Tail: ChainLink, 
+    Next.Tail.Tail.Tail.Tail: ChainLink, 
+    Next.Tail.Tail.Tail.Tail.Tail: ChainLink, 
+    Next.Tail.Tail.Tail.Tail.Tail.Tail: ChainLink, 
+    Next.Tail.Tail.Tail.Tail.Tail.Tail.Tail: ChainLink 
+{
+    public var _9: Next.Tail.Tail.Tail.Tail.Tail.Tail.Tail.Tail.Base { next.next.next.next.next.next.next.next.next.base }
+}
+
+extension Chain where 
+    Next: ChainLink, 
+    Next.Tail: ChainLink, 
+    Next.Tail.Tail: ChainLink, 
+    Next.Tail.Tail.Tail: ChainLink, 
+    Next.Tail.Tail.Tail.Tail: ChainLink, 
+    Next.Tail.Tail.Tail.Tail.Tail: ChainLink, 
+    Next.Tail.Tail.Tail.Tail.Tail.Tail: ChainLink, 
+    Next.Tail.Tail.Tail.Tail.Tail.Tail.Tail: ChainLink, 
+    Next.Tail.Tail.Tail.Tail.Tail.Tail.Tail.Tail: ChainLink 
+{
+    public var _10: Next.Tail.Tail.Tail.Tail.Tail.Tail.Tail.Tail.Tail.Base { next.next.next.next.next.next.next.next.next.next.base }
 }
