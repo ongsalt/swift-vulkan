@@ -43,16 +43,9 @@
 
 
 #ifdef VK_USE_PLATFORM_WIN32_KHR
-#include <stdint.h>
-typedef void*           HINSTANCE;
-typedef void*           HWND;
-typedef void*           HMONITOR;
-typedef void*           HANDLE;
-typedef uint32_t        DWORD;            // LLP64: 32-bit
-typedef const uint16_t* LPCWSTR;
-struct _SECURITY_ATTRIBUTES;              // incomplete; only used by pointer
-typedef struct _SECURITY_ATTRIBUTES SECURITY_ATTRIBUTES;
-
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#undef WIN32_LEAN_AND_MEAN
 #include "vulkan_win32.h"
 #endif
 

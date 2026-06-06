@@ -17,7 +17,7 @@ public enum LoaderError: Error {
 }
 
 #if os(Windows)
-    typealias Handle = HINSTANCE
+    typealias Handle = WinSDK.HINSTANCE
 
     func loadLibrary(_ path: String) -> Handle? {
         LoadLibraryA(path)
