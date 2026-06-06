@@ -21,12 +21,7 @@ A simple example of how to get started.
 let entry = try Entry()
 
 // Create an instance
-let instance = try entry.createInstance(
-    createInfo: InstanceCreateInfo(
-        flags: [],
-        applicationInfo: nil,
-        enabledLayerNames: [],
-        enabledExtensionNames: []))
+let instance = try entry.createInstance(.init())
 
 // Find any physical devices
 let physicalDevices = try instance.getPhysicalDevices()

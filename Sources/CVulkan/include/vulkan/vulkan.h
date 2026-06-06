@@ -43,7 +43,16 @@
 
 
 #ifdef VK_USE_PLATFORM_WIN32_KHR
-#include <windows.h>
+#include <stdint.h>
+typedef void*           HINSTANCE;
+typedef void*           HWND;
+typedef void*           HMONITOR;
+typedef void*           HANDLE;
+typedef uint32_t        DWORD;            // LLP64: 32-bit
+typedef const uint16_t* LPCWSTR;
+struct _SECURITY_ATTRIBUTES;              // incomplete; only used by pointer
+typedef struct _SECURITY_ATTRIBUTES SECURITY_ATTRIBUTES;
+
 #include "vulkan_win32.h"
 #endif
 
