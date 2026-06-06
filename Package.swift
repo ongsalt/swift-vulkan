@@ -38,7 +38,7 @@ let package = Package(
     products: [
         .library(
             name: "Vulkan",
-            targets: ["Vulkan", "CVulkan"])
+            targets: ["Vulkan"])
     ],
     dependencies: [],
     targets: [
