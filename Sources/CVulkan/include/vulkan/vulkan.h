@@ -7,6 +7,8 @@
 ** SPDX-License-Identifier: Apache-2.0
 */
 
+#include "../platform.h"
+
 #include "vk_platform.h"
 #include "vulkan_core.h"
 
