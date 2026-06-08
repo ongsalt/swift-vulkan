@@ -303,6 +303,8 @@ class Generator(BaseGenerator):
                             self << f'var out = {command.output_param_custom_initializer}'
                         else:
                             self << f'var out = {command.output_param_implicit_type}()'
+                            if command.s_type:
+                                self << f'out.sType = {command.s_type}'
                         if command.throws:
                             with self.indent('try checkResult(', ')'):
                                 self << call_string

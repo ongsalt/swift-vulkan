@@ -56,6 +56,7 @@ class SwiftCommand:
     output_param: str | None = None
     output_param_implicit_type: str | None = None
     output_param_custom_initializer: str | None = None
+    s_type: str | None = None
     unwrap_output_param: bool = False
     enumeration_pointer_param: str | None = None
     enumeration_count_param: str | None = None
@@ -387,13 +388,14 @@ class Importer:
         return_type, return_conversion = self.get_type_conversion(
             c_return_type, force_optional=True)
 
-        output_param: str = None
-        output_param_implicit_type: str = None
+        output_param: str | None = None
+        output_param_implicit_type: str | None = None
         output_param_custom_initializer: str | None = None
         unwrap_output_param = False
         enumeration_pointer_params: list[str] = []
-        enumeration_count_param: str = None
+        enumeration_count_param: str | None = None
         enumeration_is_bytes_array = False
+        s_type: str | None = None
 
         if c_return_type.name == 'void':
             output_params = get_output_params(c_command)
@@ -412,15 +414,21 @@ class Importer:
                                                                              implicit_only=True, force_optional=True)
                 elif not output_params[0].type.length:
                     output_param = output_params[0].name
-                    return_type, return_conversion = self.get_type_conversion(output_params[0].type.pointer_to,
-                                                                              force_optional=False)
-                    output_param_implicit_type, _ = self.get_type_conversion(output_params[0].type.pointer_to,
-                                                                             implicit_only=True, force_optional=False)
-                    unwrap_output_param = self.is_pointer_type(
-                        output_params[0].type.pointer_to)
+                    ty = output_params[0].type.pointer_to
+                    assert ty is not None
+                    return_type, return_conversion = self.get_type_conversion(ty, force_optional=False)
+                    output_param_implicit_type, _ = self.get_type_conversion(ty, implicit_only=True, force_optional=False)
+                    unwrap_output_param = self.is_pointer_type(ty)
 
-                    if output_params[0].type.pointer_to.name in self.imported_enums:
+                    output_param_type_struct = self.imported_structs.get(output_param_implicit_type, None)
+                    if output_param_type_struct:
+                        for key, value in output_param_type_struct.member_conversions.static_values:
+                            if key == 'sType':
+                                s_type = value
+
+                    if ty.name in self.imported_enums:
                         output_param_custom_initializer = f'{output_param_implicit_type}(rawValue: 0)'
+                
 
             # TODO: multiple out array
             elif len(output_params) == 2 and output_params[1].type.length == output_params[0].name:
@@ -462,12 +470,13 @@ class Importer:
                 output_param=output_param,
                 output_param_implicit_type=output_param_implicit_type,
                 output_param_custom_initializer=output_param_custom_initializer,
+                s_type=s_type,
                 unwrap_output_param=unwrap_output_param,
                 enumeration_pointer_param=enumeration_pointer_params,
                 enumeration_count_param=enumeration_count_param,
                 dispatcher=dispatcher,
                 protect=c_command.protect,
-                enumeration_is_bytes_array=enumeration_is_bytes_array
+                enumeration_is_bytes_array=enumeration_is_bytes_array,
             )
             current_class.commands.append(command)
 
@@ -487,12 +496,13 @@ class Importer:
             output_param=output_param,
             output_param_implicit_type=output_param_implicit_type,
             output_param_custom_initializer=output_param_custom_initializer,
+            s_type=s_type,
             unwrap_output_param=unwrap_output_param,
             enumeration_pointer_param=enumeration_pointer_params,
             enumeration_count_param=enumeration_count_param,
             dispatcher=dispatcher,
             protect=c_command.protect,
-            enumeration_is_bytes_array=enumeration_is_bytes_array
+            enumeration_is_bytes_array=enumeration_is_bytes_array,
         )
 
         current_class.commands.append(command)

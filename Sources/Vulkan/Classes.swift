@@ -731,18 +731,21 @@ public class PhysicalDevice: _HandleContainer {
 
     public func getFeatures2() -> PhysicalDeviceFeatures2 {
         var out = VkPhysicalDeviceFeatures2()
+        out.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2
         self.instance.dispatchTable.vkGetPhysicalDeviceFeatures2(self.handle, &out)
         return PhysicalDeviceFeatures2(cStruct: out)
     }
 
     public func getProperties2() -> PhysicalDeviceProperties2 {
         var out = VkPhysicalDeviceProperties2()
+        out.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROPERTIES_2
         self.instance.dispatchTable.vkGetPhysicalDeviceProperties2(self.handle, &out)
         return PhysicalDeviceProperties2(cStruct: out)
     }
 
     public func getFormatProperties2(format: Format) -> FormatProperties2 {
         var out = VkFormatProperties2()
+        out.sType = VK_STRUCTURE_TYPE_FORMAT_PROPERTIES_2
         self.instance.dispatchTable.vkGetPhysicalDeviceFormatProperties2(self.handle, VkFormat(rawValue: VkFormat.RawValue(format.rawValue)), &out)
         return FormatProperties2(cStruct: out)
     }
@@ -750,6 +753,7 @@ public class PhysicalDevice: _HandleContainer {
     public func getImageFormatProperties2(_ imageFormatInfo: (some Chainable<PhysicalDeviceImageFormatInfo2>)) throws(Result) -> ImageFormatProperties2 {
         try imageFormatInfo.withCStruct { ptr_imageFormatInfo throws(Result) in
             var out = VkImageFormatProperties2()
+            out.sType = VK_STRUCTURE_TYPE_IMAGE_FORMAT_PROPERTIES_2
             try checkResult(
                 self.instance.dispatchTable.vkGetPhysicalDeviceImageFormatProperties2(self.handle, ptr_imageFormatInfo, &out)
             )
@@ -760,6 +764,7 @@ public class PhysicalDevice: _HandleContainer {
     public func getImageFormatProperties2(_ imageFormatInfo: PhysicalDeviceImageFormatInfo2) throws(Result) -> ImageFormatProperties2 {
         try imageFormatInfo.withCStruct { ptr_imageFormatInfo throws(Result) in
             var out = VkImageFormatProperties2()
+            out.sType = VK_STRUCTURE_TYPE_IMAGE_FORMAT_PROPERTIES_2
             try checkResult(
                 self.instance.dispatchTable.vkGetPhysicalDeviceImageFormatProperties2(self.handle, ptr_imageFormatInfo, &out)
             )
@@ -775,6 +780,7 @@ public class PhysicalDevice: _HandleContainer {
 
     public func getMemoryProperties2() -> PhysicalDeviceMemoryProperties2 {
         var out = VkPhysicalDeviceMemoryProperties2()
+        out.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MEMORY_PROPERTIES_2
         self.instance.dispatchTable.vkGetPhysicalDeviceMemoryProperties2(self.handle, &out)
         return PhysicalDeviceMemoryProperties2(cStruct: out)
     }
@@ -798,6 +804,7 @@ public class PhysicalDevice: _HandleContainer {
     public func getExternalBufferProperties(_ externalBufferInfo: (some Chainable<PhysicalDeviceExternalBufferInfo>)) -> ExternalBufferProperties {
         externalBufferInfo.withCStruct { ptr_externalBufferInfo in
             var out = VkExternalBufferProperties()
+            out.sType = VK_STRUCTURE_TYPE_EXTERNAL_BUFFER_PROPERTIES
             self.instance.dispatchTable.vkGetPhysicalDeviceExternalBufferProperties(self.handle, ptr_externalBufferInfo, &out)
             return ExternalBufferProperties(cStruct: out)
         }
@@ -806,6 +813,7 @@ public class PhysicalDevice: _HandleContainer {
     public func getExternalBufferProperties(_ externalBufferInfo: PhysicalDeviceExternalBufferInfo) -> ExternalBufferProperties {
         externalBufferInfo.withCStruct { ptr_externalBufferInfo in
             var out = VkExternalBufferProperties()
+            out.sType = VK_STRUCTURE_TYPE_EXTERNAL_BUFFER_PROPERTIES
             self.instance.dispatchTable.vkGetPhysicalDeviceExternalBufferProperties(self.handle, ptr_externalBufferInfo, &out)
             return ExternalBufferProperties(cStruct: out)
         }
@@ -814,6 +822,7 @@ public class PhysicalDevice: _HandleContainer {
     public func getExternalSemaphoreProperties(_ externalSemaphoreInfo: (some Chainable<PhysicalDeviceExternalSemaphoreInfo>)) -> ExternalSemaphoreProperties {
         externalSemaphoreInfo.withCStruct { ptr_externalSemaphoreInfo in
             var out = VkExternalSemaphoreProperties()
+            out.sType = VK_STRUCTURE_TYPE_EXTERNAL_SEMAPHORE_PROPERTIES
             self.instance.dispatchTable.vkGetPhysicalDeviceExternalSemaphoreProperties(self.handle, ptr_externalSemaphoreInfo, &out)
             return ExternalSemaphoreProperties(cStruct: out)
         }
@@ -822,6 +831,7 @@ public class PhysicalDevice: _HandleContainer {
     public func getExternalSemaphoreProperties(_ externalSemaphoreInfo: PhysicalDeviceExternalSemaphoreInfo) -> ExternalSemaphoreProperties {
         externalSemaphoreInfo.withCStruct { ptr_externalSemaphoreInfo in
             var out = VkExternalSemaphoreProperties()
+            out.sType = VK_STRUCTURE_TYPE_EXTERNAL_SEMAPHORE_PROPERTIES
             self.instance.dispatchTable.vkGetPhysicalDeviceExternalSemaphoreProperties(self.handle, ptr_externalSemaphoreInfo, &out)
             return ExternalSemaphoreProperties(cStruct: out)
         }
@@ -830,6 +840,7 @@ public class PhysicalDevice: _HandleContainer {
     public func getExternalFenceProperties(_ externalFenceInfo: (some Chainable<PhysicalDeviceExternalFenceInfo>)) -> ExternalFenceProperties {
         externalFenceInfo.withCStruct { ptr_externalFenceInfo in
             var out = VkExternalFenceProperties()
+            out.sType = VK_STRUCTURE_TYPE_EXTERNAL_FENCE_PROPERTIES
             self.instance.dispatchTable.vkGetPhysicalDeviceExternalFenceProperties(self.handle, ptr_externalFenceInfo, &out)
             return ExternalFenceProperties(cStruct: out)
         }
@@ -838,6 +849,7 @@ public class PhysicalDevice: _HandleContainer {
     public func getExternalFenceProperties(_ externalFenceInfo: PhysicalDeviceExternalFenceInfo) -> ExternalFenceProperties {
         externalFenceInfo.withCStruct { ptr_externalFenceInfo in
             var out = VkExternalFenceProperties()
+            out.sType = VK_STRUCTURE_TYPE_EXTERNAL_FENCE_PROPERTIES
             self.instance.dispatchTable.vkGetPhysicalDeviceExternalFenceProperties(self.handle, ptr_externalFenceInfo, &out)
             return ExternalFenceProperties(cStruct: out)
         }
@@ -873,6 +885,7 @@ public class PhysicalDevice: _HandleContainer {
 
     public func getSurfaceCapabilities2EXT(surface: SurfaceKHR) throws(Result) -> SurfaceCapabilities2EXT {
         var out = VkSurfaceCapabilities2EXT()
+        out.sType = VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES_2_EXT
         try checkResult(
             self.instance.dispatchTable.vkGetPhysicalDeviceSurfaceCapabilities2EXT(self.handle, surface.handle, &out)
         )
@@ -887,6 +900,7 @@ public class PhysicalDevice: _HandleContainer {
 
     public func getMultisamplePropertiesEXT(samples: SampleCountFlags) -> MultisamplePropertiesEXT {
         var out = VkMultisamplePropertiesEXT()
+        out.sType = VK_STRUCTURE_TYPE_MULTISAMPLE_PROPERTIES_EXT
         self.instance.dispatchTable.vkGetPhysicalDeviceMultisamplePropertiesEXT(self.handle, VkSampleCountFlagBits(rawValue: VkSampleCountFlagBits.RawValue(samples.rawValue)), &out)
         return MultisamplePropertiesEXT(cStruct: out)
     }
@@ -894,6 +908,7 @@ public class PhysicalDevice: _HandleContainer {
     public func getSurfaceCapabilities2KHR(_ surfaceInfo: (some Chainable<PhysicalDeviceSurfaceInfo2KHR>)) throws(Result) -> SurfaceCapabilities2KHR {
         try surfaceInfo.withCStruct { ptr_surfaceInfo throws(Result) in
             var out = VkSurfaceCapabilities2KHR()
+            out.sType = VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES_2_KHR
             try checkResult(
                 self.instance.dispatchTable.vkGetPhysicalDeviceSurfaceCapabilities2KHR(self.handle, ptr_surfaceInfo, &out)
             )
@@ -904,6 +919,7 @@ public class PhysicalDevice: _HandleContainer {
     public func getSurfaceCapabilities2KHR(_ surfaceInfo: PhysicalDeviceSurfaceInfo2KHR = PhysicalDeviceSurfaceInfo2KHR()) throws(Result) -> SurfaceCapabilities2KHR {
         try surfaceInfo.withCStruct { ptr_surfaceInfo throws(Result) in
             var out = VkSurfaceCapabilities2KHR()
+            out.sType = VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES_2_KHR
             try checkResult(
                 self.instance.dispatchTable.vkGetPhysicalDeviceSurfaceCapabilities2KHR(self.handle, ptr_surfaceInfo, &out)
             )
@@ -942,6 +958,7 @@ public class PhysicalDevice: _HandleContainer {
     public func getDisplayPlaneCapabilities2KHR(_ displayPlaneInfo: (some Chainable<DisplayPlaneInfo2KHR>)) throws(Result) -> DisplayPlaneCapabilities2KHR {
         try displayPlaneInfo.withCStruct { ptr_displayPlaneInfo throws(Result) in
             var out = VkDisplayPlaneCapabilities2KHR()
+            out.sType = VK_STRUCTURE_TYPE_DISPLAY_PLANE_CAPABILITIES_2_KHR
             try checkResult(
                 self.instance.dispatchTable.vkGetDisplayPlaneCapabilities2KHR(self.handle, ptr_displayPlaneInfo, &out)
             )
@@ -952,6 +969,7 @@ public class PhysicalDevice: _HandleContainer {
     public func getDisplayPlaneCapabilities2KHR(_ displayPlaneInfo: DisplayPlaneInfo2KHR) throws(Result) -> DisplayPlaneCapabilities2KHR {
         try displayPlaneInfo.withCStruct { ptr_displayPlaneInfo throws(Result) in
             var out = VkDisplayPlaneCapabilities2KHR()
+            out.sType = VK_STRUCTURE_TYPE_DISPLAY_PLANE_CAPABILITIES_2_KHR
             try checkResult(
                 self.instance.dispatchTable.vkGetDisplayPlaneCapabilities2KHR(self.handle, ptr_displayPlaneInfo, &out)
             )
@@ -1034,6 +1052,7 @@ public class PhysicalDevice: _HandleContainer {
     public func getVideoCapabilitiesKHR(videoProfile: (some Chainable<VideoProfileInfoKHR>)) throws(Result) -> VideoCapabilitiesKHR {
         try videoProfile.withCStruct { ptr_videoProfile throws(Result) in
             var out = VkVideoCapabilitiesKHR()
+            out.sType = VK_STRUCTURE_TYPE_VIDEO_CAPABILITIES_KHR
             try checkResult(
                 self.instance.dispatchTable.vkGetPhysicalDeviceVideoCapabilitiesKHR(self.handle, ptr_videoProfile, &out)
             )
@@ -1044,6 +1063,7 @@ public class PhysicalDevice: _HandleContainer {
     public func getVideoCapabilitiesKHR(videoProfile: VideoProfileInfoKHR) throws(Result) -> VideoCapabilitiesKHR {
         try videoProfile.withCStruct { ptr_videoProfile throws(Result) in
             var out = VkVideoCapabilitiesKHR()
+            out.sType = VK_STRUCTURE_TYPE_VIDEO_CAPABILITIES_KHR
             try checkResult(
                 self.instance.dispatchTable.vkGetPhysicalDeviceVideoCapabilitiesKHR(self.handle, ptr_videoProfile, &out)
             )
@@ -1070,6 +1090,7 @@ public class PhysicalDevice: _HandleContainer {
     public func getVideoEncodeQualityLevelPropertiesKHR(_ qualityLevelInfo: (some Chainable<PhysicalDeviceVideoEncodeQualityLevelInfoKHR>)) throws(Result) -> VideoEncodeQualityLevelPropertiesKHR {
         try qualityLevelInfo.withCStruct { ptr_qualityLevelInfo throws(Result) in
             var out = VkVideoEncodeQualityLevelPropertiesKHR()
+            out.sType = VK_STRUCTURE_TYPE_VIDEO_ENCODE_QUALITY_LEVEL_PROPERTIES_KHR
             try checkResult(
                 self.instance.dispatchTable.vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR(self.handle, ptr_qualityLevelInfo, &out)
             )
@@ -1080,6 +1101,7 @@ public class PhysicalDevice: _HandleContainer {
     public func getVideoEncodeQualityLevelPropertiesKHR(_ qualityLevelInfo: PhysicalDeviceVideoEncodeQualityLevelInfoKHR) throws(Result) -> VideoEncodeQualityLevelPropertiesKHR {
         try qualityLevelInfo.withCStruct { ptr_qualityLevelInfo throws(Result) in
             var out = VkVideoEncodeQualityLevelPropertiesKHR()
+            out.sType = VK_STRUCTURE_TYPE_VIDEO_ENCODE_QUALITY_LEVEL_PROPERTIES_KHR
             try checkResult(
                 self.instance.dispatchTable.vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR(self.handle, ptr_qualityLevelInfo, &out)
             )
@@ -1144,6 +1166,7 @@ public class PhysicalDevice: _HandleContainer {
     public func getExternalTensorPropertiesARM(_ externalTensorInfo: (some Chainable<PhysicalDeviceExternalTensorInfoARM>)) -> ExternalTensorPropertiesARM {
         externalTensorInfo.withCStruct { ptr_externalTensorInfo in
             var out = VkExternalTensorPropertiesARM()
+            out.sType = VK_STRUCTURE_TYPE_EXTERNAL_TENSOR_PROPERTIES_ARM
             self.instance.dispatchTable.vkGetPhysicalDeviceExternalTensorPropertiesARM(self.handle, ptr_externalTensorInfo, &out)
             return ExternalTensorPropertiesARM(cStruct: out)
         }
@@ -1152,6 +1175,7 @@ public class PhysicalDevice: _HandleContainer {
     public func getExternalTensorPropertiesARM(_ externalTensorInfo: PhysicalDeviceExternalTensorInfoARM) -> ExternalTensorPropertiesARM {
         externalTensorInfo.withCStruct { ptr_externalTensorInfo in
             var out = VkExternalTensorPropertiesARM()
+            out.sType = VK_STRUCTURE_TYPE_EXTERNAL_TENSOR_PROPERTIES_ARM
             self.instance.dispatchTable.vkGetPhysicalDeviceExternalTensorPropertiesARM(self.handle, ptr_externalTensorInfo, &out)
             return ExternalTensorPropertiesARM(cStruct: out)
         }
@@ -1166,6 +1190,7 @@ public class PhysicalDevice: _HandleContainer {
     public func getQueueFamilyDataGraphProcessingEnginePropertiesARM(_ queueFamilyDataGraphProcessingEngineInfo: (some Chainable<PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM>)) -> QueueFamilyDataGraphProcessingEnginePropertiesARM {
         queueFamilyDataGraphProcessingEngineInfo.withCStruct { ptr_queueFamilyDataGraphProcessingEngineInfo in
             var out = VkQueueFamilyDataGraphProcessingEnginePropertiesARM()
+            out.sType = VK_STRUCTURE_TYPE_QUEUE_FAMILY_DATA_GRAPH_PROCESSING_ENGINE_PROPERTIES_ARM
             self.instance.dispatchTable.vkGetPhysicalDeviceQueueFamilyDataGraphProcessingEnginePropertiesARM(self.handle, ptr_queueFamilyDataGraphProcessingEngineInfo, &out)
             return QueueFamilyDataGraphProcessingEnginePropertiesARM(cStruct: out)
         }
@@ -1174,6 +1199,7 @@ public class PhysicalDevice: _HandleContainer {
     public func getQueueFamilyDataGraphProcessingEnginePropertiesARM(_ queueFamilyDataGraphProcessingEngineInfo: PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM) -> QueueFamilyDataGraphProcessingEnginePropertiesARM {
         queueFamilyDataGraphProcessingEngineInfo.withCStruct { ptr_queueFamilyDataGraphProcessingEngineInfo in
             var out = VkQueueFamilyDataGraphProcessingEnginePropertiesARM()
+            out.sType = VK_STRUCTURE_TYPE_QUEUE_FAMILY_DATA_GRAPH_PROCESSING_ENGINE_PROPERTIES_ARM
             self.instance.dispatchTable.vkGetPhysicalDeviceQueueFamilyDataGraphProcessingEnginePropertiesARM(self.handle, ptr_queueFamilyDataGraphProcessingEngineInfo, &out)
             return QueueFamilyDataGraphProcessingEnginePropertiesARM(cStruct: out)
         }
@@ -1518,6 +1544,7 @@ public class Device: _HandleContainer {
     public func createPipelineBinariesKHR(_ createInfo: (some Chainable<PipelineBinaryCreateInfoKHR>)) throws(Result) -> PipelineBinaryHandlesInfoKHR {
         try createInfo.withCStruct { ptr_createInfo throws(Result) in
             var out = VkPipelineBinaryHandlesInfoKHR()
+            out.sType = VK_STRUCTURE_TYPE_PIPELINE_BINARY_HANDLES_INFO_KHR
             try checkResult(
                 self.dispatchTable.vkCreatePipelineBinariesKHR(self.handle, ptr_createInfo, nil, &out)
             )
@@ -1528,6 +1555,7 @@ public class Device: _HandleContainer {
     public func createPipelineBinariesKHR(_ createInfo: PipelineBinaryCreateInfoKHR = PipelineBinaryCreateInfoKHR()) throws(Result) -> PipelineBinaryHandlesInfoKHR {
         try createInfo.withCStruct { ptr_createInfo throws(Result) in
             var out = VkPipelineBinaryHandlesInfoKHR()
+            out.sType = VK_STRUCTURE_TYPE_PIPELINE_BINARY_HANDLES_INFO_KHR
             try checkResult(
                 self.dispatchTable.vkCreatePipelineBinariesKHR(self.handle, ptr_createInfo, nil, &out)
             )
@@ -1538,6 +1566,7 @@ public class Device: _HandleContainer {
     public func getPipelineKeyKHR(_ pipelineCreateInfo: (some Chainable<PipelineCreateInfoKHR>)) throws(Result) -> PipelineBinaryKeyKHR {
         try pipelineCreateInfo.withCStruct { ptr_pipelineCreateInfo throws(Result) in
             var out = VkPipelineBinaryKeyKHR()
+            out.sType = VK_STRUCTURE_TYPE_PIPELINE_BINARY_KEY_KHR
             try checkResult(
                 self.dispatchTable.vkGetPipelineKeyKHR(self.handle, ptr_pipelineCreateInfo, &out)
             )
@@ -1548,6 +1577,7 @@ public class Device: _HandleContainer {
     public func getPipelineKeyKHR(_ pipelineCreateInfo: PipelineCreateInfoKHR? = nil) throws(Result) -> PipelineBinaryKeyKHR {
         try pipelineCreateInfo.withOptionalCStruct { ptr_pipelineCreateInfo throws(Result) in
             var out = VkPipelineBinaryKeyKHR()
+            out.sType = VK_STRUCTURE_TYPE_PIPELINE_BINARY_KEY_KHR
             try checkResult(
                 self.dispatchTable.vkGetPipelineKeyKHR(self.handle, ptr_pipelineCreateInfo, &out)
             )
@@ -1883,6 +1913,7 @@ public class Device: _HandleContainer {
     public func getGeneratedCommandsMemoryRequirementsNV(_ info: (some Chainable<GeneratedCommandsMemoryRequirementsInfoNV>)) -> MemoryRequirements2 {
         info.withCStruct { ptr_info in
             var out = VkMemoryRequirements2()
+            out.sType = VK_STRUCTURE_TYPE_MEMORY_REQUIREMENTS_2
             self.dispatchTable.vkGetGeneratedCommandsMemoryRequirementsNV(self.handle, ptr_info, &out)
             return MemoryRequirements2(cStruct: out)
         }
@@ -1891,6 +1922,7 @@ public class Device: _HandleContainer {
     public func getGeneratedCommandsMemoryRequirementsNV(_ info: GeneratedCommandsMemoryRequirementsInfoNV) -> MemoryRequirements2 {
         info.withCStruct { ptr_info in
             var out = VkMemoryRequirements2()
+            out.sType = VK_STRUCTURE_TYPE_MEMORY_REQUIREMENTS_2
             self.dispatchTable.vkGetGeneratedCommandsMemoryRequirementsNV(self.handle, ptr_info, &out)
             return MemoryRequirements2(cStruct: out)
         }
@@ -1919,6 +1951,7 @@ public class Device: _HandleContainer {
     public func getGeneratedCommandsMemoryRequirementsEXT(_ info: (some Chainable<GeneratedCommandsMemoryRequirementsInfoEXT>)) -> MemoryRequirements2 {
         info.withCStruct { ptr_info in
             var out = VkMemoryRequirements2()
+            out.sType = VK_STRUCTURE_TYPE_MEMORY_REQUIREMENTS_2
             self.dispatchTable.vkGetGeneratedCommandsMemoryRequirementsEXT(self.handle, ptr_info, &out)
             return MemoryRequirements2(cStruct: out)
         }
@@ -1927,6 +1960,7 @@ public class Device: _HandleContainer {
     public func getGeneratedCommandsMemoryRequirementsEXT(_ info: GeneratedCommandsMemoryRequirementsInfoEXT) -> MemoryRequirements2 {
         info.withCStruct { ptr_info in
             var out = VkMemoryRequirements2()
+            out.sType = VK_STRUCTURE_TYPE_MEMORY_REQUIREMENTS_2
             self.dispatchTable.vkGetGeneratedCommandsMemoryRequirementsEXT(self.handle, ptr_info, &out)
             return MemoryRequirements2(cStruct: out)
         }
@@ -1999,6 +2033,7 @@ public class Device: _HandleContainer {
     #if VK_USE_PLATFORM_WIN32_KHR
     public func getMemoryWin32HandlePropertiesKHR(handleType: ExternalMemoryHandleTypeFlags, handle: HANDLE) throws(Result) -> MemoryWin32HandlePropertiesKHR {
         var out = VkMemoryWin32HandlePropertiesKHR()
+        out.sType = VK_STRUCTURE_TYPE_MEMORY_WIN32_HANDLE_PROPERTIES_KHR
         try checkResult(
             self.dispatchTable.vkGetMemoryWin32HandlePropertiesKHR(self.handle, VkExternalMemoryHandleTypeFlagBits(rawValue: VkExternalMemoryHandleTypeFlagBits.RawValue(handleType.rawValue)), handle, &out)
         )
@@ -2028,6 +2063,7 @@ public class Device: _HandleContainer {
 
     public func getMemoryFdPropertiesKHR(handleType: ExternalMemoryHandleTypeFlags, fd: Int32) throws(Result) -> MemoryFdPropertiesKHR {
         var out = VkMemoryFdPropertiesKHR()
+        out.sType = VK_STRUCTURE_TYPE_MEMORY_FD_PROPERTIES_KHR
         try checkResult(
             self.dispatchTable.vkGetMemoryFdPropertiesKHR(self.handle, VkExternalMemoryHandleTypeFlagBits(rawValue: VkExternalMemoryHandleTypeFlagBits.RawValue(handleType.rawValue)), fd, &out)
         )
@@ -2061,6 +2097,7 @@ public class Device: _HandleContainer {
     #if VK_USE_PLATFORM_FUCHSIA
     public func getMemoryZirconHandlePropertiesFUCHSIA(handleType: ExternalMemoryHandleTypeFlags, zirconHandle: zx_handle_t) throws(Result) -> MemoryZirconHandlePropertiesFUCHSIA {
         var out = VkMemoryZirconHandlePropertiesFUCHSIA()
+        out.sType = VK_STRUCTURE_TYPE_MEMORY_ZIRCON_HANDLE_PROPERTIES_FUCHSIA
         try checkResult(
             self.dispatchTable.vkGetMemoryZirconHandlePropertiesFUCHSIA(self.handle, VkExternalMemoryHandleTypeFlagBits(rawValue: VkExternalMemoryHandleTypeFlagBits.RawValue(handleType.rawValue)), zirconHandle, &out)
         )
@@ -2372,6 +2409,7 @@ public class Device: _HandleContainer {
 
     public func getGroupPresentCapabilitiesKHR() throws(Result) -> DeviceGroupPresentCapabilitiesKHR {
         var out = VkDeviceGroupPresentCapabilitiesKHR()
+        out.sType = VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_CAPABILITIES_KHR
         try checkResult(
             self.dispatchTable.vkGetDeviceGroupPresentCapabilitiesKHR(self.handle, &out)
         )
@@ -2437,6 +2475,7 @@ public class Device: _HandleContainer {
     public func getBufferMemoryRequirements2(_ info: (some Chainable<BufferMemoryRequirementsInfo2>)) -> MemoryRequirements2 {
         info.withCStruct { ptr_info in
             var out = VkMemoryRequirements2()
+            out.sType = VK_STRUCTURE_TYPE_MEMORY_REQUIREMENTS_2
             self.dispatchTable.vkGetBufferMemoryRequirements2(self.handle, ptr_info, &out)
             return MemoryRequirements2(cStruct: out)
         }
@@ -2445,6 +2484,7 @@ public class Device: _HandleContainer {
     public func getBufferMemoryRequirements2(_ info: BufferMemoryRequirementsInfo2) -> MemoryRequirements2 {
         info.withCStruct { ptr_info in
             var out = VkMemoryRequirements2()
+            out.sType = VK_STRUCTURE_TYPE_MEMORY_REQUIREMENTS_2
             self.dispatchTable.vkGetBufferMemoryRequirements2(self.handle, ptr_info, &out)
             return MemoryRequirements2(cStruct: out)
         }
@@ -2453,6 +2493,7 @@ public class Device: _HandleContainer {
     public func getImageMemoryRequirements2(_ info: (some Chainable<ImageMemoryRequirementsInfo2>)) -> MemoryRequirements2 {
         info.withCStruct { ptr_info in
             var out = VkMemoryRequirements2()
+            out.sType = VK_STRUCTURE_TYPE_MEMORY_REQUIREMENTS_2
             self.dispatchTable.vkGetImageMemoryRequirements2(self.handle, ptr_info, &out)
             return MemoryRequirements2(cStruct: out)
         }
@@ -2461,6 +2502,7 @@ public class Device: _HandleContainer {
     public func getImageMemoryRequirements2(_ info: ImageMemoryRequirementsInfo2) -> MemoryRequirements2 {
         info.withCStruct { ptr_info in
             var out = VkMemoryRequirements2()
+            out.sType = VK_STRUCTURE_TYPE_MEMORY_REQUIREMENTS_2
             self.dispatchTable.vkGetImageMemoryRequirements2(self.handle, ptr_info, &out)
             return MemoryRequirements2(cStruct: out)
         }
@@ -2485,6 +2527,7 @@ public class Device: _HandleContainer {
     public func getBufferMemoryRequirements(_ info: (some Chainable<DeviceBufferMemoryRequirements>)) -> MemoryRequirements2 {
         info.withCStruct { ptr_info in
             var out = VkMemoryRequirements2()
+            out.sType = VK_STRUCTURE_TYPE_MEMORY_REQUIREMENTS_2
             self.dispatchTable.vkGetDeviceBufferMemoryRequirements(self.handle, ptr_info, &out)
             return MemoryRequirements2(cStruct: out)
         }
@@ -2493,6 +2536,7 @@ public class Device: _HandleContainer {
     public func getBufferMemoryRequirements(_ info: DeviceBufferMemoryRequirements) -> MemoryRequirements2 {
         info.withCStruct { ptr_info in
             var out = VkMemoryRequirements2()
+            out.sType = VK_STRUCTURE_TYPE_MEMORY_REQUIREMENTS_2
             self.dispatchTable.vkGetDeviceBufferMemoryRequirements(self.handle, ptr_info, &out)
             return MemoryRequirements2(cStruct: out)
         }
@@ -2501,6 +2545,7 @@ public class Device: _HandleContainer {
     public func getImageMemoryRequirements(_ info: (some Chainable<DeviceImageMemoryRequirements>)) -> MemoryRequirements2 {
         info.withCStruct { ptr_info in
             var out = VkMemoryRequirements2()
+            out.sType = VK_STRUCTURE_TYPE_MEMORY_REQUIREMENTS_2
             self.dispatchTable.vkGetDeviceImageMemoryRequirements(self.handle, ptr_info, &out)
             return MemoryRequirements2(cStruct: out)
         }
@@ -2509,6 +2554,7 @@ public class Device: _HandleContainer {
     public func getImageMemoryRequirements(_ info: DeviceImageMemoryRequirements) -> MemoryRequirements2 {
         info.withCStruct { ptr_info in
             var out = VkMemoryRequirements2()
+            out.sType = VK_STRUCTURE_TYPE_MEMORY_REQUIREMENTS_2
             self.dispatchTable.vkGetDeviceImageMemoryRequirements(self.handle, ptr_info, &out)
             return MemoryRequirements2(cStruct: out)
         }
@@ -2589,6 +2635,7 @@ public class Device: _HandleContainer {
     public func getDescriptorSetLayoutSupport(_ createInfo: (some Chainable<DescriptorSetLayoutCreateInfo>)) -> DescriptorSetLayoutSupport {
         createInfo.withCStruct { ptr_createInfo in
             var out = VkDescriptorSetLayoutSupport()
+            out.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_SUPPORT
             self.dispatchTable.vkGetDescriptorSetLayoutSupport(self.handle, ptr_createInfo, &out)
             return DescriptorSetLayoutSupport(cStruct: out)
         }
@@ -2597,6 +2644,7 @@ public class Device: _HandleContainer {
     public func getDescriptorSetLayoutSupport(_ createInfo: DescriptorSetLayoutCreateInfo = DescriptorSetLayoutCreateInfo()) -> DescriptorSetLayoutSupport {
         createInfo.withCStruct { ptr_createInfo in
             var out = VkDescriptorSetLayoutSupport()
+            out.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_SUPPORT
             self.dispatchTable.vkGetDescriptorSetLayoutSupport(self.handle, ptr_createInfo, &out)
             return DescriptorSetLayoutSupport(cStruct: out)
         }
@@ -2644,6 +2692,7 @@ public class Device: _HandleContainer {
 
     public func getMemoryHostPointerPropertiesEXT(handleType: ExternalMemoryHandleTypeFlags, hostPointer: UnsafeRawPointer) throws(Result) -> MemoryHostPointerPropertiesEXT {
         var out = VkMemoryHostPointerPropertiesEXT()
+        out.sType = VK_STRUCTURE_TYPE_MEMORY_HOST_POINTER_PROPERTIES_EXT
         try checkResult(
             self.dispatchTable.vkGetMemoryHostPointerPropertiesEXT(self.handle, VkExternalMemoryHandleTypeFlagBits(rawValue: VkExternalMemoryHandleTypeFlagBits.RawValue(handleType.rawValue)), hostPointer, &out)
         )
@@ -2705,6 +2754,7 @@ public class Device: _HandleContainer {
     #if VK_USE_PLATFORM_ANDROID_KHR
     public func getAndroidHardwareBufferPropertiesANDROID(buffer: UnsafePointer<AHardwareBuffer>) throws(Result) -> AndroidHardwareBufferPropertiesANDROID {
         var out = VkAndroidHardwareBufferPropertiesANDROID()
+        out.sType = VK_STRUCTURE_TYPE_ANDROID_HARDWARE_BUFFER_PROPERTIES_ANDROID
         try checkResult(
             self.dispatchTable.vkGetAndroidHardwareBufferPropertiesANDROID(self.handle, buffer, &out)
         )
@@ -2759,6 +2809,7 @@ public class Device: _HandleContainer {
     public func getAccelerationStructureMemoryRequirementsNV(_ info: (some Chainable<AccelerationStructureMemoryRequirementsInfoNV>)) -> MemoryRequirements2 {
         info.withCStruct { ptr_info in
             var out = VkMemoryRequirements2()
+            out.sType = VK_STRUCTURE_TYPE_MEMORY_REQUIREMENTS_2
             self.dispatchTable.vkGetAccelerationStructureMemoryRequirementsNV(self.handle, ptr_info, &out)
             return MemoryRequirements2(cStruct: out)
         }
@@ -2767,6 +2818,7 @@ public class Device: _HandleContainer {
     public func getAccelerationStructureMemoryRequirementsNV(_ info: AccelerationStructureMemoryRequirementsInfoNV) -> MemoryRequirements2 {
         info.withCStruct { ptr_info in
             var out = VkMemoryRequirements2()
+            out.sType = VK_STRUCTURE_TYPE_MEMORY_REQUIREMENTS_2
             self.dispatchTable.vkGetAccelerationStructureMemoryRequirementsNV(self.handle, ptr_info, &out)
             return MemoryRequirements2(cStruct: out)
         }
@@ -2861,6 +2913,7 @@ public class Device: _HandleContainer {
     public func getClusterAccelerationStructureBuildSizesNV(_ info: (some Chainable<ClusterAccelerationStructureInputInfoNV>)) -> AccelerationStructureBuildSizesInfoKHR {
         info.withCStruct { ptr_info in
             var out = VkAccelerationStructureBuildSizesInfoKHR()
+            out.sType = VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_BUILD_SIZES_INFO_KHR
             self.dispatchTable.vkGetClusterAccelerationStructureBuildSizesNV(self.handle, ptr_info, &out)
             return AccelerationStructureBuildSizesInfoKHR(cStruct: out)
         }
@@ -2869,6 +2922,7 @@ public class Device: _HandleContainer {
     public func getClusterAccelerationStructureBuildSizesNV(_ info: ClusterAccelerationStructureInputInfoNV) -> AccelerationStructureBuildSizesInfoKHR {
         info.withCStruct { ptr_info in
             var out = VkAccelerationStructureBuildSizesInfoKHR()
+            out.sType = VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_BUILD_SIZES_INFO_KHR
             self.dispatchTable.vkGetClusterAccelerationStructureBuildSizesNV(self.handle, ptr_info, &out)
             return AccelerationStructureBuildSizesInfoKHR(cStruct: out)
         }
@@ -3151,6 +3205,7 @@ public class Device: _HandleContainer {
     public func getPipelineIndirectMemoryRequirementsNV(_ createInfo: (some Chainable<ComputePipelineCreateInfo>)) -> MemoryRequirements2 {
         createInfo.withCStruct { ptr_createInfo in
             var out = VkMemoryRequirements2()
+            out.sType = VK_STRUCTURE_TYPE_MEMORY_REQUIREMENTS_2
             self.dispatchTable.vkGetPipelineIndirectMemoryRequirementsNV(self.handle, ptr_createInfo, &out)
             return MemoryRequirements2(cStruct: out)
         }
@@ -3159,6 +3214,7 @@ public class Device: _HandleContainer {
     public func getPipelineIndirectMemoryRequirementsNV(_ createInfo: ComputePipelineCreateInfo) -> MemoryRequirements2 {
         createInfo.withCStruct { ptr_createInfo in
             var out = VkMemoryRequirements2()
+            out.sType = VK_STRUCTURE_TYPE_MEMORY_REQUIREMENTS_2
             self.dispatchTable.vkGetPipelineIndirectMemoryRequirementsNV(self.handle, ptr_createInfo, &out)
             return MemoryRequirements2(cStruct: out)
         }
@@ -3224,6 +3280,7 @@ public class Device: _HandleContainer {
         buildInfo.withCStruct { ptr_buildInfo in
             maxPrimitiveCounts.withOptionalUnsafeBufferPointer { ptr_maxPrimitiveCounts in
                 var out = VkAccelerationStructureBuildSizesInfoKHR()
+                out.sType = VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_BUILD_SIZES_INFO_KHR
                 self.dispatchTable.vkGetAccelerationStructureBuildSizesKHR(self.handle, VkAccelerationStructureBuildTypeKHR(rawValue: VkAccelerationStructureBuildTypeKHR.RawValue(buildType.rawValue)), ptr_buildInfo, ptr_maxPrimitiveCounts.baseAddress, &out)
                 return AccelerationStructureBuildSizesInfoKHR(cStruct: out)
             }
@@ -3234,6 +3291,7 @@ public class Device: _HandleContainer {
         buildInfo.withCStruct { ptr_buildInfo in
             maxPrimitiveCounts.withOptionalUnsafeBufferPointer { ptr_maxPrimitiveCounts in
                 var out = VkAccelerationStructureBuildSizesInfoKHR()
+                out.sType = VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_BUILD_SIZES_INFO_KHR
                 self.dispatchTable.vkGetAccelerationStructureBuildSizesKHR(self.handle, VkAccelerationStructureBuildTypeKHR(rawValue: VkAccelerationStructureBuildTypeKHR.RawValue(buildType.rawValue)), ptr_buildInfo, ptr_maxPrimitiveCounts.baseAddress, &out)
                 return AccelerationStructureBuildSizesInfoKHR(cStruct: out)
             }
@@ -3355,6 +3413,7 @@ public class Device: _HandleContainer {
     public func getPartitionedAccelerationStructuresBuildSizesNV(_ info: (some Chainable<PartitionedAccelerationStructureInstancesInputNV>)) -> AccelerationStructureBuildSizesInfoKHR {
         info.withCStruct { ptr_info in
             var out = VkAccelerationStructureBuildSizesInfoKHR()
+            out.sType = VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_BUILD_SIZES_INFO_KHR
             self.dispatchTable.vkGetPartitionedAccelerationStructuresBuildSizesNV(self.handle, ptr_info, &out)
             return AccelerationStructureBuildSizesInfoKHR(cStruct: out)
         }
@@ -3363,6 +3422,7 @@ public class Device: _HandleContainer {
     public func getPartitionedAccelerationStructuresBuildSizesNV(_ info: PartitionedAccelerationStructureInstancesInputNV) -> AccelerationStructureBuildSizesInfoKHR {
         info.withCStruct { ptr_info in
             var out = VkAccelerationStructureBuildSizesInfoKHR()
+            out.sType = VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_BUILD_SIZES_INFO_KHR
             self.dispatchTable.vkGetPartitionedAccelerationStructuresBuildSizesNV(self.handle, ptr_info, &out)
             return AccelerationStructureBuildSizesInfoKHR(cStruct: out)
         }
@@ -3575,6 +3635,7 @@ public class Device: _HandleContainer {
     public func getDescriptorSetLayoutHostMappingInfoVALVE(bindingReference: (some Chainable<DescriptorSetBindingReferenceVALVE>)) -> DescriptorSetLayoutHostMappingInfoVALVE {
         bindingReference.withCStruct { ptr_bindingReference in
             var out = VkDescriptorSetLayoutHostMappingInfoVALVE()
+            out.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_HOST_MAPPING_INFO_VALVE
             self.dispatchTable.vkGetDescriptorSetLayoutHostMappingInfoVALVE(self.handle, ptr_bindingReference, &out)
             return DescriptorSetLayoutHostMappingInfoVALVE(cStruct: out)
         }
@@ -3583,6 +3644,7 @@ public class Device: _HandleContainer {
     public func getDescriptorSetLayoutHostMappingInfoVALVE(bindingReference: DescriptorSetBindingReferenceVALVE) -> DescriptorSetLayoutHostMappingInfoVALVE {
         bindingReference.withCStruct { ptr_bindingReference in
             var out = VkDescriptorSetLayoutHostMappingInfoVALVE()
+            out.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_HOST_MAPPING_INFO_VALVE
             self.dispatchTable.vkGetDescriptorSetLayoutHostMappingInfoVALVE(self.handle, ptr_bindingReference, &out)
             return DescriptorSetLayoutHostMappingInfoVALVE(cStruct: out)
         }
@@ -3691,6 +3753,7 @@ public class Device: _HandleContainer {
     public func getMicromapBuildSizesEXT(_ buildInfo: (some Chainable<MicromapBuildInfoEXT>), buildType: AccelerationStructureBuildTypeKHR) -> MicromapBuildSizesInfoEXT {
         buildInfo.withCStruct { ptr_buildInfo in
             var out = VkMicromapBuildSizesInfoEXT()
+            out.sType = VK_STRUCTURE_TYPE_MICROMAP_BUILD_SIZES_INFO_EXT
             self.dispatchTable.vkGetMicromapBuildSizesEXT(self.handle, VkAccelerationStructureBuildTypeKHR(rawValue: VkAccelerationStructureBuildTypeKHR.RawValue(buildType.rawValue)), ptr_buildInfo, &out)
             return MicromapBuildSizesInfoEXT(cStruct: out)
         }
@@ -3699,6 +3762,7 @@ public class Device: _HandleContainer {
     public func getMicromapBuildSizesEXT(_ buildInfo: MicromapBuildInfoEXT, buildType: AccelerationStructureBuildTypeKHR) -> MicromapBuildSizesInfoEXT {
         buildInfo.withCStruct { ptr_buildInfo in
             var out = VkMicromapBuildSizesInfoEXT()
+            out.sType = VK_STRUCTURE_TYPE_MICROMAP_BUILD_SIZES_INFO_EXT
             self.dispatchTable.vkGetMicromapBuildSizesEXT(self.handle, VkAccelerationStructureBuildTypeKHR(rawValue: VkAccelerationStructureBuildTypeKHR.RawValue(buildType.rawValue)), ptr_buildInfo, &out)
             return MicromapBuildSizesInfoEXT(cStruct: out)
         }
@@ -3707,6 +3771,7 @@ public class Device: _HandleContainer {
     public func getShaderModuleCreateInfoIdentifierEXT(_ createInfo: (some Chainable<ShaderModuleCreateInfo>)) -> ShaderModuleIdentifierEXT {
         createInfo.withCStruct { ptr_createInfo in
             var out = VkShaderModuleIdentifierEXT()
+            out.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_IDENTIFIER_EXT
             self.dispatchTable.vkGetShaderModuleCreateInfoIdentifierEXT(self.handle, ptr_createInfo, &out)
             return ShaderModuleIdentifierEXT(cStruct: out)
         }
@@ -3715,6 +3780,7 @@ public class Device: _HandleContainer {
     public func getShaderModuleCreateInfoIdentifierEXT(_ createInfo: ShaderModuleCreateInfo) -> ShaderModuleIdentifierEXT {
         createInfo.withCStruct { ptr_createInfo in
             var out = VkShaderModuleIdentifierEXT()
+            out.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_IDENTIFIER_EXT
             self.dispatchTable.vkGetShaderModuleCreateInfoIdentifierEXT(self.handle, ptr_createInfo, &out)
             return ShaderModuleIdentifierEXT(cStruct: out)
         }
@@ -3743,6 +3809,7 @@ public class Device: _HandleContainer {
     #if VK_USE_PLATFORM_METAL_EXT
     public func exportMetalObjectsEXT() -> ExportMetalObjectsInfoEXT {
         var out = VkExportMetalObjectsInfoEXT()
+        out.sType = VK_STRUCTURE_TYPE_EXPORT_METAL_OBJECTS_INFO_EXT
         self.dispatchTable.vkExportMetalObjectsEXT(self.handle, &out)
         return ExportMetalObjectsInfoEXT(cStruct: out)
     }
@@ -3751,6 +3818,7 @@ public class Device: _HandleContainer {
     public func getDynamicRenderingTilePropertiesQCOM(_ renderingInfo: (some Chainable<RenderingInfo>)) throws(Result) -> TilePropertiesQCOM {
         try renderingInfo.withCStruct { ptr_renderingInfo throws(Result) in
             var out = VkTilePropertiesQCOM()
+            out.sType = VK_STRUCTURE_TYPE_TILE_PROPERTIES_QCOM
             try checkResult(
                 self.dispatchTable.vkGetDynamicRenderingTilePropertiesQCOM(self.handle, ptr_renderingInfo, &out)
             )
@@ -3761,6 +3829,7 @@ public class Device: _HandleContainer {
     public func getDynamicRenderingTilePropertiesQCOM(_ renderingInfo: RenderingInfo) throws(Result) -> TilePropertiesQCOM {
         try renderingInfo.withCStruct { ptr_renderingInfo throws(Result) in
             var out = VkTilePropertiesQCOM()
+            out.sType = VK_STRUCTURE_TYPE_TILE_PROPERTIES_QCOM
             try checkResult(
                 self.dispatchTable.vkGetDynamicRenderingTilePropertiesQCOM(self.handle, ptr_renderingInfo, &out)
             )
@@ -3802,6 +3871,7 @@ public class Device: _HandleContainer {
 
     public func getFaultDebugInfoKHR() throws(Result) -> DeviceFaultDebugInfoKHR {
         var out = VkDeviceFaultDebugInfoKHR()
+        out.sType = VK_STRUCTURE_TYPE_DEVICE_FAULT_DEBUG_INFO_KHR
         try checkResult(
             self.dispatchTable.vkGetDeviceFaultDebugInfoKHR(self.handle, &out)
         )
@@ -3827,6 +3897,7 @@ public class Device: _HandleContainer {
     public func getImageSubresourceLayout(_ info: (some Chainable<DeviceImageSubresourceInfo>)) -> SubresourceLayout2 {
         info.withCStruct { ptr_info in
             var out = VkSubresourceLayout2()
+            out.sType = VK_STRUCTURE_TYPE_SUBRESOURCE_LAYOUT_2
             self.dispatchTable.vkGetDeviceImageSubresourceLayout(self.handle, ptr_info, &out)
             return SubresourceLayout2(cStruct: out)
         }
@@ -3835,6 +3906,7 @@ public class Device: _HandleContainer {
     public func getImageSubresourceLayout(_ info: DeviceImageSubresourceInfo) -> SubresourceLayout2 {
         info.withCStruct { ptr_info in
             var out = VkSubresourceLayout2()
+            out.sType = VK_STRUCTURE_TYPE_SUBRESOURCE_LAYOUT_2
             self.dispatchTable.vkGetDeviceImageSubresourceLayout(self.handle, ptr_info, &out)
             return SubresourceLayout2(cStruct: out)
         }
@@ -3890,6 +3962,7 @@ public class Device: _HandleContainer {
     public func getPastPresentationTimingEXT(_ pastPresentationTimingInfo: (some Chainable<PastPresentationTimingInfoEXT>)) throws(Result) -> PastPresentationTimingPropertiesEXT {
         try pastPresentationTimingInfo.withCStruct { ptr_pastPresentationTimingInfo throws(Result) in
             var out = VkPastPresentationTimingPropertiesEXT()
+            out.sType = VK_STRUCTURE_TYPE_PAST_PRESENTATION_TIMING_PROPERTIES_EXT
             try checkResult(
                 self.dispatchTable.vkGetPastPresentationTimingEXT(self.handle, ptr_pastPresentationTimingInfo, &out)
             )
@@ -3900,6 +3973,7 @@ public class Device: _HandleContainer {
     public func getPastPresentationTimingEXT(_ pastPresentationTimingInfo: PastPresentationTimingInfoEXT) throws(Result) -> PastPresentationTimingPropertiesEXT {
         try pastPresentationTimingInfo.withCStruct { ptr_pastPresentationTimingInfo throws(Result) in
             var out = VkPastPresentationTimingPropertiesEXT()
+            out.sType = VK_STRUCTURE_TYPE_PAST_PRESENTATION_TIMING_PROPERTIES_EXT
             try checkResult(
                 self.dispatchTable.vkGetPastPresentationTimingEXT(self.handle, ptr_pastPresentationTimingInfo, &out)
             )
@@ -3910,6 +3984,7 @@ public class Device: _HandleContainer {
     #if VK_USE_PLATFORM_SCREEN_QNX
     public func getScreenBufferPropertiesQNX(buffer: UnsafePointer<_screen_buffer>) throws(Result) -> ScreenBufferPropertiesQNX {
         var out = VkScreenBufferPropertiesQNX()
+        out.sType = VK_STRUCTURE_TYPE_SCREEN_BUFFER_PROPERTIES_QNX
         try checkResult(
             self.dispatchTable.vkGetScreenBufferPropertiesQNX(self.handle, buffer, &out)
         )
@@ -3952,6 +4027,7 @@ public class Device: _HandleContainer {
 
     public func setGpaClockModeAMD() throws(Result) -> GpaDeviceClockModeInfoAMD {
         var out = VkGpaDeviceClockModeInfoAMD()
+        out.sType = VK_STRUCTURE_TYPE_GPA_DEVICE_CLOCK_MODE_INFO_AMD
         try checkResult(
             self.dispatchTable.vkSetGpaDeviceClockModeAMD(self.handle, &out)
         )
@@ -3960,6 +4036,7 @@ public class Device: _HandleContainer {
 
     public func getGpaClockInfoAMD() throws(Result) -> GpaDeviceGetClockInfoAMD {
         var out = VkGpaDeviceGetClockInfoAMD()
+        out.sType = VK_STRUCTURE_TYPE_GPA_DEVICE_GET_CLOCK_INFO_AMD
         try checkResult(
             self.dispatchTable.vkGetGpaDeviceClockInfoAMD(self.handle, &out)
         )
@@ -3993,6 +4070,7 @@ public class Device: _HandleContainer {
     #if VK_USE_PLATFORM_METAL_EXT
     public func getMemoryMetalHandlePropertiesEXT(handleType: ExternalMemoryHandleTypeFlags, handle: UnsafeRawPointer) throws(Result) -> MemoryMetalHandlePropertiesEXT {
         var out = VkMemoryMetalHandlePropertiesEXT()
+        out.sType = VK_STRUCTURE_TYPE_MEMORY_METAL_HANDLE_PROPERTIES_EXT
         try checkResult(
             self.dispatchTable.vkGetMemoryMetalHandlePropertiesEXT(self.handle, VkExternalMemoryHandleTypeFlagBits(rawValue: VkExternalMemoryHandleTypeFlagBits.RawValue(handleType.rawValue)), handle, &out)
         )
@@ -4099,6 +4177,7 @@ public class Device: _HandleContainer {
     public func getTensorMemoryRequirementsARM(_ info: (some Chainable<TensorMemoryRequirementsInfoARM>)) -> MemoryRequirements2 {
         info.withCStruct { ptr_info in
             var out = VkMemoryRequirements2()
+            out.sType = VK_STRUCTURE_TYPE_MEMORY_REQUIREMENTS_2
             self.dispatchTable.vkGetTensorMemoryRequirementsARM(self.handle, ptr_info, &out)
             return MemoryRequirements2(cStruct: out)
         }
@@ -4107,6 +4186,7 @@ public class Device: _HandleContainer {
     public func getTensorMemoryRequirementsARM(_ info: TensorMemoryRequirementsInfoARM) -> MemoryRequirements2 {
         info.withCStruct { ptr_info in
             var out = VkMemoryRequirements2()
+            out.sType = VK_STRUCTURE_TYPE_MEMORY_REQUIREMENTS_2
             self.dispatchTable.vkGetTensorMemoryRequirementsARM(self.handle, ptr_info, &out)
             return MemoryRequirements2(cStruct: out)
         }
@@ -4123,6 +4203,7 @@ public class Device: _HandleContainer {
     public func getTensorMemoryRequirementsARM(_ info: (some Chainable<DeviceTensorMemoryRequirementsARM>)) -> MemoryRequirements2 {
         info.withCStruct { ptr_info in
             var out = VkMemoryRequirements2()
+            out.sType = VK_STRUCTURE_TYPE_MEMORY_REQUIREMENTS_2
             self.dispatchTable.vkGetDeviceTensorMemoryRequirementsARM(self.handle, ptr_info, &out)
             return MemoryRequirements2(cStruct: out)
         }
@@ -4131,6 +4212,7 @@ public class Device: _HandleContainer {
     public func getTensorMemoryRequirementsARM(_ info: DeviceTensorMemoryRequirementsARM) -> MemoryRequirements2 {
         info.withCStruct { ptr_info in
             var out = VkMemoryRequirements2()
+            out.sType = VK_STRUCTURE_TYPE_MEMORY_REQUIREMENTS_2
             self.dispatchTable.vkGetDeviceTensorMemoryRequirementsARM(self.handle, ptr_info, &out)
             return MemoryRequirements2(cStruct: out)
         }
@@ -4218,6 +4300,7 @@ public class Device: _HandleContainer {
     public func getDataGraphPipelineSessionMemoryRequirementsARM(_ info: (some Chainable<DataGraphPipelineSessionMemoryRequirementsInfoARM>)) -> MemoryRequirements2 {
         info.withCStruct { ptr_info in
             var out = VkMemoryRequirements2()
+            out.sType = VK_STRUCTURE_TYPE_MEMORY_REQUIREMENTS_2
             self.dispatchTable.vkGetDataGraphPipelineSessionMemoryRequirementsARM(self.handle, ptr_info, &out)
             return MemoryRequirements2(cStruct: out)
         }
@@ -4226,6 +4309,7 @@ public class Device: _HandleContainer {
     public func getDataGraphPipelineSessionMemoryRequirementsARM(_ info: DataGraphPipelineSessionMemoryRequirementsInfoARM) -> MemoryRequirements2 {
         info.withCStruct { ptr_info in
             var out = VkMemoryRequirements2()
+            out.sType = VK_STRUCTURE_TYPE_MEMORY_REQUIREMENTS_2
             self.dispatchTable.vkGetDataGraphPipelineSessionMemoryRequirementsARM(self.handle, ptr_info, &out)
             return MemoryRequirements2(cStruct: out)
         }
@@ -4280,6 +4364,7 @@ public class Device: _HandleContainer {
     #if VK_USE_PLATFORM_OHOS
     public func getNativeBufferPropertiesOHOS(buffer: UnsafePointer<OH_NativeBuffer>) throws(Result) -> NativeBufferPropertiesOHOS {
         var out = VkNativeBufferPropertiesOHOS()
+        out.sType = VK_STRUCTURE_TYPE_NATIVE_BUFFER_PROPERTIES_OHOS
         try checkResult(
             self.dispatchTable.vkGetNativeBufferPropertiesOHOS(self.handle, buffer, &out)
         )
@@ -6691,6 +6776,7 @@ public class Image: _HandleContainer {
 
     public func getDrmFormatModifierPropertiesEXT() throws(Result) -> ImageDrmFormatModifierPropertiesEXT {
         var out = VkImageDrmFormatModifierPropertiesEXT()
+        out.sType = VK_STRUCTURE_TYPE_IMAGE_DRM_FORMAT_MODIFIER_PROPERTIES_EXT
         try checkResult(
             self.device.dispatchTable.vkGetImageDrmFormatModifierPropertiesEXT(self.device.handle, self.handle, &out)
         )
@@ -6700,6 +6786,7 @@ public class Image: _HandleContainer {
     public func getSubresourceLayout2(subresource: (some Chainable<ImageSubresource2>)) -> SubresourceLayout2 {
         subresource.withCStruct { ptr_subresource in
             var out = VkSubresourceLayout2()
+            out.sType = VK_STRUCTURE_TYPE_SUBRESOURCE_LAYOUT_2
             self.device.dispatchTable.vkGetImageSubresourceLayout2(self.device.handle, self.handle, ptr_subresource, &out)
             return SubresourceLayout2(cStruct: out)
         }
@@ -6708,6 +6795,7 @@ public class Image: _HandleContainer {
     public func getSubresourceLayout2(subresource: ImageSubresource2) -> SubresourceLayout2 {
         subresource.withCStruct { ptr_subresource in
             var out = VkSubresourceLayout2()
+            out.sType = VK_STRUCTURE_TYPE_SUBRESOURCE_LAYOUT_2
             self.device.dispatchTable.vkGetImageSubresourceLayout2(self.device.handle, self.handle, ptr_subresource, &out)
             return SubresourceLayout2(cStruct: out)
         }
@@ -6729,6 +6817,7 @@ public class ImageView: _HandleContainer {
 
     public func getAddressNVX() throws(Result) -> ImageViewAddressPropertiesNVX {
         var out = VkImageViewAddressPropertiesNVX()
+        out.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_ADDRESS_PROPERTIES_NVX
         try checkResult(
             self.device.dispatchTable.vkGetImageViewAddressNVX(self.device.handle, self.handle, &out)
         )
@@ -6751,6 +6840,7 @@ public class ShaderModule: _HandleContainer {
 
     public func getIdentifierEXT() -> ShaderModuleIdentifierEXT {
         var out = VkShaderModuleIdentifierEXT()
+        out.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_IDENTIFIER_EXT
         self.device.dispatchTable.vkGetShaderModuleIdentifierEXT(self.device.handle, self.handle, &out)
         return ShaderModuleIdentifierEXT(cStruct: out)
     }
@@ -6800,6 +6890,7 @@ public class Pipeline: _HandleContainer {
     #if VK_ENABLE_BETA_EXTENSIONS
     public func getExecutionGraphScratchSizeAMDX() throws(Result) -> ExecutionGraphPipelineScratchSizeAMDX {
         var out = VkExecutionGraphPipelineScratchSizeAMDX()
+        out.sType = VK_STRUCTURE_TYPE_EXECUTION_GRAPH_PIPELINE_SCRATCH_SIZE_AMDX
         try checkResult(
             self.device.dispatchTable.vkGetExecutionGraphPipelineScratchSizeAMDX(self.device.handle, self.handle, &out)
         )
@@ -7335,6 +7426,7 @@ public class BufferCollectionFUCHSIA: _HandleContainer {
     #if VK_USE_PLATFORM_FUCHSIA
     public func getPropertiesFUCHSIA() throws(Result) -> BufferCollectionPropertiesFUCHSIA {
         var out = VkBufferCollectionPropertiesFUCHSIA()
+        out.sType = VK_STRUCTURE_TYPE_BUFFER_COLLECTION_PROPERTIES_FUCHSIA
         try checkResult(
             self.device.dispatchTable.vkGetBufferCollectionPropertiesFUCHSIA(self.device.handle, self.handle, &out)
         )
@@ -7819,6 +7911,7 @@ public class SwapchainKHR: _HandleContainer {
 
     public func getLatencyTimingsNV() -> GetLatencyMarkerInfoNV {
         var out = VkGetLatencyMarkerInfoNV()
+        out.sType = VK_STRUCTURE_TYPE_GET_LATENCY_MARKER_INFO_NV
         self.device.dispatchTable.vkGetLatencyTimingsNV(self.device.handle, self.handle, &out)
         return GetLatencyMarkerInfoNV(cStruct: out)
     }
@@ -7969,6 +8062,7 @@ public class ExternalComputeQueueNV: _HandleContainer {
 
     public func getDataNV(data: UnsafeMutableRawPointer) -> ExternalComputeQueueDataParamsNV {
         var out = VkExternalComputeQueueDataParamsNV()
+        out.sType = VK_STRUCTURE_TYPE_EXTERNAL_COMPUTE_QUEUE_DATA_PARAMS_NV
         self.device.dispatchTable.vkGetExternalComputeQueueDataNV(self.handle, &out, data)
         return ExternalComputeQueueDataParamsNV(cStruct: out)
     }
