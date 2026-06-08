@@ -1817,7 +1817,7 @@ public class Device: _HandleContainer {
         }
     }
 
-    public func createSharedSwapchainsKHR(createInfos: Array<SwapchainCreateInfoKHR>) throws -> Array<SwapchainKHR> {
+    public func createSharedSwapchainsKHR(_ createInfos: Array<SwapchainCreateInfoKHR>) throws -> Array<SwapchainKHR> {
         try createInfos.withCStructBufferPointer { ptr_createInfos in
             try Array<VkSwapchainKHR?>(unsafeUninitializedCapacity: Int(UInt32(ptr_createInfos.count))) { out, initializedCount in
                 try checkResult(
@@ -2354,7 +2354,7 @@ public class Device: _HandleContainer {
         return PeerMemoryFeatureFlags(rawValue: out)
     }
 
-    public func bindBufferMemory2(bindInfos: Array<BindBufferMemoryInfo>) throws -> Void {
+    public func bindBufferMemory2(_ bindInfos: Array<BindBufferMemoryInfo>) throws -> Void {
         try bindInfos.withCStructBufferPointer { ptr_bindInfos in
             try checkResult(
                 self.dispatchTable.vkBindBufferMemory2(self.handle, UInt32(ptr_bindInfos.count), ptr_bindInfos.baseAddress)
@@ -2362,7 +2362,7 @@ public class Device: _HandleContainer {
         }
     }
 
-    public func bindImageMemory2(bindInfos: Array<BindImageMemoryInfo>) throws -> Void {
+    public func bindImageMemory2(_ bindInfos: Array<BindImageMemoryInfo>) throws -> Void {
         try bindInfos.withCStructBufferPointer { ptr_bindInfos in
             try checkResult(
                 self.dispatchTable.vkBindImageMemory2(self.handle, UInt32(ptr_bindInfos.count), ptr_bindInfos.baseAddress)
@@ -2602,7 +2602,7 @@ public class Device: _HandleContainer {
         }
     }
 
-    public func getCalibratedTimestampsKHR(timestampInfos: Array<CalibratedTimestampInfoKHR>, timestamps: UnsafeMutablePointer<UInt64>, maxDeviation: UnsafeMutablePointer<UInt64>) throws -> Void {
+    public func getCalibratedTimestampsKHR(_ timestampInfos: Array<CalibratedTimestampInfoKHR>, timestamps: UnsafeMutablePointer<UInt64>, maxDeviation: UnsafeMutablePointer<UInt64>) throws -> Void {
         try timestampInfos.withCStructBufferPointer { ptr_timestampInfos in
             try checkResult(
                 self.dispatchTable.vkGetCalibratedTimestampsKHR(self.handle, UInt32(ptr_timestampInfos.count), ptr_timestampInfos.baseAddress, timestamps, maxDeviation)
@@ -2772,7 +2772,7 @@ public class Device: _HandleContainer {
         }
     }
 
-    public func bindAccelerationStructureMemoryNV(bindInfos: Array<BindAccelerationStructureMemoryInfoNV>) throws -> Void {
+    public func bindAccelerationStructureMemoryNV(_ bindInfos: Array<BindAccelerationStructureMemoryInfoNV>) throws -> Void {
         try bindInfos.withCStructBufferPointer { ptr_bindInfos in
             try checkResult(
                 self.dispatchTable.vkBindAccelerationStructureMemoryNV(self.handle, UInt32(ptr_bindInfos.count), ptr_bindInfos.baseAddress)
@@ -3876,7 +3876,7 @@ public class Device: _HandleContainer {
         }
     }
 
-    public func createShadersEXT(createInfos: Array<ShaderCreateInfoEXT>) throws -> Array<ShaderEXT> {
+    public func createShadersEXT(_ createInfos: Array<ShaderCreateInfoEXT>) throws -> Array<ShaderEXT> {
         try createInfos.withCStructBufferPointer { ptr_createInfos in
             try Array<VkShaderEXT?>(unsafeUninitializedCapacity: Int(UInt32(ptr_createInfos.count))) { out, initializedCount in
                 try checkResult(
@@ -4112,7 +4112,7 @@ public class Device: _HandleContainer {
         }
     }
 
-    public func bindTensorMemoryARM(bindInfos: Array<BindTensorMemoryInfoARM>) throws -> Void {
+    public func bindTensorMemoryARM(_ bindInfos: Array<BindTensorMemoryInfoARM>) throws -> Void {
         try bindInfos.withCStructBufferPointer { ptr_bindInfos in
             try checkResult(
                 self.dispatchTable.vkBindTensorMemoryARM(self.handle, UInt32(ptr_bindInfos.count), ptr_bindInfos.baseAddress)
@@ -4231,7 +4231,7 @@ public class Device: _HandleContainer {
         }
     }
 
-    public func bindDataGraphPipelineSessionMemoryARM(bindInfos: Array<BindDataGraphPipelineSessionMemoryInfoARM>) throws -> Void {
+    public func bindDataGraphPipelineSessionMemoryARM(_ bindInfos: Array<BindDataGraphPipelineSessionMemoryInfoARM>) throws -> Void {
         try bindInfos.withCStructBufferPointer { ptr_bindInfos in
             try checkResult(
                 self.dispatchTable.vkBindDataGraphPipelineSessionMemoryARM(self.handle, UInt32(ptr_bindInfos.count), ptr_bindInfos.baseAddress)
@@ -5337,13 +5337,13 @@ public class CommandBuffer: _HandleContainer {
         self.commandPool.device.dispatchTable.vkCmdTraceRaysIndirect2KHR(self.handle, indirectDeviceAddress)
     }
 
-    public func buildClusterAccelerationStructureIndirectNV(commandInfos: (some Chainable<ClusterAccelerationStructureCommandsInfoNV>)) -> Void {
+    public func buildClusterAccelerationStructureIndirectNV(_ commandInfos: (some Chainable<ClusterAccelerationStructureCommandsInfoNV>)) -> Void {
         commandInfos.withCStruct { ptr_commandInfos in
             self.commandPool.device.dispatchTable.vkCmdBuildClusterAccelerationStructureIndirectNV(self.handle, ptr_commandInfos)
         }
     }
 
-    public func buildClusterAccelerationStructureIndirectNV(commandInfos: ClusterAccelerationStructureCommandsInfoNV) -> Void {
+    public func buildClusterAccelerationStructureIndirectNV(_ commandInfos: ClusterAccelerationStructureCommandsInfoNV) -> Void {
         commandInfos.withCStruct { ptr_commandInfos in
             self.commandPool.device.dispatchTable.vkCmdBuildClusterAccelerationStructureIndirectNV(self.handle, ptr_commandInfos)
         }
@@ -5895,7 +5895,7 @@ public class CommandBuffer: _HandleContainer {
         }
     }
 
-    public func bindDescriptorBuffersEXT(bindingInfos: Array<DescriptorBufferBindingInfoEXT>) -> Void {
+    public func bindDescriptorBuffersEXT(_ bindingInfos: Array<DescriptorBufferBindingInfoEXT>) -> Void {
         bindingInfos.withCStructBufferPointer { ptr_bindingInfos in
             self.commandPool.device.dispatchTable.vkCmdBindDescriptorBuffersEXT(self.handle, UInt32(ptr_bindingInfos.count), ptr_bindingInfos.baseAddress)
         }
@@ -7871,7 +7871,7 @@ public class VideoSessionKHR: _HandleContainer {
         }.map { VideoSessionMemoryRequirementsKHR(cStruct: $0) }
     }
 
-    public func bindMemoryKHR(bindSessionMemoryInfos: Array<BindVideoSessionMemoryInfoKHR>) throws -> Void {
+    public func bindMemoryKHR(_ bindSessionMemoryInfos: Array<BindVideoSessionMemoryInfoKHR>) throws -> Void {
         try bindSessionMemoryInfos.withCStructBufferPointer { ptr_bindSessionMemoryInfos in
             try checkResult(
                 self.device.dispatchTable.vkBindVideoSessionMemoryKHR(self.device.handle, self.handle, UInt32(ptr_bindSessionMemoryInfos.count), ptr_bindSessionMemoryInfos.baseAddress)

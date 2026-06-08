@@ -234,7 +234,7 @@ class Generator(BaseGenerator):
         param_strings: list[str] = []
         for index, param in enumerate(command.params):
             default_value = f' = {param.default_value}' if param.default_value and 'Chainable<' not in param.type else ''
-            if index == 0 and param.name.endswith("Info"):
+            if index == 0 and (param.name.endswith("Info") or param.name.endswith("Infos")):
                 param_strings.append(
                     f'_ {param.name}: {param.type}{default_value}')
             else:
