@@ -1,10 +1,10 @@
 import CVulkan
 
-struct EntryDispatchTable {
-    let vkCreateInstance: PFN_vkCreateInstance!
-    let vkEnumerateInstanceVersion: PFN_vkEnumerateInstanceVersion!
-    let vkEnumerateInstanceLayerProperties: PFN_vkEnumerateInstanceLayerProperties!
-    let vkEnumerateInstanceExtensionProperties: PFN_vkEnumerateInstanceExtensionProperties!
+public struct EntryDispatchTable {
+    public let vkCreateInstance: PFN_vkCreateInstance!
+    public let vkEnumerateInstanceVersion: PFN_vkEnumerateInstanceVersion!
+    public let vkEnumerateInstanceLayerProperties: PFN_vkEnumerateInstanceLayerProperties!
+    public let vkEnumerateInstanceExtensionProperties: PFN_vkEnumerateInstanceExtensionProperties!
 
     init(vkGetInstanceProcAddr: PFN_vkGetInstanceProcAddr) {
         self.vkCreateInstance = unsafeBitCast(vkGetInstanceProcAddr(nil, "vkCreateInstance"), to: PFN_vkCreateInstance?.self)
@@ -14,166 +14,166 @@ struct EntryDispatchTable {
     }
 }
 
-struct InstanceDispatchTable {
-    let vkDestroyInstance: PFN_vkDestroyInstance!
-    let vkEnumeratePhysicalDevices: PFN_vkEnumeratePhysicalDevices!
-    let vkGetDeviceProcAddr: PFN_vkGetDeviceProcAddr!
-    let vkGetPhysicalDeviceProperties: PFN_vkGetPhysicalDeviceProperties!
-    let vkGetPhysicalDeviceQueueFamilyProperties: PFN_vkGetPhysicalDeviceQueueFamilyProperties!
-    let vkGetPhysicalDeviceMemoryProperties: PFN_vkGetPhysicalDeviceMemoryProperties!
-    let vkGetPhysicalDeviceFeatures: PFN_vkGetPhysicalDeviceFeatures!
-    let vkGetPhysicalDeviceFormatProperties: PFN_vkGetPhysicalDeviceFormatProperties!
-    let vkGetPhysicalDeviceImageFormatProperties: PFN_vkGetPhysicalDeviceImageFormatProperties!
-    let vkCreateDevice: PFN_vkCreateDevice!
-    let vkEnumerateDeviceLayerProperties: PFN_vkEnumerateDeviceLayerProperties!
-    let vkEnumerateDeviceExtensionProperties: PFN_vkEnumerateDeviceExtensionProperties!
-    let vkGetPhysicalDeviceSparseImageFormatProperties: PFN_vkGetPhysicalDeviceSparseImageFormatProperties!
+public struct InstanceDispatchTable {
+    public let vkDestroyInstance: PFN_vkDestroyInstance!
+    public let vkEnumeratePhysicalDevices: PFN_vkEnumeratePhysicalDevices!
+    public let vkGetDeviceProcAddr: PFN_vkGetDeviceProcAddr!
+    public let vkGetPhysicalDeviceProperties: PFN_vkGetPhysicalDeviceProperties!
+    public let vkGetPhysicalDeviceQueueFamilyProperties: PFN_vkGetPhysicalDeviceQueueFamilyProperties!
+    public let vkGetPhysicalDeviceMemoryProperties: PFN_vkGetPhysicalDeviceMemoryProperties!
+    public let vkGetPhysicalDeviceFeatures: PFN_vkGetPhysicalDeviceFeatures!
+    public let vkGetPhysicalDeviceFormatProperties: PFN_vkGetPhysicalDeviceFormatProperties!
+    public let vkGetPhysicalDeviceImageFormatProperties: PFN_vkGetPhysicalDeviceImageFormatProperties!
+    public let vkCreateDevice: PFN_vkCreateDevice!
+    public let vkEnumerateDeviceLayerProperties: PFN_vkEnumerateDeviceLayerProperties!
+    public let vkEnumerateDeviceExtensionProperties: PFN_vkEnumerateDeviceExtensionProperties!
+    public let vkGetPhysicalDeviceSparseImageFormatProperties: PFN_vkGetPhysicalDeviceSparseImageFormatProperties!
     #if VK_USE_PLATFORM_ANDROID_KHR
-    let vkCreateAndroidSurfaceKHR: PFN_vkCreateAndroidSurfaceKHR!
+    public let vkCreateAndroidSurfaceKHR: PFN_vkCreateAndroidSurfaceKHR!
     #endif
     #if VK_USE_PLATFORM_OHOS
-    let vkCreateSurfaceOHOS: PFN_vkCreateSurfaceOHOS!
+    public let vkCreateSurfaceOHOS: PFN_vkCreateSurfaceOHOS!
     #endif
-    let vkGetPhysicalDeviceDisplayPropertiesKHR: PFN_vkGetPhysicalDeviceDisplayPropertiesKHR!
-    let vkGetPhysicalDeviceDisplayPlanePropertiesKHR: PFN_vkGetPhysicalDeviceDisplayPlanePropertiesKHR!
-    let vkGetDisplayPlaneSupportedDisplaysKHR: PFN_vkGetDisplayPlaneSupportedDisplaysKHR!
-    let vkGetDisplayModePropertiesKHR: PFN_vkGetDisplayModePropertiesKHR!
-    let vkCreateDisplayModeKHR: PFN_vkCreateDisplayModeKHR!
-    let vkGetDisplayPlaneCapabilitiesKHR: PFN_vkGetDisplayPlaneCapabilitiesKHR!
-    let vkCreateDisplayPlaneSurfaceKHR: PFN_vkCreateDisplayPlaneSurfaceKHR!
-    let vkDestroySurfaceKHR: PFN_vkDestroySurfaceKHR!
-    let vkGetPhysicalDeviceSurfaceSupportKHR: PFN_vkGetPhysicalDeviceSurfaceSupportKHR!
-    let vkGetPhysicalDeviceSurfaceCapabilitiesKHR: PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR!
-    let vkGetPhysicalDeviceSurfaceFormatsKHR: PFN_vkGetPhysicalDeviceSurfaceFormatsKHR!
-    let vkGetPhysicalDeviceSurfacePresentModesKHR: PFN_vkGetPhysicalDeviceSurfacePresentModesKHR!
+    public let vkGetPhysicalDeviceDisplayPropertiesKHR: PFN_vkGetPhysicalDeviceDisplayPropertiesKHR!
+    public let vkGetPhysicalDeviceDisplayPlanePropertiesKHR: PFN_vkGetPhysicalDeviceDisplayPlanePropertiesKHR!
+    public let vkGetDisplayPlaneSupportedDisplaysKHR: PFN_vkGetDisplayPlaneSupportedDisplaysKHR!
+    public let vkGetDisplayModePropertiesKHR: PFN_vkGetDisplayModePropertiesKHR!
+    public let vkCreateDisplayModeKHR: PFN_vkCreateDisplayModeKHR!
+    public let vkGetDisplayPlaneCapabilitiesKHR: PFN_vkGetDisplayPlaneCapabilitiesKHR!
+    public let vkCreateDisplayPlaneSurfaceKHR: PFN_vkCreateDisplayPlaneSurfaceKHR!
+    public let vkDestroySurfaceKHR: PFN_vkDestroySurfaceKHR!
+    public let vkGetPhysicalDeviceSurfaceSupportKHR: PFN_vkGetPhysicalDeviceSurfaceSupportKHR!
+    public let vkGetPhysicalDeviceSurfaceCapabilitiesKHR: PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR!
+    public let vkGetPhysicalDeviceSurfaceFormatsKHR: PFN_vkGetPhysicalDeviceSurfaceFormatsKHR!
+    public let vkGetPhysicalDeviceSurfacePresentModesKHR: PFN_vkGetPhysicalDeviceSurfacePresentModesKHR!
     #if VK_USE_PLATFORM_VI_NN
-    let vkCreateViSurfaceNN: PFN_vkCreateViSurfaceNN!
+    public let vkCreateViSurfaceNN: PFN_vkCreateViSurfaceNN!
     #endif
     #if VK_USE_PLATFORM_WAYLAND_KHR
-    let vkCreateWaylandSurfaceKHR: PFN_vkCreateWaylandSurfaceKHR!
+    public let vkCreateWaylandSurfaceKHR: PFN_vkCreateWaylandSurfaceKHR!
     #endif
     #if VK_USE_PLATFORM_WAYLAND_KHR
-    let vkGetPhysicalDeviceWaylandPresentationSupportKHR: PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR!
+    public let vkGetPhysicalDeviceWaylandPresentationSupportKHR: PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR!
     #endif
     #if VK_USE_PLATFORM_UBM_SEC
-    let vkCreateUbmSurfaceSEC: PFN_vkCreateUbmSurfaceSEC!
+    public let vkCreateUbmSurfaceSEC: PFN_vkCreateUbmSurfaceSEC!
     #endif
     #if VK_USE_PLATFORM_UBM_SEC
-    let vkGetPhysicalDeviceUbmPresentationSupportSEC: PFN_vkGetPhysicalDeviceUbmPresentationSupportSEC!
+    public let vkGetPhysicalDeviceUbmPresentationSupportSEC: PFN_vkGetPhysicalDeviceUbmPresentationSupportSEC!
     #endif
     #if VK_USE_PLATFORM_WIN32_KHR
-    let vkCreateWin32SurfaceKHR: PFN_vkCreateWin32SurfaceKHR!
+    public let vkCreateWin32SurfaceKHR: PFN_vkCreateWin32SurfaceKHR!
     #endif
     #if VK_USE_PLATFORM_WIN32_KHR
-    let vkGetPhysicalDeviceWin32PresentationSupportKHR: PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR!
+    public let vkGetPhysicalDeviceWin32PresentationSupportKHR: PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR!
     #endif
     #if VK_USE_PLATFORM_XLIB_KHR
-    let vkCreateXlibSurfaceKHR: PFN_vkCreateXlibSurfaceKHR!
+    public let vkCreateXlibSurfaceKHR: PFN_vkCreateXlibSurfaceKHR!
     #endif
     #if VK_USE_PLATFORM_XLIB_KHR
-    let vkGetPhysicalDeviceXlibPresentationSupportKHR: PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR!
+    public let vkGetPhysicalDeviceXlibPresentationSupportKHR: PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR!
     #endif
     #if VK_USE_PLATFORM_XCB_KHR
-    let vkCreateXcbSurfaceKHR: PFN_vkCreateXcbSurfaceKHR!
+    public let vkCreateXcbSurfaceKHR: PFN_vkCreateXcbSurfaceKHR!
     #endif
     #if VK_USE_PLATFORM_XCB_KHR
-    let vkGetPhysicalDeviceXcbPresentationSupportKHR: PFN_vkGetPhysicalDeviceXcbPresentationSupportKHR!
+    public let vkGetPhysicalDeviceXcbPresentationSupportKHR: PFN_vkGetPhysicalDeviceXcbPresentationSupportKHR!
     #endif
     #if VK_USE_PLATFORM_DIRECTFB_EXT
-    let vkCreateDirectFBSurfaceEXT: PFN_vkCreateDirectFBSurfaceEXT!
+    public let vkCreateDirectFBSurfaceEXT: PFN_vkCreateDirectFBSurfaceEXT!
     #endif
     #if VK_USE_PLATFORM_DIRECTFB_EXT
-    let vkGetPhysicalDeviceDirectFBPresentationSupportEXT: PFN_vkGetPhysicalDeviceDirectFBPresentationSupportEXT!
+    public let vkGetPhysicalDeviceDirectFBPresentationSupportEXT: PFN_vkGetPhysicalDeviceDirectFBPresentationSupportEXT!
     #endif
     #if VK_USE_PLATFORM_FUCHSIA
-    let vkCreateImagePipeSurfaceFUCHSIA: PFN_vkCreateImagePipeSurfaceFUCHSIA!
+    public let vkCreateImagePipeSurfaceFUCHSIA: PFN_vkCreateImagePipeSurfaceFUCHSIA!
     #endif
     #if VK_USE_PLATFORM_GGP
-    let vkCreateStreamDescriptorSurfaceGGP: PFN_vkCreateStreamDescriptorSurfaceGGP!
+    public let vkCreateStreamDescriptorSurfaceGGP: PFN_vkCreateStreamDescriptorSurfaceGGP!
     #endif
     #if VK_USE_PLATFORM_SCREEN_QNX
-    let vkCreateScreenSurfaceQNX: PFN_vkCreateScreenSurfaceQNX!
+    public let vkCreateScreenSurfaceQNX: PFN_vkCreateScreenSurfaceQNX!
     #endif
     #if VK_USE_PLATFORM_SCREEN_QNX
-    let vkGetPhysicalDeviceScreenPresentationSupportQNX: PFN_vkGetPhysicalDeviceScreenPresentationSupportQNX!
+    public let vkGetPhysicalDeviceScreenPresentationSupportQNX: PFN_vkGetPhysicalDeviceScreenPresentationSupportQNX!
     #endif
-    let vkCreateDebugReportCallbackEXT: PFN_vkCreateDebugReportCallbackEXT!
-    let vkDestroyDebugReportCallbackEXT: PFN_vkDestroyDebugReportCallbackEXT!
-    let vkDebugReportMessageEXT: PFN_vkDebugReportMessageEXT!
-    let vkGetPhysicalDeviceExternalImageFormatPropertiesNV: PFN_vkGetPhysicalDeviceExternalImageFormatPropertiesNV!
-    let vkGetPhysicalDeviceFeatures2: PFN_vkGetPhysicalDeviceFeatures2!
-    let vkGetPhysicalDeviceProperties2: PFN_vkGetPhysicalDeviceProperties2!
-    let vkGetPhysicalDeviceFormatProperties2: PFN_vkGetPhysicalDeviceFormatProperties2!
-    let vkGetPhysicalDeviceImageFormatProperties2: PFN_vkGetPhysicalDeviceImageFormatProperties2!
-    let vkGetPhysicalDeviceQueueFamilyProperties2: PFN_vkGetPhysicalDeviceQueueFamilyProperties2!
-    let vkGetPhysicalDeviceMemoryProperties2: PFN_vkGetPhysicalDeviceMemoryProperties2!
-    let vkGetPhysicalDeviceSparseImageFormatProperties2: PFN_vkGetPhysicalDeviceSparseImageFormatProperties2!
-    let vkGetPhysicalDeviceExternalBufferProperties: PFN_vkGetPhysicalDeviceExternalBufferProperties!
-    let vkGetPhysicalDeviceExternalSemaphoreProperties: PFN_vkGetPhysicalDeviceExternalSemaphoreProperties!
-    let vkGetPhysicalDeviceExternalFenceProperties: PFN_vkGetPhysicalDeviceExternalFenceProperties!
-    let vkReleaseDisplayEXT: PFN_vkReleaseDisplayEXT!
+    public let vkCreateDebugReportCallbackEXT: PFN_vkCreateDebugReportCallbackEXT!
+    public let vkDestroyDebugReportCallbackEXT: PFN_vkDestroyDebugReportCallbackEXT!
+    public let vkDebugReportMessageEXT: PFN_vkDebugReportMessageEXT!
+    public let vkGetPhysicalDeviceExternalImageFormatPropertiesNV: PFN_vkGetPhysicalDeviceExternalImageFormatPropertiesNV!
+    public let vkGetPhysicalDeviceFeatures2: PFN_vkGetPhysicalDeviceFeatures2!
+    public let vkGetPhysicalDeviceProperties2: PFN_vkGetPhysicalDeviceProperties2!
+    public let vkGetPhysicalDeviceFormatProperties2: PFN_vkGetPhysicalDeviceFormatProperties2!
+    public let vkGetPhysicalDeviceImageFormatProperties2: PFN_vkGetPhysicalDeviceImageFormatProperties2!
+    public let vkGetPhysicalDeviceQueueFamilyProperties2: PFN_vkGetPhysicalDeviceQueueFamilyProperties2!
+    public let vkGetPhysicalDeviceMemoryProperties2: PFN_vkGetPhysicalDeviceMemoryProperties2!
+    public let vkGetPhysicalDeviceSparseImageFormatProperties2: PFN_vkGetPhysicalDeviceSparseImageFormatProperties2!
+    public let vkGetPhysicalDeviceExternalBufferProperties: PFN_vkGetPhysicalDeviceExternalBufferProperties!
+    public let vkGetPhysicalDeviceExternalSemaphoreProperties: PFN_vkGetPhysicalDeviceExternalSemaphoreProperties!
+    public let vkGetPhysicalDeviceExternalFenceProperties: PFN_vkGetPhysicalDeviceExternalFenceProperties!
+    public let vkReleaseDisplayEXT: PFN_vkReleaseDisplayEXT!
     #if VK_USE_PLATFORM_XLIB_XRANDR_EXT
-    let vkAcquireXlibDisplayEXT: PFN_vkAcquireXlibDisplayEXT!
+    public let vkAcquireXlibDisplayEXT: PFN_vkAcquireXlibDisplayEXT!
     #endif
     #if VK_USE_PLATFORM_XLIB_XRANDR_EXT
-    let vkGetRandROutputDisplayEXT: PFN_vkGetRandROutputDisplayEXT!
+    public let vkGetRandROutputDisplayEXT: PFN_vkGetRandROutputDisplayEXT!
     #endif
     #if VK_USE_PLATFORM_WIN32_KHR
-    let vkAcquireWinrtDisplayNV: PFN_vkAcquireWinrtDisplayNV!
+    public let vkAcquireWinrtDisplayNV: PFN_vkAcquireWinrtDisplayNV!
     #endif
     #if VK_USE_PLATFORM_WIN32_KHR
-    let vkGetWinrtDisplayNV: PFN_vkGetWinrtDisplayNV!
+    public let vkGetWinrtDisplayNV: PFN_vkGetWinrtDisplayNV!
     #endif
-    let vkGetPhysicalDeviceSurfaceCapabilities2EXT: PFN_vkGetPhysicalDeviceSurfaceCapabilities2EXT!
-    let vkEnumeratePhysicalDeviceGroups: PFN_vkEnumeratePhysicalDeviceGroups!
-    let vkGetPhysicalDevicePresentRectanglesKHR: PFN_vkGetPhysicalDevicePresentRectanglesKHR!
+    public let vkGetPhysicalDeviceSurfaceCapabilities2EXT: PFN_vkGetPhysicalDeviceSurfaceCapabilities2EXT!
+    public let vkEnumeratePhysicalDeviceGroups: PFN_vkEnumeratePhysicalDeviceGroups!
+    public let vkGetPhysicalDevicePresentRectanglesKHR: PFN_vkGetPhysicalDevicePresentRectanglesKHR!
     #if VK_USE_PLATFORM_IOS_MVK
-    let vkCreateIOSSurfaceMVK: PFN_vkCreateIOSSurfaceMVK!
+    public let vkCreateIOSSurfaceMVK: PFN_vkCreateIOSSurfaceMVK!
     #endif
     #if VK_USE_PLATFORM_MACOS_MVK
-    let vkCreateMacOSSurfaceMVK: PFN_vkCreateMacOSSurfaceMVK!
+    public let vkCreateMacOSSurfaceMVK: PFN_vkCreateMacOSSurfaceMVK!
     #endif
     #if VK_USE_PLATFORM_METAL_EXT
-    let vkCreateMetalSurfaceEXT: PFN_vkCreateMetalSurfaceEXT!
+    public let vkCreateMetalSurfaceEXT: PFN_vkCreateMetalSurfaceEXT!
     #endif
-    let vkGetPhysicalDeviceMultisamplePropertiesEXT: PFN_vkGetPhysicalDeviceMultisamplePropertiesEXT!
-    let vkGetPhysicalDeviceSurfaceCapabilities2KHR: PFN_vkGetPhysicalDeviceSurfaceCapabilities2KHR!
-    let vkGetPhysicalDeviceSurfaceFormats2KHR: PFN_vkGetPhysicalDeviceSurfaceFormats2KHR!
-    let vkGetPhysicalDeviceDisplayProperties2KHR: PFN_vkGetPhysicalDeviceDisplayProperties2KHR!
-    let vkGetPhysicalDeviceDisplayPlaneProperties2KHR: PFN_vkGetPhysicalDeviceDisplayPlaneProperties2KHR!
-    let vkGetDisplayModeProperties2KHR: PFN_vkGetDisplayModeProperties2KHR!
-    let vkGetDisplayPlaneCapabilities2KHR: PFN_vkGetDisplayPlaneCapabilities2KHR!
-    let vkGetPhysicalDeviceCalibrateableTimeDomainsKHR: PFN_vkGetPhysicalDeviceCalibrateableTimeDomainsKHR!
-    let vkCreateDebugUtilsMessengerEXT: PFN_vkCreateDebugUtilsMessengerEXT!
-    let vkDestroyDebugUtilsMessengerEXT: PFN_vkDestroyDebugUtilsMessengerEXT!
-    let vkSubmitDebugUtilsMessageEXT: PFN_vkSubmitDebugUtilsMessageEXT!
-    let vkGetPhysicalDeviceCooperativeMatrixPropertiesNV: PFN_vkGetPhysicalDeviceCooperativeMatrixPropertiesNV!
+    public let vkGetPhysicalDeviceMultisamplePropertiesEXT: PFN_vkGetPhysicalDeviceMultisamplePropertiesEXT!
+    public let vkGetPhysicalDeviceSurfaceCapabilities2KHR: PFN_vkGetPhysicalDeviceSurfaceCapabilities2KHR!
+    public let vkGetPhysicalDeviceSurfaceFormats2KHR: PFN_vkGetPhysicalDeviceSurfaceFormats2KHR!
+    public let vkGetPhysicalDeviceDisplayProperties2KHR: PFN_vkGetPhysicalDeviceDisplayProperties2KHR!
+    public let vkGetPhysicalDeviceDisplayPlaneProperties2KHR: PFN_vkGetPhysicalDeviceDisplayPlaneProperties2KHR!
+    public let vkGetDisplayModeProperties2KHR: PFN_vkGetDisplayModeProperties2KHR!
+    public let vkGetDisplayPlaneCapabilities2KHR: PFN_vkGetDisplayPlaneCapabilities2KHR!
+    public let vkGetPhysicalDeviceCalibrateableTimeDomainsKHR: PFN_vkGetPhysicalDeviceCalibrateableTimeDomainsKHR!
+    public let vkCreateDebugUtilsMessengerEXT: PFN_vkCreateDebugUtilsMessengerEXT!
+    public let vkDestroyDebugUtilsMessengerEXT: PFN_vkDestroyDebugUtilsMessengerEXT!
+    public let vkSubmitDebugUtilsMessageEXT: PFN_vkSubmitDebugUtilsMessageEXT!
+    public let vkGetPhysicalDeviceCooperativeMatrixPropertiesNV: PFN_vkGetPhysicalDeviceCooperativeMatrixPropertiesNV!
     #if VK_USE_PLATFORM_WIN32_KHR
-    let vkGetPhysicalDeviceSurfacePresentModes2EXT: PFN_vkGetPhysicalDeviceSurfacePresentModes2EXT!
+    public let vkGetPhysicalDeviceSurfacePresentModes2EXT: PFN_vkGetPhysicalDeviceSurfacePresentModes2EXT!
     #endif
-    let vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR: PFN_vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR!
-    let vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR: PFN_vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR!
-    let vkCreateHeadlessSurfaceEXT: PFN_vkCreateHeadlessSurfaceEXT!
-    let vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV: PFN_vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV!
-    let vkGetPhysicalDeviceToolProperties: PFN_vkGetPhysicalDeviceToolProperties!
-    let vkGetPhysicalDeviceFragmentShadingRatesKHR: PFN_vkGetPhysicalDeviceFragmentShadingRatesKHR!
-    let vkGetPhysicalDeviceVideoCapabilitiesKHR: PFN_vkGetPhysicalDeviceVideoCapabilitiesKHR!
-    let vkGetPhysicalDeviceVideoFormatPropertiesKHR: PFN_vkGetPhysicalDeviceVideoFormatPropertiesKHR!
-    let vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR: PFN_vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR!
-    let vkAcquireDrmDisplayEXT: PFN_vkAcquireDrmDisplayEXT!
-    let vkGetDrmDisplayEXT: PFN_vkGetDrmDisplayEXT!
-    let vkGetPhysicalDeviceOpticalFlowImageFormatsNV: PFN_vkGetPhysicalDeviceOpticalFlowImageFormatsNV!
-    let vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR: PFN_vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR!
-    let vkGetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV: PFN_vkGetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV!
-    let vkGetPhysicalDeviceCooperativeVectorPropertiesNV: PFN_vkGetPhysicalDeviceCooperativeVectorPropertiesNV!
-    let vkEnumeratePhysicalDeviceShaderInstrumentationMetricsARM: PFN_vkEnumeratePhysicalDeviceShaderInstrumentationMetricsARM!
-    let vkGetPhysicalDeviceExternalTensorPropertiesARM: PFN_vkGetPhysicalDeviceExternalTensorPropertiesARM!
-    let vkGetPhysicalDeviceQueueFamilyDataGraphPropertiesARM: PFN_vkGetPhysicalDeviceQueueFamilyDataGraphPropertiesARM!
-    let vkGetPhysicalDeviceQueueFamilyDataGraphProcessingEnginePropertiesARM: PFN_vkGetPhysicalDeviceQueueFamilyDataGraphProcessingEnginePropertiesARM!
-    let vkEnumeratePhysicalDeviceQueueFamilyPerformanceCountersByRegionARM: PFN_vkEnumeratePhysicalDeviceQueueFamilyPerformanceCountersByRegionARM!
-    let vkGetPhysicalDeviceDescriptorSizeEXT: PFN_vkGetPhysicalDeviceDescriptorSizeEXT!
-    let vkGetPhysicalDeviceQueueFamilyDataGraphEngineOperationPropertiesARM: PFN_vkGetPhysicalDeviceQueueFamilyDataGraphEngineOperationPropertiesARM!
-    let vkGetPhysicalDeviceQueueFamilyDataGraphOpticalFlowImageFormatsARM: PFN_vkGetPhysicalDeviceQueueFamilyDataGraphOpticalFlowImageFormatsARM!
+    public let vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR: PFN_vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR!
+    public let vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR: PFN_vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR!
+    public let vkCreateHeadlessSurfaceEXT: PFN_vkCreateHeadlessSurfaceEXT!
+    public let vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV: PFN_vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV!
+    public let vkGetPhysicalDeviceToolProperties: PFN_vkGetPhysicalDeviceToolProperties!
+    public let vkGetPhysicalDeviceFragmentShadingRatesKHR: PFN_vkGetPhysicalDeviceFragmentShadingRatesKHR!
+    public let vkGetPhysicalDeviceVideoCapabilitiesKHR: PFN_vkGetPhysicalDeviceVideoCapabilitiesKHR!
+    public let vkGetPhysicalDeviceVideoFormatPropertiesKHR: PFN_vkGetPhysicalDeviceVideoFormatPropertiesKHR!
+    public let vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR: PFN_vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR!
+    public let vkAcquireDrmDisplayEXT: PFN_vkAcquireDrmDisplayEXT!
+    public let vkGetDrmDisplayEXT: PFN_vkGetDrmDisplayEXT!
+    public let vkGetPhysicalDeviceOpticalFlowImageFormatsNV: PFN_vkGetPhysicalDeviceOpticalFlowImageFormatsNV!
+    public let vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR: PFN_vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR!
+    public let vkGetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV: PFN_vkGetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV!
+    public let vkGetPhysicalDeviceCooperativeVectorPropertiesNV: PFN_vkGetPhysicalDeviceCooperativeVectorPropertiesNV!
+    public let vkEnumeratePhysicalDeviceShaderInstrumentationMetricsARM: PFN_vkEnumeratePhysicalDeviceShaderInstrumentationMetricsARM!
+    public let vkGetPhysicalDeviceExternalTensorPropertiesARM: PFN_vkGetPhysicalDeviceExternalTensorPropertiesARM!
+    public let vkGetPhysicalDeviceQueueFamilyDataGraphPropertiesARM: PFN_vkGetPhysicalDeviceQueueFamilyDataGraphPropertiesARM!
+    public let vkGetPhysicalDeviceQueueFamilyDataGraphProcessingEnginePropertiesARM: PFN_vkGetPhysicalDeviceQueueFamilyDataGraphProcessingEnginePropertiesARM!
+    public let vkEnumeratePhysicalDeviceQueueFamilyPerformanceCountersByRegionARM: PFN_vkEnumeratePhysicalDeviceQueueFamilyPerformanceCountersByRegionARM!
+    public let vkGetPhysicalDeviceDescriptorSizeEXT: PFN_vkGetPhysicalDeviceDescriptorSizeEXT!
+    public let vkGetPhysicalDeviceQueueFamilyDataGraphEngineOperationPropertiesARM: PFN_vkGetPhysicalDeviceQueueFamilyDataGraphEngineOperationPropertiesARM!
+    public let vkGetPhysicalDeviceQueueFamilyDataGraphOpticalFlowImageFormatsARM: PFN_vkGetPhysicalDeviceQueueFamilyDataGraphOpticalFlowImageFormatsARM!
 
     init(vkGetInstanceProcAddr: PFN_vkGetInstanceProcAddr, instance: VkInstance) {
         self.vkDestroyInstance = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkDestroyInstance"), to: PFN_vkDestroyInstance?.self)
@@ -338,680 +338,680 @@ struct InstanceDispatchTable {
     }
 }
 
-struct DeviceDispatchTable {
-    let vkDestroyDevice: PFN_vkDestroyDevice!
-    let vkGetDeviceQueue: PFN_vkGetDeviceQueue!
-    let vkQueueSubmit: PFN_vkQueueSubmit!
-    let vkQueueWaitIdle: PFN_vkQueueWaitIdle!
-    let vkDeviceWaitIdle: PFN_vkDeviceWaitIdle!
-    let vkAllocateMemory: PFN_vkAllocateMemory!
-    let vkFreeMemory: PFN_vkFreeMemory!
-    let vkMapMemory: PFN_vkMapMemory!
-    let vkUnmapMemory: PFN_vkUnmapMemory!
-    let vkFlushMappedMemoryRanges: PFN_vkFlushMappedMemoryRanges!
-    let vkInvalidateMappedMemoryRanges: PFN_vkInvalidateMappedMemoryRanges!
-    let vkGetDeviceMemoryCommitment: PFN_vkGetDeviceMemoryCommitment!
-    let vkGetBufferMemoryRequirements: PFN_vkGetBufferMemoryRequirements!
-    let vkBindBufferMemory: PFN_vkBindBufferMemory!
-    let vkGetImageMemoryRequirements: PFN_vkGetImageMemoryRequirements!
-    let vkBindImageMemory: PFN_vkBindImageMemory!
-    let vkGetImageSparseMemoryRequirements: PFN_vkGetImageSparseMemoryRequirements!
-    let vkQueueBindSparse: PFN_vkQueueBindSparse!
-    let vkCreateFence: PFN_vkCreateFence!
-    let vkDestroyFence: PFN_vkDestroyFence!
-    let vkResetFences: PFN_vkResetFences!
-    let vkGetFenceStatus: PFN_vkGetFenceStatus!
-    let vkWaitForFences: PFN_vkWaitForFences!
-    let vkCreateSemaphore: PFN_vkCreateSemaphore!
-    let vkDestroySemaphore: PFN_vkDestroySemaphore!
-    let vkCreateEvent: PFN_vkCreateEvent!
-    let vkDestroyEvent: PFN_vkDestroyEvent!
-    let vkGetEventStatus: PFN_vkGetEventStatus!
-    let vkSetEvent: PFN_vkSetEvent!
-    let vkResetEvent: PFN_vkResetEvent!
-    let vkCreateQueryPool: PFN_vkCreateQueryPool!
-    let vkDestroyQueryPool: PFN_vkDestroyQueryPool!
-    let vkGetQueryPoolResults: PFN_vkGetQueryPoolResults!
-    let vkResetQueryPool: PFN_vkResetQueryPool!
-    let vkCreateBuffer: PFN_vkCreateBuffer!
-    let vkDestroyBuffer: PFN_vkDestroyBuffer!
-    let vkCreateBufferView: PFN_vkCreateBufferView!
-    let vkDestroyBufferView: PFN_vkDestroyBufferView!
-    let vkCreateImage: PFN_vkCreateImage!
-    let vkDestroyImage: PFN_vkDestroyImage!
-    let vkGetImageSubresourceLayout: PFN_vkGetImageSubresourceLayout!
-    let vkCreateImageView: PFN_vkCreateImageView!
-    let vkDestroyImageView: PFN_vkDestroyImageView!
-    let vkCreateShaderModule: PFN_vkCreateShaderModule!
-    let vkDestroyShaderModule: PFN_vkDestroyShaderModule!
-    let vkCreatePipelineCache: PFN_vkCreatePipelineCache!
-    let vkDestroyPipelineCache: PFN_vkDestroyPipelineCache!
-    let vkGetPipelineCacheData: PFN_vkGetPipelineCacheData!
-    let vkMergePipelineCaches: PFN_vkMergePipelineCaches!
-    let vkCreatePipelineBinariesKHR: PFN_vkCreatePipelineBinariesKHR!
-    let vkDestroyPipelineBinaryKHR: PFN_vkDestroyPipelineBinaryKHR!
-    let vkGetPipelineKeyKHR: PFN_vkGetPipelineKeyKHR!
-    let vkGetPipelineBinaryDataKHR: PFN_vkGetPipelineBinaryDataKHR!
-    let vkReleaseCapturedPipelineDataKHR: PFN_vkReleaseCapturedPipelineDataKHR!
-    let vkCreateGraphicsPipelines: PFN_vkCreateGraphicsPipelines!
-    let vkCreateComputePipelines: PFN_vkCreateComputePipelines!
-    let vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI: PFN_vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI!
-    let vkDestroyPipeline: PFN_vkDestroyPipeline!
-    let vkCreatePipelineLayout: PFN_vkCreatePipelineLayout!
-    let vkDestroyPipelineLayout: PFN_vkDestroyPipelineLayout!
-    let vkCreateSampler: PFN_vkCreateSampler!
-    let vkDestroySampler: PFN_vkDestroySampler!
-    let vkCreateDescriptorSetLayout: PFN_vkCreateDescriptorSetLayout!
-    let vkDestroyDescriptorSetLayout: PFN_vkDestroyDescriptorSetLayout!
-    let vkCreateDescriptorPool: PFN_vkCreateDescriptorPool!
-    let vkDestroyDescriptorPool: PFN_vkDestroyDescriptorPool!
-    let vkResetDescriptorPool: PFN_vkResetDescriptorPool!
-    let vkAllocateDescriptorSets: PFN_vkAllocateDescriptorSets!
-    let vkFreeDescriptorSets: PFN_vkFreeDescriptorSets!
-    let vkUpdateDescriptorSets: PFN_vkUpdateDescriptorSets!
-    let vkCreateFramebuffer: PFN_vkCreateFramebuffer!
-    let vkDestroyFramebuffer: PFN_vkDestroyFramebuffer!
-    let vkCreateRenderPass: PFN_vkCreateRenderPass!
-    let vkDestroyRenderPass: PFN_vkDestroyRenderPass!
-    let vkGetRenderAreaGranularity: PFN_vkGetRenderAreaGranularity!
-    let vkGetRenderingAreaGranularity: PFN_vkGetRenderingAreaGranularity!
-    let vkCreateCommandPool: PFN_vkCreateCommandPool!
-    let vkDestroyCommandPool: PFN_vkDestroyCommandPool!
-    let vkResetCommandPool: PFN_vkResetCommandPool!
-    let vkAllocateCommandBuffers: PFN_vkAllocateCommandBuffers!
-    let vkFreeCommandBuffers: PFN_vkFreeCommandBuffers!
-    let vkBeginCommandBuffer: PFN_vkBeginCommandBuffer!
-    let vkEndCommandBuffer: PFN_vkEndCommandBuffer!
-    let vkResetCommandBuffer: PFN_vkResetCommandBuffer!
-    let vkCmdBindPipeline: PFN_vkCmdBindPipeline!
-    let vkCmdSetPrimitiveRestartIndexEXT: PFN_vkCmdSetPrimitiveRestartIndexEXT!
-    let vkCmdSetAttachmentFeedbackLoopEnableEXT: PFN_vkCmdSetAttachmentFeedbackLoopEnableEXT!
-    let vkCmdSetViewport: PFN_vkCmdSetViewport!
-    let vkCmdSetScissor: PFN_vkCmdSetScissor!
-    let vkCmdSetLineWidth: PFN_vkCmdSetLineWidth!
-    let vkCmdSetDepthBias: PFN_vkCmdSetDepthBias!
-    let vkCmdSetBlendConstants: PFN_vkCmdSetBlendConstants!
-    let vkCmdSetDepthBounds: PFN_vkCmdSetDepthBounds!
-    let vkCmdSetStencilCompareMask: PFN_vkCmdSetStencilCompareMask!
-    let vkCmdSetStencilWriteMask: PFN_vkCmdSetStencilWriteMask!
-    let vkCmdSetStencilReference: PFN_vkCmdSetStencilReference!
-    let vkCmdBindDescriptorSets: PFN_vkCmdBindDescriptorSets!
-    let vkCmdBindIndexBuffer: PFN_vkCmdBindIndexBuffer!
-    let vkCmdBindVertexBuffers: PFN_vkCmdBindVertexBuffers!
-    let vkCmdDraw: PFN_vkCmdDraw!
-    let vkCmdDrawIndexed: PFN_vkCmdDrawIndexed!
-    let vkCmdDrawMultiEXT: PFN_vkCmdDrawMultiEXT!
-    let vkCmdDrawMultiIndexedEXT: PFN_vkCmdDrawMultiIndexedEXT!
-    let vkCmdDrawIndirect: PFN_vkCmdDrawIndirect!
-    let vkCmdDrawIndexedIndirect: PFN_vkCmdDrawIndexedIndirect!
-    let vkCmdDispatch: PFN_vkCmdDispatch!
-    let vkCmdDispatchIndirect: PFN_vkCmdDispatchIndirect!
-    let vkCmdSubpassShadingHUAWEI: PFN_vkCmdSubpassShadingHUAWEI!
-    let vkCmdDrawClusterHUAWEI: PFN_vkCmdDrawClusterHUAWEI!
-    let vkCmdDrawClusterIndirectHUAWEI: PFN_vkCmdDrawClusterIndirectHUAWEI!
-    let vkCmdUpdatePipelineIndirectBufferNV: PFN_vkCmdUpdatePipelineIndirectBufferNV!
-    let vkCmdCopyBuffer: PFN_vkCmdCopyBuffer!
-    let vkCmdCopyImage: PFN_vkCmdCopyImage!
-    let vkCmdBlitImage: PFN_vkCmdBlitImage!
-    let vkCmdCopyBufferToImage: PFN_vkCmdCopyBufferToImage!
-    let vkCmdCopyImageToBuffer: PFN_vkCmdCopyImageToBuffer!
-    let vkCmdCopyMemoryIndirectNV: PFN_vkCmdCopyMemoryIndirectNV!
-    let vkCmdCopyMemoryIndirectKHR: PFN_vkCmdCopyMemoryIndirectKHR!
-    let vkCmdCopyMemoryToImageIndirectNV: PFN_vkCmdCopyMemoryToImageIndirectNV!
-    let vkCmdCopyMemoryToImageIndirectKHR: PFN_vkCmdCopyMemoryToImageIndirectKHR!
-    let vkCmdUpdateBuffer: PFN_vkCmdUpdateBuffer!
-    let vkCmdFillBuffer: PFN_vkCmdFillBuffer!
-    let vkCmdClearColorImage: PFN_vkCmdClearColorImage!
-    let vkCmdClearDepthStencilImage: PFN_vkCmdClearDepthStencilImage!
-    let vkCmdClearAttachments: PFN_vkCmdClearAttachments!
-    let vkCmdResolveImage: PFN_vkCmdResolveImage!
-    let vkCmdSetEvent: PFN_vkCmdSetEvent!
-    let vkCmdResetEvent: PFN_vkCmdResetEvent!
-    let vkCmdWaitEvents: PFN_vkCmdWaitEvents!
-    let vkCmdPipelineBarrier: PFN_vkCmdPipelineBarrier!
-    let vkCmdBeginQuery: PFN_vkCmdBeginQuery!
-    let vkCmdEndQuery: PFN_vkCmdEndQuery!
-    let vkCmdBeginConditionalRenderingEXT: PFN_vkCmdBeginConditionalRenderingEXT!
-    let vkCmdEndConditionalRenderingEXT: PFN_vkCmdEndConditionalRenderingEXT!
-    let vkCmdBeginCustomResolveEXT: PFN_vkCmdBeginCustomResolveEXT!
-    let vkCmdResetQueryPool: PFN_vkCmdResetQueryPool!
-    let vkCmdWriteTimestamp: PFN_vkCmdWriteTimestamp!
-    let vkCmdCopyQueryPoolResults: PFN_vkCmdCopyQueryPoolResults!
-    let vkCmdPushConstants: PFN_vkCmdPushConstants!
-    let vkCmdBeginRenderPass: PFN_vkCmdBeginRenderPass!
-    let vkCmdNextSubpass: PFN_vkCmdNextSubpass!
-    let vkCmdEndRenderPass: PFN_vkCmdEndRenderPass!
-    let vkCmdExecuteCommands: PFN_vkCmdExecuteCommands!
-    let vkCreateSharedSwapchainsKHR: PFN_vkCreateSharedSwapchainsKHR!
-    let vkCreateSwapchainKHR: PFN_vkCreateSwapchainKHR!
-    let vkDestroySwapchainKHR: PFN_vkDestroySwapchainKHR!
-    let vkGetSwapchainImagesKHR: PFN_vkGetSwapchainImagesKHR!
-    let vkAcquireNextImageKHR: PFN_vkAcquireNextImageKHR!
-    let vkQueuePresentKHR: PFN_vkQueuePresentKHR!
-    let vkDebugMarkerSetObjectNameEXT: PFN_vkDebugMarkerSetObjectNameEXT!
-    let vkDebugMarkerSetObjectTagEXT: PFN_vkDebugMarkerSetObjectTagEXT!
-    let vkCmdDebugMarkerBeginEXT: PFN_vkCmdDebugMarkerBeginEXT!
-    let vkCmdDebugMarkerEndEXT: PFN_vkCmdDebugMarkerEndEXT!
-    let vkCmdDebugMarkerInsertEXT: PFN_vkCmdDebugMarkerInsertEXT!
+public struct DeviceDispatchTable {
+    public let vkDestroyDevice: PFN_vkDestroyDevice!
+    public let vkGetDeviceQueue: PFN_vkGetDeviceQueue!
+    public let vkQueueSubmit: PFN_vkQueueSubmit!
+    public let vkQueueWaitIdle: PFN_vkQueueWaitIdle!
+    public let vkDeviceWaitIdle: PFN_vkDeviceWaitIdle!
+    public let vkAllocateMemory: PFN_vkAllocateMemory!
+    public let vkFreeMemory: PFN_vkFreeMemory!
+    public let vkMapMemory: PFN_vkMapMemory!
+    public let vkUnmapMemory: PFN_vkUnmapMemory!
+    public let vkFlushMappedMemoryRanges: PFN_vkFlushMappedMemoryRanges!
+    public let vkInvalidateMappedMemoryRanges: PFN_vkInvalidateMappedMemoryRanges!
+    public let vkGetDeviceMemoryCommitment: PFN_vkGetDeviceMemoryCommitment!
+    public let vkGetBufferMemoryRequirements: PFN_vkGetBufferMemoryRequirements!
+    public let vkBindBufferMemory: PFN_vkBindBufferMemory!
+    public let vkGetImageMemoryRequirements: PFN_vkGetImageMemoryRequirements!
+    public let vkBindImageMemory: PFN_vkBindImageMemory!
+    public let vkGetImageSparseMemoryRequirements: PFN_vkGetImageSparseMemoryRequirements!
+    public let vkQueueBindSparse: PFN_vkQueueBindSparse!
+    public let vkCreateFence: PFN_vkCreateFence!
+    public let vkDestroyFence: PFN_vkDestroyFence!
+    public let vkResetFences: PFN_vkResetFences!
+    public let vkGetFenceStatus: PFN_vkGetFenceStatus!
+    public let vkWaitForFences: PFN_vkWaitForFences!
+    public let vkCreateSemaphore: PFN_vkCreateSemaphore!
+    public let vkDestroySemaphore: PFN_vkDestroySemaphore!
+    public let vkCreateEvent: PFN_vkCreateEvent!
+    public let vkDestroyEvent: PFN_vkDestroyEvent!
+    public let vkGetEventStatus: PFN_vkGetEventStatus!
+    public let vkSetEvent: PFN_vkSetEvent!
+    public let vkResetEvent: PFN_vkResetEvent!
+    public let vkCreateQueryPool: PFN_vkCreateQueryPool!
+    public let vkDestroyQueryPool: PFN_vkDestroyQueryPool!
+    public let vkGetQueryPoolResults: PFN_vkGetQueryPoolResults!
+    public let vkResetQueryPool: PFN_vkResetQueryPool!
+    public let vkCreateBuffer: PFN_vkCreateBuffer!
+    public let vkDestroyBuffer: PFN_vkDestroyBuffer!
+    public let vkCreateBufferView: PFN_vkCreateBufferView!
+    public let vkDestroyBufferView: PFN_vkDestroyBufferView!
+    public let vkCreateImage: PFN_vkCreateImage!
+    public let vkDestroyImage: PFN_vkDestroyImage!
+    public let vkGetImageSubresourceLayout: PFN_vkGetImageSubresourceLayout!
+    public let vkCreateImageView: PFN_vkCreateImageView!
+    public let vkDestroyImageView: PFN_vkDestroyImageView!
+    public let vkCreateShaderModule: PFN_vkCreateShaderModule!
+    public let vkDestroyShaderModule: PFN_vkDestroyShaderModule!
+    public let vkCreatePipelineCache: PFN_vkCreatePipelineCache!
+    public let vkDestroyPipelineCache: PFN_vkDestroyPipelineCache!
+    public let vkGetPipelineCacheData: PFN_vkGetPipelineCacheData!
+    public let vkMergePipelineCaches: PFN_vkMergePipelineCaches!
+    public let vkCreatePipelineBinariesKHR: PFN_vkCreatePipelineBinariesKHR!
+    public let vkDestroyPipelineBinaryKHR: PFN_vkDestroyPipelineBinaryKHR!
+    public let vkGetPipelineKeyKHR: PFN_vkGetPipelineKeyKHR!
+    public let vkGetPipelineBinaryDataKHR: PFN_vkGetPipelineBinaryDataKHR!
+    public let vkReleaseCapturedPipelineDataKHR: PFN_vkReleaseCapturedPipelineDataKHR!
+    public let vkCreateGraphicsPipelines: PFN_vkCreateGraphicsPipelines!
+    public let vkCreateComputePipelines: PFN_vkCreateComputePipelines!
+    public let vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI: PFN_vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI!
+    public let vkDestroyPipeline: PFN_vkDestroyPipeline!
+    public let vkCreatePipelineLayout: PFN_vkCreatePipelineLayout!
+    public let vkDestroyPipelineLayout: PFN_vkDestroyPipelineLayout!
+    public let vkCreateSampler: PFN_vkCreateSampler!
+    public let vkDestroySampler: PFN_vkDestroySampler!
+    public let vkCreateDescriptorSetLayout: PFN_vkCreateDescriptorSetLayout!
+    public let vkDestroyDescriptorSetLayout: PFN_vkDestroyDescriptorSetLayout!
+    public let vkCreateDescriptorPool: PFN_vkCreateDescriptorPool!
+    public let vkDestroyDescriptorPool: PFN_vkDestroyDescriptorPool!
+    public let vkResetDescriptorPool: PFN_vkResetDescriptorPool!
+    public let vkAllocateDescriptorSets: PFN_vkAllocateDescriptorSets!
+    public let vkFreeDescriptorSets: PFN_vkFreeDescriptorSets!
+    public let vkUpdateDescriptorSets: PFN_vkUpdateDescriptorSets!
+    public let vkCreateFramebuffer: PFN_vkCreateFramebuffer!
+    public let vkDestroyFramebuffer: PFN_vkDestroyFramebuffer!
+    public let vkCreateRenderPass: PFN_vkCreateRenderPass!
+    public let vkDestroyRenderPass: PFN_vkDestroyRenderPass!
+    public let vkGetRenderAreaGranularity: PFN_vkGetRenderAreaGranularity!
+    public let vkGetRenderingAreaGranularity: PFN_vkGetRenderingAreaGranularity!
+    public let vkCreateCommandPool: PFN_vkCreateCommandPool!
+    public let vkDestroyCommandPool: PFN_vkDestroyCommandPool!
+    public let vkResetCommandPool: PFN_vkResetCommandPool!
+    public let vkAllocateCommandBuffers: PFN_vkAllocateCommandBuffers!
+    public let vkFreeCommandBuffers: PFN_vkFreeCommandBuffers!
+    public let vkBeginCommandBuffer: PFN_vkBeginCommandBuffer!
+    public let vkEndCommandBuffer: PFN_vkEndCommandBuffer!
+    public let vkResetCommandBuffer: PFN_vkResetCommandBuffer!
+    public let vkCmdBindPipeline: PFN_vkCmdBindPipeline!
+    public let vkCmdSetPrimitiveRestartIndexEXT: PFN_vkCmdSetPrimitiveRestartIndexEXT!
+    public let vkCmdSetAttachmentFeedbackLoopEnableEXT: PFN_vkCmdSetAttachmentFeedbackLoopEnableEXT!
+    public let vkCmdSetViewport: PFN_vkCmdSetViewport!
+    public let vkCmdSetScissor: PFN_vkCmdSetScissor!
+    public let vkCmdSetLineWidth: PFN_vkCmdSetLineWidth!
+    public let vkCmdSetDepthBias: PFN_vkCmdSetDepthBias!
+    public let vkCmdSetBlendConstants: PFN_vkCmdSetBlendConstants!
+    public let vkCmdSetDepthBounds: PFN_vkCmdSetDepthBounds!
+    public let vkCmdSetStencilCompareMask: PFN_vkCmdSetStencilCompareMask!
+    public let vkCmdSetStencilWriteMask: PFN_vkCmdSetStencilWriteMask!
+    public let vkCmdSetStencilReference: PFN_vkCmdSetStencilReference!
+    public let vkCmdBindDescriptorSets: PFN_vkCmdBindDescriptorSets!
+    public let vkCmdBindIndexBuffer: PFN_vkCmdBindIndexBuffer!
+    public let vkCmdBindVertexBuffers: PFN_vkCmdBindVertexBuffers!
+    public let vkCmdDraw: PFN_vkCmdDraw!
+    public let vkCmdDrawIndexed: PFN_vkCmdDrawIndexed!
+    public let vkCmdDrawMultiEXT: PFN_vkCmdDrawMultiEXT!
+    public let vkCmdDrawMultiIndexedEXT: PFN_vkCmdDrawMultiIndexedEXT!
+    public let vkCmdDrawIndirect: PFN_vkCmdDrawIndirect!
+    public let vkCmdDrawIndexedIndirect: PFN_vkCmdDrawIndexedIndirect!
+    public let vkCmdDispatch: PFN_vkCmdDispatch!
+    public let vkCmdDispatchIndirect: PFN_vkCmdDispatchIndirect!
+    public let vkCmdSubpassShadingHUAWEI: PFN_vkCmdSubpassShadingHUAWEI!
+    public let vkCmdDrawClusterHUAWEI: PFN_vkCmdDrawClusterHUAWEI!
+    public let vkCmdDrawClusterIndirectHUAWEI: PFN_vkCmdDrawClusterIndirectHUAWEI!
+    public let vkCmdUpdatePipelineIndirectBufferNV: PFN_vkCmdUpdatePipelineIndirectBufferNV!
+    public let vkCmdCopyBuffer: PFN_vkCmdCopyBuffer!
+    public let vkCmdCopyImage: PFN_vkCmdCopyImage!
+    public let vkCmdBlitImage: PFN_vkCmdBlitImage!
+    public let vkCmdCopyBufferToImage: PFN_vkCmdCopyBufferToImage!
+    public let vkCmdCopyImageToBuffer: PFN_vkCmdCopyImageToBuffer!
+    public let vkCmdCopyMemoryIndirectNV: PFN_vkCmdCopyMemoryIndirectNV!
+    public let vkCmdCopyMemoryIndirectKHR: PFN_vkCmdCopyMemoryIndirectKHR!
+    public let vkCmdCopyMemoryToImageIndirectNV: PFN_vkCmdCopyMemoryToImageIndirectNV!
+    public let vkCmdCopyMemoryToImageIndirectKHR: PFN_vkCmdCopyMemoryToImageIndirectKHR!
+    public let vkCmdUpdateBuffer: PFN_vkCmdUpdateBuffer!
+    public let vkCmdFillBuffer: PFN_vkCmdFillBuffer!
+    public let vkCmdClearColorImage: PFN_vkCmdClearColorImage!
+    public let vkCmdClearDepthStencilImage: PFN_vkCmdClearDepthStencilImage!
+    public let vkCmdClearAttachments: PFN_vkCmdClearAttachments!
+    public let vkCmdResolveImage: PFN_vkCmdResolveImage!
+    public let vkCmdSetEvent: PFN_vkCmdSetEvent!
+    public let vkCmdResetEvent: PFN_vkCmdResetEvent!
+    public let vkCmdWaitEvents: PFN_vkCmdWaitEvents!
+    public let vkCmdPipelineBarrier: PFN_vkCmdPipelineBarrier!
+    public let vkCmdBeginQuery: PFN_vkCmdBeginQuery!
+    public let vkCmdEndQuery: PFN_vkCmdEndQuery!
+    public let vkCmdBeginConditionalRenderingEXT: PFN_vkCmdBeginConditionalRenderingEXT!
+    public let vkCmdEndConditionalRenderingEXT: PFN_vkCmdEndConditionalRenderingEXT!
+    public let vkCmdBeginCustomResolveEXT: PFN_vkCmdBeginCustomResolveEXT!
+    public let vkCmdResetQueryPool: PFN_vkCmdResetQueryPool!
+    public let vkCmdWriteTimestamp: PFN_vkCmdWriteTimestamp!
+    public let vkCmdCopyQueryPoolResults: PFN_vkCmdCopyQueryPoolResults!
+    public let vkCmdPushConstants: PFN_vkCmdPushConstants!
+    public let vkCmdBeginRenderPass: PFN_vkCmdBeginRenderPass!
+    public let vkCmdNextSubpass: PFN_vkCmdNextSubpass!
+    public let vkCmdEndRenderPass: PFN_vkCmdEndRenderPass!
+    public let vkCmdExecuteCommands: PFN_vkCmdExecuteCommands!
+    public let vkCreateSharedSwapchainsKHR: PFN_vkCreateSharedSwapchainsKHR!
+    public let vkCreateSwapchainKHR: PFN_vkCreateSwapchainKHR!
+    public let vkDestroySwapchainKHR: PFN_vkDestroySwapchainKHR!
+    public let vkGetSwapchainImagesKHR: PFN_vkGetSwapchainImagesKHR!
+    public let vkAcquireNextImageKHR: PFN_vkAcquireNextImageKHR!
+    public let vkQueuePresentKHR: PFN_vkQueuePresentKHR!
+    public let vkDebugMarkerSetObjectNameEXT: PFN_vkDebugMarkerSetObjectNameEXT!
+    public let vkDebugMarkerSetObjectTagEXT: PFN_vkDebugMarkerSetObjectTagEXT!
+    public let vkCmdDebugMarkerBeginEXT: PFN_vkCmdDebugMarkerBeginEXT!
+    public let vkCmdDebugMarkerEndEXT: PFN_vkCmdDebugMarkerEndEXT!
+    public let vkCmdDebugMarkerInsertEXT: PFN_vkCmdDebugMarkerInsertEXT!
     #if VK_USE_PLATFORM_WIN32_KHR
-    let vkGetMemoryWin32HandleNV: PFN_vkGetMemoryWin32HandleNV!
+    public let vkGetMemoryWin32HandleNV: PFN_vkGetMemoryWin32HandleNV!
     #endif
-    let vkCmdExecuteGeneratedCommandsNV: PFN_vkCmdExecuteGeneratedCommandsNV!
-    let vkCmdPreprocessGeneratedCommandsNV: PFN_vkCmdPreprocessGeneratedCommandsNV!
-    let vkCmdBindPipelineShaderGroupNV: PFN_vkCmdBindPipelineShaderGroupNV!
-    let vkGetGeneratedCommandsMemoryRequirementsNV: PFN_vkGetGeneratedCommandsMemoryRequirementsNV!
-    let vkCreateIndirectCommandsLayoutNV: PFN_vkCreateIndirectCommandsLayoutNV!
-    let vkDestroyIndirectCommandsLayoutNV: PFN_vkDestroyIndirectCommandsLayoutNV!
-    let vkCmdExecuteGeneratedCommandsEXT: PFN_vkCmdExecuteGeneratedCommandsEXT!
-    let vkCmdPreprocessGeneratedCommandsEXT: PFN_vkCmdPreprocessGeneratedCommandsEXT!
-    let vkGetGeneratedCommandsMemoryRequirementsEXT: PFN_vkGetGeneratedCommandsMemoryRequirementsEXT!
-    let vkCreateIndirectCommandsLayoutEXT: PFN_vkCreateIndirectCommandsLayoutEXT!
-    let vkDestroyIndirectCommandsLayoutEXT: PFN_vkDestroyIndirectCommandsLayoutEXT!
-    let vkCreateIndirectExecutionSetEXT: PFN_vkCreateIndirectExecutionSetEXT!
-    let vkDestroyIndirectExecutionSetEXT: PFN_vkDestroyIndirectExecutionSetEXT!
-    let vkUpdateIndirectExecutionSetPipelineEXT: PFN_vkUpdateIndirectExecutionSetPipelineEXT!
-    let vkUpdateIndirectExecutionSetShaderEXT: PFN_vkUpdateIndirectExecutionSetShaderEXT!
-    let vkCmdPushDescriptorSet: PFN_vkCmdPushDescriptorSet!
-    let vkTrimCommandPool: PFN_vkTrimCommandPool!
+    public let vkCmdExecuteGeneratedCommandsNV: PFN_vkCmdExecuteGeneratedCommandsNV!
+    public let vkCmdPreprocessGeneratedCommandsNV: PFN_vkCmdPreprocessGeneratedCommandsNV!
+    public let vkCmdBindPipelineShaderGroupNV: PFN_vkCmdBindPipelineShaderGroupNV!
+    public let vkGetGeneratedCommandsMemoryRequirementsNV: PFN_vkGetGeneratedCommandsMemoryRequirementsNV!
+    public let vkCreateIndirectCommandsLayoutNV: PFN_vkCreateIndirectCommandsLayoutNV!
+    public let vkDestroyIndirectCommandsLayoutNV: PFN_vkDestroyIndirectCommandsLayoutNV!
+    public let vkCmdExecuteGeneratedCommandsEXT: PFN_vkCmdExecuteGeneratedCommandsEXT!
+    public let vkCmdPreprocessGeneratedCommandsEXT: PFN_vkCmdPreprocessGeneratedCommandsEXT!
+    public let vkGetGeneratedCommandsMemoryRequirementsEXT: PFN_vkGetGeneratedCommandsMemoryRequirementsEXT!
+    public let vkCreateIndirectCommandsLayoutEXT: PFN_vkCreateIndirectCommandsLayoutEXT!
+    public let vkDestroyIndirectCommandsLayoutEXT: PFN_vkDestroyIndirectCommandsLayoutEXT!
+    public let vkCreateIndirectExecutionSetEXT: PFN_vkCreateIndirectExecutionSetEXT!
+    public let vkDestroyIndirectExecutionSetEXT: PFN_vkDestroyIndirectExecutionSetEXT!
+    public let vkUpdateIndirectExecutionSetPipelineEXT: PFN_vkUpdateIndirectExecutionSetPipelineEXT!
+    public let vkUpdateIndirectExecutionSetShaderEXT: PFN_vkUpdateIndirectExecutionSetShaderEXT!
+    public let vkCmdPushDescriptorSet: PFN_vkCmdPushDescriptorSet!
+    public let vkTrimCommandPool: PFN_vkTrimCommandPool!
     #if VK_USE_PLATFORM_WIN32_KHR
-    let vkGetMemoryWin32HandleKHR: PFN_vkGetMemoryWin32HandleKHR!
+    public let vkGetMemoryWin32HandleKHR: PFN_vkGetMemoryWin32HandleKHR!
     #endif
     #if VK_USE_PLATFORM_WIN32_KHR
-    let vkGetMemoryWin32HandlePropertiesKHR: PFN_vkGetMemoryWin32HandlePropertiesKHR!
+    public let vkGetMemoryWin32HandlePropertiesKHR: PFN_vkGetMemoryWin32HandlePropertiesKHR!
     #endif
-    let vkGetMemoryFdKHR: PFN_vkGetMemoryFdKHR!
-    let vkGetMemoryFdPropertiesKHR: PFN_vkGetMemoryFdPropertiesKHR!
+    public let vkGetMemoryFdKHR: PFN_vkGetMemoryFdKHR!
+    public let vkGetMemoryFdPropertiesKHR: PFN_vkGetMemoryFdPropertiesKHR!
     #if VK_USE_PLATFORM_FUCHSIA
-    let vkGetMemoryZirconHandleFUCHSIA: PFN_vkGetMemoryZirconHandleFUCHSIA!
-    #endif
-    #if VK_USE_PLATFORM_FUCHSIA
-    let vkGetMemoryZirconHandlePropertiesFUCHSIA: PFN_vkGetMemoryZirconHandlePropertiesFUCHSIA!
-    #endif
-    let vkGetMemoryRemoteAddressNV: PFN_vkGetMemoryRemoteAddressNV!
-    #if VK_USE_PLATFORM_WIN32_KHR
-    let vkGetSemaphoreWin32HandleKHR: PFN_vkGetSemaphoreWin32HandleKHR!
-    #endif
-    #if VK_USE_PLATFORM_WIN32_KHR
-    let vkImportSemaphoreWin32HandleKHR: PFN_vkImportSemaphoreWin32HandleKHR!
-    #endif
-    let vkGetSemaphoreFdKHR: PFN_vkGetSemaphoreFdKHR!
-    let vkImportSemaphoreFdKHR: PFN_vkImportSemaphoreFdKHR!
-    #if VK_USE_PLATFORM_FUCHSIA
-    let vkGetSemaphoreZirconHandleFUCHSIA: PFN_vkGetSemaphoreZirconHandleFUCHSIA!
+    public let vkGetMemoryZirconHandleFUCHSIA: PFN_vkGetMemoryZirconHandleFUCHSIA!
     #endif
     #if VK_USE_PLATFORM_FUCHSIA
-    let vkImportSemaphoreZirconHandleFUCHSIA: PFN_vkImportSemaphoreZirconHandleFUCHSIA!
+    public let vkGetMemoryZirconHandlePropertiesFUCHSIA: PFN_vkGetMemoryZirconHandlePropertiesFUCHSIA!
+    #endif
+    public let vkGetMemoryRemoteAddressNV: PFN_vkGetMemoryRemoteAddressNV!
+    #if VK_USE_PLATFORM_WIN32_KHR
+    public let vkGetSemaphoreWin32HandleKHR: PFN_vkGetSemaphoreWin32HandleKHR!
     #endif
     #if VK_USE_PLATFORM_WIN32_KHR
-    let vkGetFenceWin32HandleKHR: PFN_vkGetFenceWin32HandleKHR!
+    public let vkImportSemaphoreWin32HandleKHR: PFN_vkImportSemaphoreWin32HandleKHR!
+    #endif
+    public let vkGetSemaphoreFdKHR: PFN_vkGetSemaphoreFdKHR!
+    public let vkImportSemaphoreFdKHR: PFN_vkImportSemaphoreFdKHR!
+    #if VK_USE_PLATFORM_FUCHSIA
+    public let vkGetSemaphoreZirconHandleFUCHSIA: PFN_vkGetSemaphoreZirconHandleFUCHSIA!
+    #endif
+    #if VK_USE_PLATFORM_FUCHSIA
+    public let vkImportSemaphoreZirconHandleFUCHSIA: PFN_vkImportSemaphoreZirconHandleFUCHSIA!
     #endif
     #if VK_USE_PLATFORM_WIN32_KHR
-    let vkImportFenceWin32HandleKHR: PFN_vkImportFenceWin32HandleKHR!
+    public let vkGetFenceWin32HandleKHR: PFN_vkGetFenceWin32HandleKHR!
     #endif
-    let vkGetFenceFdKHR: PFN_vkGetFenceFdKHR!
-    let vkImportFenceFdKHR: PFN_vkImportFenceFdKHR!
-    let vkDisplayPowerControlEXT: PFN_vkDisplayPowerControlEXT!
-    let vkRegisterDeviceEventEXT: PFN_vkRegisterDeviceEventEXT!
-    let vkRegisterDisplayEventEXT: PFN_vkRegisterDisplayEventEXT!
-    let vkGetSwapchainCounterEXT: PFN_vkGetSwapchainCounterEXT!
-    let vkGetDeviceGroupPeerMemoryFeatures: PFN_vkGetDeviceGroupPeerMemoryFeatures!
-    let vkBindBufferMemory2: PFN_vkBindBufferMemory2!
-    let vkBindImageMemory2: PFN_vkBindImageMemory2!
-    let vkCmdSetDeviceMask: PFN_vkCmdSetDeviceMask!
-    let vkGetDeviceGroupPresentCapabilitiesKHR: PFN_vkGetDeviceGroupPresentCapabilitiesKHR!
-    let vkGetDeviceGroupSurfacePresentModesKHR: PFN_vkGetDeviceGroupSurfacePresentModesKHR!
-    let vkAcquireNextImage2KHR: PFN_vkAcquireNextImage2KHR!
-    let vkCmdDispatchBase: PFN_vkCmdDispatchBase!
-    let vkCreateDescriptorUpdateTemplate: PFN_vkCreateDescriptorUpdateTemplate!
-    let vkDestroyDescriptorUpdateTemplate: PFN_vkDestroyDescriptorUpdateTemplate!
-    let vkUpdateDescriptorSetWithTemplate: PFN_vkUpdateDescriptorSetWithTemplate!
-    let vkCmdPushDescriptorSetWithTemplate: PFN_vkCmdPushDescriptorSetWithTemplate!
-    let vkSetHdrMetadataEXT: PFN_vkSetHdrMetadataEXT!
-    let vkGetSwapchainStatusKHR: PFN_vkGetSwapchainStatusKHR!
-    let vkGetRefreshCycleDurationGOOGLE: PFN_vkGetRefreshCycleDurationGOOGLE!
-    let vkGetPastPresentationTimingGOOGLE: PFN_vkGetPastPresentationTimingGOOGLE!
-    let vkCmdSetViewportWScalingNV: PFN_vkCmdSetViewportWScalingNV!
-    let vkCmdSetDiscardRectangleEXT: PFN_vkCmdSetDiscardRectangleEXT!
-    let vkCmdSetDiscardRectangleEnableEXT: PFN_vkCmdSetDiscardRectangleEnableEXT!
-    let vkCmdSetDiscardRectangleModeEXT: PFN_vkCmdSetDiscardRectangleModeEXT!
-    let vkCmdSetSampleLocationsEXT: PFN_vkCmdSetSampleLocationsEXT!
-    let vkGetBufferMemoryRequirements2: PFN_vkGetBufferMemoryRequirements2!
-    let vkGetImageMemoryRequirements2: PFN_vkGetImageMemoryRequirements2!
-    let vkGetImageSparseMemoryRequirements2: PFN_vkGetImageSparseMemoryRequirements2!
-    let vkGetDeviceBufferMemoryRequirements: PFN_vkGetDeviceBufferMemoryRequirements!
-    let vkGetDeviceImageMemoryRequirements: PFN_vkGetDeviceImageMemoryRequirements!
-    let vkGetDeviceImageSparseMemoryRequirements: PFN_vkGetDeviceImageSparseMemoryRequirements!
-    let vkCreateSamplerYcbcrConversion: PFN_vkCreateSamplerYcbcrConversion!
-    let vkDestroySamplerYcbcrConversion: PFN_vkDestroySamplerYcbcrConversion!
-    let vkGetDeviceQueue2: PFN_vkGetDeviceQueue2!
-    let vkCreateValidationCacheEXT: PFN_vkCreateValidationCacheEXT!
-    let vkDestroyValidationCacheEXT: PFN_vkDestroyValidationCacheEXT!
-    let vkGetValidationCacheDataEXT: PFN_vkGetValidationCacheDataEXT!
-    let vkMergeValidationCachesEXT: PFN_vkMergeValidationCachesEXT!
-    let vkGetDescriptorSetLayoutSupport: PFN_vkGetDescriptorSetLayoutSupport!
-    let vkGetShaderInfoAMD: PFN_vkGetShaderInfoAMD!
-    let vkSetLocalDimmingAMD: PFN_vkSetLocalDimmingAMD!
-    let vkGetCalibratedTimestampsKHR: PFN_vkGetCalibratedTimestampsKHR!
-    let vkSetDebugUtilsObjectNameEXT: PFN_vkSetDebugUtilsObjectNameEXT!
-    let vkSetDebugUtilsObjectTagEXT: PFN_vkSetDebugUtilsObjectTagEXT!
-    let vkQueueBeginDebugUtilsLabelEXT: PFN_vkQueueBeginDebugUtilsLabelEXT!
-    let vkQueueEndDebugUtilsLabelEXT: PFN_vkQueueEndDebugUtilsLabelEXT!
-    let vkQueueInsertDebugUtilsLabelEXT: PFN_vkQueueInsertDebugUtilsLabelEXT!
-    let vkCmdBeginDebugUtilsLabelEXT: PFN_vkCmdBeginDebugUtilsLabelEXT!
-    let vkCmdEndDebugUtilsLabelEXT: PFN_vkCmdEndDebugUtilsLabelEXT!
-    let vkCmdInsertDebugUtilsLabelEXT: PFN_vkCmdInsertDebugUtilsLabelEXT!
-    let vkGetMemoryHostPointerPropertiesEXT: PFN_vkGetMemoryHostPointerPropertiesEXT!
-    let vkCmdWriteBufferMarkerAMD: PFN_vkCmdWriteBufferMarkerAMD!
-    let vkCreateRenderPass2: PFN_vkCreateRenderPass2!
-    let vkCmdBeginRenderPass2: PFN_vkCmdBeginRenderPass2!
-    let vkCmdNextSubpass2: PFN_vkCmdNextSubpass2!
-    let vkCmdEndRenderPass2: PFN_vkCmdEndRenderPass2!
-    let vkGetSemaphoreCounterValue: PFN_vkGetSemaphoreCounterValue!
-    let vkWaitSemaphores: PFN_vkWaitSemaphores!
-    let vkSignalSemaphore: PFN_vkSignalSemaphore!
+    #if VK_USE_PLATFORM_WIN32_KHR
+    public let vkImportFenceWin32HandleKHR: PFN_vkImportFenceWin32HandleKHR!
+    #endif
+    public let vkGetFenceFdKHR: PFN_vkGetFenceFdKHR!
+    public let vkImportFenceFdKHR: PFN_vkImportFenceFdKHR!
+    public let vkDisplayPowerControlEXT: PFN_vkDisplayPowerControlEXT!
+    public let vkRegisterDeviceEventEXT: PFN_vkRegisterDeviceEventEXT!
+    public let vkRegisterDisplayEventEXT: PFN_vkRegisterDisplayEventEXT!
+    public let vkGetSwapchainCounterEXT: PFN_vkGetSwapchainCounterEXT!
+    public let vkGetDeviceGroupPeerMemoryFeatures: PFN_vkGetDeviceGroupPeerMemoryFeatures!
+    public let vkBindBufferMemory2: PFN_vkBindBufferMemory2!
+    public let vkBindImageMemory2: PFN_vkBindImageMemory2!
+    public let vkCmdSetDeviceMask: PFN_vkCmdSetDeviceMask!
+    public let vkGetDeviceGroupPresentCapabilitiesKHR: PFN_vkGetDeviceGroupPresentCapabilitiesKHR!
+    public let vkGetDeviceGroupSurfacePresentModesKHR: PFN_vkGetDeviceGroupSurfacePresentModesKHR!
+    public let vkAcquireNextImage2KHR: PFN_vkAcquireNextImage2KHR!
+    public let vkCmdDispatchBase: PFN_vkCmdDispatchBase!
+    public let vkCreateDescriptorUpdateTemplate: PFN_vkCreateDescriptorUpdateTemplate!
+    public let vkDestroyDescriptorUpdateTemplate: PFN_vkDestroyDescriptorUpdateTemplate!
+    public let vkUpdateDescriptorSetWithTemplate: PFN_vkUpdateDescriptorSetWithTemplate!
+    public let vkCmdPushDescriptorSetWithTemplate: PFN_vkCmdPushDescriptorSetWithTemplate!
+    public let vkSetHdrMetadataEXT: PFN_vkSetHdrMetadataEXT!
+    public let vkGetSwapchainStatusKHR: PFN_vkGetSwapchainStatusKHR!
+    public let vkGetRefreshCycleDurationGOOGLE: PFN_vkGetRefreshCycleDurationGOOGLE!
+    public let vkGetPastPresentationTimingGOOGLE: PFN_vkGetPastPresentationTimingGOOGLE!
+    public let vkCmdSetViewportWScalingNV: PFN_vkCmdSetViewportWScalingNV!
+    public let vkCmdSetDiscardRectangleEXT: PFN_vkCmdSetDiscardRectangleEXT!
+    public let vkCmdSetDiscardRectangleEnableEXT: PFN_vkCmdSetDiscardRectangleEnableEXT!
+    public let vkCmdSetDiscardRectangleModeEXT: PFN_vkCmdSetDiscardRectangleModeEXT!
+    public let vkCmdSetSampleLocationsEXT: PFN_vkCmdSetSampleLocationsEXT!
+    public let vkGetBufferMemoryRequirements2: PFN_vkGetBufferMemoryRequirements2!
+    public let vkGetImageMemoryRequirements2: PFN_vkGetImageMemoryRequirements2!
+    public let vkGetImageSparseMemoryRequirements2: PFN_vkGetImageSparseMemoryRequirements2!
+    public let vkGetDeviceBufferMemoryRequirements: PFN_vkGetDeviceBufferMemoryRequirements!
+    public let vkGetDeviceImageMemoryRequirements: PFN_vkGetDeviceImageMemoryRequirements!
+    public let vkGetDeviceImageSparseMemoryRequirements: PFN_vkGetDeviceImageSparseMemoryRequirements!
+    public let vkCreateSamplerYcbcrConversion: PFN_vkCreateSamplerYcbcrConversion!
+    public let vkDestroySamplerYcbcrConversion: PFN_vkDestroySamplerYcbcrConversion!
+    public let vkGetDeviceQueue2: PFN_vkGetDeviceQueue2!
+    public let vkCreateValidationCacheEXT: PFN_vkCreateValidationCacheEXT!
+    public let vkDestroyValidationCacheEXT: PFN_vkDestroyValidationCacheEXT!
+    public let vkGetValidationCacheDataEXT: PFN_vkGetValidationCacheDataEXT!
+    public let vkMergeValidationCachesEXT: PFN_vkMergeValidationCachesEXT!
+    public let vkGetDescriptorSetLayoutSupport: PFN_vkGetDescriptorSetLayoutSupport!
+    public let vkGetShaderInfoAMD: PFN_vkGetShaderInfoAMD!
+    public let vkSetLocalDimmingAMD: PFN_vkSetLocalDimmingAMD!
+    public let vkGetCalibratedTimestampsKHR: PFN_vkGetCalibratedTimestampsKHR!
+    public let vkSetDebugUtilsObjectNameEXT: PFN_vkSetDebugUtilsObjectNameEXT!
+    public let vkSetDebugUtilsObjectTagEXT: PFN_vkSetDebugUtilsObjectTagEXT!
+    public let vkQueueBeginDebugUtilsLabelEXT: PFN_vkQueueBeginDebugUtilsLabelEXT!
+    public let vkQueueEndDebugUtilsLabelEXT: PFN_vkQueueEndDebugUtilsLabelEXT!
+    public let vkQueueInsertDebugUtilsLabelEXT: PFN_vkQueueInsertDebugUtilsLabelEXT!
+    public let vkCmdBeginDebugUtilsLabelEXT: PFN_vkCmdBeginDebugUtilsLabelEXT!
+    public let vkCmdEndDebugUtilsLabelEXT: PFN_vkCmdEndDebugUtilsLabelEXT!
+    public let vkCmdInsertDebugUtilsLabelEXT: PFN_vkCmdInsertDebugUtilsLabelEXT!
+    public let vkGetMemoryHostPointerPropertiesEXT: PFN_vkGetMemoryHostPointerPropertiesEXT!
+    public let vkCmdWriteBufferMarkerAMD: PFN_vkCmdWriteBufferMarkerAMD!
+    public let vkCreateRenderPass2: PFN_vkCreateRenderPass2!
+    public let vkCmdBeginRenderPass2: PFN_vkCmdBeginRenderPass2!
+    public let vkCmdNextSubpass2: PFN_vkCmdNextSubpass2!
+    public let vkCmdEndRenderPass2: PFN_vkCmdEndRenderPass2!
+    public let vkGetSemaphoreCounterValue: PFN_vkGetSemaphoreCounterValue!
+    public let vkWaitSemaphores: PFN_vkWaitSemaphores!
+    public let vkSignalSemaphore: PFN_vkSignalSemaphore!
     #if VK_USE_PLATFORM_ANDROID_KHR
-    let vkGetAndroidHardwareBufferPropertiesANDROID: PFN_vkGetAndroidHardwareBufferPropertiesANDROID!
+    public let vkGetAndroidHardwareBufferPropertiesANDROID: PFN_vkGetAndroidHardwareBufferPropertiesANDROID!
     #endif
     #if VK_USE_PLATFORM_ANDROID_KHR
-    let vkGetMemoryAndroidHardwareBufferANDROID: PFN_vkGetMemoryAndroidHardwareBufferANDROID!
+    public let vkGetMemoryAndroidHardwareBufferANDROID: PFN_vkGetMemoryAndroidHardwareBufferANDROID!
     #endif
-    let vkCmdDrawIndirectCount: PFN_vkCmdDrawIndirectCount!
-    let vkCmdDrawIndexedIndirectCount: PFN_vkCmdDrawIndexedIndirectCount!
-    let vkCmdSetCheckpointNV: PFN_vkCmdSetCheckpointNV!
-    let vkGetQueueCheckpointDataNV: PFN_vkGetQueueCheckpointDataNV!
-    let vkCmdBindTransformFeedbackBuffersEXT: PFN_vkCmdBindTransformFeedbackBuffersEXT!
-    let vkCmdBeginTransformFeedbackEXT: PFN_vkCmdBeginTransformFeedbackEXT!
-    let vkCmdEndTransformFeedbackEXT: PFN_vkCmdEndTransformFeedbackEXT!
-    let vkCmdBeginQueryIndexedEXT: PFN_vkCmdBeginQueryIndexedEXT!
-    let vkCmdEndQueryIndexedEXT: PFN_vkCmdEndQueryIndexedEXT!
-    let vkCmdDrawIndirectByteCountEXT: PFN_vkCmdDrawIndirectByteCountEXT!
-    let vkCmdSetExclusiveScissorNV: PFN_vkCmdSetExclusiveScissorNV!
-    let vkCmdSetExclusiveScissorEnableNV: PFN_vkCmdSetExclusiveScissorEnableNV!
-    let vkCmdBindShadingRateImageNV: PFN_vkCmdBindShadingRateImageNV!
-    let vkCmdSetViewportShadingRatePaletteNV: PFN_vkCmdSetViewportShadingRatePaletteNV!
-    let vkCmdSetCoarseSampleOrderNV: PFN_vkCmdSetCoarseSampleOrderNV!
-    let vkCmdDrawMeshTasksNV: PFN_vkCmdDrawMeshTasksNV!
-    let vkCmdDrawMeshTasksIndirectNV: PFN_vkCmdDrawMeshTasksIndirectNV!
-    let vkCmdDrawMeshTasksIndirectCountNV: PFN_vkCmdDrawMeshTasksIndirectCountNV!
-    let vkCmdDrawMeshTasksEXT: PFN_vkCmdDrawMeshTasksEXT!
-    let vkCmdDrawMeshTasksIndirectEXT: PFN_vkCmdDrawMeshTasksIndirectEXT!
-    let vkCmdDrawMeshTasksIndirectCountEXT: PFN_vkCmdDrawMeshTasksIndirectCountEXT!
-    let vkCompileDeferredNV: PFN_vkCompileDeferredNV!
-    let vkCreateAccelerationStructureNV: PFN_vkCreateAccelerationStructureNV!
-    let vkCmdBindInvocationMaskHUAWEI: PFN_vkCmdBindInvocationMaskHUAWEI!
-    let vkDestroyAccelerationStructureKHR: PFN_vkDestroyAccelerationStructureKHR!
-    let vkDestroyAccelerationStructureNV: PFN_vkDestroyAccelerationStructureNV!
-    let vkGetAccelerationStructureMemoryRequirementsNV: PFN_vkGetAccelerationStructureMemoryRequirementsNV!
-    let vkBindAccelerationStructureMemoryNV: PFN_vkBindAccelerationStructureMemoryNV!
-    let vkCmdCopyAccelerationStructureNV: PFN_vkCmdCopyAccelerationStructureNV!
-    let vkCmdCopyAccelerationStructureKHR: PFN_vkCmdCopyAccelerationStructureKHR!
-    let vkCopyAccelerationStructureKHR: PFN_vkCopyAccelerationStructureKHR!
-    let vkCmdCopyAccelerationStructureToMemoryKHR: PFN_vkCmdCopyAccelerationStructureToMemoryKHR!
-    let vkCopyAccelerationStructureToMemoryKHR: PFN_vkCopyAccelerationStructureToMemoryKHR!
-    let vkCmdCopyMemoryToAccelerationStructureKHR: PFN_vkCmdCopyMemoryToAccelerationStructureKHR!
-    let vkCopyMemoryToAccelerationStructureKHR: PFN_vkCopyMemoryToAccelerationStructureKHR!
-    let vkCmdWriteAccelerationStructuresPropertiesKHR: PFN_vkCmdWriteAccelerationStructuresPropertiesKHR!
-    let vkCmdWriteAccelerationStructuresPropertiesNV: PFN_vkCmdWriteAccelerationStructuresPropertiesNV!
-    let vkCmdBuildAccelerationStructureNV: PFN_vkCmdBuildAccelerationStructureNV!
-    let vkWriteAccelerationStructuresPropertiesKHR: PFN_vkWriteAccelerationStructuresPropertiesKHR!
-    let vkCmdTraceRaysKHR: PFN_vkCmdTraceRaysKHR!
-    let vkCmdTraceRaysNV: PFN_vkCmdTraceRaysNV!
-    let vkGetRayTracingShaderGroupHandlesKHR: PFN_vkGetRayTracingShaderGroupHandlesKHR!
-    let vkGetRayTracingCaptureReplayShaderGroupHandlesKHR: PFN_vkGetRayTracingCaptureReplayShaderGroupHandlesKHR!
-    let vkGetAccelerationStructureHandleNV: PFN_vkGetAccelerationStructureHandleNV!
-    let vkCreateRayTracingPipelinesNV: PFN_vkCreateRayTracingPipelinesNV!
-    let vkCreateRayTracingPipelinesKHR: PFN_vkCreateRayTracingPipelinesKHR!
-    let vkCmdTraceRaysIndirectKHR: PFN_vkCmdTraceRaysIndirectKHR!
-    let vkCmdTraceRaysIndirect2KHR: PFN_vkCmdTraceRaysIndirect2KHR!
-    let vkGetClusterAccelerationStructureBuildSizesNV: PFN_vkGetClusterAccelerationStructureBuildSizesNV!
-    let vkCmdBuildClusterAccelerationStructureIndirectNV: PFN_vkCmdBuildClusterAccelerationStructureIndirectNV!
-    let vkGetDeviceAccelerationStructureCompatibilityKHR: PFN_vkGetDeviceAccelerationStructureCompatibilityKHR!
-    let vkGetRayTracingShaderGroupStackSizeKHR: PFN_vkGetRayTracingShaderGroupStackSizeKHR!
-    let vkCmdSetRayTracingPipelineStackSizeKHR: PFN_vkCmdSetRayTracingPipelineStackSizeKHR!
-    let vkGetImageViewHandleNVX: PFN_vkGetImageViewHandleNVX!
-    let vkGetImageViewHandle64NVX: PFN_vkGetImageViewHandle64NVX!
-    let vkGetImageViewAddressNVX: PFN_vkGetImageViewAddressNVX!
-    let vkGetDeviceCombinedImageSamplerIndexNVX: PFN_vkGetDeviceCombinedImageSamplerIndexNVX!
+    public let vkCmdDrawIndirectCount: PFN_vkCmdDrawIndirectCount!
+    public let vkCmdDrawIndexedIndirectCount: PFN_vkCmdDrawIndexedIndirectCount!
+    public let vkCmdSetCheckpointNV: PFN_vkCmdSetCheckpointNV!
+    public let vkGetQueueCheckpointDataNV: PFN_vkGetQueueCheckpointDataNV!
+    public let vkCmdBindTransformFeedbackBuffersEXT: PFN_vkCmdBindTransformFeedbackBuffersEXT!
+    public let vkCmdBeginTransformFeedbackEXT: PFN_vkCmdBeginTransformFeedbackEXT!
+    public let vkCmdEndTransformFeedbackEXT: PFN_vkCmdEndTransformFeedbackEXT!
+    public let vkCmdBeginQueryIndexedEXT: PFN_vkCmdBeginQueryIndexedEXT!
+    public let vkCmdEndQueryIndexedEXT: PFN_vkCmdEndQueryIndexedEXT!
+    public let vkCmdDrawIndirectByteCountEXT: PFN_vkCmdDrawIndirectByteCountEXT!
+    public let vkCmdSetExclusiveScissorNV: PFN_vkCmdSetExclusiveScissorNV!
+    public let vkCmdSetExclusiveScissorEnableNV: PFN_vkCmdSetExclusiveScissorEnableNV!
+    public let vkCmdBindShadingRateImageNV: PFN_vkCmdBindShadingRateImageNV!
+    public let vkCmdSetViewportShadingRatePaletteNV: PFN_vkCmdSetViewportShadingRatePaletteNV!
+    public let vkCmdSetCoarseSampleOrderNV: PFN_vkCmdSetCoarseSampleOrderNV!
+    public let vkCmdDrawMeshTasksNV: PFN_vkCmdDrawMeshTasksNV!
+    public let vkCmdDrawMeshTasksIndirectNV: PFN_vkCmdDrawMeshTasksIndirectNV!
+    public let vkCmdDrawMeshTasksIndirectCountNV: PFN_vkCmdDrawMeshTasksIndirectCountNV!
+    public let vkCmdDrawMeshTasksEXT: PFN_vkCmdDrawMeshTasksEXT!
+    public let vkCmdDrawMeshTasksIndirectEXT: PFN_vkCmdDrawMeshTasksIndirectEXT!
+    public let vkCmdDrawMeshTasksIndirectCountEXT: PFN_vkCmdDrawMeshTasksIndirectCountEXT!
+    public let vkCompileDeferredNV: PFN_vkCompileDeferredNV!
+    public let vkCreateAccelerationStructureNV: PFN_vkCreateAccelerationStructureNV!
+    public let vkCmdBindInvocationMaskHUAWEI: PFN_vkCmdBindInvocationMaskHUAWEI!
+    public let vkDestroyAccelerationStructureKHR: PFN_vkDestroyAccelerationStructureKHR!
+    public let vkDestroyAccelerationStructureNV: PFN_vkDestroyAccelerationStructureNV!
+    public let vkGetAccelerationStructureMemoryRequirementsNV: PFN_vkGetAccelerationStructureMemoryRequirementsNV!
+    public let vkBindAccelerationStructureMemoryNV: PFN_vkBindAccelerationStructureMemoryNV!
+    public let vkCmdCopyAccelerationStructureNV: PFN_vkCmdCopyAccelerationStructureNV!
+    public let vkCmdCopyAccelerationStructureKHR: PFN_vkCmdCopyAccelerationStructureKHR!
+    public let vkCopyAccelerationStructureKHR: PFN_vkCopyAccelerationStructureKHR!
+    public let vkCmdCopyAccelerationStructureToMemoryKHR: PFN_vkCmdCopyAccelerationStructureToMemoryKHR!
+    public let vkCopyAccelerationStructureToMemoryKHR: PFN_vkCopyAccelerationStructureToMemoryKHR!
+    public let vkCmdCopyMemoryToAccelerationStructureKHR: PFN_vkCmdCopyMemoryToAccelerationStructureKHR!
+    public let vkCopyMemoryToAccelerationStructureKHR: PFN_vkCopyMemoryToAccelerationStructureKHR!
+    public let vkCmdWriteAccelerationStructuresPropertiesKHR: PFN_vkCmdWriteAccelerationStructuresPropertiesKHR!
+    public let vkCmdWriteAccelerationStructuresPropertiesNV: PFN_vkCmdWriteAccelerationStructuresPropertiesNV!
+    public let vkCmdBuildAccelerationStructureNV: PFN_vkCmdBuildAccelerationStructureNV!
+    public let vkWriteAccelerationStructuresPropertiesKHR: PFN_vkWriteAccelerationStructuresPropertiesKHR!
+    public let vkCmdTraceRaysKHR: PFN_vkCmdTraceRaysKHR!
+    public let vkCmdTraceRaysNV: PFN_vkCmdTraceRaysNV!
+    public let vkGetRayTracingShaderGroupHandlesKHR: PFN_vkGetRayTracingShaderGroupHandlesKHR!
+    public let vkGetRayTracingCaptureReplayShaderGroupHandlesKHR: PFN_vkGetRayTracingCaptureReplayShaderGroupHandlesKHR!
+    public let vkGetAccelerationStructureHandleNV: PFN_vkGetAccelerationStructureHandleNV!
+    public let vkCreateRayTracingPipelinesNV: PFN_vkCreateRayTracingPipelinesNV!
+    public let vkCreateRayTracingPipelinesKHR: PFN_vkCreateRayTracingPipelinesKHR!
+    public let vkCmdTraceRaysIndirectKHR: PFN_vkCmdTraceRaysIndirectKHR!
+    public let vkCmdTraceRaysIndirect2KHR: PFN_vkCmdTraceRaysIndirect2KHR!
+    public let vkGetClusterAccelerationStructureBuildSizesNV: PFN_vkGetClusterAccelerationStructureBuildSizesNV!
+    public let vkCmdBuildClusterAccelerationStructureIndirectNV: PFN_vkCmdBuildClusterAccelerationStructureIndirectNV!
+    public let vkGetDeviceAccelerationStructureCompatibilityKHR: PFN_vkGetDeviceAccelerationStructureCompatibilityKHR!
+    public let vkGetRayTracingShaderGroupStackSizeKHR: PFN_vkGetRayTracingShaderGroupStackSizeKHR!
+    public let vkCmdSetRayTracingPipelineStackSizeKHR: PFN_vkCmdSetRayTracingPipelineStackSizeKHR!
+    public let vkGetImageViewHandleNVX: PFN_vkGetImageViewHandleNVX!
+    public let vkGetImageViewHandle64NVX: PFN_vkGetImageViewHandle64NVX!
+    public let vkGetImageViewAddressNVX: PFN_vkGetImageViewAddressNVX!
+    public let vkGetDeviceCombinedImageSamplerIndexNVX: PFN_vkGetDeviceCombinedImageSamplerIndexNVX!
     #if VK_USE_PLATFORM_WIN32_KHR
-    let vkGetDeviceGroupSurfacePresentModes2EXT: PFN_vkGetDeviceGroupSurfacePresentModes2EXT!
-    #endif
-    #if VK_USE_PLATFORM_WIN32_KHR
-    let vkAcquireFullScreenExclusiveModeEXT: PFN_vkAcquireFullScreenExclusiveModeEXT!
+    public let vkGetDeviceGroupSurfacePresentModes2EXT: PFN_vkGetDeviceGroupSurfacePresentModes2EXT!
     #endif
     #if VK_USE_PLATFORM_WIN32_KHR
-    let vkReleaseFullScreenExclusiveModeEXT: PFN_vkReleaseFullScreenExclusiveModeEXT!
+    public let vkAcquireFullScreenExclusiveModeEXT: PFN_vkAcquireFullScreenExclusiveModeEXT!
     #endif
-    let vkAcquireProfilingLockKHR: PFN_vkAcquireProfilingLockKHR!
-    let vkReleaseProfilingLockKHR: PFN_vkReleaseProfilingLockKHR!
-    let vkGetImageDrmFormatModifierPropertiesEXT: PFN_vkGetImageDrmFormatModifierPropertiesEXT!
-    let vkGetBufferOpaqueCaptureAddress: PFN_vkGetBufferOpaqueCaptureAddress!
-    let vkGetBufferDeviceAddress: PFN_vkGetBufferDeviceAddress!
-    let vkInitializePerformanceApiINTEL: PFN_vkInitializePerformanceApiINTEL!
-    let vkUninitializePerformanceApiINTEL: PFN_vkUninitializePerformanceApiINTEL!
-    let vkCmdSetPerformanceMarkerINTEL: PFN_vkCmdSetPerformanceMarkerINTEL!
-    let vkCmdSetPerformanceStreamMarkerINTEL: PFN_vkCmdSetPerformanceStreamMarkerINTEL!
-    let vkCmdSetPerformanceOverrideINTEL: PFN_vkCmdSetPerformanceOverrideINTEL!
-    let vkAcquirePerformanceConfigurationINTEL: PFN_vkAcquirePerformanceConfigurationINTEL!
-    let vkReleasePerformanceConfigurationINTEL: PFN_vkReleasePerformanceConfigurationINTEL!
-    let vkQueueSetPerformanceConfigurationINTEL: PFN_vkQueueSetPerformanceConfigurationINTEL!
-    let vkGetPerformanceParameterINTEL: PFN_vkGetPerformanceParameterINTEL!
-    let vkGetDeviceMemoryOpaqueCaptureAddress: PFN_vkGetDeviceMemoryOpaqueCaptureAddress!
-    let vkGetPipelineExecutablePropertiesKHR: PFN_vkGetPipelineExecutablePropertiesKHR!
-    let vkGetPipelineExecutableStatisticsKHR: PFN_vkGetPipelineExecutableStatisticsKHR!
-    let vkGetPipelineExecutableInternalRepresentationsKHR: PFN_vkGetPipelineExecutableInternalRepresentationsKHR!
-    let vkCmdSetLineStipple: PFN_vkCmdSetLineStipple!
-    let vkCreateAccelerationStructureKHR: PFN_vkCreateAccelerationStructureKHR!
-    let vkCmdBuildAccelerationStructuresKHR: PFN_vkCmdBuildAccelerationStructuresKHR!
-    let vkCmdBuildAccelerationStructuresIndirectKHR: PFN_vkCmdBuildAccelerationStructuresIndirectKHR!
-    let vkBuildAccelerationStructuresKHR: PFN_vkBuildAccelerationStructuresKHR!
-    let vkGetAccelerationStructureDeviceAddressKHR: PFN_vkGetAccelerationStructureDeviceAddressKHR!
-    let vkCreateDeferredOperationKHR: PFN_vkCreateDeferredOperationKHR!
-    let vkDestroyDeferredOperationKHR: PFN_vkDestroyDeferredOperationKHR!
-    let vkGetDeferredOperationMaxConcurrencyKHR: PFN_vkGetDeferredOperationMaxConcurrencyKHR!
-    let vkGetDeferredOperationResultKHR: PFN_vkGetDeferredOperationResultKHR!
-    let vkDeferredOperationJoinKHR: PFN_vkDeferredOperationJoinKHR!
-    let vkGetPipelineIndirectMemoryRequirementsNV: PFN_vkGetPipelineIndirectMemoryRequirementsNV!
-    let vkGetPipelineIndirectDeviceAddressNV: PFN_vkGetPipelineIndirectDeviceAddressNV!
-    let vkAntiLagUpdateAMD: PFN_vkAntiLagUpdateAMD!
-    let vkCmdSetCullMode: PFN_vkCmdSetCullMode!
-    let vkCmdSetFrontFace: PFN_vkCmdSetFrontFace!
-    let vkCmdSetPrimitiveTopology: PFN_vkCmdSetPrimitiveTopology!
-    let vkCmdSetViewportWithCount: PFN_vkCmdSetViewportWithCount!
-    let vkCmdSetScissorWithCount: PFN_vkCmdSetScissorWithCount!
-    let vkCmdBindIndexBuffer2: PFN_vkCmdBindIndexBuffer2!
-    let vkCmdBindVertexBuffers2: PFN_vkCmdBindVertexBuffers2!
-    let vkCmdSetDepthTestEnable: PFN_vkCmdSetDepthTestEnable!
-    let vkCmdSetDepthWriteEnable: PFN_vkCmdSetDepthWriteEnable!
-    let vkCmdSetDepthCompareOp: PFN_vkCmdSetDepthCompareOp!
-    let vkCmdSetDepthBoundsTestEnable: PFN_vkCmdSetDepthBoundsTestEnable!
-    let vkCmdSetStencilTestEnable: PFN_vkCmdSetStencilTestEnable!
-    let vkCmdSetStencilOp: PFN_vkCmdSetStencilOp!
-    let vkCmdSetPatchControlPointsEXT: PFN_vkCmdSetPatchControlPointsEXT!
-    let vkCmdSetRasterizerDiscardEnable: PFN_vkCmdSetRasterizerDiscardEnable!
-    let vkCmdSetDepthBiasEnable: PFN_vkCmdSetDepthBiasEnable!
-    let vkCmdSetLogicOpEXT: PFN_vkCmdSetLogicOpEXT!
-    let vkCmdSetPrimitiveRestartEnable: PFN_vkCmdSetPrimitiveRestartEnable!
-    let vkCmdSetTessellationDomainOriginEXT: PFN_vkCmdSetTessellationDomainOriginEXT!
-    let vkCmdSetDepthClampEnableEXT: PFN_vkCmdSetDepthClampEnableEXT!
-    let vkCmdSetPolygonModeEXT: PFN_vkCmdSetPolygonModeEXT!
-    let vkCmdSetRasterizationSamplesEXT: PFN_vkCmdSetRasterizationSamplesEXT!
-    let vkCmdSetSampleMaskEXT: PFN_vkCmdSetSampleMaskEXT!
-    let vkCmdSetAlphaToCoverageEnableEXT: PFN_vkCmdSetAlphaToCoverageEnableEXT!
-    let vkCmdSetAlphaToOneEnableEXT: PFN_vkCmdSetAlphaToOneEnableEXT!
-    let vkCmdSetLogicOpEnableEXT: PFN_vkCmdSetLogicOpEnableEXT!
-    let vkCmdSetColorBlendEnableEXT: PFN_vkCmdSetColorBlendEnableEXT!
-    let vkCmdSetColorBlendEquationEXT: PFN_vkCmdSetColorBlendEquationEXT!
-    let vkCmdSetColorWriteMaskEXT: PFN_vkCmdSetColorWriteMaskEXT!
-    let vkCmdSetRasterizationStreamEXT: PFN_vkCmdSetRasterizationStreamEXT!
-    let vkCmdSetConservativeRasterizationModeEXT: PFN_vkCmdSetConservativeRasterizationModeEXT!
-    let vkCmdSetExtraPrimitiveOverestimationSizeEXT: PFN_vkCmdSetExtraPrimitiveOverestimationSizeEXT!
-    let vkCmdSetDepthClipEnableEXT: PFN_vkCmdSetDepthClipEnableEXT!
-    let vkCmdSetSampleLocationsEnableEXT: PFN_vkCmdSetSampleLocationsEnableEXT!
-    let vkCmdSetColorBlendAdvancedEXT: PFN_vkCmdSetColorBlendAdvancedEXT!
-    let vkCmdSetProvokingVertexModeEXT: PFN_vkCmdSetProvokingVertexModeEXT!
-    let vkCmdSetLineRasterizationModeEXT: PFN_vkCmdSetLineRasterizationModeEXT!
-    let vkCmdSetLineStippleEnableEXT: PFN_vkCmdSetLineStippleEnableEXT!
-    let vkCmdSetDepthClipNegativeOneToOneEXT: PFN_vkCmdSetDepthClipNegativeOneToOneEXT!
-    let vkCmdSetViewportWScalingEnableNV: PFN_vkCmdSetViewportWScalingEnableNV!
-    let vkCmdSetViewportSwizzleNV: PFN_vkCmdSetViewportSwizzleNV!
-    let vkCmdSetCoverageToColorEnableNV: PFN_vkCmdSetCoverageToColorEnableNV!
-    let vkCmdSetCoverageToColorLocationNV: PFN_vkCmdSetCoverageToColorLocationNV!
-    let vkCmdSetCoverageModulationModeNV: PFN_vkCmdSetCoverageModulationModeNV!
-    let vkCmdSetCoverageModulationTableEnableNV: PFN_vkCmdSetCoverageModulationTableEnableNV!
-    let vkCmdSetCoverageModulationTableNV: PFN_vkCmdSetCoverageModulationTableNV!
-    let vkCmdSetShadingRateImageEnableNV: PFN_vkCmdSetShadingRateImageEnableNV!
-    let vkCmdSetCoverageReductionModeNV: PFN_vkCmdSetCoverageReductionModeNV!
-    let vkCmdSetRepresentativeFragmentTestEnableNV: PFN_vkCmdSetRepresentativeFragmentTestEnableNV!
-    let vkCreatePrivateDataSlot: PFN_vkCreatePrivateDataSlot!
-    let vkDestroyPrivateDataSlot: PFN_vkDestroyPrivateDataSlot!
-    let vkSetPrivateData: PFN_vkSetPrivateData!
-    let vkGetPrivateData: PFN_vkGetPrivateData!
-    let vkCmdCopyBuffer2: PFN_vkCmdCopyBuffer2!
-    let vkCmdCopyImage2: PFN_vkCmdCopyImage2!
-    let vkCmdBlitImage2: PFN_vkCmdBlitImage2!
-    let vkCmdCopyBufferToImage2: PFN_vkCmdCopyBufferToImage2!
-    let vkCmdCopyImageToBuffer2: PFN_vkCmdCopyImageToBuffer2!
-    let vkCmdResolveImage2: PFN_vkCmdResolveImage2!
-    let vkCmdSetFragmentShadingRateKHR: PFN_vkCmdSetFragmentShadingRateKHR!
-    let vkCmdSetFragmentShadingRateEnumNV: PFN_vkCmdSetFragmentShadingRateEnumNV!
-    let vkGetAccelerationStructureBuildSizesKHR: PFN_vkGetAccelerationStructureBuildSizesKHR!
-    let vkCmdSetVertexInputEXT: PFN_vkCmdSetVertexInputEXT!
-    let vkCmdSetColorWriteEnableEXT: PFN_vkCmdSetColorWriteEnableEXT!
-    let vkCmdSetEvent2: PFN_vkCmdSetEvent2!
-    let vkCmdResetEvent2: PFN_vkCmdResetEvent2!
-    let vkCmdWaitEvents2: PFN_vkCmdWaitEvents2!
-    let vkCmdPipelineBarrier2: PFN_vkCmdPipelineBarrier2!
-    let vkQueueSubmit2: PFN_vkQueueSubmit2!
-    let vkCmdWriteTimestamp2: PFN_vkCmdWriteTimestamp2!
-    let vkCmdWriteBufferMarker2AMD: PFN_vkCmdWriteBufferMarker2AMD!
-    let vkGetQueueCheckpointData2NV: PFN_vkGetQueueCheckpointData2NV!
-    let vkCopyMemoryToImage: PFN_vkCopyMemoryToImage!
-    let vkCopyImageToMemory: PFN_vkCopyImageToMemory!
-    let vkCopyImageToImage: PFN_vkCopyImageToImage!
-    let vkTransitionImageLayout: PFN_vkTransitionImageLayout!
-    let vkCreateVideoSessionKHR: PFN_vkCreateVideoSessionKHR!
-    let vkDestroyVideoSessionKHR: PFN_vkDestroyVideoSessionKHR!
-    let vkCreateVideoSessionParametersKHR: PFN_vkCreateVideoSessionParametersKHR!
-    let vkUpdateVideoSessionParametersKHR: PFN_vkUpdateVideoSessionParametersKHR!
-    let vkGetEncodedVideoSessionParametersKHR: PFN_vkGetEncodedVideoSessionParametersKHR!
-    let vkDestroyVideoSessionParametersKHR: PFN_vkDestroyVideoSessionParametersKHR!
-    let vkGetVideoSessionMemoryRequirementsKHR: PFN_vkGetVideoSessionMemoryRequirementsKHR!
-    let vkBindVideoSessionMemoryKHR: PFN_vkBindVideoSessionMemoryKHR!
-    let vkCmdDecodeVideoKHR: PFN_vkCmdDecodeVideoKHR!
-    let vkCmdBeginVideoCodingKHR: PFN_vkCmdBeginVideoCodingKHR!
-    let vkCmdControlVideoCodingKHR: PFN_vkCmdControlVideoCodingKHR!
-    let vkCmdEndVideoCodingKHR: PFN_vkCmdEndVideoCodingKHR!
-    let vkCmdEncodeVideoKHR: PFN_vkCmdEncodeVideoKHR!
-    let vkCmdDecompressMemoryNV: PFN_vkCmdDecompressMemoryNV!
-    let vkCmdDecompressMemoryIndirectCountNV: PFN_vkCmdDecompressMemoryIndirectCountNV!
-    let vkGetPartitionedAccelerationStructuresBuildSizesNV: PFN_vkGetPartitionedAccelerationStructuresBuildSizesNV!
-    let vkCmdBuildPartitionedAccelerationStructuresNV: PFN_vkCmdBuildPartitionedAccelerationStructuresNV!
-    let vkCmdDecompressMemoryEXT: PFN_vkCmdDecompressMemoryEXT!
-    let vkCmdDecompressMemoryIndirectCountEXT: PFN_vkCmdDecompressMemoryIndirectCountEXT!
-    let vkCreateCuModuleNVX: PFN_vkCreateCuModuleNVX!
-    let vkCreateCuFunctionNVX: PFN_vkCreateCuFunctionNVX!
-    let vkDestroyCuModuleNVX: PFN_vkDestroyCuModuleNVX!
-    let vkDestroyCuFunctionNVX: PFN_vkDestroyCuFunctionNVX!
-    let vkCmdCuLaunchKernelNVX: PFN_vkCmdCuLaunchKernelNVX!
-    let vkGetDescriptorSetLayoutSizeEXT: PFN_vkGetDescriptorSetLayoutSizeEXT!
-    let vkGetDescriptorSetLayoutBindingOffsetEXT: PFN_vkGetDescriptorSetLayoutBindingOffsetEXT!
-    let vkGetDescriptorEXT: PFN_vkGetDescriptorEXT!
-    let vkCmdBindDescriptorBuffersEXT: PFN_vkCmdBindDescriptorBuffersEXT!
-    let vkCmdSetDescriptorBufferOffsetsEXT: PFN_vkCmdSetDescriptorBufferOffsetsEXT!
-    let vkCmdBindDescriptorBufferEmbeddedSamplersEXT: PFN_vkCmdBindDescriptorBufferEmbeddedSamplersEXT!
-    let vkGetBufferOpaqueCaptureDescriptorDataEXT: PFN_vkGetBufferOpaqueCaptureDescriptorDataEXT!
-    let vkGetImageOpaqueCaptureDescriptorDataEXT: PFN_vkGetImageOpaqueCaptureDescriptorDataEXT!
-    let vkGetImageViewOpaqueCaptureDescriptorDataEXT: PFN_vkGetImageViewOpaqueCaptureDescriptorDataEXT!
-    let vkGetSamplerOpaqueCaptureDescriptorDataEXT: PFN_vkGetSamplerOpaqueCaptureDescriptorDataEXT!
-    let vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT: PFN_vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT!
-    let vkSetDeviceMemoryPriorityEXT: PFN_vkSetDeviceMemoryPriorityEXT!
-    let vkWaitForPresent2KHR: PFN_vkWaitForPresent2KHR!
-    let vkWaitForPresentKHR: PFN_vkWaitForPresentKHR!
-    #if VK_USE_PLATFORM_FUCHSIA
-    let vkCreateBufferCollectionFUCHSIA: PFN_vkCreateBufferCollectionFUCHSIA!
+    #if VK_USE_PLATFORM_WIN32_KHR
+    public let vkReleaseFullScreenExclusiveModeEXT: PFN_vkReleaseFullScreenExclusiveModeEXT!
     #endif
+    public let vkAcquireProfilingLockKHR: PFN_vkAcquireProfilingLockKHR!
+    public let vkReleaseProfilingLockKHR: PFN_vkReleaseProfilingLockKHR!
+    public let vkGetImageDrmFormatModifierPropertiesEXT: PFN_vkGetImageDrmFormatModifierPropertiesEXT!
+    public let vkGetBufferOpaqueCaptureAddress: PFN_vkGetBufferOpaqueCaptureAddress!
+    public let vkGetBufferDeviceAddress: PFN_vkGetBufferDeviceAddress!
+    public let vkInitializePerformanceApiINTEL: PFN_vkInitializePerformanceApiINTEL!
+    public let vkUninitializePerformanceApiINTEL: PFN_vkUninitializePerformanceApiINTEL!
+    public let vkCmdSetPerformanceMarkerINTEL: PFN_vkCmdSetPerformanceMarkerINTEL!
+    public let vkCmdSetPerformanceStreamMarkerINTEL: PFN_vkCmdSetPerformanceStreamMarkerINTEL!
+    public let vkCmdSetPerformanceOverrideINTEL: PFN_vkCmdSetPerformanceOverrideINTEL!
+    public let vkAcquirePerformanceConfigurationINTEL: PFN_vkAcquirePerformanceConfigurationINTEL!
+    public let vkReleasePerformanceConfigurationINTEL: PFN_vkReleasePerformanceConfigurationINTEL!
+    public let vkQueueSetPerformanceConfigurationINTEL: PFN_vkQueueSetPerformanceConfigurationINTEL!
+    public let vkGetPerformanceParameterINTEL: PFN_vkGetPerformanceParameterINTEL!
+    public let vkGetDeviceMemoryOpaqueCaptureAddress: PFN_vkGetDeviceMemoryOpaqueCaptureAddress!
+    public let vkGetPipelineExecutablePropertiesKHR: PFN_vkGetPipelineExecutablePropertiesKHR!
+    public let vkGetPipelineExecutableStatisticsKHR: PFN_vkGetPipelineExecutableStatisticsKHR!
+    public let vkGetPipelineExecutableInternalRepresentationsKHR: PFN_vkGetPipelineExecutableInternalRepresentationsKHR!
+    public let vkCmdSetLineStipple: PFN_vkCmdSetLineStipple!
+    public let vkCreateAccelerationStructureKHR: PFN_vkCreateAccelerationStructureKHR!
+    public let vkCmdBuildAccelerationStructuresKHR: PFN_vkCmdBuildAccelerationStructuresKHR!
+    public let vkCmdBuildAccelerationStructuresIndirectKHR: PFN_vkCmdBuildAccelerationStructuresIndirectKHR!
+    public let vkBuildAccelerationStructuresKHR: PFN_vkBuildAccelerationStructuresKHR!
+    public let vkGetAccelerationStructureDeviceAddressKHR: PFN_vkGetAccelerationStructureDeviceAddressKHR!
+    public let vkCreateDeferredOperationKHR: PFN_vkCreateDeferredOperationKHR!
+    public let vkDestroyDeferredOperationKHR: PFN_vkDestroyDeferredOperationKHR!
+    public let vkGetDeferredOperationMaxConcurrencyKHR: PFN_vkGetDeferredOperationMaxConcurrencyKHR!
+    public let vkGetDeferredOperationResultKHR: PFN_vkGetDeferredOperationResultKHR!
+    public let vkDeferredOperationJoinKHR: PFN_vkDeferredOperationJoinKHR!
+    public let vkGetPipelineIndirectMemoryRequirementsNV: PFN_vkGetPipelineIndirectMemoryRequirementsNV!
+    public let vkGetPipelineIndirectDeviceAddressNV: PFN_vkGetPipelineIndirectDeviceAddressNV!
+    public let vkAntiLagUpdateAMD: PFN_vkAntiLagUpdateAMD!
+    public let vkCmdSetCullMode: PFN_vkCmdSetCullMode!
+    public let vkCmdSetFrontFace: PFN_vkCmdSetFrontFace!
+    public let vkCmdSetPrimitiveTopology: PFN_vkCmdSetPrimitiveTopology!
+    public let vkCmdSetViewportWithCount: PFN_vkCmdSetViewportWithCount!
+    public let vkCmdSetScissorWithCount: PFN_vkCmdSetScissorWithCount!
+    public let vkCmdBindIndexBuffer2: PFN_vkCmdBindIndexBuffer2!
+    public let vkCmdBindVertexBuffers2: PFN_vkCmdBindVertexBuffers2!
+    public let vkCmdSetDepthTestEnable: PFN_vkCmdSetDepthTestEnable!
+    public let vkCmdSetDepthWriteEnable: PFN_vkCmdSetDepthWriteEnable!
+    public let vkCmdSetDepthCompareOp: PFN_vkCmdSetDepthCompareOp!
+    public let vkCmdSetDepthBoundsTestEnable: PFN_vkCmdSetDepthBoundsTestEnable!
+    public let vkCmdSetStencilTestEnable: PFN_vkCmdSetStencilTestEnable!
+    public let vkCmdSetStencilOp: PFN_vkCmdSetStencilOp!
+    public let vkCmdSetPatchControlPointsEXT: PFN_vkCmdSetPatchControlPointsEXT!
+    public let vkCmdSetRasterizerDiscardEnable: PFN_vkCmdSetRasterizerDiscardEnable!
+    public let vkCmdSetDepthBiasEnable: PFN_vkCmdSetDepthBiasEnable!
+    public let vkCmdSetLogicOpEXT: PFN_vkCmdSetLogicOpEXT!
+    public let vkCmdSetPrimitiveRestartEnable: PFN_vkCmdSetPrimitiveRestartEnable!
+    public let vkCmdSetTessellationDomainOriginEXT: PFN_vkCmdSetTessellationDomainOriginEXT!
+    public let vkCmdSetDepthClampEnableEXT: PFN_vkCmdSetDepthClampEnableEXT!
+    public let vkCmdSetPolygonModeEXT: PFN_vkCmdSetPolygonModeEXT!
+    public let vkCmdSetRasterizationSamplesEXT: PFN_vkCmdSetRasterizationSamplesEXT!
+    public let vkCmdSetSampleMaskEXT: PFN_vkCmdSetSampleMaskEXT!
+    public let vkCmdSetAlphaToCoverageEnableEXT: PFN_vkCmdSetAlphaToCoverageEnableEXT!
+    public let vkCmdSetAlphaToOneEnableEXT: PFN_vkCmdSetAlphaToOneEnableEXT!
+    public let vkCmdSetLogicOpEnableEXT: PFN_vkCmdSetLogicOpEnableEXT!
+    public let vkCmdSetColorBlendEnableEXT: PFN_vkCmdSetColorBlendEnableEXT!
+    public let vkCmdSetColorBlendEquationEXT: PFN_vkCmdSetColorBlendEquationEXT!
+    public let vkCmdSetColorWriteMaskEXT: PFN_vkCmdSetColorWriteMaskEXT!
+    public let vkCmdSetRasterizationStreamEXT: PFN_vkCmdSetRasterizationStreamEXT!
+    public let vkCmdSetConservativeRasterizationModeEXT: PFN_vkCmdSetConservativeRasterizationModeEXT!
+    public let vkCmdSetExtraPrimitiveOverestimationSizeEXT: PFN_vkCmdSetExtraPrimitiveOverestimationSizeEXT!
+    public let vkCmdSetDepthClipEnableEXT: PFN_vkCmdSetDepthClipEnableEXT!
+    public let vkCmdSetSampleLocationsEnableEXT: PFN_vkCmdSetSampleLocationsEnableEXT!
+    public let vkCmdSetColorBlendAdvancedEXT: PFN_vkCmdSetColorBlendAdvancedEXT!
+    public let vkCmdSetProvokingVertexModeEXT: PFN_vkCmdSetProvokingVertexModeEXT!
+    public let vkCmdSetLineRasterizationModeEXT: PFN_vkCmdSetLineRasterizationModeEXT!
+    public let vkCmdSetLineStippleEnableEXT: PFN_vkCmdSetLineStippleEnableEXT!
+    public let vkCmdSetDepthClipNegativeOneToOneEXT: PFN_vkCmdSetDepthClipNegativeOneToOneEXT!
+    public let vkCmdSetViewportWScalingEnableNV: PFN_vkCmdSetViewportWScalingEnableNV!
+    public let vkCmdSetViewportSwizzleNV: PFN_vkCmdSetViewportSwizzleNV!
+    public let vkCmdSetCoverageToColorEnableNV: PFN_vkCmdSetCoverageToColorEnableNV!
+    public let vkCmdSetCoverageToColorLocationNV: PFN_vkCmdSetCoverageToColorLocationNV!
+    public let vkCmdSetCoverageModulationModeNV: PFN_vkCmdSetCoverageModulationModeNV!
+    public let vkCmdSetCoverageModulationTableEnableNV: PFN_vkCmdSetCoverageModulationTableEnableNV!
+    public let vkCmdSetCoverageModulationTableNV: PFN_vkCmdSetCoverageModulationTableNV!
+    public let vkCmdSetShadingRateImageEnableNV: PFN_vkCmdSetShadingRateImageEnableNV!
+    public let vkCmdSetCoverageReductionModeNV: PFN_vkCmdSetCoverageReductionModeNV!
+    public let vkCmdSetRepresentativeFragmentTestEnableNV: PFN_vkCmdSetRepresentativeFragmentTestEnableNV!
+    public let vkCreatePrivateDataSlot: PFN_vkCreatePrivateDataSlot!
+    public let vkDestroyPrivateDataSlot: PFN_vkDestroyPrivateDataSlot!
+    public let vkSetPrivateData: PFN_vkSetPrivateData!
+    public let vkGetPrivateData: PFN_vkGetPrivateData!
+    public let vkCmdCopyBuffer2: PFN_vkCmdCopyBuffer2!
+    public let vkCmdCopyImage2: PFN_vkCmdCopyImage2!
+    public let vkCmdBlitImage2: PFN_vkCmdBlitImage2!
+    public let vkCmdCopyBufferToImage2: PFN_vkCmdCopyBufferToImage2!
+    public let vkCmdCopyImageToBuffer2: PFN_vkCmdCopyImageToBuffer2!
+    public let vkCmdResolveImage2: PFN_vkCmdResolveImage2!
+    public let vkCmdSetFragmentShadingRateKHR: PFN_vkCmdSetFragmentShadingRateKHR!
+    public let vkCmdSetFragmentShadingRateEnumNV: PFN_vkCmdSetFragmentShadingRateEnumNV!
+    public let vkGetAccelerationStructureBuildSizesKHR: PFN_vkGetAccelerationStructureBuildSizesKHR!
+    public let vkCmdSetVertexInputEXT: PFN_vkCmdSetVertexInputEXT!
+    public let vkCmdSetColorWriteEnableEXT: PFN_vkCmdSetColorWriteEnableEXT!
+    public let vkCmdSetEvent2: PFN_vkCmdSetEvent2!
+    public let vkCmdResetEvent2: PFN_vkCmdResetEvent2!
+    public let vkCmdWaitEvents2: PFN_vkCmdWaitEvents2!
+    public let vkCmdPipelineBarrier2: PFN_vkCmdPipelineBarrier2!
+    public let vkQueueSubmit2: PFN_vkQueueSubmit2!
+    public let vkCmdWriteTimestamp2: PFN_vkCmdWriteTimestamp2!
+    public let vkCmdWriteBufferMarker2AMD: PFN_vkCmdWriteBufferMarker2AMD!
+    public let vkGetQueueCheckpointData2NV: PFN_vkGetQueueCheckpointData2NV!
+    public let vkCopyMemoryToImage: PFN_vkCopyMemoryToImage!
+    public let vkCopyImageToMemory: PFN_vkCopyImageToMemory!
+    public let vkCopyImageToImage: PFN_vkCopyImageToImage!
+    public let vkTransitionImageLayout: PFN_vkTransitionImageLayout!
+    public let vkCreateVideoSessionKHR: PFN_vkCreateVideoSessionKHR!
+    public let vkDestroyVideoSessionKHR: PFN_vkDestroyVideoSessionKHR!
+    public let vkCreateVideoSessionParametersKHR: PFN_vkCreateVideoSessionParametersKHR!
+    public let vkUpdateVideoSessionParametersKHR: PFN_vkUpdateVideoSessionParametersKHR!
+    public let vkGetEncodedVideoSessionParametersKHR: PFN_vkGetEncodedVideoSessionParametersKHR!
+    public let vkDestroyVideoSessionParametersKHR: PFN_vkDestroyVideoSessionParametersKHR!
+    public let vkGetVideoSessionMemoryRequirementsKHR: PFN_vkGetVideoSessionMemoryRequirementsKHR!
+    public let vkBindVideoSessionMemoryKHR: PFN_vkBindVideoSessionMemoryKHR!
+    public let vkCmdDecodeVideoKHR: PFN_vkCmdDecodeVideoKHR!
+    public let vkCmdBeginVideoCodingKHR: PFN_vkCmdBeginVideoCodingKHR!
+    public let vkCmdControlVideoCodingKHR: PFN_vkCmdControlVideoCodingKHR!
+    public let vkCmdEndVideoCodingKHR: PFN_vkCmdEndVideoCodingKHR!
+    public let vkCmdEncodeVideoKHR: PFN_vkCmdEncodeVideoKHR!
+    public let vkCmdDecompressMemoryNV: PFN_vkCmdDecompressMemoryNV!
+    public let vkCmdDecompressMemoryIndirectCountNV: PFN_vkCmdDecompressMemoryIndirectCountNV!
+    public let vkGetPartitionedAccelerationStructuresBuildSizesNV: PFN_vkGetPartitionedAccelerationStructuresBuildSizesNV!
+    public let vkCmdBuildPartitionedAccelerationStructuresNV: PFN_vkCmdBuildPartitionedAccelerationStructuresNV!
+    public let vkCmdDecompressMemoryEXT: PFN_vkCmdDecompressMemoryEXT!
+    public let vkCmdDecompressMemoryIndirectCountEXT: PFN_vkCmdDecompressMemoryIndirectCountEXT!
+    public let vkCreateCuModuleNVX: PFN_vkCreateCuModuleNVX!
+    public let vkCreateCuFunctionNVX: PFN_vkCreateCuFunctionNVX!
+    public let vkDestroyCuModuleNVX: PFN_vkDestroyCuModuleNVX!
+    public let vkDestroyCuFunctionNVX: PFN_vkDestroyCuFunctionNVX!
+    public let vkCmdCuLaunchKernelNVX: PFN_vkCmdCuLaunchKernelNVX!
+    public let vkGetDescriptorSetLayoutSizeEXT: PFN_vkGetDescriptorSetLayoutSizeEXT!
+    public let vkGetDescriptorSetLayoutBindingOffsetEXT: PFN_vkGetDescriptorSetLayoutBindingOffsetEXT!
+    public let vkGetDescriptorEXT: PFN_vkGetDescriptorEXT!
+    public let vkCmdBindDescriptorBuffersEXT: PFN_vkCmdBindDescriptorBuffersEXT!
+    public let vkCmdSetDescriptorBufferOffsetsEXT: PFN_vkCmdSetDescriptorBufferOffsetsEXT!
+    public let vkCmdBindDescriptorBufferEmbeddedSamplersEXT: PFN_vkCmdBindDescriptorBufferEmbeddedSamplersEXT!
+    public let vkGetBufferOpaqueCaptureDescriptorDataEXT: PFN_vkGetBufferOpaqueCaptureDescriptorDataEXT!
+    public let vkGetImageOpaqueCaptureDescriptorDataEXT: PFN_vkGetImageOpaqueCaptureDescriptorDataEXT!
+    public let vkGetImageViewOpaqueCaptureDescriptorDataEXT: PFN_vkGetImageViewOpaqueCaptureDescriptorDataEXT!
+    public let vkGetSamplerOpaqueCaptureDescriptorDataEXT: PFN_vkGetSamplerOpaqueCaptureDescriptorDataEXT!
+    public let vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT: PFN_vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT!
+    public let vkSetDeviceMemoryPriorityEXT: PFN_vkSetDeviceMemoryPriorityEXT!
+    public let vkWaitForPresent2KHR: PFN_vkWaitForPresent2KHR!
+    public let vkWaitForPresentKHR: PFN_vkWaitForPresentKHR!
     #if VK_USE_PLATFORM_FUCHSIA
-    let vkSetBufferCollectionBufferConstraintsFUCHSIA: PFN_vkSetBufferCollectionBufferConstraintsFUCHSIA!
-    #endif
-    #if VK_USE_PLATFORM_FUCHSIA
-    let vkSetBufferCollectionImageConstraintsFUCHSIA: PFN_vkSetBufferCollectionImageConstraintsFUCHSIA!
+    public let vkCreateBufferCollectionFUCHSIA: PFN_vkCreateBufferCollectionFUCHSIA!
     #endif
     #if VK_USE_PLATFORM_FUCHSIA
-    let vkDestroyBufferCollectionFUCHSIA: PFN_vkDestroyBufferCollectionFUCHSIA!
+    public let vkSetBufferCollectionBufferConstraintsFUCHSIA: PFN_vkSetBufferCollectionBufferConstraintsFUCHSIA!
     #endif
     #if VK_USE_PLATFORM_FUCHSIA
-    let vkGetBufferCollectionPropertiesFUCHSIA: PFN_vkGetBufferCollectionPropertiesFUCHSIA!
+    public let vkSetBufferCollectionImageConstraintsFUCHSIA: PFN_vkSetBufferCollectionImageConstraintsFUCHSIA!
+    #endif
+    #if VK_USE_PLATFORM_FUCHSIA
+    public let vkDestroyBufferCollectionFUCHSIA: PFN_vkDestroyBufferCollectionFUCHSIA!
+    #endif
+    #if VK_USE_PLATFORM_FUCHSIA
+    public let vkGetBufferCollectionPropertiesFUCHSIA: PFN_vkGetBufferCollectionPropertiesFUCHSIA!
     #endif
     #if VK_ENABLE_BETA_EXTENSIONS
-    let vkCreateCudaModuleNV: PFN_vkCreateCudaModuleNV!
+    public let vkCreateCudaModuleNV: PFN_vkCreateCudaModuleNV!
     #endif
     #if VK_ENABLE_BETA_EXTENSIONS
-    let vkGetCudaModuleCacheNV: PFN_vkGetCudaModuleCacheNV!
+    public let vkGetCudaModuleCacheNV: PFN_vkGetCudaModuleCacheNV!
     #endif
     #if VK_ENABLE_BETA_EXTENSIONS
-    let vkCreateCudaFunctionNV: PFN_vkCreateCudaFunctionNV!
+    public let vkCreateCudaFunctionNV: PFN_vkCreateCudaFunctionNV!
     #endif
     #if VK_ENABLE_BETA_EXTENSIONS
-    let vkDestroyCudaModuleNV: PFN_vkDestroyCudaModuleNV!
+    public let vkDestroyCudaModuleNV: PFN_vkDestroyCudaModuleNV!
     #endif
     #if VK_ENABLE_BETA_EXTENSIONS
-    let vkDestroyCudaFunctionNV: PFN_vkDestroyCudaFunctionNV!
+    public let vkDestroyCudaFunctionNV: PFN_vkDestroyCudaFunctionNV!
     #endif
     #if VK_ENABLE_BETA_EXTENSIONS
-    let vkCmdCudaLaunchKernelNV: PFN_vkCmdCudaLaunchKernelNV!
+    public let vkCmdCudaLaunchKernelNV: PFN_vkCmdCudaLaunchKernelNV!
     #endif
-    let vkCmdBeginRendering: PFN_vkCmdBeginRendering!
-    let vkCmdEndRendering: PFN_vkCmdEndRendering!
-    let vkCmdEndRendering2KHR: PFN_vkCmdEndRendering2KHR!
-    let vkGetDescriptorSetLayoutHostMappingInfoVALVE: PFN_vkGetDescriptorSetLayoutHostMappingInfoVALVE!
-    let vkGetDescriptorSetHostMappingVALVE: PFN_vkGetDescriptorSetHostMappingVALVE!
-    let vkGetShaderModuleIdentifierEXT: PFN_vkGetShaderModuleIdentifierEXT!
-    let vkGetShaderModuleCreateInfoIdentifierEXT: PFN_vkGetShaderModuleCreateInfoIdentifierEXT!
-    let vkGetImageSubresourceLayout2: PFN_vkGetImageSubresourceLayout2!
-    let vkGetPipelinePropertiesEXT: PFN_vkGetPipelinePropertiesEXT!
+    public let vkCmdBeginRendering: PFN_vkCmdBeginRendering!
+    public let vkCmdEndRendering: PFN_vkCmdEndRendering!
+    public let vkCmdEndRendering2KHR: PFN_vkCmdEndRendering2KHR!
+    public let vkGetDescriptorSetLayoutHostMappingInfoVALVE: PFN_vkGetDescriptorSetLayoutHostMappingInfoVALVE!
+    public let vkGetDescriptorSetHostMappingVALVE: PFN_vkGetDescriptorSetHostMappingVALVE!
+    public let vkGetShaderModuleIdentifierEXT: PFN_vkGetShaderModuleIdentifierEXT!
+    public let vkGetShaderModuleCreateInfoIdentifierEXT: PFN_vkGetShaderModuleCreateInfoIdentifierEXT!
+    public let vkGetImageSubresourceLayout2: PFN_vkGetImageSubresourceLayout2!
+    public let vkGetPipelinePropertiesEXT: PFN_vkGetPipelinePropertiesEXT!
     #if VK_USE_PLATFORM_METAL_EXT
-    let vkExportMetalObjectsEXT: PFN_vkExportMetalObjectsEXT!
+    public let vkExportMetalObjectsEXT: PFN_vkExportMetalObjectsEXT!
     #endif
-    let vkCmdBindTileMemoryQCOM: PFN_vkCmdBindTileMemoryQCOM!
-    let vkGetFramebufferTilePropertiesQCOM: PFN_vkGetFramebufferTilePropertiesQCOM!
-    let vkGetDynamicRenderingTilePropertiesQCOM: PFN_vkGetDynamicRenderingTilePropertiesQCOM!
-    let vkCreateOpticalFlowSessionNV: PFN_vkCreateOpticalFlowSessionNV!
-    let vkDestroyOpticalFlowSessionNV: PFN_vkDestroyOpticalFlowSessionNV!
-    let vkBindOpticalFlowSessionImageNV: PFN_vkBindOpticalFlowSessionImageNV!
-    let vkCmdOpticalFlowExecuteNV: PFN_vkCmdOpticalFlowExecuteNV!
-    let vkGetDeviceFaultInfoEXT: PFN_vkGetDeviceFaultInfoEXT!
-    let vkGetDeviceFaultReportsKHR: PFN_vkGetDeviceFaultReportsKHR!
-    let vkGetDeviceFaultDebugInfoKHR: PFN_vkGetDeviceFaultDebugInfoKHR!
-    let vkCmdSetDepthBias2EXT: PFN_vkCmdSetDepthBias2EXT!
-    let vkReleaseSwapchainImagesKHR: PFN_vkReleaseSwapchainImagesKHR!
-    let vkGetDeviceImageSubresourceLayout: PFN_vkGetDeviceImageSubresourceLayout!
-    let vkMapMemory2: PFN_vkMapMemory2!
-    let vkUnmapMemory2: PFN_vkUnmapMemory2!
-    let vkCreateShadersEXT: PFN_vkCreateShadersEXT!
-    let vkDestroyShaderEXT: PFN_vkDestroyShaderEXT!
-    let vkGetShaderBinaryDataEXT: PFN_vkGetShaderBinaryDataEXT!
-    let vkCmdBindShadersEXT: PFN_vkCmdBindShadersEXT!
-    let vkSetSwapchainPresentTimingQueueSizeEXT: PFN_vkSetSwapchainPresentTimingQueueSizeEXT!
-    let vkGetSwapchainTimingPropertiesEXT: PFN_vkGetSwapchainTimingPropertiesEXT!
-    let vkGetSwapchainTimeDomainPropertiesEXT: PFN_vkGetSwapchainTimeDomainPropertiesEXT!
-    let vkGetPastPresentationTimingEXT: PFN_vkGetPastPresentationTimingEXT!
+    public let vkCmdBindTileMemoryQCOM: PFN_vkCmdBindTileMemoryQCOM!
+    public let vkGetFramebufferTilePropertiesQCOM: PFN_vkGetFramebufferTilePropertiesQCOM!
+    public let vkGetDynamicRenderingTilePropertiesQCOM: PFN_vkGetDynamicRenderingTilePropertiesQCOM!
+    public let vkCreateOpticalFlowSessionNV: PFN_vkCreateOpticalFlowSessionNV!
+    public let vkDestroyOpticalFlowSessionNV: PFN_vkDestroyOpticalFlowSessionNV!
+    public let vkBindOpticalFlowSessionImageNV: PFN_vkBindOpticalFlowSessionImageNV!
+    public let vkCmdOpticalFlowExecuteNV: PFN_vkCmdOpticalFlowExecuteNV!
+    public let vkGetDeviceFaultInfoEXT: PFN_vkGetDeviceFaultInfoEXT!
+    public let vkGetDeviceFaultReportsKHR: PFN_vkGetDeviceFaultReportsKHR!
+    public let vkGetDeviceFaultDebugInfoKHR: PFN_vkGetDeviceFaultDebugInfoKHR!
+    public let vkCmdSetDepthBias2EXT: PFN_vkCmdSetDepthBias2EXT!
+    public let vkReleaseSwapchainImagesKHR: PFN_vkReleaseSwapchainImagesKHR!
+    public let vkGetDeviceImageSubresourceLayout: PFN_vkGetDeviceImageSubresourceLayout!
+    public let vkMapMemory2: PFN_vkMapMemory2!
+    public let vkUnmapMemory2: PFN_vkUnmapMemory2!
+    public let vkCreateShadersEXT: PFN_vkCreateShadersEXT!
+    public let vkDestroyShaderEXT: PFN_vkDestroyShaderEXT!
+    public let vkGetShaderBinaryDataEXT: PFN_vkGetShaderBinaryDataEXT!
+    public let vkCmdBindShadersEXT: PFN_vkCmdBindShadersEXT!
+    public let vkSetSwapchainPresentTimingQueueSizeEXT: PFN_vkSetSwapchainPresentTimingQueueSizeEXT!
+    public let vkGetSwapchainTimingPropertiesEXT: PFN_vkGetSwapchainTimingPropertiesEXT!
+    public let vkGetSwapchainTimeDomainPropertiesEXT: PFN_vkGetSwapchainTimeDomainPropertiesEXT!
+    public let vkGetPastPresentationTimingEXT: PFN_vkGetPastPresentationTimingEXT!
     #if VK_USE_PLATFORM_SCREEN_QNX
-    let vkGetScreenBufferPropertiesQNX: PFN_vkGetScreenBufferPropertiesQNX!
+    public let vkGetScreenBufferPropertiesQNX: PFN_vkGetScreenBufferPropertiesQNX!
     #endif
     #if VK_ENABLE_BETA_EXTENSIONS
-    let vkGetExecutionGraphPipelineScratchSizeAMDX: PFN_vkGetExecutionGraphPipelineScratchSizeAMDX!
+    public let vkGetExecutionGraphPipelineScratchSizeAMDX: PFN_vkGetExecutionGraphPipelineScratchSizeAMDX!
     #endif
     #if VK_ENABLE_BETA_EXTENSIONS
-    let vkGetExecutionGraphPipelineNodeIndexAMDX: PFN_vkGetExecutionGraphPipelineNodeIndexAMDX!
+    public let vkGetExecutionGraphPipelineNodeIndexAMDX: PFN_vkGetExecutionGraphPipelineNodeIndexAMDX!
     #endif
     #if VK_ENABLE_BETA_EXTENSIONS
-    let vkCreateExecutionGraphPipelinesAMDX: PFN_vkCreateExecutionGraphPipelinesAMDX!
+    public let vkCreateExecutionGraphPipelinesAMDX: PFN_vkCreateExecutionGraphPipelinesAMDX!
     #endif
     #if VK_ENABLE_BETA_EXTENSIONS
-    let vkCmdInitializeGraphScratchMemoryAMDX: PFN_vkCmdInitializeGraphScratchMemoryAMDX!
+    public let vkCmdInitializeGraphScratchMemoryAMDX: PFN_vkCmdInitializeGraphScratchMemoryAMDX!
     #endif
     #if VK_ENABLE_BETA_EXTENSIONS
-    let vkCmdDispatchGraphAMDX: PFN_vkCmdDispatchGraphAMDX!
+    public let vkCmdDispatchGraphAMDX: PFN_vkCmdDispatchGraphAMDX!
     #endif
     #if VK_ENABLE_BETA_EXTENSIONS
-    let vkCmdDispatchGraphIndirectAMDX: PFN_vkCmdDispatchGraphIndirectAMDX!
+    public let vkCmdDispatchGraphIndirectAMDX: PFN_vkCmdDispatchGraphIndirectAMDX!
     #endif
     #if VK_ENABLE_BETA_EXTENSIONS
-    let vkCmdDispatchGraphIndirectCountAMDX: PFN_vkCmdDispatchGraphIndirectCountAMDX!
+    public let vkCmdDispatchGraphIndirectCountAMDX: PFN_vkCmdDispatchGraphIndirectCountAMDX!
     #endif
-    let vkCmdBindDescriptorSets2: PFN_vkCmdBindDescriptorSets2!
-    let vkCmdPushConstants2: PFN_vkCmdPushConstants2!
-    let vkCmdPushDescriptorSet2: PFN_vkCmdPushDescriptorSet2!
-    let vkCmdPushDescriptorSetWithTemplate2: PFN_vkCmdPushDescriptorSetWithTemplate2!
-    let vkCmdSetDescriptorBufferOffsets2EXT: PFN_vkCmdSetDescriptorBufferOffsets2EXT!
-    let vkCmdBindDescriptorBufferEmbeddedSamplers2EXT: PFN_vkCmdBindDescriptorBufferEmbeddedSamplers2EXT!
-    let vkSetLatencySleepModeNV: PFN_vkSetLatencySleepModeNV!
-    let vkLatencySleepNV: PFN_vkLatencySleepNV!
-    let vkSetLatencyMarkerNV: PFN_vkSetLatencyMarkerNV!
-    let vkGetLatencyTimingsNV: PFN_vkGetLatencyTimingsNV!
-    let vkQueueNotifyOutOfBandNV: PFN_vkQueueNotifyOutOfBandNV!
-    let vkCmdSetRenderingAttachmentLocations: PFN_vkCmdSetRenderingAttachmentLocations!
-    let vkCmdSetRenderingInputAttachmentIndices: PFN_vkCmdSetRenderingInputAttachmentIndices!
-    let vkCmdSetDepthClampRangeEXT: PFN_vkCmdSetDepthClampRangeEXT!
+    public let vkCmdBindDescriptorSets2: PFN_vkCmdBindDescriptorSets2!
+    public let vkCmdPushConstants2: PFN_vkCmdPushConstants2!
+    public let vkCmdPushDescriptorSet2: PFN_vkCmdPushDescriptorSet2!
+    public let vkCmdPushDescriptorSetWithTemplate2: PFN_vkCmdPushDescriptorSetWithTemplate2!
+    public let vkCmdSetDescriptorBufferOffsets2EXT: PFN_vkCmdSetDescriptorBufferOffsets2EXT!
+    public let vkCmdBindDescriptorBufferEmbeddedSamplers2EXT: PFN_vkCmdBindDescriptorBufferEmbeddedSamplers2EXT!
+    public let vkSetLatencySleepModeNV: PFN_vkSetLatencySleepModeNV!
+    public let vkLatencySleepNV: PFN_vkLatencySleepNV!
+    public let vkSetLatencyMarkerNV: PFN_vkSetLatencyMarkerNV!
+    public let vkGetLatencyTimingsNV: PFN_vkGetLatencyTimingsNV!
+    public let vkQueueNotifyOutOfBandNV: PFN_vkQueueNotifyOutOfBandNV!
+    public let vkCmdSetRenderingAttachmentLocations: PFN_vkCmdSetRenderingAttachmentLocations!
+    public let vkCmdSetRenderingInputAttachmentIndices: PFN_vkCmdSetRenderingInputAttachmentIndices!
+    public let vkCmdSetDepthClampRangeEXT: PFN_vkCmdSetDepthClampRangeEXT!
     #if VK_USE_PLATFORM_METAL_EXT
-    let vkGetMemoryMetalHandleEXT: PFN_vkGetMemoryMetalHandleEXT!
+    public let vkGetMemoryMetalHandleEXT: PFN_vkGetMemoryMetalHandleEXT!
     #endif
     #if VK_USE_PLATFORM_METAL_EXT
-    let vkGetMemoryMetalHandlePropertiesEXT: PFN_vkGetMemoryMetalHandlePropertiesEXT!
+    public let vkGetMemoryMetalHandlePropertiesEXT: PFN_vkGetMemoryMetalHandlePropertiesEXT!
     #endif
-    let vkConvertCooperativeVectorMatrixNV: PFN_vkConvertCooperativeVectorMatrixNV!
-    let vkCmdConvertCooperativeVectorMatrixNV: PFN_vkCmdConvertCooperativeVectorMatrixNV!
-    let vkCmdDispatchTileQCOM: PFN_vkCmdDispatchTileQCOM!
-    let vkCmdBeginPerTileExecutionQCOM: PFN_vkCmdBeginPerTileExecutionQCOM!
-    let vkCmdEndPerTileExecutionQCOM: PFN_vkCmdEndPerTileExecutionQCOM!
-    let vkCreateExternalComputeQueueNV: PFN_vkCreateExternalComputeQueueNV!
-    let vkDestroyExternalComputeQueueNV: PFN_vkDestroyExternalComputeQueueNV!
-    let vkGetExternalComputeQueueDataNV: PFN_vkGetExternalComputeQueueDataNV!
-    let vkCreateShaderInstrumentationARM: PFN_vkCreateShaderInstrumentationARM!
-    let vkDestroyShaderInstrumentationARM: PFN_vkDestroyShaderInstrumentationARM!
-    let vkCmdBeginShaderInstrumentationARM: PFN_vkCmdBeginShaderInstrumentationARM!
-    let vkCmdEndShaderInstrumentationARM: PFN_vkCmdEndShaderInstrumentationARM!
-    let vkGetShaderInstrumentationValuesARM: PFN_vkGetShaderInstrumentationValuesARM!
-    let vkClearShaderInstrumentationMetricsARM: PFN_vkClearShaderInstrumentationMetricsARM!
-    let vkCreateTensorARM: PFN_vkCreateTensorARM!
-    let vkDestroyTensorARM: PFN_vkDestroyTensorARM!
-    let vkCreateTensorViewARM: PFN_vkCreateTensorViewARM!
-    let vkDestroyTensorViewARM: PFN_vkDestroyTensorViewARM!
-    let vkGetTensorMemoryRequirementsARM: PFN_vkGetTensorMemoryRequirementsARM!
-    let vkBindTensorMemoryARM: PFN_vkBindTensorMemoryARM!
-    let vkGetDeviceTensorMemoryRequirementsARM: PFN_vkGetDeviceTensorMemoryRequirementsARM!
-    let vkCmdCopyTensorARM: PFN_vkCmdCopyTensorARM!
-    let vkGetTensorOpaqueCaptureDescriptorDataARM: PFN_vkGetTensorOpaqueCaptureDescriptorDataARM!
-    let vkGetTensorViewOpaqueCaptureDescriptorDataARM: PFN_vkGetTensorViewOpaqueCaptureDescriptorDataARM!
-    let vkCreateDataGraphPipelinesARM: PFN_vkCreateDataGraphPipelinesARM!
-    let vkCreateDataGraphPipelineSessionARM: PFN_vkCreateDataGraphPipelineSessionARM!
-    let vkGetDataGraphPipelineSessionBindPointRequirementsARM: PFN_vkGetDataGraphPipelineSessionBindPointRequirementsARM!
-    let vkGetDataGraphPipelineSessionMemoryRequirementsARM: PFN_vkGetDataGraphPipelineSessionMemoryRequirementsARM!
-    let vkBindDataGraphPipelineSessionMemoryARM: PFN_vkBindDataGraphPipelineSessionMemoryARM!
-    let vkDestroyDataGraphPipelineSessionARM: PFN_vkDestroyDataGraphPipelineSessionARM!
-    let vkCmdDispatchDataGraphARM: PFN_vkCmdDispatchDataGraphARM!
-    let vkGetDataGraphPipelineAvailablePropertiesARM: PFN_vkGetDataGraphPipelineAvailablePropertiesARM!
-    let vkGetDataGraphPipelinePropertiesARM: PFN_vkGetDataGraphPipelinePropertiesARM!
+    public let vkConvertCooperativeVectorMatrixNV: PFN_vkConvertCooperativeVectorMatrixNV!
+    public let vkCmdConvertCooperativeVectorMatrixNV: PFN_vkCmdConvertCooperativeVectorMatrixNV!
+    public let vkCmdDispatchTileQCOM: PFN_vkCmdDispatchTileQCOM!
+    public let vkCmdBeginPerTileExecutionQCOM: PFN_vkCmdBeginPerTileExecutionQCOM!
+    public let vkCmdEndPerTileExecutionQCOM: PFN_vkCmdEndPerTileExecutionQCOM!
+    public let vkCreateExternalComputeQueueNV: PFN_vkCreateExternalComputeQueueNV!
+    public let vkDestroyExternalComputeQueueNV: PFN_vkDestroyExternalComputeQueueNV!
+    public let vkGetExternalComputeQueueDataNV: PFN_vkGetExternalComputeQueueDataNV!
+    public let vkCreateShaderInstrumentationARM: PFN_vkCreateShaderInstrumentationARM!
+    public let vkDestroyShaderInstrumentationARM: PFN_vkDestroyShaderInstrumentationARM!
+    public let vkCmdBeginShaderInstrumentationARM: PFN_vkCmdBeginShaderInstrumentationARM!
+    public let vkCmdEndShaderInstrumentationARM: PFN_vkCmdEndShaderInstrumentationARM!
+    public let vkGetShaderInstrumentationValuesARM: PFN_vkGetShaderInstrumentationValuesARM!
+    public let vkClearShaderInstrumentationMetricsARM: PFN_vkClearShaderInstrumentationMetricsARM!
+    public let vkCreateTensorARM: PFN_vkCreateTensorARM!
+    public let vkDestroyTensorARM: PFN_vkDestroyTensorARM!
+    public let vkCreateTensorViewARM: PFN_vkCreateTensorViewARM!
+    public let vkDestroyTensorViewARM: PFN_vkDestroyTensorViewARM!
+    public let vkGetTensorMemoryRequirementsARM: PFN_vkGetTensorMemoryRequirementsARM!
+    public let vkBindTensorMemoryARM: PFN_vkBindTensorMemoryARM!
+    public let vkGetDeviceTensorMemoryRequirementsARM: PFN_vkGetDeviceTensorMemoryRequirementsARM!
+    public let vkCmdCopyTensorARM: PFN_vkCmdCopyTensorARM!
+    public let vkGetTensorOpaqueCaptureDescriptorDataARM: PFN_vkGetTensorOpaqueCaptureDescriptorDataARM!
+    public let vkGetTensorViewOpaqueCaptureDescriptorDataARM: PFN_vkGetTensorViewOpaqueCaptureDescriptorDataARM!
+    public let vkCreateDataGraphPipelinesARM: PFN_vkCreateDataGraphPipelinesARM!
+    public let vkCreateDataGraphPipelineSessionARM: PFN_vkCreateDataGraphPipelineSessionARM!
+    public let vkGetDataGraphPipelineSessionBindPointRequirementsARM: PFN_vkGetDataGraphPipelineSessionBindPointRequirementsARM!
+    public let vkGetDataGraphPipelineSessionMemoryRequirementsARM: PFN_vkGetDataGraphPipelineSessionMemoryRequirementsARM!
+    public let vkBindDataGraphPipelineSessionMemoryARM: PFN_vkBindDataGraphPipelineSessionMemoryARM!
+    public let vkDestroyDataGraphPipelineSessionARM: PFN_vkDestroyDataGraphPipelineSessionARM!
+    public let vkCmdDispatchDataGraphARM: PFN_vkCmdDispatchDataGraphARM!
+    public let vkGetDataGraphPipelineAvailablePropertiesARM: PFN_vkGetDataGraphPipelineAvailablePropertiesARM!
+    public let vkGetDataGraphPipelinePropertiesARM: PFN_vkGetDataGraphPipelinePropertiesARM!
     #if VK_USE_PLATFORM_OHOS
-    let vkGetNativeBufferPropertiesOHOS: PFN_vkGetNativeBufferPropertiesOHOS!
+    public let vkGetNativeBufferPropertiesOHOS: PFN_vkGetNativeBufferPropertiesOHOS!
     #endif
     #if VK_USE_PLATFORM_OHOS
-    let vkGetMemoryNativeBufferOHOS: PFN_vkGetMemoryNativeBufferOHOS!
+    public let vkGetMemoryNativeBufferOHOS: PFN_vkGetMemoryNativeBufferOHOS!
     #endif
-    let vkQueueSetPerfHintQCOM: PFN_vkQueueSetPerfHintQCOM!
-    let vkCmdSetComputeOccupancyPriorityNV: PFN_vkCmdSetComputeOccupancyPriorityNV!
-    let vkWriteSamplerDescriptorsEXT: PFN_vkWriteSamplerDescriptorsEXT!
-    let vkWriteResourceDescriptorsEXT: PFN_vkWriteResourceDescriptorsEXT!
-    let vkCmdBindSamplerHeapEXT: PFN_vkCmdBindSamplerHeapEXT!
-    let vkCmdBindResourceHeapEXT: PFN_vkCmdBindResourceHeapEXT!
-    let vkCmdPushDataEXT: PFN_vkCmdPushDataEXT!
-    let vkRegisterCustomBorderColorEXT: PFN_vkRegisterCustomBorderColorEXT!
-    let vkUnregisterCustomBorderColorEXT: PFN_vkUnregisterCustomBorderColorEXT!
-    let vkGetImageOpaqueCaptureDataEXT: PFN_vkGetImageOpaqueCaptureDataEXT!
-    let vkGetTensorOpaqueCaptureDataARM: PFN_vkGetTensorOpaqueCaptureDataARM!
-    let vkCmdCopyMemoryKHR: PFN_vkCmdCopyMemoryKHR!
-    let vkCmdCopyMemoryToImageKHR: PFN_vkCmdCopyMemoryToImageKHR!
-    let vkCmdCopyImageToMemoryKHR: PFN_vkCmdCopyImageToMemoryKHR!
-    let vkCmdUpdateMemoryKHR: PFN_vkCmdUpdateMemoryKHR!
-    let vkCmdFillMemoryKHR: PFN_vkCmdFillMemoryKHR!
-    let vkCmdCopyQueryPoolResultsToMemoryKHR: PFN_vkCmdCopyQueryPoolResultsToMemoryKHR!
-    let vkCmdBeginConditionalRendering2EXT: PFN_vkCmdBeginConditionalRendering2EXT!
-    let vkCmdBindTransformFeedbackBuffers2EXT: PFN_vkCmdBindTransformFeedbackBuffers2EXT!
-    let vkCmdBeginTransformFeedback2EXT: PFN_vkCmdBeginTransformFeedback2EXT!
-    let vkCmdEndTransformFeedback2EXT: PFN_vkCmdEndTransformFeedback2EXT!
-    let vkCmdDrawIndirectByteCount2EXT: PFN_vkCmdDrawIndirectByteCount2EXT!
-    let vkCmdWriteMarkerToMemoryAMD: PFN_vkCmdWriteMarkerToMemoryAMD!
-    let vkCmdBindIndexBuffer3KHR: PFN_vkCmdBindIndexBuffer3KHR!
-    let vkCmdBindVertexBuffers3KHR: PFN_vkCmdBindVertexBuffers3KHR!
-    let vkCmdDrawIndirect2KHR: PFN_vkCmdDrawIndirect2KHR!
-    let vkCmdDrawIndexedIndirect2KHR: PFN_vkCmdDrawIndexedIndirect2KHR!
-    let vkCmdDrawIndirectCount2KHR: PFN_vkCmdDrawIndirectCount2KHR!
-    let vkCmdDrawIndexedIndirectCount2KHR: PFN_vkCmdDrawIndexedIndirectCount2KHR!
-    let vkCmdDrawMeshTasksIndirect2EXT: PFN_vkCmdDrawMeshTasksIndirect2EXT!
-    let vkCmdDrawMeshTasksIndirectCount2EXT: PFN_vkCmdDrawMeshTasksIndirectCount2EXT!
-    let vkCmdDispatchIndirect2KHR: PFN_vkCmdDispatchIndirect2KHR!
-    let vkCreateAccelerationStructure2KHR: PFN_vkCreateAccelerationStructure2KHR!
-    let vkCmdSetDispatchParametersARM: PFN_vkCmdSetDispatchParametersARM!
+    public let vkQueueSetPerfHintQCOM: PFN_vkQueueSetPerfHintQCOM!
+    public let vkCmdSetComputeOccupancyPriorityNV: PFN_vkCmdSetComputeOccupancyPriorityNV!
+    public let vkWriteSamplerDescriptorsEXT: PFN_vkWriteSamplerDescriptorsEXT!
+    public let vkWriteResourceDescriptorsEXT: PFN_vkWriteResourceDescriptorsEXT!
+    public let vkCmdBindSamplerHeapEXT: PFN_vkCmdBindSamplerHeapEXT!
+    public let vkCmdBindResourceHeapEXT: PFN_vkCmdBindResourceHeapEXT!
+    public let vkCmdPushDataEXT: PFN_vkCmdPushDataEXT!
+    public let vkRegisterCustomBorderColorEXT: PFN_vkRegisterCustomBorderColorEXT!
+    public let vkUnregisterCustomBorderColorEXT: PFN_vkUnregisterCustomBorderColorEXT!
+    public let vkGetImageOpaqueCaptureDataEXT: PFN_vkGetImageOpaqueCaptureDataEXT!
+    public let vkGetTensorOpaqueCaptureDataARM: PFN_vkGetTensorOpaqueCaptureDataARM!
+    public let vkCmdCopyMemoryKHR: PFN_vkCmdCopyMemoryKHR!
+    public let vkCmdCopyMemoryToImageKHR: PFN_vkCmdCopyMemoryToImageKHR!
+    public let vkCmdCopyImageToMemoryKHR: PFN_vkCmdCopyImageToMemoryKHR!
+    public let vkCmdUpdateMemoryKHR: PFN_vkCmdUpdateMemoryKHR!
+    public let vkCmdFillMemoryKHR: PFN_vkCmdFillMemoryKHR!
+    public let vkCmdCopyQueryPoolResultsToMemoryKHR: PFN_vkCmdCopyQueryPoolResultsToMemoryKHR!
+    public let vkCmdBeginConditionalRendering2EXT: PFN_vkCmdBeginConditionalRendering2EXT!
+    public let vkCmdBindTransformFeedbackBuffers2EXT: PFN_vkCmdBindTransformFeedbackBuffers2EXT!
+    public let vkCmdBeginTransformFeedback2EXT: PFN_vkCmdBeginTransformFeedback2EXT!
+    public let vkCmdEndTransformFeedback2EXT: PFN_vkCmdEndTransformFeedback2EXT!
+    public let vkCmdDrawIndirectByteCount2EXT: PFN_vkCmdDrawIndirectByteCount2EXT!
+    public let vkCmdWriteMarkerToMemoryAMD: PFN_vkCmdWriteMarkerToMemoryAMD!
+    public let vkCmdBindIndexBuffer3KHR: PFN_vkCmdBindIndexBuffer3KHR!
+    public let vkCmdBindVertexBuffers3KHR: PFN_vkCmdBindVertexBuffers3KHR!
+    public let vkCmdDrawIndirect2KHR: PFN_vkCmdDrawIndirect2KHR!
+    public let vkCmdDrawIndexedIndirect2KHR: PFN_vkCmdDrawIndexedIndirect2KHR!
+    public let vkCmdDrawIndirectCount2KHR: PFN_vkCmdDrawIndirectCount2KHR!
+    public let vkCmdDrawIndexedIndirectCount2KHR: PFN_vkCmdDrawIndexedIndirectCount2KHR!
+    public let vkCmdDrawMeshTasksIndirect2EXT: PFN_vkCmdDrawMeshTasksIndirect2EXT!
+    public let vkCmdDrawMeshTasksIndirectCount2EXT: PFN_vkCmdDrawMeshTasksIndirectCount2EXT!
+    public let vkCmdDispatchIndirect2KHR: PFN_vkCmdDispatchIndirect2KHR!
+    public let vkCreateAccelerationStructure2KHR: PFN_vkCreateAccelerationStructure2KHR!
+    public let vkCmdSetDispatchParametersARM: PFN_vkCmdSetDispatchParametersARM!
 
     init(vkGetDeviceProcAddr: PFN_vkGetDeviceProcAddr, device: VkDevice) {
         self.vkDestroyDevice = unsafeBitCast(vkGetDeviceProcAddr(device, "vkDestroyDevice"), to: PFN_vkDestroyDevice?.self)

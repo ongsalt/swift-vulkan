@@ -135,10 +135,8 @@ class Generator(BaseGenerator):
 
         c_values = {
             member.name: f'cStruct.{member.name}' for member in struct.c_struct.members}
-        # print(struct.name)
+        
         classes = {p.reference_name: p.reference_name for p in parent_classes}
-        # print(classes)
-        # print(f"c_values = {c_values}")
         swift_values = struct.member_conversions.get_swift_values(
             c_values, classes)
 
@@ -178,7 +176,7 @@ class Generator(BaseGenerator):
             if cls.parent:
                 self << f'public let {cls.parent.reference_name}: {cls.parent.name}'
             if cls.dispatch_table:
-                self << f'let dispatchTable: {cls.dispatch_table.name}'
+                self << f'public let dispatchTable: {cls.dispatch_table.name}'
 
             self.linebreak()
             self.generate_class_init(cls)
@@ -337,11 +335,11 @@ class Generator(BaseGenerator):
             self << '#endif'
 
     def generate_dispatch_table(self, dispatch_table: DispatchTable):
-        with self.indent(f'struct {dispatch_table.name} {{', '}'):
+        with self.indent(f'public struct {dispatch_table.name} {{', '}'):
             for command in dispatch_table.commands:
                 if command.protect:
                     self << f'#if {command.protect}'
-                self << f'let {command.name}: PFN_{command.name}!'
+                self << f'public let {command.name}: PFN_{command.name}!'
                 if command.protect:
                     self << '#endif'
             self.linebreak()

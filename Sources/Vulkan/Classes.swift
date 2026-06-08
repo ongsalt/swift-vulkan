@@ -2,7 +2,7 @@ import CVulkan
 
 public class Entry {
     public let loader: Loader
-    let dispatchTable: EntryDispatchTable
+    public let dispatchTable: EntryDispatchTable
 
     public init(loader: Loader) {
         self.loader = loader
@@ -61,7 +61,7 @@ public class Entry {
 public class Instance: _HandleContainer {
     let handle: VkInstance?
     public let entry: Entry
-    let dispatchTable: InstanceDispatchTable
+    public let dispatchTable: InstanceDispatchTable
 
     public init(handle: VkInstance!, entry: Entry) {
         self.handle = handle
@@ -1233,7 +1233,7 @@ public class PhysicalDevice: _HandleContainer {
 public class Device: _HandleContainer {
     let handle: VkDevice?
     public let physicalDevice: PhysicalDevice
-    let dispatchTable: DeviceDispatchTable
+    public let dispatchTable: DeviceDispatchTable
 
     public init(handle: VkDevice!, physicalDevice: PhysicalDevice) {
         self.handle = handle
