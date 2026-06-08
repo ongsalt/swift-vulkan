@@ -46,7 +46,6 @@ Swift-vulkan is a relatively new project, and there are still some important mil
 
 ## Todos
 - fix parent class?
-- remove `cmd` prefix for CommandBuffer
 - fix: array to optional parsing and default value
 
 - latexmath lenght 😭

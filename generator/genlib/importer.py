@@ -269,13 +269,13 @@ class Importer:
                 # if type_name in ('VkPhysicalDevice', 'VkDisplayKHR', 'VkDisplayModeKHR'):
                 elif type_name in self.imported_classes:
                     c = self.imported_classes[type_name].parent
-                    if c not in parent_classes:
+                    if c and c not in parent_classes:
                         parent_classes.append(c)
 
-                    # TODO: cant we just do Global.getHandleClass() or some shi
-                    # vulkan wont return an existing handle which mean we can create this
-                    # convertible_from_c_struct = False
-                    # pass
+                # TODO: cant we just do Global.getHandleClass() or some shi
+                # vulkan wont return an existing handle which mean we can create this
+                # convertible_from_c_struct = False
+                # pass
 
         protocols: list[str] = []
         for base in c_struct.struct_extends:
@@ -537,7 +537,7 @@ class Importer:
             break
         return class_params
 
-    def get_member_conversions(self, c_members: list[CMember], c_struct: CStruct = None, c_command: CCommand = None,
+    def get_member_conversions(self, c_members: list[CMember], c_struct: CStruct | None = None, c_command: CCommand | None = None,
                                transform_chainable: bool = False) -> tuple[list[SwiftMember], tc.MemberConversions]:
         members: list[SwiftMember] = []
         conversions = tc.MemberConversions()
@@ -793,35 +793,45 @@ class Importer:
         return string, None
     
 
-    def get_default_value(self, swift_type: str, c_type: CType, optional_lengths: set[str]) -> str | None:
-        # if swift_type.endswith('?'):
-        #     return 'nil'
+    def get_default_value(self, swift_type: str | None, c_type: CType, optional_lengths: set[str] | None = None) -> str | None:
+        if swift_type and swift_type.endswith('?'):
+            return 'nil'
         
         ty = c_type
-        default_value = None
         if ty.length and type(ty.length) == str and ty.length != 'null-terminated': 
-            if ty.length in optional_lengths:
+            if optional_lengths and ty.length in optional_lengths:
                 if ty.optional:
-                    default_value = 'nil'
+                    return 'nil'
                 else:
-                    default_value = '[]'
+                    return '[]'
         elif ty.optional:
             if ty.pointer_to and not ty.length:
-                default_value = 'nil'
+                return 'nil'
             elif ty.length == 'null-terminated':
-                default_value = 'nil'
+                return 'nil'
             elif ty.name in tc.NUMERIC_TYPE:
-                default_value = '0'
+                return '0'
             elif ty.name == 'VkBool32':
-                default_value = 'false'
+                return 'false'
             elif ty.name in self.imported_enums:
-                default_value = '.init(rawValue: 0)!'
+                return '.init(rawValue: 0)!'
             elif ty.name in self.imported_option_sets:
-                default_value = '[]'
+                return '[]'
             elif ty.name in self.imported_classes:
-                default_value = 'nil'
+                return 'nil'
+        
+        # if this is a struct and the init of the struct can be written as .init()
+        if c_type.type_name in self.imported_structs:
+            struct = self.imported_structs[c_type.type_name]
+            can_omit = True
+            for member in struct.members:
+                if member.default_value is None:
+                    can_omit = False
+                    break
+            if can_omit:
+                return '.init()'
 
-        return default_value
+        return None
 
 
 # excluding the one with pnext

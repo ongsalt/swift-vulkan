@@ -739,7 +739,7 @@ public struct AllocationCallbacks: CStructConvertible {
     public let pfnInternalAllocation: PFN_vkInternalAllocationNotification?
     public let pfnInternalFree: PFN_vkInternalFreeNotification?
 
-    public init(userData: UnsafeMutableRawPointer? = nil, pfnAllocation: @escaping PFN_vkAllocationFunction, pfnReallocation: @escaping PFN_vkReallocationFunction, pfnFree: @escaping PFN_vkFreeFunction, pfnInternalAllocation: PFN_vkInternalAllocationNotification?, pfnInternalFree: PFN_vkInternalFreeNotification?) {
+    public init(userData: UnsafeMutableRawPointer? = nil, pfnAllocation: @escaping PFN_vkAllocationFunction, pfnReallocation: @escaping PFN_vkReallocationFunction, pfnFree: @escaping PFN_vkFreeFunction, pfnInternalAllocation: PFN_vkInternalAllocationNotification? = nil, pfnInternalFree: PFN_vkInternalFreeNotification? = nil) {
         self.userData = userData
         self.pfnAllocation = pfnAllocation
         self.pfnReallocation = pfnReallocation
@@ -3455,7 +3455,7 @@ public struct PipelineMultisampleStateCreateInfo: ChainableBase {
     public let alphaToCoverageEnable: Bool
     public let alphaToOneEnable: Bool
 
-    public init(flags: PipelineMultisampleStateCreateFlags = [], rasterizationSamples: SampleCountFlags, sampleShadingEnable: Bool, minSampleShading: Float, sampleMask: UnsafePointer<VkSampleMask>?, alphaToCoverageEnable: Bool, alphaToOneEnable: Bool) {
+    public init(flags: PipelineMultisampleStateCreateFlags = [], rasterizationSamples: SampleCountFlags, sampleShadingEnable: Bool, minSampleShading: Float, sampleMask: UnsafePointer<VkSampleMask>? = nil, alphaToCoverageEnable: Bool, alphaToOneEnable: Bool) {
         self.flags = flags
         self.rasterizationSamples = rasterizationSamples
         self.sampleShadingEnable = sampleShadingEnable
@@ -4138,7 +4138,7 @@ public struct PipelineBinaryHandlesInfoKHR: ChainableBase {
     public let pipelineBinaryCount: UInt32
     public let pipelineBinaries: UnsafeMutablePointer<VkPipelineBinaryKHR?>?
 
-    public init(pipelineBinaryCount: UInt32 = 0, pipelineBinaries: UnsafeMutablePointer<VkPipelineBinaryKHR?>?) {
+    public init(pipelineBinaryCount: UInt32 = 0, pipelineBinaries: UnsafeMutablePointer<VkPipelineBinaryKHR?>? = nil) {
         self.pipelineBinaryCount = pipelineBinaryCount
         self.pipelineBinaries = pipelineBinaries
     }
@@ -6117,7 +6117,7 @@ public struct PresentInfoKHR: ChainableBase {
     public let imageIndices: Array<UInt32>
     public let results: UnsafeMutablePointer<VkResult>?
 
-    public init(waitSemaphores: Array<Semaphore> = [], swapchains: Array<SwapchainKHR>, imageIndices: Array<UInt32>, results: UnsafeMutablePointer<VkResult>?) {
+    public init(waitSemaphores: Array<Semaphore> = [], swapchains: Array<SwapchainKHR>, imageIndices: Array<UInt32>, results: UnsafeMutablePointer<VkResult>? = nil) {
         self.waitSemaphores = waitSemaphores
         self.swapchains = swapchains
         self.imageIndices = imageIndices
@@ -6655,7 +6655,7 @@ public struct ImportMemoryWin32HandleInfoNV: ChainableBase, MemoryAllocateInfoEx
     public let handleType: ExternalMemoryHandleTypeFlagsNV
     public let handle: HANDLE?
 
-    public init(handleType: ExternalMemoryHandleTypeFlagsNV = [], handle: HANDLE?) {
+    public init(handleType: ExternalMemoryHandleTypeFlagsNV = [], handle: HANDLE? = nil) {
         self.handleType = handleType
         self.handle = handle
     }
@@ -8694,7 +8694,7 @@ public struct PresentRegionsKHR: ChainableBase, PresentInfoKHRExtension {
 
     public let regions: Array<PresentRegionKHR>?
 
-    public init(regions: Array<PresentRegionKHR>?) {
+    public init(regions: Array<PresentRegionKHR>? = nil) {
         self.regions = regions
     }
 
@@ -9018,7 +9018,7 @@ public struct ImportMemoryWin32HandleInfoKHR: ChainableBase, MemoryAllocateInfoE
     public let handle: HANDLE?
     public let name: LPCWSTR
 
-    public init(handleType: ExternalMemoryHandleTypeFlags, handle: HANDLE?, name: LPCWSTR) {
+    public init(handleType: ExternalMemoryHandleTypeFlags, handle: HANDLE? = nil, name: LPCWSTR) {
         self.handleType = handleType
         self.handle = handle
         self.name = name
@@ -9576,7 +9576,7 @@ public struct ImportSemaphoreWin32HandleInfoKHR: ChainableBase {
     public let handle: HANDLE?
     public let name: LPCWSTR
 
-    public init(semaphore: Semaphore, flags: SemaphoreImportFlags = [], handleType: ExternalSemaphoreHandleTypeFlags, handle: HANDLE?, name: LPCWSTR) {
+    public init(semaphore: Semaphore, flags: SemaphoreImportFlags = [], handleType: ExternalSemaphoreHandleTypeFlags, handle: HANDLE? = nil, name: LPCWSTR) {
         self.semaphore = semaphore
         self.flags = flags
         self.handleType = handleType
@@ -9968,7 +9968,7 @@ public struct ImportFenceWin32HandleInfoKHR: ChainableBase {
     public let handle: HANDLE?
     public let name: LPCWSTR
 
-    public init(fence: Fence, flags: FenceImportFlags = [], handleType: ExternalFenceHandleTypeFlags, handle: HANDLE?, name: LPCWSTR) {
+    public init(fence: Fence, flags: FenceImportFlags = [], handleType: ExternalFenceHandleTypeFlags, handle: HANDLE? = nil, name: LPCWSTR) {
         self.fence = fence
         self.flags = flags
         self.handleType = handleType
@@ -11150,7 +11150,7 @@ public struct PresentIdKHR: ChainableBase, PresentInfoKHRExtension {
 
     public let presentIds: Array<UInt64>?
 
-    public init(presentIds: Array<UInt64>?) {
+    public init(presentIds: Array<UInt64>? = nil) {
         self.presentIds = presentIds
     }
 
@@ -11209,7 +11209,7 @@ public struct PresentId2KHR: ChainableBase, PresentInfoKHRExtension {
 
     public let presentIds: Array<UInt64>?
 
-    public init(presentIds: Array<UInt64>?) {
+    public init(presentIds: Array<UInt64>? = nil) {
         self.presentIds = presentIds
     }
 
@@ -11624,7 +11624,7 @@ public struct PresentTimingsInfoEXT: ChainableBase, PresentInfoKHRExtension {
 
     public let timingInfos: Array<PresentTimingInfoEXT>?
 
-    public init(timingInfos: Array<PresentTimingInfoEXT>?) {
+    public init(timingInfos: Array<PresentTimingInfoEXT>? = nil) {
         self.timingInfos = timingInfos
     }
 
@@ -11907,7 +11907,7 @@ public struct PresentTimesInfoGOOGLE: ChainableBase, PresentInfoKHRExtension {
 
     public let times: Array<PresentTimeGOOGLE>?
 
-    public init(times: Array<PresentTimeGOOGLE>?) {
+    public init(times: Array<PresentTimeGOOGLE>? = nil) {
         self.times = times
     }
 
@@ -12065,7 +12065,7 @@ public struct PipelineViewportWScalingStateCreateInfoNV: ChainableBase, Pipeline
     public let viewportWScalingEnable: Bool
     public let viewportWScalings: Array<ViewportWScalingNV>?
 
-    public init(viewportWScalingEnable: Bool, viewportWScalings: Array<ViewportWScalingNV>?) {
+    public init(viewportWScalingEnable: Bool, viewportWScalings: Array<ViewportWScalingNV>? = nil) {
         self.viewportWScalingEnable = viewportWScalingEnable
         self.viewportWScalings = viewportWScalings
     }
@@ -14470,7 +14470,7 @@ public struct PhysicalDeviceLayeredApiPropertiesListKHR: ChainableBase, Physical
     public let layeredApiCount: UInt32
     public let layeredApis: UnsafeMutablePointer<VkPhysicalDeviceLayeredApiPropertiesKHR>?
 
-    public init(layeredApiCount: UInt32 = 0, layeredApis: UnsafeMutablePointer<VkPhysicalDeviceLayeredApiPropertiesKHR>?) {
+    public init(layeredApiCount: UInt32 = 0, layeredApis: UnsafeMutablePointer<VkPhysicalDeviceLayeredApiPropertiesKHR>? = nil) {
         self.layeredApiCount = layeredApiCount
         self.layeredApis = layeredApis
     }
@@ -27582,7 +27582,7 @@ public struct IndirectExecutionSetShaderInfoEXT: ChainableBase {
     public let maxShaderCount: UInt32
     public let pushConstantRanges: Array<PushConstantRange>
 
-    public init(initialShaders: Array<ShaderEXT>, setLayoutInfos: Array<IndirectExecutionSetShaderLayoutInfoEXT>?, maxShaderCount: UInt32, pushConstantRanges: Array<PushConstantRange> = []) {
+    public init(initialShaders: Array<ShaderEXT>, setLayoutInfos: Array<IndirectExecutionSetShaderLayoutInfoEXT>? = nil, maxShaderCount: UInt32, pushConstantRanges: Array<PushConstantRange> = []) {
         self.initialShaders = initialShaders
         self.setLayoutInfos = setLayoutInfos
         self.maxShaderCount = maxShaderCount
@@ -28889,7 +28889,7 @@ public struct PhysicalDeviceHostImageCopyProperties: ChainableBase, PhysicalDevi
     public let optimalTilingLayoutUUID: (UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8)
     public let identicalMemoryTypeRequirements: Bool
 
-    public init(copySrcLayoutCount: UInt32 = 0, copySrcLayouts: UnsafeMutablePointer<VkImageLayout>?, copyDstLayoutCount: UInt32 = 0, copyDstLayouts: UnsafeMutablePointer<VkImageLayout>?, optimalTilingLayoutUUID: (UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8), identicalMemoryTypeRequirements: Bool) {
+    public init(copySrcLayoutCount: UInt32 = 0, copySrcLayouts: UnsafeMutablePointer<VkImageLayout>? = nil, copyDstLayoutCount: UInt32 = 0, copyDstLayouts: UnsafeMutablePointer<VkImageLayout>? = nil, optimalTilingLayoutUUID: (UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8), identicalMemoryTypeRequirements: Bool) {
         self.copySrcLayoutCount = copySrcLayoutCount
         self.copySrcLayouts = copySrcLayouts
         self.copyDstLayoutCount = copyDstLayoutCount
@@ -40104,7 +40104,7 @@ public struct FrameBoundaryEXT: ChainableBase, SubmitInfoExtension, SubmitInfo2E
     public let tagSize: Int
     public let tag: UnsafeRawPointer?
 
-    public init(flags: FrameBoundaryFlagsEXT = [], frameID: UInt64, images: Array<Image>? = nil, buffers: Array<Buffer>? = nil, tagName: UInt64 = 0, tagSize: Int = 0, tag: UnsafeRawPointer?) {
+    public init(flags: FrameBoundaryFlagsEXT = [], frameID: UInt64, images: Array<Image>? = nil, buffers: Array<Buffer>? = nil, tagName: UInt64 = 0, tagSize: Int = 0, tag: UnsafeRawPointer? = nil) {
         self.flags = flags
         self.frameID = frameID
         self.images = images
@@ -40317,7 +40317,7 @@ public struct SurfacePresentModeCompatibilityKHR: ChainableBase, SurfaceCapabili
     public let presentModeCount: UInt32
     public let presentModes: UnsafeMutablePointer<VkPresentModeKHR>?
 
-    public init(presentModeCount: UInt32 = 0, presentModes: UnsafeMutablePointer<VkPresentModeKHR>?) {
+    public init(presentModeCount: UInt32 = 0, presentModes: UnsafeMutablePointer<VkPresentModeKHR>? = nil) {
         self.presentModeCount = presentModeCount
         self.presentModes = presentModes
     }
@@ -43002,7 +43002,7 @@ public struct GetLatencyMarkerInfoNV: ChainableBase {
     public let timingCount: UInt32
     public let timings: UnsafeMutablePointer<VkLatencyTimingsFrameReportNV>?
 
-    public init(timingCount: UInt32 = 0, timings: UnsafeMutablePointer<VkLatencyTimingsFrameReportNV>?) {
+    public init(timingCount: UInt32 = 0, timings: UnsafeMutablePointer<VkLatencyTimingsFrameReportNV>? = nil) {
         self.timingCount = timingCount
         self.timings = timings
     }
@@ -43118,7 +43118,7 @@ public struct LatencySurfaceCapabilitiesNV: ChainableBase, SurfaceCapabilities2K
     public let presentModeCount: UInt32
     public let presentModes: UnsafeMutablePointer<VkPresentModeKHR>?
 
-    public init(presentModeCount: UInt32 = 0, presentModes: UnsafeMutablePointer<VkPresentModeKHR>?) {
+    public init(presentModeCount: UInt32 = 0, presentModes: UnsafeMutablePointer<VkPresentModeKHR>? = nil) {
         self.presentModeCount = presentModeCount
         self.presentModes = presentModes
     }
@@ -45289,7 +45289,7 @@ public struct TensorDescriptionARM: ChainableBase, DataGraphPipelineResourceInfo
     public let strides: Array<Int64>?
     public let usage: TensorUsageFlagsARM
 
-    public init(tiling: TensorTilingARM, format: Format, dimensions: Array<Int64>, strides: Array<Int64>?, usage: TensorUsageFlagsARM) {
+    public init(tiling: TensorTilingARM, format: Format, dimensions: Array<Int64>, strides: Array<Int64>? = nil, usage: TensorUsageFlagsARM) {
         self.tiling = tiling
         self.format = format
         self.dimensions = dimensions
@@ -45803,7 +45803,7 @@ public struct CopyTensorInfoARM: ChainableBase {
     public let dstTensor: TensorARM
     public let regions: Array<TensorCopyARM>
 
-    public init(srcTensor: TensorARM, dstTensor: TensorARM, regions: Array<TensorCopyARM>) {
+    public init(srcTensor: TensorARM, dstTensor: TensorARM, regions: Array<TensorCopyARM> = .init()) {
         self.srcTensor = srcTensor
         self.dstTensor = dstTensor
         self.regions = regions
@@ -46702,7 +46702,7 @@ public struct DataGraphPipelinePropertyQueryResultARM: ChainableBase {
     public let dataSize: Int
     public let data: UnsafeMutableRawPointer?
 
-    public init(property: DataGraphPipelinePropertyARM, isText: Bool, dataSize: Int = 0, data: UnsafeMutableRawPointer?) {
+    public init(property: DataGraphPipelinePropertyARM, isText: Bool, dataSize: Int = 0, data: UnsafeMutableRawPointer? = nil) {
         self.property = property
         self.isText = isText
         self.dataSize = dataSize
