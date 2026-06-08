@@ -374,6 +374,10 @@ class Importer:
         if name.startswith('enumerate'):
             name = 'get' + name[9:]
 
+        if name.startswith('cmd'):
+            name = name[3].lower() + name[4:]
+
+
         c_return_type = c_command.return_type
         throws = False
         if c_return_type.name == 'VkResult':
