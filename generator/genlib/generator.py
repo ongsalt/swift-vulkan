@@ -143,21 +143,22 @@ class Generator(BaseGenerator):
         classes = {p.reference_name: p.reference_name for p in parent_classes}
         swift_values = struct.member_conversions.get_swift_values(
             c_values, classes)
+        swift_values['throws'] = ''
 
         with self.indent(f'init({", ".join(params)}) {{', '}'):
             for member in struct.members:
                 self << f'self.{member.name} = {swift_values[member.name]}'
 
     def generate_struct_swift_to_c_method(self, struct: SwiftStruct, is_chainable_base=False):
-        with self.indent('public func withCStruct<R>(' +
+        with self.indent('public func withCStruct<R, E: Error>(' +
                          ('pNext: UnsafeRawPointer?, ' if is_chainable_base else '') +
-                         f'_ body: (UnsafePointer<{struct.c_struct.name}>) throws -> R' +
-                         ') rethrows -> R {', '}'):
+                         f'_ body: (UnsafePointer<{struct.c_struct.name}>) throws(E) -> R' +
+                         ') throws(E) -> R {', '}'):
 
             swift_values = {
                 member.name: f'self.{member.name}' for member in struct.members}
             c_values = struct.member_conversions.get_c_values(swift_values)
-            closures = struct.member_conversions.get_c_closures(swift_values)
+            closures = struct.member_conversions.get_c_closures(swift_values, throws=' throws(E)')
 
             with self.closures(closures, throws=True):
                 self << f'var cStruct = {struct.c_struct.name}()'
@@ -222,7 +223,10 @@ class Generator(BaseGenerator):
             {param: get_class_chain(cls, target_class)
              for param, target_class in command.class_params.items()}
         )
-        closures = command.param_conversions.get_c_closures(swift_values)
+
+        throws_string = ' throws(Result)' if command.throws else ''
+
+        closures = command.param_conversions.get_c_closures(swift_values, throws=throws_string)
         c_values = command.param_conversions.get_c_values(swift_values)
 
         classes = get_all_class_chains(cls)
@@ -243,8 +247,6 @@ class Generator(BaseGenerator):
 
         params.sort(key=lambda x: 0 if 'info' in x[0].lower() else 1)
         param_string = ', '.join(f'{p[0]}: {p[1]}' for p in params)
-
-        throws_string = ' throws' if command.throws else ''
 
         with self.indent(f'public func {command.name}({param_string})'
                          f'{throws_string} -> {command.return_type} {{', '}'):
@@ -285,7 +287,7 @@ class Generator(BaseGenerator):
                         with self.closures([(
                                 f'Array<{command.output_param_implicit_type}>'
                                 f'(unsafeUninitializedCapacity: Int({count_value})) {{ '
-                                f'out, initializedCount in',
+                                f'out, initializedCount{throws_string} in',
                                 f'}}{map_string}'
                         )], throws=command.throws):
                             if command.throws:

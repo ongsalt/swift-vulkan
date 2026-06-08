@@ -51,11 +51,11 @@ class Conversion:
         value = values[name] if values is not None else name
         return _substitute(self.c_value_template, dict(name=name, value=value), safe=safe)
 
-    def get_c_closure(self, name: str, values: dict[str, str] | None = None, safe: bool = False) -> tuple[str, str]:
+    def get_c_closure(self, name: str, values: dict[str, str] | None = None, safe: bool = False, throws: str | None = None) -> tuple[str, str]:
         value = values[name] if values is not None else name
         return (
             _substitute(self.c_closure_template[0], dict(
-                name=name, value=value), safe=safe),
+                name=name, value=value, throws=throws or ''), safe=safe),
             _substitute(self.c_closure_template[1], dict(
                 name=name, value=value), safe=safe)
         )
@@ -118,12 +118,12 @@ class MemberConversions:
                 c_member, c_values, classes))
         return result
 
-    def get_c_closures(self, swift_values: dict[str, str]) -> list[tuple[str, str]]:
+    def get_c_closures(self, swift_values: dict[str, str], throws: str | None = None) -> list[tuple[str, str]]:
         result: list[tuple[str, str]] = []
         for _, swift_member, conversion in self.conversions:
             if conversion.requires_closure:
                 result.append(conversion.get_c_closure(
-                    swift_member, swift_values))
+                    swift_member, swift_values, throws=throws))
         return result
 
     def get_c_values(self, swift_values: dict[str, str]) -> dict[str, str]:
@@ -176,13 +176,13 @@ def option_set_bit_conversion(c_enum: str, option_set: str, isU64: bool = False)
 
 string_conversion = Conversion(
     swift_value_template='String(cString: $value)',
-    c_closure_template=('$value.withCString { cString_$name in', '}'),
+    c_closure_template=('$value._withCString { cString_$name$throws in', '}'),
     c_value_template='cString_$name'
 )
 
 optional_string_conversion = Conversion(
     swift_value_template='($value != nil) ? String(cString: $value) : nil',
-    c_closure_template=('$value.withOptionalCString { cString_$name in', '}'),
+    c_closure_template=('$value.withOptionalCString { cString_$name$throws in', '}'),
     c_value_template='cString_$name'
 )
 
@@ -200,7 +200,7 @@ def struct_conversion(swift_struct: str, parent_names: list[str] | None = None) 
             swift_params.append(f'{name}: $cls_{name}')
     return Conversion(
         swift_value_template=f'{swift_struct}({", ".join(swift_params)})',
-        c_closure_template=('$value.withCStruct { ptr_$name in', '}'),
+        c_closure_template=('$value.withCStruct { ptr_$name$throws in', '}'),
         c_value_template='ptr_$name.pointee'
     )
 
@@ -212,7 +212,7 @@ def struct_pointer_conversion(swift_struct: str, parent_names: list[str] | None 
             swift_params.append(f'{name}: $cls_{name}')
     return Conversion(
         swift_value_template=f'{swift_struct}({", ".join(swift_params)})',
-        c_closure_template=('$value.withCStruct { ptr_$name in', '}'),
+        c_closure_template=('$value.withCStruct { ptr_$name$throws in', '}'),
         c_value_template='ptr_$name'
     )
 
@@ -224,7 +224,7 @@ def optional_struct_conversion(swift_struct: str, parent_names: list[str] | None
             swift_params.append(f'{name}: $cls_{name}')
     return Conversion(
         swift_value_template=f'($value != nil) ? {swift_struct}({", ".join(swift_params)}) : nil',
-        c_closure_template=('$value.withOptionalCStruct { ptr_$name in', '}'),
+        c_closure_template=('$value.withOptionalCStruct { ptr_$name$throws in', '}'),
         c_value_template='ptr_$name'
     )
 
@@ -250,7 +250,7 @@ def array_conversion(length: str) -> ArrayConversion:
         length=length,
         swift_value_template='Array(UnsafeBufferPointer(start: $value, count: Int($length)))',
         c_closure_template=(
-            '$value.withUnsafeBufferPointer { ptr_$name in', '}'),
+            '$value.withUnsafeBufferPointer { ptr_$name$throws in', '}'),
         c_value_template='ptr_$name.baseAddress',
         c_length_template='UInt32(ptr_$name.count)'
     )
@@ -261,7 +261,7 @@ def optional_array_conversion(length: str) -> ArrayConversion:
         length=length,
         swift_value_template='($value != nil) ? Array(UnsafeBufferPointer(start: $value, count: Int($length))) : nil',
         c_closure_template=(
-            '$value.withOptionalUnsafeBufferPointer { ptr_$name in', '}'),
+            '$value.withOptionalUnsafeBufferPointer { ptr_$name$throws in', '}'),
         c_value_template='ptr_$name.baseAddress',
         c_length_template='UInt32(ptr_$name.count)'
     )
@@ -272,7 +272,7 @@ def byte_array_conversion(length: str) -> ArrayConversion:
         length=length,
         swift_value_template='Array<UInt8>(UnsafeBufferPointer(start: $value, count: $length))',
         c_closure_template=(
-            '$value.withUnsafeBufferPointer { ptr_$name in', '}'),
+            '$value.withUnsafeBufferPointer { ptr_$name$throws in', '}'),
         c_value_template='ptr_$name.baseAddress',
         c_length_template='ptr_$name.count'
     )
@@ -285,7 +285,7 @@ def string_array_conversion(length: str) -> ArrayConversion:
         swift_value_template=f'UnsafeBufferPointer(start: $value, count: Int($length)).map{{ String(cString: $$0!) }}',
         swift_element_template='String(cString: $value!)',
         c_closure_template=(
-            '$value.withCStringBufferPointer { ptr_$name in', '}'),
+            '$value.withCStringBufferPointer { ptr_$name$throws in', '}'),
         c_value_template='ptr_$name.baseAddress',
         c_length_template='UInt32(ptr_$name.count)'
     )
@@ -304,7 +304,7 @@ def struct_array_conversion(swift_struct: str, length: str, parent_names: list[s
                              f'.map{{ {swift_struct}({", ".join(swift_params)}) }}',
         swift_element_template=f'{swift_struct}({", ".join(swift_element_params)})',
         c_closure_template=(
-            '$value.withCStructBufferPointer { ptr_$name in', '}'),
+            '$value.withCStructBufferPointer { ptr_$name$throws in', '}'),
         c_value_template='ptr_$name.baseAddress',
         c_length_template='UInt32(ptr_$name.count)'
     )
@@ -320,7 +320,7 @@ def optional_struct_array_conversion(swift_struct: str, length: str, parent_name
         swift_value_template='($value != nil) ? UnsafeBufferPointer(start: $value, count: Int($length))'
                              f'.map{{ {swift_struct}({", ".join(swift_params)}) }} : nil',
         c_closure_template=(
-            '$value.withOptionalCStructBufferPointer { ptr_$name in', '}'),
+            '$value.withOptionalCStructBufferPointer { ptr_$name$throws in', '}'),
         c_value_template='ptr_$name.baseAddress',
         c_length_template='UInt32(ptr_$name.count)'
     )
@@ -337,7 +337,7 @@ def array_mapped_conversion(element_conversion: Conversion, length: str) -> Arra
         swift_value_template=f'UnsafeBufferPointer(start: $value, count: Int($length)).map{{ {swift_element} }}',
         swift_element_template=swift_element_template,
         c_closure_template=(
-            f'$value.map{{ {c_element} }}.withUnsafeBufferPointer {{ ptr_$name in', '}'),
+            f'$value.map{{ {c_element} }}.withUnsafeBufferPointer {{ ptr_$name$throws in', '}'),
         c_value_template='ptr_$name.baseAddress',
         c_length_template='UInt32(ptr_$name.count)'
     )
@@ -352,7 +352,7 @@ def optional_array_mapped_conversion(element_conversion: Conversion, length: str
         swift_value_template='($value != nil) ? UnsafeBufferPointer(start: $value, count: Int($length))'
                              f'.map{{ {swift_element} }} : nil',
         c_closure_template=(
-            f'($value?.map{{ {c_element} }}).withOptionalUnsafeBufferPointer {{ ptr_$name in', '}'),
+            f'($value?.map{{ {c_element} }}).withOptionalUnsafeBufferPointer {{ ptr_$name$throws in', '}'),
         c_value_template='ptr_$name.baseAddress',
         c_length_template='UInt32(ptr_$name.count)'
     )
@@ -361,7 +361,7 @@ def optional_array_mapped_conversion(element_conversion: Conversion, length: str
 def tuple_pointer_conversion(element_type: str) -> Conversion:
     return Conversion(
         swift_value_template='',
-        c_closure_template=('withUnsafeBytes(of: $value) { ptr_$name in', '}'),
+        c_closure_template=('withUnsafeBytes(of: $value) { ptr_$name$throws in', '}'),
         c_value_template=f'ptr_$name.bindMemory(to: {element_type}.self).baseAddress'
     )
 
