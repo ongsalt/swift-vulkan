@@ -231,16 +231,18 @@ class Generator(BaseGenerator):
         elif command.name == 'allocateDescriptorSets':
             classes['descriptorPool'] = 'allocateInfo.base.descriptorPool'
 
-        param_strings: list[str] = []
-        for index, param in enumerate(command.params):
+        params: list[tuple[str, str]] = []
+        # make x{Info} first params
+        for param in command.params:
             default_value = f' = {param.default_value}' if param.default_value and 'Chainable<' not in param.type else ''
-            if index == 0 and (param.name.endswith("Info") or param.name.endswith("Infos")):
-                param_strings.append(
-                    f'_ {param.name}: {param.type}{default_value}')
+            if param.name.lower().endswith("info") or param.name.lower().endswith("infos"):
+                params.append(
+                    (f'_ {param.name}', f'{param.type}{default_value}'))
             else:
-                param_strings.append(
-                    f'{param.name}: {param.type}{default_value}')
-        param_string = ', '.join(param_strings)
+                params.append((param.name, f'{param.type}{default_value}'))
+
+        params.sort(key=lambda x: 0 if 'info' in x[0].lower() else 1)
+        param_string = ', '.join(f'{p[0]}: {p[1]}' for p in params)
 
         throws_string = ' throws' if command.throws else ''
 
