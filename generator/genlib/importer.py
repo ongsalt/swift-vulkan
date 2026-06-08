@@ -615,7 +615,9 @@ class Importer:
                 'PFN_') and not c_member.type.optional)
 
 
-            default_value = self.get_default_value(swift_type, c_member.type, optional_lengths)
+            # if this is a features struct we make everything default to false
+            force_default = c_struct is not None and 'Features' in c_struct.name                
+            default_value = self.get_default_value(swift_type, c_member.type, optional_lengths, forced=force_default)
 
             member = SwiftMember(
                 name=swift_name, type=swift_type, is_closure=is_closure, default_value=default_value)
@@ -793,7 +795,7 @@ class Importer:
         return string, None
     
 
-    def get_default_value(self, swift_type: str | None, c_type: CType, optional_lengths: set[str] | None = None) -> str | None:
+    def get_default_value(self, swift_type: str | None, c_type: CType, optional_lengths: set[str] | None = None, forced: bool = False) -> str | None:
         if swift_type and swift_type.endswith('?'):
             return 'nil'
         
@@ -804,7 +806,7 @@ class Importer:
                     return 'nil'
                 else:
                     return '[]'
-        elif ty.optional:
+        elif ty.optional or forced:
             if ty.pointer_to and not ty.length:
                 return 'nil'
             elif ty.length == 'null-terminated':

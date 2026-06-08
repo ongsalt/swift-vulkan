@@ -867,7 +867,7 @@ public struct PhysicalDeviceFeatures: CStructConvertible {
     public let variableMultisampleRate: Bool
     public let inheritedQueries: Bool
 
-    public init(robustBufferAccess: Bool, fullDrawIndexUint32: Bool, imageCubeArray: Bool, independentBlend: Bool, geometryShader: Bool, tessellationShader: Bool, sampleRateShading: Bool, dualSrcBlend: Bool, logicOp: Bool, multiDrawIndirect: Bool, drawIndirectFirstInstance: Bool, depthClamp: Bool, depthBiasClamp: Bool, fillModeNonSolid: Bool, depthBounds: Bool, wideLines: Bool, largePoints: Bool, alphaToOne: Bool, multiViewport: Bool, samplerAnisotropy: Bool, textureCompressionETC2: Bool, textureCompressionASTC_LDR: Bool, textureCompressionBC: Bool, occlusionQueryPrecise: Bool, pipelineStatisticsQuery: Bool, vertexPipelineStoresAndAtomics: Bool, fragmentStoresAndAtomics: Bool, shaderTessellationAndGeometryPointSize: Bool, shaderImageGatherExtended: Bool, shaderStorageImageExtendedFormats: Bool, shaderStorageImageMultisample: Bool, shaderStorageImageReadWithoutFormat: Bool, shaderStorageImageWriteWithoutFormat: Bool, shaderUniformBufferArrayDynamicIndexing: Bool, shaderSampledImageArrayDynamicIndexing: Bool, shaderStorageBufferArrayDynamicIndexing: Bool, shaderStorageImageArrayDynamicIndexing: Bool, shaderClipDistance: Bool, shaderCullDistance: Bool, shaderFloat64: Bool, shaderInt64: Bool, shaderInt16: Bool, shaderResourceResidency: Bool, shaderResourceMinLod: Bool, sparseBinding: Bool, sparseResidencyBuffer: Bool, sparseResidencyImage2D: Bool, sparseResidencyImage3D: Bool, sparseResidency2Samples: Bool, sparseResidency4Samples: Bool, sparseResidency8Samples: Bool, sparseResidency16Samples: Bool, sparseResidencyAliased: Bool, variableMultisampleRate: Bool, inheritedQueries: Bool) {
+    public init(robustBufferAccess: Bool = false, fullDrawIndexUint32: Bool = false, imageCubeArray: Bool = false, independentBlend: Bool = false, geometryShader: Bool = false, tessellationShader: Bool = false, sampleRateShading: Bool = false, dualSrcBlend: Bool = false, logicOp: Bool = false, multiDrawIndirect: Bool = false, drawIndirectFirstInstance: Bool = false, depthClamp: Bool = false, depthBiasClamp: Bool = false, fillModeNonSolid: Bool = false, depthBounds: Bool = false, wideLines: Bool = false, largePoints: Bool = false, alphaToOne: Bool = false, multiViewport: Bool = false, samplerAnisotropy: Bool = false, textureCompressionETC2: Bool = false, textureCompressionASTC_LDR: Bool = false, textureCompressionBC: Bool = false, occlusionQueryPrecise: Bool = false, pipelineStatisticsQuery: Bool = false, vertexPipelineStoresAndAtomics: Bool = false, fragmentStoresAndAtomics: Bool = false, shaderTessellationAndGeometryPointSize: Bool = false, shaderImageGatherExtended: Bool = false, shaderStorageImageExtendedFormats: Bool = false, shaderStorageImageMultisample: Bool = false, shaderStorageImageReadWithoutFormat: Bool = false, shaderStorageImageWriteWithoutFormat: Bool = false, shaderUniformBufferArrayDynamicIndexing: Bool = false, shaderSampledImageArrayDynamicIndexing: Bool = false, shaderStorageBufferArrayDynamicIndexing: Bool = false, shaderStorageImageArrayDynamicIndexing: Bool = false, shaderClipDistance: Bool = false, shaderCullDistance: Bool = false, shaderFloat64: Bool = false, shaderInt64: Bool = false, shaderInt16: Bool = false, shaderResourceResidency: Bool = false, shaderResourceMinLod: Bool = false, sparseBinding: Bool = false, sparseResidencyBuffer: Bool = false, sparseResidencyImage2D: Bool = false, sparseResidencyImage3D: Bool = false, sparseResidency2Samples: Bool = false, sparseResidency4Samples: Bool = false, sparseResidency8Samples: Bool = false, sparseResidency16Samples: Bool = false, sparseResidencyAliased: Bool = false, variableMultisampleRate: Bool = false, inheritedQueries: Bool = false) {
         self.robustBufferAccess = robustBufferAccess
         self.fullDrawIndexUint32 = fullDrawIndexUint32
         self.imageCubeArray = imageCubeArray
@@ -6779,7 +6779,7 @@ public struct PhysicalDeviceDeviceGeneratedCommandsFeaturesNV: ChainableBase, Ph
 
     public let deviceGeneratedCommands: Bool
 
-    public init(deviceGeneratedCommands: Bool) {
+    public init(deviceGeneratedCommands: Bool = false) {
         self.deviceGeneratedCommands = deviceGeneratedCommands
     }
 
@@ -6835,7 +6835,7 @@ public struct PhysicalDevicePushConstantBankFeaturesNV: ChainableBase, PhysicalD
 
     public let pushConstantBank: Bool
 
-    public init(pushConstantBank: Bool) {
+    public init(pushConstantBank: Bool = false) {
         self.pushConstantBank = pushConstantBank
     }
 
@@ -6898,7 +6898,7 @@ public struct PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV: ChainableB
     public let deviceGeneratedComputePipelines: Bool
     public let deviceGeneratedComputeCaptureReplay: Bool
 
-    public init(deviceGeneratedCompute: Bool, deviceGeneratedComputePipelines: Bool, deviceGeneratedComputeCaptureReplay: Bool) {
+    public init(deviceGeneratedCompute: Bool = false, deviceGeneratedComputePipelines: Bool = false, deviceGeneratedComputeCaptureReplay: Bool = false) {
         self.deviceGeneratedCompute = deviceGeneratedCompute
         self.deviceGeneratedComputePipelines = deviceGeneratedComputePipelines
         self.deviceGeneratedComputeCaptureReplay = deviceGeneratedComputeCaptureReplay
@@ -6988,7 +6988,7 @@ public struct PhysicalDevicePrivateDataFeatures: ChainableBase, PhysicalDeviceFe
 
     public let privateData: Bool
 
-    public init(privateData: Bool) {
+    public init(privateData: Bool = false) {
         self.privateData = privateData
     }
 
@@ -7064,7 +7064,7 @@ public struct PhysicalDeviceClusterAccelerationStructureFeaturesNV: ChainableBas
 
     public let clusterAccelerationStructure: Bool
 
-    public init(clusterAccelerationStructure: Bool) {
+    public init(clusterAccelerationStructure: Bool = false) {
         self.clusterAccelerationStructure = clusterAccelerationStructure
     }
 
@@ -8274,7 +8274,7 @@ public struct PhysicalDeviceFeatures2: ChainableBase, DeviceCreateInfoExtension 
 
     public let features: PhysicalDeviceFeatures
 
-    public init(features: PhysicalDeviceFeatures) {
+    public init(features: PhysicalDeviceFeatures = PhysicalDeviceFeatures()) {
         self.features = features
     }
 
@@ -8726,7 +8726,7 @@ public struct PhysicalDeviceVariablePointersFeatures: ChainableBase, PhysicalDev
     public let variablePointersStorageBuffer: Bool
     public let variablePointers: Bool
 
-    public init(variablePointersStorageBuffer: Bool, variablePointers: Bool) {
+    public init(variablePointersStorageBuffer: Bool = false, variablePointers: Bool = false) {
         self.variablePointersStorageBuffer = variablePointersStorageBuffer
         self.variablePointers = variablePointers
     }
@@ -10155,7 +10155,7 @@ public struct PhysicalDeviceMultiviewFeatures: ChainableBase, PhysicalDeviceFeat
     public let multiviewGeometryShader: Bool
     public let multiviewTessellationShader: Bool
 
-    public init(multiview: Bool, multiviewGeometryShader: Bool, multiviewTessellationShader: Bool) {
+    public init(multiview: Bool = false, multiviewGeometryShader: Bool = false, multiviewTessellationShader: Bool = false) {
         self.multiview = multiview
         self.multiviewGeometryShader = multiviewGeometryShader
         self.multiviewTessellationShader = multiviewTessellationShader
@@ -11122,7 +11122,7 @@ public struct PhysicalDevicePresentIdFeaturesKHR: ChainableBase, PhysicalDeviceF
 
     public let presentId: Bool
 
-    public init(presentId: Bool) {
+    public init(presentId: Bool = false) {
         self.presentId = presentId
     }
 
@@ -11181,7 +11181,7 @@ public struct PhysicalDevicePresentId2FeaturesKHR: ChainableBase, PhysicalDevice
 
     public let presentId2: Bool
 
-    public init(presentId2: Bool) {
+    public init(presentId2: Bool = false) {
         self.presentId2 = presentId2
     }
 
@@ -11272,7 +11272,7 @@ public struct PhysicalDevicePresentWaitFeaturesKHR: ChainableBase, PhysicalDevic
 
     public let presentWait: Bool
 
-    public init(presentWait: Bool) {
+    public init(presentWait: Bool = false) {
         self.presentWait = presentWait
     }
 
@@ -11300,7 +11300,7 @@ public struct PhysicalDevicePresentWait2FeaturesKHR: ChainableBase, PhysicalDevi
 
     public let presentWait2: Bool
 
-    public init(presentWait2: Bool) {
+    public init(presentWait2: Bool = false) {
         self.presentWait2 = presentWait2
     }
 
@@ -11330,7 +11330,7 @@ public struct PhysicalDevicePresentTimingFeaturesEXT: ChainableBase, PhysicalDev
     public let presentAtAbsoluteTime: Bool
     public let presentAtRelativeTime: Bool
 
-    public init(presentTiming: Bool, presentAtAbsoluteTime: Bool, presentAtRelativeTime: Bool) {
+    public init(presentTiming: Bool = false, presentAtAbsoluteTime: Bool = false, presentAtRelativeTime: Bool = false) {
         self.presentTiming = presentTiming
         self.presentAtAbsoluteTime = presentAtAbsoluteTime
         self.presentAtRelativeTime = presentAtRelativeTime
@@ -12579,7 +12579,7 @@ public struct PhysicalDevice16BitStorageFeatures: ChainableBase, PhysicalDeviceF
     public let storagePushConstant16: Bool
     public let storageInputOutput16: Bool
 
-    public init(storageBuffer16BitAccess: Bool, uniformAndStorageBuffer16BitAccess: Bool, storagePushConstant16: Bool, storageInputOutput16: Bool) {
+    public init(storageBuffer16BitAccess: Bool = false, uniformAndStorageBuffer16BitAccess: Bool = false, storagePushConstant16: Bool = false, storageInputOutput16: Bool = false) {
         self.storageBuffer16BitAccess = storageBuffer16BitAccess
         self.uniformAndStorageBuffer16BitAccess = uniformAndStorageBuffer16BitAccess
         self.storagePushConstant16 = storagePushConstant16
@@ -12649,7 +12649,7 @@ public struct PhysicalDeviceShaderSubgroupExtendedTypesFeatures: ChainableBase, 
 
     public let shaderSubgroupExtendedTypes: Bool
 
-    public init(shaderSubgroupExtendedTypes: Bool) {
+    public init(shaderSubgroupExtendedTypes: Bool = false) {
         self.shaderSubgroupExtendedTypes = shaderSubgroupExtendedTypes
     }
 
@@ -13190,7 +13190,7 @@ public struct PhysicalDeviceSamplerYcbcrConversionFeatures: ChainableBase, Physi
 
     public let samplerYcbcrConversion: Bool
 
-    public init(samplerYcbcrConversion: Bool) {
+    public init(samplerYcbcrConversion: Bool = false) {
         self.samplerYcbcrConversion = samplerYcbcrConversion
     }
 
@@ -13330,7 +13330,7 @@ public struct PhysicalDeviceProtectedMemoryFeatures: ChainableBase, PhysicalDevi
 
     public let protectedMemory: Bool
 
-    public init(protectedMemory: Bool) {
+    public init(protectedMemory: Bool = false) {
         self.protectedMemory = protectedMemory
     }
 
@@ -13762,7 +13762,7 @@ public struct PhysicalDeviceBlendOperationAdvancedFeaturesEXT: ChainableBase, Ph
 
     public let advancedBlendCoherentOperations: Bool
 
-    public init(advancedBlendCoherentOperations: Bool) {
+    public init(advancedBlendCoherentOperations: Bool = false) {
         self.advancedBlendCoherentOperations = advancedBlendCoherentOperations
     }
 
@@ -13790,7 +13790,7 @@ public struct PhysicalDeviceMultiDrawFeaturesEXT: ChainableBase, PhysicalDeviceF
 
     public let multiDraw: Bool
 
-    public init(multiDraw: Bool) {
+    public init(multiDraw: Bool = false) {
         self.multiDraw = multiDraw
     }
 
@@ -13894,7 +13894,7 @@ public struct PhysicalDeviceInlineUniformBlockFeatures: ChainableBase, PhysicalD
     public let inlineUniformBlock: Bool
     public let descriptorBindingInlineUniformBlockUpdateAfterBind: Bool
 
-    public init(inlineUniformBlock: Bool, descriptorBindingInlineUniformBlockUpdateAfterBind: Bool) {
+    public init(inlineUniformBlock: Bool = false, descriptorBindingInlineUniformBlockUpdateAfterBind: Bool = false) {
         self.inlineUniformBlock = inlineUniformBlock
         self.descriptorBindingInlineUniformBlockUpdateAfterBind = descriptorBindingInlineUniformBlockUpdateAfterBind
     }
@@ -14186,7 +14186,7 @@ public struct PhysicalDeviceMaintenance4Features: ChainableBase, PhysicalDeviceF
 
     public let maintenance4: Bool
 
-    public init(maintenance4: Bool) {
+    public init(maintenance4: Bool = false) {
         self.maintenance4 = maintenance4
     }
 
@@ -14238,7 +14238,7 @@ public struct PhysicalDeviceMaintenance5Features: ChainableBase, PhysicalDeviceF
 
     public let maintenance5: Bool
 
-    public init(maintenance5: Bool) {
+    public init(maintenance5: Bool = false) {
         self.maintenance5 = maintenance5
     }
 
@@ -14305,7 +14305,7 @@ public struct PhysicalDeviceMaintenance6Features: ChainableBase, PhysicalDeviceF
 
     public let maintenance6: Bool
 
-    public init(maintenance6: Bool) {
+    public init(maintenance6: Bool = false) {
         self.maintenance6 = maintenance6
     }
 
@@ -14363,7 +14363,7 @@ public struct PhysicalDeviceMaintenance7FeaturesKHR: ChainableBase, PhysicalDevi
 
     public let maintenance7: Bool
 
-    public init(maintenance7: Bool) {
+    public init(maintenance7: Bool = false) {
         self.maintenance7 = maintenance7
     }
 
@@ -14527,7 +14527,7 @@ public struct PhysicalDeviceMaintenance8FeaturesKHR: ChainableBase, PhysicalDevi
 
     public let maintenance8: Bool
 
-    public init(maintenance8: Bool) {
+    public init(maintenance8: Bool = false) {
         self.maintenance8 = maintenance8
     }
 
@@ -14555,7 +14555,7 @@ public struct PhysicalDeviceMaintenance9FeaturesKHR: ChainableBase, PhysicalDevi
 
     public let maintenance9: Bool
 
-    public init(maintenance9: Bool) {
+    public init(maintenance9: Bool = false) {
         self.maintenance9 = maintenance9
     }
 
@@ -14610,7 +14610,7 @@ public struct PhysicalDeviceMaintenance11FeaturesKHR: ChainableBase, PhysicalDev
 
     public let maintenance11: Bool
 
-    public init(maintenance11: Bool) {
+    public init(maintenance11: Bool = false) {
         self.maintenance11 = maintenance11
     }
 
@@ -14668,7 +14668,7 @@ public struct PhysicalDeviceMaintenance10FeaturesKHR: ChainableBase, PhysicalDev
 
     public let maintenance10: Bool
 
-    public init(maintenance10: Bool) {
+    public init(maintenance10: Bool = false) {
         self.maintenance10 = maintenance10
     }
 
@@ -14813,7 +14813,7 @@ public struct PhysicalDeviceShaderDrawParametersFeatures: ChainableBase, Physica
 
     public let shaderDrawParameters: Bool
 
-    public init(shaderDrawParameters: Bool) {
+    public init(shaderDrawParameters: Bool = false) {
         self.shaderDrawParameters = shaderDrawParameters
     }
 
@@ -14842,7 +14842,7 @@ public struct PhysicalDeviceShaderFloat16Int8Features: ChainableBase, PhysicalDe
     public let shaderFloat16: Bool
     public let shaderInt8: Bool
 
-    public init(shaderFloat16: Bool, shaderInt8: Bool) {
+    public init(shaderFloat16: Bool = false, shaderInt8: Bool = false) {
         self.shaderFloat16 = shaderFloat16
         self.shaderInt8 = shaderInt8
     }
@@ -14945,7 +14945,7 @@ public struct PhysicalDeviceHostQueryResetFeatures: ChainableBase, PhysicalDevic
 
     public let hostQueryReset: Bool
 
-    public init(hostQueryReset: Bool) {
+    public init(hostQueryReset: Bool = false) {
         self.hostQueryReset = hostQueryReset
     }
 
@@ -15037,7 +15037,7 @@ public struct PhysicalDeviceElapsedTimerQueryFeaturesQCOM: ChainableBase, Physic
 
     public let elapsedTimerQuery: Bool
 
-    public init(elapsedTimerQuery: Bool) {
+    public init(elapsedTimerQuery: Bool = false) {
         self.elapsedTimerQuery = elapsedTimerQuery
     }
 
@@ -15093,7 +15093,7 @@ public struct PhysicalDeviceGlobalPriorityQueryFeatures: ChainableBase, Physical
 
     public let globalPriorityQuery: Bool
 
-    public init(globalPriorityQuery: Bool) {
+    public init(globalPriorityQuery: Bool = false) {
         self.globalPriorityQuery = globalPriorityQuery
     }
 
@@ -15373,7 +15373,7 @@ public struct PhysicalDeviceDeviceMemoryReportFeaturesEXT: ChainableBase, Physic
 
     public let deviceMemoryReport: Bool
 
-    public init(deviceMemoryReport: Bool) {
+    public init(deviceMemoryReport: Bool = false) {
         self.deviceMemoryReport = deviceMemoryReport
     }
 
@@ -15780,7 +15780,7 @@ public struct PhysicalDeviceDescriptorIndexingFeatures: ChainableBase, PhysicalD
     public let descriptorBindingVariableDescriptorCount: Bool
     public let runtimeDescriptorArray: Bool
 
-    public init(shaderInputAttachmentArrayDynamicIndexing: Bool, shaderUniformTexelBufferArrayDynamicIndexing: Bool, shaderStorageTexelBufferArrayDynamicIndexing: Bool, shaderUniformBufferArrayNonUniformIndexing: Bool, shaderSampledImageArrayNonUniformIndexing: Bool, shaderStorageBufferArrayNonUniformIndexing: Bool, shaderStorageImageArrayNonUniformIndexing: Bool, shaderInputAttachmentArrayNonUniformIndexing: Bool, shaderUniformTexelBufferArrayNonUniformIndexing: Bool, shaderStorageTexelBufferArrayNonUniformIndexing: Bool, descriptorBindingUniformBufferUpdateAfterBind: Bool, descriptorBindingSampledImageUpdateAfterBind: Bool, descriptorBindingStorageImageUpdateAfterBind: Bool, descriptorBindingStorageBufferUpdateAfterBind: Bool, descriptorBindingUniformTexelBufferUpdateAfterBind: Bool, descriptorBindingStorageTexelBufferUpdateAfterBind: Bool, descriptorBindingUpdateUnusedWhilePending: Bool, descriptorBindingPartiallyBound: Bool, descriptorBindingVariableDescriptorCount: Bool, runtimeDescriptorArray: Bool) {
+    public init(shaderInputAttachmentArrayDynamicIndexing: Bool = false, shaderUniformTexelBufferArrayDynamicIndexing: Bool = false, shaderStorageTexelBufferArrayDynamicIndexing: Bool = false, shaderUniformBufferArrayNonUniformIndexing: Bool = false, shaderSampledImageArrayNonUniformIndexing: Bool = false, shaderStorageBufferArrayNonUniformIndexing: Bool = false, shaderStorageImageArrayNonUniformIndexing: Bool = false, shaderInputAttachmentArrayNonUniformIndexing: Bool = false, shaderUniformTexelBufferArrayNonUniformIndexing: Bool = false, shaderStorageTexelBufferArrayNonUniformIndexing: Bool = false, descriptorBindingUniformBufferUpdateAfterBind: Bool = false, descriptorBindingSampledImageUpdateAfterBind: Bool = false, descriptorBindingStorageImageUpdateAfterBind: Bool = false, descriptorBindingStorageBufferUpdateAfterBind: Bool = false, descriptorBindingUniformTexelBufferUpdateAfterBind: Bool = false, descriptorBindingStorageTexelBufferUpdateAfterBind: Bool = false, descriptorBindingUpdateUnusedWhilePending: Bool = false, descriptorBindingPartiallyBound: Bool = false, descriptorBindingVariableDescriptorCount: Bool = false, runtimeDescriptorArray: Bool = false) {
         self.shaderInputAttachmentArrayDynamicIndexing = shaderInputAttachmentArrayDynamicIndexing
         self.shaderUniformTexelBufferArrayDynamicIndexing = shaderUniformTexelBufferArrayDynamicIndexing
         self.shaderStorageTexelBufferArrayDynamicIndexing = shaderStorageTexelBufferArrayDynamicIndexing
@@ -16370,7 +16370,7 @@ public struct PhysicalDeviceTimelineSemaphoreFeatures: ChainableBase, PhysicalDe
 
     public let timelineSemaphore: Bool
 
-    public init(timelineSemaphore: Bool) {
+    public init(timelineSemaphore: Bool = false) {
         self.timelineSemaphore = timelineSemaphore
     }
 
@@ -16928,7 +16928,7 @@ public struct PhysicalDevice8BitStorageFeatures: ChainableBase, PhysicalDeviceFe
     public let uniformAndStorageBuffer8BitAccess: Bool
     public let storagePushConstant8: Bool
 
-    public init(storageBuffer8BitAccess: Bool, uniformAndStorageBuffer8BitAccess: Bool, storagePushConstant8: Bool) {
+    public init(storageBuffer8BitAccess: Bool = false, uniformAndStorageBuffer8BitAccess: Bool = false, storagePushConstant8: Bool = false) {
         self.storageBuffer8BitAccess = storageBuffer8BitAccess
         self.uniformAndStorageBuffer8BitAccess = uniformAndStorageBuffer8BitAccess
         self.storagePushConstant8 = storagePushConstant8
@@ -16963,7 +16963,7 @@ public struct PhysicalDeviceConditionalRenderingFeaturesEXT: ChainableBase, Phys
     public let conditionalRendering: Bool
     public let inheritedConditionalRendering: Bool
 
-    public init(conditionalRendering: Bool, inheritedConditionalRendering: Bool) {
+    public init(conditionalRendering: Bool = false, inheritedConditionalRendering: Bool = false) {
         self.conditionalRendering = conditionalRendering
         self.inheritedConditionalRendering = inheritedConditionalRendering
     }
@@ -16996,7 +16996,7 @@ public struct PhysicalDeviceVulkanMemoryModelFeatures: ChainableBase, PhysicalDe
     public let vulkanMemoryModelDeviceScope: Bool
     public let vulkanMemoryModelAvailabilityVisibilityChains: Bool
 
-    public init(vulkanMemoryModel: Bool, vulkanMemoryModelDeviceScope: Bool, vulkanMemoryModelAvailabilityVisibilityChains: Bool) {
+    public init(vulkanMemoryModel: Bool = false, vulkanMemoryModelDeviceScope: Bool = false, vulkanMemoryModelAvailabilityVisibilityChains: Bool = false) {
         self.vulkanMemoryModel = vulkanMemoryModel
         self.vulkanMemoryModelDeviceScope = vulkanMemoryModelDeviceScope
         self.vulkanMemoryModelAvailabilityVisibilityChains = vulkanMemoryModelAvailabilityVisibilityChains
@@ -17031,7 +17031,7 @@ public struct PhysicalDeviceShaderAtomicInt64Features: ChainableBase, PhysicalDe
     public let shaderBufferInt64Atomics: Bool
     public let shaderSharedInt64Atomics: Bool
 
-    public init(shaderBufferInt64Atomics: Bool, shaderSharedInt64Atomics: Bool) {
+    public init(shaderBufferInt64Atomics: Bool = false, shaderSharedInt64Atomics: Bool = false) {
         self.shaderBufferInt64Atomics = shaderBufferInt64Atomics
         self.shaderSharedInt64Atomics = shaderSharedInt64Atomics
     }
@@ -17073,7 +17073,7 @@ public struct PhysicalDeviceShaderAtomicFloatFeaturesEXT: ChainableBase, Physica
     public let sparseImageFloat32Atomics: Bool
     public let sparseImageFloat32AtomicAdd: Bool
 
-    public init(shaderBufferFloat32Atomics: Bool, shaderBufferFloat32AtomicAdd: Bool, shaderBufferFloat64Atomics: Bool, shaderBufferFloat64AtomicAdd: Bool, shaderSharedFloat32Atomics: Bool, shaderSharedFloat32AtomicAdd: Bool, shaderSharedFloat64Atomics: Bool, shaderSharedFloat64AtomicAdd: Bool, shaderImageFloat32Atomics: Bool, shaderImageFloat32AtomicAdd: Bool, sparseImageFloat32Atomics: Bool, sparseImageFloat32AtomicAdd: Bool) {
+    public init(shaderBufferFloat32Atomics: Bool = false, shaderBufferFloat32AtomicAdd: Bool = false, shaderBufferFloat64Atomics: Bool = false, shaderBufferFloat64AtomicAdd: Bool = false, shaderSharedFloat32Atomics: Bool = false, shaderSharedFloat32AtomicAdd: Bool = false, shaderSharedFloat64Atomics: Bool = false, shaderSharedFloat64AtomicAdd: Bool = false, shaderImageFloat32Atomics: Bool = false, shaderImageFloat32AtomicAdd: Bool = false, sparseImageFloat32Atomics: Bool = false, sparseImageFloat32AtomicAdd: Bool = false) {
         self.shaderBufferFloat32Atomics = shaderBufferFloat32Atomics
         self.shaderBufferFloat32AtomicAdd = shaderBufferFloat32AtomicAdd
         self.shaderBufferFloat64Atomics = shaderBufferFloat64Atomics
@@ -17145,7 +17145,7 @@ public struct PhysicalDeviceShaderAtomicFloat2FeaturesEXT: ChainableBase, Physic
     public let shaderImageFloat32AtomicMinMax: Bool
     public let sparseImageFloat32AtomicMinMax: Bool
 
-    public init(shaderBufferFloat16Atomics: Bool, shaderBufferFloat16AtomicAdd: Bool, shaderBufferFloat16AtomicMinMax: Bool, shaderBufferFloat32AtomicMinMax: Bool, shaderBufferFloat64AtomicMinMax: Bool, shaderSharedFloat16Atomics: Bool, shaderSharedFloat16AtomicAdd: Bool, shaderSharedFloat16AtomicMinMax: Bool, shaderSharedFloat32AtomicMinMax: Bool, shaderSharedFloat64AtomicMinMax: Bool, shaderImageFloat32AtomicMinMax: Bool, sparseImageFloat32AtomicMinMax: Bool) {
+    public init(shaderBufferFloat16Atomics: Bool = false, shaderBufferFloat16AtomicAdd: Bool = false, shaderBufferFloat16AtomicMinMax: Bool = false, shaderBufferFloat32AtomicMinMax: Bool = false, shaderBufferFloat64AtomicMinMax: Bool = false, shaderSharedFloat16Atomics: Bool = false, shaderSharedFloat16AtomicAdd: Bool = false, shaderSharedFloat16AtomicMinMax: Bool = false, shaderSharedFloat32AtomicMinMax: Bool = false, shaderSharedFloat64AtomicMinMax: Bool = false, shaderImageFloat32AtomicMinMax: Bool = false, sparseImageFloat32AtomicMinMax: Bool = false) {
         self.shaderBufferFloat16Atomics = shaderBufferFloat16Atomics
         self.shaderBufferFloat16AtomicAdd = shaderBufferFloat16AtomicAdd
         self.shaderBufferFloat16AtomicMinMax = shaderBufferFloat16AtomicMinMax
@@ -17207,7 +17207,7 @@ public struct PhysicalDeviceVertexAttributeDivisorFeatures: ChainableBase, Physi
     public let vertexAttributeInstanceRateDivisor: Bool
     public let vertexAttributeInstanceRateZeroDivisor: Bool
 
-    public init(vertexAttributeInstanceRateDivisor: Bool, vertexAttributeInstanceRateZeroDivisor: Bool) {
+    public init(vertexAttributeInstanceRateDivisor: Bool = false, vertexAttributeInstanceRateZeroDivisor: Bool = false) {
         self.vertexAttributeInstanceRateDivisor = vertexAttributeInstanceRateDivisor
         self.vertexAttributeInstanceRateZeroDivisor = vertexAttributeInstanceRateZeroDivisor
     }
@@ -17388,7 +17388,7 @@ public struct PhysicalDeviceASTCDecodeFeaturesEXT: ChainableBase, PhysicalDevice
 
     public let decodeModeSharedExponent: Bool
 
-    public init(decodeModeSharedExponent: Bool) {
+    public init(decodeModeSharedExponent: Bool = false) {
         self.decodeModeSharedExponent = decodeModeSharedExponent
     }
 
@@ -17417,7 +17417,7 @@ public struct PhysicalDeviceTransformFeedbackFeaturesEXT: ChainableBase, Physica
     public let transformFeedback: Bool
     public let geometryStreams: Bool
 
-    public init(transformFeedback: Bool, geometryStreams: Bool) {
+    public init(transformFeedback: Bool = false, geometryStreams: Bool = false) {
         self.transformFeedback = transformFeedback
         self.geometryStreams = geometryStreams
     }
@@ -17531,7 +17531,7 @@ public struct PhysicalDeviceRepresentativeFragmentTestFeaturesNV: ChainableBase,
 
     public let representativeFragmentTest: Bool
 
-    public init(representativeFragmentTest: Bool) {
+    public init(representativeFragmentTest: Bool = false) {
         self.representativeFragmentTest = representativeFragmentTest
     }
 
@@ -17587,7 +17587,7 @@ public struct PhysicalDeviceExclusiveScissorFeaturesNV: ChainableBase, PhysicalD
 
     public let exclusiveScissor: Bool
 
-    public init(exclusiveScissor: Bool) {
+    public init(exclusiveScissor: Bool = false) {
         self.exclusiveScissor = exclusiveScissor
     }
 
@@ -17646,7 +17646,7 @@ public struct PhysicalDeviceCornerSampledImageFeaturesNV: ChainableBase, Physica
 
     public let cornerSampledImage: Bool
 
-    public init(cornerSampledImage: Bool) {
+    public init(cornerSampledImage: Bool = false) {
         self.cornerSampledImage = cornerSampledImage
     }
 
@@ -17675,7 +17675,7 @@ public struct PhysicalDeviceComputeShaderDerivativesFeaturesKHR: ChainableBase, 
     public let computeDerivativeGroupQuads: Bool
     public let computeDerivativeGroupLinear: Bool
 
-    public init(computeDerivativeGroupQuads: Bool, computeDerivativeGroupLinear: Bool) {
+    public init(computeDerivativeGroupQuads: Bool = false, computeDerivativeGroupLinear: Bool = false) {
         self.computeDerivativeGroupQuads = computeDerivativeGroupQuads
         self.computeDerivativeGroupLinear = computeDerivativeGroupLinear
     }
@@ -17730,7 +17730,7 @@ public struct PhysicalDeviceShaderImageFootprintFeaturesNV: ChainableBase, Physi
 
     public let imageFootprint: Bool
 
-    public init(imageFootprint: Bool) {
+    public init(imageFootprint: Bool = false) {
         self.imageFootprint = imageFootprint
     }
 
@@ -17758,7 +17758,7 @@ public struct PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV: Chainabl
 
     public let dedicatedAllocationImageAliasing: Bool
 
-    public init(dedicatedAllocationImageAliasing: Bool) {
+    public init(dedicatedAllocationImageAliasing: Bool = false) {
         self.dedicatedAllocationImageAliasing = dedicatedAllocationImageAliasing
     }
 
@@ -17787,7 +17787,7 @@ public struct PhysicalDeviceCopyMemoryIndirectFeaturesKHR: ChainableBase, Physic
     public let indirectMemoryCopy: Bool
     public let indirectMemoryToImageCopy: Bool
 
-    public init(indirectMemoryCopy: Bool, indirectMemoryToImageCopy: Bool) {
+    public init(indirectMemoryCopy: Bool = false, indirectMemoryToImageCopy: Bool = false) {
         self.indirectMemoryCopy = indirectMemoryCopy
         self.indirectMemoryToImageCopy = indirectMemoryToImageCopy
     }
@@ -17818,7 +17818,7 @@ public struct PhysicalDeviceCopyMemoryIndirectFeaturesNV: ChainableBase, Physica
 
     public let indirectCopy: Bool
 
-    public init(indirectCopy: Bool) {
+    public init(indirectCopy: Bool = false) {
         self.indirectCopy = indirectCopy
     }
 
@@ -17870,7 +17870,7 @@ public struct PhysicalDeviceMemoryDecompressionFeaturesEXT: ChainableBase, Physi
 
     public let memoryDecompression: Bool
 
-    public init(memoryDecompression: Bool) {
+    public init(memoryDecompression: Bool = false) {
         self.memoryDecompression = memoryDecompression
     }
 
@@ -17984,7 +17984,7 @@ public struct PhysicalDeviceShadingRateImageFeaturesNV: ChainableBase, PhysicalD
     public let shadingRateImage: Bool
     public let shadingRateCoarseSampleOrder: Bool
 
-    public init(shadingRateImage: Bool, shadingRateCoarseSampleOrder: Bool) {
+    public init(shadingRateImage: Bool = false, shadingRateCoarseSampleOrder: Bool = false) {
         self.shadingRateImage = shadingRateImage
         self.shadingRateCoarseSampleOrder = shadingRateCoarseSampleOrder
     }
@@ -18047,7 +18047,7 @@ public struct PhysicalDeviceInvocationMaskFeaturesHUAWEI: ChainableBase, Physica
 
     public let invocationMask: Bool
 
-    public init(invocationMask: Bool) {
+    public init(invocationMask: Bool = false) {
         self.invocationMask = invocationMask
     }
 
@@ -18170,7 +18170,7 @@ public struct PhysicalDeviceMeshShaderFeaturesNV: ChainableBase, PhysicalDeviceF
     public let taskShader: Bool
     public let meshShader: Bool
 
-    public init(taskShader: Bool, meshShader: Bool) {
+    public init(taskShader: Bool = false, meshShader: Bool = false) {
         self.taskShader = taskShader
         self.meshShader = meshShader
     }
@@ -18289,7 +18289,7 @@ public struct PhysicalDeviceMeshShaderFeaturesEXT: ChainableBase, PhysicalDevice
     public let primitiveFragmentShadingRateMeshShader: Bool
     public let meshShaderQueries: Bool
 
-    public init(taskShader: Bool, meshShader: Bool, multiviewMeshShader: Bool, primitiveFragmentShadingRateMeshShader: Bool, meshShaderQueries: Bool) {
+    public init(taskShader: Bool = false, meshShader: Bool = false, multiviewMeshShader: Bool = false, primitiveFragmentShadingRateMeshShader: Bool = false, meshShaderQueries: Bool = false) {
         self.taskShader = taskShader
         self.meshShader = meshShader
         self.multiviewMeshShader = multiviewMeshShader
@@ -19143,7 +19143,7 @@ public struct PhysicalDeviceAccelerationStructureFeaturesKHR: ChainableBase, Phy
     public let accelerationStructureHostCommands: Bool
     public let descriptorBindingAccelerationStructureUpdateAfterBind: Bool
 
-    public init(accelerationStructure: Bool, accelerationStructureCaptureReplay: Bool, accelerationStructureIndirectBuild: Bool, accelerationStructureHostCommands: Bool, descriptorBindingAccelerationStructureUpdateAfterBind: Bool) {
+    public init(accelerationStructure: Bool = false, accelerationStructureCaptureReplay: Bool = false, accelerationStructureIndirectBuild: Bool = false, accelerationStructureHostCommands: Bool = false, descriptorBindingAccelerationStructureUpdateAfterBind: Bool = false) {
         self.accelerationStructure = accelerationStructure
         self.accelerationStructureCaptureReplay = accelerationStructureCaptureReplay
         self.accelerationStructureIndirectBuild = accelerationStructureIndirectBuild
@@ -19187,7 +19187,7 @@ public struct PhysicalDeviceRayTracingPipelineFeaturesKHR: ChainableBase, Physic
     public let rayTracingPipelineTraceRaysIndirect: Bool
     public let rayTraversalPrimitiveCulling: Bool
 
-    public init(rayTracingPipeline: Bool, rayTracingPipelineShaderGroupHandleCaptureReplay: Bool, rayTracingPipelineShaderGroupHandleCaptureReplayMixed: Bool, rayTracingPipelineTraceRaysIndirect: Bool, rayTraversalPrimitiveCulling: Bool) {
+    public init(rayTracingPipeline: Bool = false, rayTracingPipelineShaderGroupHandleCaptureReplay: Bool = false, rayTracingPipelineShaderGroupHandleCaptureReplayMixed: Bool = false, rayTracingPipelineTraceRaysIndirect: Bool = false, rayTraversalPrimitiveCulling: Bool = false) {
         self.rayTracingPipeline = rayTracingPipeline
         self.rayTracingPipelineShaderGroupHandleCaptureReplay = rayTracingPipelineShaderGroupHandleCaptureReplay
         self.rayTracingPipelineShaderGroupHandleCaptureReplayMixed = rayTracingPipelineShaderGroupHandleCaptureReplayMixed
@@ -19227,7 +19227,7 @@ public struct PhysicalDeviceRayQueryFeaturesKHR: ChainableBase, PhysicalDeviceFe
 
     public let rayQuery: Bool
 
-    public init(rayQuery: Bool) {
+    public init(rayQuery: Bool = false) {
         self.rayQuery = rayQuery
     }
 
@@ -19491,7 +19491,7 @@ public struct PhysicalDeviceRayTracingMaintenance1FeaturesKHR: ChainableBase, Ph
     public let rayTracingMaintenance1: Bool
     public let rayTracingPipelineTraceRaysIndirect2: Bool
 
-    public init(rayTracingMaintenance1: Bool, rayTracingPipelineTraceRaysIndirect2: Bool) {
+    public init(rayTracingMaintenance1: Bool = false, rayTracingPipelineTraceRaysIndirect2: Bool = false) {
         self.rayTracingMaintenance1 = rayTracingMaintenance1
         self.rayTracingPipelineTraceRaysIndirect2 = rayTracingPipelineTraceRaysIndirect2
     }
@@ -19758,7 +19758,7 @@ public struct PhysicalDeviceFragmentDensityMapFeaturesEXT: ChainableBase, Physic
     public let fragmentDensityMapDynamic: Bool
     public let fragmentDensityMapNonSubsampledImages: Bool
 
-    public init(fragmentDensityMap: Bool, fragmentDensityMapDynamic: Bool, fragmentDensityMapNonSubsampledImages: Bool) {
+    public init(fragmentDensityMap: Bool = false, fragmentDensityMapDynamic: Bool = false, fragmentDensityMapNonSubsampledImages: Bool = false) {
         self.fragmentDensityMap = fragmentDensityMap
         self.fragmentDensityMapDynamic = fragmentDensityMapDynamic
         self.fragmentDensityMapNonSubsampledImages = fragmentDensityMapNonSubsampledImages
@@ -19792,7 +19792,7 @@ public struct PhysicalDeviceFragmentDensityMap2FeaturesEXT: ChainableBase, Physi
 
     public let fragmentDensityMapDeferred: Bool
 
-    public init(fragmentDensityMapDeferred: Bool) {
+    public init(fragmentDensityMapDeferred: Bool = false) {
         self.fragmentDensityMapDeferred = fragmentDensityMapDeferred
     }
 
@@ -19820,7 +19820,7 @@ public struct PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT: ChainableBase, 
 
     public let fragmentDensityMapOffset: Bool
 
-    public init(fragmentDensityMapOffset: Bool) {
+    public init(fragmentDensityMapOffset: Bool = false) {
         self.fragmentDensityMapOffset = fragmentDensityMapOffset
     }
 
@@ -20002,7 +20002,7 @@ public struct PhysicalDeviceScalarBlockLayoutFeatures: ChainableBase, PhysicalDe
 
     public let scalarBlockLayout: Bool
 
-    public init(scalarBlockLayout: Bool) {
+    public init(scalarBlockLayout: Bool = false) {
         self.scalarBlockLayout = scalarBlockLayout
     }
 
@@ -20054,7 +20054,7 @@ public struct PhysicalDeviceUniformBufferStandardLayoutFeatures: ChainableBase, 
 
     public let uniformBufferStandardLayout: Bool
 
-    public init(uniformBufferStandardLayout: Bool) {
+    public init(uniformBufferStandardLayout: Bool = false) {
         self.uniformBufferStandardLayout = uniformBufferStandardLayout
     }
 
@@ -20082,7 +20082,7 @@ public struct PhysicalDeviceDepthClipEnableFeaturesEXT: ChainableBase, PhysicalD
 
     public let depthClipEnable: Bool
 
-    public init(depthClipEnable: Bool) {
+    public init(depthClipEnable: Bool = false) {
         self.depthClipEnable = depthClipEnable
     }
 
@@ -20169,7 +20169,7 @@ public struct PhysicalDeviceMemoryPriorityFeaturesEXT: ChainableBase, PhysicalDe
 
     public let memoryPriority: Bool
 
-    public init(memoryPriority: Bool) {
+    public init(memoryPriority: Bool = false) {
         self.memoryPriority = memoryPriority
     }
 
@@ -20225,7 +20225,7 @@ public struct PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT: ChainableBase,
 
     public let pageableDeviceLocalMemory: Bool
 
-    public init(pageableDeviceLocalMemory: Bool) {
+    public init(pageableDeviceLocalMemory: Bool = false) {
         self.pageableDeviceLocalMemory = pageableDeviceLocalMemory
     }
 
@@ -20255,7 +20255,7 @@ public struct PhysicalDeviceBufferDeviceAddressFeatures: ChainableBase, Physical
     public let bufferDeviceAddressCaptureReplay: Bool
     public let bufferDeviceAddressMultiDevice: Bool
 
-    public init(bufferDeviceAddress: Bool, bufferDeviceAddressCaptureReplay: Bool, bufferDeviceAddressMultiDevice: Bool) {
+    public init(bufferDeviceAddress: Bool = false, bufferDeviceAddressCaptureReplay: Bool = false, bufferDeviceAddressMultiDevice: Bool = false) {
         self.bufferDeviceAddress = bufferDeviceAddress
         self.bufferDeviceAddressCaptureReplay = bufferDeviceAddressCaptureReplay
         self.bufferDeviceAddressMultiDevice = bufferDeviceAddressMultiDevice
@@ -20291,7 +20291,7 @@ public struct PhysicalDeviceBufferDeviceAddressFeaturesEXT: ChainableBase, Physi
     public let bufferDeviceAddressCaptureReplay: Bool
     public let bufferDeviceAddressMultiDevice: Bool
 
-    public init(bufferDeviceAddress: Bool, bufferDeviceAddressCaptureReplay: Bool, bufferDeviceAddressMultiDevice: Bool) {
+    public init(bufferDeviceAddress: Bool = false, bufferDeviceAddressCaptureReplay: Bool = false, bufferDeviceAddressMultiDevice: Bool = false) {
         self.bufferDeviceAddress = bufferDeviceAddress
         self.bufferDeviceAddressCaptureReplay = bufferDeviceAddressCaptureReplay
         self.bufferDeviceAddressMultiDevice = bufferDeviceAddressMultiDevice
@@ -20464,7 +20464,7 @@ public struct PhysicalDeviceImagelessFramebufferFeatures: ChainableBase, Physica
 
     public let imagelessFramebuffer: Bool
 
-    public init(imagelessFramebuffer: Bool) {
+    public init(imagelessFramebuffer: Bool = false) {
         self.imagelessFramebuffer = imagelessFramebuffer
     }
 
@@ -20605,7 +20605,7 @@ public struct PhysicalDeviceTextureCompressionASTCHDRFeatures: ChainableBase, Ph
 
     public let textureCompressionASTC_HDR: Bool
 
-    public init(textureCompressionASTC_HDR: Bool) {
+    public init(textureCompressionASTC_HDR: Bool = false) {
         self.textureCompressionASTC_HDR = textureCompressionASTC_HDR
     }
 
@@ -20634,7 +20634,7 @@ public struct PhysicalDeviceCooperativeMatrixFeaturesNV: ChainableBase, Physical
     public let cooperativeMatrix: Bool
     public let cooperativeMatrixRobustBufferAccess: Bool
 
-    public init(cooperativeMatrix: Bool, cooperativeMatrixRobustBufferAccess: Bool) {
+    public init(cooperativeMatrix: Bool = false, cooperativeMatrixRobustBufferAccess: Bool = false) {
         self.cooperativeMatrix = cooperativeMatrix
         self.cooperativeMatrixRobustBufferAccess = cooperativeMatrixRobustBufferAccess
     }
@@ -20734,7 +20734,7 @@ public struct PhysicalDeviceYcbcrImageArraysFeaturesEXT: ChainableBase, Physical
 
     public let ycbcrImageArrays: Bool
 
-    public init(ycbcrImageArrays: Bool) {
+    public init(ycbcrImageArrays: Bool = false) {
         self.ycbcrImageArrays = ycbcrImageArrays
     }
 
@@ -20996,7 +20996,7 @@ public struct PhysicalDevicePresentBarrierFeaturesNV: ChainableBase, PhysicalDev
 
     public let presentBarrier: Bool
 
-    public init(presentBarrier: Bool) {
+    public init(presentBarrier: Bool = false) {
         self.presentBarrier = presentBarrier
     }
 
@@ -21077,7 +21077,7 @@ public struct PhysicalDevicePerformanceQueryFeaturesKHR: ChainableBase, Physical
     public let performanceCounterQueryPools: Bool
     public let performanceCounterMultipleQueryPools: Bool
 
-    public init(performanceCounterQueryPools: Bool, performanceCounterMultipleQueryPools: Bool) {
+    public init(performanceCounterQueryPools: Bool = false, performanceCounterMultipleQueryPools: Bool = false) {
         self.performanceCounterQueryPools = performanceCounterQueryPools
         self.performanceCounterMultipleQueryPools = performanceCounterMultipleQueryPools
     }
@@ -21321,7 +21321,7 @@ public struct PhysicalDeviceCoverageReductionModeFeaturesNV: ChainableBase, Phys
 
     public let coverageReductionMode: Bool
 
-    public init(coverageReductionMode: Bool) {
+    public init(coverageReductionMode: Bool = false) {
         self.coverageReductionMode = coverageReductionMode
     }
 
@@ -21414,7 +21414,7 @@ public struct PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL: ChainableBase,
 
     public let shaderIntegerFunctions2: Bool
 
-    public init(shaderIntegerFunctions2: Bool) {
+    public init(shaderIntegerFunctions2: Bool = false) {
         self.shaderIntegerFunctions2 = shaderIntegerFunctions2
     }
 
@@ -21638,7 +21638,7 @@ public struct PhysicalDeviceShaderClockFeaturesKHR: ChainableBase, PhysicalDevic
     public let shaderSubgroupClock: Bool
     public let shaderDeviceClock: Bool
 
-    public init(shaderSubgroupClock: Bool, shaderDeviceClock: Bool) {
+    public init(shaderSubgroupClock: Bool = false, shaderDeviceClock: Bool = false) {
         self.shaderSubgroupClock = shaderSubgroupClock
         self.shaderDeviceClock = shaderDeviceClock
     }
@@ -21669,7 +21669,7 @@ public struct PhysicalDeviceIndexTypeUint8Features: ChainableBase, PhysicalDevic
 
     public let indexTypeUint8: Bool
 
-    public init(indexTypeUint8: Bool) {
+    public init(indexTypeUint8: Bool = false) {
         self.indexTypeUint8 = indexTypeUint8
     }
 
@@ -21724,7 +21724,7 @@ public struct PhysicalDeviceShaderSMBuiltinsFeaturesNV: ChainableBase, PhysicalD
 
     public let shaderSMBuiltins: Bool
 
-    public init(shaderSMBuiltins: Bool) {
+    public init(shaderSMBuiltins: Bool = false) {
         self.shaderSMBuiltins = shaderSMBuiltins
     }
 
@@ -21754,7 +21754,7 @@ public struct PhysicalDeviceFragmentShaderInterlockFeaturesEXT: ChainableBase, P
     public let fragmentShaderPixelInterlock: Bool
     public let fragmentShaderShadingRateInterlock: Bool
 
-    public init(fragmentShaderSampleInterlock: Bool, fragmentShaderPixelInterlock: Bool, fragmentShaderShadingRateInterlock: Bool) {
+    public init(fragmentShaderSampleInterlock: Bool = false, fragmentShaderPixelInterlock: Bool = false, fragmentShaderShadingRateInterlock: Bool = false) {
         self.fragmentShaderSampleInterlock = fragmentShaderSampleInterlock
         self.fragmentShaderPixelInterlock = fragmentShaderPixelInterlock
         self.fragmentShaderShadingRateInterlock = fragmentShaderShadingRateInterlock
@@ -21788,7 +21788,7 @@ public struct PhysicalDeviceSeparateDepthStencilLayoutsFeatures: ChainableBase, 
 
     public let separateDepthStencilLayouts: Bool
 
-    public init(separateDepthStencilLayouts: Bool) {
+    public init(separateDepthStencilLayouts: Bool = false) {
         self.separateDepthStencilLayouts = separateDepthStencilLayouts
     }
 
@@ -21845,7 +21845,7 @@ public struct PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT: ChainableBa
     public let primitiveTopologyListRestart: Bool
     public let primitiveTopologyPatchListRestart: Bool
 
-    public init(primitiveTopologyListRestart: Bool, primitiveTopologyPatchListRestart: Bool) {
+    public init(primitiveTopologyListRestart: Bool = false, primitiveTopologyPatchListRestart: Bool = false) {
         self.primitiveTopologyListRestart = primitiveTopologyListRestart
         self.primitiveTopologyPatchListRestart = primitiveTopologyPatchListRestart
     }
@@ -21908,7 +21908,7 @@ public struct PhysicalDevicePipelineExecutablePropertiesFeaturesKHR: ChainableBa
 
     public let pipelineExecutableInfo: Bool
 
-    public init(pipelineExecutableInfo: Bool) {
+    public init(pipelineExecutableInfo: Bool = false) {
         self.pipelineExecutableInfo = pipelineExecutableInfo
     }
 
@@ -22098,7 +22098,7 @@ public struct PhysicalDeviceShaderDemoteToHelperInvocationFeatures: ChainableBas
 
     public let shaderDemoteToHelperInvocation: Bool
 
-    public init(shaderDemoteToHelperInvocation: Bool) {
+    public init(shaderDemoteToHelperInvocation: Bool = false) {
         self.shaderDemoteToHelperInvocation = shaderDemoteToHelperInvocation
     }
 
@@ -22126,7 +22126,7 @@ public struct PhysicalDeviceTexelBufferAlignmentFeaturesEXT: ChainableBase, Phys
 
     public let texelBufferAlignment: Bool
 
-    public init(texelBufferAlignment: Bool) {
+    public init(texelBufferAlignment: Bool = false) {
         self.texelBufferAlignment = texelBufferAlignment
     }
 
@@ -22188,7 +22188,7 @@ public struct PhysicalDeviceSubgroupSizeControlFeatures: ChainableBase, Physical
     public let subgroupSizeControl: Bool
     public let computeFullSubgroups: Bool
 
-    public init(subgroupSizeControl: Bool, computeFullSubgroups: Bool) {
+    public init(subgroupSizeControl: Bool = false, computeFullSubgroups: Bool = false) {
         self.subgroupSizeControl = subgroupSizeControl
         self.computeFullSubgroups = computeFullSubgroups
     }
@@ -22430,7 +22430,7 @@ public struct PhysicalDeviceLineRasterizationFeatures: ChainableBase, PhysicalDe
     public let stippledBresenhamLines: Bool
     public let stippledSmoothLines: Bool
 
-    public init(rectangularLines: Bool, bresenhamLines: Bool, smoothLines: Bool, stippledRectangularLines: Bool, stippledBresenhamLines: Bool, stippledSmoothLines: Bool) {
+    public init(rectangularLines: Bool = false, bresenhamLines: Bool = false, smoothLines: Bool = false, stippledRectangularLines: Bool = false, stippledBresenhamLines: Bool = false, stippledSmoothLines: Bool = false) {
         self.rectangularLines = rectangularLines
         self.bresenhamLines = bresenhamLines
         self.smoothLines = smoothLines
@@ -22537,7 +22537,7 @@ public struct PhysicalDevicePipelineCreationCacheControlFeatures: ChainableBase,
 
     public let pipelineCreationCacheControl: Bool
 
-    public init(pipelineCreationCacheControl: Bool) {
+    public init(pipelineCreationCacheControl: Bool = false) {
         self.pipelineCreationCacheControl = pipelineCreationCacheControl
     }
 
@@ -22576,7 +22576,7 @@ public struct PhysicalDeviceVulkan11Features: ChainableBase, PhysicalDeviceFeatu
     public let samplerYcbcrConversion: Bool
     public let shaderDrawParameters: Bool
 
-    public init(storageBuffer16BitAccess: Bool, uniformAndStorageBuffer16BitAccess: Bool, storagePushConstant16: Bool, storageInputOutput16: Bool, multiview: Bool, multiviewGeometryShader: Bool, multiviewTessellationShader: Bool, variablePointersStorageBuffer: Bool, variablePointers: Bool, protectedMemory: Bool, samplerYcbcrConversion: Bool, shaderDrawParameters: Bool) {
+    public init(storageBuffer16BitAccess: Bool = false, uniformAndStorageBuffer16BitAccess: Bool = false, storagePushConstant16: Bool = false, storageInputOutput16: Bool = false, multiview: Bool = false, multiviewGeometryShader: Bool = false, multiviewTessellationShader: Bool = false, variablePointersStorageBuffer: Bool = false, variablePointers: Bool = false, protectedMemory: Bool = false, samplerYcbcrConversion: Bool = false, shaderDrawParameters: Bool = false) {
         self.storageBuffer16BitAccess = storageBuffer16BitAccess
         self.uniformAndStorageBuffer16BitAccess = uniformAndStorageBuffer16BitAccess
         self.storagePushConstant16 = storagePushConstant16
@@ -22749,7 +22749,7 @@ public struct PhysicalDeviceVulkan12Features: ChainableBase, PhysicalDeviceFeatu
     public let shaderOutputLayer: Bool
     public let subgroupBroadcastDynamicId: Bool
 
-    public init(samplerMirrorClampToEdge: Bool, drawIndirectCount: Bool, storageBuffer8BitAccess: Bool, uniformAndStorageBuffer8BitAccess: Bool, storagePushConstant8: Bool, shaderBufferInt64Atomics: Bool, shaderSharedInt64Atomics: Bool, shaderFloat16: Bool, shaderInt8: Bool, descriptorIndexing: Bool, shaderInputAttachmentArrayDynamicIndexing: Bool, shaderUniformTexelBufferArrayDynamicIndexing: Bool, shaderStorageTexelBufferArrayDynamicIndexing: Bool, shaderUniformBufferArrayNonUniformIndexing: Bool, shaderSampledImageArrayNonUniformIndexing: Bool, shaderStorageBufferArrayNonUniformIndexing: Bool, shaderStorageImageArrayNonUniformIndexing: Bool, shaderInputAttachmentArrayNonUniformIndexing: Bool, shaderUniformTexelBufferArrayNonUniformIndexing: Bool, shaderStorageTexelBufferArrayNonUniformIndexing: Bool, descriptorBindingUniformBufferUpdateAfterBind: Bool, descriptorBindingSampledImageUpdateAfterBind: Bool, descriptorBindingStorageImageUpdateAfterBind: Bool, descriptorBindingStorageBufferUpdateAfterBind: Bool, descriptorBindingUniformTexelBufferUpdateAfterBind: Bool, descriptorBindingStorageTexelBufferUpdateAfterBind: Bool, descriptorBindingUpdateUnusedWhilePending: Bool, descriptorBindingPartiallyBound: Bool, descriptorBindingVariableDescriptorCount: Bool, runtimeDescriptorArray: Bool, samplerFilterMinmax: Bool, scalarBlockLayout: Bool, imagelessFramebuffer: Bool, uniformBufferStandardLayout: Bool, shaderSubgroupExtendedTypes: Bool, separateDepthStencilLayouts: Bool, hostQueryReset: Bool, timelineSemaphore: Bool, bufferDeviceAddress: Bool, bufferDeviceAddressCaptureReplay: Bool, bufferDeviceAddressMultiDevice: Bool, vulkanMemoryModel: Bool, vulkanMemoryModelDeviceScope: Bool, vulkanMemoryModelAvailabilityVisibilityChains: Bool, shaderOutputViewportIndex: Bool, shaderOutputLayer: Bool, subgroupBroadcastDynamicId: Bool) {
+    public init(samplerMirrorClampToEdge: Bool = false, drawIndirectCount: Bool = false, storageBuffer8BitAccess: Bool = false, uniformAndStorageBuffer8BitAccess: Bool = false, storagePushConstant8: Bool = false, shaderBufferInt64Atomics: Bool = false, shaderSharedInt64Atomics: Bool = false, shaderFloat16: Bool = false, shaderInt8: Bool = false, descriptorIndexing: Bool = false, shaderInputAttachmentArrayDynamicIndexing: Bool = false, shaderUniformTexelBufferArrayDynamicIndexing: Bool = false, shaderStorageTexelBufferArrayDynamicIndexing: Bool = false, shaderUniformBufferArrayNonUniformIndexing: Bool = false, shaderSampledImageArrayNonUniformIndexing: Bool = false, shaderStorageBufferArrayNonUniformIndexing: Bool = false, shaderStorageImageArrayNonUniformIndexing: Bool = false, shaderInputAttachmentArrayNonUniformIndexing: Bool = false, shaderUniformTexelBufferArrayNonUniformIndexing: Bool = false, shaderStorageTexelBufferArrayNonUniformIndexing: Bool = false, descriptorBindingUniformBufferUpdateAfterBind: Bool = false, descriptorBindingSampledImageUpdateAfterBind: Bool = false, descriptorBindingStorageImageUpdateAfterBind: Bool = false, descriptorBindingStorageBufferUpdateAfterBind: Bool = false, descriptorBindingUniformTexelBufferUpdateAfterBind: Bool = false, descriptorBindingStorageTexelBufferUpdateAfterBind: Bool = false, descriptorBindingUpdateUnusedWhilePending: Bool = false, descriptorBindingPartiallyBound: Bool = false, descriptorBindingVariableDescriptorCount: Bool = false, runtimeDescriptorArray: Bool = false, samplerFilterMinmax: Bool = false, scalarBlockLayout: Bool = false, imagelessFramebuffer: Bool = false, uniformBufferStandardLayout: Bool = false, shaderSubgroupExtendedTypes: Bool = false, separateDepthStencilLayouts: Bool = false, hostQueryReset: Bool = false, timelineSemaphore: Bool = false, bufferDeviceAddress: Bool = false, bufferDeviceAddressCaptureReplay: Bool = false, bufferDeviceAddressMultiDevice: Bool = false, vulkanMemoryModel: Bool = false, vulkanMemoryModelDeviceScope: Bool = false, vulkanMemoryModelAvailabilityVisibilityChains: Bool = false, shaderOutputViewportIndex: Bool = false, shaderOutputLayer: Bool = false, subgroupBroadcastDynamicId: Bool = false) {
         self.samplerMirrorClampToEdge = samplerMirrorClampToEdge
         self.drawIndirectCount = drawIndirectCount
         self.storageBuffer8BitAccess = storageBuffer8BitAccess
@@ -23108,7 +23108,7 @@ public struct PhysicalDeviceVulkan13Features: ChainableBase, PhysicalDeviceFeatu
     public let shaderIntegerDotProduct: Bool
     public let maintenance4: Bool
 
-    public init(robustImageAccess: Bool, inlineUniformBlock: Bool, descriptorBindingInlineUniformBlockUpdateAfterBind: Bool, pipelineCreationCacheControl: Bool, privateData: Bool, shaderDemoteToHelperInvocation: Bool, shaderTerminateInvocation: Bool, subgroupSizeControl: Bool, computeFullSubgroups: Bool, synchronization2: Bool, textureCompressionASTC_HDR: Bool, shaderZeroInitializeWorkgroupMemory: Bool, dynamicRendering: Bool, shaderIntegerDotProduct: Bool, maintenance4: Bool) {
+    public init(robustImageAccess: Bool = false, inlineUniformBlock: Bool = false, descriptorBindingInlineUniformBlockUpdateAfterBind: Bool = false, pipelineCreationCacheControl: Bool = false, privateData: Bool = false, shaderDemoteToHelperInvocation: Bool = false, shaderTerminateInvocation: Bool = false, subgroupSizeControl: Bool = false, computeFullSubgroups: Bool = false, synchronization2: Bool = false, textureCompressionASTC_HDR: Bool = false, shaderZeroInitializeWorkgroupMemory: Bool = false, dynamicRendering: Bool = false, shaderIntegerDotProduct: Bool = false, maintenance4: Bool = false) {
         self.robustImageAccess = robustImageAccess
         self.inlineUniformBlock = inlineUniformBlock
         self.descriptorBindingInlineUniformBlockUpdateAfterBind = descriptorBindingInlineUniformBlockUpdateAfterBind
@@ -23354,7 +23354,7 @@ public struct PhysicalDeviceVulkan14Features: ChainableBase, PhysicalDeviceFeatu
     public let hostImageCopy: Bool
     public let pushDescriptor: Bool
 
-    public init(globalPriorityQuery: Bool, shaderSubgroupRotate: Bool, shaderSubgroupRotateClustered: Bool, shaderFloatControls2: Bool, shaderExpectAssume: Bool, rectangularLines: Bool, bresenhamLines: Bool, smoothLines: Bool, stippledRectangularLines: Bool, stippledBresenhamLines: Bool, stippledSmoothLines: Bool, vertexAttributeInstanceRateDivisor: Bool, vertexAttributeInstanceRateZeroDivisor: Bool, indexTypeUint8: Bool, dynamicRenderingLocalRead: Bool, maintenance5: Bool, maintenance6: Bool, pipelineProtectedAccess: Bool, pipelineRobustness: Bool, hostImageCopy: Bool, pushDescriptor: Bool) {
+    public init(globalPriorityQuery: Bool = false, shaderSubgroupRotate: Bool = false, shaderSubgroupRotateClustered: Bool = false, shaderFloatControls2: Bool = false, shaderExpectAssume: Bool = false, rectangularLines: Bool = false, bresenhamLines: Bool = false, smoothLines: Bool = false, stippledRectangularLines: Bool = false, stippledBresenhamLines: Bool = false, stippledSmoothLines: Bool = false, vertexAttributeInstanceRateDivisor: Bool = false, vertexAttributeInstanceRateZeroDivisor: Bool = false, indexTypeUint8: Bool = false, dynamicRenderingLocalRead: Bool = false, maintenance5: Bool = false, maintenance6: Bool = false, pipelineProtectedAccess: Bool = false, pipelineRobustness: Bool = false, hostImageCopy: Bool = false, pushDescriptor: Bool = false) {
         self.globalPriorityQuery = globalPriorityQuery
         self.shaderSubgroupRotate = shaderSubgroupRotate
         self.shaderSubgroupRotateClustered = shaderSubgroupRotateClustered
@@ -23566,7 +23566,7 @@ public struct PhysicalDeviceCoherentMemoryFeaturesAMD: ChainableBase, PhysicalDe
 
     public let deviceCoherentMemory: Bool
 
-    public init(deviceCoherentMemory: Bool) {
+    public init(deviceCoherentMemory: Bool = false) {
         self.deviceCoherentMemory = deviceCoherentMemory
     }
 
@@ -23641,7 +23641,7 @@ public struct PhysicalDeviceGpaFeaturesAMD: ChainableBase, PhysicalDeviceFeature
     public let sqThreadTracing: Bool
     public let clockModes: Bool
 
-    public init(perfCounters: Bool, streamingPerfCounters: Bool, sqThreadTracing: Bool, clockModes: Bool) {
+    public init(perfCounters: Bool = false, streamingPerfCounters: Bool = false, sqThreadTracing: Bool = false, clockModes: Bool = false) {
         self.perfCounters = perfCounters
         self.streamingPerfCounters = streamingPerfCounters
         self.sqThreadTracing = sqThreadTracing
@@ -24042,7 +24042,7 @@ public struct PhysicalDeviceCustomBorderColorFeaturesEXT: ChainableBase, Physica
     public let customBorderColors: Bool
     public let customBorderColorWithoutFormat: Bool
 
-    public init(customBorderColors: Bool, customBorderColorWithoutFormat: Bool) {
+    public init(customBorderColors: Bool = false, customBorderColorWithoutFormat: Bool = false) {
         self.customBorderColors = customBorderColors
         self.customBorderColorWithoutFormat = customBorderColorWithoutFormat
     }
@@ -24108,7 +24108,7 @@ public struct PhysicalDeviceBorderColorSwizzleFeaturesEXT: ChainableBase, Physic
     public let borderColorSwizzle: Bool
     public let borderColorSwizzleFromImage: Bool
 
-    public init(borderColorSwizzle: Bool, borderColorSwizzleFromImage: Bool) {
+    public init(borderColorSwizzle: Bool = false, borderColorSwizzleFromImage: Bool = false) {
         self.borderColorSwizzle = borderColorSwizzle
         self.borderColorSwizzleFromImage = borderColorSwizzleFromImage
     }
@@ -24826,7 +24826,7 @@ public struct PhysicalDeviceExtendedDynamicStateFeaturesEXT: ChainableBase, Phys
 
     public let extendedDynamicState: Bool
 
-    public init(extendedDynamicState: Bool) {
+    public init(extendedDynamicState: Bool = false) {
         self.extendedDynamicState = extendedDynamicState
     }
 
@@ -24856,7 +24856,7 @@ public struct PhysicalDeviceExtendedDynamicState2FeaturesEXT: ChainableBase, Phy
     public let extendedDynamicState2LogicOp: Bool
     public let extendedDynamicState2PatchControlPoints: Bool
 
-    public init(extendedDynamicState2: Bool, extendedDynamicState2LogicOp: Bool, extendedDynamicState2PatchControlPoints: Bool) {
+    public init(extendedDynamicState2: Bool = false, extendedDynamicState2LogicOp: Bool = false, extendedDynamicState2PatchControlPoints: Bool = false) {
         self.extendedDynamicState2 = extendedDynamicState2
         self.extendedDynamicState2LogicOp = extendedDynamicState2LogicOp
         self.extendedDynamicState2PatchControlPoints = extendedDynamicState2PatchControlPoints
@@ -24920,7 +24920,7 @@ public struct PhysicalDeviceExtendedDynamicState3FeaturesEXT: ChainableBase, Phy
     public let extendedDynamicState3RepresentativeFragmentTestEnable: Bool
     public let extendedDynamicState3ShadingRateImageEnable: Bool
 
-    public init(extendedDynamicState3TessellationDomainOrigin: Bool, extendedDynamicState3DepthClampEnable: Bool, extendedDynamicState3PolygonMode: Bool, extendedDynamicState3RasterizationSamples: Bool, extendedDynamicState3SampleMask: Bool, extendedDynamicState3AlphaToCoverageEnable: Bool, extendedDynamicState3AlphaToOneEnable: Bool, extendedDynamicState3LogicOpEnable: Bool, extendedDynamicState3ColorBlendEnable: Bool, extendedDynamicState3ColorBlendEquation: Bool, extendedDynamicState3ColorWriteMask: Bool, extendedDynamicState3RasterizationStream: Bool, extendedDynamicState3ConservativeRasterizationMode: Bool, extendedDynamicState3ExtraPrimitiveOverestimationSize: Bool, extendedDynamicState3DepthClipEnable: Bool, extendedDynamicState3SampleLocationsEnable: Bool, extendedDynamicState3ColorBlendAdvanced: Bool, extendedDynamicState3ProvokingVertexMode: Bool, extendedDynamicState3LineRasterizationMode: Bool, extendedDynamicState3LineStippleEnable: Bool, extendedDynamicState3DepthClipNegativeOneToOne: Bool, extendedDynamicState3ViewportWScalingEnable: Bool, extendedDynamicState3ViewportSwizzle: Bool, extendedDynamicState3CoverageToColorEnable: Bool, extendedDynamicState3CoverageToColorLocation: Bool, extendedDynamicState3CoverageModulationMode: Bool, extendedDynamicState3CoverageModulationTableEnable: Bool, extendedDynamicState3CoverageModulationTable: Bool, extendedDynamicState3CoverageReductionMode: Bool, extendedDynamicState3RepresentativeFragmentTestEnable: Bool, extendedDynamicState3ShadingRateImageEnable: Bool) {
+    public init(extendedDynamicState3TessellationDomainOrigin: Bool = false, extendedDynamicState3DepthClampEnable: Bool = false, extendedDynamicState3PolygonMode: Bool = false, extendedDynamicState3RasterizationSamples: Bool = false, extendedDynamicState3SampleMask: Bool = false, extendedDynamicState3AlphaToCoverageEnable: Bool = false, extendedDynamicState3AlphaToOneEnable: Bool = false, extendedDynamicState3LogicOpEnable: Bool = false, extendedDynamicState3ColorBlendEnable: Bool = false, extendedDynamicState3ColorBlendEquation: Bool = false, extendedDynamicState3ColorWriteMask: Bool = false, extendedDynamicState3RasterizationStream: Bool = false, extendedDynamicState3ConservativeRasterizationMode: Bool = false, extendedDynamicState3ExtraPrimitiveOverestimationSize: Bool = false, extendedDynamicState3DepthClipEnable: Bool = false, extendedDynamicState3SampleLocationsEnable: Bool = false, extendedDynamicState3ColorBlendAdvanced: Bool = false, extendedDynamicState3ProvokingVertexMode: Bool = false, extendedDynamicState3LineRasterizationMode: Bool = false, extendedDynamicState3LineStippleEnable: Bool = false, extendedDynamicState3DepthClipNegativeOneToOne: Bool = false, extendedDynamicState3ViewportWScalingEnable: Bool = false, extendedDynamicState3ViewportSwizzle: Bool = false, extendedDynamicState3CoverageToColorEnable: Bool = false, extendedDynamicState3CoverageToColorLocation: Bool = false, extendedDynamicState3CoverageModulationMode: Bool = false, extendedDynamicState3CoverageModulationTableEnable: Bool = false, extendedDynamicState3CoverageModulationTable: Bool = false, extendedDynamicState3CoverageReductionMode: Bool = false, extendedDynamicState3RepresentativeFragmentTestEnable: Bool = false, extendedDynamicState3ShadingRateImageEnable: Bool = false) {
         self.extendedDynamicState3TessellationDomainOrigin = extendedDynamicState3TessellationDomainOrigin
         self.extendedDynamicState3DepthClampEnable = extendedDynamicState3DepthClampEnable
         self.extendedDynamicState3PolygonMode = extendedDynamicState3PolygonMode
@@ -25228,7 +25228,7 @@ public struct PhysicalDevicePartitionedAccelerationStructureFeaturesNV: Chainabl
 
     public let partitionedAccelerationStructure: Bool
 
-    public init(partitionedAccelerationStructure: Bool) {
+    public init(partitionedAccelerationStructure: Bool = false) {
         self.partitionedAccelerationStructure = partitionedAccelerationStructure
     }
 
@@ -25569,7 +25569,7 @@ public struct PhysicalDeviceDiagnosticsConfigFeaturesNV: ChainableBase, Physical
 
     public let diagnosticsConfig: Bool
 
-    public init(diagnosticsConfig: Bool) {
+    public init(diagnosticsConfig: Bool = false) {
         self.diagnosticsConfig = diagnosticsConfig
     }
 
@@ -25625,7 +25625,7 @@ public struct PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures: ChainableBase
 
     public let shaderZeroInitializeWorkgroupMemory: Bool
 
-    public init(shaderZeroInitializeWorkgroupMemory: Bool) {
+    public init(shaderZeroInitializeWorkgroupMemory: Bool = false) {
         self.shaderZeroInitializeWorkgroupMemory = shaderZeroInitializeWorkgroupMemory
     }
 
@@ -25653,7 +25653,7 @@ public struct PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR: Chainab
 
     public let shaderSubgroupUniformControlFlow: Bool
 
-    public init(shaderSubgroupUniformControlFlow: Bool) {
+    public init(shaderSubgroupUniformControlFlow: Bool = false) {
         self.shaderSubgroupUniformControlFlow = shaderSubgroupUniformControlFlow
     }
 
@@ -25683,7 +25683,7 @@ public struct PhysicalDeviceRobustness2FeaturesKHR: ChainableBase, PhysicalDevic
     public let robustImageAccess2: Bool
     public let nullDescriptor: Bool
 
-    public init(robustBufferAccess2: Bool, robustImageAccess2: Bool, nullDescriptor: Bool) {
+    public init(robustBufferAccess2: Bool = false, robustImageAccess2: Bool = false, nullDescriptor: Bool = false) {
         self.robustBufferAccess2 = robustBufferAccess2
         self.robustImageAccess2 = robustImageAccess2
         self.nullDescriptor = nullDescriptor
@@ -25744,7 +25744,7 @@ public struct PhysicalDeviceImageRobustnessFeatures: ChainableBase, PhysicalDevi
 
     public let robustImageAccess: Bool
 
-    public init(robustImageAccess: Bool) {
+    public init(robustImageAccess: Bool = false) {
         self.robustImageAccess = robustImageAccess
     }
 
@@ -25775,7 +25775,7 @@ public struct PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR: ChainableB
     public let workgroupMemoryExplicitLayout8BitAccess: Bool
     public let workgroupMemoryExplicitLayout16BitAccess: Bool
 
-    public init(workgroupMemoryExplicitLayout: Bool, workgroupMemoryExplicitLayoutScalarBlockLayout: Bool, workgroupMemoryExplicitLayout8BitAccess: Bool, workgroupMemoryExplicitLayout16BitAccess: Bool) {
+    public init(workgroupMemoryExplicitLayout: Bool = false, workgroupMemoryExplicitLayoutScalarBlockLayout: Bool = false, workgroupMemoryExplicitLayout8BitAccess: Bool = false, workgroupMemoryExplicitLayout16BitAccess: Bool = false) {
         self.workgroupMemoryExplicitLayout = workgroupMemoryExplicitLayout
         self.workgroupMemoryExplicitLayoutScalarBlockLayout = workgroupMemoryExplicitLayoutScalarBlockLayout
         self.workgroupMemoryExplicitLayout8BitAccess = workgroupMemoryExplicitLayout8BitAccess
@@ -25827,7 +25827,7 @@ public struct PhysicalDevicePortabilitySubsetFeaturesKHR: ChainableBase, Physica
     public let triangleFans: Bool
     public let vertexAttributeAccessBeyondStride: Bool
 
-    public init(constantAlphaColorBlendFactors: Bool, events: Bool, imageViewFormatReinterpretation: Bool, imageViewFormatSwizzle: Bool, imageView2DOn3DImage: Bool, multisampleArrayImage: Bool, mutableComparisonSamplers: Bool, pointPolygons: Bool, samplerMipLodBias: Bool, separateStencilMaskRef: Bool, shaderSampleRateInterpolationFunctions: Bool, tessellationIsolines: Bool, tessellationPointMode: Bool, triangleFans: Bool, vertexAttributeAccessBeyondStride: Bool) {
+    public init(constantAlphaColorBlendFactors: Bool = false, events: Bool = false, imageViewFormatReinterpretation: Bool = false, imageViewFormatSwizzle: Bool = false, imageView2DOn3DImage: Bool = false, multisampleArrayImage: Bool = false, mutableComparisonSamplers: Bool = false, pointPolygons: Bool = false, samplerMipLodBias: Bool = false, separateStencilMaskRef: Bool = false, shaderSampleRateInterpolationFunctions: Bool = false, tessellationIsolines: Bool = false, tessellationPointMode: Bool = false, triangleFans: Bool = false, vertexAttributeAccessBeyondStride: Bool = false) {
         self.constantAlphaColorBlendFactors = constantAlphaColorBlendFactors
         self.events = events
         self.imageViewFormatReinterpretation = imageViewFormatReinterpretation
@@ -25925,7 +25925,7 @@ public struct PhysicalDevice4444FormatsFeaturesEXT: ChainableBase, PhysicalDevic
     public let formatA4R4G4B4: Bool
     public let formatA4B4G4R4: Bool
 
-    public init(formatA4R4G4B4: Bool, formatA4B4G4R4: Bool) {
+    public init(formatA4R4G4B4: Bool = false, formatA4B4G4R4: Bool = false) {
         self.formatA4R4G4B4 = formatA4R4G4B4
         self.formatA4B4G4R4 = formatA4B4G4R4
     }
@@ -25956,7 +25956,7 @@ public struct PhysicalDeviceSubpassShadingFeaturesHUAWEI: ChainableBase, Physica
 
     public let subpassShading: Bool
 
-    public init(subpassShading: Bool) {
+    public init(subpassShading: Bool = false) {
         self.subpassShading = subpassShading
     }
 
@@ -25985,7 +25985,7 @@ public struct PhysicalDeviceClusterCullingShaderFeaturesHUAWEI: ChainableBase, P
     public let clustercullingShader: Bool
     public let multiviewClusterCullingShader: Bool
 
-    public init(clustercullingShader: Bool, multiviewClusterCullingShader: Bool) {
+    public init(clustercullingShader: Bool = false, multiviewClusterCullingShader: Bool = false) {
         self.clustercullingShader = clustercullingShader
         self.multiviewClusterCullingShader = multiviewClusterCullingShader
     }
@@ -26016,7 +26016,7 @@ public struct PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI: ChainableBase
 
     public let clusterShadingRate: Bool
 
-    public init(clusterShadingRate: Bool) {
+    public init(clusterShadingRate: Bool = false) {
         self.clusterShadingRate = clusterShadingRate
     }
 
@@ -26557,7 +26557,7 @@ public struct PhysicalDeviceShaderImageAtomicInt64FeaturesEXT: ChainableBase, Ph
     public let shaderImageInt64Atomics: Bool
     public let sparseImageInt64Atomics: Bool
 
-    public init(shaderImageInt64Atomics: Bool, sparseImageInt64Atomics: Bool) {
+    public init(shaderImageInt64Atomics: Bool = false, sparseImageInt64Atomics: Bool = false) {
         self.shaderImageInt64Atomics = shaderImageInt64Atomics
         self.sparseImageInt64Atomics = sparseImageInt64Atomics
     }
@@ -26660,7 +26660,7 @@ public struct PhysicalDeviceFragmentShadingRateFeaturesKHR: ChainableBase, Physi
     public let primitiveFragmentShadingRate: Bool
     public let attachmentFragmentShadingRate: Bool
 
-    public init(pipelineFragmentShadingRate: Bool, primitiveFragmentShadingRate: Bool, attachmentFragmentShadingRate: Bool) {
+    public init(pipelineFragmentShadingRate: Bool = false, primitiveFragmentShadingRate: Bool = false, attachmentFragmentShadingRate: Bool = false) {
         self.pipelineFragmentShadingRate = pipelineFragmentShadingRate
         self.primitiveFragmentShadingRate = primitiveFragmentShadingRate
         self.attachmentFragmentShadingRate = attachmentFragmentShadingRate
@@ -26801,7 +26801,7 @@ public struct PhysicalDeviceShaderTerminateInvocationFeatures: ChainableBase, Ph
 
     public let shaderTerminateInvocation: Bool
 
-    public init(shaderTerminateInvocation: Bool) {
+    public init(shaderTerminateInvocation: Bool = false) {
         self.shaderTerminateInvocation = shaderTerminateInvocation
     }
 
@@ -26831,7 +26831,7 @@ public struct PhysicalDeviceFragmentShadingRateEnumsFeaturesNV: ChainableBase, P
     public let supersampleFragmentShadingRates: Bool
     public let noInvocationFragmentShadingRates: Bool
 
-    public init(fragmentShadingRateEnums: Bool, supersampleFragmentShadingRates: Bool, noInvocationFragmentShadingRates: Bool) {
+    public init(fragmentShadingRateEnums: Bool = false, supersampleFragmentShadingRates: Bool = false, noInvocationFragmentShadingRates: Bool = false) {
         self.fragmentShadingRateEnums = fragmentShadingRateEnums
         self.supersampleFragmentShadingRates = supersampleFragmentShadingRates
         self.noInvocationFragmentShadingRates = noInvocationFragmentShadingRates
@@ -26956,7 +26956,7 @@ public struct PhysicalDeviceImage2DViewOf3DFeaturesEXT: ChainableBase, PhysicalD
     public let image2DViewOf3D: Bool
     public let sampler2DViewOf3D: Bool
 
-    public init(image2DViewOf3D: Bool, sampler2DViewOf3D: Bool) {
+    public init(image2DViewOf3D: Bool = false, sampler2DViewOf3D: Bool = false) {
         self.image2DViewOf3D = image2DViewOf3D
         self.sampler2DViewOf3D = sampler2DViewOf3D
     }
@@ -26987,7 +26987,7 @@ public struct PhysicalDeviceImageSlicedViewOf3DFeaturesEXT: ChainableBase, Physi
 
     public let imageSlicedViewOf3D: Bool
 
-    public init(imageSlicedViewOf3D: Bool) {
+    public init(imageSlicedViewOf3D: Bool = false) {
         self.imageSlicedViewOf3D = imageSlicedViewOf3D
     }
 
@@ -27015,7 +27015,7 @@ public struct PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT: Chain
 
     public let attachmentFeedbackLoopDynamicState: Bool
 
-    public init(attachmentFeedbackLoopDynamicState: Bool) {
+    public init(attachmentFeedbackLoopDynamicState: Bool = false) {
         self.attachmentFeedbackLoopDynamicState = attachmentFeedbackLoopDynamicState
     }
 
@@ -27043,7 +27043,7 @@ public struct PhysicalDeviceLegacyVertexAttributesFeaturesEXT: ChainableBase, Ph
 
     public let legacyVertexAttributes: Bool
 
-    public init(legacyVertexAttributes: Bool) {
+    public init(legacyVertexAttributes: Bool = false) {
         self.legacyVertexAttributes = legacyVertexAttributes
     }
 
@@ -27095,7 +27095,7 @@ public struct PhysicalDeviceMutableDescriptorTypeFeaturesEXT: ChainableBase, Phy
 
     public let mutableDescriptorType: Bool
 
-    public init(mutableDescriptorType: Bool) {
+    public init(mutableDescriptorType: Bool = false) {
         self.mutableDescriptorType = mutableDescriptorType
     }
 
@@ -27177,7 +27177,7 @@ public struct PhysicalDeviceDepthClipControlFeaturesEXT: ChainableBase, Physical
 
     public let depthClipControl: Bool
 
-    public init(depthClipControl: Bool) {
+    public init(depthClipControl: Bool = false) {
         self.depthClipControl = depthClipControl
     }
 
@@ -27205,7 +27205,7 @@ public struct PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT: ChainableBase
 
     public let zeroInitializeDeviceMemory: Bool
 
-    public init(zeroInitializeDeviceMemory: Bool) {
+    public init(zeroInitializeDeviceMemory: Bool = false) {
         self.zeroInitializeDeviceMemory = zeroInitializeDeviceMemory
     }
 
@@ -27257,7 +27257,7 @@ public struct PhysicalDeviceCustomResolveFeaturesEXT: ChainableBase, PhysicalDev
 
     public let customResolve: Bool
 
-    public init(customResolve: Bool) {
+    public init(customResolve: Bool = false) {
         self.customResolve = customResolve
     }
 
@@ -27329,7 +27329,7 @@ public struct PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT: ChainableBase, P
     public let deviceGeneratedCommands: Bool
     public let dynamicGeneratedPipelineLayout: Bool
 
-    public init(deviceGeneratedCommands: Bool, dynamicGeneratedPipelineLayout: Bool) {
+    public init(deviceGeneratedCommands: Bool = false, dynamicGeneratedPipelineLayout: Bool = false) {
         self.deviceGeneratedCommands = deviceGeneratedCommands
         self.dynamicGeneratedPipelineLayout = dynamicGeneratedPipelineLayout
     }
@@ -28068,7 +28068,7 @@ public struct PhysicalDeviceDepthClampControlFeaturesEXT: ChainableBase, Physica
 
     public let depthClampControl: Bool
 
-    public init(depthClampControl: Bool) {
+    public init(depthClampControl: Bool = false) {
         self.depthClampControl = depthClampControl
     }
 
@@ -28154,7 +28154,7 @@ public struct PhysicalDeviceVertexInputDynamicStateFeaturesEXT: ChainableBase, P
 
     public let vertexInputDynamicState: Bool
 
-    public init(vertexInputDynamicState: Bool) {
+    public init(vertexInputDynamicState: Bool = false) {
         self.vertexInputDynamicState = vertexInputDynamicState
     }
 
@@ -28182,7 +28182,7 @@ public struct PhysicalDeviceExternalMemoryRDMAFeaturesNV: ChainableBase, Physica
 
     public let externalMemoryRDMA: Bool
 
-    public init(externalMemoryRDMA: Bool) {
+    public init(externalMemoryRDMA: Bool = false) {
         self.externalMemoryRDMA = externalMemoryRDMA
     }
 
@@ -28210,7 +28210,7 @@ public struct PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR: Chainab
 
     public let shaderRelaxedExtendedInstruction: Bool
 
-    public init(shaderRelaxedExtendedInstruction: Bool) {
+    public init(shaderRelaxedExtendedInstruction: Bool = false) {
         self.shaderRelaxedExtendedInstruction = shaderRelaxedExtendedInstruction
     }
 
@@ -28318,7 +28318,7 @@ public struct PhysicalDeviceColorWriteEnableFeaturesEXT: ChainableBase, Physical
 
     public let colorWriteEnable: Bool
 
-    public init(colorWriteEnable: Bool) {
+    public init(colorWriteEnable: Bool = false) {
         self.colorWriteEnable = colorWriteEnable
     }
 
@@ -28796,7 +28796,7 @@ public struct PhysicalDeviceSynchronization2Features: ChainableBase, PhysicalDev
 
     public let synchronization2: Bool
 
-    public init(synchronization2: Bool) {
+    public init(synchronization2: Bool = false) {
         self.synchronization2 = synchronization2
     }
 
@@ -28825,7 +28825,7 @@ public struct PhysicalDeviceUnifiedImageLayoutsFeaturesKHR: ChainableBase, Physi
     public let unifiedImageLayouts: Bool
     public let unifiedImageLayoutsVideo: Bool
 
-    public init(unifiedImageLayouts: Bool, unifiedImageLayoutsVideo: Bool) {
+    public init(unifiedImageLayouts: Bool = false, unifiedImageLayoutsVideo: Bool = false) {
         self.unifiedImageLayouts = unifiedImageLayouts
         self.unifiedImageLayoutsVideo = unifiedImageLayoutsVideo
     }
@@ -28856,7 +28856,7 @@ public struct PhysicalDeviceHostImageCopyFeatures: ChainableBase, PhysicalDevice
 
     public let hostImageCopy: Bool
 
-    public init(hostImageCopy: Bool) {
+    public init(hostImageCopy: Bool = false) {
         self.hostImageCopy = hostImageCopy
     }
 
@@ -29272,7 +29272,7 @@ public struct PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT: ChainableBase, 
     public let primitivesGeneratedQueryWithRasterizerDiscard: Bool
     public let primitivesGeneratedQueryWithNonZeroStreams: Bool
 
-    public init(primitivesGeneratedQuery: Bool, primitivesGeneratedQueryWithRasterizerDiscard: Bool, primitivesGeneratedQueryWithNonZeroStreams: Bool) {
+    public init(primitivesGeneratedQuery: Bool = false, primitivesGeneratedQueryWithRasterizerDiscard: Bool = false, primitivesGeneratedQueryWithNonZeroStreams: Bool = false) {
         self.primitivesGeneratedQuery = primitivesGeneratedQuery
         self.primitivesGeneratedQueryWithRasterizerDiscard = primitivesGeneratedQueryWithRasterizerDiscard
         self.primitivesGeneratedQueryWithNonZeroStreams = primitivesGeneratedQueryWithNonZeroStreams
@@ -29306,7 +29306,7 @@ public struct PhysicalDeviceLegacyDitheringFeaturesEXT: ChainableBase, PhysicalD
 
     public let legacyDithering: Bool
 
-    public init(legacyDithering: Bool) {
+    public init(legacyDithering: Bool = false) {
         self.legacyDithering = legacyDithering
     }
 
@@ -29334,7 +29334,7 @@ public struct PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT: Chaina
 
     public let multisampledRenderToSingleSampled: Bool
 
-    public init(multisampledRenderToSingleSampled: Bool) {
+    public init(multisampledRenderToSingleSampled: Bool = false) {
         self.multisampledRenderToSingleSampled = multisampledRenderToSingleSampled
     }
 
@@ -29474,7 +29474,7 @@ public struct PhysicalDevicePipelineProtectedAccessFeatures: ChainableBase, Phys
 
     public let pipelineProtectedAccess: Bool
 
-    public init(pipelineProtectedAccess: Bool) {
+    public init(pipelineProtectedAccess: Bool = false) {
         self.pipelineProtectedAccess = pipelineProtectedAccess
     }
 
@@ -30185,7 +30185,7 @@ public struct PhysicalDeviceVideoMaintenance1FeaturesKHR: ChainableBase, Physica
 
     public let videoMaintenance1: Bool
 
-    public init(videoMaintenance1: Bool) {
+    public init(videoMaintenance1: Bool = false) {
         self.videoMaintenance1 = videoMaintenance1
     }
 
@@ -30213,7 +30213,7 @@ public struct PhysicalDeviceVideoMaintenance2FeaturesKHR: ChainableBase, Physica
 
     public let videoMaintenance2: Bool
 
-    public init(videoMaintenance2: Bool) {
+    public init(videoMaintenance2: Bool = false) {
         self.videoMaintenance2 = videoMaintenance2
     }
 
@@ -30747,7 +30747,7 @@ public struct PhysicalDeviceVideoDecodeVP9FeaturesKHR: ChainableBase, PhysicalDe
 
     public let videoDecodeVP9: Bool
 
-    public init(videoDecodeVP9: Bool) {
+    public init(videoDecodeVP9: Bool = false) {
         self.videoDecodeVP9 = videoDecodeVP9
     }
 
@@ -31504,7 +31504,7 @@ public struct PhysicalDeviceVideoEncodeQuantizationMapFeaturesKHR: ChainableBase
 
     public let videoEncodeQuantizationMap: Bool
 
-    public init(videoEncodeQuantizationMap: Bool) {
+    public init(videoEncodeQuantizationMap: Bool = false) {
         self.videoEncodeQuantizationMap = videoEncodeQuantizationMap
     }
 
@@ -33215,7 +33215,7 @@ public struct PhysicalDeviceVideoEncodeAV1FeaturesKHR: ChainableBase, PhysicalDe
 
     public let videoEncodeAV1: Bool
 
-    public init(videoEncodeAV1: Bool) {
+    public init(videoEncodeAV1: Bool = false) {
         self.videoEncodeAV1 = videoEncodeAV1
     }
 
@@ -33588,7 +33588,7 @@ public struct PhysicalDeviceInheritedViewportScissorFeaturesNV: ChainableBase, P
 
     public let inheritedViewportScissor2D: Bool
 
-    public init(inheritedViewportScissor2D: Bool) {
+    public init(inheritedViewportScissor2D: Bool = false) {
         self.inheritedViewportScissor2D = inheritedViewportScissor2D
     }
 
@@ -33654,7 +33654,7 @@ public struct PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT: ChainableBase, Phy
 
     public let ycbcr2plane444Formats: Bool
 
-    public init(ycbcr2plane444Formats: Bool) {
+    public init(ycbcr2plane444Formats: Bool = false) {
         self.ycbcr2plane444Formats = ycbcr2plane444Formats
     }
 
@@ -33683,7 +33683,7 @@ public struct PhysicalDeviceProvokingVertexFeaturesEXT: ChainableBase, PhysicalD
     public let provokingVertexLast: Bool
     public let transformFeedbackPreservesProvokingVertex: Bool
 
-    public init(provokingVertexLast: Bool, transformFeedbackPreservesProvokingVertex: Bool) {
+    public init(provokingVertexLast: Bool = false, transformFeedbackPreservesProvokingVertex: Bool = false) {
         self.provokingVertexLast = provokingVertexLast
         self.transformFeedbackPreservesProvokingVertex = transformFeedbackPreservesProvokingVertex
     }
@@ -33893,7 +33893,7 @@ public struct PhysicalDeviceVideoEncodeIntraRefreshFeaturesKHR: ChainableBase, P
 
     public let videoEncodeIntraRefresh: Bool
 
-    public init(videoEncodeIntraRefresh: Bool) {
+    public init(videoEncodeIntraRefresh: Bool = false) {
         self.videoEncodeIntraRefresh = videoEncodeIntraRefresh
     }
 
@@ -34090,7 +34090,7 @@ public struct PhysicalDeviceDescriptorBufferFeaturesEXT: ChainableBase, Physical
     public let descriptorBufferImageLayoutIgnored: Bool
     public let descriptorBufferPushDescriptors: Bool
 
-    public init(descriptorBuffer: Bool, descriptorBufferCaptureReplay: Bool, descriptorBufferImageLayoutIgnored: Bool, descriptorBufferPushDescriptors: Bool) {
+    public init(descriptorBuffer: Bool = false, descriptorBufferCaptureReplay: Bool = false, descriptorBufferImageLayoutIgnored: Bool = false, descriptorBufferPushDescriptors: Bool = false) {
         self.descriptorBuffer = descriptorBuffer
         self.descriptorBufferCaptureReplay = descriptorBufferCaptureReplay
         self.descriptorBufferImageLayoutIgnored = descriptorBufferImageLayoutIgnored
@@ -34571,7 +34571,7 @@ public struct PhysicalDeviceShaderIntegerDotProductFeatures: ChainableBase, Phys
 
     public let shaderIntegerDotProduct: Bool
 
-    public init(shaderIntegerDotProduct: Bool) {
+    public init(shaderIntegerDotProduct: Bool = false) {
         self.shaderIntegerDotProduct = shaderIntegerDotProduct
     }
 
@@ -34749,7 +34749,7 @@ public struct PhysicalDeviceFragmentShaderBarycentricFeaturesKHR: ChainableBase,
 
     public let fragmentShaderBarycentric: Bool
 
-    public init(fragmentShaderBarycentric: Bool) {
+    public init(fragmentShaderBarycentric: Bool = false) {
         self.fragmentShaderBarycentric = fragmentShaderBarycentric
     }
 
@@ -34803,7 +34803,7 @@ public struct PhysicalDeviceShaderFmaFeaturesKHR: ChainableBase, PhysicalDeviceF
     public let shaderFmaFloat32: Bool
     public let shaderFmaFloat64: Bool
 
-    public init(shaderFmaFloat16: Bool, shaderFmaFloat32: Bool, shaderFmaFloat64: Bool) {
+    public init(shaderFmaFloat16: Bool = false, shaderFmaFloat32: Bool = false, shaderFmaFloat64: Bool = false) {
         self.shaderFmaFloat16 = shaderFmaFloat16
         self.shaderFmaFloat32 = shaderFmaFloat32
         self.shaderFmaFloat64 = shaderFmaFloat64
@@ -34838,7 +34838,7 @@ public struct PhysicalDeviceRayTracingMotionBlurFeaturesNV: ChainableBase, Physi
     public let rayTracingMotionBlur: Bool
     public let rayTracingMotionBlurPipelineTraceRaysIndirect: Bool
 
-    public init(rayTracingMotionBlur: Bool, rayTracingMotionBlurPipelineTraceRaysIndirect: Bool) {
+    public init(rayTracingMotionBlur: Bool = false, rayTracingMotionBlurPipelineTraceRaysIndirect: Bool = false) {
         self.rayTracingMotionBlur = rayTracingMotionBlur
         self.rayTracingMotionBlurPipelineTraceRaysIndirect = rayTracingMotionBlurPipelineTraceRaysIndirect
     }
@@ -34869,7 +34869,7 @@ public struct PhysicalDeviceRayTracingValidationFeaturesNV: ChainableBase, Physi
 
     public let rayTracingValidation: Bool
 
-    public init(rayTracingValidation: Bool) {
+    public init(rayTracingValidation: Bool = false) {
         self.rayTracingValidation = rayTracingValidation
     }
 
@@ -34898,7 +34898,7 @@ public struct PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV: ChainableBas
     public let spheres: Bool
     public let linearSweptSpheres: Bool
 
-    public init(spheres: Bool, linearSweptSpheres: Bool) {
+    public init(spheres: Bool = false, linearSweptSpheres: Bool = false) {
         self.spheres = spheres
         self.linearSweptSpheres = linearSweptSpheres
     }
@@ -35773,7 +35773,7 @@ public struct PhysicalDeviceRGBA10X6FormatsFeaturesEXT: ChainableBase, PhysicalD
 
     public let formatRgba10x6WithoutYCbCrSampler: Bool
 
-    public init(formatRgba10x6WithoutYCbCrSampler: Bool) {
+    public init(formatRgba10x6WithoutYCbCrSampler: Bool = false) {
         self.formatRgba10x6WithoutYCbCrSampler = formatRgba10x6WithoutYCbCrSampler
     }
 
@@ -36183,7 +36183,7 @@ public struct PhysicalDeviceDynamicRenderingFeatures: ChainableBase, PhysicalDev
 
     public let dynamicRendering: Bool
 
-    public init(dynamicRendering: Bool) {
+    public init(dynamicRendering: Bool = false) {
         self.dynamicRendering = dynamicRendering
     }
 
@@ -36329,7 +36329,7 @@ public struct PhysicalDeviceImageViewMinLodFeaturesEXT: ChainableBase, PhysicalD
 
     public let minLod: Bool
 
-    public init(minLod: Bool) {
+    public init(minLod: Bool = false) {
         self.minLod = minLod
     }
 
@@ -36387,7 +36387,7 @@ public struct PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT: Chain
     public let rasterizationOrderDepthAttachmentAccess: Bool
     public let rasterizationOrderStencilAttachmentAccess: Bool
 
-    public init(rasterizationOrderColorAttachmentAccess: Bool, rasterizationOrderDepthAttachmentAccess: Bool, rasterizationOrderStencilAttachmentAccess: Bool) {
+    public init(rasterizationOrderColorAttachmentAccess: Bool = false, rasterizationOrderDepthAttachmentAccess: Bool = false, rasterizationOrderStencilAttachmentAccess: Bool = false) {
         self.rasterizationOrderColorAttachmentAccess = rasterizationOrderColorAttachmentAccess
         self.rasterizationOrderDepthAttachmentAccess = rasterizationOrderDepthAttachmentAccess
         self.rasterizationOrderStencilAttachmentAccess = rasterizationOrderStencilAttachmentAccess
@@ -36421,7 +36421,7 @@ public struct PhysicalDeviceLinearColorAttachmentFeaturesNV: ChainableBase, Phys
 
     public let linearColorAttachment: Bool
 
-    public init(linearColorAttachment: Bool) {
+    public init(linearColorAttachment: Bool = false) {
         self.linearColorAttachment = linearColorAttachment
     }
 
@@ -36449,7 +36449,7 @@ public struct PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT: ChainableBase, P
 
     public let graphicsPipelineLibrary: Bool
 
-    public init(graphicsPipelineLibrary: Bool) {
+    public init(graphicsPipelineLibrary: Bool = false) {
         self.graphicsPipelineLibrary = graphicsPipelineLibrary
     }
 
@@ -36477,7 +36477,7 @@ public struct PhysicalDevicePipelineBinaryFeaturesKHR: ChainableBase, PhysicalDe
 
     public let pipelineBinaries: Bool
 
-    public init(pipelineBinaries: Bool) {
+    public init(pipelineBinaries: Bool = false) {
         self.pipelineBinaries = pipelineBinaries
     }
 
@@ -36624,7 +36624,7 @@ public struct PhysicalDeviceDataGraphNeuralAcceleratorStatisticsFeaturesARM: Cha
 
     public let dataGraphNeuralAcceleratorStatistics: Bool
 
-    public init(dataGraphNeuralAcceleratorStatistics: Bool) {
+    public init(dataGraphNeuralAcceleratorStatistics: Bool = false) {
         self.dataGraphNeuralAcceleratorStatistics = dataGraphNeuralAcceleratorStatistics
     }
 
@@ -36708,7 +36708,7 @@ public struct PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE: ChainableBase
 
     public let descriptorSetHostMapping: Bool
 
-    public init(descriptorSetHostMapping: Bool) {
+    public init(descriptorSetHostMapping: Bool = false) {
         self.descriptorSetHostMapping = descriptorSetHostMapping
     }
 
@@ -36802,7 +36802,7 @@ public struct PhysicalDeviceNestedCommandBufferFeaturesEXT: ChainableBase, Physi
     public let nestedCommandBufferRendering: Bool
     public let nestedCommandBufferSimultaneousUse: Bool
 
-    public init(nestedCommandBuffer: Bool, nestedCommandBufferRendering: Bool, nestedCommandBufferSimultaneousUse: Bool) {
+    public init(nestedCommandBuffer: Bool = false, nestedCommandBufferRendering: Bool = false, nestedCommandBufferSimultaneousUse: Bool = false) {
         self.nestedCommandBuffer = nestedCommandBuffer
         self.nestedCommandBufferRendering = nestedCommandBufferRendering
         self.nestedCommandBufferSimultaneousUse = nestedCommandBufferSimultaneousUse
@@ -36860,7 +36860,7 @@ public struct PhysicalDeviceShaderModuleIdentifierFeaturesEXT: ChainableBase, Ph
 
     public let shaderModuleIdentifier: Bool
 
-    public init(shaderModuleIdentifier: Bool) {
+    public init(shaderModuleIdentifier: Bool = false) {
         self.shaderModuleIdentifier = shaderModuleIdentifier
     }
 
@@ -37006,7 +37006,7 @@ public struct PhysicalDeviceImageCompressionControlFeaturesEXT: ChainableBase, P
 
     public let imageCompressionControl: Bool
 
-    public init(imageCompressionControl: Bool) {
+    public init(imageCompressionControl: Bool = false) {
         self.imageCompressionControl = imageCompressionControl
     }
 
@@ -37061,7 +37061,7 @@ public struct PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT: Chainab
 
     public let imageCompressionControlSwapchain: Bool
 
-    public init(imageCompressionControlSwapchain: Bool) {
+    public init(imageCompressionControlSwapchain: Bool = false) {
         self.imageCompressionControlSwapchain = imageCompressionControlSwapchain
     }
 
@@ -37267,7 +37267,7 @@ public struct PhysicalDeviceSubpassMergeFeedbackFeaturesEXT: ChainableBase, Phys
 
     public let subpassMergeFeedback: Bool
 
-    public init(subpassMergeFeedback: Bool) {
+    public init(subpassMergeFeedback: Bool = false) {
         self.subpassMergeFeedback = subpassMergeFeedback
     }
 
@@ -37717,7 +37717,7 @@ public struct PhysicalDeviceOpacityMicromapFeaturesKHR: ChainableBase, PhysicalD
 
     public let micromap: Bool
 
-    public init(micromap: Bool) {
+    public init(micromap: Bool = false) {
         self.micromap = micromap
     }
 
@@ -37747,7 +37747,7 @@ public struct PhysicalDeviceOpacityMicromapFeaturesEXT: ChainableBase, PhysicalD
     public let micromapCaptureReplay: Bool
     public let micromapHostCommands: Bool
 
-    public init(micromap: Bool, micromapCaptureReplay: Bool, micromapHostCommands: Bool) {
+    public init(micromap: Bool = false, micromapCaptureReplay: Bool = false, micromapHostCommands: Bool = false) {
         self.micromap = micromap
         self.micromapCaptureReplay = micromapCaptureReplay
         self.micromapHostCommands = micromapHostCommands
@@ -37943,7 +37943,7 @@ public struct PhysicalDeviceDisplacementMicromapFeaturesNV: ChainableBase, Physi
 
     public let displacementMicromap: Bool
 
-    public init(displacementMicromap: Bool) {
+    public init(displacementMicromap: Bool = false) {
         self.displacementMicromap = displacementMicromap
     }
 
@@ -38113,7 +38113,7 @@ public struct PhysicalDevicePipelinePropertiesFeaturesEXT: ChainableBase, Physic
 
     public let pipelinePropertiesIdentifier: Bool
 
-    public init(pipelinePropertiesIdentifier: Bool) {
+    public init(pipelinePropertiesIdentifier: Bool = false) {
         self.pipelinePropertiesIdentifier = pipelinePropertiesIdentifier
     }
 
@@ -38141,7 +38141,7 @@ public struct PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD: Chainabl
 
     public let shaderEarlyAndLateFragmentTests: Bool
 
-    public init(shaderEarlyAndLateFragmentTests: Bool) {
+    public init(shaderEarlyAndLateFragmentTests: Bool = false) {
         self.shaderEarlyAndLateFragmentTests = shaderEarlyAndLateFragmentTests
     }
 
@@ -38593,7 +38593,7 @@ public struct PhysicalDeviceNonSeamlessCubeMapFeaturesEXT: ChainableBase, Physic
 
     public let nonSeamlessCubeMap: Bool
 
-    public init(nonSeamlessCubeMap: Bool) {
+    public init(nonSeamlessCubeMap: Bool = false) {
         self.nonSeamlessCubeMap = nonSeamlessCubeMap
     }
 
@@ -38621,7 +38621,7 @@ public struct PhysicalDevicePipelineRobustnessFeatures: ChainableBase, PhysicalD
 
     public let pipelineRobustness: Bool
 
-    public init(pipelineRobustness: Bool) {
+    public init(pipelineRobustness: Bool = false) {
         self.pipelineRobustness = pipelineRobustness
     }
 
@@ -38762,7 +38762,7 @@ public struct PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM: ChainableBase,
 
     public let shaderMultipleWaitQueues: Bool
 
-    public init(shaderMultipleWaitQueues: Bool) {
+    public init(shaderMultipleWaitQueues: Bool = false) {
         self.shaderMultipleWaitQueues = shaderMultipleWaitQueues
     }
 
@@ -38816,7 +38816,7 @@ public struct PhysicalDeviceImageProcessingFeaturesQCOM: ChainableBase, Physical
     public let textureBoxFilter: Bool
     public let textureBlockMatch: Bool
 
-    public init(textureSampleWeighted: Bool, textureBoxFilter: Bool, textureBlockMatch: Bool) {
+    public init(textureSampleWeighted: Bool = false, textureBoxFilter: Bool = false, textureBlockMatch: Bool = false) {
         self.textureSampleWeighted = textureSampleWeighted
         self.textureBoxFilter = textureBoxFilter
         self.textureBlockMatch = textureBlockMatch
@@ -38889,7 +38889,7 @@ public struct PhysicalDeviceTilePropertiesFeaturesQCOM: ChainableBase, PhysicalD
 
     public let tileProperties: Bool
 
-    public init(tileProperties: Bool) {
+    public init(tileProperties: Bool = false) {
         self.tileProperties = tileProperties
     }
 
@@ -38987,7 +38987,7 @@ public struct PhysicalDeviceAmigoProfilingFeaturesSEC: ChainableBase, PhysicalDe
 
     public let amigoProfiling: Bool
 
-    public init(amigoProfiling: Bool) {
+    public init(amigoProfiling: Bool = false) {
         self.amigoProfiling = amigoProfiling
     }
 
@@ -39047,7 +39047,7 @@ public struct PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT: ChainableBa
 
     public let attachmentFeedbackLoopLayout: Bool
 
-    public init(attachmentFeedbackLoopLayout: Bool) {
+    public init(attachmentFeedbackLoopLayout: Bool = false) {
         self.attachmentFeedbackLoopLayout = attachmentFeedbackLoopLayout
     }
 
@@ -39103,7 +39103,7 @@ public struct PhysicalDeviceAddressBindingReportFeaturesEXT: ChainableBase, Phys
 
     public let reportAddressBinding: Bool
 
-    public init(reportAddressBinding: Bool) {
+    public init(reportAddressBinding: Bool = false) {
         self.reportAddressBinding = reportAddressBinding
     }
 
@@ -39235,7 +39235,7 @@ public struct PhysicalDeviceOpticalFlowFeaturesNV: ChainableBase, PhysicalDevice
 
     public let opticalFlow: Bool
 
-    public init(opticalFlow: Bool) {
+    public init(opticalFlow: Bool = false) {
         self.opticalFlow = opticalFlow
     }
 
@@ -39501,7 +39501,7 @@ public struct PhysicalDeviceFaultFeaturesEXT: ChainableBase, PhysicalDeviceFeatu
     public let deviceFault: Bool
     public let deviceFaultVendorBinary: Bool
 
-    public init(deviceFault: Bool, deviceFaultVendorBinary: Bool) {
+    public init(deviceFault: Bool = false, deviceFaultVendorBinary: Bool = false) {
         self.deviceFault = deviceFault
         self.deviceFaultVendorBinary = deviceFaultVendorBinary
     }
@@ -39780,7 +39780,7 @@ public struct PhysicalDeviceFaultFeaturesKHR: ChainableBase, PhysicalDeviceFeatu
     public let deviceFaultReportMasked: Bool
     public let deviceFaultDeviceLostOnMasked: Bool
 
-    public init(deviceFault: Bool, deviceFaultVendorBinary: Bool, deviceFaultReportMasked: Bool, deviceFaultDeviceLostOnMasked: Bool) {
+    public init(deviceFault: Bool = false, deviceFaultVendorBinary: Bool = false, deviceFaultReportMasked: Bool = false, deviceFaultDeviceLostOnMasked: Bool = false) {
         self.deviceFault = deviceFault
         self.deviceFaultVendorBinary = deviceFaultVendorBinary
         self.deviceFaultReportMasked = deviceFaultReportMasked
@@ -39841,7 +39841,7 @@ public struct PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT: ChainableBas
 
     public let pipelineLibraryGroupHandles: Bool
 
-    public init(pipelineLibraryGroupHandles: Bool) {
+    public init(pipelineLibraryGroupHandles: Bool = false) {
         self.pipelineLibraryGroupHandles = pipelineLibraryGroupHandles
     }
 
@@ -40070,7 +40070,7 @@ public struct PhysicalDeviceShaderCoreBuiltinsFeaturesARM: ChainableBase, Physic
 
     public let shaderCoreBuiltins: Bool
 
-    public init(shaderCoreBuiltins: Bool) {
+    public init(shaderCoreBuiltins: Bool = false) {
         self.shaderCoreBuiltins = shaderCoreBuiltins
     }
 
@@ -40156,7 +40156,7 @@ public struct PhysicalDeviceFrameBoundaryFeaturesEXT: ChainableBase, PhysicalDev
 
     public let frameBoundary: Bool
 
-    public init(frameBoundary: Bool) {
+    public init(frameBoundary: Bool = false) {
         self.frameBoundary = frameBoundary
     }
 
@@ -40184,7 +40184,7 @@ public struct PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT: Chaina
 
     public let dynamicRenderingUnusedAttachments: Bool
 
-    public init(dynamicRenderingUnusedAttachments: Bool) {
+    public init(dynamicRenderingUnusedAttachments: Bool = false) {
         self.dynamicRenderingUnusedAttachments = dynamicRenderingUnusedAttachments
     }
 
@@ -40212,7 +40212,7 @@ public struct PhysicalDeviceInternallySynchronizedQueuesFeaturesKHR: ChainableBa
 
     public let internallySynchronizedQueues: Bool
 
-    public init(internallySynchronizedQueues: Bool) {
+    public init(internallySynchronizedQueues: Bool = false) {
         self.internallySynchronizedQueues = internallySynchronizedQueues
     }
 
@@ -40348,7 +40348,7 @@ public struct PhysicalDeviceSwapchainMaintenance1FeaturesKHR: ChainableBase, Phy
 
     public let swapchainMaintenance1: Bool
 
-    public init(swapchainMaintenance1: Bool) {
+    public init(swapchainMaintenance1: Bool = false) {
         self.swapchainMaintenance1 = swapchainMaintenance1
     }
 
@@ -40543,7 +40543,7 @@ public struct PhysicalDeviceDepthBiasControlFeaturesEXT: ChainableBase, Physical
     public let floatRepresentation: Bool
     public let depthBiasExact: Bool
 
-    public init(depthBiasControl: Bool, leastRepresentableValueForceUnormRepresentation: Bool, floatRepresentation: Bool, depthBiasExact: Bool) {
+    public init(depthBiasControl: Bool = false, leastRepresentableValueForceUnormRepresentation: Bool = false, floatRepresentation: Bool = false, depthBiasExact: Bool = false) {
         self.depthBiasControl = depthBiasControl
         self.leastRepresentableValueForceUnormRepresentation = leastRepresentableValueForceUnormRepresentation
         self.floatRepresentation = floatRepresentation
@@ -40580,7 +40580,7 @@ public struct PhysicalDeviceRayTracingInvocationReorderFeaturesEXT: ChainableBas
 
     public let rayTracingInvocationReorder: Bool
 
-    public init(rayTracingInvocationReorder: Bool) {
+    public init(rayTracingInvocationReorder: Bool = false) {
         self.rayTracingInvocationReorder = rayTracingInvocationReorder
     }
 
@@ -40608,7 +40608,7 @@ public struct PhysicalDeviceRayTracingInvocationReorderFeaturesNV: ChainableBase
 
     public let rayTracingInvocationReorder: Bool
 
-    public init(rayTracingInvocationReorder: Bool) {
+    public init(rayTracingInvocationReorder: Bool = false) {
         self.rayTracingInvocationReorder = rayTracingInvocationReorder
     }
 
@@ -40687,7 +40687,7 @@ public struct PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV: ChainableBase,
 
     public let extendedSparseAddressSpace: Bool
 
-    public init(extendedSparseAddressSpace: Bool) {
+    public init(extendedSparseAddressSpace: Bool = false) {
         self.extendedSparseAddressSpace = extendedSparseAddressSpace
     }
 
@@ -40812,7 +40812,7 @@ public struct PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM: ChainableBase
 
     public let multiviewPerViewViewports: Bool
 
-    public init(multiviewPerViewViewports: Bool) {
+    public init(multiviewPerViewViewports: Bool = false) {
         self.multiviewPerViewViewports = multiviewPerViewViewports
     }
 
@@ -40840,7 +40840,7 @@ public struct PhysicalDeviceRayTracingPositionFetchFeaturesKHR: ChainableBase, P
 
     public let rayTracingPositionFetch: Bool
 
-    public init(rayTracingPositionFetch: Bool) {
+    public init(rayTracingPositionFetch: Bool = false) {
         self.rayTracingPositionFetch = rayTracingPositionFetch
     }
 
@@ -40934,7 +40934,7 @@ public struct PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM: ChainableBa
 
     public let multiviewPerViewRenderAreas: Bool
 
-    public init(multiviewPerViewRenderAreas: Bool) {
+    public init(multiviewPerViewRenderAreas: Bool = false) {
         self.multiviewPerViewRenderAreas = multiviewPerViewRenderAreas
     }
 
@@ -41093,7 +41093,7 @@ public struct PhysicalDeviceShaderObjectFeaturesEXT: ChainableBase, PhysicalDevi
 
     public let shaderObject: Bool
 
-    public init(shaderObject: Bool) {
+    public init(shaderObject: Bool = false) {
         self.shaderObject = shaderObject
     }
 
@@ -41224,7 +41224,7 @@ public struct PhysicalDeviceShaderTileImageFeaturesEXT: ChainableBase, PhysicalD
     public let shaderTileImageDepthReadAccess: Bool
     public let shaderTileImageStencilReadAccess: Bool
 
-    public init(shaderTileImageColorReadAccess: Bool, shaderTileImageDepthReadAccess: Bool, shaderTileImageStencilReadAccess: Bool) {
+    public init(shaderTileImageColorReadAccess: Bool = false, shaderTileImageDepthReadAccess: Bool = false, shaderTileImageStencilReadAccess: Bool = false) {
         self.shaderTileImageColorReadAccess = shaderTileImageColorReadAccess
         self.shaderTileImageDepthReadAccess = shaderTileImageDepthReadAccess
         self.shaderTileImageStencilReadAccess = shaderTileImageStencilReadAccess
@@ -41430,7 +41430,7 @@ public struct PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX: ChainableBase
 
     public let screenBufferImport: Bool
 
-    public init(screenBufferImport: Bool) {
+    public init(screenBufferImport: Bool = false) {
         self.screenBufferImport = screenBufferImport
     }
 
@@ -41460,7 +41460,7 @@ public struct PhysicalDeviceCooperativeMatrixFeaturesKHR: ChainableBase, Physica
     public let cooperativeMatrix: Bool
     public let cooperativeMatrixRobustBufferAccess: Bool
 
-    public init(cooperativeMatrix: Bool, cooperativeMatrixRobustBufferAccess: Bool) {
+    public init(cooperativeMatrix: Bool = false, cooperativeMatrixRobustBufferAccess: Bool = false) {
         self.cooperativeMatrix = cooperativeMatrix
         self.cooperativeMatrixRobustBufferAccess = cooperativeMatrixRobustBufferAccess
     }
@@ -41563,7 +41563,7 @@ public struct PhysicalDeviceCooperativeMatrixConversionFeaturesQCOM: ChainableBa
 
     public let cooperativeMatrixConversion: Bool
 
-    public init(cooperativeMatrixConversion: Bool) {
+    public init(cooperativeMatrixConversion: Bool = false) {
         self.cooperativeMatrixConversion = cooperativeMatrixConversion
     }
 
@@ -41637,7 +41637,7 @@ public struct PhysicalDeviceShaderEnqueueFeaturesAMDX: ChainableBase, PhysicalDe
     public let shaderEnqueue: Bool
     public let shaderMeshEnqueue: Bool
 
-    public init(shaderEnqueue: Bool, shaderMeshEnqueue: Bool) {
+    public init(shaderEnqueue: Bool = false, shaderMeshEnqueue: Bool = false) {
         self.shaderEnqueue = shaderEnqueue
         self.shaderMeshEnqueue = shaderMeshEnqueue
     }
@@ -41862,7 +41862,7 @@ public struct PhysicalDeviceAntiLagFeaturesAMD: ChainableBase, PhysicalDeviceFea
 
     public let antiLag: Bool
 
-    public init(antiLag: Bool) {
+    public init(antiLag: Bool = false) {
         self.antiLag = antiLag
     }
 
@@ -41988,7 +41988,7 @@ public struct PhysicalDeviceTileMemoryHeapFeaturesQCOM: ChainableBase, PhysicalD
 
     public let tileMemoryHeap: Bool
 
-    public init(tileMemoryHeap: Bool) {
+    public init(tileMemoryHeap: Bool = false) {
         self.tileMemoryHeap = tileMemoryHeap
     }
 
@@ -42370,7 +42370,7 @@ public struct PhysicalDeviceCubicClampFeaturesQCOM: ChainableBase, PhysicalDevic
 
     public let cubicRangeClamp: Bool
 
-    public init(cubicRangeClamp: Bool) {
+    public init(cubicRangeClamp: Bool = false) {
         self.cubicRangeClamp = cubicRangeClamp
     }
 
@@ -42398,7 +42398,7 @@ public struct PhysicalDeviceYcbcrDegammaFeaturesQCOM: ChainableBase, PhysicalDev
 
     public let ycbcrDegamma: Bool
 
-    public init(ycbcrDegamma: Bool) {
+    public init(ycbcrDegamma: Bool = false) {
         self.ycbcrDegamma = ycbcrDegamma
     }
 
@@ -42458,7 +42458,7 @@ public struct PhysicalDeviceCubicWeightsFeaturesQCOM: ChainableBase, PhysicalDev
 
     public let selectableCubicWeights: Bool
 
-    public init(selectableCubicWeights: Bool) {
+    public init(selectableCubicWeights: Bool = false) {
         self.selectableCubicWeights = selectableCubicWeights
     }
 
@@ -42542,7 +42542,7 @@ public struct PhysicalDeviceImageProcessing2FeaturesQCOM: ChainableBase, Physica
 
     public let textureBlockMatch2: Bool
 
-    public init(textureBlockMatch2: Bool) {
+    public init(textureBlockMatch2: Bool = false) {
         self.textureBlockMatch2 = textureBlockMatch2
     }
 
@@ -42632,7 +42632,7 @@ public struct PhysicalDeviceImageProcessing3FeaturesQCOM: ChainableBase, Physica
     public let imageGatherExtendedModes: Bool
     public let blockMatchExtendedClampToEdge: Bool
 
-    public init(imageGatherLinear: Bool, imageGatherExtendedModes: Bool, blockMatchExtendedClampToEdge: Bool) {
+    public init(imageGatherLinear: Bool = false, imageGatherExtendedModes: Bool = false, blockMatchExtendedClampToEdge: Bool = false) {
         self.imageGatherLinear = imageGatherLinear
         self.imageGatherExtendedModes = imageGatherExtendedModes
         self.blockMatchExtendedClampToEdge = blockMatchExtendedClampToEdge
@@ -42666,7 +42666,7 @@ public struct PhysicalDeviceDescriptorPoolOverallocationFeaturesNV: ChainableBas
 
     public let descriptorPoolOverallocation: Bool
 
-    public init(descriptorPoolOverallocation: Bool) {
+    public init(descriptorPoolOverallocation: Bool = false) {
         self.descriptorPoolOverallocation = descriptorPoolOverallocation
     }
 
@@ -42719,7 +42719,7 @@ public struct PhysicalDevicePerStageDescriptorSetFeaturesNV: ChainableBase, Phys
     public let perStageDescriptorSet: Bool
     public let dynamicPipelineLayout: Bool
 
-    public init(perStageDescriptorSet: Bool, dynamicPipelineLayout: Bool) {
+    public init(perStageDescriptorSet: Bool = false, dynamicPipelineLayout: Bool = false) {
         self.perStageDescriptorSet = perStageDescriptorSet
         self.dynamicPipelineLayout = dynamicPipelineLayout
     }
@@ -42751,7 +42751,7 @@ public struct PhysicalDeviceExternalFormatResolveFeaturesANDROID: ChainableBase,
 
     public let externalFormatResolve: Bool
 
-    public init(externalFormatResolve: Bool) {
+    public init(externalFormatResolve: Bool = false) {
         self.externalFormatResolve = externalFormatResolve
     }
 
@@ -43150,7 +43150,7 @@ public struct PhysicalDeviceCudaKernelLaunchFeaturesNV: ChainableBase, PhysicalD
 
     public let cudaKernelLaunchFeatures: Bool
 
-    public init(cudaKernelLaunchFeatures: Bool) {
+    public init(cudaKernelLaunchFeatures: Bool = false) {
         self.cudaKernelLaunchFeatures = cudaKernelLaunchFeatures
     }
 
@@ -43236,7 +43236,7 @@ public struct PhysicalDeviceSchedulingControlsFeaturesARM: ChainableBase, Physic
 
     public let schedulingControls: Bool
 
-    public init(schedulingControls: Bool) {
+    public init(schedulingControls: Bool = false) {
         self.schedulingControls = schedulingControls
     }
 
@@ -43354,7 +43354,7 @@ public struct PhysicalDeviceRelaxedLineRasterizationFeaturesIMG: ChainableBase, 
 
     public let relaxedLineRasterization: Bool
 
-    public init(relaxedLineRasterization: Bool) {
+    public init(relaxedLineRasterization: Bool = false) {
         self.relaxedLineRasterization = relaxedLineRasterization
     }
 
@@ -43382,7 +43382,7 @@ public struct PhysicalDeviceRenderPassStripedFeaturesARM: ChainableBase, Physica
 
     public let renderPassStriped: Bool
 
-    public init(renderPassStriped: Bool) {
+    public init(renderPassStriped: Bool = false) {
         self.renderPassStriped = renderPassStriped
     }
 
@@ -43531,7 +43531,7 @@ public struct PhysicalDevicePipelineOpacityMicromapFeaturesARM: ChainableBase, P
 
     public let pipelineOpacityMicromap: Bool
 
-    public init(pipelineOpacityMicromap: Bool) {
+    public init(pipelineOpacityMicromap: Bool = false) {
         self.pipelineOpacityMicromap = pipelineOpacityMicromap
     }
 
@@ -43559,7 +43559,7 @@ public struct PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR: ChainableBase
 
     public let shaderMaximalReconvergence: Bool
 
-    public init(shaderMaximalReconvergence: Bool) {
+    public init(shaderMaximalReconvergence: Bool = false) {
         self.shaderMaximalReconvergence = shaderMaximalReconvergence
     }
 
@@ -43588,7 +43588,7 @@ public struct PhysicalDeviceShaderSubgroupRotateFeatures: ChainableBase, Physica
     public let shaderSubgroupRotate: Bool
     public let shaderSubgroupRotateClustered: Bool
 
-    public init(shaderSubgroupRotate: Bool, shaderSubgroupRotateClustered: Bool) {
+    public init(shaderSubgroupRotate: Bool = false, shaderSubgroupRotateClustered: Bool = false) {
         self.shaderSubgroupRotate = shaderSubgroupRotate
         self.shaderSubgroupRotateClustered = shaderSubgroupRotateClustered
     }
@@ -43619,7 +43619,7 @@ public struct PhysicalDeviceShaderExpectAssumeFeatures: ChainableBase, PhysicalD
 
     public let shaderExpectAssume: Bool
 
-    public init(shaderExpectAssume: Bool) {
+    public init(shaderExpectAssume: Bool = false) {
         self.shaderExpectAssume = shaderExpectAssume
     }
 
@@ -43647,7 +43647,7 @@ public struct PhysicalDeviceShaderFloatControls2Features: ChainableBase, Physica
 
     public let shaderFloatControls2: Bool
 
-    public init(shaderFloatControls2: Bool) {
+    public init(shaderFloatControls2: Bool = false) {
         self.shaderFloatControls2 = shaderFloatControls2
     }
 
@@ -43675,7 +43675,7 @@ public struct PhysicalDeviceDynamicRenderingLocalReadFeatures: ChainableBase, Ph
 
     public let dynamicRenderingLocalRead: Bool
 
-    public init(dynamicRenderingLocalRead: Bool) {
+    public init(dynamicRenderingLocalRead: Bool = false) {
         self.dynamicRenderingLocalRead = dynamicRenderingLocalRead
     }
 
@@ -43773,7 +43773,7 @@ public struct PhysicalDeviceShaderQuadControlFeaturesKHR: ChainableBase, Physica
 
     public let shaderQuadControl: Bool
 
-    public init(shaderQuadControl: Bool) {
+    public init(shaderQuadControl: Bool = false) {
         self.shaderQuadControl = shaderQuadControl
     }
 
@@ -43801,7 +43801,7 @@ public struct PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV: ChainableBase, 
 
     public let shaderFloat16VectorAtomics: Bool
 
-    public init(shaderFloat16VectorAtomics: Bool) {
+    public init(shaderFloat16VectorAtomics: Bool = false) {
         self.shaderFloat16VectorAtomics = shaderFloat16VectorAtomics
     }
 
@@ -43831,7 +43831,7 @@ public struct PhysicalDeviceMapMemoryPlacedFeaturesEXT: ChainableBase, PhysicalD
     public let memoryMapRangePlaced: Bool
     public let memoryUnmapReserve: Bool
 
-    public init(memoryMapPlaced: Bool, memoryMapRangePlaced: Bool, memoryUnmapReserve: Bool) {
+    public init(memoryMapPlaced: Bool = false, memoryMapRangePlaced: Bool = false, memoryUnmapReserve: Bool = false) {
         self.memoryMapPlaced = memoryMapPlaced
         self.memoryMapRangePlaced = memoryMapRangePlaced
         self.memoryUnmapReserve = memoryUnmapReserve
@@ -43919,7 +43919,7 @@ public struct PhysicalDeviceShaderBfloat16FeaturesKHR: ChainableBase, PhysicalDe
     public let shaderBFloat16DotProduct: Bool
     public let shaderBFloat16CooperativeMatrix: Bool
 
-    public init(shaderBFloat16Type: Bool, shaderBFloat16DotProduct: Bool, shaderBFloat16CooperativeMatrix: Bool) {
+    public init(shaderBFloat16Type: Bool = false, shaderBFloat16DotProduct: Bool = false, shaderBFloat16CooperativeMatrix: Bool = false) {
         self.shaderBFloat16Type = shaderBFloat16Type
         self.shaderBFloat16DotProduct = shaderBFloat16DotProduct
         self.shaderBFloat16CooperativeMatrix = shaderBFloat16CooperativeMatrix
@@ -43953,7 +43953,7 @@ public struct PhysicalDeviceRawAccessChainsFeaturesNV: ChainableBase, PhysicalDe
 
     public let shaderRawAccessChains: Bool
 
-    public init(shaderRawAccessChains: Bool) {
+    public init(shaderRawAccessChains: Bool = false) {
         self.shaderRawAccessChains = shaderRawAccessChains
     }
 
@@ -43981,7 +43981,7 @@ public struct PhysicalDeviceCommandBufferInheritanceFeaturesNV: ChainableBase, P
 
     public let commandBufferInheritance: Bool
 
-    public init(commandBufferInheritance: Bool) {
+    public init(commandBufferInheritance: Bool = false) {
         self.commandBufferInheritance = commandBufferInheritance
     }
 
@@ -44009,7 +44009,7 @@ public struct PhysicalDeviceImageAlignmentControlFeaturesMESA: ChainableBase, Ph
 
     public let imageAlignmentControl: Bool
 
-    public init(imageAlignmentControl: Bool) {
+    public init(imageAlignmentControl: Bool = false) {
         self.imageAlignmentControl = imageAlignmentControl
     }
 
@@ -44089,7 +44089,7 @@ public struct PhysicalDeviceShaderReplicatedCompositesFeaturesEXT: ChainableBase
 
     public let shaderReplicatedComposites: Bool
 
-    public init(shaderReplicatedComposites: Bool) {
+    public init(shaderReplicatedComposites: Bool = false) {
         self.shaderReplicatedComposites = shaderReplicatedComposites
     }
 
@@ -44117,7 +44117,7 @@ public struct PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR: ChainableBase
 
     public let presentModeFifoLatestReady: Bool
 
-    public init(presentModeFifoLatestReady: Bool) {
+    public init(presentModeFifoLatestReady: Bool = false) {
         self.presentModeFifoLatestReady = presentModeFifoLatestReady
     }
 
@@ -44151,7 +44151,7 @@ public struct PhysicalDeviceCooperativeMatrix2FeaturesNV: ChainableBase, Physica
     public let cooperativeMatrixTensorAddressing: Bool
     public let cooperativeMatrixBlockLoads: Bool
 
-    public init(cooperativeMatrixWorkgroupScope: Bool, cooperativeMatrixFlexibleDimensions: Bool, cooperativeMatrixReductions: Bool, cooperativeMatrixConversions: Bool, cooperativeMatrixPerElementOperations: Bool, cooperativeMatrixTensorAddressing: Bool, cooperativeMatrixBlockLoads: Bool) {
+    public init(cooperativeMatrixWorkgroupScope: Bool = false, cooperativeMatrixFlexibleDimensions: Bool = false, cooperativeMatrixReductions: Bool = false, cooperativeMatrixConversions: Bool = false, cooperativeMatrixPerElementOperations: Bool = false, cooperativeMatrixTensorAddressing: Bool = false, cooperativeMatrixBlockLoads: Bool = false) {
         self.cooperativeMatrixWorkgroupScope = cooperativeMatrixWorkgroupScope
         self.cooperativeMatrixFlexibleDimensions = cooperativeMatrixFlexibleDimensions
         self.cooperativeMatrixReductions = cooperativeMatrixReductions
@@ -44278,7 +44278,7 @@ public struct PhysicalDeviceHdrVividFeaturesHUAWEI: ChainableBase, PhysicalDevic
 
     public let hdrVivid: Bool
 
-    public init(hdrVivid: Bool) {
+    public init(hdrVivid: Bool = false) {
         self.hdrVivid = hdrVivid
     }
 
@@ -44306,7 +44306,7 @@ public struct PhysicalDeviceVertexAttributeRobustnessFeaturesEXT: ChainableBase,
 
     public let vertexAttributeRobustness: Bool
 
-    public init(vertexAttributeRobustness: Bool) {
+    public init(vertexAttributeRobustness: Bool = false) {
         self.vertexAttributeRobustness = vertexAttributeRobustness
     }
 
@@ -44335,7 +44335,7 @@ public struct PhysicalDeviceDenseGeometryFormatFeaturesAMDX: ChainableBase, Phys
 
     public let denseGeometryFormat: Bool
 
-    public init(denseGeometryFormat: Bool) {
+    public init(denseGeometryFormat: Bool = false) {
         self.denseGeometryFormat = denseGeometryFormat
     }
 
@@ -44418,7 +44418,7 @@ public struct PhysicalDeviceDepthClampZeroOneFeaturesKHR: ChainableBase, Physica
 
     public let depthClampZeroOne: Bool
 
-    public init(depthClampZeroOne: Bool) {
+    public init(depthClampZeroOne: Bool = false) {
         self.depthClampZeroOne = depthClampZeroOne
     }
 
@@ -44447,7 +44447,7 @@ public struct PhysicalDeviceCooperativeVectorFeaturesNV: ChainableBase, Physical
     public let cooperativeVector: Bool
     public let cooperativeVectorTraining: Bool
 
-    public init(cooperativeVector: Bool, cooperativeVectorTraining: Bool) {
+    public init(cooperativeVector: Bool = false, cooperativeVectorTraining: Bool = false) {
         self.cooperativeVector = cooperativeVector
         self.cooperativeVectorTraining = cooperativeVectorTraining
     }
@@ -44644,7 +44644,7 @@ public struct PhysicalDeviceTileShadingFeaturesQCOM: ChainableBase, PhysicalDevi
     public let tileShadingAtomicOps: Bool
     public let tileShadingImageProcessing: Bool
 
-    public init(tileShading: Bool, tileShadingFragmentStage: Bool, tileShadingColorAttachments: Bool, tileShadingDepthAttachments: Bool, tileShadingStencilAttachments: Bool, tileShadingInputAttachments: Bool, tileShadingSampledAttachments: Bool, tileShadingPerTileDraw: Bool, tileShadingPerTileDispatch: Bool, tileShadingDispatchTile: Bool, tileShadingApron: Bool, tileShadingAnisotropicApron: Bool, tileShadingAtomicOps: Bool, tileShadingImageProcessing: Bool) {
+    public init(tileShading: Bool = false, tileShadingFragmentStage: Bool = false, tileShadingColorAttachments: Bool = false, tileShadingDepthAttachments: Bool = false, tileShadingStencilAttachments: Bool = false, tileShadingInputAttachments: Bool = false, tileShadingSampledAttachments: Bool = false, tileShadingPerTileDraw: Bool = false, tileShadingPerTileDispatch: Bool = false, tileShadingDispatchTile: Bool = false, tileShadingApron: Bool = false, tileShadingAnisotropicApron: Bool = false, tileShadingAtomicOps: Bool = false, tileShadingImageProcessing: Bool = false) {
         self.tileShading = tileShading
         self.tileShadingFragmentStage = tileShadingFragmentStage
         self.tileShadingColorAttachments = tileShadingColorAttachments
@@ -44878,7 +44878,7 @@ public struct PhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE: ChainableBas
 
     public let fragmentDensityMapLayered: Bool
 
-    public init(fragmentDensityMapLayered: Bool) {
+    public init(fragmentDensityMapLayered: Bool = false) {
         self.fragmentDensityMapLayered = fragmentDensityMapLayered
     }
 
@@ -44966,7 +44966,7 @@ public struct PhysicalDevicePresentMeteringFeaturesNV: ChainableBase, PhysicalDe
 
     public let presentMetering: Bool
 
-    public init(presentMetering: Bool) {
+    public init(presentMetering: Bool = false) {
         self.presentMetering = presentMetering
     }
 
@@ -45105,7 +45105,7 @@ public struct PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT: Chainabl
 
     public let shaderUniformBufferUnsizedArray: Bool
 
-    public init(shaderUniformBufferUnsizedArray: Bool) {
+    public init(shaderUniformBufferUnsizedArray: Bool = false) {
         self.shaderUniformBufferUnsizedArray = shaderUniformBufferUnsizedArray
     }
 
@@ -45136,7 +45136,7 @@ public struct PhysicalDeviceShaderMixedFloatDotProductFeaturesVALVE: ChainableBa
     public let shaderMixedFloatDotProductBFloat16Acc: Bool
     public let shaderMixedFloatDotProductFloat8AccFloat32: Bool
 
-    public init(shaderMixedFloatDotProductFloat16AccFloat32: Bool, shaderMixedFloatDotProductFloat16AccFloat16: Bool, shaderMixedFloatDotProductBFloat16Acc: Bool, shaderMixedFloatDotProductFloat8AccFloat32: Bool) {
+    public init(shaderMixedFloatDotProductFloat16AccFloat32: Bool = false, shaderMixedFloatDotProductFloat16AccFloat16: Bool = false, shaderMixedFloatDotProductBFloat16Acc: Bool = false, shaderMixedFloatDotProductFloat8AccFloat32: Bool = false) {
         self.shaderMixedFloatDotProductFloat16AccFloat32 = shaderMixedFloatDotProductFloat16AccFloat32
         self.shaderMixedFloatDotProductFloat16AccFloat16 = shaderMixedFloatDotProductFloat16AccFloat16
         self.shaderMixedFloatDotProductBFloat16Acc = shaderMixedFloatDotProductBFloat16Acc
@@ -45173,7 +45173,7 @@ public struct PhysicalDevicePrimitiveRestartIndexFeaturesEXT: ChainableBase, Phy
 
     public let primitiveRestartIndex: Bool
 
-    public init(primitiveRestartIndex: Bool) {
+    public init(primitiveRestartIndex: Bool = false) {
         self.primitiveRestartIndex = primitiveRestartIndex
     }
 
@@ -45201,7 +45201,7 @@ public struct PhysicalDeviceFormatPackFeaturesARM: ChainableBase, PhysicalDevice
 
     public let formatPack: Bool
 
-    public init(formatPack: Bool) {
+    public init(formatPack: Bool = false) {
         self.formatPack = formatPack
     }
 
@@ -45229,7 +45229,7 @@ public struct PhysicalDeviceThrottleHintFeaturesSEC: ChainableBase, PhysicalDevi
 
     public let throttleHint: Bool
 
-    public init(throttleHint: Bool) {
+    public init(throttleHint: Bool = false) {
         self.throttleHint = throttleHint
     }
 
@@ -45685,7 +45685,7 @@ public struct PhysicalDeviceTensorFeaturesARM: ChainableBase, PhysicalDeviceFeat
     public let descriptorBindingStorageTensorUpdateAfterBind: Bool
     public let tensors: Bool
 
-    public init(tensorNonPacked: Bool, shaderTensorAccess: Bool, shaderStorageTensorArrayDynamicIndexing: Bool, shaderStorageTensorArrayNonUniformIndexing: Bool, descriptorBindingStorageTensorUpdateAfterBind: Bool, tensors: Bool) {
+    public init(tensorNonPacked: Bool = false, shaderTensorAccess: Bool = false, shaderStorageTensorArrayDynamicIndexing: Bool = false, shaderStorageTensorArrayNonUniformIndexing: Bool = false, descriptorBindingStorageTensorUpdateAfterBind: Bool = false, tensors: Bool = false) {
         self.tensorNonPacked = tensorNonPacked
         self.shaderTensorAccess = shaderTensorAccess
         self.shaderStorageTensorArrayDynamicIndexing = shaderStorageTensorArrayDynamicIndexing
@@ -45904,7 +45904,7 @@ public struct PhysicalDeviceDescriptorBufferTensorFeaturesARM: ChainableBase, Ph
 
     public let descriptorBufferTensorDescriptors: Bool
 
-    public init(descriptorBufferTensorDescriptors: Bool) {
+    public init(descriptorBufferTensorDescriptors: Bool = false) {
         self.descriptorBufferTensorDescriptors = descriptorBufferTensorDescriptors
     }
 
@@ -46144,7 +46144,7 @@ public struct PhysicalDeviceShaderFloat8FeaturesEXT: ChainableBase, PhysicalDevi
     public let shaderFloat8: Bool
     public let shaderFloat8CooperativeMatrix: Bool
 
-    public init(shaderFloat8: Bool, shaderFloat8CooperativeMatrix: Bool) {
+    public init(shaderFloat8: Bool = false, shaderFloat8CooperativeMatrix: Bool = false) {
         self.shaderFloat8 = shaderFloat8
         self.shaderFloat8CooperativeMatrix = shaderFloat8CooperativeMatrix
     }
@@ -46213,7 +46213,7 @@ public struct PhysicalDeviceDataGraphFeaturesARM: ChainableBase, PhysicalDeviceF
     public let dataGraphDescriptorBuffer: Bool
     public let dataGraphShaderModule: Bool
 
-    public init(dataGraph: Bool, dataGraphUpdateAfterBind: Bool, dataGraphSpecializationConstants: Bool, dataGraphDescriptorBuffer: Bool, dataGraphShaderModule: Bool) {
+    public init(dataGraph: Bool = false, dataGraphUpdateAfterBind: Bool = false, dataGraphSpecializationConstants: Bool = false, dataGraphDescriptorBuffer: Bool = false, dataGraphShaderModule: Bool = false) {
         self.dataGraph = dataGraph
         self.dataGraphUpdateAfterBind = dataGraphUpdateAfterBind
         self.dataGraphSpecializationConstants = dataGraphSpecializationConstants
@@ -46972,7 +46972,7 @@ public struct PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC: ChainableBa
 
     public let pipelineCacheIncrementalMode: Bool
 
-    public init(pipelineCacheIncrementalMode: Bool) {
+    public init(pipelineCacheIncrementalMode: Bool = false) {
         self.pipelineCacheIncrementalMode = pipelineCacheIncrementalMode
     }
 
@@ -47030,7 +47030,7 @@ public struct PhysicalDeviceDataGraphModelFeaturesQCOM: ChainableBase, PhysicalD
 
     public let dataGraphModel: Bool
 
-    public init(dataGraphModel: Bool) {
+    public init(dataGraphModel: Bool = false) {
         self.dataGraphModel = dataGraphModel
     }
 
@@ -47058,7 +47058,7 @@ public struct PhysicalDeviceShaderUntypedPointersFeaturesKHR: ChainableBase, Phy
 
     public let shaderUntypedPointers: Bool
 
-    public init(shaderUntypedPointers: Bool) {
+    public init(shaderUntypedPointers: Bool = false) {
         self.shaderUntypedPointers = shaderUntypedPointers
     }
 
@@ -47086,7 +47086,7 @@ public struct PhysicalDeviceVideoEncodeRgbConversionFeaturesVALVE: ChainableBase
 
     public let videoEncodeRgbConversion: Bool
 
-    public init(videoEncodeRgbConversion: Bool) {
+    public init(videoEncodeRgbConversion: Bool = false) {
         self.videoEncodeRgbConversion = videoEncodeRgbConversion
     }
 
@@ -47215,7 +47215,7 @@ public struct PhysicalDeviceShader64BitIndexingFeaturesEXT: ChainableBase, Physi
 
     public let shader64BitIndexing: Bool
 
-    public init(shader64BitIndexing: Bool) {
+    public init(shader64BitIndexing: Bool = false) {
         self.shader64BitIndexing = shader64BitIndexing
     }
 
@@ -47469,7 +47469,7 @@ public struct PhysicalDeviceQueuePerfHintFeaturesQCOM: ChainableBase, PhysicalDe
 
     public let queuePerfHint: Bool
 
-    public init(queuePerfHint: Bool) {
+    public init(queuePerfHint: Bool = false) {
         self.queuePerfHint = queuePerfHint
     }
 
@@ -47521,7 +47521,7 @@ public struct PhysicalDevicePerformanceCountersByRegionFeaturesARM: ChainableBas
 
     public let performanceCountersByRegion: Bool
 
-    public init(performanceCountersByRegion: Bool) {
+    public init(performanceCountersByRegion: Bool = false) {
         self.performanceCountersByRegion = performanceCountersByRegion
     }
 
@@ -47713,7 +47713,7 @@ public struct PhysicalDeviceComputeOccupancyPriorityFeaturesNV: ChainableBase, P
 
     public let computeOccupancyPriority: Bool
 
-    public init(computeOccupancyPriority: Bool) {
+    public init(computeOccupancyPriority: Bool = false) {
         self.computeOccupancyPriority = computeOccupancyPriority
     }
 
@@ -47741,7 +47741,7 @@ public struct PhysicalDeviceShaderLongVectorFeaturesEXT: ChainableBase, Physical
 
     public let longVector: Bool
 
-    public init(longVector: Bool) {
+    public init(longVector: Bool = false) {
         self.longVector = longVector
     }
 
@@ -47793,7 +47793,7 @@ public struct PhysicalDeviceTextureCompressionASTC3DFeaturesEXT: ChainableBase, 
 
     public let textureCompressionASTC_3D: Bool
 
-    public init(textureCompressionASTC_3D: Bool) {
+    public init(textureCompressionASTC_3D: Bool = false) {
         self.textureCompressionASTC_3D = textureCompressionASTC_3D
     }
 
@@ -47821,7 +47821,7 @@ public struct PhysicalDeviceShaderSubgroupPartitionedFeaturesEXT: ChainableBase,
 
     public let shaderSubgroupPartitioned: Bool
 
-    public init(shaderSubgroupPartitioned: Bool) {
+    public init(shaderSubgroupPartitioned: Bool = false) {
         self.shaderSubgroupPartitioned = shaderSubgroupPartitioned
     }
 
@@ -48588,7 +48588,7 @@ public struct PhysicalDeviceShaderSplitBarrierFeaturesEXT: ChainableBase, Physic
 
     public let shaderSplitBarrier: Bool
 
-    public init(shaderSplitBarrier: Bool) {
+    public init(shaderSplitBarrier: Bool = false) {
         self.shaderSplitBarrier = shaderSplitBarrier
     }
 
@@ -48641,7 +48641,7 @@ public struct PhysicalDeviceDescriptorHeapFeaturesEXT: ChainableBase, PhysicalDe
     public let descriptorHeap: Bool
     public let descriptorHeapCaptureReplay: Bool
 
-    public init(descriptorHeap: Bool, descriptorHeapCaptureReplay: Bool) {
+    public init(descriptorHeap: Bool = false, descriptorHeapCaptureReplay: Bool = false) {
         self.descriptorHeap = descriptorHeap
         self.descriptorHeapCaptureReplay = descriptorHeapCaptureReplay
     }
@@ -48816,7 +48816,7 @@ public struct PhysicalDeviceShaderInstrumentationFeaturesARM: ChainableBase, Phy
 
     public let shaderInstrumentation: Bool
 
-    public init(shaderInstrumentation: Bool) {
+    public init(shaderInstrumentation: Bool = false) {
         self.shaderInstrumentation = shaderInstrumentation
     }
 
@@ -49246,7 +49246,7 @@ public struct PhysicalDeviceDeviceAddressCommandsFeaturesKHR: ChainableBase, Phy
 
     public let deviceAddressCommands: Bool
 
-    public init(deviceAddressCommands: Bool) {
+    public init(deviceAddressCommands: Bool = false) {
         self.deviceAddressCommands = deviceAddressCommands
     }
 
@@ -49626,7 +49626,7 @@ public struct PhysicalDeviceShaderConstantDataFeaturesKHR: ChainableBase, Physic
 
     public let shaderConstantData: Bool
 
-    public init(shaderConstantData: Bool) {
+    public init(shaderConstantData: Bool = false) {
         self.shaderConstantData = shaderConstantData
     }
 
@@ -49654,7 +49654,7 @@ public struct PhysicalDeviceShaderAbortFeaturesKHR: ChainableBase, PhysicalDevic
 
     public let shaderAbort: Bool
 
-    public init(shaderAbort: Bool) {
+    public init(shaderAbort: Bool = false) {
         self.shaderAbort = shaderAbort
     }
 
@@ -49828,7 +49828,7 @@ public struct PhysicalDeviceDataGraphOpticalFlowFeaturesARM: ChainableBase, Phys
 
     public let dataGraphOpticalFlow: Bool
 
-    public init(dataGraphOpticalFlow: Bool) {
+    public init(dataGraphOpticalFlow: Bool = false) {
         self.dataGraphOpticalFlow = dataGraphOpticalFlow
     }
 

@@ -48,7 +48,6 @@ Swift-vulkan is a relatively new project, and there are still some important mil
 - fix parent class?
 - latexmath lenght 😭
 - use `MutableSpan` or `OutputSpan` for out array field in a struct + make it non escapable?
-
 - handle Chainable out param
     - discrete type: fill sType for out param
     - `Chainable<_>`: make it inout param
