@@ -1,5 +1,3 @@
-from __future__ import annotations
-from typing import Dict, Tuple, List
 from dataclasses import dataclass, field
 from string import Template
 
@@ -32,7 +30,7 @@ NUMERIC_TYPE = {
 }
 
 
-def _substitute(template: str, values: Dict[str, str], safe: bool = False):
+def _substitute(template: str, values: dict[str, str], safe: bool = False):
     if safe:
         return Template(template).safe_substitute(**values)
     else:
@@ -49,11 +47,11 @@ class Conversion:
     def requires_closure(self) -> bool:
         return self.c_closure_template is not None
 
-    def get_c_value(self, name: str, values: Dict[str, str] = None, safe: bool = False) -> str:
+    def get_c_value(self, name: str, values: dict[str, str] | None = None, safe: bool = False) -> str:
         value = values[name] if values is not None else name
         return _substitute(self.c_value_template, dict(name=name, value=value), safe=safe)
 
-    def get_c_closure(self, name: str, values: Dict[str, str] = None, safe: bool = False) -> Tuple[str, str]:
+    def get_c_closure(self, name: str, values: dict[str, str] | None = None, safe: bool = False) -> tuple[str, str]:
         value = values[name] if values is not None else name
         return (
             _substitute(self.c_closure_template[0], dict(
@@ -62,7 +60,7 @@ class Conversion:
                 name=name, value=value), safe=safe)
         )
 
-    def get_swift_value(self, name: str, values: Dict[str, str] = None, classes: Dict[str, str] = None,
+    def get_swift_value(self, name: str, values: dict[str, str] | None = None, classes: dict[str, str] | None = None,
                         safe: bool = False) -> str:
         value = values[name] if values is not None else name
         values = dict(name=name, value=value)
@@ -78,11 +76,11 @@ class ArrayConversion(Conversion):
     c_length_template: str
     swift_element_template: str | None = None
 
-    def get_c_length(self, name: str, values: Dict[str, str] = None, safe: bool = False) -> str:
+    def get_c_length(self, name: str, values: dict[str, str] | None = None, safe: bool = False) -> str:
         value = values[name] if values is not None else name
         return _substitute(self.c_length_template, dict(name=name, value=value), safe=safe)
 
-    def get_swift_value(self, name: str, values: Dict[str, str] = None, classes: Dict[str, str] = None,
+    def get_swift_value(self, name: str, values: dict[str, str] | None = None, classes: dict[str, str] | None = None,
                         safe: bool = False) -> str:
         value, length = (values[name], values[self.length]
                          ) if values is not None else (name, self.length)
@@ -92,7 +90,7 @@ class ArrayConversion(Conversion):
                           value in classes.items()})
         return _substitute(self.swift_value_template, values, safe=safe)
 
-    def get_swift_element_value(self, name: str, values: Dict[str, str] = None, classes: Dict[str, str] = None,
+    def get_swift_element_value(self, name: str, values: dict[str, str] | None = None, classes: dict[str, str] | None = None,
                                 safe: bool = False) -> str:
         value = values[name] if values is not None else name
         values = dict(name=name, value=value)
@@ -113,23 +111,23 @@ class MemberConversions:
     def add_static_value(self, c_member: str, value: str):
         self.static_values.append((c_member, value))
 
-    def get_swift_values(self, c_values: Dict[str, str], classes: Dict[str, str] = None) -> Dict[str, str]:
-        result: Dict[str, str] = {}
+    def get_swift_values(self, c_values: dict[str, str], classes: dict[str, str] = None) -> dict[str, str]:
+        result: dict[str, str] = {}
         for c_member, swift_member, conversion in self.conversions:
             result.setdefault(swift_member, conversion.get_swift_value(
                 c_member, c_values, classes))
         return result
 
-    def get_c_closures(self, swift_values: Dict[str, str]) -> List[Tuple[str, str]]:
-        result: List[Tuple[str, str]] = []
+    def get_c_closures(self, swift_values: dict[str, str]) -> list[tuple[str, str]]:
+        result: list[tuple[str, str]] = []
         for _, swift_member, conversion in self.conversions:
             if conversion.requires_closure:
                 result.append(conversion.get_c_closure(
                     swift_member, swift_values))
         return result
 
-    def get_c_values(self, swift_values: Dict[str, str]) -> Dict[str, str]:
-        result: Dict[str, str] = {}
+    def get_c_values(self, swift_values: dict[str, str]) -> dict[str, str]:
+        result: dict[str, str] = {}
         for c_member, swift_member, conversion in self.conversions:
             result.setdefault(c_member, conversion.get_c_value(
                 swift_member, swift_values))
@@ -195,7 +193,7 @@ char_array_conversion = Conversion(
 )
 
 
-def struct_conversion(swift_struct: str, parent_names: List[str] | None = None) -> Conversion:
+def struct_conversion(swift_struct: str, parent_names: list[str] | None = None) -> Conversion:
     swift_params = ['cStruct: $value']
     if parent_names:
         for name in parent_names:
@@ -207,7 +205,7 @@ def struct_conversion(swift_struct: str, parent_names: List[str] | None = None) 
     )
 
 
-def struct_pointer_conversion(swift_struct: str, parent_names: List[str] | None = None, chainable=False) -> Conversion:
+def struct_pointer_conversion(swift_struct: str, parent_names: list[str] | None = None, chainable=False) -> Conversion:
     swift_params = ['cStruct: $value.pointee']
     if parent_names:
         for name in parent_names:
@@ -219,7 +217,7 @@ def struct_pointer_conversion(swift_struct: str, parent_names: List[str] | None 
     )
 
 
-def optional_struct_conversion(swift_struct: str, parent_names: List[str] | None = None, chainable=False) -> Conversion:
+def optional_struct_conversion(swift_struct: str, parent_names: list[str] | None = None, chainable=False) -> Conversion:
     swift_params = ['cStruct: $value.pointee']
     if parent_names:
         for name in parent_names:
@@ -231,7 +229,7 @@ def optional_struct_conversion(swift_struct: str, parent_names: List[str] | None
     )
 
 
-def class_conversion(swift_class: str, parent_name: str = None) -> Conversion:
+def class_conversion(swift_class: str, parent_name: str | None = None) -> Conversion:
     class_params = f'handle: $value, {parent_name}: $cls_{parent_name}' if parent_name else 'handle: $value'
     return Conversion(
         swift_value_template=f'{swift_class}({class_params})',
@@ -239,7 +237,7 @@ def class_conversion(swift_class: str, parent_name: str = None) -> Conversion:
     )
 
 
-def optional_class_conversion(swift_class: str, parent_name: str = None) -> Conversion:
+def optional_class_conversion(swift_class: str, parent_name: str | None = None) -> Conversion:
     class_params = f'handle: $value, {parent_name}: $cls_{parent_name}' if parent_name else 'handle: $value'
     return Conversion(
         swift_value_template=f'($value != nil) ? {swift_class}({class_params}) : nil',
@@ -293,7 +291,7 @@ def string_array_conversion(length: str) -> ArrayConversion:
     )
 
 
-def struct_array_conversion(swift_struct: str, length: str, parent_names: List[str] | None = None) -> ArrayConversion:
+def struct_array_conversion(swift_struct: str, length: str, parent_names: list[str] | None = None) -> ArrayConversion:
     swift_params = ['cStruct: $$0']
     swift_element_params = ['cStruct: $value']
     if parent_names:
@@ -312,7 +310,7 @@ def struct_array_conversion(swift_struct: str, length: str, parent_names: List[s
     )
 
 
-def optional_struct_array_conversion(swift_struct: str, length: str, parent_names: List[str] | None = None) -> ArrayConversion:
+def optional_struct_array_conversion(swift_struct: str, length: str, parent_names: list[str] | None = None) -> ArrayConversion:
     swift_params = ['cStruct: $$0']
     if parent_names:
         for name in parent_names:

@@ -1,7 +1,5 @@
-from __future__ import annotations
-from xml.etree.ElementTree import ElementTree, parse
-from typing import List, Union, Dict, Optional
 import re
+from xml.etree.ElementTree import ElementTree, parse
 from itertools import zip_longest
 from dataclasses import dataclass, field
 
@@ -114,16 +112,16 @@ class CAlias:
 
 class CContext:
     def __init__(self) -> None:
-        self.platform_protects: Dict[str, str] = {}
-        self.extension_tags: List[str] = []
-        self.extensions: List[CExtension] = []
+        self.platform_protects: dict[str, str] = {}
+        self.extension_tags: list[str] = []
+        self.extensions: list[CExtension] = []
         self.features: list[CFeature] = []
-        self.handles: List[CHandle] = []
-        self.enums: List[CEnum] = []
-        self.bitmasks: List[CBitmask] = []
-        self.structs: List[CStruct] = []
-        self.commands: List[CCommand] = []
-        self.aliases: List[CAlias] = []
+        self.handles: list[CHandle] = []
+        self.enums: list[CEnum] = []
+        self.bitmasks: list[CBitmask] = []
+        self.structs: list[CStruct] = []
+        self.commands: list[CCommand] = []
+        self.aliases: list[CAlias] = []
 
     def parse(self, source):
         tree = parse(source)
@@ -205,10 +203,10 @@ class CContext:
             name = e_extension.attrib['name']
             platform = e_extension.get('platform')
 
-            enums: Dict[str, List[CEnum.Case]] = {}
-            types: List[str] = []
-            commands: List[str] = []
-            ignored_names: List[str] = []
+            enums: dict[str, list[CEnum.Case]] = {}
+            types: list[str] = []
+            commands: list[str] = []
+            ignored_names: list[str] = []
 
             for e_require in e_extension.findall('./require'):
                 if self.should_ignore(api=parse_api(e_require)):
@@ -252,8 +250,8 @@ class CContext:
             self.extension_tags.append(tag.attrib['name'])
 
     def parse_handles(self, tree: ElementTree):
-        handles: Dict[str, CHandle] = {}
-        parents: Dict[str, str] = {}
+        handles: dict[str, CHandle] = {}
+        parents: dict[str, str] = {}
 
         for e_handle in tree.findall('./types/type[@category="handle"]'):
             if 'alias' in e_handle.attrib:
@@ -342,7 +340,7 @@ class CContext:
             self.bitmasks.append(c_bitmask)
 
     def parse_structs(self, tree: ElementTree):
-        bases: List[str] = []
+        bases: list[str] = []
         for struct in tree.findall('./types/type[@category="struct"]'):
             if 'alias' in struct.attrib:
                 continue
@@ -350,7 +348,7 @@ class CContext:
             if self.should_ignore(type_=struct.attrib['name'], api=parse_api(struct)):
                 continue
 
-            extends: List[str] = []
+            extends: list[str] = []
             if 'structextends' in struct.attrib:
                 for name in struct.attrib['structextends'].split(","):
                     if self.should_ignore(type_=name):  # wtf is this
@@ -389,7 +387,7 @@ class CContext:
 
             self.commands.append(c_command)
 
-    def find_extension(self, type_: str = None, command: str = None) -> Optional[CExtension]:
+    def find_extension(self, type_: str = None, command: str = None) -> CExtension | None:
         for extension in self.extensions:
             if (type_ and type_ in extension.types) or (command and command in extension.commands):
                 return extension
@@ -401,7 +399,7 @@ class CContext:
                 features.append(feature)
         return features
 
-    def find_protect(self, type_: str = None, command: str = None) -> Optional[str]:
+    def find_protect(self, type_: str = None, command: str = None) -> str | None:
         extension = self.find_extension(type_, command)
         if extension:
             return extension.protect
@@ -493,7 +491,7 @@ def parse_member(member: ElementTree, tree: ElementTree) -> CMember:
     return CMember(name, c_type, values)
 
 
-def parse_api(element: ElementTree) -> Optional[str]:
+def parse_api(element: ElementTree) -> str | None:
     if 'api' in element.attrib:
         return element.attrib['api']
     return None

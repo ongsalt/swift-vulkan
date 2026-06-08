@@ -1,6 +1,6 @@
 from contextlib import contextmanager
+from typing import TextIO
 from .importer import SwiftEnum, SwiftOptionSet, SwiftStruct, SwiftClass, SwiftCommand, SwiftAlias, DispatchTable
-from typing import Literal, TextIO, List, Tuple, Dict
 from . import typeconversion as tc
 
 
@@ -22,7 +22,7 @@ class BaseGenerator:
         self.write(text)
 
     @contextmanager
-    def indent(self, prepend: str = None, append: str = None):
+    def indent(self, prepend: str | None = None, append: str | None = None):
         if prepend is not None:
             self << prepend
         self.indent_size += 1
@@ -378,7 +378,7 @@ class Generator(BaseGenerator):
         self.linebreak()
 
     @contextmanager
-    def closures(self, closures: List[Tuple[str, str]], throws: bool = False):
+    def closures(self, closures: list[tuple[str, str]], throws: bool = False):
         for closure in closures:
             if throws:
                 self << 'try ' + closure[0]
@@ -405,9 +405,9 @@ def get_class_chain(current_class: SwiftClass, target_class: SwiftClass) -> str:
     return chain
 
 
-def get_all_class_chains(cls: SwiftClass) -> Dict[str, str]:
+def get_all_class_chains(cls: SwiftClass) -> dict[str, str]:
     chain = 'self'
-    chains: Dict[str, str] = {cls.reference_name: chain}
+    chains: dict[str, str] = {cls.reference_name: chain}
     for ancestor in cls.ancestors:
         chain += f'.{ancestor.reference_name}'
         chains[ancestor.reference_name] = chain

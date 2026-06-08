@@ -1,9 +1,7 @@
-from __future__ import annotations
-from .parser import CContext, CEnum, CBitmask, CStruct, CType, CHandle, CMember, CCommand, CAlias
-from . import typeconversion as tc
-from typing import Optional, Tuple, List, Dict
 from dataclasses import dataclass, field
 import re
+from .parser import CContext, CEnum, CBitmask, CStruct, CType, CHandle, CMember, CCommand, CAlias
+from . import typeconversion as tc
 
 
 class SwiftEnum(CEnum):
@@ -34,11 +32,11 @@ class SwiftMember:
 class SwiftStruct:
     c_struct: CStruct
     name: str
-    members: List[SwiftMember]
+    members: list[SwiftMember]
     member_conversions: tc.MemberConversions
     convertible_from_c_struct: bool = True
-    parent_classes: List[SwiftClass] = field(default_factory=list)
-    protocols: List[str] = field(default_factory=list)
+    parent_classes: list[SwiftClass] = field(default_factory=list)
+    protocols: list[str] = field(default_factory=list)
     protect: str | None = None
 
     @property
@@ -51,8 +49,8 @@ class SwiftCommand:
     name: str
     return_type: str
     throws: bool
-    class_params: Dict[str, SwiftClass]
-    params: List[SwiftMember]
+    class_params: dict[str, SwiftClass]
+    params: list[SwiftMember]
     param_conversions: tc.MemberConversions
     return_conversion: tc.Conversion
     output_param: str | None = None
@@ -69,9 +67,9 @@ class SwiftCommand:
 @dataclass(eq=False)
 class DispatchTable:
     name: str
-    loader: Tuple[str, str]
-    param: Tuple[str, str] | None = None
-    commands: List[CCommand] = field(default_factory=list)
+    loader: tuple[str, str]
+    param: tuple[str, str] | None = None
+    commands: list[CCommand] = field(default_factory=list)
 
 
 @dataclass(eq=False)
@@ -82,12 +80,12 @@ class SwiftClass:
     parent: SwiftClass | None = None
     dispatch_table: DispatchTable | None = None
     dispatcher: SwiftClass | None = None
-    commands: List[SwiftCommand] = field(default_factory=list)
+    commands: list[SwiftCommand] = field(default_factory=list)
     protect: str | None = None
 
     @property
-    def ancestors(self) -> List[SwiftClass]:
-        ancestors: List[SwiftClass] = []
+    def ancestors(self) -> list[SwiftClass]:
+        ancestors: list[SwiftClass] = []
         current_class = self
         while current_class.parent:
             current_class = current_class.parent
@@ -105,24 +103,24 @@ class SwiftAlias:
 
 @dataclass(eq=False)
 class SwiftContext:
-    enums: List[SwiftEnum] = field(default_factory=list)
-    option_sets: List[SwiftOptionSet] = field(default_factory=list)
-    structs: List[SwiftStruct] = field(default_factory=list)
-    classes: List[SwiftClass] = field(default_factory=list)
-    aliases: List[SwiftAlias] = field(default_factory=list)
-    dispatch_tables: List[DispatchTable] = field(default_factory=list)
+    enums: list[SwiftEnum] = field(default_factory=list)
+    option_sets: list[SwiftOptionSet] = field(default_factory=list)
+    structs: list[SwiftStruct] = field(default_factory=list)
+    classes: list[SwiftClass] = field(default_factory=list)
+    aliases: list[SwiftAlias] = field(default_factory=list)
+    dispatch_tables: list[DispatchTable] = field(default_factory=list)
 
 
 class Importer:
     def __init__(self, c_context: CContext):
         self.c_context = c_context
         self.swift_context = SwiftContext()
-        self.imported_enums: Dict[str, str] = {}
-        self.imported_option_sets: Dict[str, str] = {}
-        self.imported_option_set_bits: Dict[str, str] = {}
-        self.imported_structs: Dict[str, SwiftStruct] = {}
-        self.imported_classes: Dict[str, SwiftClass] = {}
-        self.imported_aliases: Dict[str, SwiftAlias] = {}
+        self.imported_enums: dict[str, str] = {}
+        self.imported_option_sets: dict[str, str] = {}
+        self.imported_option_set_bits: dict[str, str] = {}
+        self.imported_structs: dict[str, SwiftStruct] = {}
+        self.imported_classes: dict[str, SwiftClass] = {}
+        self.imported_aliases: dict[str, SwiftAlias] = {}
         self.pointer_types = [handle.name for handle in c_context.handles] + \
             [alias.name for alias in c_context.aliases]
         self.c_structs = {
@@ -279,7 +277,7 @@ class Importer:
                     # convertible_from_c_struct = False
                     # pass
 
-        protocols: List[str] = []
+        protocols: list[str] = []
         for base in c_struct.struct_extends:
             protocols.append(f"{remove_vk_prefix(base)}Extension")
 
@@ -361,7 +359,7 @@ class Importer:
         return cls
 
     def import_command(self, c_command: CCommand) -> SwiftCommand:
-        class_params_and_classes: List[Tuple[CMember,
+        class_params_and_classes: list[tuple[CMember,
                                              SwiftClass]] = self.get_class_params(c_command)
         current_class = class_params_and_classes[-1][1] if class_params_and_classes \
             else self.imported_classes['entry']
@@ -389,7 +387,7 @@ class Importer:
         output_param_implicit_type: str = None
         output_param_custom_initializer: str | None = None
         unwrap_output_param = False
-        enumeration_pointer_params: List[str] = []
+        enumeration_pointer_params: list[str] = []
         enumeration_count_param: str = None
         enumeration_is_bytes_array = False
 
@@ -520,8 +518,8 @@ class Importer:
                         return ancestor
         return self.imported_classes['entry']
 
-    def get_class_params(self, command: CCommand) -> List[Tuple[CMember, SwiftClass]]:
-        class_params: List[Tuple[CMember, SwiftClass]] = []
+    def get_class_params(self, command: CCommand) -> list[tuple[CMember, SwiftClass]]:
+        class_params: list[tuple[CMember, SwiftClass]] = []
         previous_class: SwiftClass = None
         for param in command.params:
             if param.type.name and param.type.name in self.imported_classes:
@@ -535,11 +533,11 @@ class Importer:
             break
         return class_params
 
-    def get_member_conversions(self, c_members: List[CMember], c_struct: CStruct = None, c_command: CCommand = None,
-                               transform_chainable: bool = False) -> Tuple[List[SwiftMember], tc.MemberConversions]:
-        members: List[SwiftMember] = []
+    def get_member_conversions(self, c_members: list[CMember], c_struct: CStruct = None, c_command: CCommand = None,
+                               transform_chainable: bool = False) -> tuple[list[SwiftMember], tc.MemberConversions]:
+        members: list[SwiftMember] = []
         conversions = tc.MemberConversions()
-        lengths: List[str] = []
+        lengths: list[str] = []
         optional_lengths: set[str] = set()
 
         for c_member in c_members:
@@ -638,7 +636,7 @@ class Importer:
         return out
 
     def get_type_conversion(self, c_type: CType, implicit_only: bool = False, force_optional: bool = None,
-                            convert_array_to_pointer: bool = False, transform_chainable=False) -> Tuple[str, tc.Conversion]:
+                            convert_array_to_pointer: bool = False, transform_chainable=False) -> tuple[str, tc.Conversion]:
         optional = force_optional if force_optional is not None else c_type.optional
         if c_type.pointer_to and c_type.pointer_to.name in ('wl_display', 'wl_surface'):
             return 'OpaquePointer', tc.implicit_conversion
@@ -735,7 +733,7 @@ class Importer:
             else:
                 return swift_type, tc.implicit_conversion
 
-    def get_array_conversion(self, c_type: CType, force_optional: bool = None) -> Tuple[str, tc.ArrayConversion]:
+    def get_array_conversion(self, c_type: CType, force_optional: bool = None) -> tuple[str, tc.ArrayConversion]:
         optional = force_optional if force_optional is not None else c_type.optional
 
         if is_string_convertible(c_type.pointer_to) and not optional:
@@ -784,7 +782,7 @@ class Importer:
         return (c_type.pointer_to is not None
                 or (c_type.name and (c_type.name in self.pointer_types or c_type.name.startswith('PFN_'))))
 
-    def pop_extension_tag(self, string: str) -> Tuple[str, Optional[str]]:
+    def pop_extension_tag(self, string: str) -> tuple[str, str | None]:
         for tag in self.c_context.extension_tags:
             if string.endswith(tag):
                 return string[:-len(tag)].rstrip('_'), tag
@@ -823,8 +821,8 @@ class Importer:
 
 
 # excluding the one with pnext
-def get_output_params(command: CCommand) -> List[CMember]:
-    output_params: List[CMember] = []
+def get_output_params(command: CCommand) -> list[CMember]:
+    output_params: list[CMember] = []
     for param in command.params:
         if param.type.pointer_to and not param.type.pointer_to.const:
             if param.type.pointer_to.name == 'void':
