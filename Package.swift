@@ -14,9 +14,9 @@ let autoDetectedNames: [(String, Platform)] = [
     ("VK_USE_PLATFORM_METAL_EXT", .iOS),
     ("VK_USE_PLATFORM_ANDROID_KHR", .android),
     ("VK_USE_PLATFORM_WAYLAND_KHR", .linux),
-    ("VK_USE_PLATFORM_XLIB_KHR", .linux),
-    ("VK_USE_PLATFORM_XLIB_XRANDR_KHR", .linux),
-    ("VK_USE_PLATFORM_XCB_KHR", .linux),
+    // ("VK_USE_PLATFORM_XLIB_KHR", .linux),
+    // ("VK_USE_PLATFORM_XLIB_XRANDR_KHR", .linux),
+    // ("VK_USE_PLATFORM_XCB_KHR", .linux),
 ]
 
 // this wont get passed into 

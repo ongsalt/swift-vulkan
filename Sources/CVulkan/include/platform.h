@@ -19,8 +19,8 @@
 
 #elif defined(__linux__)
     #define VK_USE_PLATFORM_WAYLAND_KHR
-    #define VK_USE_PLATFORM_XLIB_KHR
-    #define VK_USE_PLATFORM_XLIB_XRANDR_KHR
-    #define VK_USE_PLATFORM_XCB_KHR
+    // #define VK_USE_PLATFORM_XLIB_KHR
+    // #define VK_USE_PLATFORM_XLIB_XRANDR_KHR
+    // #define VK_USE_PLATFORM_XCB_KHR
 
 #endif
