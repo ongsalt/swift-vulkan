@@ -11,6 +11,7 @@ import CVulkan
 public protocol Loader {
     var vkGetInstanceProcAddr: PFN_vkGetInstanceProcAddr { get }
 }
+
 public enum LoaderError: Error {
     case loaderNotFound
     case symbolNotFound
@@ -38,7 +39,6 @@ public enum LoaderError: Error {
         dlopen(path, RTLD_LAZY)
     }
 
-    // TODO
     func getProcAddress(_ handle: Handle, _ name: String) -> UnsafeMutableRawPointer? {
         dlsym(handle, "vkGetInstanceProcAddr")
     }
@@ -80,6 +80,7 @@ public class DynamicLoader: Loader {
         freeLibrary(handle)
     }
 }
+
 extension Entry {
     public convenience init() throws {
         self.init(loader: try DynamicLoader())

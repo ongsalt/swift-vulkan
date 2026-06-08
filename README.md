@@ -46,12 +46,10 @@ Swift-vulkan is a relatively new project, and there are still some important mil
 
 ## Todos
 - fix parent class?
-- fix: array to optional parsing and default value
-
 - latexmath lenght 😭
 - use `MutableSpan` or `OutputSpan` for out array field in a struct + make it non escapable?
 
-- generate overload for Chainable out param
+- handle Chainable out param
     - discrete type: fill sType for out param
     - `Chainable<_>`: make it inout param
     - or 

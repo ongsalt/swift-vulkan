@@ -177,7 +177,7 @@ class Generator(BaseGenerator):
         protocol_string = ': _HandleContainer' if cls.c_handle else ''
         with self.indent(f'public class {cls.name}{protocol_string} {{', '}'):
             if cls.c_handle:
-                self << f'let handle: {cls.c_handle.name}?'
+                self << f'public let handle: {cls.c_handle.name}?'
             if cls.parent:
                 self << f'public let {cls.parent.reference_name}: {cls.parent.name}'
             if cls.dispatch_table:
