@@ -96,9 +96,7 @@ class Generator(BaseGenerator):
             if not struct.c_struct.returned_only:
                 self.generate_struct_init(struct)
                 self.linebreak()
-            # if struct.convertible_from_c_struct:
             self.generate_struct_c_to_swift_method(struct)
-            # print(f"ignoring convertible_from_c_struct for {struct.c_struct.name}")
             # TODO: update generate_struct_c_to_swift_method
             self.linebreak()
             self.generate_struct_swift_to_c_method(
@@ -127,8 +125,6 @@ class Generator(BaseGenerator):
     def generate_struct_c_to_swift_method(self, struct: SwiftStruct):
         params = [f'cStruct: {struct.c_struct.name}']
         parent_classes = struct.parent_classes
-        # if len(parent_classes) > 0:
-        #     print(struct.name, [p.name for p in parent_classes])
 
         for p in parent_classes:
             params.append(f'{p.reference_name}: {p.name}')
@@ -313,7 +309,8 @@ class Generator(BaseGenerator):
                     else:
                         map_string = ''
                     try_string = 'try ' if command.throws else ''
-                    with self.indent(f'{try_string}enumerate {{ {command.enumeration_pointer_param}, '
+                    enumerateFn = 'enumerateBytes' if command.enumeration_is_bytes_array else 'enumerate'
+                    with self.indent(f'{try_string}{enumerateFn} {{ {command.enumeration_pointer_param}, '
                                      f'{command.enumeration_count_param} in', f'}}{map_string}'):
                         self << call_string
                 else:

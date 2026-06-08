@@ -113,62 +113,6 @@ extension Sequence {
         return UnsafeMutableRawBufferPointer(ptr).bindMemory(to: T.self).baseAddress!.pointee
     }
 }
-// private func nilPointer<T>(for _: T.Type) -> UnsafeMutablePointer<T>? { nil }
-// func enumerate<each R>(
-//     body: ((repeat UnsafeMutablePointer<each R>?), UnsafeMutablePointer<UInt32>) -> VkResult
-// )
-//     throws -> (repeat [each R])
-// {
-//     var count: UInt32 = 0
-//     try checkResult(body((repeat nilPointer(for: (each R).self)), &count))
-
-//     while true {
-//         if count == 0 {
-//             return (repeat [each R]())
-//         }
-
-//         let buffers: (repeat UnsafeMutablePointer<each R>?) =
-//             (repeat UnsafeMutablePointer<each R>.allocate(capacity: Int(count)))
-//         let result = body(buffers, &count)
-
-//         defer {
-//             repeat (each buffers)?.deallocate()
-//         }
-
-//         if result != VK_INCOMPLETE {
-//             try checkResult(result)
-//             return (repeat (Array(UnsafeBufferPointer(start: each buffers, count: Int(count)))))
-//         }
-//     }
-// }
-// func enumerate<each R>(
-//     body: ((repeat UnsafeMutablePointer<each R>?), UnsafeMutablePointer<UInt32>) -> Void
-// )
-//     -> (repeat [each R])
-// {
-//     var count: UInt32 = 0
-//     body((repeat nilPointer(for: (each R).self)), &count)
-
-//     if count == 0 {
-//         return (repeat [each R]())
-//     }
-
-//     let buffers: (repeat UnsafeMutablePointer<each R>?) =
-//         (repeat UnsafeMutablePointer<each R>.allocate(capacity: Int(count)))
-//     body(buffers, &count)
-
-//     defer {
-//         repeat (each buffers)?.deallocate()
-//     }
-
-//     return (repeat (Array(UnsafeBufferPointer(start: each buffers, count: Int(count)))))
-// }
-
-func enumerate<R>(_ type: R.Type, _ body: (UnsafeMutablePointer<R>?, UnsafeMutablePointer<UInt32>) -> VkResult)
-    throws -> [R]
-{
-    try enumerate(body)
-}
 
 func enumerate<R>(_ body: (UnsafeMutablePointer<R>?, UnsafeMutablePointer<UInt32>) -> VkResult)
     throws -> [R]
@@ -194,10 +138,6 @@ func enumerate<R>(_ body: (UnsafeMutablePointer<R>?, UnsafeMutablePointer<UInt32
     return array
 }
 
-func enumerate<R>(_ type: R.Type, _ body: (UnsafeMutablePointer<R>?, UnsafeMutablePointer<UInt32>) -> Void) -> [R] {
-    enumerate(body)
-}
-
 func enumerate<R>(_ body: (UnsafeMutablePointer<R>?, UnsafeMutablePointer<UInt32>) -> Void) -> [R] {
     var count: UInt32 = 0
     body(nil, &count)
@@ -211,6 +151,32 @@ func enumerate<R>(_ body: (UnsafeMutablePointer<R>?, UnsafeMutablePointer<UInt32
         initializedCount = Int(count)
     }
 }
+
+// size_t is Int
+func enumerateBytes(_ body: (UnsafeMutablePointer<UInt8>?, UnsafeMutablePointer<Int>) -> VkResult)
+    throws -> [UInt8]
+{
+    var count: Int = 0
+    var result = VK_SUCCESS
+    var array: [UInt8]
+
+    repeat {
+        try checkResult(body(nil, &count))
+
+        if count == 0 {
+            return []
+        }
+
+        array = [UInt8](unsafeUninitializedCapacity: Int(count)) { buffer, initializedCount in
+            result = body(buffer.baseAddress!, &count)
+            initializedCount = Int(count)
+        }
+    } while result == VK_INCOMPLETE
+
+    try checkResult(result)
+    return array
+}
+
 
 protocol StringConvertibleOptionSet: OptionSet, CustomStringConvertible {
     static var descriptions: [(Self.Element, String)] { get }

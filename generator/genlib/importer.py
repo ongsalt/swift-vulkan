@@ -52,7 +52,7 @@ class SwiftCommand:
                  param_conversions: tc.MemberConversions, return_conversion: tc.Conversion,
                  output_param: str = None, output_param_implicit_type: str = None, output_param_custom_initializer: str | None = None, unwrap_output_param: bool = False,
                  enumeration_pointer_param: str = None, enumeration_count_param: str = None,
-                 dispatcher: 'SwiftClass' = None, protect: str | None = None):
+                 dispatcher: 'SwiftClass' = None, protect: str | None = None, enumeration_is_bytes_array: bool | None = False):
         self.c_command = c_command
         self.name = name
         self.return_type = return_type
@@ -69,6 +69,7 @@ class SwiftCommand:
         self.enumeration_count_param = enumeration_count_param
         self.dispatcher = dispatcher
         self.protect = protect
+        self.enumeration_is_bytes_array = enumeration_is_bytes_array
 
 
 class DispatchTable:
@@ -399,6 +400,8 @@ class Importer:
         unwrap_output_param = False
         enumeration_pointer_params: List[str] = []
         enumeration_count_param: str = None
+        enumeration_is_bytes_array = False
+
         if c_return_type.name == 'void':
             output_params = get_output_params(c_command)
 
@@ -426,11 +429,13 @@ class Importer:
                     if output_params[0].type.pointer_to.name in self.imported_enums:
                         output_param_custom_initializer = f'{output_param_implicit_type}(rawValue: 0)'
 
+            # TODO: multiple out array
             elif len(output_params) == 2 and output_params[1].type.length == output_params[0].name:
                 enumeration_pointer_params = output_params[1].name
                 enumeration_count_param = output_params[0].name
                 return_type, return_conversion = self.get_array_conversion(
-                    output_params[1].type, force_optional=False)
+                    output_params[1].type, force_optional=False)                
+                enumeration_is_bytes_array = output_params[1].type.pointer_to.name == 'void'
 
         class_params = [param for param, _ in class_params_and_classes]
         output_params = (
@@ -468,7 +473,8 @@ class Importer:
                 enumeration_pointer_param=enumeration_pointer_params,
                 enumeration_count_param=enumeration_count_param,
                 dispatcher=dispatcher,
-                protect=c_command.protect
+                protect=c_command.protect,
+                enumeration_is_bytes_array=enumeration_is_bytes_array
             )
             current_class.commands.append(command)
 
@@ -492,7 +498,8 @@ class Importer:
             enumeration_pointer_param=enumeration_pointer_params,
             enumeration_count_param=enumeration_count_param,
             dispatcher=dispatcher,
-            protect=c_command.protect
+            protect=c_command.protect,
+            enumeration_is_bytes_array=enumeration_is_bytes_array
         )
 
         current_class.commands.append(command)
@@ -547,12 +554,6 @@ class Importer:
         for c_member in c_members:
             if is_array_convertible(c_member.type):
                 lengths.append(c_member.type.length)
-        # if c_struct:
-        #     # why aren't these specified in the Vulkan spec?
-        #     if c_struct.name == 'VkPhysicalDeviceMemoryProperties':
-        #         lengths += ['memoryTypeCount', 'memoryHeapCount']
-        #     elif c_struct.name == 'VkPhysicalDeviceGroupProperties':
-        #         lengths.append('physicalDeviceCount')
 
         for c_member in c_members:
             if c_member.name in lengths:
@@ -580,6 +581,14 @@ class Importer:
                 or (c_struct.name == 'VkLayerProperties' and c_member.name == 'specVersion')
             )):
                 swift_type, conversion = 'Version', tc.version_conversion
+
+            # These are large tuples
+            # TODO: automatically do this after certain threshold
+            # require parser change btw
+            # elif type(c_member.type.length) == int and c_member.type.length >= 16:
+            #     swift_type, conversion = 'Array<MemoryType>', tc.tuple_array_conversion(
+            #         tc.struct_array_conversion('MemoryType', 'memoryTypeCount'), 'VkMemoryType', c_member.type.length)
+
 
             elif c_struct and c_struct.name == 'VkPhysicalDeviceMemoryProperties' and c_member.name == 'memoryTypes':
                 swift_type, conversion = 'Array<MemoryType>', tc.tuple_array_conversion(
@@ -612,32 +621,8 @@ class Importer:
             is_closure = c_member.type.name and c_member.type.name.startswith(
                 'PFN_') and not c_member.type.optional
 
-            default_value = None
-            ty = c_member.type
-            if ty.length and type(ty.length) == str and ty.length != 'null-terminated': 
-                if ty.length in optional_lengths:
-                    if ty.optional:
-                        default_value = 'nil'
-                    else:
-                        default_value = '[]'
-            elif ty.optional:
-                if ty.pointer_to and not ty.length:
-                    default_value = 'nil'
-                elif ty.length == 'null-terminated':
-                    default_value = 'nil'
-                elif ty.name in tc.NUMERIC_TYPE:
-                    default_value = '0'
-                elif ty.name == 'VkBool32':
-                    default_value = 'false'
-                elif ty.name in self.imported_enums:
-                    default_value = '.init(rawValue: 0)!'
-                elif ty.name in self.imported_option_sets:
-                    default_value = '[]'
-                elif ty.name in self.imported_classes:
-                    default_value = 'nil'
-                # elif ty.name in self.imported_option_set_bits:
-                #     default_value = '0'
 
+            default_value = self.get_default_value(swift_type, c_member.type, optional_lengths)
 
             member = SwiftMember(
                 name=swift_name, type_=swift_type, is_closure=is_closure, default_value=default_value)
@@ -778,6 +763,9 @@ class Importer:
                     tc.optional_struct_array_conversion(
                         swift_struct.name, c_type.length, parent_names)
 
+        if c_type.pointer_to.name == 'void':
+            return 'Array<UInt8>', tc.byte_array_conversion(c_type.length)
+
         if c_type.pointer_to.name:
             element_type, element_conversion = self.get_type_conversion(
                 c_type.pointer_to)
@@ -799,6 +787,7 @@ class Importer:
             return f'Array<{element_type}>?', tc.optional_array_conversion(c_type.length)
 
     def is_pointer_type(self, c_type: CType) -> bool:
+        # VkRemoteAddressNV is a base type
         if c_type.name in ('VkRemoteAddressNV', 'HANDLE'):
             return True
         return (c_type.pointer_to is not None
@@ -809,14 +798,49 @@ class Importer:
             if string.endswith(tag):
                 return string[:-len(tag)].rstrip('_'), tag
         return string, None
+    
+
+    def get_default_value(self, swift_type: str, c_type: CType, optional_lengths: set[str]) -> str | None:
+        # if swift_type.endswith('?'):
+        #     return 'nil'
+        
+        ty = c_type
+        default_value = None
+        if ty.length and type(ty.length) == str and ty.length != 'null-terminated': 
+            if ty.length in optional_lengths:
+                if ty.optional:
+                    default_value = 'nil'
+                else:
+                    default_value = '[]'
+        elif ty.optional:
+            if ty.pointer_to and not ty.length:
+                default_value = 'nil'
+            elif ty.length == 'null-terminated':
+                default_value = 'nil'
+            elif ty.name in tc.NUMERIC_TYPE:
+                default_value = '0'
+            elif ty.name == 'VkBool32':
+                default_value = 'false'
+            elif ty.name in self.imported_enums:
+                default_value = '.init(rawValue: 0)!'
+            elif ty.name in self.imported_option_sets:
+                default_value = '[]'
+            elif ty.name in self.imported_classes:
+                default_value = 'nil'
+
+        return default_value
 
 
 # excluding the one with pnext
 def get_output_params(command: CCommand) -> List[CMember]:
     output_params: List[CMember] = []
     for param in command.params:
-        if param.type.pointer_to and not param.type.pointer_to.const and param.type.pointer_to.name != 'void':
-            output_params.append(param)
+        if param.type.pointer_to and not param.type.pointer_to.const:
+            if param.type.pointer_to.name == 'void':
+                if param.type.length:
+                    output_params.append(param)
+            else:
+                output_params.append(param)
     return output_params
 
 
@@ -852,3 +876,5 @@ def get_member_name(c_name: str, c_type: CType) -> str:
     if c_type.pointer_to and c_name.startswith('p'):
         return get_member_name(c_name[1].lower() + c_name[2:], c_type.pointer_to)
     return c_name
+
+

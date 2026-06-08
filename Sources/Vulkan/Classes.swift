@@ -6529,12 +6529,10 @@ public class Pipeline: _HandleContainer {
         self.device.dispatchTable.vkDestroyPipeline(self.device.handle, self.handle, nil)
     }
 
-    public func getShaderInfoAMD(shaderStage: ShaderStageFlags, infoType: ShaderInfoTypeAMD, info: UnsafeMutableRawPointer?) throws -> Int {
-        var out = Int()
-        try checkResult(
-            self.device.dispatchTable.vkGetShaderInfoAMD(self.device.handle, self.handle, VkShaderStageFlagBits(rawValue: VkShaderStageFlagBits.RawValue(shaderStage.rawValue)), VkShaderInfoTypeAMD(rawValue: VkShaderInfoTypeAMD.RawValue(infoType.rawValue)), &out, info)
-        )
-        return out
+    public func getShaderInfoAMD(shaderStage: ShaderStageFlags, infoType: ShaderInfoTypeAMD) throws -> Array<UInt8> {
+        try enumerateBytes { pInfo, pInfoSize in
+            self.device.dispatchTable.vkGetShaderInfoAMD(self.device.handle, self.handle, VkShaderStageFlagBits(rawValue: VkShaderStageFlagBits.RawValue(shaderStage.rawValue)), VkShaderInfoTypeAMD(rawValue: VkShaderInfoTypeAMD.RawValue(infoType.rawValue)), pInfoSize, pInfo)
+        }
     }
 
     public func compileDeferredNV(shader: UInt32) throws -> Void {
@@ -6855,12 +6853,10 @@ public class PipelineCache: _HandleContainer {
         self.device.dispatchTable.vkDestroyPipelineCache(self.device.handle, self.handle, nil)
     }
 
-    public func getData(data: UnsafeMutableRawPointer?) throws -> Int {
-        var out = Int()
-        try checkResult(
-            self.device.dispatchTable.vkGetPipelineCacheData(self.device.handle, self.handle, &out, data)
-        )
-        return out
+    public func getData() throws -> Array<UInt8> {
+        try enumerateBytes { pData, pDataSize in
+            self.device.dispatchTable.vkGetPipelineCacheData(self.device.handle, self.handle, pDataSize, pData)
+        }
     }
 
     public func mergePipelineCaches(srcCaches: Array<PipelineCache>) throws -> Void {
@@ -6981,12 +6977,10 @@ public class ValidationCacheEXT: _HandleContainer {
         self.device.dispatchTable.vkDestroyValidationCacheEXT(self.device.handle, self.handle, nil)
     }
 
-    public func getDataEXT(data: UnsafeMutableRawPointer?) throws -> Int {
-        var out = Int()
-        try checkResult(
-            self.device.dispatchTable.vkGetValidationCacheDataEXT(self.device.handle, self.handle, &out, data)
-        )
-        return out
+    public func getDataEXT() throws -> Array<UInt8> {
+        try enumerateBytes { pData, pDataSize in
+            self.device.dispatchTable.vkGetValidationCacheDataEXT(self.device.handle, self.handle, pDataSize, pData)
+        }
     }
 
     public func mergeValidationCachesEXT(srcCaches: Array<ValidationCacheEXT>) throws -> Void {
@@ -7215,12 +7209,10 @@ public class ShaderEXT: _HandleContainer {
         self.device.dispatchTable.vkDestroyShaderEXT(self.device.handle, self.handle, nil)
     }
 
-    public func getBinaryDataEXT(data: UnsafeMutableRawPointer?) throws -> Int {
-        var out = Int()
-        try checkResult(
-            self.device.dispatchTable.vkGetShaderBinaryDataEXT(self.device.handle, self.handle, &out, data)
-        )
-        return out
+    public func getBinaryDataEXT() throws -> Array<UInt8> {
+        try enumerateBytes { pData, pDataSize in
+            self.device.dispatchTable.vkGetShaderBinaryDataEXT(self.device.handle, self.handle, pDataSize, pData)
+        }
     }
 }
 
@@ -7643,12 +7635,10 @@ public class CudaModuleNV: _HandleContainer {
     }
 
     #if VK_ENABLE_BETA_EXTENSIONS
-    public func getCacheNV(cacheData: UnsafeMutableRawPointer?) throws -> Int {
-        var out = Int()
-        try checkResult(
-            self.device.dispatchTable.vkGetCudaModuleCacheNV(self.device.handle, self.handle, &out, cacheData)
-        )
-        return out
+    public func getCacheNV() throws -> Array<UInt8> {
+        try enumerateBytes { pCacheData, pCacheSize in
+            self.device.dispatchTable.vkGetCudaModuleCacheNV(self.device.handle, self.handle, pCacheSize, pCacheData)
+        }
     }
     #endif
 

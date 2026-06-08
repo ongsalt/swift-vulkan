@@ -269,6 +269,18 @@ def optional_array_conversion(length: str) -> ArrayConversion:
     )
 
 
+def byte_array_conversion(length: str) -> ArrayConversion:
+    return ArrayConversion(
+        length=length,
+        swift_value_template='Array<UInt8>(UnsafeBufferPointer(start: $value, count: $length))',
+        c_closure_template=(
+            '$value.withUnsafeBufferPointer { ptr_$name in', '}'),
+        c_value_template='ptr_$name.baseAddress',
+        c_length_template='ptr_$name.count'
+    )
+
+
+
 def string_array_conversion(length: str) -> ArrayConversion:
     return ArrayConversion(
         length=length,
