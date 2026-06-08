@@ -45,6 +45,6 @@ if __name__ == '__main__':
     with open('../Sources/Vulkan/Chain+Extensions.swift', 'w') as f:
         generator = Generator(f)
         for struct in swift_context.structs:
-            if not struct.c_struct.is_chainable_base:
+            if not struct.c_struct.is_chainable:
                 continue
             generator.generate_chain_extension(struct)

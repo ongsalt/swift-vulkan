@@ -57,7 +57,7 @@ class CStruct:
     members: list[CMember] = field(default_factory=list)
     returned_only: bool = False
     struct_extends: list[str] = field(default_factory=list)
-    is_chainable_base: bool = False
+    is_chainable: bool = False
     protect: str | None = None
 
 
@@ -367,7 +367,7 @@ class CContext:
                 c_struct.members.append(member)
                 # TODO: checl pNext type, maybe
                 if member.name == "pNext":
-                    c_struct.is_chainable_base = True
+                    c_struct.is_chainable = True
 
             self.structs.append(c_struct)
 

@@ -85,8 +85,15 @@ class Generator(BaseGenerator):
     def generate_struct(self, struct: SwiftStruct):
         if struct.protect:
             self << f'#if {struct.protect}'
-        protocols = [
-            'ChainableBase' if struct.c_struct.is_chainable_base else 'CStructConvertible'] + struct.protocols
+
+        protocols = [] 
+        if struct.c_struct.is_chainable:
+            # we need to walk the entire thing to generate correct ChainableBase/Chainable distinction
+            protocols.append('ChainableBase')
+        protocols += struct.protocols
+        if len(protocols) == 0:
+            protocols.append('CStructConvertible')
+
         with self.indent(f'public struct {struct.name}: {", ".join(protocols)} {{', '}'):
             self << f'public typealias CStruct = {struct.c_struct.name}'
             self.linebreak()
@@ -100,12 +107,13 @@ class Generator(BaseGenerator):
             # TODO: update generate_struct_c_to_swift_method
             self.linebreak()
             self.generate_struct_swift_to_c_method(
-                struct, is_chainable_base=struct.c_struct.is_chainable_base)
-            if struct.c_struct.is_chainable_base:
+                struct, is_chainable_base=struct.c_struct.is_chainable)
+            if struct.c_struct.is_chainable:
+                self.linebreak()
                 self.generate_struct_chain_push_method(struct)
         if struct.protect:
             self << '#endif'
-        if struct.c_struct.is_chainable_base:
+        if struct.c_struct.is_chainable:
             self.linebreak()
             self << f'public protocol {struct.extension_name}: Chainable {{}}'
         self.linebreak()

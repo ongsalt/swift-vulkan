@@ -629,7 +629,7 @@ class Importer:
             name = p.type.type_name
             if name in self.imported_structs and p.type.pointer_to and p.type.pointer_to.const and not p.type.name:
                 swift_struct = self.imported_structs[name]
-                if swift_struct.c_struct.is_chainable_base and not p.type.length:
+                if swift_struct.c_struct.is_chainable and not p.type.length:
                     if out == True:
                         print(
                             f"warning: {c_command.name} contains multiple chainable parameter")
