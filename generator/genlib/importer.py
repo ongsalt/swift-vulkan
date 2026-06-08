@@ -821,7 +821,7 @@ class Importer:
                 return 'nil'
         
         # if this is a struct and the init of the struct can be written as .init()
-        if c_type.type_name in self.imported_structs:
+        if swift_type and c_type.type_name in self.imported_structs and not c_type.length:
             struct = self.imported_structs[c_type.type_name]
             can_omit = True
             for member in struct.members:
@@ -829,7 +829,7 @@ class Importer:
                     can_omit = False
                     break
             if can_omit:
-                return '.init()'
+                return f'{swift_type}()'
 
         return None
 

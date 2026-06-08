@@ -45803,7 +45803,7 @@ public struct CopyTensorInfoARM: ChainableBase {
     public let dstTensor: TensorARM
     public let regions: Array<TensorCopyARM>
 
-    public init(srcTensor: TensorARM, dstTensor: TensorARM, regions: Array<TensorCopyARM> = .init()) {
+    public init(srcTensor: TensorARM, dstTensor: TensorARM, regions: Array<TensorCopyARM>) {
         self.srcTensor = srcTensor
         self.dstTensor = dstTensor
         self.regions = regions
