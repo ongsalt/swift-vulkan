@@ -1,6 +1,8 @@
+from __future__ import annotations
 from .parser import CContext, CEnum, CBitmask, CStruct, CType, CHandle, CMember, CCommand, CAlias
 from . import typeconversion as tc
 from typing import Optional, Tuple, List, Dict
+from dataclasses import dataclass, field
 import re
 
 
@@ -19,83 +21,72 @@ class SwiftOptionSet(CEnum):
         self.raw_type = raw_type
 
 
+@dataclass(eq=False)
 class SwiftMember:
-    def __init__(self, name: str, type_: str, is_closure: bool = False, default_value: str | None = None):
-        self.name = name
-        self.type = type_
-        self.is_closure = is_closure
-        self.default_value = default_value
+    name: str
+    type: str
+    is_closure: bool = False
+    default_value: str | None = None
 
 
 
+@dataclass(eq=False)
 class SwiftStruct:
-    def __init__(self, c_struct: CStruct, name: str,
-                 members: List[SwiftMember], member_conversions: tc.MemberConversions,
-                 convertible_from_c_struct: bool = True, parent_classes: 'List[SwiftClass] | None' = None,
-                 protocols: List[str] = None, protect: str | None = None):
-        self.name = name
-        self.members = members
-        self.member_conversions: tc.MemberConversions = member_conversions
-        self.c_struct = c_struct
-        self.convertible_from_c_struct = convertible_from_c_struct
-        self.parent_classes = parent_classes or []
-        self.protocols = protocols or []
-        self.protect = protect
+    c_struct: CStruct
+    name: str
+    members: List[SwiftMember]
+    member_conversions: tc.MemberConversions
+    convertible_from_c_struct: bool = True
+    parent_classes: List[SwiftClass] = field(default_factory=list)
+    protocols: List[str] = field(default_factory=list)
+    protect: str | None = None
 
     @property
     def extension_name(self):
         return f'{self.name}Extension'
 
+@dataclass(eq=False)
 class SwiftCommand:
-    def __init__(self, c_command: CCommand, name: str, return_type: str, throws: bool,
-                 class_params: Dict[str, 'SwiftClass'], params: List[SwiftMember],
-                 param_conversions: tc.MemberConversions, return_conversion: tc.Conversion,
-                 output_param: str = None, output_param_implicit_type: str = None, output_param_custom_initializer: str | None = None, unwrap_output_param: bool = False,
-                 enumeration_pointer_param: str = None, enumeration_count_param: str = None,
-                 dispatcher: 'SwiftClass' = None, protect: str | None = None, enumeration_is_bytes_array: bool | None = False):
-        self.c_command = c_command
-        self.name = name
-        self.return_type = return_type
-        self.throws = throws
-        self.class_params = class_params
-        self.params = params
-        self.param_conversions = param_conversions
-        self.return_conversion = return_conversion
-        self.output_param = output_param
-        self.output_param_implicit_type = output_param_implicit_type
-        self.output_param_custom_initializer = output_param_custom_initializer
-        self.unwrap_output_param = unwrap_output_param
-        self.enumeration_pointer_param = enumeration_pointer_param
-        self.enumeration_count_param = enumeration_count_param
-        self.dispatcher = dispatcher
-        self.protect = protect
-        self.enumeration_is_bytes_array = enumeration_is_bytes_array
+    c_command: CCommand
+    name: str
+    return_type: str
+    throws: bool
+    class_params: Dict[str, SwiftClass]
+    params: List[SwiftMember]
+    param_conversions: tc.MemberConversions
+    return_conversion: tc.Conversion
+    output_param: str | None = None
+    output_param_implicit_type: str | None = None
+    output_param_custom_initializer: str | None = None
+    unwrap_output_param: bool = False
+    enumeration_pointer_param: str | None = None
+    enumeration_count_param: str | None = None
+    dispatcher: SwiftClass | None = None
+    protect: str | None = None
+    enumeration_is_bytes_array: bool = False
 
 
+@dataclass(eq=False)
 class DispatchTable:
-    def __init__(self, name: str, loader: Tuple[str, str], param: Tuple[str, str] = None,
-                 commands: List[CCommand] = None):
-        self.name = name
-        self.loader = loader
-        self.param = param
-        self.commands = commands or []
+    name: str
+    loader: Tuple[str, str]
+    param: Tuple[str, str] | None = None
+    commands: List[CCommand] = field(default_factory=list)
 
 
+@dataclass(eq=False)
 class SwiftClass:
-    def __init__(self, name: str, reference_name: str, c_handle: CHandle = None,  parent: 'SwiftClass' = None,
-                 dispatch_table: DispatchTable = None, dispatcher: 'SwiftClass' = None,
-                 commands: List[SwiftCommand] = None, protect: str | None = None):
-        self.c_handle = c_handle
-        self.name = name
-        self.reference_name = reference_name
-        self.parent = parent
-        self.dispatch_table = dispatch_table
-        self.dispatcher = dispatcher
-        self.commands = commands or []
-        self.protect = protect
+    name: str
+    reference_name: str
+    c_handle: CHandle | None = None
+    parent: SwiftClass | None = None
+    dispatch_table: DispatchTable | None = None
+    dispatcher: SwiftClass | None = None
+    commands: List[SwiftCommand] = field(default_factory=list)
+    protect: str | None = None
 
     @property
-    def ancestors(self) -> List['SwiftClass']:
+    def ancestors(self) -> List[SwiftClass]:
         ancestors: List[SwiftClass] = []
         current_class = self
         while current_class.parent:
@@ -104,22 +95,22 @@ class SwiftClass:
         return ancestors
 
 
+@dataclass(eq=False)
 class SwiftAlias:
-    def __init__(self, c_alias: CAlias, name: str, alias: str, protect: str | None = None):
-        self.c_alias = c_alias
-        self.name = name
-        self.alias = alias
-        self.protect = protect
+    c_alias: CAlias
+    name: str
+    alias: str
+    protect: str | None = None
 
 
+@dataclass(eq=False)
 class SwiftContext:
-    def __init__(self):
-        self.enums: List[SwiftEnum] = []
-        self.option_sets: List[SwiftOptionSet] = []
-        self.structs: List[SwiftStruct] = []
-        self.classes: List[SwiftClass] = []
-        self.aliases: List[SwiftAlias] = []
-        self.dispatch_tables: List[DispatchTable] = []
+    enums: List[SwiftEnum] = field(default_factory=list)
+    option_sets: List[SwiftOptionSet] = field(default_factory=list)
+    structs: List[SwiftStruct] = field(default_factory=list)
+    classes: List[SwiftClass] = field(default_factory=list)
+    aliases: List[SwiftAlias] = field(default_factory=list)
+    dispatch_tables: List[DispatchTable] = field(default_factory=list)
 
 
 class Importer:
@@ -618,14 +609,14 @@ class Importer:
                     # TODO: better naming maybe
                     swift_name = f"{swift_name}2"
 
-            is_closure = c_member.type.name and c_member.type.name.startswith(
-                'PFN_') and not c_member.type.optional
+            is_closure = bool(c_member.type.name and c_member.type.name.startswith(
+                'PFN_') and not c_member.type.optional)
 
 
             default_value = self.get_default_value(swift_type, c_member.type, optional_lengths)
 
             member = SwiftMember(
-                name=swift_name, type_=swift_type, is_closure=is_closure, default_value=default_value)
+                name=swift_name, type=swift_type, is_closure=is_closure, default_value=default_value)
 
             members.append(member)
             conversions.add_conversion(c_member.name, swift_name, conversion)

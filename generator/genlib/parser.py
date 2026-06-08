@@ -1,41 +1,42 @@
-from xml.etree import ElementTree
+from __future__ import annotations
+from xml.etree.ElementTree import ElementTree, parse
 from typing import List, Union, Dict, Optional
 import re
 from itertools import zip_longest
+from dataclasses import dataclass, field
 
 
+@dataclass(eq=False)
 class CEnum:
+    @dataclass(eq=False)
     class Case:
-        def __init__(self, name: str, value: str):
-            self.name = name
-            self.value = value
+        name: str
+        value: str
 
-    def __init__(self, name: str, cases: List[Case] = None, protect: str | None = None):
-        self.name = name
-        self.cases = cases or []
-        self.protect = protect
+    name: str
+    cases: list[CEnum.Case] = field(default_factory=list)
+    protect: str | None = None
 
 
+@dataclass(eq=False)
 class CBitmask:
-    def __init__(self, name: str, enum: CEnum = None, is64: bool = False, protect: str | None = None):
-        self.name = name
-        self.enum = enum
-        self.is64 = is64
-        self.protect = protect
+    name: str
+    enum: CEnum | None = None
+    is64: bool = False
+    protect: str | None = None
 
 
+@dataclass(eq=False)
 class CType:
-    def __init__(self, name: str = None, pointer_to: 'CType' = None, array_of: 'CType' = None,
-                 const: bool = False, length: Union[str, int, list[int]] = None, optional: bool = False):
-        self.name = name
-        self.pointer_to = pointer_to
-        self.array_of = array_of
-        self.const = const
-        self.length = length
-        self.optional = optional
+    name: str | None = None
+    pointer_to: CType | None = None
+    array_of: CType | None = None
+    const: bool = False
+    length: str | int | list[int] | None = None
+    optional: bool = False
 
     @property
-    def type_name(self) -> str:
+    def type_name(self) -> str | None:
         if self.pointer_to:
             return self.pointer_to.type_name
         if self.array_of:
@@ -43,52 +44,49 @@ class CType:
         return self.name
 
 
+@dataclass(eq=False)
 class CMember:
-    def __init__(self, name: str, type_: CType, values: List[str] = None):
-        self.name = name
-        self.type = type_
-        self.values = values or []
+    name: str
+    type: CType
+    values: list[str] = field(default_factory=list)
 
 
+@dataclass(eq=False)
 class CStruct:
-    def __init__(self, name: str, members: List[CMember] = None, returned_only=False, struct_extends: List[str] = None, is_chainable_base: bool = False, protect: str | None = None):
-        self.name = name
-        self.members = members or []
-        self.returned_only = returned_only
-        self.struct_extends = struct_extends or []
-        self.is_chainable_base = is_chainable_base
-        self.protect = protect
+    name: str
+    members: list[CMember] = field(default_factory=list)
+    returned_only: bool = False
+    struct_extends: list[str] = field(default_factory=list)
+    is_chainable_base: bool = False
+    protect: str | None = None
 
 
+@dataclass(eq=False)
 class CHandle:
-    def __init__(self, name: str, parent: 'CHandle' = None, protect: str | None = None):
-        self.name = name
-        self.parent = parent
-        self.protect = protect
+    name: str
+    parent: CHandle | None = None
+    protect: str | None = None
 
 
+@dataclass(eq=False)
 class CCommand:
-    def __init__(self, name: str, return_type: CType, params: List[CMember] = None, protect: str | None = None):
-        self.name = name
-        self.return_type = return_type
-        self.params = params or []
-        self.protect = protect
+    name: str
+    return_type: CType
+    params: list[CMember] = field(default_factory=list)
+    protect: str | None = None
 
 
+@dataclass(eq=False)
 class CExtension:
-    def __init__(self, name: str, supported: str = None, platform: str = None, protect: str = None,
-                 types: List[str] = None, enums: List[CEnum] = None, commands: List[str] = None,
-                 ignored_names: list[str] | None = None,
-                 supported_apis: List[str] | None = None):
-        self.name = name
-        self.supported = supported
-        self.platform = platform
-        self.protect = protect
-        self.types = types or []
-        self.enums = enums or []
-        self.commands = commands or []
-        self.supported_apis = supported_apis or []
-        self.ignored_names = ignored_names or []
+    name: str
+    supported: str | None = None
+    platform: str | None = None
+    protect: str | None = None
+    types: list[str] = field(default_factory=list)
+    enums: list[CEnum] = field(default_factory=list)
+    commands: list[str] = field(default_factory=list)
+    supported_apis: list[str] = field(default_factory=list)
+    ignored_names: list[str] = field(default_factory=list)
 
 
 blacklisted_extensions = set([
@@ -102,20 +100,24 @@ blacklisted_extensions = set([
 ])
 
 
+@dataclass(eq=False)
 class CFeature:
-    def __init__(self, name: str, api: list[str], type_names: list[str], command_names: list[str], apitype: str | None = None,):
-        self.name = name
-        self.api = api or "public"
-        self.apitype = apitype
-        self.type_names = set(type_names)
-        self.command_names = set(command_names)
+    name: str
+    api: list[str]
+    type_names: set[str]
+    command_names: set[str]
+    apitype: str | None = None
+
+    def __post_init__(self):
+        self.type_names = set(self.type_names)
+        self.command_names = set(self.command_names)
 
 
+@dataclass(eq=False)
 class CAlias:
-    def __init__(self, name: str, alias: str, protect: str = None):
-        self.name = name
-        self.alias = alias
-        self.protect = protect
+    name: str
+    alias: str
+    protect: str | None = None
 
 
 class CContext:
@@ -132,7 +134,7 @@ class CContext:
         self.aliases: List[CAlias] = []
 
     def parse(self, source):
-        tree = ElementTree.parse(source)
+        tree = parse(source)
         # TODO: parse feature block instead of doing this
         # self._filter_vulkansc(tree.getroot())
         self.parse_tree(tree)

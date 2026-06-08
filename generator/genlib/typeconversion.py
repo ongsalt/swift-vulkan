@@ -1,4 +1,6 @@
+from __future__ import annotations
 from typing import Dict, Tuple, List
+from dataclasses import dataclass, field
 from string import Template
 
 IMPLICIT_TYPE_MAP = {
@@ -37,11 +39,11 @@ def _substitute(template: str, values: Dict[str, str], safe: bool = False):
         return Template(template).substitute(**values)
 
 
+@dataclass(eq=False, kw_only=True)
 class Conversion:
-    def __init__(self, swift_value_template: str, c_value_template: str, c_closure_template: Tuple[str, str] = None):
-        self.c_value_template = c_value_template
-        self.c_closure_template = c_closure_template
-        self.swift_value_template = swift_value_template
+    swift_value_template: str
+    c_value_template: str
+    c_closure_template: tuple[str, str] | None = None
 
     @property
     def requires_closure(self) -> bool:
@@ -70,13 +72,11 @@ class Conversion:
         return _substitute(self.swift_value_template, values, safe=safe)
 
 
+@dataclass(eq=False, kw_only=True)
 class ArrayConversion(Conversion):
-    def __init__(self, length: str, swift_value_template: str, c_value_template: str, c_length_template: str,
-                 c_closure_template: Tuple[str, str] = None, swift_element_template: str = None):
-        super().__init__(swift_value_template, c_value_template, c_closure_template)
-        self.length = length
-        self.c_length_template = c_length_template
-        self.swift_element_template = swift_element_template
+    length: str
+    c_length_template: str
+    swift_element_template: str | None = None
 
     def get_c_length(self, name: str, values: Dict[str, str] = None, safe: bool = False) -> str:
         value = values[name] if values is not None else name
@@ -102,10 +102,10 @@ class ArrayConversion(Conversion):
         return _substitute(self.swift_element_template, values, safe=safe)
 
 
+@dataclass(eq=False)
 class MemberConversions:
-    def __init__(self):
-        self.conversions: List[Tuple[str, str, Conversion]] = []
-        self.static_values: List[Tuple[str, str]] = []
+    conversions: list[tuple[str, str, Conversion]] = field(default_factory=list)
+    static_values: list[tuple[str, str]] = field(default_factory=list)
 
     def add_conversion(self, c_member: str, swift_member: str, conversion: Conversion):
         self.conversions.append((c_member, swift_member, conversion))
