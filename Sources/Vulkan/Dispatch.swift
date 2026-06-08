@@ -865,6 +865,20 @@ public struct DeviceDispatchTable {
     public let vkCmdEndRendering2KHR: PFN_vkCmdEndRendering2KHR!
     public let vkGetDescriptorSetLayoutHostMappingInfoVALVE: PFN_vkGetDescriptorSetLayoutHostMappingInfoVALVE!
     public let vkGetDescriptorSetHostMappingVALVE: PFN_vkGetDescriptorSetHostMappingVALVE!
+    public let vkCreateMicromapEXT: PFN_vkCreateMicromapEXT!
+    public let vkCmdBuildMicromapsEXT: PFN_vkCmdBuildMicromapsEXT!
+    public let vkBuildMicromapsEXT: PFN_vkBuildMicromapsEXT!
+    public let vkDestroyMicromapEXT: PFN_vkDestroyMicromapEXT!
+    public let vkCmdCopyMicromapEXT: PFN_vkCmdCopyMicromapEXT!
+    public let vkCopyMicromapEXT: PFN_vkCopyMicromapEXT!
+    public let vkCmdCopyMicromapToMemoryEXT: PFN_vkCmdCopyMicromapToMemoryEXT!
+    public let vkCopyMicromapToMemoryEXT: PFN_vkCopyMicromapToMemoryEXT!
+    public let vkCmdCopyMemoryToMicromapEXT: PFN_vkCmdCopyMemoryToMicromapEXT!
+    public let vkCopyMemoryToMicromapEXT: PFN_vkCopyMemoryToMicromapEXT!
+    public let vkCmdWriteMicromapsPropertiesEXT: PFN_vkCmdWriteMicromapsPropertiesEXT!
+    public let vkWriteMicromapsPropertiesEXT: PFN_vkWriteMicromapsPropertiesEXT!
+    public let vkGetDeviceMicromapCompatibilityEXT: PFN_vkGetDeviceMicromapCompatibilityEXT!
+    public let vkGetMicromapBuildSizesEXT: PFN_vkGetMicromapBuildSizesEXT!
     public let vkGetShaderModuleIdentifierEXT: PFN_vkGetShaderModuleIdentifierEXT!
     public let vkGetShaderModuleCreateInfoIdentifierEXT: PFN_vkGetShaderModuleCreateInfoIdentifierEXT!
     public let vkGetImageSubresourceLayout2: PFN_vkGetImageSubresourceLayout2!
@@ -919,6 +933,18 @@ public struct DeviceDispatchTable {
     #if VK_ENABLE_BETA_EXTENSIONS
     public let vkCmdDispatchGraphIndirectCountAMDX: PFN_vkCmdDispatchGraphIndirectCountAMDX!
     #endif
+    public let vkCreateGpaSessionAMD: PFN_vkCreateGpaSessionAMD!
+    public let vkDestroyGpaSessionAMD: PFN_vkDestroyGpaSessionAMD!
+    public let vkSetGpaDeviceClockModeAMD: PFN_vkSetGpaDeviceClockModeAMD!
+    public let vkGetGpaDeviceClockInfoAMD: PFN_vkGetGpaDeviceClockInfoAMD!
+    public let vkCmdBeginGpaSessionAMD: PFN_vkCmdBeginGpaSessionAMD!
+    public let vkCmdEndGpaSessionAMD: PFN_vkCmdEndGpaSessionAMD!
+    public let vkCmdBeginGpaSampleAMD: PFN_vkCmdBeginGpaSampleAMD!
+    public let vkCmdEndGpaSampleAMD: PFN_vkCmdEndGpaSampleAMD!
+    public let vkGetGpaSessionStatusAMD: PFN_vkGetGpaSessionStatusAMD!
+    public let vkGetGpaSessionResultsAMD: PFN_vkGetGpaSessionResultsAMD!
+    public let vkResetGpaSessionAMD: PFN_vkResetGpaSessionAMD!
+    public let vkCmdCopyGpaSessionResultsAMD: PFN_vkCmdCopyGpaSessionResultsAMD!
     public let vkCmdBindDescriptorSets2: PFN_vkCmdBindDescriptorSets2!
     public let vkCmdPushConstants2: PFN_vkCmdPushConstants2!
     public let vkCmdPushDescriptorSet2: PFN_vkCmdPushDescriptorSet2!
@@ -1540,6 +1566,20 @@ public struct DeviceDispatchTable {
         self.vkCmdEndRendering2KHR = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdEndRendering2KHR"), to: PFN_vkCmdEndRendering2KHR?.self)
         self.vkGetDescriptorSetLayoutHostMappingInfoVALVE = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetDescriptorSetLayoutHostMappingInfoVALVE"), to: PFN_vkGetDescriptorSetLayoutHostMappingInfoVALVE?.self)
         self.vkGetDescriptorSetHostMappingVALVE = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetDescriptorSetHostMappingVALVE"), to: PFN_vkGetDescriptorSetHostMappingVALVE?.self)
+        self.vkCreateMicromapEXT = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCreateMicromapEXT"), to: PFN_vkCreateMicromapEXT?.self)
+        self.vkCmdBuildMicromapsEXT = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdBuildMicromapsEXT"), to: PFN_vkCmdBuildMicromapsEXT?.self)
+        self.vkBuildMicromapsEXT = unsafeBitCast(vkGetDeviceProcAddr(device, "vkBuildMicromapsEXT"), to: PFN_vkBuildMicromapsEXT?.self)
+        self.vkDestroyMicromapEXT = unsafeBitCast(vkGetDeviceProcAddr(device, "vkDestroyMicromapEXT"), to: PFN_vkDestroyMicromapEXT?.self)
+        self.vkCmdCopyMicromapEXT = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdCopyMicromapEXT"), to: PFN_vkCmdCopyMicromapEXT?.self)
+        self.vkCopyMicromapEXT = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCopyMicromapEXT"), to: PFN_vkCopyMicromapEXT?.self)
+        self.vkCmdCopyMicromapToMemoryEXT = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdCopyMicromapToMemoryEXT"), to: PFN_vkCmdCopyMicromapToMemoryEXT?.self)
+        self.vkCopyMicromapToMemoryEXT = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCopyMicromapToMemoryEXT"), to: PFN_vkCopyMicromapToMemoryEXT?.self)
+        self.vkCmdCopyMemoryToMicromapEXT = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdCopyMemoryToMicromapEXT"), to: PFN_vkCmdCopyMemoryToMicromapEXT?.self)
+        self.vkCopyMemoryToMicromapEXT = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCopyMemoryToMicromapEXT"), to: PFN_vkCopyMemoryToMicromapEXT?.self)
+        self.vkCmdWriteMicromapsPropertiesEXT = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdWriteMicromapsPropertiesEXT"), to: PFN_vkCmdWriteMicromapsPropertiesEXT?.self)
+        self.vkWriteMicromapsPropertiesEXT = unsafeBitCast(vkGetDeviceProcAddr(device, "vkWriteMicromapsPropertiesEXT"), to: PFN_vkWriteMicromapsPropertiesEXT?.self)
+        self.vkGetDeviceMicromapCompatibilityEXT = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetDeviceMicromapCompatibilityEXT"), to: PFN_vkGetDeviceMicromapCompatibilityEXT?.self)
+        self.vkGetMicromapBuildSizesEXT = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetMicromapBuildSizesEXT"), to: PFN_vkGetMicromapBuildSizesEXT?.self)
         self.vkGetShaderModuleIdentifierEXT = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetShaderModuleIdentifierEXT"), to: PFN_vkGetShaderModuleIdentifierEXT?.self)
         self.vkGetShaderModuleCreateInfoIdentifierEXT = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetShaderModuleCreateInfoIdentifierEXT"), to: PFN_vkGetShaderModuleCreateInfoIdentifierEXT?.self)
         self.vkGetImageSubresourceLayout2 = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetImageSubresourceLayout2"), to: PFN_vkGetImageSubresourceLayout2?.self)
@@ -1594,6 +1634,18 @@ public struct DeviceDispatchTable {
         #if VK_ENABLE_BETA_EXTENSIONS
         self.vkCmdDispatchGraphIndirectCountAMDX = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdDispatchGraphIndirectCountAMDX"), to: PFN_vkCmdDispatchGraphIndirectCountAMDX?.self)
         #endif
+        self.vkCreateGpaSessionAMD = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCreateGpaSessionAMD"), to: PFN_vkCreateGpaSessionAMD?.self)
+        self.vkDestroyGpaSessionAMD = unsafeBitCast(vkGetDeviceProcAddr(device, "vkDestroyGpaSessionAMD"), to: PFN_vkDestroyGpaSessionAMD?.self)
+        self.vkSetGpaDeviceClockModeAMD = unsafeBitCast(vkGetDeviceProcAddr(device, "vkSetGpaDeviceClockModeAMD"), to: PFN_vkSetGpaDeviceClockModeAMD?.self)
+        self.vkGetGpaDeviceClockInfoAMD = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetGpaDeviceClockInfoAMD"), to: PFN_vkGetGpaDeviceClockInfoAMD?.self)
+        self.vkCmdBeginGpaSessionAMD = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdBeginGpaSessionAMD"), to: PFN_vkCmdBeginGpaSessionAMD?.self)
+        self.vkCmdEndGpaSessionAMD = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdEndGpaSessionAMD"), to: PFN_vkCmdEndGpaSessionAMD?.self)
+        self.vkCmdBeginGpaSampleAMD = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdBeginGpaSampleAMD"), to: PFN_vkCmdBeginGpaSampleAMD?.self)
+        self.vkCmdEndGpaSampleAMD = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdEndGpaSampleAMD"), to: PFN_vkCmdEndGpaSampleAMD?.self)
+        self.vkGetGpaSessionStatusAMD = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetGpaSessionStatusAMD"), to: PFN_vkGetGpaSessionStatusAMD?.self)
+        self.vkGetGpaSessionResultsAMD = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetGpaSessionResultsAMD"), to: PFN_vkGetGpaSessionResultsAMD?.self)
+        self.vkResetGpaSessionAMD = unsafeBitCast(vkGetDeviceProcAddr(device, "vkResetGpaSessionAMD"), to: PFN_vkResetGpaSessionAMD?.self)
+        self.vkCmdCopyGpaSessionResultsAMD = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdCopyGpaSessionResultsAMD"), to: PFN_vkCmdCopyGpaSessionResultsAMD?.self)
         self.vkCmdBindDescriptorSets2 = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdBindDescriptorSets2"), to: PFN_vkCmdBindDescriptorSets2?.self)
         self.vkCmdPushConstants2 = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdPushConstants2"), to: PFN_vkCmdPushConstants2?.self)
         self.vkCmdPushDescriptorSet2 = unsafeBitCast(vkGetDeviceProcAddr(device, "vkCmdPushDescriptorSet2"), to: PFN_vkCmdPushDescriptorSet2?.self)

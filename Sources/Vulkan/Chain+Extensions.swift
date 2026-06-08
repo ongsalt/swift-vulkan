@@ -1944,6 +1944,12 @@ extension Chain where Base == PhysicalDeviceHostQueryResetFeatures {
     }
 }
 
+extension Chain where Base == PhysicalDeviceElapsedTimerQueryFeaturesQCOM {
+    public func push<NewValue: PhysicalDeviceElapsedTimerQueryFeaturesQCOMExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
 extension Chain where Base == DeviceQueueGlobalPriorityCreateInfo {
     public func push<NewValue: DeviceQueueGlobalPriorityCreateInfoExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
         Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
@@ -3262,6 +3268,48 @@ extension Chain where Base == PipelineCompilerControlCreateInfoAMD {
 
 extension Chain where Base == PhysicalDeviceCoherentMemoryFeaturesAMD {
     public func push<NewValue: PhysicalDeviceCoherentMemoryFeaturesAMDExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
+extension Chain where Base == PhysicalDeviceGpaFeaturesAMD {
+    public func push<NewValue: PhysicalDeviceGpaFeaturesAMDExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
+extension Chain where Base == PhysicalDeviceGpaPropertiesAMD {
+    public func push<NewValue: PhysicalDeviceGpaPropertiesAMDExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
+extension Chain where Base == PhysicalDeviceGpaProperties2AMD {
+    public func push<NewValue: PhysicalDeviceGpaProperties2AMDExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
+extension Chain where Base == GpaSampleBeginInfoAMD {
+    public func push<NewValue: GpaSampleBeginInfoAMDExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
+extension Chain where Base == GpaDeviceClockModeInfoAMD {
+    public func push<NewValue: GpaDeviceClockModeInfoAMDExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
+extension Chain where Base == GpaDeviceGetClockInfoAMD {
+    public func push<NewValue: GpaDeviceGetClockInfoAMDExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
+extension Chain where Base == GpaSessionCreateInfoAMD {
+    public func push<NewValue: GpaSessionCreateInfoAMDExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
         Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
     }
 }
@@ -5338,6 +5386,90 @@ extension Chain where Base == PhysicalDeviceSubpassMergeFeedbackFeaturesEXT {
     }
 }
 
+extension Chain where Base == MicromapBuildInfoEXT {
+    public func push<NewValue: MicromapBuildInfoEXTExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
+extension Chain where Base == AccelerationStructureGeometryMicromapDataKHR {
+    public func push<NewValue: AccelerationStructureGeometryMicromapDataKHRExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
+extension Chain where Base == MicromapCreateInfoEXT {
+    public func push<NewValue: MicromapCreateInfoEXTExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
+extension Chain where Base == MicromapVersionInfoEXT {
+    public func push<NewValue: MicromapVersionInfoEXTExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
+extension Chain where Base == CopyMicromapInfoEXT {
+    public func push<NewValue: CopyMicromapInfoEXTExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
+extension Chain where Base == CopyMicromapToMemoryInfoEXT {
+    public func push<NewValue: CopyMicromapToMemoryInfoEXTExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
+extension Chain where Base == CopyMemoryToMicromapInfoEXT {
+    public func push<NewValue: CopyMemoryToMicromapInfoEXTExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
+extension Chain where Base == MicromapBuildSizesInfoEXT {
+    public func push<NewValue: MicromapBuildSizesInfoEXTExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
+extension Chain where Base == PhysicalDeviceOpacityMicromapFeaturesKHR {
+    public func push<NewValue: PhysicalDeviceOpacityMicromapFeaturesKHRExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
+extension Chain where Base == PhysicalDeviceOpacityMicromapFeaturesEXT {
+    public func push<NewValue: PhysicalDeviceOpacityMicromapFeaturesEXTExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
+extension Chain where Base == PhysicalDeviceOpacityMicromapPropertiesKHR {
+    public func push<NewValue: PhysicalDeviceOpacityMicromapPropertiesKHRExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
+extension Chain where Base == PhysicalDeviceOpacityMicromapPropertiesEXT {
+    public func push<NewValue: PhysicalDeviceOpacityMicromapPropertiesEXTExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
+extension Chain where Base == AccelerationStructureTrianglesOpacityMicromapKHR {
+    public func push<NewValue: AccelerationStructureTrianglesOpacityMicromapKHRExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
+extension Chain where Base == AccelerationStructureTrianglesOpacityMicromapEXT {
+    public func push<NewValue: AccelerationStructureTrianglesOpacityMicromapEXTExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
 #if VK_ENABLE_BETA_EXTENSIONS
 extension Chain where Base == PhysicalDeviceDisplacementMicromapFeaturesNV {
     public func push<NewValue: PhysicalDeviceDisplacementMicromapFeaturesNVExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
@@ -5508,6 +5640,18 @@ extension Chain where Base == PhysicalDevicePipelineRobustnessProperties {
 
 extension Chain where Base == ImageViewSampleWeightCreateInfoQCOM {
     public func push<NewValue: ImageViewSampleWeightCreateInfoQCOMExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
+extension Chain where Base == PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM {
+    public func push<NewValue: PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOMExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
+extension Chain where Base == PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM {
+    public func push<NewValue: PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOMExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
         Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
     }
 }
@@ -6164,6 +6308,12 @@ extension Chain where Base == PhysicalDeviceImageProcessing2PropertiesQCOM {
 
 extension Chain where Base == SamplerBlockMatchWindowCreateInfoQCOM {
     public func push<NewValue: SamplerBlockMatchWindowCreateInfoQCOMExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
+extension Chain where Base == PhysicalDeviceImageProcessing3FeaturesQCOM {
+    public func push<NewValue: PhysicalDeviceImageProcessing3FeaturesQCOMExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
         Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
     }
 }
@@ -7206,6 +7356,18 @@ extension Chain where Base == IndirectCommandsLayoutPushDataTokenNV {
 
 extension Chain where Base == SubsampledImageFormatPropertiesEXT {
     public func push<NewValue: SubsampledImageFormatPropertiesEXTExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
+extension Chain where Base == PhysicalDeviceShaderSplitBarrierFeaturesEXT {
+    public func push<NewValue: PhysicalDeviceShaderSplitBarrierFeaturesEXTExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
+extension Chain where Base == PhysicalDeviceShaderSplitBarrierPropertiesEXT {
+    public func push<NewValue: PhysicalDeviceShaderSplitBarrierPropertiesEXTExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
         Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
     }
 }

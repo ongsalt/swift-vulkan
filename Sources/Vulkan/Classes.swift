@@ -3588,6 +3588,122 @@ public class Device: _HandleContainer {
         }
     }
 
+    public func createMicromapEXT(_ createInfo: (some Chainable<MicromapCreateInfoEXT>)) throws -> MicromapEXT {
+        try createInfo.withCStruct { ptr_createInfo in
+            var out: VkMicromapEXT!
+            try checkResult(
+                self.dispatchTable.vkCreateMicromapEXT(self.handle, ptr_createInfo, nil, &out)
+            )
+            return MicromapEXT(handle: out, device: self)
+        }
+    }
+
+    public func createMicromapEXT(_ createInfo: MicromapCreateInfoEXT) throws -> MicromapEXT {
+        try createInfo.withCStruct { ptr_createInfo in
+            var out: VkMicromapEXT!
+            try checkResult(
+                self.dispatchTable.vkCreateMicromapEXT(self.handle, ptr_createInfo, nil, &out)
+            )
+            return MicromapEXT(handle: out, device: self)
+        }
+    }
+
+    public func buildMicromapsEXT(deferredOperation: DeferredOperationKHR? = nil, infos: Array<MicromapBuildInfoEXT>) throws -> Void {
+        try infos.withCStructBufferPointer { ptr_infos in
+            try checkResult(
+                self.dispatchTable.vkBuildMicromapsEXT(self.handle, deferredOperation?.handle, UInt32(ptr_infos.count), ptr_infos.baseAddress)
+            )
+        }
+    }
+
+    public func copyMicromapEXT(deferredOperation: DeferredOperationKHR? = nil, info: (some Chainable<CopyMicromapInfoEXT>)) throws -> Void {
+        try info.withCStruct { ptr_info in
+            try checkResult(
+                self.dispatchTable.vkCopyMicromapEXT(self.handle, deferredOperation?.handle, ptr_info)
+            )
+        }
+    }
+
+    public func copyMicromapEXT(deferredOperation: DeferredOperationKHR? = nil, info: CopyMicromapInfoEXT) throws -> Void {
+        try info.withCStruct { ptr_info in
+            try checkResult(
+                self.dispatchTable.vkCopyMicromapEXT(self.handle, deferredOperation?.handle, ptr_info)
+            )
+        }
+    }
+
+    public func copyMicromapToMemoryEXT(deferredOperation: DeferredOperationKHR? = nil, info: (some Chainable<CopyMicromapToMemoryInfoEXT>)) throws -> Void {
+        try info.withCStruct { ptr_info in
+            try checkResult(
+                self.dispatchTable.vkCopyMicromapToMemoryEXT(self.handle, deferredOperation?.handle, ptr_info)
+            )
+        }
+    }
+
+    public func copyMicromapToMemoryEXT(deferredOperation: DeferredOperationKHR? = nil, info: CopyMicromapToMemoryInfoEXT) throws -> Void {
+        try info.withCStruct { ptr_info in
+            try checkResult(
+                self.dispatchTable.vkCopyMicromapToMemoryEXT(self.handle, deferredOperation?.handle, ptr_info)
+            )
+        }
+    }
+
+    public func copyMemoryToMicromapEXT(deferredOperation: DeferredOperationKHR? = nil, info: (some Chainable<CopyMemoryToMicromapInfoEXT>)) throws -> Void {
+        try info.withCStruct { ptr_info in
+            try checkResult(
+                self.dispatchTable.vkCopyMemoryToMicromapEXT(self.handle, deferredOperation?.handle, ptr_info)
+            )
+        }
+    }
+
+    public func copyMemoryToMicromapEXT(deferredOperation: DeferredOperationKHR? = nil, info: CopyMemoryToMicromapInfoEXT) throws -> Void {
+        try info.withCStruct { ptr_info in
+            try checkResult(
+                self.dispatchTable.vkCopyMemoryToMicromapEXT(self.handle, deferredOperation?.handle, ptr_info)
+            )
+        }
+    }
+
+    public func writeMicromapsPropertiesEXT(micromaps: Array<MicromapEXT>, queryType: QueryType, dataSize: Int, data: UnsafeMutableRawPointer, stride: Int) throws -> Void {
+        try micromaps.map{ $0.handle }.withUnsafeBufferPointer { ptr_micromaps in
+            try checkResult(
+                self.dispatchTable.vkWriteMicromapsPropertiesEXT(self.handle, UInt32(ptr_micromaps.count), ptr_micromaps.baseAddress, VkQueryType(rawValue: VkQueryType.RawValue(queryType.rawValue)), dataSize, data, stride)
+            )
+        }
+    }
+
+    public func getMicromapCompatibilityEXT(_ versionInfo: (some Chainable<MicromapVersionInfoEXT>)) -> AccelerationStructureCompatibilityKHR {
+        versionInfo.withCStruct { ptr_versionInfo in
+            var out = VkAccelerationStructureCompatibilityKHR(rawValue: 0)
+            self.dispatchTable.vkGetDeviceMicromapCompatibilityEXT(self.handle, ptr_versionInfo, &out)
+            return AccelerationStructureCompatibilityKHR(rawValue: unsafeBitCast(out, to: UInt32.self))!
+        }
+    }
+
+    public func getMicromapCompatibilityEXT(_ versionInfo: MicromapVersionInfoEXT) -> AccelerationStructureCompatibilityKHR {
+        versionInfo.withCStruct { ptr_versionInfo in
+            var out = VkAccelerationStructureCompatibilityKHR(rawValue: 0)
+            self.dispatchTable.vkGetDeviceMicromapCompatibilityEXT(self.handle, ptr_versionInfo, &out)
+            return AccelerationStructureCompatibilityKHR(rawValue: unsafeBitCast(out, to: UInt32.self))!
+        }
+    }
+
+    public func getMicromapBuildSizesEXT(buildType: AccelerationStructureBuildTypeKHR, buildInfo: (some Chainable<MicromapBuildInfoEXT>)) -> MicromapBuildSizesInfoEXT {
+        buildInfo.withCStruct { ptr_buildInfo in
+            var out = VkMicromapBuildSizesInfoEXT()
+            self.dispatchTable.vkGetMicromapBuildSizesEXT(self.handle, VkAccelerationStructureBuildTypeKHR(rawValue: VkAccelerationStructureBuildTypeKHR.RawValue(buildType.rawValue)), ptr_buildInfo, &out)
+            return MicromapBuildSizesInfoEXT(cStruct: out)
+        }
+    }
+
+    public func getMicromapBuildSizesEXT(buildType: AccelerationStructureBuildTypeKHR, buildInfo: MicromapBuildInfoEXT) -> MicromapBuildSizesInfoEXT {
+        buildInfo.withCStruct { ptr_buildInfo in
+            var out = VkMicromapBuildSizesInfoEXT()
+            self.dispatchTable.vkGetMicromapBuildSizesEXT(self.handle, VkAccelerationStructureBuildTypeKHR(rawValue: VkAccelerationStructureBuildTypeKHR.RawValue(buildType.rawValue)), ptr_buildInfo, &out)
+            return MicromapBuildSizesInfoEXT(cStruct: out)
+        }
+    }
+
     public func getShaderModuleCreateInfoIdentifierEXT(_ createInfo: (some Chainable<ShaderModuleCreateInfo>)) -> ShaderModuleIdentifierEXT {
         createInfo.withCStruct { ptr_createInfo in
             var out = VkShaderModuleIdentifierEXT()
@@ -3813,6 +3929,42 @@ public class Device: _HandleContainer {
         }
     }
     #endif
+
+    public func createGpaSessionAMD(_ createInfo: (some Chainable<GpaSessionCreateInfoAMD>)) throws -> GpaSessionAMD {
+        try createInfo.withCStruct { ptr_createInfo in
+            var out: VkGpaSessionAMD!
+            try checkResult(
+                self.dispatchTable.vkCreateGpaSessionAMD(self.handle, ptr_createInfo, nil, &out)
+            )
+            return GpaSessionAMD(handle: out, device: self)
+        }
+    }
+
+    public func createGpaSessionAMD(_ createInfo: GpaSessionCreateInfoAMD) throws -> GpaSessionAMD {
+        try createInfo.withCStruct { ptr_createInfo in
+            var out: VkGpaSessionAMD!
+            try checkResult(
+                self.dispatchTable.vkCreateGpaSessionAMD(self.handle, ptr_createInfo, nil, &out)
+            )
+            return GpaSessionAMD(handle: out, device: self)
+        }
+    }
+
+    public func setGpaClockModeAMD() throws -> GpaDeviceClockModeInfoAMD {
+        var out = VkGpaDeviceClockModeInfoAMD()
+        try checkResult(
+            self.dispatchTable.vkSetGpaDeviceClockModeAMD(self.handle, &out)
+        )
+        return GpaDeviceClockModeInfoAMD(cStruct: out)
+    }
+
+    public func getGpaClockInfoAMD() throws -> GpaDeviceGetClockInfoAMD {
+        var out = VkGpaDeviceGetClockInfoAMD()
+        try checkResult(
+            self.dispatchTable.vkGetGpaDeviceClockInfoAMD(self.handle, &out)
+        )
+        return GpaDeviceGetClockInfoAMD(cStruct: out)
+    }
 
     #if VK_USE_PLATFORM_METAL_EXT
     public func getMemoryMetalHandleEXT(_ getMetalHandleInfo: (some Chainable<MemoryGetMetalHandleInfoEXT>)) throws -> UnsafeMutableRawPointer {
@@ -5805,6 +5957,54 @@ public class CommandBuffer: _HandleContainer {
         }
     }
 
+    public func cmdBuildMicromapsEXT(infos: Array<MicromapBuildInfoEXT>) -> Void {
+        infos.withCStructBufferPointer { ptr_infos in
+            self.commandPool.device.dispatchTable.vkCmdBuildMicromapsEXT(self.handle, UInt32(ptr_infos.count), ptr_infos.baseAddress)
+        }
+    }
+
+    public func cmdCopyMicromapEXT(info: (some Chainable<CopyMicromapInfoEXT>)) -> Void {
+        info.withCStruct { ptr_info in
+            self.commandPool.device.dispatchTable.vkCmdCopyMicromapEXT(self.handle, ptr_info)
+        }
+    }
+
+    public func cmdCopyMicromapEXT(info: CopyMicromapInfoEXT) -> Void {
+        info.withCStruct { ptr_info in
+            self.commandPool.device.dispatchTable.vkCmdCopyMicromapEXT(self.handle, ptr_info)
+        }
+    }
+
+    public func cmdCopyMicromapToMemoryEXT(info: (some Chainable<CopyMicromapToMemoryInfoEXT>)) -> Void {
+        info.withCStruct { ptr_info in
+            self.commandPool.device.dispatchTable.vkCmdCopyMicromapToMemoryEXT(self.handle, ptr_info)
+        }
+    }
+
+    public func cmdCopyMicromapToMemoryEXT(info: CopyMicromapToMemoryInfoEXT) -> Void {
+        info.withCStruct { ptr_info in
+            self.commandPool.device.dispatchTable.vkCmdCopyMicromapToMemoryEXT(self.handle, ptr_info)
+        }
+    }
+
+    public func cmdCopyMemoryToMicromapEXT(info: (some Chainable<CopyMemoryToMicromapInfoEXT>)) -> Void {
+        info.withCStruct { ptr_info in
+            self.commandPool.device.dispatchTable.vkCmdCopyMemoryToMicromapEXT(self.handle, ptr_info)
+        }
+    }
+
+    public func cmdCopyMemoryToMicromapEXT(info: CopyMemoryToMicromapInfoEXT) -> Void {
+        info.withCStruct { ptr_info in
+            self.commandPool.device.dispatchTable.vkCmdCopyMemoryToMicromapEXT(self.handle, ptr_info)
+        }
+    }
+
+    public func cmdWriteMicromapsPropertiesEXT(micromaps: Array<MicromapEXT>, queryType: QueryType, queryPool: QueryPool, firstQuery: UInt32) -> Void {
+        micromaps.map{ $0.handle }.withUnsafeBufferPointer { ptr_micromaps in
+            self.commandPool.device.dispatchTable.vkCmdWriteMicromapsPropertiesEXT(self.handle, UInt32(ptr_micromaps.count), ptr_micromaps.baseAddress, VkQueryType(rawValue: VkQueryType.RawValue(queryType.rawValue)), queryPool.handle, firstQuery)
+        }
+    }
+
     public func cmdBindTileMemoryQCOM(_ tileMemoryBindInfo: (some Chainable<TileMemoryBindInfoQCOM>)) -> Void {
         tileMemoryBindInfo.withCStruct { ptr_tileMemoryBindInfo in
             self.commandPool.device.dispatchTable.vkCmdBindTileMemoryQCOM(self.handle, ptr_tileMemoryBindInfo)
@@ -5876,6 +6076,46 @@ public class CommandBuffer: _HandleContainer {
         self.commandPool.device.dispatchTable.vkCmdDispatchGraphIndirectCountAMDX(self.handle, scratch, scratchSize, countInfo)
     }
     #endif
+
+    public func cmdBeginGpaSessionAMD(gpaSession: GpaSessionAMD) throws -> Void {
+        try checkResult(
+            self.commandPool.device.dispatchTable.vkCmdBeginGpaSessionAMD(self.handle, gpaSession.handle)
+        )
+    }
+
+    public func cmdEndGpaSessionAMD(gpaSession: GpaSessionAMD) throws -> Void {
+        try checkResult(
+            self.commandPool.device.dispatchTable.vkCmdEndGpaSessionAMD(self.handle, gpaSession.handle)
+        )
+    }
+
+    public func cmdBeginGpaSampleAMD(gpaSession: GpaSessionAMD, gpaSampleBeginInfo: (some Chainable<GpaSampleBeginInfoAMD>)) throws -> UInt32 {
+        try gpaSampleBeginInfo.withCStruct { ptr_gpaSampleBeginInfo in
+            var out = UInt32()
+            try checkResult(
+                self.commandPool.device.dispatchTable.vkCmdBeginGpaSampleAMD(self.handle, gpaSession.handle, ptr_gpaSampleBeginInfo, &out)
+            )
+            return out
+        }
+    }
+
+    public func cmdBeginGpaSampleAMD(gpaSession: GpaSessionAMD, gpaSampleBeginInfo: GpaSampleBeginInfoAMD) throws -> UInt32 {
+        try gpaSampleBeginInfo.withCStruct { ptr_gpaSampleBeginInfo in
+            var out = UInt32()
+            try checkResult(
+                self.commandPool.device.dispatchTable.vkCmdBeginGpaSampleAMD(self.handle, gpaSession.handle, ptr_gpaSampleBeginInfo, &out)
+            )
+            return out
+        }
+    }
+
+    public func cmdEndGpaSampleAMD(gpaSession: GpaSessionAMD, sampleID: UInt32) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdEndGpaSampleAMD(self.handle, gpaSession.handle, sampleID)
+    }
+
+    public func cmdCopyGpaSessionResultsAMD(gpaSession: GpaSessionAMD) -> Void {
+        self.commandPool.device.dispatchTable.vkCmdCopyGpaSessionResultsAMD(self.handle, gpaSession.handle)
+    }
 
     public func cmdBindDescriptorSets2(_ bindDescriptorSetsInfo: (some Chainable<BindDescriptorSetsInfo>)) -> Void {
         bindDescriptorSetsInfo.withCStruct { ptr_bindDescriptorSetsInfo in
@@ -7196,6 +7436,20 @@ public class OpticalFlowSessionNV: _HandleContainer {
     }
 }
 
+public class MicromapEXT: _HandleContainer {
+    let handle: VkMicromapEXT?
+    public let device: Device
+
+    public init(handle: VkMicromapEXT!, device: Device) {
+        self.handle = handle
+        self.device = device
+    }
+
+    public func destroyEXT() -> Void {
+        self.device.dispatchTable.vkDestroyMicromapEXT(self.device.handle, self.handle, nil)
+    }
+}
+
 public class ShaderEXT: _HandleContainer {
     let handle: VkShaderEXT?
     public let device: Device
@@ -7281,6 +7535,38 @@ public class ShaderInstrumentationARM: _HandleContainer {
 
     public func clearMetricsARM() -> Void {
         self.device.dispatchTable.vkClearShaderInstrumentationMetricsARM(self.device.handle, self.handle)
+    }
+}
+
+public class GpaSessionAMD: _HandleContainer {
+    let handle: VkGpaSessionAMD?
+    public let device: Device
+
+    public init(handle: VkGpaSessionAMD!, device: Device) {
+        self.handle = handle
+        self.device = device
+    }
+
+    public func destroyAMD() -> Void {
+        self.device.dispatchTable.vkDestroyGpaSessionAMD(self.device.handle, self.handle, nil)
+    }
+
+    public func getStatusAMD() throws -> Void {
+        try checkResult(
+            self.device.dispatchTable.vkGetGpaSessionStatusAMD(self.device.handle, self.handle)
+        )
+    }
+
+    public func getResultsAMD(sampleID: UInt32) throws -> Array<UInt8> {
+        try enumerateBytes { pData, pSizeInBytes in
+            self.device.dispatchTable.vkGetGpaSessionResultsAMD(self.device.handle, self.handle, sampleID, pSizeInBytes, pData)
+        }
+    }
+
+    public func resetAMD() throws -> Void {
+        try checkResult(
+            self.device.dispatchTable.vkResetGpaSessionAMD(self.device.handle, self.handle)
+        )
     }
 }
 

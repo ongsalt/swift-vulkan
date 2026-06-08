@@ -89,15 +89,7 @@ class CExtension:
     ignored_names: list[str] = field(default_factory=list)
 
 
-blacklisted_extensions = set([
-    "VK_AMD_gpa_interface",  # not presented in the header, lunarg sdk?
-    "VK_QCOM_elapsed_timer_query",
-    "VK_KHR_opacity_micromap",
-    "VK_EXT_opacity_micromap",
-    "VK_QCOM_shader_multiple_wait_queues",
-    "VK_QCOM_image_processing3",
-    "VK_EXT_shader_split_barrier",
-])
+blacklisted_extensions = set()
 
 
 @dataclass(eq=False)

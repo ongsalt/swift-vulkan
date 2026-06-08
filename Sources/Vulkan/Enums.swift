@@ -2324,6 +2324,38 @@ public enum OpticalFlowSessionBindingPointNV: UInt32 {
     case globalFlow = 8
 }
 
+public enum MicromapTypeEXT: UInt32 {
+    case opacityMicromap = 0
+}
+
+public enum CopyMicromapModeEXT: UInt32 {
+    case clone = 0
+    case serialize = 1
+    case deserialize = 2
+    case compact = 3
+}
+
+public enum BuildMicromapModeEXT: UInt32 {
+    case build = 0
+}
+
+public enum OpacityMicromapFormatKHR: UInt32 {
+    case type2State = 1
+    case type4State = 2
+}
+
+public enum OpacityMicromapSpecialIndexKHR: Int32 {
+    case fullyTransparent = -1
+    case fullyOpaque = -2
+    case fullyUnknownTransparent = -3
+    case fullyUnknownOpaque = -4
+    case clusterGeometryDisableOpacityMicromapNV = -5
+}
+
+public enum AccelerationStructureSerializedBlockTypeKHR: UInt32 {
+    case opacityMicromap = 0
+}
+
 public enum DepthBiasRepresentationEXT: UInt32 {
     case leastRepresentableValueFormat = 0
     case leastRepresentableValueForceUnorm = 1
@@ -2540,6 +2572,81 @@ public enum DescriptorMappingSourceEXT: UInt32 {
     case heapWithShaderRecordIndex = 8
     case shaderRecordData = 9
     case shaderRecordAddress = 10
+}
+
+public enum GpaPerfBlockAMD: UInt32 {
+    case cpf = 0
+    case ia = 1
+    case vgt = 2
+    case pa = 3
+    case sc = 4
+    case spi = 5
+    case sq = 6
+    case sx = 7
+    case ta = 8
+    case td = 9
+    case tcp = 10
+    case tcc = 11
+    case tca = 12
+    case db = 13
+    case cb = 14
+    case gds = 15
+    case srbm = 16
+    case grbm = 17
+    case grbmSe = 18
+    case rlc = 19
+    case dma = 20
+    case mc = 21
+    case cpg = 22
+    case cpc = 23
+    case wd = 24
+    case tcs = 25
+    case atc = 26
+    case atcL2 = 27
+    case mcVmL2 = 28
+    case ea = 29
+    case rpb = 30
+    case rmi = 31
+    case umcch = 32
+    case ge = 33
+    case gl1a = 34
+    case gl1c = 35
+    case gl1cg = 36
+    case gl2a = 37
+    case gl2c = 38
+    case cha = 39
+    case chc = 40
+    case chcg = 41
+    case gus = 42
+    case gcr = 43
+    case ph = 44
+    case utcl1 = 45
+    case geDist = 46
+    case geSe = 47
+    case dfMall = 48
+    case sqWgp = 49
+    case pc = 50
+    case gl1xa = 51
+    case gl1xc = 52
+    case wgs = 53
+    case eacpwd = 54
+    case ease = 55
+    case rlcuser = 56
+}
+
+public enum GpaSampleTypeAMD: UInt32 {
+    case cumulative = 0
+    case trace = 1
+    case timing = 2
+}
+
+public enum GpaDeviceClockModeAMD: UInt32 {
+    case `default` = 0
+    case query = 1
+    case profiling = 2
+    case minMemory = 3
+    case minEngine = 4
+    case peak = 5
 }
 
 public enum DataGraphTOSALevelARM: UInt32 {

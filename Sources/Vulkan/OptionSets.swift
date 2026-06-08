@@ -1764,6 +1764,38 @@ public struct DeviceFaultFlagsKHR: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
+public struct BuildMicromapFlagsEXT: OptionSet, StringConvertibleOptionSet {
+    public let rawValue: UInt32
+
+    public static let preferFastTrace = BuildMicromapFlagsEXT(rawValue: 1)
+    public static let preferFastBuild = BuildMicromapFlagsEXT(rawValue: 2)
+    public static let allowCompaction = BuildMicromapFlagsEXT(rawValue: 4)
+
+    public init(rawValue: UInt32) {
+        self.rawValue = rawValue
+    }
+
+    static let descriptions: [(Self, String)] = [
+        (.preferFastTrace, "preferFastTrace"),
+        (.preferFastBuild, "preferFastBuild"),
+        (.allowCompaction, "allowCompaction"),
+    ]
+}
+
+public struct MicromapCreateFlagsEXT: OptionSet, StringConvertibleOptionSet {
+    public let rawValue: UInt32
+
+    public static let deviceAddressCaptureReplay = MicromapCreateFlagsEXT(rawValue: 1)
+
+    public init(rawValue: UInt32) {
+        self.rawValue = rawValue
+    }
+
+    static let descriptions: [(Self, String)] = [
+        (.deviceAddressCaptureReplay, "deviceAddressCaptureReplay"),
+    ]
+}
+
 public struct IndirectCommandsLayoutUsageFlagsEXT: OptionSet, StringConvertibleOptionSet {
     public let rawValue: UInt32
 
@@ -1987,6 +2019,54 @@ public struct SpirvResourceTypeFlagsEXT: OptionSet, StringConvertibleOptionSet {
         (.readWriteStorageBuffer, "readWriteStorageBuffer"),
         (.accelerationStructure, "accelerationStructure"),
         (.tensorARM, "tensorARM"),
+    ]
+}
+
+public struct GpaSqShaderStageFlagsAMD: OptionSet, StringConvertibleOptionSet {
+    public let rawValue: UInt32
+
+    public static let ps = GpaSqShaderStageFlagsAMD(rawValue: 1)
+    public static let vs = GpaSqShaderStageFlagsAMD(rawValue: 2)
+    public static let gs = GpaSqShaderStageFlagsAMD(rawValue: 4)
+    public static let es = GpaSqShaderStageFlagsAMD(rawValue: 8)
+    public static let hs = GpaSqShaderStageFlagsAMD(rawValue: 16)
+    public static let ls = GpaSqShaderStageFlagsAMD(rawValue: 32)
+    public static let cs = GpaSqShaderStageFlagsAMD(rawValue: 64)
+
+    public init(rawValue: UInt32) {
+        self.rawValue = rawValue
+    }
+
+    static let descriptions: [(Self, String)] = [
+        (.ps, "ps"),
+        (.vs, "vs"),
+        (.gs, "gs"),
+        (.es, "es"),
+        (.hs, "hs"),
+        (.ls, "ls"),
+        (.cs, "cs"),
+    ]
+}
+
+public struct GpaPerfBlockPropertiesFlagsAMD: OptionSet, StringConvertibleOptionSet {
+    public let rawValue: UInt32
+
+    public init(rawValue: UInt32) {
+        self.rawValue = rawValue
+    }
+
+    static let descriptions: [(Self, String)] = [
+    ]
+}
+
+public struct PhysicalDeviceGpaPropertiesFlagsAMD: OptionSet, StringConvertibleOptionSet {
+    public let rawValue: UInt32
+
+    public init(rawValue: UInt32) {
+        self.rawValue = rawValue
+    }
+
+    static let descriptions: [(Self, String)] = [
     ]
 }
 

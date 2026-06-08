@@ -14720,6 +14720,33 @@ public struct ShaderStatisticsInfoAMD: CStructConvertible {
     }
 }
 
+public struct PhysicalDeviceElapsedTimerQueryFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
+    public typealias CStruct = VkPhysicalDeviceElapsedTimerQueryFeaturesQCOM
+
+    public let elapsedTimerQuery: Bool
+
+    public init(elapsedTimerQuery: Bool) {
+        self.elapsedTimerQuery = elapsedTimerQuery
+    }
+
+    init(cStruct: VkPhysicalDeviceElapsedTimerQueryFeaturesQCOM) {
+        self.elapsedTimerQuery = cStruct.elapsedTimerQuery == VK_TRUE
+    }
+
+    public func withCStruct<R>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPhysicalDeviceElapsedTimerQueryFeaturesQCOM>) throws -> R) rethrows -> R {
+        var cStruct = VkPhysicalDeviceElapsedTimerQueryFeaturesQCOM()
+        cStruct.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ELAPSED_TIMER_QUERY_FEATURES_QCOM
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.elapsedTimerQuery = VkBool32(self.elapsedTimerQuery ? VK_TRUE : VK_FALSE)
+        return try body(&cStruct)
+    }
+    public func push<Extension: PhysicalDeviceElapsedTimerQueryFeaturesQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol PhysicalDeviceElapsedTimerQueryFeaturesQCOMExtension: Chainable {}
+
 public struct DeviceQueueGlobalPriorityCreateInfo: ChainableBase, DeviceQueueCreateInfoExtension {
     public typealias CStruct = VkDeviceQueueGlobalPriorityCreateInfo
 
@@ -23031,6 +23058,354 @@ public struct PhysicalDeviceCoherentMemoryFeaturesAMD: ChainableBase, PhysicalDe
 }
 
 public protocol PhysicalDeviceCoherentMemoryFeaturesAMDExtension: Chainable {}
+
+public struct GpaPerfBlockPropertiesAMD: CStructConvertible {
+    public typealias CStruct = VkGpaPerfBlockPropertiesAMD
+
+    public let blockType: GpaPerfBlockAMD
+    public let flags: GpaPerfBlockPropertiesFlagsAMD
+    public let instanceCount: UInt32
+    public let maxEventID: UInt32
+    public let maxGlobalOnlyCounters: UInt32
+    public let maxGlobalSharedCounters: UInt32
+    public let maxStreamingCounters: UInt32
+
+    public init(blockType: GpaPerfBlockAMD, flags: GpaPerfBlockPropertiesFlagsAMD, instanceCount: UInt32, maxEventID: UInt32, maxGlobalOnlyCounters: UInt32, maxGlobalSharedCounters: UInt32, maxStreamingCounters: UInt32) {
+        self.blockType = blockType
+        self.flags = flags
+        self.instanceCount = instanceCount
+        self.maxEventID = maxEventID
+        self.maxGlobalOnlyCounters = maxGlobalOnlyCounters
+        self.maxGlobalSharedCounters = maxGlobalSharedCounters
+        self.maxStreamingCounters = maxStreamingCounters
+    }
+
+    init(cStruct: VkGpaPerfBlockPropertiesAMD) {
+        self.blockType = GpaPerfBlockAMD(rawValue: unsafeBitCast(cStruct.blockType, to: UInt32.self))!
+        self.flags = GpaPerfBlockPropertiesFlagsAMD(rawValue: cStruct.flags)
+        self.instanceCount = cStruct.instanceCount
+        self.maxEventID = cStruct.maxEventID
+        self.maxGlobalOnlyCounters = cStruct.maxGlobalOnlyCounters
+        self.maxGlobalSharedCounters = cStruct.maxGlobalSharedCounters
+        self.maxStreamingCounters = cStruct.maxStreamingCounters
+    }
+
+    public func withCStruct<R>(_ body: (UnsafePointer<VkGpaPerfBlockPropertiesAMD>) throws -> R) rethrows -> R {
+        var cStruct = VkGpaPerfBlockPropertiesAMD()
+        cStruct.blockType = VkGpaPerfBlockAMD(rawValue: VkGpaPerfBlockAMD.RawValue(self.blockType.rawValue))
+        cStruct.flags = self.flags.rawValue
+        cStruct.instanceCount = self.instanceCount
+        cStruct.maxEventID = self.maxEventID
+        cStruct.maxGlobalOnlyCounters = self.maxGlobalOnlyCounters
+        cStruct.maxGlobalSharedCounters = self.maxGlobalSharedCounters
+        cStruct.maxStreamingCounters = self.maxStreamingCounters
+        return try body(&cStruct)
+    }
+}
+
+public struct PhysicalDeviceGpaFeaturesAMD: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
+    public typealias CStruct = VkPhysicalDeviceGpaFeaturesAMD
+
+    public let perfCounters: Bool
+    public let streamingPerfCounters: Bool
+    public let sqThreadTracing: Bool
+    public let clockModes: Bool
+
+    public init(perfCounters: Bool, streamingPerfCounters: Bool, sqThreadTracing: Bool, clockModes: Bool) {
+        self.perfCounters = perfCounters
+        self.streamingPerfCounters = streamingPerfCounters
+        self.sqThreadTracing = sqThreadTracing
+        self.clockModes = clockModes
+    }
+
+    init(cStruct: VkPhysicalDeviceGpaFeaturesAMD) {
+        self.perfCounters = cStruct.perfCounters == VK_TRUE
+        self.streamingPerfCounters = cStruct.streamingPerfCounters == VK_TRUE
+        self.sqThreadTracing = cStruct.sqThreadTracing == VK_TRUE
+        self.clockModes = cStruct.clockModes == VK_TRUE
+    }
+
+    public func withCStruct<R>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPhysicalDeviceGpaFeaturesAMD>) throws -> R) rethrows -> R {
+        var cStruct = VkPhysicalDeviceGpaFeaturesAMD()
+        cStruct.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_GPA_FEATURES_AMD
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.perfCounters = VkBool32(self.perfCounters ? VK_TRUE : VK_FALSE)
+        cStruct.streamingPerfCounters = VkBool32(self.streamingPerfCounters ? VK_TRUE : VK_FALSE)
+        cStruct.sqThreadTracing = VkBool32(self.sqThreadTracing ? VK_TRUE : VK_FALSE)
+        cStruct.clockModes = VkBool32(self.clockModes ? VK_TRUE : VK_FALSE)
+        return try body(&cStruct)
+    }
+    public func push<Extension: PhysicalDeviceGpaFeaturesAMDExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol PhysicalDeviceGpaFeaturesAMDExtension: Chainable {}
+
+public struct PhysicalDeviceGpaPropertiesAMD: ChainableBase, PhysicalDeviceProperties2Extension {
+    public typealias CStruct = VkPhysicalDeviceGpaPropertiesAMD
+
+    public let flags: PhysicalDeviceGpaPropertiesFlagsAMD
+    public let maxSqttSeBufferSize: VkDeviceSize
+    public let shaderEngineCount: UInt32
+    public let perfBlockCount: UInt32
+    public let perfBlocks: UnsafeMutablePointer<VkGpaPerfBlockPropertiesAMD>
+
+    init(cStruct: VkPhysicalDeviceGpaPropertiesAMD) {
+        self.flags = PhysicalDeviceGpaPropertiesFlagsAMD(rawValue: cStruct.flags)
+        self.maxSqttSeBufferSize = cStruct.maxSqttSeBufferSize
+        self.shaderEngineCount = cStruct.shaderEngineCount
+        self.perfBlockCount = cStruct.perfBlockCount
+        self.perfBlocks = cStruct.pPerfBlocks
+    }
+
+    public func withCStruct<R>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPhysicalDeviceGpaPropertiesAMD>) throws -> R) rethrows -> R {
+        var cStruct = VkPhysicalDeviceGpaPropertiesAMD()
+        cStruct.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_GPA_PROPERTIES_AMD
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.flags = self.flags.rawValue
+        cStruct.maxSqttSeBufferSize = self.maxSqttSeBufferSize
+        cStruct.shaderEngineCount = self.shaderEngineCount
+        cStruct.perfBlockCount = self.perfBlockCount
+        cStruct.pPerfBlocks = self.perfBlocks
+        return try body(&cStruct)
+    }
+    public func push<Extension: PhysicalDeviceGpaPropertiesAMDExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol PhysicalDeviceGpaPropertiesAMDExtension: Chainable {}
+
+public struct PhysicalDeviceGpaProperties2AMD: ChainableBase, PhysicalDeviceProperties2Extension {
+    public typealias CStruct = VkPhysicalDeviceGpaProperties2AMD
+
+    public let revisionId: UInt32
+
+    init(cStruct: VkPhysicalDeviceGpaProperties2AMD) {
+        self.revisionId = cStruct.revisionId
+    }
+
+    public func withCStruct<R>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPhysicalDeviceGpaProperties2AMD>) throws -> R) rethrows -> R {
+        var cStruct = VkPhysicalDeviceGpaProperties2AMD()
+        cStruct.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_GPA_PROPERTIES_2_AMD
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.revisionId = self.revisionId
+        return try body(&cStruct)
+    }
+    public func push<Extension: PhysicalDeviceGpaProperties2AMDExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol PhysicalDeviceGpaProperties2AMDExtension: Chainable {}
+
+public struct GpaPerfCounterAMD: CStructConvertible {
+    public typealias CStruct = VkGpaPerfCounterAMD
+
+    public let blockType: GpaPerfBlockAMD
+    public let blockInstance: UInt32
+    public let eventID: UInt32
+
+    public init(blockType: GpaPerfBlockAMD, blockInstance: UInt32, eventID: UInt32) {
+        self.blockType = blockType
+        self.blockInstance = blockInstance
+        self.eventID = eventID
+    }
+
+    init(cStruct: VkGpaPerfCounterAMD) {
+        self.blockType = GpaPerfBlockAMD(rawValue: unsafeBitCast(cStruct.blockType, to: UInt32.self))!
+        self.blockInstance = cStruct.blockInstance
+        self.eventID = cStruct.eventID
+    }
+
+    public func withCStruct<R>(_ body: (UnsafePointer<VkGpaPerfCounterAMD>) throws -> R) rethrows -> R {
+        var cStruct = VkGpaPerfCounterAMD()
+        cStruct.blockType = VkGpaPerfBlockAMD(rawValue: VkGpaPerfBlockAMD.RawValue(self.blockType.rawValue))
+        cStruct.blockInstance = self.blockInstance
+        cStruct.eventID = self.eventID
+        return try body(&cStruct)
+    }
+}
+
+public struct GpaSampleBeginInfoAMD: ChainableBase {
+    public typealias CStruct = VkGpaSampleBeginInfoAMD
+
+    public let sampleType: GpaSampleTypeAMD
+    public let sampleInternalOperations: Bool
+    public let cacheFlushOnCounterCollection: Bool
+    public let sqShaderMaskEnable: Bool
+    public let sqShaderMask: GpaSqShaderStageFlagsAMD
+    public let perfCounters: Array<GpaPerfCounterAMD>
+    public let streamingPerfTraceSampleInterval: UInt32
+    public let perfCounterDeviceMemoryLimit: VkDeviceSize
+    public let sqThreadTraceEnable: Bool
+    public let sqThreadTraceSuppressInstructionTokens: Bool
+    public let sqThreadTraceDeviceMemoryLimit: VkDeviceSize
+    public let timingPreSample: PipelineStageFlags
+    public let timingPostSample: PipelineStageFlags
+
+    public init(sampleType: GpaSampleTypeAMD, sampleInternalOperations: Bool, cacheFlushOnCounterCollection: Bool, sqShaderMaskEnable: Bool, sqShaderMask: GpaSqShaderStageFlagsAMD, perfCounters: Array<GpaPerfCounterAMD>, streamingPerfTraceSampleInterval: UInt32, perfCounterDeviceMemoryLimit: VkDeviceSize, sqThreadTraceEnable: Bool, sqThreadTraceSuppressInstructionTokens: Bool, sqThreadTraceDeviceMemoryLimit: VkDeviceSize, timingPreSample: PipelineStageFlags, timingPostSample: PipelineStageFlags) {
+        self.sampleType = sampleType
+        self.sampleInternalOperations = sampleInternalOperations
+        self.cacheFlushOnCounterCollection = cacheFlushOnCounterCollection
+        self.sqShaderMaskEnable = sqShaderMaskEnable
+        self.sqShaderMask = sqShaderMask
+        self.perfCounters = perfCounters
+        self.streamingPerfTraceSampleInterval = streamingPerfTraceSampleInterval
+        self.perfCounterDeviceMemoryLimit = perfCounterDeviceMemoryLimit
+        self.sqThreadTraceEnable = sqThreadTraceEnable
+        self.sqThreadTraceSuppressInstructionTokens = sqThreadTraceSuppressInstructionTokens
+        self.sqThreadTraceDeviceMemoryLimit = sqThreadTraceDeviceMemoryLimit
+        self.timingPreSample = timingPreSample
+        self.timingPostSample = timingPostSample
+    }
+
+    init(cStruct: VkGpaSampleBeginInfoAMD) {
+        self.sampleType = GpaSampleTypeAMD(rawValue: unsafeBitCast(cStruct.sampleType, to: UInt32.self))!
+        self.sampleInternalOperations = cStruct.sampleInternalOperations == VK_TRUE
+        self.cacheFlushOnCounterCollection = cStruct.cacheFlushOnCounterCollection == VK_TRUE
+        self.sqShaderMaskEnable = cStruct.sqShaderMaskEnable == VK_TRUE
+        self.sqShaderMask = GpaSqShaderStageFlagsAMD(rawValue: cStruct.sqShaderMask)
+        self.perfCounters = UnsafeBufferPointer(start: cStruct.pPerfCounters, count: Int(cStruct.perfCounterCount)).map{ GpaPerfCounterAMD(cStruct: $0) }
+        self.streamingPerfTraceSampleInterval = cStruct.streamingPerfTraceSampleInterval
+        self.perfCounterDeviceMemoryLimit = cStruct.perfCounterDeviceMemoryLimit
+        self.sqThreadTraceEnable = cStruct.sqThreadTraceEnable == VK_TRUE
+        self.sqThreadTraceSuppressInstructionTokens = cStruct.sqThreadTraceSuppressInstructionTokens == VK_TRUE
+        self.sqThreadTraceDeviceMemoryLimit = cStruct.sqThreadTraceDeviceMemoryLimit
+        self.timingPreSample = PipelineStageFlags(rawValue: cStruct.timingPreSample)
+        self.timingPostSample = PipelineStageFlags(rawValue: cStruct.timingPostSample)
+    }
+
+    public func withCStruct<R>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkGpaSampleBeginInfoAMD>) throws -> R) rethrows -> R {
+        try self.perfCounters.withCStructBufferPointer { ptr_perfCounters in
+            var cStruct = VkGpaSampleBeginInfoAMD()
+            cStruct.sType = VK_STRUCTURE_TYPE_GPA_SAMPLE_BEGIN_INFO_AMD
+            cStruct.pNext = maybeMutable(pNext)
+            cStruct.sampleType = VkGpaSampleTypeAMD(rawValue: VkGpaSampleTypeAMD.RawValue(self.sampleType.rawValue))
+            cStruct.sampleInternalOperations = VkBool32(self.sampleInternalOperations ? VK_TRUE : VK_FALSE)
+            cStruct.cacheFlushOnCounterCollection = VkBool32(self.cacheFlushOnCounterCollection ? VK_TRUE : VK_FALSE)
+            cStruct.sqShaderMaskEnable = VkBool32(self.sqShaderMaskEnable ? VK_TRUE : VK_FALSE)
+            cStruct.sqShaderMask = self.sqShaderMask.rawValue
+            cStruct.perfCounterCount = UInt32(ptr_perfCounters.count)
+            cStruct.pPerfCounters = ptr_perfCounters.baseAddress
+            cStruct.streamingPerfTraceSampleInterval = self.streamingPerfTraceSampleInterval
+            cStruct.perfCounterDeviceMemoryLimit = self.perfCounterDeviceMemoryLimit
+            cStruct.sqThreadTraceEnable = VkBool32(self.sqThreadTraceEnable ? VK_TRUE : VK_FALSE)
+            cStruct.sqThreadTraceSuppressInstructionTokens = VkBool32(self.sqThreadTraceSuppressInstructionTokens ? VK_TRUE : VK_FALSE)
+            cStruct.sqThreadTraceDeviceMemoryLimit = self.sqThreadTraceDeviceMemoryLimit
+            cStruct.timingPreSample = self.timingPreSample.rawValue
+            cStruct.timingPostSample = self.timingPostSample.rawValue
+            return try body(&cStruct)
+        }
+    }
+    public func push<Extension: GpaSampleBeginInfoAMDExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol GpaSampleBeginInfoAMDExtension: Chainable {}
+
+public struct GpaDeviceClockModeInfoAMD: ChainableBase {
+    public typealias CStruct = VkGpaDeviceClockModeInfoAMD
+
+    public let clockMode: GpaDeviceClockModeAMD
+    public let memoryClockRatioToPeak: Float
+    public let engineClockRatioToPeak: Float
+
+    public init(clockMode: GpaDeviceClockModeAMD, memoryClockRatioToPeak: Float, engineClockRatioToPeak: Float) {
+        self.clockMode = clockMode
+        self.memoryClockRatioToPeak = memoryClockRatioToPeak
+        self.engineClockRatioToPeak = engineClockRatioToPeak
+    }
+
+    init(cStruct: VkGpaDeviceClockModeInfoAMD) {
+        self.clockMode = GpaDeviceClockModeAMD(rawValue: unsafeBitCast(cStruct.clockMode, to: UInt32.self))!
+        self.memoryClockRatioToPeak = cStruct.memoryClockRatioToPeak
+        self.engineClockRatioToPeak = cStruct.engineClockRatioToPeak
+    }
+
+    public func withCStruct<R>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkGpaDeviceClockModeInfoAMD>) throws -> R) rethrows -> R {
+        var cStruct = VkGpaDeviceClockModeInfoAMD()
+        cStruct.sType = VK_STRUCTURE_TYPE_GPA_DEVICE_CLOCK_MODE_INFO_AMD
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.clockMode = VkGpaDeviceClockModeAMD(rawValue: VkGpaDeviceClockModeAMD.RawValue(self.clockMode.rawValue))
+        cStruct.memoryClockRatioToPeak = self.memoryClockRatioToPeak
+        cStruct.engineClockRatioToPeak = self.engineClockRatioToPeak
+        return try body(&cStruct)
+    }
+    public func push<Extension: GpaDeviceClockModeInfoAMDExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol GpaDeviceClockModeInfoAMDExtension: Chainable {}
+
+public struct GpaDeviceGetClockInfoAMD: ChainableBase {
+    public typealias CStruct = VkGpaDeviceGetClockInfoAMD
+
+    public let memoryClockRatioToPeak: Float
+    public let engineClockRatioToPeak: Float
+    public let memoryClockFrequency: UInt32
+    public let engineClockFrequency: UInt32
+
+    public init(memoryClockRatioToPeak: Float, engineClockRatioToPeak: Float, memoryClockFrequency: UInt32, engineClockFrequency: UInt32) {
+        self.memoryClockRatioToPeak = memoryClockRatioToPeak
+        self.engineClockRatioToPeak = engineClockRatioToPeak
+        self.memoryClockFrequency = memoryClockFrequency
+        self.engineClockFrequency = engineClockFrequency
+    }
+
+    init(cStruct: VkGpaDeviceGetClockInfoAMD) {
+        self.memoryClockRatioToPeak = cStruct.memoryClockRatioToPeak
+        self.engineClockRatioToPeak = cStruct.engineClockRatioToPeak
+        self.memoryClockFrequency = cStruct.memoryClockFrequency
+        self.engineClockFrequency = cStruct.engineClockFrequency
+    }
+
+    public func withCStruct<R>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkGpaDeviceGetClockInfoAMD>) throws -> R) rethrows -> R {
+        var cStruct = VkGpaDeviceGetClockInfoAMD()
+        cStruct.sType = VK_STRUCTURE_TYPE_GPA_DEVICE_GET_CLOCK_INFO_AMD
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.memoryClockRatioToPeak = self.memoryClockRatioToPeak
+        cStruct.engineClockRatioToPeak = self.engineClockRatioToPeak
+        cStruct.memoryClockFrequency = self.memoryClockFrequency
+        cStruct.engineClockFrequency = self.engineClockFrequency
+        return try body(&cStruct)
+    }
+    public func push<Extension: GpaDeviceGetClockInfoAMDExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol GpaDeviceGetClockInfoAMDExtension: Chainable {}
+
+public struct GpaSessionCreateInfoAMD: ChainableBase {
+    public typealias CStruct = VkGpaSessionCreateInfoAMD
+
+    public let secondaryCopySource: GpaSessionAMD?
+
+    public init(secondaryCopySource: GpaSessionAMD? = nil) {
+        self.secondaryCopySource = secondaryCopySource
+    }
+
+    init(cStruct: VkGpaSessionCreateInfoAMD, device: Device) {
+        self.secondaryCopySource = (cStruct.secondaryCopySource != nil) ? GpaSessionAMD(handle: cStruct.secondaryCopySource, device: device) : nil
+    }
+
+    public func withCStruct<R>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkGpaSessionCreateInfoAMD>) throws -> R) rethrows -> R {
+        var cStruct = VkGpaSessionCreateInfoAMD()
+        cStruct.sType = VK_STRUCTURE_TYPE_GPA_SESSION_CREATE_INFO_AMD
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.secondaryCopySource = self.secondaryCopySource?.handle
+        return try body(&cStruct)
+    }
+    public func push<Extension: GpaSessionCreateInfoAMDExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol GpaSessionCreateInfoAMDExtension: Chainable {}
 
 public struct PhysicalDeviceToolProperties: ChainableBase {
     public typealias CStruct = VkPhysicalDeviceToolProperties
@@ -36038,6 +36413,639 @@ public struct PhysicalDeviceSubpassMergeFeedbackFeaturesEXT: ChainableBase, Phys
 
 public protocol PhysicalDeviceSubpassMergeFeedbackFeaturesEXTExtension: Chainable {}
 
+public struct MicromapUsageEXT: CStructConvertible {
+    public typealias CStruct = VkMicromapUsageEXT
+
+    public let count: UInt32
+    public let subdivisionLevel: UInt32
+    public let format: UInt32
+
+    public init(count: UInt32, subdivisionLevel: UInt32, format: UInt32) {
+        self.count = count
+        self.subdivisionLevel = subdivisionLevel
+        self.format = format
+    }
+
+    init(cStruct: VkMicromapUsageEXT) {
+        self.count = cStruct.count
+        self.subdivisionLevel = cStruct.subdivisionLevel
+        self.format = cStruct.format
+    }
+
+    public func withCStruct<R>(_ body: (UnsafePointer<VkMicromapUsageEXT>) throws -> R) rethrows -> R {
+        var cStruct = VkMicromapUsageEXT()
+        cStruct.count = self.count
+        cStruct.subdivisionLevel = self.subdivisionLevel
+        cStruct.format = self.format
+        return try body(&cStruct)
+    }
+}
+
+public struct MicromapBuildInfoEXT: ChainableBase {
+    public typealias CStruct = VkMicromapBuildInfoEXT
+
+    public let type: MicromapTypeEXT
+    public let flags: BuildMicromapFlagsEXT
+    public let mode: BuildMicromapModeEXT
+    public let dstMicromap: MicromapEXT?
+    public let usageCounts: Array<MicromapUsageEXT>?
+    public let usageCounts2: Array<UnsafePointer<VkMicromapUsageEXT>?>?
+    public let data: VkDeviceOrHostAddressConstKHR
+    public let scratchData: VkDeviceOrHostAddressKHR
+    public let triangleArray: VkDeviceOrHostAddressConstKHR
+    public let triangleArrayStride: VkDeviceSize
+
+    public init(type: MicromapTypeEXT, flags: BuildMicromapFlagsEXT = [], mode: BuildMicromapModeEXT, dstMicromap: MicromapEXT? = nil, usageCounts: Array<MicromapUsageEXT>? = nil, usageCounts2: Array<UnsafePointer<VkMicromapUsageEXT>?>? = nil, data: VkDeviceOrHostAddressConstKHR, scratchData: VkDeviceOrHostAddressKHR, triangleArray: VkDeviceOrHostAddressConstKHR, triangleArrayStride: VkDeviceSize) {
+        self.type = type
+        self.flags = flags
+        self.mode = mode
+        self.dstMicromap = dstMicromap
+        self.usageCounts = usageCounts
+        self.usageCounts2 = usageCounts2
+        self.data = data
+        self.scratchData = scratchData
+        self.triangleArray = triangleArray
+        self.triangleArrayStride = triangleArrayStride
+    }
+
+    init(cStruct: VkMicromapBuildInfoEXT, device: Device) {
+        self.type = MicromapTypeEXT(rawValue: unsafeBitCast(cStruct.type, to: UInt32.self))!
+        self.flags = BuildMicromapFlagsEXT(rawValue: cStruct.flags)
+        self.mode = BuildMicromapModeEXT(rawValue: unsafeBitCast(cStruct.mode, to: UInt32.self))!
+        self.dstMicromap = (cStruct.dstMicromap != nil) ? MicromapEXT(handle: cStruct.dstMicromap, device: device) : nil
+        self.usageCounts = (cStruct.pUsageCounts != nil) ? UnsafeBufferPointer(start: cStruct.pUsageCounts, count: Int(cStruct.usageCountsCount)).map{ MicromapUsageEXT(cStruct: $0) } : nil
+        self.usageCounts2 = (cStruct.ppUsageCounts != nil) ? Array(UnsafeBufferPointer(start: cStruct.ppUsageCounts, count: Int(cStruct.usageCountsCount))) : nil
+        self.data = cStruct.data
+        self.scratchData = cStruct.scratchData
+        self.triangleArray = cStruct.triangleArray
+        self.triangleArrayStride = cStruct.triangleArrayStride
+    }
+
+    public func withCStruct<R>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkMicromapBuildInfoEXT>) throws -> R) rethrows -> R {
+        try self.usageCounts.withOptionalCStructBufferPointer { ptr_usageCounts in
+            try self.usageCounts2.withOptionalUnsafeBufferPointer { ptr_usageCounts2 in
+                var cStruct = VkMicromapBuildInfoEXT()
+                cStruct.sType = VK_STRUCTURE_TYPE_MICROMAP_BUILD_INFO_EXT
+                cStruct.pNext = maybeMutable(pNext)
+                cStruct.type = VkMicromapTypeEXT(rawValue: VkMicromapTypeEXT.RawValue(self.type.rawValue))
+                cStruct.flags = self.flags.rawValue
+                cStruct.mode = VkBuildMicromapModeEXT(rawValue: VkBuildMicromapModeEXT.RawValue(self.mode.rawValue))
+                cStruct.dstMicromap = self.dstMicromap?.handle
+                cStruct.usageCountsCount = UInt32(ptr_usageCounts.count)
+                cStruct.pUsageCounts = ptr_usageCounts.baseAddress
+                cStruct.ppUsageCounts = ptr_usageCounts2.baseAddress
+                cStruct.data = self.data
+                cStruct.scratchData = self.scratchData
+                cStruct.triangleArray = self.triangleArray
+                cStruct.triangleArrayStride = self.triangleArrayStride
+                return try body(&cStruct)
+            }
+        }
+    }
+    public func push<Extension: MicromapBuildInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol MicromapBuildInfoEXTExtension: Chainable {}
+
+public struct MicromapUsageKHR: CStructConvertible {
+    public typealias CStruct = VkMicromapUsageKHR
+
+    public let count: UInt32
+    public let subdivisionLevel: UInt32
+    public let format: OpacityMicromapFormatKHR
+
+    public init(count: UInt32, subdivisionLevel: UInt32, format: OpacityMicromapFormatKHR) {
+        self.count = count
+        self.subdivisionLevel = subdivisionLevel
+        self.format = format
+    }
+
+    init(cStruct: VkMicromapUsageKHR) {
+        self.count = cStruct.count
+        self.subdivisionLevel = cStruct.subdivisionLevel
+        self.format = OpacityMicromapFormatKHR(rawValue: unsafeBitCast(cStruct.format, to: UInt32.self))!
+    }
+
+    public func withCStruct<R>(_ body: (UnsafePointer<VkMicromapUsageKHR>) throws -> R) rethrows -> R {
+        var cStruct = VkMicromapUsageKHR()
+        cStruct.count = self.count
+        cStruct.subdivisionLevel = self.subdivisionLevel
+        cStruct.format = VkOpacityMicromapFormatKHR(rawValue: VkOpacityMicromapFormatKHR.RawValue(self.format.rawValue))
+        return try body(&cStruct)
+    }
+}
+
+public struct AccelerationStructureGeometryMicromapDataKHR: ChainableBase, AccelerationStructureGeometryKHRExtension {
+    public typealias CStruct = VkAccelerationStructureGeometryMicromapDataKHR
+
+    public let usageCounts: Array<MicromapUsageKHR>?
+    public let usageCounts2: Array<UnsafePointer<VkMicromapUsageKHR>?>?
+    public let data: VkDeviceAddress
+    public let triangleArray: VkDeviceAddress
+    public let triangleArrayStride: VkDeviceSize
+
+    public init(usageCounts: Array<MicromapUsageKHR>? = nil, usageCounts2: Array<UnsafePointer<VkMicromapUsageKHR>?>? = nil, data: VkDeviceAddress, triangleArray: VkDeviceAddress, triangleArrayStride: VkDeviceSize) {
+        self.usageCounts = usageCounts
+        self.usageCounts2 = usageCounts2
+        self.data = data
+        self.triangleArray = triangleArray
+        self.triangleArrayStride = triangleArrayStride
+    }
+
+    init(cStruct: VkAccelerationStructureGeometryMicromapDataKHR) {
+        self.usageCounts = (cStruct.pUsageCounts != nil) ? UnsafeBufferPointer(start: cStruct.pUsageCounts, count: Int(cStruct.usageCountsCount)).map{ MicromapUsageKHR(cStruct: $0) } : nil
+        self.usageCounts2 = (cStruct.ppUsageCounts != nil) ? Array(UnsafeBufferPointer(start: cStruct.ppUsageCounts, count: Int(cStruct.usageCountsCount))) : nil
+        self.data = cStruct.data
+        self.triangleArray = cStruct.triangleArray
+        self.triangleArrayStride = cStruct.triangleArrayStride
+    }
+
+    public func withCStruct<R>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkAccelerationStructureGeometryMicromapDataKHR>) throws -> R) rethrows -> R {
+        try self.usageCounts.withOptionalCStructBufferPointer { ptr_usageCounts in
+            try self.usageCounts2.withOptionalUnsafeBufferPointer { ptr_usageCounts2 in
+                var cStruct = VkAccelerationStructureGeometryMicromapDataKHR()
+                cStruct.sType = VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_GEOMETRY_MICROMAP_DATA_KHR
+                cStruct.pNext = maybeMutable(pNext)
+                cStruct.usageCountsCount = UInt32(ptr_usageCounts.count)
+                cStruct.pUsageCounts = ptr_usageCounts.baseAddress
+                cStruct.ppUsageCounts = ptr_usageCounts2.baseAddress
+                cStruct.data = self.data
+                cStruct.triangleArray = self.triangleArray
+                cStruct.triangleArrayStride = self.triangleArrayStride
+                return try body(&cStruct)
+            }
+        }
+    }
+    public func push<Extension: AccelerationStructureGeometryMicromapDataKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol AccelerationStructureGeometryMicromapDataKHRExtension: Chainable {}
+
+public struct MicromapCreateInfoEXT: ChainableBase {
+    public typealias CStruct = VkMicromapCreateInfoEXT
+
+    public let createFlags: MicromapCreateFlagsEXT
+    public let buffer: Buffer
+    public let offset: VkDeviceSize
+    public let size: VkDeviceSize
+    public let type: MicromapTypeEXT
+    public let deviceAddress: VkDeviceAddress
+
+    public init(createFlags: MicromapCreateFlagsEXT = [], buffer: Buffer, offset: VkDeviceSize, size: VkDeviceSize, type: MicromapTypeEXT, deviceAddress: VkDeviceAddress) {
+        self.createFlags = createFlags
+        self.buffer = buffer
+        self.offset = offset
+        self.size = size
+        self.type = type
+        self.deviceAddress = deviceAddress
+    }
+
+    init(cStruct: VkMicromapCreateInfoEXT, device: Device) {
+        self.createFlags = MicromapCreateFlagsEXT(rawValue: cStruct.createFlags)
+        self.buffer = Buffer(handle: cStruct.buffer, device: device)
+        self.offset = cStruct.offset
+        self.size = cStruct.size
+        self.type = MicromapTypeEXT(rawValue: unsafeBitCast(cStruct.type, to: UInt32.self))!
+        self.deviceAddress = cStruct.deviceAddress
+    }
+
+    public func withCStruct<R>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkMicromapCreateInfoEXT>) throws -> R) rethrows -> R {
+        var cStruct = VkMicromapCreateInfoEXT()
+        cStruct.sType = VK_STRUCTURE_TYPE_MICROMAP_CREATE_INFO_EXT
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.createFlags = self.createFlags.rawValue
+        cStruct.buffer = self.buffer.handle
+        cStruct.offset = self.offset
+        cStruct.size = self.size
+        cStruct.type = VkMicromapTypeEXT(rawValue: VkMicromapTypeEXT.RawValue(self.type.rawValue))
+        cStruct.deviceAddress = self.deviceAddress
+        return try body(&cStruct)
+    }
+    public func push<Extension: MicromapCreateInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol MicromapCreateInfoEXTExtension: Chainable {}
+
+public struct MicromapVersionInfoEXT: ChainableBase {
+    public typealias CStruct = VkMicromapVersionInfoEXT
+
+    public let versionData: UnsafePointer<UInt8>
+
+    public init(versionData: UnsafePointer<UInt8>) {
+        self.versionData = versionData
+    }
+
+    init(cStruct: VkMicromapVersionInfoEXT) {
+        self.versionData = cStruct.pVersionData
+    }
+
+    public func withCStruct<R>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkMicromapVersionInfoEXT>) throws -> R) rethrows -> R {
+        var cStruct = VkMicromapVersionInfoEXT()
+        cStruct.sType = VK_STRUCTURE_TYPE_MICROMAP_VERSION_INFO_EXT
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.pVersionData = self.versionData
+        return try body(&cStruct)
+    }
+    public func push<Extension: MicromapVersionInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol MicromapVersionInfoEXTExtension: Chainable {}
+
+public struct CopyMicromapInfoEXT: ChainableBase {
+    public typealias CStruct = VkCopyMicromapInfoEXT
+
+    public let src: MicromapEXT
+    public let dst: MicromapEXT
+    public let mode: CopyMicromapModeEXT
+
+    public init(src: MicromapEXT, dst: MicromapEXT, mode: CopyMicromapModeEXT) {
+        self.src = src
+        self.dst = dst
+        self.mode = mode
+    }
+
+    init(cStruct: VkCopyMicromapInfoEXT, device: Device) {
+        self.src = MicromapEXT(handle: cStruct.src, device: device)
+        self.dst = MicromapEXT(handle: cStruct.dst, device: device)
+        self.mode = CopyMicromapModeEXT(rawValue: unsafeBitCast(cStruct.mode, to: UInt32.self))!
+    }
+
+    public func withCStruct<R>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkCopyMicromapInfoEXT>) throws -> R) rethrows -> R {
+        var cStruct = VkCopyMicromapInfoEXT()
+        cStruct.sType = VK_STRUCTURE_TYPE_COPY_MICROMAP_INFO_EXT
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.src = self.src.handle
+        cStruct.dst = self.dst.handle
+        cStruct.mode = VkCopyMicromapModeEXT(rawValue: VkCopyMicromapModeEXT.RawValue(self.mode.rawValue))
+        return try body(&cStruct)
+    }
+    public func push<Extension: CopyMicromapInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol CopyMicromapInfoEXTExtension: Chainable {}
+
+public struct CopyMicromapToMemoryInfoEXT: ChainableBase {
+    public typealias CStruct = VkCopyMicromapToMemoryInfoEXT
+
+    public let src: MicromapEXT
+    public let dst: VkDeviceOrHostAddressKHR
+    public let mode: CopyMicromapModeEXT
+
+    public init(src: MicromapEXT, dst: VkDeviceOrHostAddressKHR, mode: CopyMicromapModeEXT) {
+        self.src = src
+        self.dst = dst
+        self.mode = mode
+    }
+
+    init(cStruct: VkCopyMicromapToMemoryInfoEXT, device: Device) {
+        self.src = MicromapEXT(handle: cStruct.src, device: device)
+        self.dst = cStruct.dst
+        self.mode = CopyMicromapModeEXT(rawValue: unsafeBitCast(cStruct.mode, to: UInt32.self))!
+    }
+
+    public func withCStruct<R>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkCopyMicromapToMemoryInfoEXT>) throws -> R) rethrows -> R {
+        var cStruct = VkCopyMicromapToMemoryInfoEXT()
+        cStruct.sType = VK_STRUCTURE_TYPE_COPY_MICROMAP_TO_MEMORY_INFO_EXT
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.src = self.src.handle
+        cStruct.dst = self.dst
+        cStruct.mode = VkCopyMicromapModeEXT(rawValue: VkCopyMicromapModeEXT.RawValue(self.mode.rawValue))
+        return try body(&cStruct)
+    }
+    public func push<Extension: CopyMicromapToMemoryInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol CopyMicromapToMemoryInfoEXTExtension: Chainable {}
+
+public struct CopyMemoryToMicromapInfoEXT: ChainableBase {
+    public typealias CStruct = VkCopyMemoryToMicromapInfoEXT
+
+    public let src: VkDeviceOrHostAddressConstKHR
+    public let dst: MicromapEXT
+    public let mode: CopyMicromapModeEXT
+
+    public init(src: VkDeviceOrHostAddressConstKHR, dst: MicromapEXT, mode: CopyMicromapModeEXT) {
+        self.src = src
+        self.dst = dst
+        self.mode = mode
+    }
+
+    init(cStruct: VkCopyMemoryToMicromapInfoEXT, device: Device) {
+        self.src = cStruct.src
+        self.dst = MicromapEXT(handle: cStruct.dst, device: device)
+        self.mode = CopyMicromapModeEXT(rawValue: unsafeBitCast(cStruct.mode, to: UInt32.self))!
+    }
+
+    public func withCStruct<R>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkCopyMemoryToMicromapInfoEXT>) throws -> R) rethrows -> R {
+        var cStruct = VkCopyMemoryToMicromapInfoEXT()
+        cStruct.sType = VK_STRUCTURE_TYPE_COPY_MEMORY_TO_MICROMAP_INFO_EXT
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.src = self.src
+        cStruct.dst = self.dst.handle
+        cStruct.mode = VkCopyMicromapModeEXT(rawValue: VkCopyMicromapModeEXT.RawValue(self.mode.rawValue))
+        return try body(&cStruct)
+    }
+    public func push<Extension: CopyMemoryToMicromapInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol CopyMemoryToMicromapInfoEXTExtension: Chainable {}
+
+public struct MicromapBuildSizesInfoEXT: ChainableBase {
+    public typealias CStruct = VkMicromapBuildSizesInfoEXT
+
+    public let micromapSize: VkDeviceSize
+    public let buildScratchSize: VkDeviceSize
+    public let discardable: Bool
+
+    public init(micromapSize: VkDeviceSize, buildScratchSize: VkDeviceSize, discardable: Bool) {
+        self.micromapSize = micromapSize
+        self.buildScratchSize = buildScratchSize
+        self.discardable = discardable
+    }
+
+    init(cStruct: VkMicromapBuildSizesInfoEXT) {
+        self.micromapSize = cStruct.micromapSize
+        self.buildScratchSize = cStruct.buildScratchSize
+        self.discardable = cStruct.discardable == VK_TRUE
+    }
+
+    public func withCStruct<R>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkMicromapBuildSizesInfoEXT>) throws -> R) rethrows -> R {
+        var cStruct = VkMicromapBuildSizesInfoEXT()
+        cStruct.sType = VK_STRUCTURE_TYPE_MICROMAP_BUILD_SIZES_INFO_EXT
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.micromapSize = self.micromapSize
+        cStruct.buildScratchSize = self.buildScratchSize
+        cStruct.discardable = VkBool32(self.discardable ? VK_TRUE : VK_FALSE)
+        return try body(&cStruct)
+    }
+    public func push<Extension: MicromapBuildSizesInfoEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol MicromapBuildSizesInfoEXTExtension: Chainable {}
+
+public struct MicromapTriangleKHR: CStructConvertible {
+    public typealias CStruct = VkMicromapTriangleKHR
+
+    public let dataOffset: UInt32
+    public let subdivisionLevel: UInt16
+    public let format: UInt16
+
+    public init(dataOffset: UInt32, subdivisionLevel: UInt16, format: UInt16) {
+        self.dataOffset = dataOffset
+        self.subdivisionLevel = subdivisionLevel
+        self.format = format
+    }
+
+    init(cStruct: VkMicromapTriangleKHR) {
+        self.dataOffset = cStruct.dataOffset
+        self.subdivisionLevel = cStruct.subdivisionLevel
+        self.format = cStruct.format
+    }
+
+    public func withCStruct<R>(_ body: (UnsafePointer<VkMicromapTriangleKHR>) throws -> R) rethrows -> R {
+        var cStruct = VkMicromapTriangleKHR()
+        cStruct.dataOffset = self.dataOffset
+        cStruct.subdivisionLevel = self.subdivisionLevel
+        cStruct.format = self.format
+        return try body(&cStruct)
+    }
+}
+
+public struct PhysicalDeviceOpacityMicromapFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
+    public typealias CStruct = VkPhysicalDeviceOpacityMicromapFeaturesKHR
+
+    public let micromap: Bool
+
+    public init(micromap: Bool) {
+        self.micromap = micromap
+    }
+
+    init(cStruct: VkPhysicalDeviceOpacityMicromapFeaturesKHR) {
+        self.micromap = cStruct.micromap == VK_TRUE
+    }
+
+    public func withCStruct<R>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPhysicalDeviceOpacityMicromapFeaturesKHR>) throws -> R) rethrows -> R {
+        var cStruct = VkPhysicalDeviceOpacityMicromapFeaturesKHR()
+        cStruct.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_OPACITY_MICROMAP_FEATURES_KHR
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.micromap = VkBool32(self.micromap ? VK_TRUE : VK_FALSE)
+        return try body(&cStruct)
+    }
+    public func push<Extension: PhysicalDeviceOpacityMicromapFeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol PhysicalDeviceOpacityMicromapFeaturesKHRExtension: Chainable {}
+
+public struct PhysicalDeviceOpacityMicromapFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
+    public typealias CStruct = VkPhysicalDeviceOpacityMicromapFeaturesEXT
+
+    public let micromap: Bool
+    public let micromapCaptureReplay: Bool
+    public let micromapHostCommands: Bool
+
+    public init(micromap: Bool, micromapCaptureReplay: Bool, micromapHostCommands: Bool) {
+        self.micromap = micromap
+        self.micromapCaptureReplay = micromapCaptureReplay
+        self.micromapHostCommands = micromapHostCommands
+    }
+
+    init(cStruct: VkPhysicalDeviceOpacityMicromapFeaturesEXT) {
+        self.micromap = cStruct.micromap == VK_TRUE
+        self.micromapCaptureReplay = cStruct.micromapCaptureReplay == VK_TRUE
+        self.micromapHostCommands = cStruct.micromapHostCommands == VK_TRUE
+    }
+
+    public func withCStruct<R>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPhysicalDeviceOpacityMicromapFeaturesEXT>) throws -> R) rethrows -> R {
+        var cStruct = VkPhysicalDeviceOpacityMicromapFeaturesEXT()
+        cStruct.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_OPACITY_MICROMAP_FEATURES_EXT
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.micromap = VkBool32(self.micromap ? VK_TRUE : VK_FALSE)
+        cStruct.micromapCaptureReplay = VkBool32(self.micromapCaptureReplay ? VK_TRUE : VK_FALSE)
+        cStruct.micromapHostCommands = VkBool32(self.micromapHostCommands ? VK_TRUE : VK_FALSE)
+        return try body(&cStruct)
+    }
+    public func push<Extension: PhysicalDeviceOpacityMicromapFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol PhysicalDeviceOpacityMicromapFeaturesEXTExtension: Chainable {}
+
+public struct PhysicalDeviceOpacityMicromapPropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension {
+    public typealias CStruct = VkPhysicalDeviceOpacityMicromapPropertiesKHR
+
+    public let maxOpacity2StateSubdivisionLevel: UInt32
+    public let maxOpacity4StateSubdivisionLevel: UInt32
+    public let maxOpacityLossy4StateSubdivisionLevel: UInt32
+    public let maxMicromapTriangles: UInt64
+
+    init(cStruct: VkPhysicalDeviceOpacityMicromapPropertiesKHR) {
+        self.maxOpacity2StateSubdivisionLevel = cStruct.maxOpacity2StateSubdivisionLevel
+        self.maxOpacity4StateSubdivisionLevel = cStruct.maxOpacity4StateSubdivisionLevel
+        self.maxOpacityLossy4StateSubdivisionLevel = cStruct.maxOpacityLossy4StateSubdivisionLevel
+        self.maxMicromapTriangles = cStruct.maxMicromapTriangles
+    }
+
+    public func withCStruct<R>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPhysicalDeviceOpacityMicromapPropertiesKHR>) throws -> R) rethrows -> R {
+        var cStruct = VkPhysicalDeviceOpacityMicromapPropertiesKHR()
+        cStruct.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_OPACITY_MICROMAP_PROPERTIES_KHR
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.maxOpacity2StateSubdivisionLevel = self.maxOpacity2StateSubdivisionLevel
+        cStruct.maxOpacity4StateSubdivisionLevel = self.maxOpacity4StateSubdivisionLevel
+        cStruct.maxOpacityLossy4StateSubdivisionLevel = self.maxOpacityLossy4StateSubdivisionLevel
+        cStruct.maxMicromapTriangles = self.maxMicromapTriangles
+        return try body(&cStruct)
+    }
+    public func push<Extension: PhysicalDeviceOpacityMicromapPropertiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol PhysicalDeviceOpacityMicromapPropertiesKHRExtension: Chainable {}
+
+public struct PhysicalDeviceOpacityMicromapPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
+    public typealias CStruct = VkPhysicalDeviceOpacityMicromapPropertiesEXT
+
+    public let maxOpacity2StateSubdivisionLevel: UInt32
+    public let maxOpacity4StateSubdivisionLevel: UInt32
+
+    init(cStruct: VkPhysicalDeviceOpacityMicromapPropertiesEXT) {
+        self.maxOpacity2StateSubdivisionLevel = cStruct.maxOpacity2StateSubdivisionLevel
+        self.maxOpacity4StateSubdivisionLevel = cStruct.maxOpacity4StateSubdivisionLevel
+    }
+
+    public func withCStruct<R>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPhysicalDeviceOpacityMicromapPropertiesEXT>) throws -> R) rethrows -> R {
+        var cStruct = VkPhysicalDeviceOpacityMicromapPropertiesEXT()
+        cStruct.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_OPACITY_MICROMAP_PROPERTIES_EXT
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.maxOpacity2StateSubdivisionLevel = self.maxOpacity2StateSubdivisionLevel
+        cStruct.maxOpacity4StateSubdivisionLevel = self.maxOpacity4StateSubdivisionLevel
+        return try body(&cStruct)
+    }
+    public func push<Extension: PhysicalDeviceOpacityMicromapPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol PhysicalDeviceOpacityMicromapPropertiesEXTExtension: Chainable {}
+
+public struct AccelerationStructureTrianglesOpacityMicromapKHR: ChainableBase, AccelerationStructureGeometryTrianglesDataKHRExtension, AccelerationStructureDenseGeometryFormatTrianglesDataAMDXExtension {
+    public typealias CStruct = VkAccelerationStructureTrianglesOpacityMicromapKHR
+
+    public let indexType: IndexType
+    public let indexBuffer: VkDeviceAddress
+    public let indexStride: VkDeviceSize
+    public let baseTriangle: UInt32
+    public let micromap: AccelerationStructureKHR?
+
+    public init(indexType: IndexType, indexBuffer: VkDeviceAddress, indexStride: VkDeviceSize, baseTriangle: UInt32, micromap: AccelerationStructureKHR? = nil) {
+        self.indexType = indexType
+        self.indexBuffer = indexBuffer
+        self.indexStride = indexStride
+        self.baseTriangle = baseTriangle
+        self.micromap = micromap
+    }
+
+    init(cStruct: VkAccelerationStructureTrianglesOpacityMicromapKHR, device: Device) {
+        self.indexType = IndexType(rawValue: unsafeBitCast(cStruct.indexType, to: UInt32.self))!
+        self.indexBuffer = cStruct.indexBuffer
+        self.indexStride = cStruct.indexStride
+        self.baseTriangle = cStruct.baseTriangle
+        self.micromap = (cStruct.micromap != nil) ? AccelerationStructureKHR(handle: cStruct.micromap, device: device) : nil
+    }
+
+    public func withCStruct<R>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkAccelerationStructureTrianglesOpacityMicromapKHR>) throws -> R) rethrows -> R {
+        var cStruct = VkAccelerationStructureTrianglesOpacityMicromapKHR()
+        cStruct.sType = VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_TRIANGLES_OPACITY_MICROMAP_KHR
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.indexType = VkIndexType(rawValue: VkIndexType.RawValue(self.indexType.rawValue))
+        cStruct.indexBuffer = self.indexBuffer
+        cStruct.indexStride = self.indexStride
+        cStruct.baseTriangle = self.baseTriangle
+        cStruct.micromap = self.micromap?.handle
+        return try body(&cStruct)
+    }
+    public func push<Extension: AccelerationStructureTrianglesOpacityMicromapKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol AccelerationStructureTrianglesOpacityMicromapKHRExtension: Chainable {}
+
+public struct AccelerationStructureTrianglesOpacityMicromapEXT: ChainableBase, AccelerationStructureGeometryTrianglesDataKHRExtension, AccelerationStructureDenseGeometryFormatTrianglesDataAMDXExtension {
+    public typealias CStruct = VkAccelerationStructureTrianglesOpacityMicromapEXT
+
+    public let indexType: IndexType
+    public let indexBuffer: VkDeviceOrHostAddressConstKHR
+    public let indexStride: VkDeviceSize
+    public let baseTriangle: UInt32
+    public let usageCounts: Array<MicromapUsageEXT>?
+    public let usageCounts2: Array<UnsafePointer<VkMicromapUsageEXT>?>?
+    public let micromap: MicromapEXT?
+
+    public init(indexType: IndexType, indexBuffer: VkDeviceOrHostAddressConstKHR, indexStride: VkDeviceSize, baseTriangle: UInt32, usageCounts: Array<MicromapUsageEXT>? = nil, usageCounts2: Array<UnsafePointer<VkMicromapUsageEXT>?>? = nil, micromap: MicromapEXT? = nil) {
+        self.indexType = indexType
+        self.indexBuffer = indexBuffer
+        self.indexStride = indexStride
+        self.baseTriangle = baseTriangle
+        self.usageCounts = usageCounts
+        self.usageCounts2 = usageCounts2
+        self.micromap = micromap
+    }
+
+    init(cStruct: VkAccelerationStructureTrianglesOpacityMicromapEXT, device: Device) {
+        self.indexType = IndexType(rawValue: unsafeBitCast(cStruct.indexType, to: UInt32.self))!
+        self.indexBuffer = cStruct.indexBuffer
+        self.indexStride = cStruct.indexStride
+        self.baseTriangle = cStruct.baseTriangle
+        self.usageCounts = (cStruct.pUsageCounts != nil) ? UnsafeBufferPointer(start: cStruct.pUsageCounts, count: Int(cStruct.usageCountsCount)).map{ MicromapUsageEXT(cStruct: $0) } : nil
+        self.usageCounts2 = (cStruct.ppUsageCounts != nil) ? Array(UnsafeBufferPointer(start: cStruct.ppUsageCounts, count: Int(cStruct.usageCountsCount))) : nil
+        self.micromap = (cStruct.micromap != nil) ? MicromapEXT(handle: cStruct.micromap, device: device) : nil
+    }
+
+    public func withCStruct<R>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkAccelerationStructureTrianglesOpacityMicromapEXT>) throws -> R) rethrows -> R {
+        try self.usageCounts.withOptionalCStructBufferPointer { ptr_usageCounts in
+            try self.usageCounts2.withOptionalUnsafeBufferPointer { ptr_usageCounts2 in
+                var cStruct = VkAccelerationStructureTrianglesOpacityMicromapEXT()
+                cStruct.sType = VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_TRIANGLES_OPACITY_MICROMAP_EXT
+                cStruct.pNext = maybeMutable(pNext)
+                cStruct.indexType = VkIndexType(rawValue: VkIndexType.RawValue(self.indexType.rawValue))
+                cStruct.indexBuffer = self.indexBuffer
+                cStruct.indexStride = self.indexStride
+                cStruct.baseTriangle = self.baseTriangle
+                cStruct.usageCountsCount = UInt32(ptr_usageCounts.count)
+                cStruct.pUsageCounts = ptr_usageCounts.baseAddress
+                cStruct.ppUsageCounts = ptr_usageCounts2.baseAddress
+                cStruct.micromap = self.micromap?.handle
+                return try body(&cStruct)
+            }
+        }
+    }
+    public func push<Extension: AccelerationStructureTrianglesOpacityMicromapEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol AccelerationStructureTrianglesOpacityMicromapEXTExtension: Chainable {}
+
 #if VK_ENABLE_BETA_EXTENSIONS
 public struct PhysicalDeviceDisplacementMicromapFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDisplacementMicromapFeaturesNV
@@ -36108,11 +37116,11 @@ public struct AccelerationStructureTrianglesDisplacementMicromapNV: ChainableBas
     public let indexBuffer: VkDeviceOrHostAddressConstKHR
     public let indexStride: VkDeviceSize
     public let baseTriangle: UInt32
-    public let usageCounts: Array<VkMicromapUsageEXT>?
+    public let usageCounts: Array<MicromapUsageEXT>?
     public let usageCounts2: Array<UnsafePointer<VkMicromapUsageEXT>?>?
-    public let micromap: VkMicromapEXT
+    public let micromap: MicromapEXT?
 
-    public init(displacementBiasAndScaleFormat: Format, displacementVectorFormat: Format, displacementBiasAndScaleBuffer: VkDeviceOrHostAddressConstKHR, displacementBiasAndScaleStride: VkDeviceSize, displacementVectorBuffer: VkDeviceOrHostAddressConstKHR, displacementVectorStride: VkDeviceSize, displacedMicromapPrimitiveFlags: VkDeviceOrHostAddressConstKHR, displacedMicromapPrimitiveFlagsStride: VkDeviceSize, indexType: IndexType, indexBuffer: VkDeviceOrHostAddressConstKHR, indexStride: VkDeviceSize, baseTriangle: UInt32, usageCounts: Array<VkMicromapUsageEXT>? = nil, usageCounts2: Array<UnsafePointer<VkMicromapUsageEXT>?>? = nil, micromap: VkMicromapEXT) {
+    public init(displacementBiasAndScaleFormat: Format, displacementVectorFormat: Format, displacementBiasAndScaleBuffer: VkDeviceOrHostAddressConstKHR, displacementBiasAndScaleStride: VkDeviceSize, displacementVectorBuffer: VkDeviceOrHostAddressConstKHR, displacementVectorStride: VkDeviceSize, displacedMicromapPrimitiveFlags: VkDeviceOrHostAddressConstKHR, displacedMicromapPrimitiveFlagsStride: VkDeviceSize, indexType: IndexType, indexBuffer: VkDeviceOrHostAddressConstKHR, indexStride: VkDeviceSize, baseTriangle: UInt32, usageCounts: Array<MicromapUsageEXT>? = nil, usageCounts2: Array<UnsafePointer<VkMicromapUsageEXT>?>? = nil, micromap: MicromapEXT? = nil) {
         self.displacementBiasAndScaleFormat = displacementBiasAndScaleFormat
         self.displacementVectorFormat = displacementVectorFormat
         self.displacementBiasAndScaleBuffer = displacementBiasAndScaleBuffer
@@ -36130,7 +37138,7 @@ public struct AccelerationStructureTrianglesDisplacementMicromapNV: ChainableBas
         self.micromap = micromap
     }
 
-    init(cStruct: VkAccelerationStructureTrianglesDisplacementMicromapNV) {
+    init(cStruct: VkAccelerationStructureTrianglesDisplacementMicromapNV, device: Device) {
         self.displacementBiasAndScaleFormat = Format(rawValue: unsafeBitCast(cStruct.displacementBiasAndScaleFormat, to: UInt32.self))!
         self.displacementVectorFormat = Format(rawValue: unsafeBitCast(cStruct.displacementVectorFormat, to: UInt32.self))!
         self.displacementBiasAndScaleBuffer = cStruct.displacementBiasAndScaleBuffer
@@ -36143,13 +37151,13 @@ public struct AccelerationStructureTrianglesDisplacementMicromapNV: ChainableBas
         self.indexBuffer = cStruct.indexBuffer
         self.indexStride = cStruct.indexStride
         self.baseTriangle = cStruct.baseTriangle
-        self.usageCounts = (cStruct.pUsageCounts != nil) ? Array(UnsafeBufferPointer(start: cStruct.pUsageCounts, count: Int(cStruct.usageCountsCount))) : nil
+        self.usageCounts = (cStruct.pUsageCounts != nil) ? UnsafeBufferPointer(start: cStruct.pUsageCounts, count: Int(cStruct.usageCountsCount)).map{ MicromapUsageEXT(cStruct: $0) } : nil
         self.usageCounts2 = (cStruct.ppUsageCounts != nil) ? Array(UnsafeBufferPointer(start: cStruct.ppUsageCounts, count: Int(cStruct.usageCountsCount))) : nil
-        self.micromap = cStruct.micromap
+        self.micromap = (cStruct.micromap != nil) ? MicromapEXT(handle: cStruct.micromap, device: device) : nil
     }
 
     public func withCStruct<R>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkAccelerationStructureTrianglesDisplacementMicromapNV>) throws -> R) rethrows -> R {
-        try self.usageCounts.withOptionalUnsafeBufferPointer { ptr_usageCounts in
+        try self.usageCounts.withOptionalCStructBufferPointer { ptr_usageCounts in
             try self.usageCounts2.withOptionalUnsafeBufferPointer { ptr_usageCounts2 in
                 var cStruct = VkAccelerationStructureTrianglesDisplacementMicromapNV()
                 cStruct.sType = VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_TRIANGLES_DISPLACEMENT_MICROMAP_NV
@@ -36169,7 +37177,7 @@ public struct AccelerationStructureTrianglesDisplacementMicromapNV: ChainableBas
                 cStruct.usageCountsCount = UInt32(ptr_usageCounts.count)
                 cStruct.pUsageCounts = ptr_usageCounts.baseAddress
                 cStruct.ppUsageCounts = ptr_usageCounts2.baseAddress
-                cStruct.micromap = self.micromap
+                cStruct.micromap = self.micromap?.handle
                 return try body(&cStruct)
             }
         }
@@ -36833,6 +37841,56 @@ public struct ImageViewSampleWeightCreateInfoQCOM: ChainableBase, ImageViewCreat
 }
 
 public protocol ImageViewSampleWeightCreateInfoQCOMExtension: Chainable {}
+
+public struct PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
+    public typealias CStruct = VkPhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM
+
+    public let shaderMultipleWaitQueues: Bool
+
+    public init(shaderMultipleWaitQueues: Bool) {
+        self.shaderMultipleWaitQueues = shaderMultipleWaitQueues
+    }
+
+    init(cStruct: VkPhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM) {
+        self.shaderMultipleWaitQueues = cStruct.shaderMultipleWaitQueues == VK_TRUE
+    }
+
+    public func withCStruct<R>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM>) throws -> R) rethrows -> R {
+        var cStruct = VkPhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM()
+        cStruct.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_MULTIPLE_WAIT_QUEUES_FEATURES_QCOM
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.shaderMultipleWaitQueues = VkBool32(self.shaderMultipleWaitQueues ? VK_TRUE : VK_FALSE)
+        return try body(&cStruct)
+    }
+    public func push<Extension: PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOMExtension: Chainable {}
+
+public struct PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM: ChainableBase, PhysicalDeviceProperties2Extension {
+    public typealias CStruct = VkPhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM
+
+    public let maxShaderWaitQueues: UInt32
+
+    init(cStruct: VkPhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM) {
+        self.maxShaderWaitQueues = cStruct.maxShaderWaitQueues
+    }
+
+    public func withCStruct<R>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM>) throws -> R) rethrows -> R {
+        var cStruct = VkPhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM()
+        cStruct.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_MULTIPLE_WAIT_QUEUES_PROPERTIES_QCOM
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.maxShaderWaitQueues = self.maxShaderWaitQueues
+        return try body(&cStruct)
+    }
+    public func push<Extension: PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOMExtension: Chainable {}
 
 public struct PhysicalDeviceImageProcessingFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceImageProcessingFeaturesQCOM
@@ -40543,6 +41601,41 @@ public struct SamplerBlockMatchWindowCreateInfoQCOM: ChainableBase, SamplerCreat
 }
 
 public protocol SamplerBlockMatchWindowCreateInfoQCOMExtension: Chainable {}
+
+public struct PhysicalDeviceImageProcessing3FeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
+    public typealias CStruct = VkPhysicalDeviceImageProcessing3FeaturesQCOM
+
+    public let imageGatherLinear: Bool
+    public let imageGatherExtendedModes: Bool
+    public let blockMatchExtendedClampToEdge: Bool
+
+    public init(imageGatherLinear: Bool, imageGatherExtendedModes: Bool, blockMatchExtendedClampToEdge: Bool) {
+        self.imageGatherLinear = imageGatherLinear
+        self.imageGatherExtendedModes = imageGatherExtendedModes
+        self.blockMatchExtendedClampToEdge = blockMatchExtendedClampToEdge
+    }
+
+    init(cStruct: VkPhysicalDeviceImageProcessing3FeaturesQCOM) {
+        self.imageGatherLinear = cStruct.imageGatherLinear == VK_TRUE
+        self.imageGatherExtendedModes = cStruct.imageGatherExtendedModes == VK_TRUE
+        self.blockMatchExtendedClampToEdge = cStruct.blockMatchExtendedClampToEdge == VK_TRUE
+    }
+
+    public func withCStruct<R>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPhysicalDeviceImageProcessing3FeaturesQCOM>) throws -> R) rethrows -> R {
+        var cStruct = VkPhysicalDeviceImageProcessing3FeaturesQCOM()
+        cStruct.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_PROCESSING_3_FEATURES_QCOM
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.imageGatherLinear = VkBool32(self.imageGatherLinear ? VK_TRUE : VK_FALSE)
+        cStruct.imageGatherExtendedModes = VkBool32(self.imageGatherExtendedModes ? VK_TRUE : VK_FALSE)
+        cStruct.blockMatchExtendedClampToEdge = VkBool32(self.blockMatchExtendedClampToEdge ? VK_TRUE : VK_FALSE)
+        return try body(&cStruct)
+    }
+    public func push<Extension: PhysicalDeviceImageProcessing3FeaturesQCOMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol PhysicalDeviceImageProcessing3FeaturesQCOMExtension: Chainable {}
 
 public struct PhysicalDeviceDescriptorPoolOverallocationFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDescriptorPoolOverallocationFeaturesNV
@@ -46296,6 +47389,56 @@ public struct SubsampledImageFormatPropertiesEXT: ChainableBase, ImageFormatProp
 }
 
 public protocol SubsampledImageFormatPropertiesEXTExtension: Chainable {}
+
+public struct PhysicalDeviceShaderSplitBarrierFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
+    public typealias CStruct = VkPhysicalDeviceShaderSplitBarrierFeaturesEXT
+
+    public let shaderSplitBarrier: Bool
+
+    public init(shaderSplitBarrier: Bool) {
+        self.shaderSplitBarrier = shaderSplitBarrier
+    }
+
+    init(cStruct: VkPhysicalDeviceShaderSplitBarrierFeaturesEXT) {
+        self.shaderSplitBarrier = cStruct.shaderSplitBarrier == VK_TRUE
+    }
+
+    public func withCStruct<R>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPhysicalDeviceShaderSplitBarrierFeaturesEXT>) throws -> R) rethrows -> R {
+        var cStruct = VkPhysicalDeviceShaderSplitBarrierFeaturesEXT()
+        cStruct.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_SPLIT_BARRIER_FEATURES_EXT
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.shaderSplitBarrier = VkBool32(self.shaderSplitBarrier ? VK_TRUE : VK_FALSE)
+        return try body(&cStruct)
+    }
+    public func push<Extension: PhysicalDeviceShaderSplitBarrierFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol PhysicalDeviceShaderSplitBarrierFeaturesEXTExtension: Chainable {}
+
+public struct PhysicalDeviceShaderSplitBarrierPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
+    public typealias CStruct = VkPhysicalDeviceShaderSplitBarrierPropertiesEXT
+
+    public let splitBarrierReservedSharedMemory: UInt32
+
+    init(cStruct: VkPhysicalDeviceShaderSplitBarrierPropertiesEXT) {
+        self.splitBarrierReservedSharedMemory = cStruct.splitBarrierReservedSharedMemory
+    }
+
+    public func withCStruct<R>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPhysicalDeviceShaderSplitBarrierPropertiesEXT>) throws -> R) rethrows -> R {
+        var cStruct = VkPhysicalDeviceShaderSplitBarrierPropertiesEXT()
+        cStruct.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_SPLIT_BARRIER_PROPERTIES_EXT
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.splitBarrierReservedSharedMemory = self.splitBarrierReservedSharedMemory
+        return try body(&cStruct)
+    }
+    public func push<Extension: PhysicalDeviceShaderSplitBarrierPropertiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol PhysicalDeviceShaderSplitBarrierPropertiesEXTExtension: Chainable {}
 
 public struct PhysicalDeviceDescriptorHeapFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDescriptorHeapFeaturesEXT
