@@ -70,6 +70,33 @@ extension AnyChainableArray: ExpressibleByArrayLiteral {
     }
 }
 
+extension AnyChainableArray {
+    func withCStructBufferPointer<R, E: Error>(
+        _ body: (UnsafeBufferPointer<Base.CStruct>) throws(E) -> R
+    ) throws(E) -> R {
+        func _withCStructBufferPointer<S: CStructConvertible, I: IteratorProtocol>(
+            to array: inout [S.CStruct], appending iterator: inout I,
+            _ body: (UnsafeBufferPointer<S.CStruct>) throws(E) -> R
+        ) throws(E) -> R where I.Element == any Chainable<S> {
+            if let chainable = iterator.next() {
+                return try chainable.withCStruct { cStruct throws(E) in
+                    array.append(cStruct.pointee)
+                    return try _withCStructBufferPointer(to: &array, appending: &iterator, body)
+                }
+            } else {
+                return try array.withUnsafeBufferPointer { ptr throws(E) in
+                    try body(ptr)
+                }
+            }
+        }
+
+        var cStructs: [Base.CStruct] = []
+        cStructs.reserveCapacity(self.storage.count)
+        var iterator = self.storage.makeIterator()
+        return try _withCStructBufferPointer(to: &cStructs, appending: &iterator, body)
+    }
+}
+
 public protocol ChainableBase: Chainable {}
 
 public struct Chain<Base: Chainable, Next: Chainable> {
