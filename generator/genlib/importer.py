@@ -208,8 +208,11 @@ class Importer:
 
         if c_bitmask.enum:
             prefix, enum_tag = self.pop_extension_tag(option_set.name)
+
             if prefix.endswith('Flags'):
                 prefix = prefix[:-5]
+            elif prefix[:-1].endswith('Flags'): # without version number
+                prefix = prefix[:-6] + prefix[-1]
 
             starts_with_digit = False
             for case in c_bitmask.enum.cases:
