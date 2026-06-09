@@ -314,13 +314,13 @@ class CContext:
             if self.should_ignore(type_=bitmask_name, api=parse_api(e_bitmask)):
                 continue
 
-            c_bitmask = CBitmask(bitmask_name, is64=e_bitmask.find('./type').text == "VkFlags64", protect=self.find_protect(type_=bitmask_name))
+            bitvalues = e_bitmask.get('bitvalues')
+            c_bitmask = CBitmask(bitmask_name, is64=bitvalues is not None, protect=self.find_protect(type_=bitmask_name))
 
-
-            requires = e_bitmask.get('requires')
-            if requires:
+            name = e_bitmask.get('requires') or bitvalues
+            if name:
                 cases = {}
-                e_enum = tree.find(f'./enums[@name="{requires}"]')
+                e_enum = tree.find(f'./enums[@name="{name}"]')
                 for e_case in e_enum.findall('./enum'):
                     if 'alias' in e_case.attrib:
                         continue
@@ -330,11 +330,11 @@ class CContext:
                     if extension.supported in ('vulkansc', 'disabled') or extension.platform:
                         continue
                     for ext_enum in extension.enums:
-                        if ext_enum.name == requires:
+                        if ext_enum.name == name:
                             for ext_case in ext_enum.cases:
                                 cases[ext_case.name] = ext_case.value
 
-                c_bitmask.enum = CEnum(requires, [CEnum.Case(
+                c_bitmask.enum = CEnum(name, [CEnum.Case(
                     name, value) for name, value in cases.items()])
 
             self.bitmasks.append(c_bitmask)
@@ -408,7 +408,7 @@ class CContext:
         if api == 'vulkansc':
             return True
         extension = self.find_extension(type_, command)
-        if extension and ((type_ or command) in extension.ignored_names or extension.name in blacklisted_extensions or extension.supported in ('disabled', 'vulkansc')):
+        if extension and ((type_ or command) in extension.ignored_names or extension.supported in ('disabled', 'vulkansc')):
             return True
 
         features = self.find_features(type_, command)

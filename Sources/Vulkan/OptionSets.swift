@@ -1647,22 +1647,218 @@ public struct DeviceDiagnosticsConfigFlagsNV: OptionSet, StringConvertibleOption
 public struct AccessFlags2: OptionSet, StringConvertibleOptionSet {
     public let rawValue: UInt64
 
+    public static let access2None: AccessFlags2  = []
+    public static let access2IndirectCommandRead = AccessFlags2(rawValue: 1)
+    public static let access2IndexRead = AccessFlags2(rawValue: 2)
+    public static let access2VertexAttributeRead = AccessFlags2(rawValue: 4)
+    public static let access2UniformRead = AccessFlags2(rawValue: 8)
+    public static let access2InputAttachmentRead = AccessFlags2(rawValue: 16)
+    public static let access2ShaderRead = AccessFlags2(rawValue: 32)
+    public static let access2ShaderWrite = AccessFlags2(rawValue: 64)
+    public static let access2ColorAttachmentRead = AccessFlags2(rawValue: 128)
+    public static let access2ColorAttachmentWrite = AccessFlags2(rawValue: 256)
+    public static let access2DepthStencilAttachmentRead = AccessFlags2(rawValue: 512)
+    public static let access2DepthStencilAttachmentWrite = AccessFlags2(rawValue: 1024)
+    public static let access2TransferRead = AccessFlags2(rawValue: 2048)
+    public static let access2TransferWrite = AccessFlags2(rawValue: 4096)
+    public static let access2HostRead = AccessFlags2(rawValue: 8192)
+    public static let access2HostWrite = AccessFlags2(rawValue: 16384)
+    public static let access2MemoryRead = AccessFlags2(rawValue: 32768)
+    public static let access2MemoryWrite = AccessFlags2(rawValue: 65536)
+    public static let access2ShaderSampledRead = AccessFlags2(rawValue: 4294967296)
+    public static let access2ShaderStorageRead = AccessFlags2(rawValue: 8589934592)
+    public static let access2ShaderStorageWrite = AccessFlags2(rawValue: 17179869184)
+    public static let access2VideoDecodeReadKHR = AccessFlags2(rawValue: 34359738368)
+    public static let access2VideoDecodeWriteKHR = AccessFlags2(rawValue: 68719476736)
+    public static let access2SamplerHeapReadEXT = AccessFlags2(rawValue: 144115188075855872)
+    public static let access2ResourceHeapReadEXT = AccessFlags2(rawValue: 288230376151711744)
+    public static let access2VideoEncodeReadKHR = AccessFlags2(rawValue: 137438953472)
+    public static let access2VideoEncodeWriteKHR = AccessFlags2(rawValue: 274877906944)
+    public static let access2ShaderTileAttachmentReadQCOM = AccessFlags2(rawValue: 2251799813685248)
+    public static let access2ShaderTileAttachmentWriteQCOM = AccessFlags2(rawValue: 4503599627370496)
+    public static let access2TransformFeedbackWriteEXT = AccessFlags2(rawValue: 33554432)
+    public static let access2TransformFeedbackCounterReadEXT = AccessFlags2(rawValue: 67108864)
+    public static let access2TransformFeedbackCounterWriteEXT = AccessFlags2(rawValue: 134217728)
+    public static let access2ConditionalRenderingReadEXT = AccessFlags2(rawValue: 1048576)
+    public static let access2CommandPreprocessReadEXT = AccessFlags2(rawValue: 131072)
+    public static let access2CommandPreprocessWriteEXT = AccessFlags2(rawValue: 262144)
+    public static let access2FragmentShadingRateAttachmentReadKHR = AccessFlags2(rawValue: 8388608)
+    public static let access2AccelerationStructureReadKHR = AccessFlags2(rawValue: 2097152)
+    public static let access2AccelerationStructureWriteKHR = AccessFlags2(rawValue: 4194304)
+    public static let access2FragmentDensityMapReadEXT = AccessFlags2(rawValue: 16777216)
+    public static let access2ColorAttachmentReadNoncoherentEXT = AccessFlags2(rawValue: 524288)
+    public static let access2DescriptorBufferReadEXT = AccessFlags2(rawValue: 2199023255552)
+    public static let access2InvocationMaskReadHUAWEI = AccessFlags2(rawValue: 549755813888)
+    public static let access2ShaderBindingTableReadKHR = AccessFlags2(rawValue: 1099511627776)
+    public static let access2MicromapReadEXT = AccessFlags2(rawValue: 17592186044416)
+    public static let access2MicromapWriteEXT = AccessFlags2(rawValue: 35184372088832)
+    public static let access2OpticalFlowReadNV = AccessFlags2(rawValue: 4398046511104)
+    public static let access2OpticalFlowWriteNV = AccessFlags2(rawValue: 8796093022208)
+    public static let access2DataGraphReadARM = AccessFlags2(rawValue: 140737488355328)
+    public static let access2DataGraphWriteARM = AccessFlags2(rawValue: 281474976710656)
+    public static let access2MemoryDecompressionReadEXT = AccessFlags2(rawValue: 36028797018963968)
+    public static let access2MemoryDecompressionWriteEXT = AccessFlags2(rawValue: 72057594037927936)
+
     public init(rawValue: UInt64) {
         self.rawValue = rawValue
     }
 
     static let descriptions: [(Self, String)] = [
+        (.access2None, "access2None"),
+        (.access2IndirectCommandRead, "access2IndirectCommandRead"),
+        (.access2IndexRead, "access2IndexRead"),
+        (.access2VertexAttributeRead, "access2VertexAttributeRead"),
+        (.access2UniformRead, "access2UniformRead"),
+        (.access2InputAttachmentRead, "access2InputAttachmentRead"),
+        (.access2ShaderRead, "access2ShaderRead"),
+        (.access2ShaderWrite, "access2ShaderWrite"),
+        (.access2ColorAttachmentRead, "access2ColorAttachmentRead"),
+        (.access2ColorAttachmentWrite, "access2ColorAttachmentWrite"),
+        (.access2DepthStencilAttachmentRead, "access2DepthStencilAttachmentRead"),
+        (.access2DepthStencilAttachmentWrite, "access2DepthStencilAttachmentWrite"),
+        (.access2TransferRead, "access2TransferRead"),
+        (.access2TransferWrite, "access2TransferWrite"),
+        (.access2HostRead, "access2HostRead"),
+        (.access2HostWrite, "access2HostWrite"),
+        (.access2MemoryRead, "access2MemoryRead"),
+        (.access2MemoryWrite, "access2MemoryWrite"),
+        (.access2ShaderSampledRead, "access2ShaderSampledRead"),
+        (.access2ShaderStorageRead, "access2ShaderStorageRead"),
+        (.access2ShaderStorageWrite, "access2ShaderStorageWrite"),
+        (.access2VideoDecodeReadKHR, "access2VideoDecodeReadKHR"),
+        (.access2VideoDecodeWriteKHR, "access2VideoDecodeWriteKHR"),
+        (.access2SamplerHeapReadEXT, "access2SamplerHeapReadEXT"),
+        (.access2ResourceHeapReadEXT, "access2ResourceHeapReadEXT"),
+        (.access2VideoEncodeReadKHR, "access2VideoEncodeReadKHR"),
+        (.access2VideoEncodeWriteKHR, "access2VideoEncodeWriteKHR"),
+        (.access2ShaderTileAttachmentReadQCOM, "access2ShaderTileAttachmentReadQCOM"),
+        (.access2ShaderTileAttachmentWriteQCOM, "access2ShaderTileAttachmentWriteQCOM"),
+        (.access2TransformFeedbackWriteEXT, "access2TransformFeedbackWriteEXT"),
+        (.access2TransformFeedbackCounterReadEXT, "access2TransformFeedbackCounterReadEXT"),
+        (.access2TransformFeedbackCounterWriteEXT, "access2TransformFeedbackCounterWriteEXT"),
+        (.access2ConditionalRenderingReadEXT, "access2ConditionalRenderingReadEXT"),
+        (.access2CommandPreprocessReadEXT, "access2CommandPreprocessReadEXT"),
+        (.access2CommandPreprocessWriteEXT, "access2CommandPreprocessWriteEXT"),
+        (.access2FragmentShadingRateAttachmentReadKHR, "access2FragmentShadingRateAttachmentReadKHR"),
+        (.access2AccelerationStructureReadKHR, "access2AccelerationStructureReadKHR"),
+        (.access2AccelerationStructureWriteKHR, "access2AccelerationStructureWriteKHR"),
+        (.access2FragmentDensityMapReadEXT, "access2FragmentDensityMapReadEXT"),
+        (.access2ColorAttachmentReadNoncoherentEXT, "access2ColorAttachmentReadNoncoherentEXT"),
+        (.access2DescriptorBufferReadEXT, "access2DescriptorBufferReadEXT"),
+        (.access2InvocationMaskReadHUAWEI, "access2InvocationMaskReadHUAWEI"),
+        (.access2ShaderBindingTableReadKHR, "access2ShaderBindingTableReadKHR"),
+        (.access2MicromapReadEXT, "access2MicromapReadEXT"),
+        (.access2MicromapWriteEXT, "access2MicromapWriteEXT"),
+        (.access2OpticalFlowReadNV, "access2OpticalFlowReadNV"),
+        (.access2OpticalFlowWriteNV, "access2OpticalFlowWriteNV"),
+        (.access2DataGraphReadARM, "access2DataGraphReadARM"),
+        (.access2DataGraphWriteARM, "access2DataGraphWriteARM"),
+        (.access2MemoryDecompressionReadEXT, "access2MemoryDecompressionReadEXT"),
+        (.access2MemoryDecompressionWriteEXT, "access2MemoryDecompressionWriteEXT"),
     ]
 }
 
 public struct PipelineStageFlags2: OptionSet, StringConvertibleOptionSet {
     public let rawValue: UInt64
 
+    public static let pipelineStage2None: PipelineStageFlags2  = []
+    public static let pipelineStage2TopOfPipe = PipelineStageFlags2(rawValue: 1)
+    public static let pipelineStage2DrawIndirect = PipelineStageFlags2(rawValue: 2)
+    public static let pipelineStage2VertexInput = PipelineStageFlags2(rawValue: 4)
+    public static let pipelineStage2VertexShader = PipelineStageFlags2(rawValue: 8)
+    public static let pipelineStage2TessellationControlShader = PipelineStageFlags2(rawValue: 16)
+    public static let pipelineStage2TessellationEvaluationShader = PipelineStageFlags2(rawValue: 32)
+    public static let pipelineStage2GeometryShader = PipelineStageFlags2(rawValue: 64)
+    public static let pipelineStage2FragmentShader = PipelineStageFlags2(rawValue: 128)
+    public static let pipelineStage2EarlyFragmentTests = PipelineStageFlags2(rawValue: 256)
+    public static let pipelineStage2LateFragmentTests = PipelineStageFlags2(rawValue: 512)
+    public static let pipelineStage2ColorAttachmentOutput = PipelineStageFlags2(rawValue: 1024)
+    public static let pipelineStage2ComputeShader = PipelineStageFlags2(rawValue: 2048)
+    public static let pipelineStage2AllTransfer = PipelineStageFlags2(rawValue: 4096)
+    public static let pipelineStage2BottomOfPipe = PipelineStageFlags2(rawValue: 8192)
+    public static let pipelineStage2Host = PipelineStageFlags2(rawValue: 16384)
+    public static let pipelineStage2AllGraphics = PipelineStageFlags2(rawValue: 32768)
+    public static let pipelineStage2AllCommands = PipelineStageFlags2(rawValue: 65536)
+    public static let pipelineStage2Copy = PipelineStageFlags2(rawValue: 4294967296)
+    public static let pipelineStage2Resolve = PipelineStageFlags2(rawValue: 8589934592)
+    public static let pipelineStage2Blit = PipelineStageFlags2(rawValue: 17179869184)
+    public static let pipelineStage2Clear = PipelineStageFlags2(rawValue: 34359738368)
+    public static let pipelineStage2IndexInput = PipelineStageFlags2(rawValue: 68719476736)
+    public static let pipelineStage2VertexAttributeInput = PipelineStageFlags2(rawValue: 137438953472)
+    public static let pipelineStage2PreRasterizationShaders = PipelineStageFlags2(rawValue: 274877906944)
+    public static let pipelineStage2VideoDecodeKHR = PipelineStageFlags2(rawValue: 67108864)
+    public static let pipelineStage2VideoEncodeKHR = PipelineStageFlags2(rawValue: 134217728)
+    public static let pipelineStage2TransformFeedbackEXT = PipelineStageFlags2(rawValue: 16777216)
+    public static let pipelineStage2ConditionalRenderingEXT = PipelineStageFlags2(rawValue: 262144)
+    public static let pipelineStage2CommandPreprocessEXT = PipelineStageFlags2(rawValue: 131072)
+    public static let pipelineStage2FragmentShadingRateAttachmentKHR = PipelineStageFlags2(rawValue: 4194304)
+    public static let pipelineStage2AccelerationStructureBuildKHR = PipelineStageFlags2(rawValue: 33554432)
+    public static let pipelineStage2RayTracingShaderKHR = PipelineStageFlags2(rawValue: 2097152)
+    public static let pipelineStage2FragmentDensityProcessEXT = PipelineStageFlags2(rawValue: 8388608)
+    public static let pipelineStage2TaskShaderEXT = PipelineStageFlags2(rawValue: 524288)
+    public static let pipelineStage2MeshShaderEXT = PipelineStageFlags2(rawValue: 1048576)
+    public static let pipelineStage2SubpassShaderHUAWEI = PipelineStageFlags2(rawValue: 549755813888)
+    public static let pipelineStage2InvocationMaskHUAWEI = PipelineStageFlags2(rawValue: 1099511627776)
+    public static let pipelineStage2AccelerationStructureCopyKHR = PipelineStageFlags2(rawValue: 268435456)
+    public static let pipelineStage2MicromapBuildEXT = PipelineStageFlags2(rawValue: 1073741824)
+    public static let pipelineStage2ClusterCullingShaderHUAWEI = PipelineStageFlags2(rawValue: 2199023255552)
+    public static let pipelineStage2OpticalFlowNV = PipelineStageFlags2(rawValue: 536870912)
+    public static let pipelineStage2ConvertCooperativeVectorMatrixNV = PipelineStageFlags2(rawValue: 17592186044416)
+    public static let pipelineStage2DataGraphARM = PipelineStageFlags2(rawValue: 4398046511104)
+    public static let pipelineStage2CopyIndirectKHR = PipelineStageFlags2(rawValue: 70368744177664)
+    public static let pipelineStage2MemoryDecompressionEXT = PipelineStageFlags2(rawValue: 35184372088832)
+
     public init(rawValue: UInt64) {
         self.rawValue = rawValue
     }
 
     static let descriptions: [(Self, String)] = [
+        (.pipelineStage2None, "pipelineStage2None"),
+        (.pipelineStage2TopOfPipe, "pipelineStage2TopOfPipe"),
+        (.pipelineStage2DrawIndirect, "pipelineStage2DrawIndirect"),
+        (.pipelineStage2VertexInput, "pipelineStage2VertexInput"),
+        (.pipelineStage2VertexShader, "pipelineStage2VertexShader"),
+        (.pipelineStage2TessellationControlShader, "pipelineStage2TessellationControlShader"),
+        (.pipelineStage2TessellationEvaluationShader, "pipelineStage2TessellationEvaluationShader"),
+        (.pipelineStage2GeometryShader, "pipelineStage2GeometryShader"),
+        (.pipelineStage2FragmentShader, "pipelineStage2FragmentShader"),
+        (.pipelineStage2EarlyFragmentTests, "pipelineStage2EarlyFragmentTests"),
+        (.pipelineStage2LateFragmentTests, "pipelineStage2LateFragmentTests"),
+        (.pipelineStage2ColorAttachmentOutput, "pipelineStage2ColorAttachmentOutput"),
+        (.pipelineStage2ComputeShader, "pipelineStage2ComputeShader"),
+        (.pipelineStage2AllTransfer, "pipelineStage2AllTransfer"),
+        (.pipelineStage2BottomOfPipe, "pipelineStage2BottomOfPipe"),
+        (.pipelineStage2Host, "pipelineStage2Host"),
+        (.pipelineStage2AllGraphics, "pipelineStage2AllGraphics"),
+        (.pipelineStage2AllCommands, "pipelineStage2AllCommands"),
+        (.pipelineStage2Copy, "pipelineStage2Copy"),
+        (.pipelineStage2Resolve, "pipelineStage2Resolve"),
+        (.pipelineStage2Blit, "pipelineStage2Blit"),
+        (.pipelineStage2Clear, "pipelineStage2Clear"),
+        (.pipelineStage2IndexInput, "pipelineStage2IndexInput"),
+        (.pipelineStage2VertexAttributeInput, "pipelineStage2VertexAttributeInput"),
+        (.pipelineStage2PreRasterizationShaders, "pipelineStage2PreRasterizationShaders"),
+        (.pipelineStage2VideoDecodeKHR, "pipelineStage2VideoDecodeKHR"),
+        (.pipelineStage2VideoEncodeKHR, "pipelineStage2VideoEncodeKHR"),
+        (.pipelineStage2TransformFeedbackEXT, "pipelineStage2TransformFeedbackEXT"),
+        (.pipelineStage2ConditionalRenderingEXT, "pipelineStage2ConditionalRenderingEXT"),
+        (.pipelineStage2CommandPreprocessEXT, "pipelineStage2CommandPreprocessEXT"),
+        (.pipelineStage2FragmentShadingRateAttachmentKHR, "pipelineStage2FragmentShadingRateAttachmentKHR"),
+        (.pipelineStage2AccelerationStructureBuildKHR, "pipelineStage2AccelerationStructureBuildKHR"),
+        (.pipelineStage2RayTracingShaderKHR, "pipelineStage2RayTracingShaderKHR"),
+        (.pipelineStage2FragmentDensityProcessEXT, "pipelineStage2FragmentDensityProcessEXT"),
+        (.pipelineStage2TaskShaderEXT, "pipelineStage2TaskShaderEXT"),
+        (.pipelineStage2MeshShaderEXT, "pipelineStage2MeshShaderEXT"),
+        (.pipelineStage2SubpassShaderHUAWEI, "pipelineStage2SubpassShaderHUAWEI"),
+        (.pipelineStage2InvocationMaskHUAWEI, "pipelineStage2InvocationMaskHUAWEI"),
+        (.pipelineStage2AccelerationStructureCopyKHR, "pipelineStage2AccelerationStructureCopyKHR"),
+        (.pipelineStage2MicromapBuildEXT, "pipelineStage2MicromapBuildEXT"),
+        (.pipelineStage2ClusterCullingShaderHUAWEI, "pipelineStage2ClusterCullingShaderHUAWEI"),
+        (.pipelineStage2OpticalFlowNV, "pipelineStage2OpticalFlowNV"),
+        (.pipelineStage2ConvertCooperativeVectorMatrixNV, "pipelineStage2ConvertCooperativeVectorMatrixNV"),
+        (.pipelineStage2DataGraphARM, "pipelineStage2DataGraphARM"),
+        (.pipelineStage2CopyIndirectKHR, "pipelineStage2CopyIndirectKHR"),
+        (.pipelineStage2MemoryDecompressionEXT, "pipelineStage2MemoryDecompressionEXT"),
     ]
 }
 
@@ -1691,11 +1887,124 @@ public struct AccelerationStructureMotionInstanceFlagsNV: OptionSet, StringConve
 public struct FormatFeatureFlags2: OptionSet, StringConvertibleOptionSet {
     public let rawValue: UInt64
 
+    public static let formatFeature2SampledImage = FormatFeatureFlags2(rawValue: 1)
+    public static let formatFeature2StorageImage = FormatFeatureFlags2(rawValue: 2)
+    public static let formatFeature2StorageImageAtomic = FormatFeatureFlags2(rawValue: 4)
+    public static let formatFeature2UniformTexelBuffer = FormatFeatureFlags2(rawValue: 8)
+    public static let formatFeature2StorageTexelBuffer = FormatFeatureFlags2(rawValue: 16)
+    public static let formatFeature2StorageTexelBufferAtomic = FormatFeatureFlags2(rawValue: 32)
+    public static let formatFeature2VertexBuffer = FormatFeatureFlags2(rawValue: 64)
+    public static let formatFeature2ColorAttachment = FormatFeatureFlags2(rawValue: 128)
+    public static let formatFeature2ColorAttachmentBlend = FormatFeatureFlags2(rawValue: 256)
+    public static let formatFeature2DepthStencilAttachment = FormatFeatureFlags2(rawValue: 512)
+    public static let formatFeature2BlitSrc = FormatFeatureFlags2(rawValue: 1024)
+    public static let formatFeature2BlitDst = FormatFeatureFlags2(rawValue: 2048)
+    public static let formatFeature2SampledImageFilterLinear = FormatFeatureFlags2(rawValue: 4096)
+    public static let formatFeature2TransferSrc = FormatFeatureFlags2(rawValue: 16384)
+    public static let formatFeature2TransferDst = FormatFeatureFlags2(rawValue: 32768)
+    public static let formatFeature2SampledImageFilterMinmax = FormatFeatureFlags2(rawValue: 65536)
+    public static let formatFeature2MidpointChromaSamples = FormatFeatureFlags2(rawValue: 131072)
+    public static let formatFeature2SampledImageYcbcrConversionLinearFilter = FormatFeatureFlags2(rawValue: 262144)
+    public static let formatFeature2SampledImageYcbcrConversionSeparateReconstructionFilter = FormatFeatureFlags2(rawValue: 524288)
+    public static let formatFeature2SampledImageYcbcrConversionChromaReconstructionExplicit = FormatFeatureFlags2(rawValue: 1048576)
+    public static let formatFeature2SampledImageYcbcrConversionChromaReconstructionExplicitForceable = FormatFeatureFlags2(rawValue: 2097152)
+    public static let formatFeature2Disjoint = FormatFeatureFlags2(rawValue: 4194304)
+    public static let formatFeature2CositedChromaSamples = FormatFeatureFlags2(rawValue: 8388608)
+    public static let formatFeature2StorageReadWithoutFormat = FormatFeatureFlags2(rawValue: 2147483648)
+    public static let formatFeature2StorageWriteWithoutFormat = FormatFeatureFlags2(rawValue: 4294967296)
+    public static let formatFeature2SampledImageDepthComparison = FormatFeatureFlags2(rawValue: 8589934592)
+    public static let formatFeature2VideoDecodeOutputKHR = FormatFeatureFlags2(rawValue: 33554432)
+    public static let formatFeature2VideoDecodeDpbKHR = FormatFeatureFlags2(rawValue: 67108864)
+    public static let formatFeature2AccelerationStructureVertexBufferKHR = FormatFeatureFlags2(rawValue: 536870912)
+    public static let formatFeature2FragmentDensityMapEXT = FormatFeatureFlags2(rawValue: 16777216)
+    public static let formatFeature2FragmentShadingRateAttachmentKHR = FormatFeatureFlags2(rawValue: 1073741824)
+    public static let formatFeature2VideoEncodeInputKHR = FormatFeatureFlags2(rawValue: 134217728)
+    public static let formatFeature2VideoEncodeDpbKHR = FormatFeatureFlags2(rawValue: 268435456)
+    public static let formatFeature2BlockMatchingSxdQCOM = FormatFeatureFlags2(rawValue: 17592186044416)
+    public static let formatFeature2AccelerationStructureRadiusBufferNV = FormatFeatureFlags2(rawValue: 2251799813685248)
+    public static let formatFeature2LinearColorAttachmentNV = FormatFeatureFlags2(rawValue: 274877906944)
+    public static let formatFeature2WeightImageQCOM = FormatFeatureFlags2(rawValue: 17179869184)
+    public static let formatFeature2WeightSampledImageQCOM = FormatFeatureFlags2(rawValue: 34359738368)
+    public static let formatFeature2BlockMatchingQCOM = FormatFeatureFlags2(rawValue: 68719476736)
+    public static let formatFeature2BoxFilterSampledQCOM = FormatFeatureFlags2(rawValue: 137438953472)
+    public static let formatFeature2TensorShaderARM = FormatFeatureFlags2(rawValue: 549755813888)
+    public static let formatFeature2TensorImageAliasingARM = FormatFeatureFlags2(rawValue: 8796093022208)
+    public static let formatFeature2OpticalFlowImageNV = FormatFeatureFlags2(rawValue: 1099511627776)
+    public static let formatFeature2OpticalFlowVectorNV = FormatFeatureFlags2(rawValue: 2199023255552)
+    public static let formatFeature2OpticalFlowCostNV = FormatFeatureFlags2(rawValue: 4398046511104)
+    public static let formatFeature2TensorDataGraphARM = FormatFeatureFlags2(rawValue: 281474976710656)
+    public static let formatFeature2CopyImageIndirectDstKHR = FormatFeatureFlags2(rawValue: 576460752303423488)
+    public static let formatFeature2VideoEncodeQuantizationDeltaMapKHR = FormatFeatureFlags2(rawValue: 562949953421312)
+    public static let formatFeature2VideoEncodeEmphasisMapKHR = FormatFeatureFlags2(rawValue: 1125899906842624)
+    public static let formatFeature2DepthCopyOnComputeQueueKHR = FormatFeatureFlags2(rawValue: 4503599627370496)
+    public static let formatFeature2DepthCopyOnTransferQueueKHR = FormatFeatureFlags2(rawValue: 9007199254740992)
+    public static let formatFeature2StencilCopyOnComputeQueueKHR = FormatFeatureFlags2(rawValue: 18014398509481984)
+    public static let formatFeature2StencilCopyOnTransferQueueKHR = FormatFeatureFlags2(rawValue: 36028797018963968)
+    public static let formatFeature2DataGraphOpticalFlowImageARM = FormatFeatureFlags2(rawValue: 72057594037927936)
+    public static let formatFeature2DataGraphOpticalFlowVectorARM = FormatFeatureFlags2(rawValue: 144115188075855872)
+    public static let formatFeature2DataGraphOpticalFlowCostARM = FormatFeatureFlags2(rawValue: 288230376151711744)
+
     public init(rawValue: UInt64) {
         self.rawValue = rawValue
     }
 
     static let descriptions: [(Self, String)] = [
+        (.formatFeature2SampledImage, "formatFeature2SampledImage"),
+        (.formatFeature2StorageImage, "formatFeature2StorageImage"),
+        (.formatFeature2StorageImageAtomic, "formatFeature2StorageImageAtomic"),
+        (.formatFeature2UniformTexelBuffer, "formatFeature2UniformTexelBuffer"),
+        (.formatFeature2StorageTexelBuffer, "formatFeature2StorageTexelBuffer"),
+        (.formatFeature2StorageTexelBufferAtomic, "formatFeature2StorageTexelBufferAtomic"),
+        (.formatFeature2VertexBuffer, "formatFeature2VertexBuffer"),
+        (.formatFeature2ColorAttachment, "formatFeature2ColorAttachment"),
+        (.formatFeature2ColorAttachmentBlend, "formatFeature2ColorAttachmentBlend"),
+        (.formatFeature2DepthStencilAttachment, "formatFeature2DepthStencilAttachment"),
+        (.formatFeature2BlitSrc, "formatFeature2BlitSrc"),
+        (.formatFeature2BlitDst, "formatFeature2BlitDst"),
+        (.formatFeature2SampledImageFilterLinear, "formatFeature2SampledImageFilterLinear"),
+        (.formatFeature2TransferSrc, "formatFeature2TransferSrc"),
+        (.formatFeature2TransferDst, "formatFeature2TransferDst"),
+        (.formatFeature2SampledImageFilterMinmax, "formatFeature2SampledImageFilterMinmax"),
+        (.formatFeature2MidpointChromaSamples, "formatFeature2MidpointChromaSamples"),
+        (.formatFeature2SampledImageYcbcrConversionLinearFilter, "formatFeature2SampledImageYcbcrConversionLinearFilter"),
+        (.formatFeature2SampledImageYcbcrConversionSeparateReconstructionFilter, "formatFeature2SampledImageYcbcrConversionSeparateReconstructionFilter"),
+        (.formatFeature2SampledImageYcbcrConversionChromaReconstructionExplicit, "formatFeature2SampledImageYcbcrConversionChromaReconstructionExplicit"),
+        (.formatFeature2SampledImageYcbcrConversionChromaReconstructionExplicitForceable, "formatFeature2SampledImageYcbcrConversionChromaReconstructionExplicitForceable"),
+        (.formatFeature2Disjoint, "formatFeature2Disjoint"),
+        (.formatFeature2CositedChromaSamples, "formatFeature2CositedChromaSamples"),
+        (.formatFeature2StorageReadWithoutFormat, "formatFeature2StorageReadWithoutFormat"),
+        (.formatFeature2StorageWriteWithoutFormat, "formatFeature2StorageWriteWithoutFormat"),
+        (.formatFeature2SampledImageDepthComparison, "formatFeature2SampledImageDepthComparison"),
+        (.formatFeature2VideoDecodeOutputKHR, "formatFeature2VideoDecodeOutputKHR"),
+        (.formatFeature2VideoDecodeDpbKHR, "formatFeature2VideoDecodeDpbKHR"),
+        (.formatFeature2AccelerationStructureVertexBufferKHR, "formatFeature2AccelerationStructureVertexBufferKHR"),
+        (.formatFeature2FragmentDensityMapEXT, "formatFeature2FragmentDensityMapEXT"),
+        (.formatFeature2FragmentShadingRateAttachmentKHR, "formatFeature2FragmentShadingRateAttachmentKHR"),
+        (.formatFeature2VideoEncodeInputKHR, "formatFeature2VideoEncodeInputKHR"),
+        (.formatFeature2VideoEncodeDpbKHR, "formatFeature2VideoEncodeDpbKHR"),
+        (.formatFeature2BlockMatchingSxdQCOM, "formatFeature2BlockMatchingSxdQCOM"),
+        (.formatFeature2AccelerationStructureRadiusBufferNV, "formatFeature2AccelerationStructureRadiusBufferNV"),
+        (.formatFeature2LinearColorAttachmentNV, "formatFeature2LinearColorAttachmentNV"),
+        (.formatFeature2WeightImageQCOM, "formatFeature2WeightImageQCOM"),
+        (.formatFeature2WeightSampledImageQCOM, "formatFeature2WeightSampledImageQCOM"),
+        (.formatFeature2BlockMatchingQCOM, "formatFeature2BlockMatchingQCOM"),
+        (.formatFeature2BoxFilterSampledQCOM, "formatFeature2BoxFilterSampledQCOM"),
+        (.formatFeature2TensorShaderARM, "formatFeature2TensorShaderARM"),
+        (.formatFeature2TensorImageAliasingARM, "formatFeature2TensorImageAliasingARM"),
+        (.formatFeature2OpticalFlowImageNV, "formatFeature2OpticalFlowImageNV"),
+        (.formatFeature2OpticalFlowVectorNV, "formatFeature2OpticalFlowVectorNV"),
+        (.formatFeature2OpticalFlowCostNV, "formatFeature2OpticalFlowCostNV"),
+        (.formatFeature2TensorDataGraphARM, "formatFeature2TensorDataGraphARM"),
+        (.formatFeature2CopyImageIndirectDstKHR, "formatFeature2CopyImageIndirectDstKHR"),
+        (.formatFeature2VideoEncodeQuantizationDeltaMapKHR, "formatFeature2VideoEncodeQuantizationDeltaMapKHR"),
+        (.formatFeature2VideoEncodeEmphasisMapKHR, "formatFeature2VideoEncodeEmphasisMapKHR"),
+        (.formatFeature2DepthCopyOnComputeQueueKHR, "formatFeature2DepthCopyOnComputeQueueKHR"),
+        (.formatFeature2DepthCopyOnTransferQueueKHR, "formatFeature2DepthCopyOnTransferQueueKHR"),
+        (.formatFeature2StencilCopyOnComputeQueueKHR, "formatFeature2StencilCopyOnComputeQueueKHR"),
+        (.formatFeature2StencilCopyOnTransferQueueKHR, "formatFeature2StencilCopyOnTransferQueueKHR"),
+        (.formatFeature2DataGraphOpticalFlowImageARM, "formatFeature2DataGraphOpticalFlowImageARM"),
+        (.formatFeature2DataGraphOpticalFlowVectorARM, "formatFeature2DataGraphOpticalFlowVectorARM"),
+        (.formatFeature2DataGraphOpticalFlowCostARM, "formatFeature2DataGraphOpticalFlowCostARM"),
     ]
 }
 
@@ -1732,11 +2041,14 @@ public struct RenderingFlags: OptionSet, StringConvertibleOptionSet {
 public struct MemoryDecompressionMethodFlagsEXT: OptionSet, StringConvertibleOptionSet {
     public let rawValue: UInt64
 
+    public static let gdeflate10 = MemoryDecompressionMethodFlagsEXT(rawValue: 1)
+
     public init(rawValue: UInt64) {
         self.rawValue = rawValue
     }
 
     static let descriptions: [(Self, String)] = [
+        (.gdeflate10, "gdeflate10"),
     ]
 }
 
@@ -1842,22 +2154,164 @@ public struct DirectDriverLoadingFlagsLUNARG: OptionSet, StringConvertibleOption
 public struct PipelineCreateFlags2: OptionSet, StringConvertibleOptionSet {
     public let rawValue: UInt64
 
+    public static let pipelineCreate2DisableOptimization = PipelineCreateFlags2(rawValue: 1)
+    public static let pipelineCreate2AllowDerivatives = PipelineCreateFlags2(rawValue: 2)
+    public static let pipelineCreate2Derivative = PipelineCreateFlags2(rawValue: 4)
+    public static let pipelineCreate2ViewIndexFromDeviceIndex = PipelineCreateFlags2(rawValue: 8)
+    public static let pipelineCreate2DispatchBase = PipelineCreateFlags2(rawValue: 16)
+    public static let pipelineCreate2FailOnPipelineCompileRequired = PipelineCreateFlags2(rawValue: 256)
+    public static let pipelineCreate2EarlyReturnOnFailure = PipelineCreateFlags2(rawValue: 512)
+    public static let pipelineCreate2NoProtectedAccess = PipelineCreateFlags2(rawValue: 134217728)
+    public static let pipelineCreate2ProtectedAccessOnly = PipelineCreateFlags2(rawValue: 1073741824)
+    public static let pipelineCreate2DescriptorHeapEXT = PipelineCreateFlags2(rawValue: 68719476736)
+    public static let pipelineCreate2RayTracingAllowSpheresAndLinearSweptSpheresNV = PipelineCreateFlags2(rawValue: 8589934592)
+    public static let pipelineCreate2EnableLegacyDitheringEXT = PipelineCreateFlags2(rawValue: 17179869184)
+    public static let pipelineCreate2DeferCompileNV = PipelineCreateFlags2(rawValue: 32)
+    public static let pipelineCreate2CaptureStatisticsKHR = PipelineCreateFlags2(rawValue: 64)
+    public static let pipelineCreate2CaptureInternalRepresentationsKHR = PipelineCreateFlags2(rawValue: 128)
+    public static let pipelineCreate2LinkTimeOptimizationEXT = PipelineCreateFlags2(rawValue: 1024)
+    public static let pipelineCreate2RetainLinkTimeOptimizationInfoEXT = PipelineCreateFlags2(rawValue: 8388608)
+    public static let pipelineCreate2LibraryKHR = PipelineCreateFlags2(rawValue: 2048)
+    public static let pipelineCreate2RayTracingSkipTrianglesKHR = PipelineCreateFlags2(rawValue: 4096)
+    public static let pipelineCreate2RayTracingSkipAabbsKHR = PipelineCreateFlags2(rawValue: 8192)
+    public static let pipelineCreate2RayTracingNoNullAnyHitShadersKHR = PipelineCreateFlags2(rawValue: 16384)
+    public static let pipelineCreate2RayTracingNoNullClosestHitShadersKHR = PipelineCreateFlags2(rawValue: 32768)
+    public static let pipelineCreate2RayTracingNoNullMissShadersKHR = PipelineCreateFlags2(rawValue: 65536)
+    public static let pipelineCreate2RayTracingNoNullIntersectionShadersKHR = PipelineCreateFlags2(rawValue: 131072)
+    public static let pipelineCreate2RayTracingShaderGroupHandleCaptureReplayKHR = PipelineCreateFlags2(rawValue: 524288)
+    public static let pipelineCreate2IndirectBindableNV = PipelineCreateFlags2(rawValue: 262144)
+    public static let pipelineCreate2RayTracingAllowMotionNV = PipelineCreateFlags2(rawValue: 1048576)
+    public static let pipelineCreate2RenderingFragmentShadingRateAttachmentKHR = PipelineCreateFlags2(rawValue: 2097152)
+    public static let pipelineCreate2RenderingFragmentDensityMapAttachmentEXT = PipelineCreateFlags2(rawValue: 4194304)
+    public static let pipelineCreate2ColorAttachmentFeedbackLoopEXT = PipelineCreateFlags2(rawValue: 33554432)
+    public static let pipelineCreate2DepthStencilAttachmentFeedbackLoopEXT = PipelineCreateFlags2(rawValue: 67108864)
+    public static let pipelineCreate2RayTracingDisplacementMicromapNV = PipelineCreateFlags2(rawValue: 268435456)
+    public static let pipelineCreate2DescriptorBufferEXT = PipelineCreateFlags2(rawValue: 536870912)
+    public static let pipelineCreate2DisallowOpacityMicromapARM = PipelineCreateFlags2(rawValue: 137438953472)
+    public static let pipelineCreate2InstrumentShadersARM = PipelineCreateFlags2(rawValue: 549755813888)
+    public static let pipelineCreate2CaptureDataKHR = PipelineCreateFlags2(rawValue: 2147483648)
+    public static let pipelineCreate2IndirectBindableEXT = PipelineCreateFlags2(rawValue: 274877906944)
+    public static let pipelineCreate2PerLayerFragmentDensityVALVE = PipelineCreateFlags2(rawValue: 1099511627776)
+    public static let pipelineCreate2RayTracingOpacityMicromapKHR = PipelineCreateFlags2(rawValue: 16777216)
+    public static let pipelineCreate2OpacityMicromapDisallowMixedSpecialIndexKHR = PipelineCreateFlags2(rawValue: 2199023255552)
+    public static let pipelineCreate264BitIndexingEXT = PipelineCreateFlags2(rawValue: 8796093022208)
+
     public init(rawValue: UInt64) {
         self.rawValue = rawValue
     }
 
     static let descriptions: [(Self, String)] = [
+        (.pipelineCreate2DisableOptimization, "pipelineCreate2DisableOptimization"),
+        (.pipelineCreate2AllowDerivatives, "pipelineCreate2AllowDerivatives"),
+        (.pipelineCreate2Derivative, "pipelineCreate2Derivative"),
+        (.pipelineCreate2ViewIndexFromDeviceIndex, "pipelineCreate2ViewIndexFromDeviceIndex"),
+        (.pipelineCreate2DispatchBase, "pipelineCreate2DispatchBase"),
+        (.pipelineCreate2FailOnPipelineCompileRequired, "pipelineCreate2FailOnPipelineCompileRequired"),
+        (.pipelineCreate2EarlyReturnOnFailure, "pipelineCreate2EarlyReturnOnFailure"),
+        (.pipelineCreate2NoProtectedAccess, "pipelineCreate2NoProtectedAccess"),
+        (.pipelineCreate2ProtectedAccessOnly, "pipelineCreate2ProtectedAccessOnly"),
+        (.pipelineCreate2DescriptorHeapEXT, "pipelineCreate2DescriptorHeapEXT"),
+        (.pipelineCreate2RayTracingAllowSpheresAndLinearSweptSpheresNV, "pipelineCreate2RayTracingAllowSpheresAndLinearSweptSpheresNV"),
+        (.pipelineCreate2EnableLegacyDitheringEXT, "pipelineCreate2EnableLegacyDitheringEXT"),
+        (.pipelineCreate2DeferCompileNV, "pipelineCreate2DeferCompileNV"),
+        (.pipelineCreate2CaptureStatisticsKHR, "pipelineCreate2CaptureStatisticsKHR"),
+        (.pipelineCreate2CaptureInternalRepresentationsKHR, "pipelineCreate2CaptureInternalRepresentationsKHR"),
+        (.pipelineCreate2LinkTimeOptimizationEXT, "pipelineCreate2LinkTimeOptimizationEXT"),
+        (.pipelineCreate2RetainLinkTimeOptimizationInfoEXT, "pipelineCreate2RetainLinkTimeOptimizationInfoEXT"),
+        (.pipelineCreate2LibraryKHR, "pipelineCreate2LibraryKHR"),
+        (.pipelineCreate2RayTracingSkipTrianglesKHR, "pipelineCreate2RayTracingSkipTrianglesKHR"),
+        (.pipelineCreate2RayTracingSkipAabbsKHR, "pipelineCreate2RayTracingSkipAabbsKHR"),
+        (.pipelineCreate2RayTracingNoNullAnyHitShadersKHR, "pipelineCreate2RayTracingNoNullAnyHitShadersKHR"),
+        (.pipelineCreate2RayTracingNoNullClosestHitShadersKHR, "pipelineCreate2RayTracingNoNullClosestHitShadersKHR"),
+        (.pipelineCreate2RayTracingNoNullMissShadersKHR, "pipelineCreate2RayTracingNoNullMissShadersKHR"),
+        (.pipelineCreate2RayTracingNoNullIntersectionShadersKHR, "pipelineCreate2RayTracingNoNullIntersectionShadersKHR"),
+        (.pipelineCreate2RayTracingShaderGroupHandleCaptureReplayKHR, "pipelineCreate2RayTracingShaderGroupHandleCaptureReplayKHR"),
+        (.pipelineCreate2IndirectBindableNV, "pipelineCreate2IndirectBindableNV"),
+        (.pipelineCreate2RayTracingAllowMotionNV, "pipelineCreate2RayTracingAllowMotionNV"),
+        (.pipelineCreate2RenderingFragmentShadingRateAttachmentKHR, "pipelineCreate2RenderingFragmentShadingRateAttachmentKHR"),
+        (.pipelineCreate2RenderingFragmentDensityMapAttachmentEXT, "pipelineCreate2RenderingFragmentDensityMapAttachmentEXT"),
+        (.pipelineCreate2ColorAttachmentFeedbackLoopEXT, "pipelineCreate2ColorAttachmentFeedbackLoopEXT"),
+        (.pipelineCreate2DepthStencilAttachmentFeedbackLoopEXT, "pipelineCreate2DepthStencilAttachmentFeedbackLoopEXT"),
+        (.pipelineCreate2RayTracingDisplacementMicromapNV, "pipelineCreate2RayTracingDisplacementMicromapNV"),
+        (.pipelineCreate2DescriptorBufferEXT, "pipelineCreate2DescriptorBufferEXT"),
+        (.pipelineCreate2DisallowOpacityMicromapARM, "pipelineCreate2DisallowOpacityMicromapARM"),
+        (.pipelineCreate2InstrumentShadersARM, "pipelineCreate2InstrumentShadersARM"),
+        (.pipelineCreate2CaptureDataKHR, "pipelineCreate2CaptureDataKHR"),
+        (.pipelineCreate2IndirectBindableEXT, "pipelineCreate2IndirectBindableEXT"),
+        (.pipelineCreate2PerLayerFragmentDensityVALVE, "pipelineCreate2PerLayerFragmentDensityVALVE"),
+        (.pipelineCreate2RayTracingOpacityMicromapKHR, "pipelineCreate2RayTracingOpacityMicromapKHR"),
+        (.pipelineCreate2OpacityMicromapDisallowMixedSpecialIndexKHR, "pipelineCreate2OpacityMicromapDisallowMixedSpecialIndexKHR"),
+        (.pipelineCreate264BitIndexingEXT, "pipelineCreate264BitIndexingEXT"),
     ]
 }
 
 public struct BufferUsageFlags2: OptionSet, StringConvertibleOptionSet {
     public let rawValue: UInt64
 
+    public static let bufferUsage2TransferSrc = BufferUsageFlags2(rawValue: 1)
+    public static let bufferUsage2TransferDst = BufferUsageFlags2(rawValue: 2)
+    public static let bufferUsage2UniformTexelBuffer = BufferUsageFlags2(rawValue: 4)
+    public static let bufferUsage2StorageTexelBuffer = BufferUsageFlags2(rawValue: 8)
+    public static let bufferUsage2UniformBuffer = BufferUsageFlags2(rawValue: 16)
+    public static let bufferUsage2StorageBuffer = BufferUsageFlags2(rawValue: 32)
+    public static let bufferUsage2IndexBuffer = BufferUsageFlags2(rawValue: 64)
+    public static let bufferUsage2VertexBuffer = BufferUsageFlags2(rawValue: 128)
+    public static let bufferUsage2IndirectBuffer = BufferUsageFlags2(rawValue: 256)
+    public static let bufferUsage2DescriptorHeapEXT = BufferUsageFlags2(rawValue: 268435456)
+    public static let bufferUsage2MicromapBuildInputReadOnlyEXT = BufferUsageFlags2(rawValue: 8388608)
+    public static let bufferUsage2MicromapStorageEXT = BufferUsageFlags2(rawValue: 16777216)
+    public static let bufferUsage2ConditionalRenderingEXT = BufferUsageFlags2(rawValue: 512)
+    public static let bufferUsage2ShaderBindingTableKHR = BufferUsageFlags2(rawValue: 1024)
+    public static let bufferUsage2TransformFeedbackBufferEXT = BufferUsageFlags2(rawValue: 2048)
+    public static let bufferUsage2TransformFeedbackCounterBufferEXT = BufferUsageFlags2(rawValue: 4096)
+    public static let bufferUsage2VideoDecodeSrcKHR = BufferUsageFlags2(rawValue: 8192)
+    public static let bufferUsage2VideoDecodeDstKHR = BufferUsageFlags2(rawValue: 16384)
+    public static let bufferUsage2VideoEncodeDstKHR = BufferUsageFlags2(rawValue: 32768)
+    public static let bufferUsage2VideoEncodeSrcKHR = BufferUsageFlags2(rawValue: 65536)
+    public static let bufferUsage2AccelerationStructureBuildInputReadOnlyKHR = BufferUsageFlags2(rawValue: 524288)
+    public static let bufferUsage2AccelerationStructureStorageKHR = BufferUsageFlags2(rawValue: 1048576)
+    public static let bufferUsage2SamplerDescriptorBufferEXT = BufferUsageFlags2(rawValue: 2097152)
+    public static let bufferUsage2ResourceDescriptorBufferEXT = BufferUsageFlags2(rawValue: 4194304)
+    public static let bufferUsage2PushDescriptorsDescriptorBufferEXT = BufferUsageFlags2(rawValue: 67108864)
+    public static let bufferUsage2DataGraphForeignDescriptorARM = BufferUsageFlags2(rawValue: 536870912)
+    public static let bufferUsage2TileMemoryQCOM = BufferUsageFlags2(rawValue: 134217728)
+    public static let bufferUsage2MemoryDecompressionEXT = BufferUsageFlags2(rawValue: 4294967296)
+    public static let bufferUsage2PreprocessBufferEXT = BufferUsageFlags2(rawValue: 2147483648)
+
     public init(rawValue: UInt64) {
         self.rawValue = rawValue
     }
 
     static let descriptions: [(Self, String)] = [
+        (.bufferUsage2TransferSrc, "bufferUsage2TransferSrc"),
+        (.bufferUsage2TransferDst, "bufferUsage2TransferDst"),
+        (.bufferUsage2UniformTexelBuffer, "bufferUsage2UniformTexelBuffer"),
+        (.bufferUsage2StorageTexelBuffer, "bufferUsage2StorageTexelBuffer"),
+        (.bufferUsage2UniformBuffer, "bufferUsage2UniformBuffer"),
+        (.bufferUsage2StorageBuffer, "bufferUsage2StorageBuffer"),
+        (.bufferUsage2IndexBuffer, "bufferUsage2IndexBuffer"),
+        (.bufferUsage2VertexBuffer, "bufferUsage2VertexBuffer"),
+        (.bufferUsage2IndirectBuffer, "bufferUsage2IndirectBuffer"),
+        (.bufferUsage2DescriptorHeapEXT, "bufferUsage2DescriptorHeapEXT"),
+        (.bufferUsage2MicromapBuildInputReadOnlyEXT, "bufferUsage2MicromapBuildInputReadOnlyEXT"),
+        (.bufferUsage2MicromapStorageEXT, "bufferUsage2MicromapStorageEXT"),
+        (.bufferUsage2ConditionalRenderingEXT, "bufferUsage2ConditionalRenderingEXT"),
+        (.bufferUsage2ShaderBindingTableKHR, "bufferUsage2ShaderBindingTableKHR"),
+        (.bufferUsage2TransformFeedbackBufferEXT, "bufferUsage2TransformFeedbackBufferEXT"),
+        (.bufferUsage2TransformFeedbackCounterBufferEXT, "bufferUsage2TransformFeedbackCounterBufferEXT"),
+        (.bufferUsage2VideoDecodeSrcKHR, "bufferUsage2VideoDecodeSrcKHR"),
+        (.bufferUsage2VideoDecodeDstKHR, "bufferUsage2VideoDecodeDstKHR"),
+        (.bufferUsage2VideoEncodeDstKHR, "bufferUsage2VideoEncodeDstKHR"),
+        (.bufferUsage2VideoEncodeSrcKHR, "bufferUsage2VideoEncodeSrcKHR"),
+        (.bufferUsage2AccelerationStructureBuildInputReadOnlyKHR, "bufferUsage2AccelerationStructureBuildInputReadOnlyKHR"),
+        (.bufferUsage2AccelerationStructureStorageKHR, "bufferUsage2AccelerationStructureStorageKHR"),
+        (.bufferUsage2SamplerDescriptorBufferEXT, "bufferUsage2SamplerDescriptorBufferEXT"),
+        (.bufferUsage2ResourceDescriptorBufferEXT, "bufferUsage2ResourceDescriptorBufferEXT"),
+        (.bufferUsage2PushDescriptorsDescriptorBufferEXT, "bufferUsage2PushDescriptorsDescriptorBufferEXT"),
+        (.bufferUsage2DataGraphForeignDescriptorARM, "bufferUsage2DataGraphForeignDescriptorARM"),
+        (.bufferUsage2TileMemoryQCOM, "bufferUsage2TileMemoryQCOM"),
+        (.bufferUsage2MemoryDecompressionEXT, "bufferUsage2MemoryDecompressionEXT"),
+        (.bufferUsage2PreprocessBufferEXT, "bufferUsage2PreprocessBufferEXT"),
     ]
 }
 
@@ -1882,44 +2336,72 @@ public struct AddressCopyFlagsKHR: OptionSet, StringConvertibleOptionSet {
 public struct TensorCreateFlagsARM: OptionSet, StringConvertibleOptionSet {
     public let rawValue: UInt64
 
+    public static let mutableFormat = TensorCreateFlagsARM(rawValue: 1)
+    public static let protected = TensorCreateFlagsARM(rawValue: 2)
+    public static let descriptorHeapCaptureReplay = TensorCreateFlagsARM(rawValue: 8)
+    public static let descriptorBufferCaptureReplay = TensorCreateFlagsARM(rawValue: 4)
+
     public init(rawValue: UInt64) {
         self.rawValue = rawValue
     }
 
     static let descriptions: [(Self, String)] = [
+        (.mutableFormat, "mutableFormat"),
+        (.protected, "protected"),
+        (.descriptorHeapCaptureReplay, "descriptorHeapCaptureReplay"),
+        (.descriptorBufferCaptureReplay, "descriptorBufferCaptureReplay"),
     ]
 }
 
 public struct TensorUsageFlagsARM: OptionSet, StringConvertibleOptionSet {
     public let rawValue: UInt64
 
+    public static let shader = TensorUsageFlagsARM(rawValue: 2)
+    public static let transferSrc = TensorUsageFlagsARM(rawValue: 4)
+    public static let transferDst = TensorUsageFlagsARM(rawValue: 8)
+    public static let imageAliasing = TensorUsageFlagsARM(rawValue: 16)
+    public static let dataGraph = TensorUsageFlagsARM(rawValue: 32)
+
     public init(rawValue: UInt64) {
         self.rawValue = rawValue
     }
 
     static let descriptions: [(Self, String)] = [
+        (.shader, "shader"),
+        (.transferSrc, "transferSrc"),
+        (.transferDst, "transferDst"),
+        (.imageAliasing, "imageAliasing"),
+        (.dataGraph, "dataGraph"),
     ]
 }
 
 public struct TensorViewCreateFlagsARM: OptionSet, StringConvertibleOptionSet {
     public let rawValue: UInt64
 
+    public static let descriptorBufferCaptureReplay = TensorViewCreateFlagsARM(rawValue: 1)
+
     public init(rawValue: UInt64) {
         self.rawValue = rawValue
     }
 
     static let descriptions: [(Self, String)] = [
+        (.descriptorBufferCaptureReplay, "descriptorBufferCaptureReplay"),
     ]
 }
 
 public struct DataGraphPipelineSessionCreateFlagsARM: OptionSet, StringConvertibleOptionSet {
     public let rawValue: UInt64
 
+    public static let protected = DataGraphPipelineSessionCreateFlagsARM(rawValue: 1)
+    public static let opticalFlowCache = DataGraphPipelineSessionCreateFlagsARM(rawValue: 2)
+
     public init(rawValue: UInt64) {
         self.rawValue = rawValue
     }
 
     static let descriptions: [(Self, String)] = [
+        (.protected, "protected"),
+        (.opticalFlowCache, "opticalFlowCache"),
     ]
 }
 
@@ -3426,11 +3908,16 @@ public struct TileShadingRenderPassFlagsQCOM: OptionSet, StringConvertibleOption
 public struct PhysicalDeviceSchedulingControlsFlagsARM: OptionSet, StringConvertibleOptionSet {
     public let rawValue: UInt64
 
+    public static let shaderCoreCount = PhysicalDeviceSchedulingControlsFlagsARM(rawValue: 1)
+    public static let dispatchParameters = PhysicalDeviceSchedulingControlsFlagsARM(rawValue: 2)
+
     public init(rawValue: UInt64) {
         self.rawValue = rawValue
     }
 
     static let descriptions: [(Self, String)] = [
+        (.shaderCoreCount, "shaderCoreCount"),
+        (.dispatchParameters, "dispatchParameters"),
     ]
 }
 
@@ -4346,11 +4833,14 @@ public struct VideoEncodeAV1SuperblockSizeFlagsKHR: OptionSet, StringConvertible
 public struct AccessFlags3KHR: OptionSet, StringConvertibleOptionSet {
     public let rawValue: UInt64
 
+    public static let access3None: AccessFlags3KHR  = []
+
     public init(rawValue: UInt64) {
         self.rawValue = rawValue
     }
 
     static let descriptions: [(Self, String)] = [
+        (.access3None, "access3None"),
     ]
 }
 
