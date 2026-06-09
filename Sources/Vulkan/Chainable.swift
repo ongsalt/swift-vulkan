@@ -27,6 +27,49 @@ extension Chainable where Base == Self {
     public var asTuple: Self { self }
 }
 
+public struct AnyChainableArray<Base: ChainableBase> {
+    var storage: [any Chainable<Base>] = []
+    public init(storage: [any Chainable<Base>] = []) {
+        self.storage = storage
+    }
+}
+
+extension AnyChainableArray: Collection, MutableCollection, BidirectionalCollection,
+    RandomAccessCollection
+{
+    public typealias Index = Int
+    public typealias Element = any Chainable<Base>
+
+    public var startIndex: Int { storage.startIndex }
+    public var endIndex: Int { storage.endIndex }
+
+    public subscript(position: Int) -> any Chainable<Base> {
+        get { storage[position] }
+        set { storage[position] = newValue }
+    }
+
+    public func index(after i: Int) -> Int { storage.index(after: i) }
+    public func index(before i: Int) -> Int { storage.index(before: i) }
+}
+
+extension AnyChainableArray: RangeReplaceableCollection {
+    public init() {
+        self.init(storage: [])
+    }
+
+    public mutating func replaceSubrange<C: Collection>(_ subrange: Range<Int>, with newElements: C)
+    where C.Element == any Chainable<Base> {
+        storage.replaceSubrange(subrange, with: newElements)
+    }
+}
+
+extension AnyChainableArray: ExpressibleByArrayLiteral {
+    public typealias ArrayLiteralElement = any Chainable<Base>
+    public init(arrayLiteral elements: any Chainable<Base>...) {
+        self.init(storage: elements)
+    }
+}
+
 public protocol ChainableBase: Chainable {}
 
 public struct Chain<Base: Chainable, Next: Chainable> {

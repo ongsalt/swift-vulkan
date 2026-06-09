@@ -1309,10 +1309,26 @@ public class Device: _HandleContainer {
         }
     }
 
+    public func flushMappedMemoryRanges(memoryRanges: (AnyChainableArray<MappedMemoryRange>)) throws(Result) -> Void {
+        try memoryRanges.withCStructBufferPointer { ptr_memoryRanges throws(Result) in
+            try checkResult(
+                self.dispatchTable.vkFlushMappedMemoryRanges(self.handle, UInt32(ptr_memoryRanges.count), ptr_memoryRanges.baseAddress)
+            )
+        }
+    }
+
     public func flushMappedMemoryRanges(memoryRanges: Array<MappedMemoryRange>) throws(Result) -> Void {
         try memoryRanges.withCStructBufferPointer { ptr_memoryRanges throws(Result) in
             try checkResult(
                 self.dispatchTable.vkFlushMappedMemoryRanges(self.handle, UInt32(ptr_memoryRanges.count), ptr_memoryRanges.baseAddress)
+            )
+        }
+    }
+
+    public func invalidateMappedMemoryRanges(memoryRanges: (AnyChainableArray<MappedMemoryRange>)) throws(Result) -> Void {
+        try memoryRanges.withCStructBufferPointer { ptr_memoryRanges throws(Result) in
+            try checkResult(
+                self.dispatchTable.vkInvalidateMappedMemoryRanges(self.handle, UInt32(ptr_memoryRanges.count), ptr_memoryRanges.baseAddress)
             )
         }
     }
@@ -1617,11 +1633,33 @@ public class Device: _HandleContainer {
         }
     }
 
+    public func createGraphicsPipelines(_ createInfos: (AnyChainableArray<GraphicsPipelineCreateInfo>), pipelineCache: PipelineCache? = nil) throws(Result) -> Array<Pipeline> {
+        try createInfos.withCStructBufferPointer { ptr_createInfos throws(Result) in
+            try Array<VkPipeline?>(unsafeUninitializedCapacity: Int(UInt32(ptr_createInfos.count))) { out, initializedCount throws(Result) in
+                try checkResult(
+                    self.dispatchTable.vkCreateGraphicsPipelines(self.handle, pipelineCache?.handle, UInt32(ptr_createInfos.count), ptr_createInfos.baseAddress, nil, out.baseAddress)
+                )
+                initializedCount = out.count
+            }.map { Pipeline(handle: $0, device: self) }
+        }
+    }
+
     public func createGraphicsPipelines(_ createInfos: Array<GraphicsPipelineCreateInfo>, pipelineCache: PipelineCache? = nil) throws(Result) -> Array<Pipeline> {
         try createInfos.withCStructBufferPointer { ptr_createInfos throws(Result) in
             try Array<VkPipeline?>(unsafeUninitializedCapacity: Int(UInt32(ptr_createInfos.count))) { out, initializedCount throws(Result) in
                 try checkResult(
                     self.dispatchTable.vkCreateGraphicsPipelines(self.handle, pipelineCache?.handle, UInt32(ptr_createInfos.count), ptr_createInfos.baseAddress, nil, out.baseAddress)
+                )
+                initializedCount = out.count
+            }.map { Pipeline(handle: $0, device: self) }
+        }
+    }
+
+    public func createComputePipelines(_ createInfos: (AnyChainableArray<ComputePipelineCreateInfo>), pipelineCache: PipelineCache? = nil) throws(Result) -> Array<Pipeline> {
+        try createInfos.withCStructBufferPointer { ptr_createInfos throws(Result) in
+            try Array<VkPipeline?>(unsafeUninitializedCapacity: Int(UInt32(ptr_createInfos.count))) { out, initializedCount throws(Result) in
+                try checkResult(
+                    self.dispatchTable.vkCreateComputePipelines(self.handle, pipelineCache?.handle, UInt32(ptr_createInfos.count), ptr_createInfos.baseAddress, nil, out.baseAddress)
                 )
                 initializedCount = out.count
             }.map { Pipeline(handle: $0, device: self) }
@@ -1741,6 +1779,14 @@ public class Device: _HandleContainer {
         }
     }
 
+    public func updateDescriptorSets(descriptorWrites: (AnyChainableArray<WriteDescriptorSet>), descriptorCopies: (AnyChainableArray<CopyDescriptorSet>)) -> Void {
+        descriptorWrites.withCStructBufferPointer { ptr_descriptorWrites in
+            descriptorCopies.withCStructBufferPointer { ptr_descriptorCopies in
+                self.dispatchTable.vkUpdateDescriptorSets(self.handle, UInt32(ptr_descriptorWrites.count), ptr_descriptorWrites.baseAddress, UInt32(ptr_descriptorCopies.count), ptr_descriptorCopies.baseAddress)
+            }
+        }
+    }
+
     public func updateDescriptorSets(descriptorWrites: Array<WriteDescriptorSet> = [], descriptorCopies: Array<CopyDescriptorSet> = []) -> Void {
         descriptorWrites.withCStructBufferPointer { ptr_descriptorWrites in
             descriptorCopies.withCStructBufferPointer { ptr_descriptorCopies in
@@ -1844,6 +1890,17 @@ public class Device: _HandleContainer {
                 )
                 initializedCount = out.count
             }.map { CommandBuffer(handle: $0, commandPool: allocateInfo.base.commandPool) }
+        }
+    }
+
+    public func createSharedSwapchainsKHR(_ createInfos: (AnyChainableArray<SwapchainCreateInfoKHR>)) throws(Result) -> Array<SwapchainKHR> {
+        try createInfos.withCStructBufferPointer { ptr_createInfos throws(Result) in
+            try Array<VkSwapchainKHR?>(unsafeUninitializedCapacity: Int(UInt32(ptr_createInfos.count))) { out, initializedCount throws(Result) in
+                try checkResult(
+                    self.dispatchTable.vkCreateSharedSwapchainsKHR(self.handle, UInt32(ptr_createInfos.count), ptr_createInfos.baseAddress, nil, out.baseAddress)
+                )
+                initializedCount = out.count
+            }.map { SwapchainKHR(handle: $0, device: self) }
         }
     }
 
@@ -2391,10 +2448,26 @@ public class Device: _HandleContainer {
         return PeerMemoryFeatureFlags(rawValue: out)
     }
 
+    public func bindBufferMemory2(_ bindInfos: (AnyChainableArray<BindBufferMemoryInfo>)) throws(Result) -> Void {
+        try bindInfos.withCStructBufferPointer { ptr_bindInfos throws(Result) in
+            try checkResult(
+                self.dispatchTable.vkBindBufferMemory2(self.handle, UInt32(ptr_bindInfos.count), ptr_bindInfos.baseAddress)
+            )
+        }
+    }
+
     public func bindBufferMemory2(_ bindInfos: Array<BindBufferMemoryInfo>) throws(Result) -> Void {
         try bindInfos.withCStructBufferPointer { ptr_bindInfos throws(Result) in
             try checkResult(
                 self.dispatchTable.vkBindBufferMemory2(self.handle, UInt32(ptr_bindInfos.count), ptr_bindInfos.baseAddress)
+            )
+        }
+    }
+
+    public func bindImageMemory2(_ bindInfos: (AnyChainableArray<BindImageMemoryInfo>)) throws(Result) -> Void {
+        try bindInfos.withCStructBufferPointer { ptr_bindInfos throws(Result) in
+            try checkResult(
+                self.dispatchTable.vkBindImageMemory2(self.handle, UInt32(ptr_bindInfos.count), ptr_bindInfos.baseAddress)
             )
         }
     }
@@ -2461,6 +2534,14 @@ public class Device: _HandleContainer {
                 self.dispatchTable.vkCreateDescriptorUpdateTemplate(self.handle, ptr_createInfo, nil, &out)
             )
             return DescriptorUpdateTemplate(handle: out, device: self)
+        }
+    }
+
+    public func setHdrMetadataEXT(swapchains: Array<SwapchainKHR>, metadata: (AnyChainableArray<HdrMetadataEXT>)) -> Void {
+        swapchains.map{ $0.handle }.withUnsafeBufferPointer { ptr_swapchains in
+            metadata.withCStructBufferPointer { ptr_metadata in
+                self.dispatchTable.vkSetHdrMetadataEXT(self.handle, UInt32(ptr_swapchains.count), ptr_swapchains.baseAddress, ptr_metadata.baseAddress)
+            }
         }
     }
 
@@ -2650,6 +2731,14 @@ public class Device: _HandleContainer {
         }
     }
 
+    public func getCalibratedTimestampsKHR(_ timestampInfos: (AnyChainableArray<CalibratedTimestampInfoKHR>), timestamps: UnsafeMutablePointer<UInt64>, maxDeviation: UnsafeMutablePointer<UInt64>) throws(Result) -> Void {
+        try timestampInfos.withCStructBufferPointer { ptr_timestampInfos throws(Result) in
+            try checkResult(
+                self.dispatchTable.vkGetCalibratedTimestampsKHR(self.handle, UInt32(ptr_timestampInfos.count), ptr_timestampInfos.baseAddress, timestamps, maxDeviation)
+            )
+        }
+    }
+
     public func getCalibratedTimestampsKHR(_ timestampInfos: Array<CalibratedTimestampInfoKHR>, timestamps: UnsafeMutablePointer<UInt64>, maxDeviation: UnsafeMutablePointer<UInt64>) throws(Result) -> Void {
         try timestampInfos.withCStructBufferPointer { ptr_timestampInfos throws(Result) in
             try checkResult(
@@ -2824,6 +2913,14 @@ public class Device: _HandleContainer {
         }
     }
 
+    public func bindAccelerationStructureMemoryNV(_ bindInfos: (AnyChainableArray<BindAccelerationStructureMemoryInfoNV>)) throws(Result) -> Void {
+        try bindInfos.withCStructBufferPointer { ptr_bindInfos throws(Result) in
+            try checkResult(
+                self.dispatchTable.vkBindAccelerationStructureMemoryNV(self.handle, UInt32(ptr_bindInfos.count), ptr_bindInfos.baseAddress)
+            )
+        }
+    }
+
     public func bindAccelerationStructureMemoryNV(_ bindInfos: Array<BindAccelerationStructureMemoryInfoNV>) throws(Result) -> Void {
         try bindInfos.withCStructBufferPointer { ptr_bindInfos throws(Result) in
             try checkResult(
@@ -2888,11 +2985,33 @@ public class Device: _HandleContainer {
         }
     }
 
+    public func createRayTracingPipelinesNV(_ createInfos: (AnyChainableArray<RayTracingPipelineCreateInfoNV>), pipelineCache: PipelineCache? = nil) throws(Result) -> Array<Pipeline> {
+        try createInfos.withCStructBufferPointer { ptr_createInfos throws(Result) in
+            try Array<VkPipeline?>(unsafeUninitializedCapacity: Int(UInt32(ptr_createInfos.count))) { out, initializedCount throws(Result) in
+                try checkResult(
+                    self.dispatchTable.vkCreateRayTracingPipelinesNV(self.handle, pipelineCache?.handle, UInt32(ptr_createInfos.count), ptr_createInfos.baseAddress, nil, out.baseAddress)
+                )
+                initializedCount = out.count
+            }.map { Pipeline(handle: $0, device: self) }
+        }
+    }
+
     public func createRayTracingPipelinesNV(_ createInfos: Array<RayTracingPipelineCreateInfoNV>, pipelineCache: PipelineCache? = nil) throws(Result) -> Array<Pipeline> {
         try createInfos.withCStructBufferPointer { ptr_createInfos throws(Result) in
             try Array<VkPipeline?>(unsafeUninitializedCapacity: Int(UInt32(ptr_createInfos.count))) { out, initializedCount throws(Result) in
                 try checkResult(
                     self.dispatchTable.vkCreateRayTracingPipelinesNV(self.handle, pipelineCache?.handle, UInt32(ptr_createInfos.count), ptr_createInfos.baseAddress, nil, out.baseAddress)
+                )
+                initializedCount = out.count
+            }.map { Pipeline(handle: $0, device: self) }
+        }
+    }
+
+    public func createRayTracingPipelinesKHR(_ createInfos: (AnyChainableArray<RayTracingPipelineCreateInfoKHR>), deferredOperation: DeferredOperationKHR? = nil, pipelineCache: PipelineCache? = nil) throws(Result) -> Array<Pipeline> {
+        try createInfos.withCStructBufferPointer { ptr_createInfos throws(Result) in
+            try Array<VkPipeline?>(unsafeUninitializedCapacity: Int(UInt32(ptr_createInfos.count))) { out, initializedCount throws(Result) in
+                try checkResult(
+                    self.dispatchTable.vkCreateRayTracingPipelinesKHR(self.handle, deferredOperation?.handle, pipelineCache?.handle, UInt32(ptr_createInfos.count), ptr_createInfos.baseAddress, nil, out.baseAddress)
                 )
                 initializedCount = out.count
             }.map { Pipeline(handle: $0, device: self) }
@@ -3174,6 +3293,14 @@ public class Device: _HandleContainer {
         }
     }
 
+    public func buildAccelerationStructuresKHR(_ infos: (AnyChainableArray<AccelerationStructureBuildGeometryInfoKHR>), _ buildRangeInfos: UnsafePointer<UnsafePointer<VkAccelerationStructureBuildRangeInfoKHR>?>, deferredOperation: DeferredOperationKHR? = nil) throws(Result) -> Void {
+        try infos.withCStructBufferPointer { ptr_infos throws(Result) in
+            try checkResult(
+                self.dispatchTable.vkBuildAccelerationStructuresKHR(self.handle, deferredOperation?.handle, UInt32(ptr_infos.count), ptr_infos.baseAddress, buildRangeInfos)
+            )
+        }
+    }
+
     public func buildAccelerationStructuresKHR(_ infos: Array<AccelerationStructureBuildGeometryInfoKHR>, _ buildRangeInfos: UnsafePointer<UnsafePointer<VkAccelerationStructureBuildRangeInfoKHR>?>, deferredOperation: DeferredOperationKHR? = nil) throws(Result) -> Void {
         try infos.withCStructBufferPointer { ptr_infos throws(Result) in
             try checkResult(
@@ -3342,6 +3469,14 @@ public class Device: _HandleContainer {
         try copyImageToImageInfo.withCStruct { ptr_copyImageToImageInfo throws(Result) in
             try checkResult(
                 self.dispatchTable.vkCopyImageToImage(self.handle, ptr_copyImageToImageInfo)
+            )
+        }
+    }
+
+    public func transitionImageLayout(transitions: (AnyChainableArray<HostImageLayoutTransitionInfo>)) throws(Result) -> Void {
+        try transitions.withCStructBufferPointer { ptr_transitions throws(Result) in
+            try checkResult(
+                self.dispatchTable.vkTransitionImageLayout(self.handle, UInt32(ptr_transitions.count), ptr_transitions.baseAddress)
             )
         }
     }
@@ -3670,6 +3805,14 @@ public class Device: _HandleContainer {
         }
     }
 
+    public func buildMicromapsEXT(_ infos: (AnyChainableArray<MicromapBuildInfoEXT>), deferredOperation: DeferredOperationKHR? = nil) throws(Result) -> Void {
+        try infos.withCStructBufferPointer { ptr_infos throws(Result) in
+            try checkResult(
+                self.dispatchTable.vkBuildMicromapsEXT(self.handle, deferredOperation?.handle, UInt32(ptr_infos.count), ptr_infos.baseAddress)
+            )
+        }
+    }
+
     public func buildMicromapsEXT(_ infos: Array<MicromapBuildInfoEXT>, deferredOperation: DeferredOperationKHR? = nil) throws(Result) -> Void {
         try infos.withCStructBufferPointer { ptr_infos throws(Result) in
             try checkResult(
@@ -3948,6 +4091,17 @@ public class Device: _HandleContainer {
         }
     }
 
+    public func createShadersEXT(_ createInfos: (AnyChainableArray<ShaderCreateInfoEXT>)) throws(Result) -> Array<ShaderEXT> {
+        try createInfos.withCStructBufferPointer { ptr_createInfos throws(Result) in
+            try Array<VkShaderEXT?>(unsafeUninitializedCapacity: Int(UInt32(ptr_createInfos.count))) { out, initializedCount throws(Result) in
+                try checkResult(
+                    self.dispatchTable.vkCreateShadersEXT(self.handle, UInt32(ptr_createInfos.count), ptr_createInfos.baseAddress, nil, out.baseAddress)
+                )
+                initializedCount = out.count
+            }.map { ShaderEXT(handle: $0, device: self) }
+        }
+    }
+
     public func createShadersEXT(_ createInfos: Array<ShaderCreateInfoEXT>) throws(Result) -> Array<ShaderEXT> {
         try createInfos.withCStructBufferPointer { ptr_createInfos throws(Result) in
             try Array<VkShaderEXT?>(unsafeUninitializedCapacity: Int(UInt32(ptr_createInfos.count))) { out, initializedCount throws(Result) in
@@ -3989,6 +4143,19 @@ public class Device: _HandleContainer {
             self.dispatchTable.vkGetScreenBufferPropertiesQNX(self.handle, buffer, &out)
         )
         return ScreenBufferPropertiesQNX(cStruct: out)
+    }
+    #endif
+
+    #if VK_ENABLE_BETA_EXTENSIONS
+    public func createExecutionGraphPipelinesAMDX(_ createInfos: (AnyChainableArray<ExecutionGraphPipelineCreateInfoAMDX>), pipelineCache: PipelineCache? = nil) throws(Result) -> Array<Pipeline> {
+        try createInfos.withCStructBufferPointer { ptr_createInfos throws(Result) in
+            try Array<VkPipeline?>(unsafeUninitializedCapacity: Int(UInt32(ptr_createInfos.count))) { out, initializedCount throws(Result) in
+                try checkResult(
+                    self.dispatchTable.vkCreateExecutionGraphPipelinesAMDX(self.handle, pipelineCache?.handle, UInt32(ptr_createInfos.count), ptr_createInfos.baseAddress, nil, out.baseAddress)
+                )
+                initializedCount = out.count
+            }.map { Pipeline(handle: $0, device: self) }
+        }
     }
     #endif
 
@@ -4192,6 +4359,14 @@ public class Device: _HandleContainer {
         }
     }
 
+    public func bindTensorMemoryARM(_ bindInfos: (AnyChainableArray<BindTensorMemoryInfoARM>)) throws(Result) -> Void {
+        try bindInfos.withCStructBufferPointer { ptr_bindInfos throws(Result) in
+            try checkResult(
+                self.dispatchTable.vkBindTensorMemoryARM(self.handle, UInt32(ptr_bindInfos.count), ptr_bindInfos.baseAddress)
+            )
+        }
+    }
+
     public func bindTensorMemoryARM(_ bindInfos: Array<BindTensorMemoryInfoARM>) throws(Result) -> Void {
         try bindInfos.withCStructBufferPointer { ptr_bindInfos throws(Result) in
             try checkResult(
@@ -4247,6 +4422,17 @@ public class Device: _HandleContainer {
             try checkResult(
                 self.dispatchTable.vkGetTensorViewOpaqueCaptureDescriptorDataARM(self.handle, ptr_info, data)
             )
+        }
+    }
+
+    public func createDataGraphPipelinesARM(_ createInfos: (AnyChainableArray<DataGraphPipelineCreateInfoARM>), deferredOperation: DeferredOperationKHR? = nil, pipelineCache: PipelineCache? = nil) throws(Result) -> Array<Pipeline> {
+        try createInfos.withCStructBufferPointer { ptr_createInfos throws(Result) in
+            try Array<VkPipeline?>(unsafeUninitializedCapacity: Int(UInt32(ptr_createInfos.count))) { out, initializedCount throws(Result) in
+                try checkResult(
+                    self.dispatchTable.vkCreateDataGraphPipelinesARM(self.handle, deferredOperation?.handle, pipelineCache?.handle, UInt32(ptr_createInfos.count), ptr_createInfos.baseAddress, nil, out.baseAddress)
+                )
+                initializedCount = out.count
+            }.map { Pipeline(handle: $0, device: self) }
         }
     }
 
@@ -4312,6 +4498,14 @@ public class Device: _HandleContainer {
             out.sType = VK_STRUCTURE_TYPE_MEMORY_REQUIREMENTS_2
             self.dispatchTable.vkGetDataGraphPipelineSessionMemoryRequirementsARM(self.handle, ptr_info, &out)
             return MemoryRequirements2(cStruct: out)
+        }
+    }
+
+    public func bindDataGraphPipelineSessionMemoryARM(_ bindInfos: (AnyChainableArray<BindDataGraphPipelineSessionMemoryInfoARM>)) throws(Result) -> Void {
+        try bindInfos.withCStructBufferPointer { ptr_bindInfos throws(Result) in
+            try checkResult(
+                self.dispatchTable.vkBindDataGraphPipelineSessionMemoryARM(self.handle, UInt32(ptr_bindInfos.count), ptr_bindInfos.baseAddress)
+            )
         }
     }
 
@@ -4396,11 +4590,31 @@ public class Device: _HandleContainer {
     }
     #endif
 
+    public func writeSamplerDescriptorsEXT(samplers: (AnyChainableArray<SamplerCreateInfo>), descriptors: Array<HostAddressRangeEXT>) throws(Result) -> Void {
+        try samplers.withCStructBufferPointer { ptr_samplers throws(Result) in
+            try descriptors.withCStructBufferPointer { ptr_descriptors throws(Result) in
+                try checkResult(
+                    self.dispatchTable.vkWriteSamplerDescriptorsEXT(self.handle, UInt32(ptr_samplers.count), ptr_samplers.baseAddress, ptr_descriptors.baseAddress)
+                )
+            }
+        }
+    }
+
     public func writeSamplerDescriptorsEXT(samplers: Array<SamplerCreateInfo>, descriptors: Array<HostAddressRangeEXT>) throws(Result) -> Void {
         try samplers.withCStructBufferPointer { ptr_samplers throws(Result) in
             try descriptors.withCStructBufferPointer { ptr_descriptors throws(Result) in
                 try checkResult(
                     self.dispatchTable.vkWriteSamplerDescriptorsEXT(self.handle, UInt32(ptr_samplers.count), ptr_samplers.baseAddress, ptr_descriptors.baseAddress)
+                )
+            }
+        }
+    }
+
+    public func writeResourceDescriptorsEXT(resources: (AnyChainableArray<ResourceDescriptorInfoEXT>), descriptors: Array<HostAddressRangeEXT>) throws(Result) -> Void {
+        try resources.withCStructBufferPointer { ptr_resources throws(Result) in
+            try descriptors.withCStructBufferPointer { ptr_descriptors throws(Result) in
+                try checkResult(
+                    self.dispatchTable.vkWriteResourceDescriptorsEXT(self.handle, UInt32(ptr_resources.count), ptr_resources.baseAddress, ptr_descriptors.baseAddress)
                 )
             }
         }
@@ -4492,6 +4706,14 @@ public class Queue: _HandleContainer {
         self.device = device
     }
 
+    public func submit(submits: (AnyChainableArray<SubmitInfo>), fence: Fence? = nil) throws(Result) -> Void {
+        try submits.withCStructBufferPointer { ptr_submits throws(Result) in
+            try checkResult(
+                self.device.dispatchTable.vkQueueSubmit(self.handle, UInt32(ptr_submits.count), ptr_submits.baseAddress, fence?.handle)
+            )
+        }
+    }
+
     public func submit(submits: Array<SubmitInfo> = [], fence: Fence? = nil) throws(Result) -> Void {
         try submits.withCStructBufferPointer { ptr_submits throws(Result) in
             try checkResult(
@@ -4504,6 +4726,14 @@ public class Queue: _HandleContainer {
         try checkResult(
             self.device.dispatchTable.vkQueueWaitIdle(self.handle)
         )
+    }
+
+    public func bindSparse(_ bindInfo: (AnyChainableArray<BindSparseInfo>), fence: Fence? = nil) throws(Result) -> Void {
+        try bindInfo.withCStructBufferPointer { ptr_bindInfo throws(Result) in
+            try checkResult(
+                self.device.dispatchTable.vkQueueBindSparse(self.handle, UInt32(ptr_bindInfo.count), ptr_bindInfo.baseAddress, fence?.handle)
+            )
+        }
     }
 
     public func bindSparse(_ bindInfo: Array<BindSparseInfo> = [], fence: Fence? = nil) throws(Result) -> Void {
@@ -4568,6 +4798,14 @@ public class Queue: _HandleContainer {
         try checkResult(
             self.device.dispatchTable.vkQueueSetPerformanceConfigurationINTEL(self.handle, configuration.handle)
         )
+    }
+
+    public func submit2(submits: (AnyChainableArray<SubmitInfo2>), fence: Fence? = nil) throws(Result) -> Void {
+        try submits.withCStructBufferPointer { ptr_submits throws(Result) in
+            try checkResult(
+                self.device.dispatchTable.vkQueueSubmit2(self.handle, UInt32(ptr_submits.count), ptr_submits.baseAddress, fence?.handle)
+            )
+        }
     }
 
     public func submit2(submits: Array<SubmitInfo2> = [], fence: Fence? = nil) throws(Result) -> Void {
@@ -4914,6 +5152,18 @@ public class CommandBuffer: _HandleContainer {
         self.commandPool.device.dispatchTable.vkCmdResetEvent(self.handle, event.handle, stageMask.rawValue)
     }
 
+    public func waitEvents(events: Array<Event>, srcStageMask: PipelineStageFlags = [], dstStageMask: PipelineStageFlags = [], memoryBarriers: (AnyChainableArray<MemoryBarrier>), bufferMemoryBarriers: (AnyChainableArray<BufferMemoryBarrier>), imageMemoryBarriers: (AnyChainableArray<ImageMemoryBarrier>)) -> Void {
+        events.map{ $0.handle }.withUnsafeBufferPointer { ptr_events in
+            memoryBarriers.withCStructBufferPointer { ptr_memoryBarriers in
+                bufferMemoryBarriers.withCStructBufferPointer { ptr_bufferMemoryBarriers in
+                    imageMemoryBarriers.withCStructBufferPointer { ptr_imageMemoryBarriers in
+                        self.commandPool.device.dispatchTable.vkCmdWaitEvents(self.handle, UInt32(ptr_events.count), ptr_events.baseAddress, srcStageMask.rawValue, dstStageMask.rawValue, UInt32(ptr_memoryBarriers.count), ptr_memoryBarriers.baseAddress, UInt32(ptr_bufferMemoryBarriers.count), ptr_bufferMemoryBarriers.baseAddress, UInt32(ptr_imageMemoryBarriers.count), ptr_imageMemoryBarriers.baseAddress)
+                    }
+                }
+            }
+        }
+    }
+
     public func waitEvents(events: Array<Event>, srcStageMask: PipelineStageFlags = [], dstStageMask: PipelineStageFlags = [], memoryBarriers: Array<MemoryBarrier> = [], bufferMemoryBarriers: Array<BufferMemoryBarrier> = [], imageMemoryBarriers: Array<ImageMemoryBarrier> = []) -> Void {
         events.map{ $0.handle }.withUnsafeBufferPointer { ptr_events in
             memoryBarriers.withCStructBufferPointer { ptr_memoryBarriers in
@@ -4921,6 +5171,16 @@ public class CommandBuffer: _HandleContainer {
                     imageMemoryBarriers.withCStructBufferPointer { ptr_imageMemoryBarriers in
                         self.commandPool.device.dispatchTable.vkCmdWaitEvents(self.handle, UInt32(ptr_events.count), ptr_events.baseAddress, srcStageMask.rawValue, dstStageMask.rawValue, UInt32(ptr_memoryBarriers.count), ptr_memoryBarriers.baseAddress, UInt32(ptr_bufferMemoryBarriers.count), ptr_bufferMemoryBarriers.baseAddress, UInt32(ptr_imageMemoryBarriers.count), ptr_imageMemoryBarriers.baseAddress)
                     }
+                }
+            }
+        }
+    }
+
+    public func pipelineBarrier(srcStageMask: PipelineStageFlags = [], dstStageMask: PipelineStageFlags = [], dependencyFlags: DependencyFlags = [], memoryBarriers: (AnyChainableArray<MemoryBarrier>), bufferMemoryBarriers: (AnyChainableArray<BufferMemoryBarrier>), imageMemoryBarriers: (AnyChainableArray<ImageMemoryBarrier>)) -> Void {
+        memoryBarriers.withCStructBufferPointer { ptr_memoryBarriers in
+            bufferMemoryBarriers.withCStructBufferPointer { ptr_bufferMemoryBarriers in
+                imageMemoryBarriers.withCStructBufferPointer { ptr_imageMemoryBarriers in
+                    self.commandPool.device.dispatchTable.vkCmdPipelineBarrier(self.handle, srcStageMask.rawValue, dstStageMask.rawValue, dependencyFlags.rawValue, UInt32(ptr_memoryBarriers.count), ptr_memoryBarriers.baseAddress, UInt32(ptr_bufferMemoryBarriers.count), ptr_bufferMemoryBarriers.baseAddress, UInt32(ptr_imageMemoryBarriers.count), ptr_imageMemoryBarriers.baseAddress)
                 }
             }
         }
@@ -5091,6 +5351,12 @@ public class CommandBuffer: _HandleContainer {
     public func preprocessGeneratedCommandsEXT(_ generatedCommandsInfo: GeneratedCommandsInfoEXT, stateCommandBuffer: CommandBuffer) -> Void {
         generatedCommandsInfo.withCStruct { ptr_generatedCommandsInfo in
             self.commandPool.device.dispatchTable.vkCmdPreprocessGeneratedCommandsEXT(self.handle, ptr_generatedCommandsInfo, stateCommandBuffer.handle)
+        }
+    }
+
+    public func pushDescriptorSet(pipelineBindPoint: PipelineBindPoint, layout: PipelineLayout, set: UInt32, descriptorWrites: (AnyChainableArray<WriteDescriptorSet>)) -> Void {
+        descriptorWrites.withCStructBufferPointer { ptr_descriptorWrites in
+            self.commandPool.device.dispatchTable.vkCmdPushDescriptorSet(self.handle, VkPipelineBindPoint(rawValue: VkPipelineBindPoint.RawValue(pipelineBindPoint.rawValue)), layout.handle, set, UInt32(ptr_descriptorWrites.count), ptr_descriptorWrites.baseAddress)
         }
     }
 
@@ -5490,9 +5756,25 @@ public class CommandBuffer: _HandleContainer {
         self.commandPool.device.dispatchTable.vkCmdSetLineStipple(self.handle, lineStippleFactor, lineStipplePattern)
     }
 
+    public func buildAccelerationStructuresKHR(_ infos: (AnyChainableArray<AccelerationStructureBuildGeometryInfoKHR>), _ buildRangeInfos: UnsafePointer<UnsafePointer<VkAccelerationStructureBuildRangeInfoKHR>?>) -> Void {
+        infos.withCStructBufferPointer { ptr_infos in
+            self.commandPool.device.dispatchTable.vkCmdBuildAccelerationStructuresKHR(self.handle, UInt32(ptr_infos.count), ptr_infos.baseAddress, buildRangeInfos)
+        }
+    }
+
     public func buildAccelerationStructuresKHR(_ infos: Array<AccelerationStructureBuildGeometryInfoKHR>, _ buildRangeInfos: UnsafePointer<UnsafePointer<VkAccelerationStructureBuildRangeInfoKHR>?>) -> Void {
         infos.withCStructBufferPointer { ptr_infos in
             self.commandPool.device.dispatchTable.vkCmdBuildAccelerationStructuresKHR(self.handle, UInt32(ptr_infos.count), ptr_infos.baseAddress, buildRangeInfos)
+        }
+    }
+
+    public func buildAccelerationStructuresIndirectKHR(_ infos: (AnyChainableArray<AccelerationStructureBuildGeometryInfoKHR>), indirectDeviceAddresses: Array<VkDeviceAddress>, indirectStrides: Array<UInt32>, maxPrimitiveCounts: UnsafePointer<UnsafePointer<UInt32>?>) -> Void {
+        infos.withCStructBufferPointer { ptr_infos in
+            indirectDeviceAddresses.withUnsafeBufferPointer { ptr_indirectDeviceAddresses in
+                indirectStrides.withUnsafeBufferPointer { ptr_indirectStrides in
+                    self.commandPool.device.dispatchTable.vkCmdBuildAccelerationStructuresIndirectKHR(self.handle, UInt32(ptr_infos.count), ptr_infos.baseAddress, ptr_indirectDeviceAddresses.baseAddress, ptr_indirectStrides.baseAddress, maxPrimitiveCounts)
+                }
+            }
         }
     }
 
@@ -5812,6 +6094,14 @@ public class CommandBuffer: _HandleContainer {
         }
     }
 
+    public func setVertexInputEXT(vertexBindingDescriptions: (AnyChainableArray<VertexInputBindingDescription2EXT>), vertexAttributeDescriptions: (AnyChainableArray<VertexInputAttributeDescription2EXT>)) -> Void {
+        vertexBindingDescriptions.withCStructBufferPointer { ptr_vertexBindingDescriptions in
+            vertexAttributeDescriptions.withCStructBufferPointer { ptr_vertexAttributeDescriptions in
+                self.commandPool.device.dispatchTable.vkCmdSetVertexInputEXT(self.handle, UInt32(ptr_vertexBindingDescriptions.count), ptr_vertexBindingDescriptions.baseAddress, UInt32(ptr_vertexAttributeDescriptions.count), ptr_vertexAttributeDescriptions.baseAddress)
+            }
+        }
+    }
+
     public func setVertexInputEXT(vertexBindingDescriptions: Array<VertexInputBindingDescription2EXT> = [], vertexAttributeDescriptions: Array<VertexInputAttributeDescription2EXT> = []) -> Void {
         vertexBindingDescriptions.withCStructBufferPointer { ptr_vertexBindingDescriptions in
             vertexAttributeDescriptions.withCStructBufferPointer { ptr_vertexAttributeDescriptions in
@@ -5840,6 +6130,14 @@ public class CommandBuffer: _HandleContainer {
 
     public func resetEvent2(event: Event, stageMask: PipelineStageFlags2 = []) -> Void {
         self.commandPool.device.dispatchTable.vkCmdResetEvent2(self.handle, event.handle, stageMask.rawValue)
+    }
+
+    public func waitEvents2(_ dependencyInfos: (AnyChainableArray<DependencyInfo>), events: Array<Event>) -> Void {
+        events.map{ $0.handle }.withUnsafeBufferPointer { ptr_events in
+            dependencyInfos.withCStructBufferPointer { ptr_dependencyInfos in
+                self.commandPool.device.dispatchTable.vkCmdWaitEvents2(self.handle, UInt32(ptr_events.count), ptr_events.baseAddress, ptr_dependencyInfos.baseAddress)
+            }
+        }
     }
 
     public func waitEvents2(_ dependencyInfos: Array<DependencyInfo>, events: Array<Event>) -> Void {
@@ -5980,6 +6278,12 @@ public class CommandBuffer: _HandleContainer {
         }
     }
 
+    public func bindDescriptorBuffersEXT(_ bindingInfos: (AnyChainableArray<DescriptorBufferBindingInfoEXT>)) -> Void {
+        bindingInfos.withCStructBufferPointer { ptr_bindingInfos in
+            self.commandPool.device.dispatchTable.vkCmdBindDescriptorBuffersEXT(self.handle, UInt32(ptr_bindingInfos.count), ptr_bindingInfos.baseAddress)
+        }
+    }
+
     public func bindDescriptorBuffersEXT(_ bindingInfos: Array<DescriptorBufferBindingInfoEXT>) -> Void {
         bindingInfos.withCStructBufferPointer { ptr_bindingInfos in
             self.commandPool.device.dispatchTable.vkCmdBindDescriptorBuffersEXT(self.handle, UInt32(ptr_bindingInfos.count), ptr_bindingInfos.baseAddress)
@@ -6039,6 +6343,12 @@ public class CommandBuffer: _HandleContainer {
     public func endRendering2KHR(_ renderingEndInfo: RenderingEndInfoKHR? = nil) -> Void {
         renderingEndInfo.withOptionalCStruct { ptr_renderingEndInfo in
             self.commandPool.device.dispatchTable.vkCmdEndRendering2KHR(self.handle, ptr_renderingEndInfo)
+        }
+    }
+
+    public func buildMicromapsEXT(_ infos: (AnyChainableArray<MicromapBuildInfoEXT>)) -> Void {
+        infos.withCStructBufferPointer { ptr_infos in
+            self.commandPool.device.dispatchTable.vkCmdBuildMicromapsEXT(self.handle, UInt32(ptr_infos.count), ptr_infos.baseAddress)
         }
     }
 
@@ -6304,6 +6614,12 @@ public class CommandBuffer: _HandleContainer {
         }
     }
 
+    public func convertCooperativeVectorMatrixNV(_ infos: (AnyChainableArray<ConvertCooperativeVectorMatrixInfoNV>)) -> Void {
+        infos.withCStructBufferPointer { ptr_infos in
+            self.commandPool.device.dispatchTable.vkCmdConvertCooperativeVectorMatrixNV(self.handle, UInt32(ptr_infos.count), ptr_infos.baseAddress)
+        }
+    }
+
     public func convertCooperativeVectorMatrixNV(_ infos: Array<ConvertCooperativeVectorMatrixInfoNV>) -> Void {
         infos.withCStructBufferPointer { ptr_infos in
             self.commandPool.device.dispatchTable.vkCmdConvertCooperativeVectorMatrixNV(self.handle, UInt32(ptr_infos.count), ptr_infos.baseAddress)
@@ -6492,15 +6808,33 @@ public class CommandBuffer: _HandleContainer {
         }
     }
 
+    public func bindTransformFeedbackBuffers2EXT(_ bindingInfos: (AnyChainableArray<BindTransformFeedbackBuffer2InfoEXT>), firstBinding: UInt32) -> Void {
+        bindingInfos.withCStructBufferPointer { ptr_bindingInfos in
+            self.commandPool.device.dispatchTable.vkCmdBindTransformFeedbackBuffers2EXT(self.handle, firstBinding, UInt32(ptr_bindingInfos.count), ptr_bindingInfos.baseAddress)
+        }
+    }
+
     public func bindTransformFeedbackBuffers2EXT(_ bindingInfos: Array<BindTransformFeedbackBuffer2InfoEXT>? = nil, firstBinding: UInt32) -> Void {
         bindingInfos.withOptionalCStructBufferPointer { ptr_bindingInfos in
             self.commandPool.device.dispatchTable.vkCmdBindTransformFeedbackBuffers2EXT(self.handle, firstBinding, UInt32(ptr_bindingInfos.count), ptr_bindingInfos.baseAddress)
         }
     }
 
+    public func beginTransformFeedback2EXT(_ counterInfos: (AnyChainableArray<BindTransformFeedbackBuffer2InfoEXT>), firstCounterRange: UInt32) -> Void {
+        counterInfos.withCStructBufferPointer { ptr_counterInfos in
+            self.commandPool.device.dispatchTable.vkCmdBeginTransformFeedback2EXT(self.handle, firstCounterRange, UInt32(ptr_counterInfos.count), ptr_counterInfos.baseAddress)
+        }
+    }
+
     public func beginTransformFeedback2EXT(_ counterInfos: Array<BindTransformFeedbackBuffer2InfoEXT>? = nil, firstCounterRange: UInt32) -> Void {
         counterInfos.withOptionalCStructBufferPointer { ptr_counterInfos in
             self.commandPool.device.dispatchTable.vkCmdBeginTransformFeedback2EXT(self.handle, firstCounterRange, UInt32(ptr_counterInfos.count), ptr_counterInfos.baseAddress)
+        }
+    }
+
+    public func endTransformFeedback2EXT(_ counterInfos: (AnyChainableArray<BindTransformFeedbackBuffer2InfoEXT>), firstCounterRange: UInt32) -> Void {
+        counterInfos.withCStructBufferPointer { ptr_counterInfos in
+            self.commandPool.device.dispatchTable.vkCmdEndTransformFeedback2EXT(self.handle, firstCounterRange, UInt32(ptr_counterInfos.count), ptr_counterInfos.baseAddress)
         }
     }
 
@@ -6543,6 +6877,12 @@ public class CommandBuffer: _HandleContainer {
     public func bindIndexBuffer3KHR(_ info: BindIndexBuffer3InfoKHR) -> Void {
         info.withCStruct { ptr_info in
             self.commandPool.device.dispatchTable.vkCmdBindIndexBuffer3KHR(self.handle, ptr_info)
+        }
+    }
+
+    public func bindVertexBuffers3KHR(_ bindingInfos: (AnyChainableArray<BindVertexBuffer3InfoKHR>), firstBinding: UInt32) -> Void {
+        bindingInfos.withCStructBufferPointer { ptr_bindingInfos in
+            self.commandPool.device.dispatchTable.vkCmdBindVertexBuffers3KHR(self.handle, firstBinding, UInt32(ptr_bindingInfos.count), ptr_bindingInfos.baseAddress)
         }
     }
 
@@ -7254,9 +7594,21 @@ public class IndirectExecutionSetEXT: _HandleContainer {
         self.device.dispatchTable.vkDestroyIndirectExecutionSetEXT(self.device.handle, self.handle, nil)
     }
 
+    public func updatePipelineEXT(executionSetWrites: (AnyChainableArray<WriteIndirectExecutionSetPipelineEXT>)) -> Void {
+        executionSetWrites.withCStructBufferPointer { ptr_executionSetWrites in
+            self.device.dispatchTable.vkUpdateIndirectExecutionSetPipelineEXT(self.device.handle, self.handle, UInt32(ptr_executionSetWrites.count), ptr_executionSetWrites.baseAddress)
+        }
+    }
+
     public func updatePipelineEXT(executionSetWrites: Array<WriteIndirectExecutionSetPipelineEXT>) -> Void {
         executionSetWrites.withCStructBufferPointer { ptr_executionSetWrites in
             self.device.dispatchTable.vkUpdateIndirectExecutionSetPipelineEXT(self.device.handle, self.handle, UInt32(ptr_executionSetWrites.count), ptr_executionSetWrites.baseAddress)
+        }
+    }
+
+    public func updateShaderEXT(executionSetWrites: (AnyChainableArray<WriteIndirectExecutionSetShaderEXT>)) -> Void {
+        executionSetWrites.withCStructBufferPointer { ptr_executionSetWrites in
+            self.device.dispatchTable.vkUpdateIndirectExecutionSetShaderEXT(self.device.handle, self.handle, UInt32(ptr_executionSetWrites.count), ptr_executionSetWrites.baseAddress)
         }
     }
 
@@ -7962,6 +8314,14 @@ public class VideoSessionKHR: _HandleContainer {
         try enumerate { pMemoryRequirements, pMemoryRequirementsCount in
             self.device.dispatchTable.vkGetVideoSessionMemoryRequirementsKHR(self.device.handle, self.handle, pMemoryRequirementsCount, pMemoryRequirements)
         }.map { VideoSessionMemoryRequirementsKHR(cStruct: $0) }
+    }
+
+    public func bindMemoryKHR(_ bindSessionMemoryInfos: (AnyChainableArray<BindVideoSessionMemoryInfoKHR>)) throws(Result) -> Void {
+        try bindSessionMemoryInfos.withCStructBufferPointer { ptr_bindSessionMemoryInfos throws(Result) in
+            try checkResult(
+                self.device.dispatchTable.vkBindVideoSessionMemoryKHR(self.device.handle, self.handle, UInt32(ptr_bindSessionMemoryInfos.count), ptr_bindSessionMemoryInfos.baseAddress)
+            )
+        }
     }
 
     public func bindMemoryKHR(_ bindSessionMemoryInfos: Array<BindVideoSessionMemoryInfoKHR>) throws(Result) -> Void {

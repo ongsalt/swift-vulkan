@@ -56,7 +56,7 @@ class SwiftCommand:
     output_param: str | None = None
     output_param_implicit_type: str | None = None
     output_param_custom_initializer: str | None = None
-    s_type: str | None = None
+    output_s_type: str | None = None
     unwrap_output_param: bool = False
     enumeration_pointer_param: str | None = None
     enumeration_count_param: str | None = None
@@ -470,7 +470,7 @@ class Importer:
                 output_param=output_param,
                 output_param_implicit_type=output_param_implicit_type,
                 output_param_custom_initializer=output_param_custom_initializer,
-                s_type=s_type,
+                output_s_type=s_type,
                 unwrap_output_param=unwrap_output_param,
                 enumeration_pointer_param=enumeration_pointer_params,
                 enumeration_count_param=enumeration_count_param,
@@ -496,7 +496,7 @@ class Importer:
             output_param=output_param,
             output_param_implicit_type=output_param_implicit_type,
             output_param_custom_initializer=output_param_custom_initializer,
-            s_type=s_type,
+            output_s_type=s_type,
             unwrap_output_param=unwrap_output_param,
             enumeration_pointer_param=enumeration_pointer_params,
             enumeration_count_param=enumeration_count_param,
@@ -639,19 +639,22 @@ class Importer:
 
     def shuold_generate_chainable_overload(self, c_command: CCommand, c_input_params: list[CMember]):
         out = False
+
         for p in c_input_params:
             name = p.type.type_name
             if name in self.imported_structs and p.type.pointer_to and p.type.pointer_to.const and not p.type.name:
                 swift_struct = self.imported_structs[name]
-                if swift_struct.c_struct.is_chainable and not p.type.length:
-                    if out == True:
-                        print(
-                            f"warning: {c_command.name} contains multiple chainable parameter")
+                if swift_struct.c_struct.is_chainable:
+                    # if out == True:
+                    #     print(
+                    #         f"warning: {c_command.name} contains multiple chainable parameter")
                     out = True
+                    break
+
 
         return out
 
-    def get_type_conversion(self, c_type: CType, implicit_only: bool = False, force_optional: bool = None,
+    def get_type_conversion(self, c_type: CType, implicit_only: bool = False, force_optional: bool | None = None,
                             convert_array_to_pointer: bool = False, transform_chainable=False) -> tuple[str, tc.Conversion]:
         optional = force_optional if force_optional is not None else c_type.optional
         if c_type.pointer_to and c_type.pointer_to.name in ('wl_display', 'wl_surface'):
@@ -710,7 +713,19 @@ class Importer:
                         return 'String', tc.string_conversion
 
                 if is_array_convertible(c_type):
-                    return self.get_array_conversion(c_type)
+                    should_transform_chainable = transform_chainable and c_type.pointer_to.name in self.imported_structs
+                    name, conversion = self.get_array_conversion(c_type, force_optional=False if should_transform_chainable else None)
+                    if should_transform_chainable:
+                        swift_struct = self.imported_structs[c_type.pointer_to.name]
+                        if swift_struct.c_struct.is_chainable:
+                            ty_name = name
+                            if ty_name.endswith('?'):
+                                ty_name = ty_name[:-1]
+                            ty_name = ty_name[6:][:-1] 
+                            # trim Array<...>
+                            name = f"(AnyChainableArray<{ty_name}>)"
+
+                    return name, conversion
 
                 if c_type.pointer_to.name and not c_type.length and c_type.pointer_to.name in self.imported_structs:
                     swift_struct = self.imported_structs[c_type.pointer_to.name]
@@ -749,7 +764,7 @@ class Importer:
             else:
                 return swift_type, tc.implicit_conversion
 
-    def get_array_conversion(self, c_type: CType, force_optional: bool = None) -> tuple[str, tc.ArrayConversion]:
+    def get_array_conversion(self, c_type: CType, force_optional: bool | None = None) -> tuple[str, tc.ArrayConversion]:
         optional = force_optional if force_optional is not None else c_type.optional
 
         if is_string_convertible(c_type.pointer_to) and not optional:

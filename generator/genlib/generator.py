@@ -238,7 +238,7 @@ class Generator(BaseGenerator):
         params: list[tuple[str, str]] = []
         # make x{Info} first params
         for param in command.params:
-            default_value = f' = {param.default_value}' if param.default_value and 'Chainable<' not in param.type else ''
+            default_value = f' = {param.default_value}' if param.default_value and 'Chainable<' not in param.type and 'AnyChainableArray<' not in param.type else ''
             if param.name.lower().endswith("info") or param.name.lower().endswith("infos"):
                 params.append(
                     (f'_ {param.name}', f'{param.type}{default_value}'))
@@ -303,8 +303,8 @@ class Generator(BaseGenerator):
                             self << f'var out = {command.output_param_custom_initializer}'
                         else:
                             self << f'var out = {command.output_param_implicit_type}()'
-                            if command.s_type:
-                                self << f'out.sType = {command.s_type}'
+                            if command.output_s_type:
+                                self << f'out.sType = {command.output_s_type}'
                         if command.throws:
                             with self.indent('try checkResult(', ')'):
                                 self << call_string

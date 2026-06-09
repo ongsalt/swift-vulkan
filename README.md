@@ -47,6 +47,7 @@ Swift-vulkan is a relatively new project, and there are still some important mil
 ## Todos
 - fix parent class?
 - latexmath lenght 😭
+- differentiate an in chain and an out chain
 - use `MutableSpan` or `OutputSpan` for out array field in a struct + make it non escapable?
 - handle Chainable out param
     - discrete type: fill sType for out param

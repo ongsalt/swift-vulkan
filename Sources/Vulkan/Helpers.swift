@@ -117,6 +117,17 @@ extension Array where Element: CStructConvertible {
     }
 }
 
+extension AnyChainableArray {
+    func withCStructBufferPointer<R, E: Error>(
+        _ body: (UnsafeBufferPointer<Base.CStruct>) throws(E) -> R
+    ) throws(E) -> R {
+        var cStructs: [Base.CStruct] = []
+        cStructs.reserveCapacity(self.storage.count)
+        var iterator = self.storage.lazy.map { p in p.base }.makeIterator()
+        return try _withCStructBufferPointer(to: &cStructs, appending: &iterator, body)
+    }
+}
+
 extension Optional {
     func withOptionalCStructBufferPointer<T: CStructConvertible, R, E: Error>(
         _ body: (UnsafeBufferPointer<T.CStruct>) throws(E) -> R

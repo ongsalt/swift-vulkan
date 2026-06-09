@@ -9,12 +9,14 @@ if __name__ == '__main__':
     importer = Importer(c_context)
     swift_context = importer.import_all()
 
-    swift_side = {}
-    for clazz in swift_context.classes:
-        for command in clazz.commands:
-            for param in command.params:
-                count = 0
-                if 'info' in param.name.lower():
+    for command in c_context.commands:
+        count = 0
+        for param in command.params:
+            if param.type.pointer_to and not param.type.pointer_to.const and param.type.type_name in importer.c_structs:
+                struct = importer.c_structs[param.type.type_name]
+                if struct.is_chainable:
+                    # print(f'{param.name}: &{param.type.pointer_to.name}')
                     count += 1
-                if count > 1:
-                    print(f'{clazz.name}.{command.name}')
+        
+        if count > 1:
+            print(command.name)
