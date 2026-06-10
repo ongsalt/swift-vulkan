@@ -2,6 +2,10 @@ from genlib.parser import CContext
 from genlib.importer import Importer
 from genlib.generator import Generator
 
+skip_list = set([
+    'WriteDescriptorSet'
+])
+
 if __name__ == '__main__':
     c_context = CContext()
     c_context.parse('vk.xml')
@@ -23,7 +27,8 @@ if __name__ == '__main__':
         generator = Generator(f)
         generator.generate_imports()
         for struct in swift_context.structs:
-            generator.generate_struct(struct)
+            if struct.name not in skip_list:
+                generator.generate_struct(struct)
 
     with open('../Sources/Vulkan/Classes.swift', 'w') as f:
         generator = Generator(f)

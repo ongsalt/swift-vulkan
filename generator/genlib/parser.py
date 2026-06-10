@@ -1,3 +1,4 @@
+from __future__ import annotations
 import re
 from xml.etree.ElementTree import ElementTree, parse
 from itertools import zip_longest
@@ -47,6 +48,7 @@ class CMember:
     name: str
     type: CType
     values: list[str] = field(default_factory=list)
+    noautovalidity: bool = False
 
 
 @dataclass(eq=False)
@@ -478,17 +480,14 @@ def parse_member(member: ElementTree, tree: ElementTree) -> CMember:
         c_type = CType(pointer_to=c_type, length=length, const='const' in pointer,
                        optional=optional == 'true')
 
-    # if name == "pPipelineBinaries":
-    if name == "resolveAttachments":
-        print(f"{name}: {list(lengths)} : {type_strings}")
-
     if array_size is not None:
         c_type = CType(array_of=c_type, length=array_size)
 
     values_string = member.get('values')
     values = values_string.split(',') if values_string else []
+    noautovalidity = 'noautovalidity' in member.attrib and member.attrib['noautovalidity'] == 'true'
 
-    return CMember(name, c_type, values)
+    return CMember(name, c_type, values, noautovalidity)
 
 
 def parse_api(element: ElementTree) -> str | None:

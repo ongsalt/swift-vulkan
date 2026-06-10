@@ -45,6 +45,8 @@ Swift-vulkan is a relatively new project, and there are still some important mil
 
 
 ## Todos
+- take advantage of InlineArray?
+- `VkAccelerationStructureBuildGeometryInfoKHR` need special handling (pGeometries/ppGeometries, pUsageCounts/ppUsageCounts are mutually exclusive)
 - fix parent class?
 - latexmath lenght 😭
 - differentiate an in chain and an out chain

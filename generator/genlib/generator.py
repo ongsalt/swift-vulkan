@@ -1,3 +1,4 @@
+from __future__ import annotations
 from contextlib import contextmanager
 from typing import TextIO
 from .importer import SwiftEnum, SwiftOptionSet, SwiftStruct, SwiftClass, SwiftCommand, SwiftAlias, DispatchTable
