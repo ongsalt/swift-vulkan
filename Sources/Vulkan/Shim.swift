@@ -59,3 +59,5 @@ public struct WriteDescriptorSet: ChainableBase {
         Chain(base: base, next: ext)
     }
 }
+
+public protocol WriteDescriptorSetExtension: Chainable {}
