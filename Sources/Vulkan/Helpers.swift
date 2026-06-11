@@ -1,9 +1,12 @@
 @_exported import CVulkan
 
 public func checkResult(_ result: VkResult) throws(Result) {
-    if result.rawValue < 0 {
-        throw Result(rawValue: result.rawValue)!
+    guard result.rawValue < 0 else { return }
+    guard let r = Result(rawValue: result.rawValue) else {
+        fatalError("unknown error code: \(result.rawValue)")
     }
+
+    throw r
 }
 
 public protocol CStructConvertible<CStruct> {
