@@ -22,17 +22,28 @@ public enum ImageLayout: UInt32 {
     case tensorAliasingARM = 1000460000
     case videoEncodeQuantizationMapKHR = 1000553000
     case zeroInitializedEXT = 1000620000
+    case depthReadOnlyStencilAttachmentOptimal = 1000117000
+    case depthAttachmentStencilReadOnlyOptimal = 1000117001
+    case depthAttachmentOptimal = 1000241000
+    case depthReadOnlyOptimal = 1000241001
+    case stencilAttachmentOptimal = 1000241002
+    case stencilReadOnlyOptimal = 1000241003
+    case readOnlyOptimal = 1000314000
+    case attachmentOptimal = 1000314001
+    case renderingLocalRead = 1000232000
 }
 
 public enum AttachmentLoadOp: UInt32 {
     case load = 0
     case clear = 1
     case dontCare = 2
+    case none = 1000400000
 }
 
 public enum AttachmentStoreOp: UInt32 {
     case store = 0
     case dontCare = 1
+    case none = 1000301000
 }
 
 public enum ImageType: UInt32 {
@@ -91,6 +102,7 @@ public enum DescriptorType: UInt32 {
     case tensorARM = 1000460000
     case mutableEXT = 1000351000
     case partitionedAccelerationStructureNV = 1000570000
+    case inlineUniformBlock = 1000138000
 }
 
 public enum QueryType: UInt32 {
@@ -136,6 +148,7 @@ public enum PipelineBindPoint: UInt32 {
 public enum PipelineCacheHeaderVersion: UInt32 {
     case one = 1
     case dataGraphQCOM = 1000629000
+    case safetyCriticalOne = 1000298001
 }
 
 public enum PrimitiveTopology: UInt32 {
@@ -161,6 +174,7 @@ public enum IndexType: UInt32 {
     case uint16 = 0
     case uint32 = 1
     case noneKHR = 1000165000
+    case uint8 = 1000265000
 }
 
 public enum Filter: UInt32 {
@@ -179,6 +193,7 @@ public enum SamplerAddressMode: UInt32 {
     case mirroredRepeat = 1
     case clampToEdge = 2
     case clampToBorder = 3
+    case mirrorClampToEdge = 4
     case mirrorClampToEdge = 4
 }
 
@@ -579,6 +594,62 @@ public enum Format: UInt32 {
     case r14x2g14x2b14x2a14x2Unorm4pack16ARM = 1000609011
     case g14x2B14x2r14x22plane420Unorm3pack16ARM = 1000609012
     case g14x2B14x2r14x22plane422Unorm3pack16ARM = 1000609013
+    case g8b8g8r8422Unorm = 1000156000
+    case b8g8r8g8422Unorm = 1000156001
+    case g8B8R83plane420Unorm = 1000156002
+    case g8B8r82plane420Unorm = 1000156003
+    case g8B8R83plane422Unorm = 1000156004
+    case g8B8r82plane422Unorm = 1000156005
+    case g8B8R83plane444Unorm = 1000156006
+    case r10x6UnormPack16 = 1000156007
+    case r10x6g10x6Unorm2pack16 = 1000156008
+    case r10x6g10x6b10x6a10x6Unorm4pack16 = 1000156009
+    case g10x6b10x6g10x6r10x6422Unorm4pack16 = 1000156010
+    case b10x6g10x6r10x6g10x6422Unorm4pack16 = 1000156011
+    case g10x6B10x6R10x63plane420Unorm3pack16 = 1000156012
+    case g10x6B10x6r10x62plane420Unorm3pack16 = 1000156013
+    case g10x6B10x6R10x63plane422Unorm3pack16 = 1000156014
+    case g10x6B10x6r10x62plane422Unorm3pack16 = 1000156015
+    case g10x6B10x6R10x63plane444Unorm3pack16 = 1000156016
+    case r12x4UnormPack16 = 1000156017
+    case r12x4g12x4Unorm2pack16 = 1000156018
+    case r12x4g12x4b12x4a12x4Unorm4pack16 = 1000156019
+    case g12x4b12x4g12x4r12x4422Unorm4pack16 = 1000156020
+    case b12x4g12x4r12x4g12x4422Unorm4pack16 = 1000156021
+    case g12x4B12x4R12x43plane420Unorm3pack16 = 1000156022
+    case g12x4B12x4r12x42plane420Unorm3pack16 = 1000156023
+    case g12x4B12x4R12x43plane422Unorm3pack16 = 1000156024
+    case g12x4B12x4r12x42plane422Unorm3pack16 = 1000156025
+    case g12x4B12x4R12x43plane444Unorm3pack16 = 1000156026
+    case g16b16g16r16422Unorm = 1000156027
+    case b16g16r16g16422Unorm = 1000156028
+    case g16B16R163plane420Unorm = 1000156029
+    case g16B16r162plane420Unorm = 1000156030
+    case g16B16R163plane422Unorm = 1000156031
+    case g16B16r162plane422Unorm = 1000156032
+    case g16B16R163plane444Unorm = 1000156033
+    case g8B8r82plane444Unorm = 1000330000
+    case g10x6B10x6r10x62plane444Unorm3pack16 = 1000330001
+    case g12x4B12x4r12x42plane444Unorm3pack16 = 1000330002
+    case g16B16r162plane444Unorm = 1000330003
+    case a4r4g4b4UnormPack16 = 1000340000
+    case a4b4g4r4UnormPack16 = 1000340001
+    case astc4x4SfloatBlock = 1000066000
+    case astc5x4SfloatBlock = 1000066001
+    case astc5x5SfloatBlock = 1000066002
+    case astc6x5SfloatBlock = 1000066003
+    case astc6x6SfloatBlock = 1000066004
+    case astc8x5SfloatBlock = 1000066005
+    case astc8x6SfloatBlock = 1000066006
+    case astc8x8SfloatBlock = 1000066007
+    case astc10x5SfloatBlock = 1000066008
+    case astc10x6SfloatBlock = 1000066009
+    case astc10x8SfloatBlock = 1000066010
+    case astc10x10SfloatBlock = 1000066011
+    case astc12x10SfloatBlock = 1000066012
+    case astc12x12SfloatBlock = 1000066013
+    case a1b5g5r5UnormPack16 = 1000470000
+    case a8Unorm = 1000470001
 }
 
 public enum StructureType: UInt32 {
@@ -1498,6 +1569,232 @@ public enum StructureType: UInt32 {
     case dataGraphPipelineSessionNeuralStatisticsCreateInfoARM = 1000676001
     case physicalDeviceDataGraphNeuralAcceleratorStatisticsFeaturesARM = 1000676002
     case physicalDevicePrimitiveRestartIndexFeaturesEXT = 1000678000
+    case bindBufferMemoryInfo = 1000157000
+    case bindImageMemoryInfo = 1000157001
+    case memoryDedicatedRequirements = 1000127000
+    case memoryDedicatedAllocateInfo = 1000127001
+    case memoryAllocateFlagsInfo = 1000060000
+    case deviceGroupCommandBufferBeginInfo = 1000060004
+    case deviceGroupSubmitInfo = 1000060005
+    case deviceGroupBindSparseInfo = 1000060006
+    case bindBufferMemoryDeviceGroupInfo = 1000060013
+    case bindImageMemoryDeviceGroupInfo = 1000060014
+    case physicalDeviceGroupProperties = 1000070000
+    case deviceGroupDeviceCreateInfo = 1000070001
+    case bufferMemoryRequirementsInfo2 = 1000146000
+    case imageMemoryRequirementsInfo2 = 1000146001
+    case imageSparseMemoryRequirementsInfo2 = 1000146002
+    case memoryRequirements2 = 1000146003
+    case sparseImageMemoryRequirements2 = 1000146004
+    case physicalDeviceFeatures2 = 1000059000
+    case physicalDeviceProperties2 = 1000059001
+    case formatProperties2 = 1000059002
+    case imageFormatProperties2 = 1000059003
+    case physicalDeviceImageFormatInfo2 = 1000059004
+    case queueFamilyProperties2 = 1000059005
+    case physicalDeviceMemoryProperties2 = 1000059006
+    case sparseImageFormatProperties2 = 1000059007
+    case physicalDeviceSparseImageFormatInfo2 = 1000059008
+    case imageViewUsageCreateInfo = 1000117002
+    case protectedSubmitInfo = 1000145000
+    case physicalDeviceProtectedMemoryFeatures = 1000145001
+    case physicalDeviceProtectedMemoryProperties = 1000145002
+    case deviceQueueInfo2 = 1000145003
+    case physicalDeviceExternalImageFormatInfo = 1000071000
+    case externalImageFormatProperties = 1000071001
+    case physicalDeviceExternalBufferInfo = 1000071002
+    case externalBufferProperties = 1000071003
+    case physicalDeviceIdProperties = 1000071004
+    case externalMemoryBufferCreateInfo = 1000072000
+    case externalMemoryImageCreateInfo = 1000072001
+    case exportMemoryAllocateInfo = 1000072002
+    case physicalDeviceExternalFenceInfo = 1000112000
+    case externalFenceProperties = 1000112001
+    case exportFenceCreateInfo = 1000113000
+    case exportSemaphoreCreateInfo = 1000077000
+    case physicalDeviceExternalSemaphoreInfo = 1000076000
+    case externalSemaphoreProperties = 1000076001
+    case physicalDeviceSubgroupProperties = 1000094000
+    case physicalDevice16bitStorageFeatures = 1000083000
+    case physicalDeviceVariablePointersFeatures = 1000120000
+    case descriptorUpdateTemplateCreateInfo = 1000085000
+    case physicalDeviceMaintenance3Properties = 1000168000
+    case descriptorSetLayoutSupport = 1000168001
+    case samplerYcbcrConversionCreateInfo = 1000156000
+    case samplerYcbcrConversionInfo = 1000156001
+    case bindImagePlaneMemoryInfo = 1000156002
+    case imagePlaneMemoryRequirementsInfo = 1000156003
+    case physicalDeviceSamplerYcbcrConversionFeatures = 1000156004
+    case samplerYcbcrConversionImageFormatProperties = 1000156005
+    case deviceGroupRenderPassBeginInfo = 1000060003
+    case physicalDevicePointClippingProperties = 1000117000
+    case renderPassInputAttachmentAspectCreateInfo = 1000117001
+    case pipelineTessellationDomainOriginStateCreateInfo = 1000117003
+    case renderPassMultiviewCreateInfo = 1000053000
+    case physicalDeviceMultiviewFeatures = 1000053001
+    case physicalDeviceMultiviewProperties = 1000053002
+    case physicalDeviceShaderDrawParametersFeatures = 1000063000
+    case physicalDeviceDriverProperties = 1000196000
+    case physicalDeviceVulkan11Features = 49
+    case physicalDeviceVulkan11Properties = 50
+    case physicalDeviceVulkan12Features = 51
+    case physicalDeviceVulkan12Properties = 52
+    case imageFormatListCreateInfo = 1000147000
+    case physicalDeviceVulkanMemoryModelFeatures = 1000211000
+    case physicalDeviceHostQueryResetFeatures = 1000261000
+    case physicalDeviceTimelineSemaphoreFeatures = 1000207000
+    case physicalDeviceTimelineSemaphoreProperties = 1000207001
+    case semaphoreTypeCreateInfo = 1000207002
+    case timelineSemaphoreSubmitInfo = 1000207003
+    case semaphoreWaitInfo = 1000207004
+    case semaphoreSignalInfo = 1000207005
+    case physicalDeviceBufferDeviceAddressFeatures = 1000257000
+    case bufferDeviceAddressInfo = 1000244001
+    case bufferOpaqueCaptureAddressCreateInfo = 1000257002
+    case memoryOpaqueCaptureAddressAllocateInfo = 1000257003
+    case deviceMemoryOpaqueCaptureAddressInfo = 1000257004
+    case physicalDevice8bitStorageFeatures = 1000177000
+    case physicalDeviceShaderAtomicInt64Features = 1000180000
+    case physicalDeviceShaderFloat16Int8Features = 1000082000
+    case physicalDeviceFloatControlsProperties = 1000197000
+    case descriptorSetLayoutBindingFlagsCreateInfo = 1000161000
+    case physicalDeviceDescriptorIndexingFeatures = 1000161001
+    case physicalDeviceDescriptorIndexingProperties = 1000161002
+    case descriptorSetVariableDescriptorCountAllocateInfo = 1000161003
+    case descriptorSetVariableDescriptorCountLayoutSupport = 1000161004
+    case physicalDeviceScalarBlockLayoutFeatures = 1000221000
+    case physicalDeviceSamplerFilterMinmaxProperties = 1000130000
+    case samplerReductionModeCreateInfo = 1000130001
+    case physicalDeviceUniformBufferStandardLayoutFeatures = 1000253000
+    case physicalDeviceShaderSubgroupExtendedTypesFeatures = 1000175000
+    case attachmentDescription2 = 1000109000
+    case attachmentReference2 = 1000109001
+    case subpassDescription2 = 1000109002
+    case subpassDependency2 = 1000109003
+    case renderPassCreateInfo2 = 1000109004
+    case subpassBeginInfo = 1000109005
+    case subpassEndInfo = 1000109006
+    case physicalDeviceDepthStencilResolveProperties = 1000199000
+    case subpassDescriptionDepthStencilResolve = 1000199001
+    case imageStencilUsageCreateInfo = 1000246000
+    case physicalDeviceImagelessFramebufferFeatures = 1000108000
+    case framebufferAttachmentsCreateInfo = 1000108001
+    case framebufferAttachmentImageInfo = 1000108002
+    case renderPassAttachmentBeginInfo = 1000108003
+    case physicalDeviceSeparateDepthStencilLayoutsFeatures = 1000241000
+    case attachmentReferenceStencilLayout = 1000241001
+    case attachmentDescriptionStencilLayout = 1000241002
+    case physicalDeviceVulkan13Features = 53
+    case physicalDeviceVulkan13Properties = 54
+    case physicalDeviceToolProperties = 1000245000
+    case physicalDevicePrivateDataFeatures = 1000295000
+    case devicePrivateDataCreateInfo = 1000295001
+    case privateDataSlotCreateInfo = 1000295002
+    case memoryBarrier2 = 1000314000
+    case bufferMemoryBarrier2 = 1000314001
+    case imageMemoryBarrier2 = 1000314002
+    case dependencyInfo = 1000314003
+    case submitInfo2 = 1000314004
+    case semaphoreSubmitInfo = 1000314005
+    case commandBufferSubmitInfo = 1000314006
+    case physicalDeviceSynchronization2Features = 1000314007
+    case copyBufferInfo2 = 1000337000
+    case copyImageInfo2 = 1000337001
+    case copyBufferToImageInfo2 = 1000337002
+    case copyImageToBufferInfo2 = 1000337003
+    case bufferCopy2 = 1000337006
+    case imageCopy2 = 1000337007
+    case bufferImageCopy2 = 1000337009
+    case physicalDeviceTextureCompressionAstcHdrFeatures = 1000066000
+    case formatProperties3 = 1000360000
+    case physicalDeviceMaintenance4Features = 1000413000
+    case physicalDeviceMaintenance4Properties = 1000413001
+    case deviceBufferMemoryRequirements = 1000413002
+    case deviceImageMemoryRequirements = 1000413003
+    case pipelineCreationFeedbackCreateInfo = 1000192000
+    case physicalDeviceShaderTerminateInvocationFeatures = 1000215000
+    case physicalDeviceShaderDemoteToHelperInvocationFeatures = 1000276000
+    case physicalDevicePipelineCreationCacheControlFeatures = 1000297000
+    case physicalDeviceZeroInitializeWorkgroupMemoryFeatures = 1000325000
+    case physicalDeviceImageRobustnessFeatures = 1000335000
+    case physicalDeviceSubgroupSizeControlProperties = 1000225000
+    case pipelineShaderStageRequiredSubgroupSizeCreateInfo = 1000225001
+    case physicalDeviceSubgroupSizeControlFeatures = 1000225002
+    case physicalDeviceInlineUniformBlockFeatures = 1000138000
+    case physicalDeviceInlineUniformBlockProperties = 1000138001
+    case writeDescriptorSetInlineUniformBlock = 1000138002
+    case descriptorPoolInlineUniformBlockCreateInfo = 1000138003
+    case physicalDeviceShaderIntegerDotProductFeatures = 1000280000
+    case physicalDeviceShaderIntegerDotProductProperties = 1000280001
+    case physicalDeviceTexelBufferAlignmentProperties = 1000281001
+    case blitImageInfo2 = 1000337004
+    case resolveImageInfo2 = 1000337005
+    case imageBlit2 = 1000337008
+    case imageResolve2 = 1000337010
+    case renderingInfo = 1000044000
+    case renderingAttachmentInfo = 1000044001
+    case pipelineRenderingCreateInfo = 1000044002
+    case physicalDeviceDynamicRenderingFeatures = 1000044003
+    case commandBufferInheritanceRenderingInfo = 1000044004
+    case physicalDeviceVulkan14Features = 55
+    case physicalDeviceVulkan14Properties = 56
+    case deviceQueueGlobalPriorityCreateInfo = 1000174000
+    case physicalDeviceGlobalPriorityQueryFeatures = 1000388000
+    case queueFamilyGlobalPriorityProperties = 1000388001
+    case physicalDeviceIndexTypeUint8Features = 1000265000
+    case memoryMapInfo = 1000271000
+    case memoryUnmapInfo = 1000271001
+    case physicalDeviceMaintenance5Features = 1000470000
+    case physicalDeviceMaintenance5Properties = 1000470001
+    case deviceImageSubresourceInfo = 1000470004
+    case subresourceLayout2 = 1000338002
+    case imageSubresource2 = 1000338003
+    case bufferUsageFlags2CreateInfo = 1000470006
+    case physicalDeviceMaintenance6Features = 1000545000
+    case physicalDeviceMaintenance6Properties = 1000545001
+    case bindMemoryStatus = 1000545002
+    case physicalDeviceHostImageCopyFeatures = 1000270000
+    case physicalDeviceHostImageCopyProperties = 1000270001
+    case memoryToImageCopy = 1000270002
+    case imageToMemoryCopy = 1000270003
+    case copyImageToMemoryInfo = 1000270004
+    case copyMemoryToImageInfo = 1000270005
+    case hostImageLayoutTransitionInfo = 1000270006
+    case copyImageToImageInfo = 1000270007
+    case subresourceHostMemcpySize = 1000270008
+    case hostImageCopyDevicePerformanceQuery = 1000270009
+    case physicalDeviceShaderSubgroupRotateFeatures = 1000416000
+    case physicalDeviceShaderFloatControls2Features = 1000528000
+    case physicalDeviceShaderExpectAssumeFeatures = 1000544000
+    case pipelineCreateFlags2CreateInfo = 1000470005
+    case physicalDevicePushDescriptorProperties = 1000080000
+    case bindDescriptorSetsInfo = 1000545003
+    case pushConstantsInfo = 1000545004
+    case pushDescriptorSetInfo = 1000545005
+    case pushDescriptorSetWithTemplateInfo = 1000545006
+    case physicalDevicePipelineProtectedAccessFeatures = 1000466000
+    case pipelineRobustnessCreateInfo = 1000068000
+    case physicalDevicePipelineRobustnessFeatures = 1000068001
+    case physicalDevicePipelineRobustnessProperties = 1000068002
+    case physicalDeviceLineRasterizationFeatures = 1000259000
+    case pipelineRasterizationLineStateCreateInfo = 1000259001
+    case physicalDeviceLineRasterizationProperties = 1000259002
+    case physicalDeviceVertexAttributeDivisorProperties = 1000525000
+    case pipelineVertexInputDivisorStateCreateInfo = 1000190001
+    case physicalDeviceVertexAttributeDivisorFeatures = 1000190002
+    case renderingAreaInfo = 1000470003
+    case physicalDeviceDynamicRenderingLocalReadFeatures = 1000232000
+    case renderingAttachmentLocationInfo = 1000232001
+    case renderingInputAttachmentIndexInfo = 1000232002
+    case physicalDeviceVulkanSc10Features = 1000298000
+    case physicalDeviceVulkanSc10Properties = 1000298001
+    case deviceObjectReservationCreateInfo = 1000298002
+    case commandPoolMemoryReservationCreateInfo = 1000298003
+    case commandPoolMemoryConsumption = 1000298004
+    case pipelinePoolSize = 1000298005
+    case faultData = 1000298007
+    case faultCallbackInfo = 1000298008
+    case pipelineOfflineCreateInfo = 1000298010
 }
 
 public enum SubpassContents: UInt32 {
@@ -1549,6 +1846,15 @@ public enum Result: Int32, Error {
     case incompatibleShaderBinaryEXT = 1000482000
     case pipelineBinaryMissingKHR = 1000483000
     case errorNotEnoughSpaceKHR = -1000483000
+    case errorValidationFailed = -1000011001
+    case errorOutOfPoolMemory = -1000069000
+    case errorInvalidExternalHandle = -1000072003
+    case errorInvalidOpaqueCaptureAddress = -1000257000
+    case errorFragmentation = -1000161000
+    case pipelineCompileRequired = 1000297000
+    case errorNotPermitted = -1000174001
+    case errorInvalidPipelineCacheData = -1000298000
+    case errorNoPipelineMatch = -1000298001
 }
 
 public enum DynamicState: UInt32 {
@@ -1609,10 +1915,27 @@ public enum DynamicState: UInt32 {
     case coverageReductionModeNV = 1000455032
     case attachmentFeedbackLoopEnableEXT = 1000524000
     case depthClampRangeEXT = 1000582000
+    case cullMode = 1000267000
+    case frontFace = 1000267001
+    case primitiveTopology = 1000267002
+    case viewportWithCount = 1000267003
+    case scissorWithCount = 1000267004
+    case vertexInputBindingStride = 1000267005
+    case depthTestEnable = 1000267006
+    case depthWriteEnable = 1000267007
+    case depthCompareOp = 1000267008
+    case depthBoundsTestEnable = 1000267009
+    case stencilTestEnable = 1000267010
+    case stencilOp = 1000267011
+    case rasterizerDiscardEnable = 1000377001
+    case depthBiasEnable = 1000377002
+    case primitiveRestartEnable = 1000377004
+    case lineStipple = 1000259000
 }
 
 public enum DescriptorUpdateTemplateType: UInt32 {
     case descriptorSet = 0
+    case pushDescriptors = 1
 }
 
 public enum ObjectType: UInt32 {
@@ -1670,6 +1993,9 @@ public enum ObjectType: UInt32 {
     case indirectCommandsLayoutEXT = 1000572000
     case indirectExecutionSetEXT = 1000572001
     case shaderInstrumentationARM = 1000607000
+    case descriptorUpdateTemplate = 1000085000
+    case samplerYcbcrConversion = 1000156000
+    case privateDataSlot = 1000295000
 }
 
 public enum RayTracingInvocationReorderModeEXT: UInt32 {

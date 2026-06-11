@@ -144,13 +144,13 @@ class CContext:
         self.parse_platforms(tree)
         self.parse_extension_tags(tree)
         self.parse_extensions(tree)
-
         self.parse_features(tree)
         # types
         # not seen here: include, define, funcpointer
         self.parse_handles(tree)
         self.parse_enums(tree)
         self.parse_bitmasks(tree)
+        self.parse_enum_extends_in_features(tree)
         self.parse_structs(tree)
         self.parse_commands(tree)
 
@@ -172,19 +172,6 @@ class CContext:
                 name = command.attrib['name']
                 command_names.append(name)
 
-            for e_enum in feature.findall('./require/enum[@extends]'):
-                extension_number = None
-                if 'extnumber' in e_enum.attrib:
-                    extension_number = int(e_enum.attrib['extnumber'])
-                if 'alias' in e_enum.attrib:
-                    continue
-                c_case = CEnum.Case(
-                    e_enum.attrib['name'], parse_enum_value(e_enum, extension_number))
-                for enum in self.enums:
-                    if enum.name == e_enum.attrib['extends']:
-                        enum.cases.append(c_case)
-                        break
-
             apitype = None
             if apitype in feature.attrib:
                 apitype = feature.attrib['apitype']
@@ -197,6 +184,25 @@ class CContext:
                 apitype=apitype
             )
             self.features.append(c_feature)
+
+    def parse_enum_extends_in_features(self, tree: ElementTree):
+        enums = {e.name: e for e in self.enums}
+        bitmask_flags = {b.enum.name: b.enum for b in self.bitmasks if b.enum}
+        for e_enum in tree.findall('./feature/require/enum[@extends]'):
+            extension_number = None
+            if 'extnumber' in e_enum.attrib:
+                extension_number = int(e_enum.attrib['extnumber'])
+            if 'alias' in e_enum.attrib:
+                continue
+            value = parse_enum_value(e_enum, extension_number)
+            c_case = CEnum.Case(e_enum.attrib['name'], value)
+            extends = e_enum.attrib['extends']
+            if extends in enums:
+                enums[extends].cases.append(c_case)
+            elif extends in bitmask_flags:
+                bitmask_flags[extends].cases.append(c_case)
+            else:
+                print(f"warning: enum {e_enum.attrib['extends']} not found (value={value})")
 
     def parse_extensions(self, tree: ElementTree):
         for e_extension in tree.findall('./extensions/extension'):
@@ -317,7 +323,8 @@ class CContext:
                 continue
 
             bitvalues = e_bitmask.get('bitvalues')
-            c_bitmask = CBitmask(bitmask_name, is64=bitvalues is not None, protect=self.find_protect(type_=bitmask_name))
+            c_bitmask = CBitmask(bitmask_name, is64=bitvalues is not None,
+                                 protect=self.find_protect(type_=bitmask_name))
 
             name = e_bitmask.get('requires') or bitvalues
             if name:
@@ -381,7 +388,8 @@ class CContext:
             if self.should_ignore(command=proto.name, api=parse_api(e_command)):
                 continue
 
-            c_command = CCommand(proto.name, proto.type, protect=self.find_protect(command=proto.name))
+            c_command = CCommand(proto.name, proto.type,
+                                 protect=self.find_protect(command=proto.name))
             for e_param in e_command.findall('./param'):
                 if self.should_ignore(api=parse_api(e_param)):
                     continue
@@ -416,7 +424,8 @@ class CContext:
         features = self.find_features(type_, command)
         if len(features) == 1 and len(features[0].api) == 1 and 'vulkansc' in features[0].api:
             return True
-        return False    
+        return False
+
 
 def parse_enum_value(e_enum: ElementTree, extension_number: int = None) -> str:
     if 'offset' in e_enum.attrib:
@@ -485,7 +494,8 @@ def parse_member(member: ElementTree, tree: ElementTree) -> CMember:
 
     values_string = member.get('values')
     values = values_string.split(',') if values_string else []
-    noautovalidity = 'noautovalidity' in member.attrib and member.attrib['noautovalidity'] == 'true'
+    noautovalidity = 'noautovalidity' in member.attrib and member.attrib[
+        'noautovalidity'] == 'true'
 
     return CMember(name, c_type, values, noautovalidity)
 
