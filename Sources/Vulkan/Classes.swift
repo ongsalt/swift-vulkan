@@ -1,6 +1,6 @@
 import CVulkan
 
-public class Entry {
+public final class Entry {
     public let loader: Loader
     public let dispatchTable: EntryDispatchTable
 
@@ -58,7 +58,7 @@ public class Entry {
     }
 }
 
-public class Instance: _HandleContainer {
+public final class Instance: _HandleContainer {
     public let handle: VkInstance?
     public let entry: Entry
     public let dispatchTable: InstanceDispatchTable
@@ -546,7 +546,7 @@ public class Instance: _HandleContainer {
     }
 }
 
-public class PhysicalDevice: _HandleContainer {
+public final class PhysicalDevice: _HandleContainer {
     public let handle: VkPhysicalDevice?
     public let instance: Instance
 
@@ -1256,7 +1256,7 @@ public class PhysicalDevice: _HandleContainer {
     }
 }
 
-public class Device: _HandleContainer {
+public final class Device: _HandleContainer {
     public let handle: VkDevice?
     public let physicalDevice: PhysicalDevice
     public let dispatchTable: DeviceDispatchTable
@@ -4697,7 +4697,7 @@ public class Device: _HandleContainer {
     }
 }
 
-public class Queue: _HandleContainer {
+public final class Queue: _HandleContainer {
     public let handle: VkQueue?
     public let device: Device
 
@@ -4851,7 +4851,7 @@ public class Queue: _HandleContainer {
     }
 }
 
-public class CommandPool: _HandleContainer {
+public final class CommandPool: _HandleContainer {
     public let handle: VkCommandPool?
     public let device: Device
 
@@ -4881,7 +4881,7 @@ public class CommandPool: _HandleContainer {
     }
 }
 
-public class CommandBuffer: _HandleContainer {
+public final class CommandBuffer: _HandleContainer {
     public let handle: VkCommandBuffer?
     public let commandPool: CommandPool
 
@@ -6989,7 +6989,7 @@ public class CommandBuffer: _HandleContainer {
     }
 }
 
-public class DeviceMemory: _HandleContainer {
+public final class DeviceMemory: _HandleContainer {
     public let handle: VkDeviceMemory?
     public let device: Device
 
@@ -7035,7 +7035,7 @@ public class DeviceMemory: _HandleContainer {
     }
 }
 
-public class Buffer: _HandleContainer {
+public final class Buffer: _HandleContainer {
     public let handle: VkBuffer?
     public let device: Device
 
@@ -7061,7 +7061,7 @@ public class Buffer: _HandleContainer {
     }
 }
 
-public class BufferView: _HandleContainer {
+public final class BufferView: _HandleContainer {
     public let handle: VkBufferView?
     public let device: Device
 
@@ -7075,7 +7075,7 @@ public class BufferView: _HandleContainer {
     }
 }
 
-public class Image: _HandleContainer {
+public final class Image: _HandleContainer {
     public let handle: VkImage?
     public let device: Device
 
@@ -7142,7 +7142,7 @@ public class Image: _HandleContainer {
     }
 }
 
-public class ImageView: _HandleContainer {
+public final class ImageView: _HandleContainer {
     public let handle: VkImageView?
     public let device: Device
 
@@ -7165,7 +7165,7 @@ public class ImageView: _HandleContainer {
     }
 }
 
-public class ShaderModule: _HandleContainer {
+public final class ShaderModule: _HandleContainer {
     public let handle: VkShaderModule?
     public let device: Device
 
@@ -7186,7 +7186,7 @@ public class ShaderModule: _HandleContainer {
     }
 }
 
-public class Pipeline: _HandleContainer {
+public final class Pipeline: _HandleContainer {
     public let handle: VkPipeline?
     public let device: Device
 
@@ -7263,7 +7263,7 @@ public class Pipeline: _HandleContainer {
     #endif
 }
 
-public class PipelineLayout: _HandleContainer {
+public final class PipelineLayout: _HandleContainer {
     public let handle: VkPipelineLayout?
     public let device: Device
 
@@ -7277,7 +7277,7 @@ public class PipelineLayout: _HandleContainer {
     }
 }
 
-public class Sampler: _HandleContainer {
+public final class Sampler: _HandleContainer {
     public let handle: VkSampler?
     public let device: Device
 
@@ -7291,7 +7291,7 @@ public class Sampler: _HandleContainer {
     }
 }
 
-public class DescriptorPool: _HandleContainer {
+public final class DescriptorPool: _HandleContainer {
     public let handle: VkDescriptorPool?
     public let device: Device
 
@@ -7319,7 +7319,7 @@ public class DescriptorPool: _HandleContainer {
     }
 }
 
-public class DescriptorSet: _HandleContainer {
+public final class DescriptorSet: _HandleContainer {
     public let handle: VkDescriptorSet?
     public let descriptorPool: DescriptorPool
 
@@ -7339,7 +7339,7 @@ public class DescriptorSet: _HandleContainer {
     }
 }
 
-public class DescriptorSetLayout: _HandleContainer {
+public final class DescriptorSetLayout: _HandleContainer {
     public let handle: VkDescriptorSetLayout?
     public let device: Device
 
@@ -7365,7 +7365,7 @@ public class DescriptorSetLayout: _HandleContainer {
     }
 }
 
-public class Fence: _HandleContainer {
+public final class Fence: _HandleContainer {
     public let handle: VkFence?
     public let device: Device
 
@@ -7385,7 +7385,7 @@ public class Fence: _HandleContainer {
     }
 }
 
-public class Semaphore: _HandleContainer {
+public final class Semaphore: _HandleContainer {
     public let handle: VkSemaphore?
     public let device: Device
 
@@ -7407,7 +7407,7 @@ public class Semaphore: _HandleContainer {
     }
 }
 
-public class Event: _HandleContainer {
+public final class Event: _HandleContainer {
     public let handle: VkEvent?
     public let device: Device
 
@@ -7439,7 +7439,7 @@ public class Event: _HandleContainer {
     }
 }
 
-public class QueryPool: _HandleContainer {
+public final class QueryPool: _HandleContainer {
     public let handle: VkQueryPool?
     public let device: Device
 
@@ -7463,7 +7463,7 @@ public class QueryPool: _HandleContainer {
     }
 }
 
-public class Framebuffer: _HandleContainer {
+public final class Framebuffer: _HandleContainer {
     public let handle: VkFramebuffer?
     public let device: Device
 
@@ -7483,7 +7483,7 @@ public class Framebuffer: _HandleContainer {
     }
 }
 
-public class RenderPass: _HandleContainer {
+public final class RenderPass: _HandleContainer {
     public let handle: VkRenderPass?
     public let device: Device
 
@@ -7511,7 +7511,7 @@ public class RenderPass: _HandleContainer {
     }
 }
 
-public class PipelineCache: _HandleContainer {
+public final class PipelineCache: _HandleContainer {
     public let handle: VkPipelineCache?
     public let device: Device
 
@@ -7539,7 +7539,7 @@ public class PipelineCache: _HandleContainer {
     }
 }
 
-public class PipelineBinaryKHR: _HandleContainer {
+public final class PipelineBinaryKHR: _HandleContainer {
     public let handle: VkPipelineBinaryKHR?
     public let device: Device
 
@@ -7553,7 +7553,7 @@ public class PipelineBinaryKHR: _HandleContainer {
     }
 }
 
-public class IndirectCommandsLayoutNV: _HandleContainer {
+public final class IndirectCommandsLayoutNV: _HandleContainer {
     public let handle: VkIndirectCommandsLayoutNV?
     public let device: Device
 
@@ -7567,7 +7567,7 @@ public class IndirectCommandsLayoutNV: _HandleContainer {
     }
 }
 
-public class IndirectCommandsLayoutEXT: _HandleContainer {
+public final class IndirectCommandsLayoutEXT: _HandleContainer {
     public let handle: VkIndirectCommandsLayoutEXT?
     public let device: Device
 
@@ -7581,7 +7581,7 @@ public class IndirectCommandsLayoutEXT: _HandleContainer {
     }
 }
 
-public class IndirectExecutionSetEXT: _HandleContainer {
+public final class IndirectExecutionSetEXT: _HandleContainer {
     public let handle: VkIndirectExecutionSetEXT?
     public let device: Device
 
@@ -7619,7 +7619,7 @@ public class IndirectExecutionSetEXT: _HandleContainer {
     }
 }
 
-public class DescriptorUpdateTemplate: _HandleContainer {
+public final class DescriptorUpdateTemplate: _HandleContainer {
     public let handle: VkDescriptorUpdateTemplate?
     public let device: Device
 
@@ -7633,7 +7633,7 @@ public class DescriptorUpdateTemplate: _HandleContainer {
     }
 }
 
-public class SamplerYcbcrConversion: _HandleContainer {
+public final class SamplerYcbcrConversion: _HandleContainer {
     public let handle: VkSamplerYcbcrConversion?
     public let device: Device
 
@@ -7647,7 +7647,7 @@ public class SamplerYcbcrConversion: _HandleContainer {
     }
 }
 
-public class ValidationCacheEXT: _HandleContainer {
+public final class ValidationCacheEXT: _HandleContainer {
     public let handle: VkValidationCacheEXT?
     public let device: Device
 
@@ -7675,7 +7675,7 @@ public class ValidationCacheEXT: _HandleContainer {
     }
 }
 
-public class AccelerationStructureKHR: _HandleContainer {
+public final class AccelerationStructureKHR: _HandleContainer {
     public let handle: VkAccelerationStructureKHR?
     public let device: Device
 
@@ -7689,7 +7689,7 @@ public class AccelerationStructureKHR: _HandleContainer {
     }
 }
 
-public class AccelerationStructureNV: _HandleContainer {
+public final class AccelerationStructureNV: _HandleContainer {
     public let handle: VkAccelerationStructureNV?
     public let device: Device
 
@@ -7709,7 +7709,7 @@ public class AccelerationStructureNV: _HandleContainer {
     }
 }
 
-public class PerformanceConfigurationINTEL: _HandleContainer {
+public final class PerformanceConfigurationINTEL: _HandleContainer {
     public let handle: VkPerformanceConfigurationINTEL?
     public let device: Device
 
@@ -7720,7 +7720,7 @@ public class PerformanceConfigurationINTEL: _HandleContainer {
 }
 
 #if VK_USE_PLATFORM_FUCHSIA
-public class BufferCollectionFUCHSIA: _HandleContainer {
+public final class BufferCollectionFUCHSIA: _HandleContainer {
     public let handle: VkBufferCollectionFUCHSIA?
     public let device: Device
 
@@ -7788,7 +7788,7 @@ public class BufferCollectionFUCHSIA: _HandleContainer {
 }
 #endif
 
-public class DeferredOperationKHR: _HandleContainer {
+public final class DeferredOperationKHR: _HandleContainer {
     public let handle: VkDeferredOperationKHR?
     public let device: Device
 
@@ -7818,7 +7818,7 @@ public class DeferredOperationKHR: _HandleContainer {
     }
 }
 
-public class PrivateDataSlot: _HandleContainer {
+public final class PrivateDataSlot: _HandleContainer {
     public let handle: VkPrivateDataSlot?
     public let device: Device
 
@@ -7832,7 +7832,7 @@ public class PrivateDataSlot: _HandleContainer {
     }
 }
 
-public class CuModuleNVX: _HandleContainer {
+public final class CuModuleNVX: _HandleContainer {
     public let handle: VkCuModuleNVX?
     public let device: Device
 
@@ -7846,7 +7846,7 @@ public class CuModuleNVX: _HandleContainer {
     }
 }
 
-public class CuFunctionNVX: _HandleContainer {
+public final class CuFunctionNVX: _HandleContainer {
     public let handle: VkCuFunctionNVX?
     public let device: Device
 
@@ -7860,7 +7860,7 @@ public class CuFunctionNVX: _HandleContainer {
     }
 }
 
-public class OpticalFlowSessionNV: _HandleContainer {
+public final class OpticalFlowSessionNV: _HandleContainer {
     public let handle: VkOpticalFlowSessionNV?
     public let device: Device
 
@@ -7880,7 +7880,7 @@ public class OpticalFlowSessionNV: _HandleContainer {
     }
 }
 
-public class MicromapEXT: _HandleContainer {
+public final class MicromapEXT: _HandleContainer {
     public let handle: VkMicromapEXT?
     public let device: Device
 
@@ -7894,7 +7894,7 @@ public class MicromapEXT: _HandleContainer {
     }
 }
 
-public class ShaderEXT: _HandleContainer {
+public final class ShaderEXT: _HandleContainer {
     public let handle: VkShaderEXT?
     public let device: Device
 
@@ -7914,7 +7914,7 @@ public class ShaderEXT: _HandleContainer {
     }
 }
 
-public class TensorARM: _HandleContainer {
+public final class TensorARM: _HandleContainer {
     public let handle: VkTensorARM?
     public let device: Device
 
@@ -7928,7 +7928,7 @@ public class TensorARM: _HandleContainer {
     }
 }
 
-public class TensorViewARM: _HandleContainer {
+public final class TensorViewARM: _HandleContainer {
     public let handle: VkTensorViewARM?
     public let device: Device
 
@@ -7942,7 +7942,7 @@ public class TensorViewARM: _HandleContainer {
     }
 }
 
-public class DataGraphPipelineSessionARM: _HandleContainer {
+public final class DataGraphPipelineSessionARM: _HandleContainer {
     public let handle: VkDataGraphPipelineSessionARM?
     public let device: Device
 
@@ -7956,7 +7956,7 @@ public class DataGraphPipelineSessionARM: _HandleContainer {
     }
 }
 
-public class ShaderInstrumentationARM: _HandleContainer {
+public final class ShaderInstrumentationARM: _HandleContainer {
     public let handle: VkShaderInstrumentationARM?
     public let device: Device
 
@@ -7982,7 +7982,7 @@ public class ShaderInstrumentationARM: _HandleContainer {
     }
 }
 
-public class GpaSessionAMD: _HandleContainer {
+public final class GpaSessionAMD: _HandleContainer {
     public let handle: VkGpaSessionAMD?
     public let device: Device
 
@@ -8014,7 +8014,7 @@ public class GpaSessionAMD: _HandleContainer {
     }
 }
 
-public class DisplayKHR: _HandleContainer {
+public final class DisplayKHR: _HandleContainer {
     public let handle: VkDisplayKHR?
     public let physicalDevice: PhysicalDevice
 
@@ -8070,7 +8070,7 @@ public class DisplayKHR: _HandleContainer {
     }
 }
 
-public class DisplayModeKHR: _HandleContainer {
+public final class DisplayModeKHR: _HandleContainer {
     public let handle: VkDisplayModeKHR?
     public let display: DisplayKHR
 
@@ -8088,7 +8088,7 @@ public class DisplayModeKHR: _HandleContainer {
     }
 }
 
-public class SurfaceKHR: _HandleContainer {
+public final class SurfaceKHR: _HandleContainer {
     public let handle: VkSurfaceKHR?
     public let instance: Instance
 
@@ -8102,7 +8102,7 @@ public class SurfaceKHR: _HandleContainer {
     }
 }
 
-public class SwapchainKHR: _HandleContainer {
+public final class SwapchainKHR: _HandleContainer {
     public let handle: VkSwapchainKHR?
     public let device: Device
 
@@ -8269,7 +8269,7 @@ public class SwapchainKHR: _HandleContainer {
     }
 }
 
-public class DebugReportCallbackEXT: _HandleContainer {
+public final class DebugReportCallbackEXT: _HandleContainer {
     public let handle: VkDebugReportCallbackEXT?
     public let instance: Instance
 
@@ -8283,7 +8283,7 @@ public class DebugReportCallbackEXT: _HandleContainer {
     }
 }
 
-public class DebugUtilsMessengerEXT: _HandleContainer {
+public final class DebugUtilsMessengerEXT: _HandleContainer {
     public let handle: VkDebugUtilsMessengerEXT?
     public let instance: Instance
 
@@ -8297,7 +8297,7 @@ public class DebugUtilsMessengerEXT: _HandleContainer {
     }
 }
 
-public class VideoSessionKHR: _HandleContainer {
+public final class VideoSessionKHR: _HandleContainer {
     public let handle: VkVideoSessionKHR?
     public let device: Device
 
@@ -8333,7 +8333,7 @@ public class VideoSessionKHR: _HandleContainer {
     }
 }
 
-public class VideoSessionParametersKHR: _HandleContainer {
+public final class VideoSessionParametersKHR: _HandleContainer {
     public let handle: VkVideoSessionParametersKHR?
     public let device: Device
 
@@ -8364,7 +8364,7 @@ public class VideoSessionParametersKHR: _HandleContainer {
 }
 
 #if VK_ENABLE_BETA_EXTENSIONS
-public class CudaModuleNV: _HandleContainer {
+public final class CudaModuleNV: _HandleContainer {
     public let handle: VkCudaModuleNV?
     public let device: Device
 
@@ -8390,7 +8390,7 @@ public class CudaModuleNV: _HandleContainer {
 #endif
 
 #if VK_ENABLE_BETA_EXTENSIONS
-public class CudaFunctionNV: _HandleContainer {
+public final class CudaFunctionNV: _HandleContainer {
     public let handle: VkCudaFunctionNV?
     public let device: Device
 
@@ -8407,7 +8407,7 @@ public class CudaFunctionNV: _HandleContainer {
 }
 #endif
 
-public class ExternalComputeQueueNV: _HandleContainer {
+public final class ExternalComputeQueueNV: _HandleContainer {
     public let handle: VkExternalComputeQueueNV?
     public let device: Device
 

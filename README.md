@@ -64,6 +64,8 @@ Swift-vulkan is a relatively new project, and there are still some important mil
     ```swift
     let (features, vulkan11Properties, descriptorIndexingProperties) = physicalDevice.getFeatures2(features: #ChainOf(PhysicalDeviceVulkan11Properties, PhysicalDeviceDescriptorIndexingProperties))
     ```
+    - or `pNext: (any ChainableStruct)?`
+
 - explicitly type `enumerate()`?
 - assert(array1.count == array2.count)?
 - multiple out array

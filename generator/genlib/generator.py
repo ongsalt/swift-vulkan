@@ -176,7 +176,7 @@ class Generator(BaseGenerator):
         if cls.protect:
             self << f'#if {cls.protect}'
         protocol_string = ': _HandleContainer' if cls.c_handle else ''
-        with self.indent(f'public class {cls.name}{protocol_string} {{', '}'):
+        with self.indent(f'public final class {cls.name}{protocol_string} {{', '}'):
             if cls.c_handle:
                 self << f'public let handle: {cls.c_handle.name}?'
             if cls.parent:
