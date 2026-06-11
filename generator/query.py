@@ -11,24 +11,10 @@ if __name__ == '__main__':
     swift_context = importer.import_all()
 
     for struct in c_context.structs:
-        count: dict[str, int] = {}
+        lenghts: set[str] = set()
         for member in struct.members:
-            if type(member.type.length) == str and member.noautovalidity:
-                name = member.type.length
-                count[name] = count.setdefault(name, 0) + 1
+            if type(member.type.length) == str and member.noautovalidity and member.type.optional:
+                print(f'{struct.name}::{member.name}: {member.type.type_name}[{member.type.length}]')
 
-        for key, value in count.items():
-            if value > 1:
-                print(struct.name, key)
-
-    for command in c_context.commands:
-        count: dict[str, int] = {}
-        for member in command.params:
-            if type(member.type.length) == str and member.noautovalidity:
-                name = member.type.length
-                count[name] = count.setdefault(name, 0) + 1
-
-        for key, value in count.items():
-            if value > 1:
-                print(command.name, key)
+    # for command in c_context.commands:
 

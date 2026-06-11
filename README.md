@@ -47,6 +47,12 @@ Swift-vulkan is a relatively new project, and there are still some important mil
 ## Todos
 - take advantage of InlineArray?
 - `VkAccelerationStructureBuildGeometryInfoKHR` need special handling (pGeometries/ppGeometries, pUsageCounts/ppUsageCounts are mutually exclusive)
+- determine if these shuold be manually handled
+    - VkGraphicsPipelineCreateInfo.pStages: VkPipelineShaderStageCreateInfo[stageCount]
+    - VkPipelineViewportWScalingStateCreateInfoNV.pViewportWScalings: VkViewportWScalingNV[viewportCount]
+    - VkPipelineCoverageModulationStateCreateInfoNV.pCoverageModulationTable: float[coverageModulationTableCount]
+    - VkShaderCreateInfoEXT.pSetLayouts: VkDescriptorSetLayout[setLayoutCount]
+
 - fix parent class?
 - latexmath lenght 😭
 - differentiate an in chain and an out chain

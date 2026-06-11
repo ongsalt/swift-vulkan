@@ -2720,41 +2720,6 @@ public struct ShaderModuleCreateInfo: ChainableBase, PipelineShaderStageCreateIn
 
 public protocol ShaderModuleCreateInfoExtension: Chainable {}
 
-public struct DescriptorSetLayoutBinding: CStructConvertible {
-    public typealias CStruct = VkDescriptorSetLayoutBinding
-
-    public let binding: UInt32
-    public let descriptorType: DescriptorType
-    public let stageFlags: ShaderStageFlags
-    public let immutableSamplers: Array<Sampler>?
-
-    public init(binding: UInt32, descriptorType: DescriptorType, stageFlags: ShaderStageFlags, immutableSamplers: Array<Sampler>? = nil) {
-        self.binding = binding
-        self.descriptorType = descriptorType
-        self.stageFlags = stageFlags
-        self.immutableSamplers = immutableSamplers
-    }
-
-    init(cStruct: VkDescriptorSetLayoutBinding, device: Device) {
-        self.binding = cStruct.binding
-        self.descriptorType = DescriptorType(rawValue: unsafeBitCast(cStruct.descriptorType, to: UInt32.self))!
-        self.stageFlags = ShaderStageFlags(rawValue: cStruct.stageFlags)
-        self.immutableSamplers = (cStruct.pImmutableSamplers != nil) ? UnsafeBufferPointer(start: cStruct.pImmutableSamplers, count: Int(cStruct.descriptorCount)).map{ Sampler(handle: $0, device: device) } : nil
-    }
-
-    public func withCStruct<R, E: Error>(_ body: (UnsafePointer<VkDescriptorSetLayoutBinding>) throws(E) -> R) throws(E) -> R {
-        try (self.immutableSamplers?.map{ $0.handle }).withOptionalUnsafeBufferPointer { ptr_immutableSamplers throws(E) in
-            var cStruct = VkDescriptorSetLayoutBinding()
-            cStruct.binding = self.binding
-            cStruct.descriptorType = VkDescriptorType(rawValue: VkDescriptorType.RawValue(self.descriptorType.rawValue))
-            cStruct.descriptorCount = UInt32(ptr_immutableSamplers.count)
-            cStruct.stageFlags = self.stageFlags.rawValue
-            cStruct.pImmutableSamplers = ptr_immutableSamplers.baseAddress
-            return try body(&cStruct)
-        }
-    }
-}
-
 public struct DescriptorSetLayoutCreateInfo: ChainableBase {
     public typealias CStruct = VkDescriptorSetLayoutCreateInfo
 

@@ -3,7 +3,9 @@ from genlib.importer import Importer
 from genlib.generator import Generator
 
 skip_list = set([
-    'WriteDescriptorSet'
+    # some struct/command `len` semantics are ass and should be pass in explicitly
+    'WriteDescriptorSet',
+    'DescriptorSetLayoutBinding'
 ])
 
 if __name__ == '__main__':
