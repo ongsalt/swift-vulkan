@@ -32,11 +32,22 @@ if __name__ == '__main__':
             if struct.name not in skip_list:
                 generator.generate_struct(struct)
 
+    classes = set(['Device', 'CommandBuffer'])
     with open('../Sources/Vulkan/Classes.swift', 'w') as f:
         generator = Generator(f)
         generator.generate_imports()
         for cls in swift_context.classes:
-            generator.generate_class(cls)
+            if cls.name not in classes:
+                generator.generate_class(cls)
+
+    for cls_name in classes:
+        with open(f'../Sources/Vulkan/{cls_name}.swift', 'w') as f:
+            generator = Generator(f)
+            generator.generate_imports()
+            for cls in swift_context.classes:
+                if cls.name == cls_name:
+                    generator.generate_class(cls)
+                    break
 
     with open('../Sources/Vulkan/Aliases.swift', 'w') as f:
         generator = Generator(f)
