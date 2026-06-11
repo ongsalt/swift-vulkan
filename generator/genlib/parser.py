@@ -197,12 +197,27 @@ class CContext:
             value = parse_enum_value(e_enum, extension_number)
             c_case = CEnum.Case(e_enum.attrib['name'], value)
             extends = e_enum.attrib['extends']
+
+            enum: CEnum | None = None
             if extends in enums:
-                enums[extends].cases.append(c_case)
+                enum = enums[extends]
             elif extends in bitmask_flags:
-                bitmask_flags[extends].cases.append(c_case)
-            else:
+                enum = bitmask_flags[extends]
+            
+            if not enum:
                 print(f"warning: enum {e_enum.attrib['extends']} not found (value={value})")
+                continue
+
+            # check for duplicated case
+            for c in enum.cases:
+                if c.name == c_case.name:
+                    if c.value == c_case.value:
+                        break
+                    else:
+                        print(f"warning: duplicated enum case with different values: {enum.name}{c.name} = {c.value}, {c_case.value}")
+            else:
+                enum.cases.append(c_case)
+
 
     def parse_extensions(self, tree: ElementTree):
         for e_extension in tree.findall('./extensions/extension'):

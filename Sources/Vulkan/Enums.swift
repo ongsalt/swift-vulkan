@@ -194,7 +194,6 @@ public enum SamplerAddressMode: UInt32 {
     case clampToEdge = 2
     case clampToBorder = 3
     case mirrorClampToEdge = 4
-    case mirrorClampToEdge = 4
 }
 
 public enum CompareOp: UInt32 {
