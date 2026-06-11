@@ -1,6 +1,6 @@
 @_exported import CVulkan
 
-func checkResult(_ result: VkResult) throws(Result) {
+public func checkResult(_ result: VkResult) throws(Result) {
     if result.rawValue < 0 {
         throw Result(rawValue: result.rawValue)!
     }
