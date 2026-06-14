@@ -26,6 +26,7 @@ class SwiftMember:
     type: str
     is_closure: bool = False
     default_value: str | None = None
+    is_static: bool = False
 
 
 @dataclass(eq=False)
@@ -57,13 +58,14 @@ class SwiftCommand:
     output_param: str | None = None
     output_param_implicit_type: str | None = None
     output_param_custom_initializer: str | None = None
-    output_s_type: str | None = None
+    output_param_structure_type: str | None = None
     unwrap_output_param: bool = False
     enumeration_pointer_param: str | None = None
     enumeration_count_param: str | None = None
     dispatcher: SwiftClass | None = None
     protect: str | None = None
     enumeration_is_bytes_array: bool = False
+    chainable_out_parameters: list[str] | None = None
 
 
 @dataclass(eq=False)
@@ -263,7 +265,17 @@ class Importer:
         convertible_from_c_struct = True
         parent_classes: list[SwiftClass] = []
 
+        protocols: list[str] = []
+        for base in c_struct.struct_extends:
+            protocols.append(f"{remove_vk_prefix(base)}Extension")
+
         for member in c_struct.members:
+            if member.name == 'pNext':
+                if member.type.pointer_to.const:
+                    # protocols.append('InStruct')
+                    pass
+                else:
+                    protocols.append('OutStruct')
             type_name = member.type.type_name
             if type_name in self.c_structs:
                 child_struct = self.import_struct(self.c_structs[type_name])
@@ -280,15 +292,12 @@ class Importer:
                     c = self.imported_classes[type_name].parent
                     if c and c not in parent_classes:
                         parent_classes.append(c)
-
+            # else:
+                # print()
                 # TODO: cant we just do Global.getHandleClass() or some shi
                 # vulkan wont return an existing handle which mean we can create this
                 # convertible_from_c_struct = False
                 # pass
-
-        protocols: list[str] = []
-        for base in c_struct.struct_extends:
-            protocols.append(f"{remove_vk_prefix(base)}Extension")
 
         members, conversions = self.get_member_conversions(
             c_struct.members, c_struct=c_struct)
@@ -398,12 +407,12 @@ class Importer:
         output_param: str | None = None
         output_param_implicit_type: str | None = None
         output_param_custom_initializer: str | None = None
+        output_param_structure_type: str | None = None
         unwrap_output_param = False
         enumeration_pointer_params: list[str] = []
         enumeration_count_param: str | None = None
         enumeration_is_bytes_array = False
-        s_type: str | None = None
-
+        
         if c_return_type.name == 'void':
             output_params = get_output_params(c_command)
 
@@ -431,10 +440,6 @@ class Importer:
 
                     output_param_type_struct = self.imported_structs.get(
                         output_param_implicit_type, None)
-                    if output_param_type_struct:
-                        for key, value in output_param_type_struct.member_conversions.static_values:
-                            if key == 'sType':
-                                s_type = value
 
                     if ty.name in self.imported_enums:
                         output_param_custom_initializer = f'{output_param_implicit_type}(rawValue: 0)'
@@ -447,6 +452,12 @@ class Importer:
                     output_params[1].type, force_optional=False)
                 enumeration_is_bytes_array = output_params[1].type.pointer_to.name == 'void'
 
+        
+        if output_param_implicit_type and output_param_implicit_type in self.imported_structs: 
+            c_struct = self.imported_structs[output_param_implicit_type].c_struct
+            if c_struct.s_type:
+                output_param_structure_type = c_struct.s_type
+
         class_params = [param for param, _ in class_params_and_classes]
         output_params = (
             output_param, enumeration_pointer_params, enumeration_count_param)
@@ -458,11 +469,13 @@ class Importer:
         if dispatcher.dispatch_table:
             dispatcher.dispatch_table.commands.append(c_command)
 
-        # a Chainable<_> overlaod
-        shuold_generate_overload = self.shuold_generate_chainable_overload(
+        # a Chainable<_> in overlaod
+        should_generate_chainable_overload = self.should_generate_chainable_overload(
             c_command, c_input_params)
+        
+        chainable_out_parameters = self.get_chainable_out_parameters(c_command)
 
-        if shuold_generate_overload:
+        if should_generate_chainable_overload:
             params, conversions = self.get_member_conversions(
                 c_input_params, c_command=c_command, transform_chainable=True)
 
@@ -479,7 +492,7 @@ class Importer:
                 output_param=output_param,
                 output_param_implicit_type=output_param_implicit_type,
                 output_param_custom_initializer=output_param_custom_initializer,
-                output_s_type=s_type,
+                output_param_structure_type=output_param_structure_type,
                 unwrap_output_param=unwrap_output_param,
                 enumeration_pointer_param=enumeration_pointer_params,
                 enumeration_count_param=enumeration_count_param,
@@ -505,7 +518,7 @@ class Importer:
             output_param=output_param,
             output_param_implicit_type=output_param_implicit_type,
             output_param_custom_initializer=output_param_custom_initializer,
-            output_s_type=s_type,
+            output_param_structure_type=output_param_structure_type,
             unwrap_output_param=unwrap_output_param,
             enumeration_pointer_param=enumeration_pointer_params,
             enumeration_count_param=enumeration_count_param,
@@ -515,6 +528,35 @@ class Importer:
         )
 
         current_class.commands.append(command)
+
+        if len(chainable_out_parameters) == 1:
+            params, conversions = self.get_member_conversions(c_input_params, c_command=c_command)
+
+            command = SwiftCommand(
+                c_command=c_command,
+                name=remove_vk_prefix(name),
+                return_type=return_type,
+                throws=throws,
+                class_params={param.name: cls for param,
+                            cls in class_params_and_classes},
+                params=params[len(class_params):],
+                param_conversions=conversions,
+                return_conversion=return_conversion,
+                output_param=output_param,
+                output_param_implicit_type=output_param_implicit_type,
+                output_param_custom_initializer=output_param_custom_initializer,
+                output_param_structure_type=output_param_structure_type,
+                unwrap_output_param=unwrap_output_param,
+                enumeration_pointer_param=enumeration_pointer_params,
+                enumeration_count_param=enumeration_count_param,
+                dispatcher=dispatcher,
+                protect=c_command.protect,
+                enumeration_is_bytes_array=enumeration_is_bytes_array,
+                chainable_out_parameters=chainable_out_parameters
+            )
+
+            current_class.commands.append(command)
+
 
         # unused return
         return command
@@ -556,8 +598,12 @@ class Importer:
             break
         return class_params
 
-    def get_member_conversions(self, c_members: list[CMember], c_struct: CStruct | None = None, c_command: CCommand | None = None,
-                               transform_chainable: bool = False) -> tuple[list[SwiftMember], tc.MemberConversions]:
+    def get_member_conversions(self, c_members: list[CMember], 
+                               c_struct: CStruct | None = None, 
+                               c_command: CCommand | None = None,
+                               transform_chainable: bool = False,
+                            #    chainable_out_parameters: list[str] | None = None
+                               ) -> tuple[list[SwiftMember], tc.MemberConversions]:
         members: list[SwiftMember] = []
         conversions = tc.MemberConversions()
         lengths: list[str] = []
@@ -576,10 +622,15 @@ class Importer:
             # currently every "values" field is used to specify VkStructureType
             if len(c_member.values) == 1:
                 # treat it as sType
-                # swift_name = self.imported_structure_types[c_name]
-                # tc.enum_conversion('VkStructureType', 'StructureType')
-                c_name = c_member.values[0]
-                conversions.add_static_value(c_member.name, c_name)
+                c_name = 'sType'
+                swift_name = 'structureType'
+                
+                conversion = tc.enum_conversion('VkStructureType', 'StructureType')
+                conversions.add_conversion(c_name, f'{swift_name}', conversion)
+
+                c_value = c_member.values[0]
+                value = self.imported_structure_types[c_value]
+                members.append(SwiftMember(swift_name, type="StructureType", is_static=True, default_value=f'.{value}'))
                 continue
             elif len(c_member.values) > 1:
                 print(
@@ -653,7 +704,7 @@ class Importer:
 
         return members, conversions
 
-    def shuold_generate_chainable_overload(self, c_command: CCommand, c_input_params: list[CMember]):
+    def should_generate_chainable_overload(self, c_command: CCommand, c_input_params: list[CMember]):
         out = False
 
         for p in c_input_params:
@@ -661,13 +712,34 @@ class Importer:
             if name in self.imported_structs and p.type.pointer_to and p.type.pointer_to.const and not p.type.name:
                 swift_struct = self.imported_structs[name]
                 if swift_struct.c_struct.is_chainable:
-                    if out == True:
-                        print(
-                            f"warning: {c_command.name} contains multiple chainable parameter")
+                    # if out == True:
+                    #     print(
+                    #         f"warning: {c_command.name} contains multiple chainable parameter")
                     out = True
-                    # break
+                    break
 
         return out
+    
+
+    def get_chainable_out_parameters(self, c_command: CCommand) -> list[str]:
+        chainable_out_params: list[str] = []
+        for param in c_command.params:
+            # ignoring array
+            if is_array_convertible(param.type, ignore_const=True):
+                continue
+            # if its out param 
+            ty = param.type.type_name
+            if param.type.pointer_to and not param.type.pointer_to.const:
+                # if its chainable
+                if ty in self.imported_structs and self.imported_structs[ty].c_struct.is_chainable:
+                    chainable_out_params.append(param.name)            
+        
+        if len(chainable_out_params) > 1:
+            print(f'warning: {c_command.name} contains multiple chainable out parameter. skipping...')
+            return []
+
+        return chainable_out_params if len(chainable_out_params) == 1 else []
+        
 
     def get_type_conversion(self, c_type: CType, implicit_only: bool = False, force_optional: bool | None = None,
                             convert_array_to_pointer: bool = False, transform_chainable=False) -> tuple[str, tc.Conversion]:

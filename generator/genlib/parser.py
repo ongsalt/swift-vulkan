@@ -59,6 +59,11 @@ class CStruct:
     struct_extends: list[str] = field(default_factory=list)
     is_chainable: bool = False
     protect: str | None = None
+    s_type: str | None = None
+
+    @property
+    def has_s_type(self) -> bool:
+        return self.s_type != None
 
 
 @dataclass(eq=False)
@@ -82,15 +87,17 @@ class CExtension:
     requires: list[CRequire]
     supported: str | None = None
     platform: str | None = None
-    protect: str | None = None    
+    protect: str | None = None
     # supported_apis: list[str] = field(default_factory=list)
-    
+
+
 @dataclass(eq=False)
 class CFeature:
     name: str
     api: list[str]
     requires: list[CRequire]
     apitype: str | None = None
+
 
 @dataclass(eq=False)
 class CRequire:
@@ -99,7 +106,6 @@ class CRequire:
     commands: list[str] = field(default_factory=list)
     enum_cases: dict[str, list[CEnum.Case]] = field(default_factory=dict)
     types: list[str] = field(default_factory=list)
-
 
 
 @dataclass(eq=False)
@@ -156,8 +162,10 @@ class CContext:
             requires: list[CRequire] = []
             should_ignore_feature = self.should_ignore(feature)
             for e_require in feature.findall('./require'):
-                should_ignore = self.should_ignore(e_require) or should_ignore_feature
-                requires.append(self.parse_require_block(e_require, should_ignore))
+                should_ignore = self.should_ignore(
+                    e_require) or should_ignore_feature
+                requires.append(self.parse_require_block(
+                    e_require, should_ignore))
 
             apitype = None
             if apitype in feature.attrib:
@@ -174,7 +182,7 @@ class CContext:
     def parse_extensions(self, tree: ElementTree):
         for e_extension in tree.findall('./extensions/extension'):
             supported = e_extension.attrib['supported']
-            
+
             should_ignore_extension = supported in ('vulkansc', 'disabled')
 
             extension_number = int(e_extension.attrib['number'])
@@ -183,8 +191,10 @@ class CContext:
 
             requires: list[CRequire] = []
             for e_require in e_extension.findall('./require'):
-                should_ignore = self.should_ignore(e_require) or should_ignore_extension
-                requires.append(self.parse_require_block(e_require, should_ignore, extension_number))
+                should_ignore = self.should_ignore(
+                    e_require) or should_ignore_extension
+                requires.append(self.parse_require_block(
+                    e_require, should_ignore, extension_number))
 
             c_extension = CExtension(
                 name=name,
@@ -214,7 +224,7 @@ class CContext:
             if ignored:
                 self.ignored_names.append(name)
 
-        # we wont skip enum case unless it case name colission, handled in import_enums 
+        # we wont skip enum case unless it case name colission, handled in import_enums
 
         # this may include bitmask flag too
         enum_cases: dict[str, list[CEnum.Case]] = {}
@@ -242,7 +252,6 @@ class CContext:
                 known_enum_extensions.setdefault(enum, []).extend(cases)
 
         return known_enum_extensions
-        
 
     def parse_handles(self, tree: ElementTree):
         handles: dict[str, CHandle] = {}
@@ -262,7 +271,8 @@ class CContext:
             if self.should_ignore(e_handle, name=handle_name):
                 continue
 
-            handle = CHandle(handle_name, protect=self.find_protect(type_=handle_name))
+            handle = CHandle(
+                handle_name, protect=self.find_protect(type_=handle_name))
             self.handles.append(handle)
             handles[handle_name] = handle
             parents[handle_name] = e_handle.get('parent')
@@ -273,7 +283,7 @@ class CContext:
             except KeyError:
                 pass
 
-    def parse_enums(self, tree: ElementTree, known_enum_extensions: dict[str, list[CEnum.Case]]):    
+    def parse_enums(self, tree: ElementTree, known_enum_extensions: dict[str, list[CEnum.Case]]):
         for e_enum in tree.findall('./enums[@type="enum"]'):
             enum_name = e_enum.attrib['name']
 
@@ -292,7 +302,7 @@ class CContext:
             if enum_name in known_enum_extensions:
                 ext_cases = known_enum_extensions[enum_name]
                 for ext_case in ext_cases:
-                    cases[ext_case.name] = ext_case.value                
+                    cases[ext_case.name] = ext_case.value
 
             c_enum = CEnum(enum_name, [CEnum.Case(name, value)
                            for name, value in cases.items()], protect=self.find_protect(type_=enum_name))
@@ -324,7 +334,7 @@ class CContext:
                 if name in known_enum_extensions:
                     ext_cases = known_enum_extensions[name]
                     for ext_case in ext_cases:
-                        cases[ext_case.name] = ext_case.value                
+                        cases[ext_case.name] = ext_case.value
 
                 c_bitmask.enum = CEnum(name, [CEnum.Case(
                     name, value) for name, value in cases.items()])
@@ -335,11 +345,11 @@ class CContext:
         for struct in tree.findall('./types/type[@category="struct"]'):
             if 'alias' in struct.attrib:
                 continue
-            
+
             name = struct.attrib['name']
             if self.should_ignore(struct, name=name):
                 continue
-            
+
             extends: list[str] = []
             if 'structextends' in struct.attrib:
                 for ext_name in struct.attrib['structextends'].split(","):
@@ -347,8 +357,12 @@ class CContext:
                         continue
                     extends.append(ext_name)
 
-            c_struct = CStruct(name, returned_only=struct.get(
-                'returnedonly') == 'true', struct_extends=extends, protect=self.find_protect(type_=struct.attrib['name']))
+            c_struct = CStruct(
+                name,
+                returned_only=struct.get('returnedonly') == 'true',
+                struct_extends=extends,
+                protect=self.find_protect(type_=struct.attrib['name'])
+            )
 
             for member in struct.findall('./member'):
                 if self.should_ignore(member):
@@ -358,7 +372,9 @@ class CContext:
                 # TODO: checl pNext type, maybe
                 if member.name == "pNext":
                     c_struct.is_chainable = True
-
+                elif member.name == 'sType' and member.values: # excluding VkBase{In,Out}Stucture
+                    c_struct.s_type = member.values[0]
+                    
             self.structs.append(c_struct)
 
     def parse_commands(self, tree: ElementTree):
@@ -394,11 +410,11 @@ class CContext:
     def should_ignore(self, node: Element | None = None, name: str | None = None) -> bool:
         if node and parse_api(node) == 'vulkansc':
             return True
-            
+
         if name and name in self.ignored_names:
             # print(f'ignored: {name}')
             return True
-        
+
         return False
 
 

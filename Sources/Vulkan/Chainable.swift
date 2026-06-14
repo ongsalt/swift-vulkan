@@ -114,6 +114,10 @@ extension Chain {
 extension Chain: Chainable<Base> {
     public typealias CStruct = Base.CStruct
 
+    init(cStruct: CStruct) {
+        fatalError("im too lazy to implement this")
+    }
+
     public func withCStruct<R, E: Error>(
         pNext: UnsafeRawPointer?, _ body: (UnsafePointer<Base.CStruct>) throws(E) -> R
     ) throws(E) -> R {

@@ -99,13 +99,16 @@ class Generator(BaseGenerator):
             self << f'public typealias CStruct = {struct.c_struct.name}'
             self.linebreak()
             for member in struct.members:
-                self << f'public let {safe_name(member.name)}: {member.type}'
+                static = ' static' if member.is_static else ''
+                value = f' = {member.default_value}' if member.is_static and member.default_value else ''
+                self << f'public{static} let {safe_name(member.name)}: {member.type}{value}'
             self.linebreak()
             if not struct.c_struct.returned_only:
                 self.generate_struct_init(struct)
                 self.linebreak()
-            self.generate_struct_c_to_swift_method(struct)
             # TODO: update generate_struct_c_to_swift_method
+            # fuck refcount semantics
+            self.generate_struct_c_to_swift_method(struct)
             self.linebreak()
             self.generate_struct_swift_to_c_method(
                 struct, is_chainable_base=struct.c_struct.is_chainable)
@@ -122,6 +125,8 @@ class Generator(BaseGenerator):
     def generate_struct_init(self, struct: SwiftStruct):
         params = []
         for member in struct.members:
+            if member.is_static:
+                continue
             escaping = '@escaping ' if member.is_closure else ''
             default_value = f' = {member.default_value}' if member.default_value else ''
             params.append(
@@ -129,6 +134,8 @@ class Generator(BaseGenerator):
 
         with self.indent(f'public init({", ".join(params)}) {{', '}'):
             for member in struct.members:
+                if member.is_static:
+                    continue
                 self << f'self.{member.name} = {member.name}'
 
     def generate_struct_c_to_swift_method(self, struct: SwiftStruct):
@@ -136,7 +143,7 @@ class Generator(BaseGenerator):
         parent_classes = struct.parent_classes
 
         for p in parent_classes:
-            params.append(f'{p.reference_name}: {p.name}')
+            params.append(f'{p.reference_name}: {p.name}?')
 
         c_values = {
             member.name: f'cStruct.{member.name}' for member in struct.c_struct.members}
@@ -146,9 +153,10 @@ class Generator(BaseGenerator):
             c_values, classes)
         swift_values['throws'] = ''
 
-        with self.indent(f'init({", ".join(params)}) {{', '}'):
+        with self.indent(f'public init({", ".join(params)}) {{', '}'):
             for member in struct.members:
-                self << f'self.{member.name} = {swift_values[member.name]}'
+                if not member.is_static:
+                    self << f'self.{member.name} = {swift_values[member.name]}'
 
     def generate_struct_swift_to_c_method(self, struct: SwiftStruct, is_chainable_base=False):
         with self.indent('public func withCStruct<R, E: Error>(' +
@@ -157,7 +165,7 @@ class Generator(BaseGenerator):
                          ') throws(E) -> R {', '}'):
 
             swift_values = {
-                member.name: f'self.{member.name}' for member in struct.members}
+                member.name: f'self.{member.name}' if not member.is_static else f'Self.{member.name}' for member in struct.members}
             c_values = struct.member_conversions.get_c_values(swift_values)
             closures = struct.member_conversions.get_c_closures(swift_values, throws=' throws(E)')
 
@@ -180,7 +188,7 @@ class Generator(BaseGenerator):
             if cls.c_handle:
                 self << f'public let handle: {cls.c_handle.name}?'
             if cls.parent:
-                self << f'public let {cls.parent.reference_name}: {cls.parent.name}'
+                self << f'public let {cls.parent.reference_name}: {cls.parent.name}!'
             if cls.dispatch_table:
                 self << f'public let dispatchTable: {cls.dispatch_table.name}'
 
@@ -198,9 +206,9 @@ class Generator(BaseGenerator):
     def generate_class_init(self, cls: SwiftClass):
         params = []
         if cls.c_handle:
-            params.append(f'handle: {cls.c_handle.name}!')
+            params.append(f'handle: {cls.c_handle.name}?')
         if cls.parent:
-            params.append(f'{cls.parent.reference_name}: {cls.parent.name}')
+            params.append(f'{cls.parent.reference_name}: {cls.parent.name}!')
 
         with self.indent(f'public init({", ".join(params)}) {{', '}'):
             if cls.c_handle:
@@ -246,17 +254,29 @@ class Generator(BaseGenerator):
             else:
                 params.append((param.name, f'{param.type}{default_value}'))
 
+
+        return_type = command.return_type
+        generic_string = ''
+        where_string = ''
+        if command.chainable_out_parameters:
+            where_string = f' where repeat each Ext: {return_type}Extension & OutStruct'
+            return_type = f'({return_type}, repeat each Ext)'
+            generic_string = '<each Ext>'
+            params.append(('returning _', 'repeat (each Ext).Type'))
+
         params.sort(key=lambda x: 0 if 'info' in x[0].lower() else 1)
         param_string = ', '.join(f'{p[0]}: {p[1]}' for p in params)
 
-        with self.indent(f'public func {command.name}({param_string})'
-                         f'{throws_string} -> {command.return_type} {{', '}'):
+        with self.indent(f'public func {command.name}{generic_string}({param_string})'
+                         f'{throws_string} -> {return_type}{where_string} {{', '}'):
             with self.closures(closures, throws=command.throws):
                 params = []
                 for param in command.c_command.params:
                     if param.name == command.output_param:
                         if isinstance(command.return_conversion, tc.ArrayConversion):
                             params.append('out.baseAddress')
+                        elif command.chainable_out_parameters:
+                            params.append('out')
                         else:
                             params.append('&out')
                     elif param.name == command.enumeration_pointer_param:
@@ -297,6 +317,15 @@ class Generator(BaseGenerator):
                             else:
                                 self << call_string
                             self << 'initializedCount = out.count'
+                    elif command.chainable_out_parameters:
+                        prefix = f'withOutStructureChain(base: {command.return_type}.self, chaining: (repeat (each Ext).self)) {{ out{throws_string} in'
+                        if command.throws:
+                            with self.indent(f'try {prefix}', '}'):
+                                with self.indent(f'try checkResult(', ')'):
+                                    self << call_string
+                        else: 
+                            with self.indent(prefix, '}'):
+                                self << call_string
                     else:
                         if command.unwrap_output_param:
                             self << f'var out: {command.output_param_implicit_type}!'
@@ -304,8 +333,8 @@ class Generator(BaseGenerator):
                             self << f'var out = {command.output_param_custom_initializer}'
                         else:
                             self << f'var out = {command.output_param_implicit_type}()'
-                            if command.output_s_type:
-                                self << f'out.sType = {command.output_s_type}'
+                            if command.output_param_structure_type:
+                                self << f'out.sType = {command.output_param_structure_type}'
                         if command.throws:
                             with self.indent('try checkResult(', ')'):
                                 self << call_string

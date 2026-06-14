@@ -53,7 +53,8 @@ Swift-vulkan is a relatively new project, and there are still some important mil
     - VkPipelineCoverageModulationStateCreateInfoNV.pCoverageModulationTable: float[coverageModulationTableCount]
     - VkShaderCreateInfoEXT.pSetLayouts: VkDescriptorSetLayout[setLayoutCount]
 
-- fix parent class?
+- fix parent class? `init(cStruct:)`
+    - `VkAccelerationStructureTrianglesOpacityMicromapEXT` is an out struct, some of its properties are treated as query including a `VkMicromapEXT` handle.
 - latexmath lenght 😭
 - differentiate an in chain and an out chain
 - use `MutableSpan` or `OutputSpan` for out array field in a struct + make it non escapable?
