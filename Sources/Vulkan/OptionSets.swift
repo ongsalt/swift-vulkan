@@ -120,17 +120,6 @@ public struct PipelineDepthStencilStateCreateFlags: OptionSet, StringConvertible
     ]
 }
 
-public struct PipelineDepthStencilStateCreateFlags: OptionSet, StringConvertibleOptionSet {
-    public let rawValue: UInt32
-
-    public init(rawValue: UInt32) {
-        self.rawValue = rawValue
-    }
-
-    static let descriptions: [(Self, String)] = [
-    ]
-}
-
 public struct PipelineDynamicStateCreateFlags: OptionSet, StringConvertibleOptionSet {
     public let rawValue: UInt32
 
@@ -153,17 +142,6 @@ public struct PipelineColorBlendStateCreateFlags: OptionSet, StringConvertibleOp
 
     static let descriptions: [(Self, String)] = [
         (.rasterizationOrderAttachmentAccessEXT, "rasterizationOrderAttachmentAccessEXT"),
-    ]
-}
-
-public struct PipelineColorBlendStateCreateFlags: OptionSet, StringConvertibleOptionSet {
-    public let rawValue: UInt32
-
-    public init(rawValue: UInt32) {
-        self.rawValue = rawValue
-    }
-
-    static let descriptions: [(Self, String)] = [
     ]
 }
 

@@ -143,7 +143,6 @@ class CContext:
         self.parse_handles(tree)
         self.parse_enums(tree, known_enum_extensions)
         self.parse_bitmasks(tree, known_enum_extensions)
-        self.parse_enum_extends(tree)
         self.parse_structs(tree)
         self.parse_commands(tree)
 
@@ -171,42 +170,6 @@ class CContext:
                 apitype=apitype
             )
             self.features.append(c_feature)
-
-    def parse_enum_extends(self, tree: ElementTree):
-        enums = {e.name: e for e in self.enums}
-        bitmask_flags = {b.enum.name: b.enum for b in self.bitmasks if b.enum}
-
-        for e_enum in tree.findall('./feature/require/enum[@extends]'):
-            extension_number = None
-            if 'extnumber' in e_enum.attrib:
-                extension_number = int(e_enum.attrib['extnumber'])
-            if 'alias' in e_enum.attrib:
-                continue
-            value = parse_enum_value(e_enum, extension_number)
-            c_case = CEnum.Case(e_enum.attrib['name'], value)
-            extends = e_enum.attrib['extends']
-
-            enum: CEnum | None = None
-            if extends in enums:
-                enum = enums[extends]
-            elif extends in bitmask_flags:
-                enum = bitmask_flags[extends]
-
-            if not enum:
-                print(
-                    f"warning: enum {e_enum.attrib['extends']} not found (value={value})")
-                continue
-
-            # check for duplicated case
-            for c in enum.cases:
-                if c.name == c_case.name:
-                    if c.value == c_case.value:
-                        break
-                    else:
-                        print(
-                            f"warning: duplicated enum case with different values: {enum.name}{c.name} = {c.value}, {c_case.value}")
-            else:
-                enum.cases.append(c_case)
 
     def parse_extensions(self, tree: ElementTree):
         for e_extension in tree.findall('./extensions/extension'):
@@ -314,8 +277,8 @@ class CContext:
         for e_enum in tree.findall('./enums[@type="enum"]'):
             enum_name = e_enum.attrib['name']
 
-            # if self.should_ignore(e_enum, name=enum_name):
-            #     continue
+            if self.should_ignore(e_enum, name=enum_name):
+                continue
 
             cases = {}
             for e_case in e_enum.findall('./enum'):
@@ -342,8 +305,8 @@ class CContext:
 
             bitmask_name: str = e_bitmask.find('./name').text
 
-            # if self.should_ignore(e_bitmask):
-            #     continue
+            if self.should_ignore(e_bitmask):
+                continue
 
             bitvalues = e_bitmask.get('bitvalues')
             c_bitmask = CBitmask(bitmask_name, is64=bitvalues is not None,

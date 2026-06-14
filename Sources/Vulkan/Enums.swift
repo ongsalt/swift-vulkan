@@ -2659,31 +2659,6 @@ public enum LineRasterizationMode: UInt32 {
     case rectangularSmooth = 3
 }
 
-public enum FaultLevel: UInt32 {
-    case unassigned = 0
-    case critical = 1
-    case recoverable = 2
-    case warning = 3
-}
-
-public enum FaultType: UInt32 {
-    case invalid = 0
-    case unassigned = 1
-    case implementation = 2
-    case system = 3
-    case physicalDevice = 4
-    case commandBufferFull = 5
-    case invalidApiUsage = 6
-}
-
-public enum FaultQueryBehavior: UInt32 {
-    case getAndClearAllFaults = 0
-}
-
-public enum PipelineMatchControl: UInt32 {
-    case applicationUuidExactMatch = 0
-}
-
 public enum FragmentShadingRateCombinerOpKHR: UInt32 {
     case keep = 0
     case replace = 1
@@ -2729,28 +2704,9 @@ public enum SubpassMergeStatusEXT: UInt32 {
     case notMergedUnspecified = 13
 }
 
-#if VK_USE_PLATFORM_SCI
-public enum SciSyncClientTypeNV: UInt32 {
-    case signaler = 0
-    case waiter = 1
-    case signalerWaiter = 2
-}
-#endif
-
-#if VK_USE_PLATFORM_SCI
-public enum SciSyncPrimitiveTypeNV: UInt32 {
-    case fence = 0
-    case semaphore = 1
-}
-#endif
-
 public enum ProvokingVertexModeEXT: UInt32 {
     case firstVertex = 0
     case lastVertex = 1
-}
-
-public enum PipelineCacheValidationVersion: UInt32 {
-    case safetyCriticalOne = 1
 }
 
 public enum AccelerationStructureMotionInstanceTypeNV: UInt32 {
