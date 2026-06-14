@@ -270,12 +270,12 @@ class Importer:
             protocols.append(f"{remove_vk_prefix(base)}Extension")
 
         for member in c_struct.members:
-            if member.name == 'pNext':
-                if member.type.pointer_to.const:
-                    # protocols.append('InStruct')
-                    pass
-                else:
-                    protocols.append('OutStruct')
+            # if member.name == 'pNext':
+            #     if member.type.pointer_to.const:
+            #         # protocols.append('InStruct')
+            #         pass
+            #     else:
+            #         protocols.append('OutStruct')
             type_name = member.type.type_name
             if type_name in self.c_structs:
                 child_struct = self.import_struct(self.c_structs[type_name])

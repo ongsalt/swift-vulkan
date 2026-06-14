@@ -290,59 +290,6 @@ extension PhysicalDevice {
     // }
 }
 
-// claude wrote this
-// im gonna redo this once we have MutableRef in September
-// may be generate new `init()` for every struct for default init
-func withOutStructureChain<Base, E, each Ext>(
-    base baseIn: Base,
-    chaining _: repeat inout (each Ext),
-    call: (UnsafeMutablePointer<Base.CStruct>) throws(E) -> Void,
-) throws(E) -> (Base, repeat each Ext) where Base: OutStruct, repeat each Ext: OutStruct {
-    var base = zeroed(of: Base.CStruct.self)
-    var scratch: [UnsafeMutableRawPointer] = []
-
-    // 1. Stable storage per extender; force-set sType, pNext patched below.
-    func materialize<T: OutStruct>(_ ty: T.Type) {
-        let p = UnsafeMutablePointer<T.CStruct>.allocate(capacity: 1)
-        let value = zeroed(of: ty.CStruct.self)
-        p.initialize(to: value)
-        UnsafeMutableRawPointer(p)
-            .assumingMemoryBound(to: VkBaseOutStructure.self)
-            .pointee.sType = .init(numericCast(T.structureType.rawValue))
-        scratch.append(UnsafeMutableRawPointer(p))
-    }
-    repeat materialize((each Ext).self)
-
-    // 2. Link scratch[0] -> scratch[1] -> ... -> nil
-    for i in scratch.indices {
-        let ptr = (i + 1 < scratch.count) ? scratch[i + 1] : nil
-        scratch[i].assumingMemoryBound(to: VkBaseOutStructure.self)
-            .pointee.pNext = .init(OpaquePointer(ptr))
-    }
-
-    // 3. Run the call against a stable base pointer.
-    try withUnsafeMutablePointer(to: &base) { p throws(E) in
-        let h = UnsafeMutableRawPointer(p).assumingMemoryBound(to: VkBaseOutStructure.self)
-        h.pointee.sType = .init(numericCast(Base.structureType.rawValue))
-        h.pointee.pNext = .init(OpaquePointer(scratch.first!))
-        try call(p)
-    }
-
-    // 4. Read back in pack order (== allocation order), free scratch.
-    var idx = 0
-    func readBack<T: OutStruct>(_: T.Type) -> T {
-        defer { idx += 1 }
-        let p = scratch[idx].assumingMemoryBound(to: T.CStruct.self)
-        defer {
-            p.deinitialize(count: 1)
-            p.deallocate()
-        }
-        return T(cStruct: p.pointee)
-    }
-
-    return (Base(cStruct: base), repeat readBack((each Ext).self))
-}
-
 func numericBitCast<T, U>(_ x: T) -> U where T: BinaryInteger, U: BinaryInteger {
     unsafeBitCast(x, to: U.self)
 }

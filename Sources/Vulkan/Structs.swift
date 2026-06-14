@@ -218,10 +218,10 @@ public struct ComponentMapping: CStructConvertible {
     }
 
     public init(cStruct: VkComponentMapping) {
-        self.r = ComponentSwizzle(rawValue: numericBitCast(cStruct.r))!
-        self.g = ComponentSwizzle(rawValue: numericBitCast(cStruct.g))!
-        self.b = ComponentSwizzle(rawValue: numericBitCast(cStruct.b))!
-        self.a = ComponentSwizzle(rawValue: numericBitCast(cStruct.a))!
+        self.r = ComponentSwizzle(rawValue: numericBitCast(cStruct.r.rawValue))!
+        self.g = ComponentSwizzle(rawValue: numericBitCast(cStruct.g.rawValue))!
+        self.b = ComponentSwizzle(rawValue: numericBitCast(cStruct.b.rawValue))!
+        self.a = ComponentSwizzle(rawValue: numericBitCast(cStruct.a.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(_ body: (UnsafePointer<VkComponentMapping>) throws(E) -> R) throws(E) -> R {
@@ -611,7 +611,7 @@ public struct PhysicalDeviceProperties: CStructConvertible {
         self.driverVersion = cStruct.driverVersion
         self.vendorID = cStruct.vendorID
         self.deviceID = cStruct.deviceID
-        self.deviceType = PhysicalDeviceType(rawValue: numericBitCast(cStruct.deviceType))!
+        self.deviceType = PhysicalDeviceType(rawValue: numericBitCast(cStruct.deviceType.rawValue))!
         self.deviceName = String(unsafeBytesOf: cStruct.deviceName)
         self.pipelineCacheUUID = cStruct.pipelineCacheUUID
         self.limits = PhysicalDeviceLimits(cStruct: cStruct.limits)
@@ -1368,7 +1368,7 @@ public struct MappedMemoryRange: ChainableBase {
         self.size = size
     }
 
-    public init(cStruct: VkMappedMemoryRange, device: Device?) {
+    public init(cStruct: VkMappedMemoryRange, device: Device) {
         self.memory = DeviceMemory(handle: cStruct.memory, device: device)
         self.offset = cStruct.offset
         self.size = cStruct.size
@@ -1456,7 +1456,7 @@ public struct DescriptorBufferInfo: CStructConvertible {
         self.range = range
     }
 
-    public init(cStruct: VkDescriptorBufferInfo, device: Device?) {
+    public init(cStruct: VkDescriptorBufferInfo, device: Device) {
         self.buffer = (cStruct.buffer != nil) ? Buffer(handle: cStruct.buffer, device: device) : nil
         self.offset = cStruct.offset
         self.range = cStruct.range
@@ -1484,10 +1484,10 @@ public struct DescriptorImageInfo: CStructConvertible {
         self.imageLayout = imageLayout
     }
 
-    public init(cStruct: VkDescriptorImageInfo, device: Device?) {
+    public init(cStruct: VkDescriptorImageInfo, device: Device) {
         self.sampler = Sampler(handle: cStruct.sampler, device: device)
         self.imageView = ImageView(handle: cStruct.imageView, device: device)
-        self.imageLayout = ImageLayout(rawValue: numericBitCast(cStruct.imageLayout))!
+        self.imageLayout = ImageLayout(rawValue: numericBitCast(cStruct.imageLayout.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(_ body: (UnsafePointer<VkDescriptorImageInfo>) throws(E) -> R) throws(E) -> R {
@@ -1521,7 +1521,7 @@ public struct CopyDescriptorSet: ChainableBase {
         self.descriptorCount = descriptorCount
     }
 
-    public init(cStruct: VkCopyDescriptorSet, descriptorPool: DescriptorPool?) {
+    public init(cStruct: VkCopyDescriptorSet, descriptorPool: DescriptorPool) {
         self.srcSet = DescriptorSet(handle: cStruct.srcSet, descriptorPool: descriptorPool)
         self.srcBinding = cStruct.srcBinding
         self.srcArrayElement = cStruct.srcArrayElement
@@ -1603,7 +1603,7 @@ public struct BufferCreateInfo: ChainableBase {
         self.flags = BufferCreateFlags(rawValue: cStruct.flags)
         self.size = cStruct.size
         self.usage = BufferUsageFlags(rawValue: cStruct.usage)
-        self.sharingMode = SharingMode(rawValue: numericBitCast(cStruct.sharingMode))!
+        self.sharingMode = SharingMode(rawValue: numericBitCast(cStruct.sharingMode.rawValue))!
         self.queueFamilyIndices = Array(UnsafeBufferPointer(start: cStruct.pQueueFamilyIndices, count: Int(cStruct.queueFamilyIndexCount)))
     }
 
@@ -1647,10 +1647,10 @@ public struct BufferViewCreateInfo: ChainableBase {
         self.range = range
     }
 
-    public init(cStruct: VkBufferViewCreateInfo, device: Device?) {
+    public init(cStruct: VkBufferViewCreateInfo, device: Device) {
         self.flags = BufferViewCreateFlags(rawValue: cStruct.flags)
         self.buffer = Buffer(handle: cStruct.buffer, device: device)
-        self.format = Format(rawValue: numericBitCast(cStruct.format))!
+        self.format = Format(rawValue: numericBitCast(cStruct.format.rawValue))!
         self.offset = cStruct.offset
         self.range = cStruct.range
     }
@@ -1825,7 +1825,7 @@ public struct BufferMemoryBarrier: ChainableBase {
         self.size = size
     }
 
-    public init(cStruct: VkBufferMemoryBarrier, device: Device?) {
+    public init(cStruct: VkBufferMemoryBarrier, device: Device) {
         self.srcAccessMask = AccessFlags(rawValue: cStruct.srcAccessMask)
         self.dstAccessMask = AccessFlags(rawValue: cStruct.dstAccessMask)
         self.srcQueueFamilyIndex = cStruct.srcQueueFamilyIndex
@@ -1880,11 +1880,11 @@ public struct ImageMemoryBarrier: ChainableBase {
         self.subresourceRange = subresourceRange
     }
 
-    public init(cStruct: VkImageMemoryBarrier, device: Device?) {
+    public init(cStruct: VkImageMemoryBarrier, device: Device) {
         self.srcAccessMask = AccessFlags(rawValue: cStruct.srcAccessMask)
         self.dstAccessMask = AccessFlags(rawValue: cStruct.dstAccessMask)
-        self.oldLayout = ImageLayout(rawValue: numericBitCast(cStruct.oldLayout))!
-        self.newLayout = ImageLayout(rawValue: numericBitCast(cStruct.newLayout))!
+        self.oldLayout = ImageLayout(rawValue: numericBitCast(cStruct.oldLayout.rawValue))!
+        self.newLayout = ImageLayout(rawValue: numericBitCast(cStruct.newLayout.rawValue))!
         self.srcQueueFamilyIndex = cStruct.srcQueueFamilyIndex
         self.dstQueueFamilyIndex = cStruct.dstQueueFamilyIndex
         self.image = Image(handle: cStruct.image, device: device)
@@ -1949,17 +1949,17 @@ public struct ImageCreateInfo: ChainableBase {
 
     public init(cStruct: VkImageCreateInfo) {
         self.flags = ImageCreateFlags(rawValue: cStruct.flags)
-        self.imageType = ImageType(rawValue: numericBitCast(cStruct.imageType))!
-        self.format = Format(rawValue: numericBitCast(cStruct.format))!
+        self.imageType = ImageType(rawValue: numericBitCast(cStruct.imageType.rawValue))!
+        self.format = Format(rawValue: numericBitCast(cStruct.format.rawValue))!
         self.extent = Extent3D(cStruct: cStruct.extent)
         self.mipLevels = cStruct.mipLevels
         self.arrayLayers = cStruct.arrayLayers
         self.samples = SampleCountFlags(rawValue: numericBitCast(cStruct.samples.rawValue))
-        self.tiling = ImageTiling(rawValue: numericBitCast(cStruct.tiling))!
+        self.tiling = ImageTiling(rawValue: numericBitCast(cStruct.tiling.rawValue))!
         self.usage = ImageUsageFlags(rawValue: cStruct.usage)
-        self.sharingMode = SharingMode(rawValue: numericBitCast(cStruct.sharingMode))!
+        self.sharingMode = SharingMode(rawValue: numericBitCast(cStruct.sharingMode.rawValue))!
         self.queueFamilyIndices = Array(UnsafeBufferPointer(start: cStruct.pQueueFamilyIndices, count: Int(cStruct.queueFamilyIndexCount)))
-        self.initialLayout = ImageLayout(rawValue: numericBitCast(cStruct.initialLayout))!
+        self.initialLayout = ImageLayout(rawValue: numericBitCast(cStruct.initialLayout.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkImageCreateInfo>) throws(E) -> R) throws(E) -> R {
@@ -2049,11 +2049,11 @@ public struct ImageViewCreateInfo: ChainableBase {
         self.subresourceRange = subresourceRange
     }
 
-    public init(cStruct: VkImageViewCreateInfo, device: Device?) {
+    public init(cStruct: VkImageViewCreateInfo, device: Device) {
         self.flags = ImageViewCreateFlags(rawValue: cStruct.flags)
         self.image = Image(handle: cStruct.image, device: device)
-        self.viewType = ImageViewType(rawValue: numericBitCast(cStruct.viewType))!
-        self.format = Format(rawValue: numericBitCast(cStruct.format))!
+        self.viewType = ImageViewType(rawValue: numericBitCast(cStruct.viewType.rawValue))!
+        self.format = Format(rawValue: numericBitCast(cStruct.format.rawValue))!
         self.components = ComponentMapping(cStruct: cStruct.components)
         self.subresourceRange = ImageSubresourceRange(cStruct: cStruct.subresourceRange)
     }
@@ -2127,7 +2127,7 @@ public struct SparseMemoryBind: CStructConvertible {
         self.flags = flags
     }
 
-    public init(cStruct: VkSparseMemoryBind, device: Device?) {
+    public init(cStruct: VkSparseMemoryBind, device: Device) {
         self.resourceOffset = cStruct.resourceOffset
         self.size = cStruct.size
         self.memory = (cStruct.memory != nil) ? DeviceMemory(handle: cStruct.memory, device: device) : nil
@@ -2165,7 +2165,7 @@ public struct SparseImageMemoryBind: CStructConvertible {
         self.flags = flags
     }
 
-    public init(cStruct: VkSparseImageMemoryBind, device: Device?) {
+    public init(cStruct: VkSparseImageMemoryBind, device: Device) {
         self.subresource = ImageSubresource(cStruct: cStruct.subresource)
         self.offset = Offset3D(cStruct: cStruct.offset)
         self.extent = Extent3D(cStruct: cStruct.extent)
@@ -2203,7 +2203,7 @@ public struct SparseBufferMemoryBindInfo: CStructConvertible {
         self.binds = binds
     }
 
-    public init(cStruct: VkSparseBufferMemoryBindInfo, device: Device?) {
+    public init(cStruct: VkSparseBufferMemoryBindInfo, device: Device) {
         self.buffer = Buffer(handle: cStruct.buffer, device: device)
         self.binds = UnsafeBufferPointer(start: cStruct.pBinds, count: Int(cStruct.bindCount)).map{ SparseMemoryBind(cStruct: $0, device: device) }
     }
@@ -2230,7 +2230,7 @@ public struct SparseImageOpaqueMemoryBindInfo: CStructConvertible {
         self.binds = binds
     }
 
-    public init(cStruct: VkSparseImageOpaqueMemoryBindInfo, device: Device?) {
+    public init(cStruct: VkSparseImageOpaqueMemoryBindInfo, device: Device) {
         self.image = Image(handle: cStruct.image, device: device)
         self.binds = UnsafeBufferPointer(start: cStruct.pBinds, count: Int(cStruct.bindCount)).map{ SparseMemoryBind(cStruct: $0, device: device) }
     }
@@ -2257,7 +2257,7 @@ public struct SparseImageMemoryBindInfo: CStructConvertible {
         self.binds = binds
     }
 
-    public init(cStruct: VkSparseImageMemoryBindInfo, device: Device?) {
+    public init(cStruct: VkSparseImageMemoryBindInfo, device: Device) {
         self.image = Image(handle: cStruct.image, device: device)
         self.binds = UnsafeBufferPointer(start: cStruct.pBinds, count: Int(cStruct.bindCount)).map{ SparseImageMemoryBind(cStruct: $0, device: device) }
     }
@@ -2291,7 +2291,7 @@ public struct BindSparseInfo: ChainableBase {
         self.signalSemaphores = signalSemaphores
     }
 
-    public init(cStruct: VkBindSparseInfo, device: Device?) {
+    public init(cStruct: VkBindSparseInfo, device: Device) {
         self.waitSemaphores = UnsafeBufferPointer(start: cStruct.pWaitSemaphores, count: Int(cStruct.waitSemaphoreCount)).map{ Semaphore(handle: $0, device: device) }
         self.bufferBinds = UnsafeBufferPointer(start: cStruct.pBufferBinds, count: Int(cStruct.bufferBindCount)).map{ SparseBufferMemoryBindInfo(cStruct: $0, device: device) }
         self.imageOpaqueBinds = UnsafeBufferPointer(start: cStruct.pImageOpaqueBinds, count: Int(cStruct.imageOpaqueBindCount)).map{ SparseImageOpaqueMemoryBindInfo(cStruct: $0, device: device) }
@@ -2624,11 +2624,11 @@ public struct CopyMemoryToImageIndirectInfoKHR: ChainableBase {
         self.imageSubresources = imageSubresources
     }
 
-    public init(cStruct: VkCopyMemoryToImageIndirectInfoKHR, device: Device?) {
+    public init(cStruct: VkCopyMemoryToImageIndirectInfoKHR, device: Device) {
         self.srcCopyFlags = AddressCopyFlagsKHR(rawValue: cStruct.srcCopyFlags)
         self.copyAddressRange = StridedDeviceAddressRangeKHR(cStruct: cStruct.copyAddressRange)
         self.dstImage = Image(handle: cStruct.dstImage, device: device)
-        self.dstImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.dstImageLayout))!
+        self.dstImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.dstImageLayout.rawValue))!
         self.imageSubresources = UnsafeBufferPointer(start: cStruct.pImageSubresources, count: Int(cStruct.copyCount)).map{ ImageSubresourceLayers(cStruct: $0) }
     }
 
@@ -2751,7 +2751,7 @@ public struct DescriptorSetLayoutCreateInfo: ChainableBase {
         self.bindings = bindings
     }
 
-    public init(cStruct: VkDescriptorSetLayoutCreateInfo, device: Device?) {
+    public init(cStruct: VkDescriptorSetLayoutCreateInfo, device: Device) {
         self.flags = DescriptorSetLayoutCreateFlags(rawValue: cStruct.flags)
         self.bindings = UnsafeBufferPointer(start: cStruct.pBindings, count: Int(cStruct.bindingCount)).map{ DescriptorSetLayoutBinding(cStruct: $0, device: device) }
     }
@@ -2787,7 +2787,7 @@ public struct DescriptorPoolSize: CStructConvertible {
     }
 
     public init(cStruct: VkDescriptorPoolSize) {
-        self.type = DescriptorType(rawValue: numericBitCast(cStruct.type))!
+        self.type = DescriptorType(rawValue: numericBitCast(cStruct.type.rawValue))!
         self.descriptorCount = cStruct.descriptorCount
     }
 
@@ -2851,7 +2851,7 @@ public struct DescriptorSetAllocateInfo: ChainableBase {
         self.setLayouts = setLayouts
     }
 
-    public init(cStruct: VkDescriptorSetAllocateInfo, device: Device?) {
+    public init(cStruct: VkDescriptorSetAllocateInfo, device: Device) {
         self.descriptorPool = DescriptorPool(handle: cStruct.descriptorPool, device: device)
         self.setLayouts = UnsafeBufferPointer(start: cStruct.pSetLayouts, count: Int(cStruct.descriptorSetCount)).map{ DescriptorSetLayout(handle: $0, device: device) }
     }
@@ -2952,7 +2952,7 @@ public struct PipelineShaderStageCreateInfo: ChainableBase {
         self.specializationInfo = specializationInfo
     }
 
-    public init(cStruct: VkPipelineShaderStageCreateInfo, device: Device?) {
+    public init(cStruct: VkPipelineShaderStageCreateInfo, device: Device) {
         self.flags = PipelineShaderStageCreateFlags(rawValue: cStruct.flags)
         self.stage = ShaderStageFlags(rawValue: numericBitCast(cStruct.stage.rawValue))
         self.module = (cStruct.module != nil) ? ShaderModule(handle: cStruct.module, device: device) : nil
@@ -3001,7 +3001,7 @@ public struct ComputePipelineCreateInfo: ChainableBase {
         self.basePipelineIndex = basePipelineIndex
     }
 
-    public init(cStruct: VkComputePipelineCreateInfo, device: Device?) {
+    public init(cStruct: VkComputePipelineCreateInfo, device: Device) {
         self.flags = PipelineCreateFlags(rawValue: cStruct.flags)
         self.stage = PipelineShaderStageCreateInfo(cStruct: cStruct.stage, device: device)
         self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout, device: device) : nil
@@ -3112,7 +3112,7 @@ public struct VertexInputBindingDescription: CStructConvertible {
     public init(cStruct: VkVertexInputBindingDescription) {
         self.binding = cStruct.binding
         self.stride = cStruct.stride
-        self.inputRate = VertexInputRate(rawValue: numericBitCast(cStruct.inputRate))!
+        self.inputRate = VertexInputRate(rawValue: numericBitCast(cStruct.inputRate.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(_ body: (UnsafePointer<VkVertexInputBindingDescription>) throws(E) -> R) throws(E) -> R {
@@ -3142,7 +3142,7 @@ public struct VertexInputAttributeDescription: CStructConvertible {
     public init(cStruct: VkVertexInputAttributeDescription) {
         self.location = cStruct.location
         self.binding = cStruct.binding
-        self.format = Format(rawValue: numericBitCast(cStruct.format))!
+        self.format = Format(rawValue: numericBitCast(cStruct.format.rawValue))!
         self.offset = cStruct.offset
     }
 
@@ -3215,7 +3215,7 @@ public struct PipelineInputAssemblyStateCreateInfo: ChainableBase {
 
     public init(cStruct: VkPipelineInputAssemblyStateCreateInfo) {
         self.flags = PipelineInputAssemblyStateCreateFlags(rawValue: cStruct.flags)
-        self.topology = PrimitiveTopology(rawValue: numericBitCast(cStruct.topology))!
+        self.topology = PrimitiveTopology(rawValue: numericBitCast(cStruct.topology.rawValue))!
         self.primitiveRestartEnable = cStruct.primitiveRestartEnable == VK_TRUE
     }
 
@@ -3346,9 +3346,9 @@ public struct PipelineRasterizationStateCreateInfo: ChainableBase {
         self.flags = PipelineRasterizationStateCreateFlags(rawValue: cStruct.flags)
         self.depthClampEnable = cStruct.depthClampEnable == VK_TRUE
         self.rasterizerDiscardEnable = cStruct.rasterizerDiscardEnable == VK_TRUE
-        self.polygonMode = PolygonMode(rawValue: numericBitCast(cStruct.polygonMode))!
+        self.polygonMode = PolygonMode(rawValue: numericBitCast(cStruct.polygonMode.rawValue))!
         self.cullMode = CullModeFlags(rawValue: cStruct.cullMode)
-        self.frontFace = FrontFace(rawValue: numericBitCast(cStruct.frontFace))!
+        self.frontFace = FrontFace(rawValue: numericBitCast(cStruct.frontFace.rawValue))!
         self.depthBiasEnable = cStruct.depthBiasEnable == VK_TRUE
         self.depthBiasConstantFactor = cStruct.depthBiasConstantFactor
         self.depthBiasClamp = cStruct.depthBiasClamp
@@ -3459,12 +3459,12 @@ public struct PipelineColorBlendAttachmentState: CStructConvertible {
 
     public init(cStruct: VkPipelineColorBlendAttachmentState) {
         self.blendEnable = cStruct.blendEnable == VK_TRUE
-        self.srcColorBlendFactor = BlendFactor(rawValue: numericBitCast(cStruct.srcColorBlendFactor))!
-        self.dstColorBlendFactor = BlendFactor(rawValue: numericBitCast(cStruct.dstColorBlendFactor))!
-        self.colorBlendOp = BlendOp(rawValue: numericBitCast(cStruct.colorBlendOp))!
-        self.srcAlphaBlendFactor = BlendFactor(rawValue: numericBitCast(cStruct.srcAlphaBlendFactor))!
-        self.dstAlphaBlendFactor = BlendFactor(rawValue: numericBitCast(cStruct.dstAlphaBlendFactor))!
-        self.alphaBlendOp = BlendOp(rawValue: numericBitCast(cStruct.alphaBlendOp))!
+        self.srcColorBlendFactor = BlendFactor(rawValue: numericBitCast(cStruct.srcColorBlendFactor.rawValue))!
+        self.dstColorBlendFactor = BlendFactor(rawValue: numericBitCast(cStruct.dstColorBlendFactor.rawValue))!
+        self.colorBlendOp = BlendOp(rawValue: numericBitCast(cStruct.colorBlendOp.rawValue))!
+        self.srcAlphaBlendFactor = BlendFactor(rawValue: numericBitCast(cStruct.srcAlphaBlendFactor.rawValue))!
+        self.dstAlphaBlendFactor = BlendFactor(rawValue: numericBitCast(cStruct.dstAlphaBlendFactor.rawValue))!
+        self.alphaBlendOp = BlendOp(rawValue: numericBitCast(cStruct.alphaBlendOp.rawValue))!
         self.colorWriteMask = ColorComponentFlags(rawValue: cStruct.colorWriteMask)
     }
 
@@ -3503,7 +3503,7 @@ public struct PipelineColorBlendStateCreateInfo: ChainableBase {
     public init(cStruct: VkPipelineColorBlendStateCreateInfo) {
         self.flags = PipelineColorBlendStateCreateFlags(rawValue: cStruct.flags)
         self.logicOpEnable = cStruct.logicOpEnable == VK_TRUE
-        self.logicOp = LogicOp(rawValue: numericBitCast(cStruct.logicOp))!
+        self.logicOp = LogicOp(rawValue: numericBitCast(cStruct.logicOp.rawValue))!
         self.attachments = (cStruct.pAttachments != nil) ? UnsafeBufferPointer(start: cStruct.pAttachments, count: Int(cStruct.attachmentCount)).map{ PipelineColorBlendAttachmentState(cStruct: $0) } : nil
         self.blendConstants = cStruct.blendConstants
     }
@@ -3544,7 +3544,7 @@ public struct PipelineDynamicStateCreateInfo: ChainableBase {
 
     public init(cStruct: VkPipelineDynamicStateCreateInfo) {
         self.flags = PipelineDynamicStateCreateFlags(rawValue: cStruct.flags)
-        self.dynamicStates = UnsafeBufferPointer(start: cStruct.pDynamicStates, count: Int(cStruct.dynamicStateCount)).map{ DynamicState(rawValue: numericBitCast($0))! }
+        self.dynamicStates = UnsafeBufferPointer(start: cStruct.pDynamicStates, count: Int(cStruct.dynamicStateCount)).map{ DynamicState(rawValue: numericBitCast($0.rawValue))! }
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPipelineDynamicStateCreateInfo>) throws(E) -> R) throws(E) -> R {
@@ -3588,10 +3588,10 @@ public struct StencilOpState: CStructConvertible {
     }
 
     public init(cStruct: VkStencilOpState) {
-        self.failOp = StencilOp(rawValue: numericBitCast(cStruct.failOp))!
-        self.passOp = StencilOp(rawValue: numericBitCast(cStruct.passOp))!
-        self.depthFailOp = StencilOp(rawValue: numericBitCast(cStruct.depthFailOp))!
-        self.compareOp = CompareOp(rawValue: numericBitCast(cStruct.compareOp))!
+        self.failOp = StencilOp(rawValue: numericBitCast(cStruct.failOp.rawValue))!
+        self.passOp = StencilOp(rawValue: numericBitCast(cStruct.passOp.rawValue))!
+        self.depthFailOp = StencilOp(rawValue: numericBitCast(cStruct.depthFailOp.rawValue))!
+        self.compareOp = CompareOp(rawValue: numericBitCast(cStruct.compareOp.rawValue))!
         self.compareMask = cStruct.compareMask
         self.writeMask = cStruct.writeMask
         self.reference = cStruct.reference
@@ -3642,7 +3642,7 @@ public struct PipelineDepthStencilStateCreateInfo: ChainableBase {
         self.flags = PipelineDepthStencilStateCreateFlags(rawValue: cStruct.flags)
         self.depthTestEnable = cStruct.depthTestEnable == VK_TRUE
         self.depthWriteEnable = cStruct.depthWriteEnable == VK_TRUE
-        self.depthCompareOp = CompareOp(rawValue: numericBitCast(cStruct.depthCompareOp))!
+        self.depthCompareOp = CompareOp(rawValue: numericBitCast(cStruct.depthCompareOp.rawValue))!
         self.depthBoundsTestEnable = cStruct.depthBoundsTestEnable == VK_TRUE
         self.stencilTestEnable = cStruct.stencilTestEnable == VK_TRUE
         self.front = StencilOpState(cStruct: cStruct.front)
@@ -3719,7 +3719,7 @@ public struct GraphicsPipelineCreateInfo: ChainableBase {
         self.basePipelineIndex = basePipelineIndex
     }
 
-    public init(cStruct: VkGraphicsPipelineCreateInfo, device: Device?) {
+    public init(cStruct: VkGraphicsPipelineCreateInfo, device: Device) {
         self.flags = PipelineCreateFlags(rawValue: cStruct.flags)
         self.stages = (cStruct.pStages != nil) ? UnsafeBufferPointer(start: cStruct.pStages, count: Int(cStruct.stageCount)).map{ PipelineShaderStageCreateInfo(cStruct: $0, device: device) } : nil
         self.vertexInputState = (cStruct.pVertexInputState != nil) ? PipelineVertexInputStateCreateInfo(cStruct: cStruct.pVertexInputState.pointee) : nil
@@ -3845,7 +3845,7 @@ public struct PipelineCacheHeaderVersionOne: CStructConvertible {
 
     public init(cStruct: VkPipelineCacheHeaderVersionOne) {
         self.headerSize = cStruct.headerSize
-        self.headerVersion = PipelineCacheHeaderVersion(rawValue: numericBitCast(cStruct.headerVersion))!
+        self.headerVersion = PipelineCacheHeaderVersion(rawValue: numericBitCast(cStruct.headerVersion.rawValue))!
         self.vendorID = cStruct.vendorID
         self.deviceID = cStruct.deviceID
         self.pipelineCacheUUID = cStruct.pipelineCacheUUID
@@ -3881,8 +3881,8 @@ public struct PipelineCacheHeaderVersionDataGraphQCOM: CStructConvertible {
 
     public init(cStruct: VkPipelineCacheHeaderVersionDataGraphQCOM) {
         self.headerSize = cStruct.headerSize
-        self.headerVersion = PipelineCacheHeaderVersion(rawValue: numericBitCast(cStruct.headerVersion))!
-        self.cacheType = DataGraphModelCacheTypeQCOM(rawValue: numericBitCast(cStruct.cacheType))!
+        self.headerVersion = PipelineCacheHeaderVersion(rawValue: numericBitCast(cStruct.headerVersion.rawValue))!
+        self.cacheType = DataGraphModelCacheTypeQCOM(rawValue: numericBitCast(cStruct.cacheType.rawValue))!
         self.cacheVersion = cStruct.cacheVersion
         self.toolchainVersion = cStruct.toolchainVersion
     }
@@ -3926,7 +3926,7 @@ public struct PushConstantRange: CStructConvertible {
     }
 }
 
-public struct PipelineBinaryKeyKHR: ChainableBase, OutStruct {
+public struct PipelineBinaryKeyKHR: ChainableBase {
     public typealias CStruct = VkPipelineBinaryKeyKHR
 
     public static let structureType: StructureType = .pipelineBinaryKeyKHR
@@ -4012,7 +4012,7 @@ public struct PipelineBinaryKeysAndDataKHR: CStructConvertible {
     }
 }
 
-public struct PipelineCreateInfoKHR: ChainableBase, OutStruct {
+public struct PipelineCreateInfoKHR: ChainableBase {
     public typealias CStruct = VkPipelineCreateInfoKHR
 
     public static let structureType: StructureType = .pipelineCreateInfoKHR
@@ -4051,7 +4051,7 @@ public struct PipelineBinaryCreateInfoKHR: ChainableBase {
         self.pipelineCreateInfo = pipelineCreateInfo
     }
 
-    public init(cStruct: VkPipelineBinaryCreateInfoKHR, device: Device?) {
+    public init(cStruct: VkPipelineBinaryCreateInfoKHR, device: Device) {
         self.keysAndDataInfo = (cStruct.pKeysAndDataInfo != nil) ? PipelineBinaryKeysAndDataKHR(cStruct: cStruct.pKeysAndDataInfo.pointee) : nil
         self.pipeline = (cStruct.pipeline != nil) ? Pipeline(handle: cStruct.pipeline, device: device) : nil
         self.pipelineCreateInfo = (cStruct.pPipelineCreateInfo != nil) ? PipelineCreateInfoKHR(cStruct: cStruct.pPipelineCreateInfo.pointee) : nil
@@ -4090,7 +4090,7 @@ public struct PipelineBinaryHandlesInfoKHR: ChainableBase {
         self.pipelineBinaries = pipelineBinaries
     }
 
-    public init(cStruct: VkPipelineBinaryHandlesInfoKHR, device: Device?) {
+    public init(cStruct: VkPipelineBinaryHandlesInfoKHR, device: Device) {
         self.pipelineBinaryCount = cStruct.pipelineBinaryCount
         self.pipelineBinaries = cStruct.pPipelineBinaries
     }
@@ -4121,7 +4121,7 @@ public struct PipelineBinaryInfoKHR: ChainableBase, GraphicsPipelineCreateInfoEx
         self.pipelineBinaries = pipelineBinaries
     }
 
-    public init(cStruct: VkPipelineBinaryInfoKHR, device: Device?) {
+    public init(cStruct: VkPipelineBinaryInfoKHR, device: Device) {
         self.pipelineBinaries = UnsafeBufferPointer(start: cStruct.pPipelineBinaries, count: Int(cStruct.binaryCount)).map{ PipelineBinaryKHR(handle: $0, device: device) }
     }
 
@@ -4143,7 +4143,7 @@ public struct PipelineBinaryInfoKHR: ChainableBase, GraphicsPipelineCreateInfoEx
 
 public protocol PipelineBinaryInfoKHRExtension: Chainable {}
 
-public struct ReleaseCapturedPipelineDataInfoKHR: ChainableBase, OutStruct {
+public struct ReleaseCapturedPipelineDataInfoKHR: ChainableBase {
     public typealias CStruct = VkReleaseCapturedPipelineDataInfoKHR
 
     public static let structureType: StructureType = .releaseCapturedPipelineDataInfoKHR
@@ -4153,7 +4153,7 @@ public struct ReleaseCapturedPipelineDataInfoKHR: ChainableBase, OutStruct {
         self.pipeline = pipeline
     }
 
-    public init(cStruct: VkReleaseCapturedPipelineDataInfoKHR, device: Device?) {
+    public init(cStruct: VkReleaseCapturedPipelineDataInfoKHR, device: Device) {
         self.pipeline = Pipeline(handle: cStruct.pipeline, device: device)
     }
 
@@ -4172,7 +4172,7 @@ public struct ReleaseCapturedPipelineDataInfoKHR: ChainableBase, OutStruct {
 
 public protocol ReleaseCapturedPipelineDataInfoKHRExtension: Chainable {}
 
-public struct PipelineBinaryDataInfoKHR: ChainableBase, OutStruct {
+public struct PipelineBinaryDataInfoKHR: ChainableBase {
     public typealias CStruct = VkPipelineBinaryDataInfoKHR
 
     public static let structureType: StructureType = .pipelineBinaryDataInfoKHR
@@ -4182,7 +4182,7 @@ public struct PipelineBinaryDataInfoKHR: ChainableBase, OutStruct {
         self.pipelineBinary = pipelineBinary
     }
 
-    public init(cStruct: VkPipelineBinaryDataInfoKHR, device: Device?) {
+    public init(cStruct: VkPipelineBinaryDataInfoKHR, device: Device) {
         self.pipelineBinary = PipelineBinaryKHR(handle: cStruct.pipelineBinary, device: device)
     }
 
@@ -4215,7 +4215,7 @@ public struct PipelineLayoutCreateInfo: ChainableBase, BindDescriptorSetsInfoExt
         self.pushConstantRanges = pushConstantRanges
     }
 
-    public init(cStruct: VkPipelineLayoutCreateInfo, device: Device?) {
+    public init(cStruct: VkPipelineLayoutCreateInfo, device: Device) {
         self.flags = PipelineLayoutCreateFlags(rawValue: cStruct.flags)
         self.setLayouts = UnsafeBufferPointer(start: cStruct.pSetLayouts, count: Int(cStruct.setLayoutCount)).map{ ($0 != nil) ? DescriptorSetLayout(handle: $0, device: device) : nil }
         self.pushConstantRanges = UnsafeBufferPointer(start: cStruct.pPushConstantRanges, count: Int(cStruct.pushConstantRangeCount)).map{ PushConstantRange(cStruct: $0) }
@@ -4286,20 +4286,20 @@ public struct SamplerCreateInfo: ChainableBase {
 
     public init(cStruct: VkSamplerCreateInfo) {
         self.flags = SamplerCreateFlags(rawValue: cStruct.flags)
-        self.magFilter = Filter(rawValue: numericBitCast(cStruct.magFilter))!
-        self.minFilter = Filter(rawValue: numericBitCast(cStruct.minFilter))!
-        self.mipmapMode = SamplerMipmapMode(rawValue: numericBitCast(cStruct.mipmapMode))!
-        self.addressModeU = SamplerAddressMode(rawValue: numericBitCast(cStruct.addressModeU))!
-        self.addressModeV = SamplerAddressMode(rawValue: numericBitCast(cStruct.addressModeV))!
-        self.addressModeW = SamplerAddressMode(rawValue: numericBitCast(cStruct.addressModeW))!
+        self.magFilter = Filter(rawValue: numericBitCast(cStruct.magFilter.rawValue))!
+        self.minFilter = Filter(rawValue: numericBitCast(cStruct.minFilter.rawValue))!
+        self.mipmapMode = SamplerMipmapMode(rawValue: numericBitCast(cStruct.mipmapMode.rawValue))!
+        self.addressModeU = SamplerAddressMode(rawValue: numericBitCast(cStruct.addressModeU.rawValue))!
+        self.addressModeV = SamplerAddressMode(rawValue: numericBitCast(cStruct.addressModeV.rawValue))!
+        self.addressModeW = SamplerAddressMode(rawValue: numericBitCast(cStruct.addressModeW.rawValue))!
         self.mipLodBias = cStruct.mipLodBias
         self.anisotropyEnable = cStruct.anisotropyEnable == VK_TRUE
         self.maxAnisotropy = cStruct.maxAnisotropy
         self.compareEnable = cStruct.compareEnable == VK_TRUE
-        self.compareOp = CompareOp(rawValue: numericBitCast(cStruct.compareOp))!
+        self.compareOp = CompareOp(rawValue: numericBitCast(cStruct.compareOp.rawValue))!
         self.minLod = cStruct.minLod
         self.maxLod = cStruct.maxLod
-        self.borderColor = BorderColor(rawValue: numericBitCast(cStruct.borderColor))!
+        self.borderColor = BorderColor(rawValue: numericBitCast(cStruct.borderColor.rawValue))!
         self.unnormalizedCoordinates = cStruct.unnormalizedCoordinates == VK_TRUE
     }
 
@@ -4380,9 +4380,9 @@ public struct CommandBufferAllocateInfo: ChainableBase {
         self.commandBufferCount = commandBufferCount
     }
 
-    public init(cStruct: VkCommandBufferAllocateInfo, device: Device?) {
+    public init(cStruct: VkCommandBufferAllocateInfo, device: Device) {
         self.commandPool = CommandPool(handle: cStruct.commandPool, device: device)
-        self.level = CommandBufferLevel(rawValue: numericBitCast(cStruct.level))!
+        self.level = CommandBufferLevel(rawValue: numericBitCast(cStruct.level.rawValue))!
         self.commandBufferCount = cStruct.commandBufferCount
     }
 
@@ -4423,7 +4423,7 @@ public struct CommandBufferInheritanceInfo: ChainableBase {
         self.pipelineStatistics = pipelineStatistics
     }
 
-    public init(cStruct: VkCommandBufferInheritanceInfo, device: Device?) {
+    public init(cStruct: VkCommandBufferInheritanceInfo, device: Device) {
         self.renderPass = (cStruct.renderPass != nil) ? RenderPass(handle: cStruct.renderPass, device: device) : nil
         self.subpass = cStruct.subpass
         self.framebuffer = (cStruct.framebuffer != nil) ? Framebuffer(handle: cStruct.framebuffer, device: device) : nil
@@ -4464,7 +4464,7 @@ public struct CommandBufferBeginInfo: ChainableBase {
         self.inheritanceInfo = inheritanceInfo
     }
 
-    public init(cStruct: VkCommandBufferBeginInfo, device: Device?) {
+    public init(cStruct: VkCommandBufferBeginInfo, device: Device) {
         self.flags = CommandBufferUsageFlags(rawValue: cStruct.flags)
         self.inheritanceInfo = (cStruct.pInheritanceInfo != nil) ? CommandBufferInheritanceInfo(cStruct: cStruct.pInheritanceInfo.pointee, device: device) : nil
     }
@@ -4503,7 +4503,7 @@ public struct RenderPassBeginInfo: ChainableBase {
         self.clearValues = clearValues
     }
 
-    public init(cStruct: VkRenderPassBeginInfo, device: Device?) {
+    public init(cStruct: VkRenderPassBeginInfo, device: Device) {
         self.renderPass = RenderPass(handle: cStruct.renderPass, device: device)
         self.framebuffer = Framebuffer(handle: cStruct.framebuffer, device: device)
         self.renderArea = Rect2D(cStruct: cStruct.renderArea)
@@ -4612,14 +4612,14 @@ public struct AttachmentDescription: CStructConvertible {
 
     public init(cStruct: VkAttachmentDescription) {
         self.flags = AttachmentDescriptionFlags(rawValue: cStruct.flags)
-        self.format = Format(rawValue: numericBitCast(cStruct.format))!
+        self.format = Format(rawValue: numericBitCast(cStruct.format.rawValue))!
         self.samples = SampleCountFlags(rawValue: numericBitCast(cStruct.samples.rawValue))
-        self.loadOp = AttachmentLoadOp(rawValue: numericBitCast(cStruct.loadOp))!
-        self.storeOp = AttachmentStoreOp(rawValue: numericBitCast(cStruct.storeOp))!
-        self.stencilLoadOp = AttachmentLoadOp(rawValue: numericBitCast(cStruct.stencilLoadOp))!
-        self.stencilStoreOp = AttachmentStoreOp(rawValue: numericBitCast(cStruct.stencilStoreOp))!
-        self.initialLayout = ImageLayout(rawValue: numericBitCast(cStruct.initialLayout))!
-        self.finalLayout = ImageLayout(rawValue: numericBitCast(cStruct.finalLayout))!
+        self.loadOp = AttachmentLoadOp(rawValue: numericBitCast(cStruct.loadOp.rawValue))!
+        self.storeOp = AttachmentStoreOp(rawValue: numericBitCast(cStruct.storeOp.rawValue))!
+        self.stencilLoadOp = AttachmentLoadOp(rawValue: numericBitCast(cStruct.stencilLoadOp.rawValue))!
+        self.stencilStoreOp = AttachmentStoreOp(rawValue: numericBitCast(cStruct.stencilStoreOp.rawValue))!
+        self.initialLayout = ImageLayout(rawValue: numericBitCast(cStruct.initialLayout.rawValue))!
+        self.finalLayout = ImageLayout(rawValue: numericBitCast(cStruct.finalLayout.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(_ body: (UnsafePointer<VkAttachmentDescription>) throws(E) -> R) throws(E) -> R {
@@ -4650,7 +4650,7 @@ public struct AttachmentReference: CStructConvertible {
 
     public init(cStruct: VkAttachmentReference) {
         self.attachment = cStruct.attachment
-        self.layout = ImageLayout(rawValue: numericBitCast(cStruct.layout))!
+        self.layout = ImageLayout(rawValue: numericBitCast(cStruct.layout.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(_ body: (UnsafePointer<VkAttachmentReference>) throws(E) -> R) throws(E) -> R {
@@ -4684,7 +4684,7 @@ public struct SubpassDescription: CStructConvertible {
 
     public init(cStruct: VkSubpassDescription) {
         self.flags = SubpassDescriptionFlags(rawValue: cStruct.flags)
-        self.pipelineBindPoint = PipelineBindPoint(rawValue: numericBitCast(cStruct.pipelineBindPoint))!
+        self.pipelineBindPoint = PipelineBindPoint(rawValue: numericBitCast(cStruct.pipelineBindPoint.rawValue))!
         self.inputAttachments = UnsafeBufferPointer(start: cStruct.pInputAttachments, count: Int(cStruct.inputAttachmentCount)).map{ AttachmentReference(cStruct: $0) }
         self.colorAttachments = UnsafeBufferPointer(start: cStruct.pColorAttachments, count: Int(cStruct.colorAttachmentCount)).map{ AttachmentReference(cStruct: $0) }
         self.resolveAttachments = (cStruct.pResolveAttachments != nil) ? UnsafeBufferPointer(start: cStruct.pResolveAttachments, count: Int(cStruct.colorAttachmentCount)).map{ AttachmentReference(cStruct: $0) } : nil
@@ -4917,7 +4917,7 @@ public struct QueryPoolCreateInfo: ChainableBase {
 
     public init(cStruct: VkQueryPoolCreateInfo) {
         self.flags = QueryPoolCreateFlags(rawValue: cStruct.flags)
-        self.queryType = QueryType(rawValue: numericBitCast(cStruct.queryType))!
+        self.queryType = QueryType(rawValue: numericBitCast(cStruct.queryType.rawValue))!
         self.queryCount = cStruct.queryCount
         self.pipelineStatistics = QueryPipelineStatisticFlags(rawValue: cStruct.pipelineStatistics)
     }
@@ -4960,7 +4960,7 @@ public struct FramebufferCreateInfo: ChainableBase {
         self.layers = layers
     }
 
-    public init(cStruct: VkFramebufferCreateInfo, device: Device?) {
+    public init(cStruct: VkFramebufferCreateInfo, device: Device) {
         self.flags = FramebufferCreateFlags(rawValue: cStruct.flags)
         self.renderPass = RenderPass(handle: cStruct.renderPass, device: device)
         self.attachments = UnsafeBufferPointer(start: cStruct.pAttachments, count: Int(cStruct.attachmentCount)).map{ ImageView(handle: $0, device: device) }
@@ -5156,7 +5156,7 @@ public struct SubmitInfo: ChainableBase {
         self.signalSemaphores = signalSemaphores
     }
 
-    public init(cStruct: VkSubmitInfo, device: Device?, commandPool: CommandPool?) {
+    public init(cStruct: VkSubmitInfo, device: Device, commandPool: CommandPool) {
         self.waitSemaphores = UnsafeBufferPointer(start: cStruct.pWaitSemaphores, count: Int(cStruct.waitSemaphoreCount)).map{ Semaphore(handle: $0, device: device) }
         self.waitDstStageMask = UnsafeBufferPointer(start: cStruct.pWaitDstStageMask, count: Int(cStruct.waitSemaphoreCount)).map{ PipelineStageFlags(rawValue: $0) }
         self.commandBuffers = UnsafeBufferPointer(start: cStruct.pCommandBuffers, count: Int(cStruct.commandBufferCount)).map{ CommandBuffer(handle: $0, commandPool: commandPool) }
@@ -5203,7 +5203,7 @@ public struct DisplayPropertiesKHR: CStructConvertible {
     public let planeReorderPossible: Bool
     public let persistentContent: Bool
 
-    public init(cStruct: VkDisplayPropertiesKHR, physicalDevice: PhysicalDevice?) {
+    public init(cStruct: VkDisplayPropertiesKHR, physicalDevice: PhysicalDevice) {
         self.display = DisplayKHR(handle: cStruct.display, physicalDevice: physicalDevice)
         self.displayName = String(cString: cStruct.displayName)
         self.physicalDimensions = Extent2D(cStruct: cStruct.physicalDimensions)
@@ -5238,7 +5238,7 @@ public struct DisplayPlanePropertiesKHR: CStructConvertible {
     public let currentDisplay: DisplayKHR
     public let currentStackIndex: UInt32
 
-    public init(cStruct: VkDisplayPlanePropertiesKHR, physicalDevice: PhysicalDevice?) {
+    public init(cStruct: VkDisplayPlanePropertiesKHR, physicalDevice: PhysicalDevice) {
         self.currentDisplay = DisplayKHR(handle: cStruct.currentDisplay, physicalDevice: physicalDevice)
         self.currentStackIndex = cStruct.currentStackIndex
     }
@@ -5283,7 +5283,7 @@ public struct DisplayModePropertiesKHR: CStructConvertible {
     public let displayMode: DisplayModeKHR
     public let parameters: DisplayModeParametersKHR
 
-    public init(cStruct: VkDisplayModePropertiesKHR, display: DisplayKHR?) {
+    public init(cStruct: VkDisplayModePropertiesKHR, display: DisplayKHR) {
         self.displayMode = DisplayModeKHR(handle: cStruct.displayMode, display: display)
         self.parameters = DisplayModeParametersKHR(cStruct: cStruct.parameters)
     }
@@ -5413,7 +5413,7 @@ public struct DisplaySurfaceCreateInfoKHR: ChainableBase {
         self.imageExtent = imageExtent
     }
 
-    public init(cStruct: VkDisplaySurfaceCreateInfoKHR, display: DisplayKHR?) {
+    public init(cStruct: VkDisplaySurfaceCreateInfoKHR, display: DisplayKHR) {
         self.flags = DisplaySurfaceCreateFlagsKHR(rawValue: cStruct.flags)
         self.displayMode = DisplayModeKHR(handle: cStruct.displayMode, display: display)
         self.planeIndex = cStruct.planeIndex
@@ -5459,7 +5459,7 @@ public struct DisplaySurfaceStereoCreateInfoNV: ChainableBase, DisplaySurfaceCre
     }
 
     public init(cStruct: VkDisplaySurfaceStereoCreateInfoNV) {
-        self.stereoType = DisplaySurfaceStereoTypeNV(rawValue: numericBitCast(cStruct.stereoType))!
+        self.stereoType = DisplaySurfaceStereoTypeNV(rawValue: numericBitCast(cStruct.stereoType.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkDisplaySurfaceStereoCreateInfoNV>) throws(E) -> R) throws(E) -> R {
@@ -5987,8 +5987,8 @@ public struct SurfaceFormatKHR: CStructConvertible {
     public let colorSpace: ColorSpaceKHR
 
     public init(cStruct: VkSurfaceFormatKHR) {
-        self.format = Format(rawValue: numericBitCast(cStruct.format))!
-        self.colorSpace = ColorSpaceKHR(rawValue: numericBitCast(cStruct.colorSpace))!
+        self.format = Format(rawValue: numericBitCast(cStruct.format.rawValue))!
+        self.colorSpace = ColorSpaceKHR(rawValue: numericBitCast(cStruct.colorSpace.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(_ body: (UnsafePointer<VkSurfaceFormatKHR>) throws(E) -> R) throws(E) -> R {
@@ -6037,20 +6037,20 @@ public struct SwapchainCreateInfoKHR: ChainableBase {
         self.oldSwapchain = oldSwapchain
     }
 
-    public init(cStruct: VkSwapchainCreateInfoKHR, instance: Instance?, device: Device?) {
+    public init(cStruct: VkSwapchainCreateInfoKHR, instance: Instance, device: Device) {
         self.flags = SwapchainCreateFlagsKHR(rawValue: cStruct.flags)
         self.surface = SurfaceKHR(handle: cStruct.surface, instance: instance)
         self.minImageCount = cStruct.minImageCount
-        self.imageFormat = Format(rawValue: numericBitCast(cStruct.imageFormat))!
-        self.imageColorSpace = ColorSpaceKHR(rawValue: numericBitCast(cStruct.imageColorSpace))!
+        self.imageFormat = Format(rawValue: numericBitCast(cStruct.imageFormat.rawValue))!
+        self.imageColorSpace = ColorSpaceKHR(rawValue: numericBitCast(cStruct.imageColorSpace.rawValue))!
         self.imageExtent = Extent2D(cStruct: cStruct.imageExtent)
         self.imageArrayLayers = cStruct.imageArrayLayers
         self.imageUsage = ImageUsageFlags(rawValue: cStruct.imageUsage)
-        self.imageSharingMode = SharingMode(rawValue: numericBitCast(cStruct.imageSharingMode))!
+        self.imageSharingMode = SharingMode(rawValue: numericBitCast(cStruct.imageSharingMode.rawValue))!
         self.queueFamilyIndices = Array(UnsafeBufferPointer(start: cStruct.pQueueFamilyIndices, count: Int(cStruct.queueFamilyIndexCount)))
         self.preTransform = SurfaceTransformFlagsKHR(rawValue: numericBitCast(cStruct.preTransform.rawValue))
         self.compositeAlpha = CompositeAlphaFlagsKHR(rawValue: numericBitCast(cStruct.compositeAlpha.rawValue))
-        self.presentMode = PresentModeKHR(rawValue: numericBitCast(cStruct.presentMode))!
+        self.presentMode = PresentModeKHR(rawValue: numericBitCast(cStruct.presentMode.rawValue))!
         self.clipped = cStruct.clipped == VK_TRUE
         self.oldSwapchain = (cStruct.oldSwapchain != nil) ? SwapchainKHR(handle: cStruct.oldSwapchain, device: device) : nil
     }
@@ -6105,7 +6105,7 @@ public struct PresentInfoKHR: ChainableBase {
         self.results = results
     }
 
-    public init(cStruct: VkPresentInfoKHR, device: Device?) {
+    public init(cStruct: VkPresentInfoKHR, device: Device) {
         self.waitSemaphores = UnsafeBufferPointer(start: cStruct.pWaitSemaphores, count: Int(cStruct.waitSemaphoreCount)).map{ Semaphore(handle: $0, device: device) }
         self.swapchains = UnsafeBufferPointer(start: cStruct.pSwapchains, count: Int(cStruct.swapchainCount)).map{ SwapchainKHR(handle: $0, device: device) }
         self.imageIndices = Array(UnsafeBufferPointer(start: cStruct.pImageIndices, count: Int(cStruct.swapchainCount)))
@@ -6186,7 +6186,7 @@ public struct ValidationFlagsEXT: ChainableBase, InstanceCreateInfoExtension {
     }
 
     public init(cStruct: VkValidationFlagsEXT) {
-        self.disabledValidationChecks = UnsafeBufferPointer(start: cStruct.pDisabledValidationChecks, count: Int(cStruct.disabledValidationCheckCount)).map{ ValidationCheckEXT(rawValue: numericBitCast($0))! }
+        self.disabledValidationChecks = UnsafeBufferPointer(start: cStruct.pDisabledValidationChecks, count: Int(cStruct.disabledValidationCheckCount)).map{ ValidationCheckEXT(rawValue: numericBitCast($0.rawValue))! }
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkValidationFlagsEXT>) throws(E) -> R) throws(E) -> R {
@@ -6220,8 +6220,8 @@ public struct ValidationFeaturesEXT: ChainableBase, InstanceCreateInfoExtension,
     }
 
     public init(cStruct: VkValidationFeaturesEXT) {
-        self.enabledValidationFeatures = UnsafeBufferPointer(start: cStruct.pEnabledValidationFeatures, count: Int(cStruct.enabledValidationFeatureCount)).map{ ValidationFeatureEnableEXT(rawValue: numericBitCast($0))! }
-        self.disabledValidationFeatures = UnsafeBufferPointer(start: cStruct.pDisabledValidationFeatures, count: Int(cStruct.disabledValidationFeatureCount)).map{ ValidationFeatureDisableEXT(rawValue: numericBitCast($0))! }
+        self.enabledValidationFeatures = UnsafeBufferPointer(start: cStruct.pEnabledValidationFeatures, count: Int(cStruct.enabledValidationFeatureCount)).map{ ValidationFeatureEnableEXT(rawValue: numericBitCast($0.rawValue))! }
+        self.disabledValidationFeatures = UnsafeBufferPointer(start: cStruct.pDisabledValidationFeatures, count: Int(cStruct.disabledValidationFeatureCount)).map{ ValidationFeatureDisableEXT(rawValue: numericBitCast($0.rawValue))! }
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkValidationFeaturesEXT>) throws(E) -> R) throws(E) -> R {
@@ -6266,7 +6266,7 @@ public struct LayerSettingEXT: CStructConvertible {
     public init(cStruct: VkLayerSettingEXT) {
         self.layerName = String(cString: cStruct.pLayerName)
         self.settingName = String(cString: cStruct.pSettingName)
-        self.type = LayerSettingTypeEXT(rawValue: numericBitCast(cStruct.type))!
+        self.type = LayerSettingTypeEXT(rawValue: numericBitCast(cStruct.type.rawValue))!
         self.valueCount = cStruct.valueCount
         self.values = cStruct.pValues
     }
@@ -6329,7 +6329,7 @@ public struct PipelineRasterizationStateRasterizationOrderAMD: ChainableBase, Pi
     }
 
     public init(cStruct: VkPipelineRasterizationStateRasterizationOrderAMD) {
-        self.rasterizationOrder = RasterizationOrderAMD(rawValue: numericBitCast(cStruct.rasterizationOrder))!
+        self.rasterizationOrder = RasterizationOrderAMD(rawValue: numericBitCast(cStruct.rasterizationOrder.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPipelineRasterizationStateRasterizationOrderAMD>) throws(E) -> R) throws(E) -> R {
@@ -6362,7 +6362,7 @@ public struct DebugMarkerObjectNameInfoEXT: ChainableBase {
     }
 
     public init(cStruct: VkDebugMarkerObjectNameInfoEXT) {
-        self.objectType = DebugReportObjectTypeEXT(rawValue: numericBitCast(cStruct.objectType))!
+        self.objectType = DebugReportObjectTypeEXT(rawValue: numericBitCast(cStruct.objectType.rawValue))!
         self.object = cStruct.object
         self.objectName = String(cString: cStruct.pObjectName)
     }
@@ -6405,7 +6405,7 @@ public struct DebugMarkerObjectTagInfoEXT: ChainableBase {
     }
 
     public init(cStruct: VkDebugMarkerObjectTagInfoEXT) {
-        self.objectType = DebugReportObjectTypeEXT(rawValue: numericBitCast(cStruct.objectType))!
+        self.objectType = DebugReportObjectTypeEXT(rawValue: numericBitCast(cStruct.objectType.rawValue))!
         self.object = cStruct.object
         self.tagName = cStruct.tagName
         self.tagSize = cStruct.tagSize
@@ -6536,7 +6536,7 @@ public struct DedicatedAllocationMemoryAllocateInfoNV: ChainableBase, MemoryAllo
         self.buffer = buffer
     }
 
-    public init(cStruct: VkDedicatedAllocationMemoryAllocateInfoNV, device: Device?) {
+    public init(cStruct: VkDedicatedAllocationMemoryAllocateInfoNV, device: Device) {
         self.image = (cStruct.image != nil) ? Image(handle: cStruct.image, device: device) : nil
         self.buffer = (cStruct.buffer != nil) ? Buffer(handle: cStruct.buffer, device: device) : nil
     }
@@ -6731,7 +6731,7 @@ public struct Win32KeyedMutexAcquireReleaseInfoNV: ChainableBase, SubmitInfoExte
         self.releaseKeys = releaseKeys
     }
 
-    public init(cStruct: VkWin32KeyedMutexAcquireReleaseInfoNV, device: Device?) {
+    public init(cStruct: VkWin32KeyedMutexAcquireReleaseInfoNV, device: Device) {
         self.acquireSyncs = UnsafeBufferPointer(start: cStruct.pAcquireSyncs, count: Int(cStruct.acquireCount)).map{ DeviceMemory(handle: $0, device: device) }
         self.acquireKeys = Array(UnsafeBufferPointer(start: cStruct.pAcquireKeys, count: Int(cStruct.acquireCount)))
         self.acquireTimeoutMilliseconds = Array(UnsafeBufferPointer(start: cStruct.pAcquireTimeoutMilliseconds, count: Int(cStruct.acquireCount)))
@@ -6771,7 +6771,7 @@ public struct Win32KeyedMutexAcquireReleaseInfoNV: ChainableBase, SubmitInfoExte
 
 public protocol Win32KeyedMutexAcquireReleaseInfoNVExtension: Chainable {}
 
-public struct PhysicalDeviceDeviceGeneratedCommandsFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceDeviceGeneratedCommandsFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDeviceGeneratedCommandsFeaturesNV
 
     public static let structureType: StructureType = .physicalDeviceDeviceGeneratedCommandsFeaturesNV
@@ -6829,7 +6829,7 @@ public struct PushConstantBankInfoNV: ChainableBase, DescriptorSetAndBindingMapp
 
 public protocol PushConstantBankInfoNVExtension: Chainable {}
 
-public struct PhysicalDevicePushConstantBankFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDevicePushConstantBankFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePushConstantBankFeaturesNV
 
     public static let structureType: StructureType = .physicalDevicePushConstantBankFeaturesNV
@@ -6858,7 +6858,7 @@ public struct PhysicalDevicePushConstantBankFeaturesNV: ChainableBase, PhysicalD
 
 public protocol PhysicalDevicePushConstantBankFeaturesNVExtension: Chainable {}
 
-public struct PhysicalDevicePushConstantBankPropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDevicePushConstantBankPropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDevicePushConstantBankPropertiesNV
 
     public static let structureType: StructureType = .physicalDevicePushConstantBankPropertiesNV
@@ -6892,7 +6892,7 @@ public struct PhysicalDevicePushConstantBankPropertiesNV: ChainableBase, Physica
 
 public protocol PhysicalDevicePushConstantBankPropertiesNVExtension: Chainable {}
 
-public struct PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV
 
     public static let structureType: StructureType = .physicalDeviceDeviceGeneratedCommandsComputeFeaturesNV
@@ -6987,7 +6987,7 @@ public struct PrivateDataSlotCreateInfo: ChainableBase {
 
 public protocol PrivateDataSlotCreateInfoExtension: Chainable {}
 
-public struct PhysicalDevicePrivateDataFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDevicePrivateDataFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePrivateDataFeatures
 
     public static let structureType: StructureType = .physicalDevicePrivateDataFeatures
@@ -7016,7 +7016,7 @@ public struct PhysicalDevicePrivateDataFeatures: ChainableBase, PhysicalDeviceFe
 
 public protocol PhysicalDevicePrivateDataFeaturesExtension: Chainable {}
 
-public struct PhysicalDeviceDeviceGeneratedCommandsPropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceDeviceGeneratedCommandsPropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceDeviceGeneratedCommandsPropertiesNV
 
     public static let structureType: StructureType = .physicalDeviceDeviceGeneratedCommandsPropertiesNV
@@ -7065,7 +7065,7 @@ public struct PhysicalDeviceDeviceGeneratedCommandsPropertiesNV: ChainableBase, 
 
 public protocol PhysicalDeviceDeviceGeneratedCommandsPropertiesNVExtension: Chainable {}
 
-public struct PhysicalDeviceClusterAccelerationStructureFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceClusterAccelerationStructureFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceClusterAccelerationStructureFeaturesNV
 
     public static let structureType: StructureType = .physicalDeviceClusterAccelerationStructureFeaturesNV
@@ -7094,7 +7094,7 @@ public struct PhysicalDeviceClusterAccelerationStructureFeaturesNV: ChainableBas
 
 public protocol PhysicalDeviceClusterAccelerationStructureFeaturesNVExtension: Chainable {}
 
-public struct PhysicalDeviceClusterAccelerationStructurePropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceClusterAccelerationStructurePropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceClusterAccelerationStructurePropertiesNV
 
     public static let structureType: StructureType = .physicalDeviceClusterAccelerationStructurePropertiesNV
@@ -7164,7 +7164,7 @@ public struct StridedDeviceAddressNV: CStructConvertible {
     }
 }
 
-public struct RayTracingPipelineClusterAccelerationStructureCreateInfoNV: ChainableBase, RayTracingPipelineCreateInfoKHRExtension, OutStruct {
+public struct RayTracingPipelineClusterAccelerationStructureCreateInfoNV: ChainableBase, RayTracingPipelineCreateInfoKHRExtension {
     public typealias CStruct = VkRayTracingPipelineClusterAccelerationStructureCreateInfoNV
 
     public static let structureType: StructureType = .rayTracingPipelineClusterAccelerationStructureCreateInfoNV
@@ -7503,7 +7503,7 @@ public struct ClusterAccelerationStructureInstantiateClusterInfoNV: CStructConve
     }
 }
 
-public struct ClusterAccelerationStructureClustersBottomLevelInputNV: ChainableBase, OutStruct {
+public struct ClusterAccelerationStructureClustersBottomLevelInputNV: ChainableBase {
     public typealias CStruct = VkClusterAccelerationStructureClustersBottomLevelInputNV
 
     public static let structureType: StructureType = .clusterAccelerationStructureClustersBottomLevelInputNV
@@ -7536,7 +7536,7 @@ public struct ClusterAccelerationStructureClustersBottomLevelInputNV: ChainableB
 
 public protocol ClusterAccelerationStructureClustersBottomLevelInputNVExtension: Chainable {}
 
-public struct ClusterAccelerationStructureTriangleClusterInputNV: ChainableBase, OutStruct {
+public struct ClusterAccelerationStructureTriangleClusterInputNV: ChainableBase {
     public typealias CStruct = VkClusterAccelerationStructureTriangleClusterInputNV
 
     public static let structureType: StructureType = .clusterAccelerationStructureTriangleClusterInputNV
@@ -7561,7 +7561,7 @@ public struct ClusterAccelerationStructureTriangleClusterInputNV: ChainableBase,
     }
 
     public init(cStruct: VkClusterAccelerationStructureTriangleClusterInputNV) {
-        self.vertexFormat = Format(rawValue: numericBitCast(cStruct.vertexFormat))!
+        self.vertexFormat = Format(rawValue: numericBitCast(cStruct.vertexFormat.rawValue))!
         self.maxGeometryIndexValue = cStruct.maxGeometryIndexValue
         self.maxClusterUniqueGeometryCount = cStruct.maxClusterUniqueGeometryCount
         self.maxClusterTriangleCount = cStruct.maxClusterTriangleCount
@@ -7593,7 +7593,7 @@ public struct ClusterAccelerationStructureTriangleClusterInputNV: ChainableBase,
 
 public protocol ClusterAccelerationStructureTriangleClusterInputNVExtension: Chainable {}
 
-public struct ClusterAccelerationStructureMoveObjectsInputNV: ChainableBase, OutStruct {
+public struct ClusterAccelerationStructureMoveObjectsInputNV: ChainableBase {
     public typealias CStruct = VkClusterAccelerationStructureMoveObjectsInputNV
 
     public static let structureType: StructureType = .clusterAccelerationStructureMoveObjectsInputNV
@@ -7608,7 +7608,7 @@ public struct ClusterAccelerationStructureMoveObjectsInputNV: ChainableBase, Out
     }
 
     public init(cStruct: VkClusterAccelerationStructureMoveObjectsInputNV) {
-        self.type = ClusterAccelerationStructureTypeNV(rawValue: numericBitCast(cStruct.type))!
+        self.type = ClusterAccelerationStructureTypeNV(rawValue: numericBitCast(cStruct.type.rawValue))!
         self.noMoveOverlap = cStruct.noMoveOverlap == VK_TRUE
         self.maxMovedBytes = cStruct.maxMovedBytes
     }
@@ -7630,7 +7630,7 @@ public struct ClusterAccelerationStructureMoveObjectsInputNV: ChainableBase, Out
 
 public protocol ClusterAccelerationStructureMoveObjectsInputNVExtension: Chainable {}
 
-public struct ClusterAccelerationStructureInputInfoNV: ChainableBase, OutStruct {
+public struct ClusterAccelerationStructureInputInfoNV: ChainableBase {
     public typealias CStruct = VkClusterAccelerationStructureInputInfoNV
 
     public static let structureType: StructureType = .clusterAccelerationStructureInputInfoNV
@@ -7651,8 +7651,8 @@ public struct ClusterAccelerationStructureInputInfoNV: ChainableBase, OutStruct 
     public init(cStruct: VkClusterAccelerationStructureInputInfoNV) {
         self.maxAccelerationStructureCount = cStruct.maxAccelerationStructureCount
         self.flags = BuildAccelerationStructureFlagsKHR(rawValue: cStruct.flags)
-        self.opType = ClusterAccelerationStructureOpTypeNV(rawValue: numericBitCast(cStruct.opType))!
-        self.opMode = ClusterAccelerationStructureOpModeNV(rawValue: numericBitCast(cStruct.opMode))!
+        self.opType = ClusterAccelerationStructureOpTypeNV(rawValue: numericBitCast(cStruct.opType.rawValue))!
+        self.opMode = ClusterAccelerationStructureOpModeNV(rawValue: numericBitCast(cStruct.opMode.rawValue))!
         self.opInput = cStruct.opInput
     }
 
@@ -7703,7 +7703,7 @@ public struct StridedDeviceAddressRegionKHR: CStructConvertible {
     }
 }
 
-public struct ClusterAccelerationStructureCommandsInfoNV: ChainableBase, OutStruct {
+public struct ClusterAccelerationStructureCommandsInfoNV: ChainableBase {
     public typealias CStruct = VkClusterAccelerationStructureCommandsInfoNV
 
     public static let structureType: StructureType = .clusterAccelerationStructureCommandsInfoNV
@@ -7768,7 +7768,7 @@ public struct ClusterAccelerationStructureCommandsInfoNV: ChainableBase, OutStru
 
 public protocol ClusterAccelerationStructureCommandsInfoNVExtension: Chainable {}
 
-public struct PhysicalDeviceMultiDrawPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceMultiDrawPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceMultiDrawPropertiesEXT
 
     public static let structureType: StructureType = .physicalDeviceMultiDrawPropertiesEXT
@@ -7807,7 +7807,7 @@ public struct GraphicsShaderGroupCreateInfoNV: ChainableBase {
         self.tessellationState = tessellationState
     }
 
-    public init(cStruct: VkGraphicsShaderGroupCreateInfoNV, device: Device?) {
+    public init(cStruct: VkGraphicsShaderGroupCreateInfoNV, device: Device) {
         self.stages = UnsafeBufferPointer(start: cStruct.pStages, count: Int(cStruct.stageCount)).map{ PipelineShaderStageCreateInfo(cStruct: $0, device: device) }
         self.vertexInputState = (cStruct.pVertexInputState != nil) ? PipelineVertexInputStateCreateInfo(cStruct: cStruct.pVertexInputState.pointee) : nil
         self.tessellationState = (cStruct.pTessellationState != nil) ? PipelineTessellationStateCreateInfo(cStruct: cStruct.pTessellationState.pointee) : nil
@@ -7849,7 +7849,7 @@ public struct GraphicsPipelineShaderGroupsCreateInfoNV: ChainableBase, GraphicsP
         self.pipelines = pipelines
     }
 
-    public init(cStruct: VkGraphicsPipelineShaderGroupsCreateInfoNV, device: Device?) {
+    public init(cStruct: VkGraphicsPipelineShaderGroupsCreateInfoNV, device: Device) {
         self.groups = UnsafeBufferPointer(start: cStruct.pGroups, count: Int(cStruct.groupCount)).map{ GraphicsShaderGroupCreateInfoNV(cStruct: $0, device: device) }
         self.pipelines = UnsafeBufferPointer(start: cStruct.pPipelines, count: Int(cStruct.pipelineCount)).map{ Pipeline(handle: $0, device: device) }
     }
@@ -7912,7 +7912,7 @@ public struct BindIndexBufferIndirectCommandNV: CStructConvertible {
     public init(cStruct: VkBindIndexBufferIndirectCommandNV) {
         self.bufferAddress = cStruct.bufferAddress
         self.size = cStruct.size
-        self.indexType = IndexType(rawValue: numericBitCast(cStruct.indexType))!
+        self.indexType = IndexType(rawValue: numericBitCast(cStruct.indexType.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(_ body: (UnsafePointer<VkBindIndexBufferIndirectCommandNV>) throws(E) -> R) throws(E) -> R {
@@ -7983,7 +7983,7 @@ public struct IndirectCommandsStreamNV: CStructConvertible {
         self.offset = offset
     }
 
-    public init(cStruct: VkIndirectCommandsStreamNV, device: Device?) {
+    public init(cStruct: VkIndirectCommandsStreamNV, device: Device) {
         self.buffer = Buffer(handle: cStruct.buffer, device: device)
         self.offset = cStruct.offset
     }
@@ -8028,8 +8028,8 @@ public struct IndirectCommandsLayoutTokenNV: ChainableBase {
         self.indexTypeValues = indexTypeValues
     }
 
-    public init(cStruct: VkIndirectCommandsLayoutTokenNV, device: Device?) {
-        self.tokenType = IndirectCommandsTokenTypeNV(rawValue: numericBitCast(cStruct.tokenType))!
+    public init(cStruct: VkIndirectCommandsLayoutTokenNV, device: Device) {
+        self.tokenType = IndirectCommandsTokenTypeNV(rawValue: numericBitCast(cStruct.tokenType.rawValue))!
         self.stream = cStruct.stream
         self.offset = cStruct.offset
         self.vertexBindingUnit = cStruct.vertexBindingUnit
@@ -8039,7 +8039,7 @@ public struct IndirectCommandsLayoutTokenNV: ChainableBase {
         self.pushconstantOffset = cStruct.pushconstantOffset
         self.pushconstantSize = cStruct.pushconstantSize
         self.indirectStateFlags = IndirectStateFlagsNV(rawValue: cStruct.indirectStateFlags)
-        self.indexTypes = UnsafeBufferPointer(start: cStruct.pIndexTypes, count: Int(cStruct.indexTypeCount)).map{ IndexType(rawValue: numericBitCast($0))! }
+        self.indexTypes = UnsafeBufferPointer(start: cStruct.pIndexTypes, count: Int(cStruct.indexTypeCount)).map{ IndexType(rawValue: numericBitCast($0.rawValue))! }
         self.indexTypeValues = Array(UnsafeBufferPointer(start: cStruct.pIndexTypeValues, count: Int(cStruct.indexTypeCount)))
     }
 
@@ -8090,9 +8090,9 @@ public struct IndirectCommandsLayoutCreateInfoNV: ChainableBase {
         self.streamStrides = streamStrides
     }
 
-    public init(cStruct: VkIndirectCommandsLayoutCreateInfoNV, device: Device?) {
+    public init(cStruct: VkIndirectCommandsLayoutCreateInfoNV, device: Device) {
         self.flags = IndirectCommandsLayoutUsageFlagsNV(rawValue: cStruct.flags)
-        self.pipelineBindPoint = PipelineBindPoint(rawValue: numericBitCast(cStruct.pipelineBindPoint))!
+        self.pipelineBindPoint = PipelineBindPoint(rawValue: numericBitCast(cStruct.pipelineBindPoint.rawValue))!
         self.tokens = UnsafeBufferPointer(start: cStruct.pTokens, count: Int(cStruct.tokenCount)).map{ IndirectCommandsLayoutTokenNV(cStruct: $0, device: device) }
         self.streamStrides = Array(UnsafeBufferPointer(start: cStruct.pStreamStrides, count: Int(cStruct.streamCount)))
     }
@@ -8153,8 +8153,8 @@ public struct GeneratedCommandsInfoNV: ChainableBase {
         self.sequencesIndexOffset = sequencesIndexOffset
     }
 
-    public init(cStruct: VkGeneratedCommandsInfoNV, device: Device?) {
-        self.pipelineBindPoint = PipelineBindPoint(rawValue: numericBitCast(cStruct.pipelineBindPoint))!
+    public init(cStruct: VkGeneratedCommandsInfoNV, device: Device) {
+        self.pipelineBindPoint = PipelineBindPoint(rawValue: numericBitCast(cStruct.pipelineBindPoint.rawValue))!
         self.pipeline = (cStruct.pipeline != nil) ? Pipeline(handle: cStruct.pipeline, device: device) : nil
         self.indirectCommandsLayout = IndirectCommandsLayoutNV(handle: cStruct.indirectCommandsLayout, device: device)
         self.streams = UnsafeBufferPointer(start: cStruct.pStreams, count: Int(cStruct.streamCount)).map{ IndirectCommandsStreamNV(cStruct: $0, device: device) }
@@ -8213,8 +8213,8 @@ public struct GeneratedCommandsMemoryRequirementsInfoNV: ChainableBase {
         self.maxSequencesCount = maxSequencesCount
     }
 
-    public init(cStruct: VkGeneratedCommandsMemoryRequirementsInfoNV, device: Device?) {
-        self.pipelineBindPoint = PipelineBindPoint(rawValue: numericBitCast(cStruct.pipelineBindPoint))!
+    public init(cStruct: VkGeneratedCommandsMemoryRequirementsInfoNV, device: Device) {
+        self.pipelineBindPoint = PipelineBindPoint(rawValue: numericBitCast(cStruct.pipelineBindPoint.rawValue))!
         self.pipeline = (cStruct.pipeline != nil) ? Pipeline(handle: cStruct.pipeline, device: device) : nil
         self.indirectCommandsLayout = IndirectCommandsLayoutNV(handle: cStruct.indirectCommandsLayout, device: device)
         self.maxSequencesCount = cStruct.maxSequencesCount
@@ -8250,8 +8250,8 @@ public struct PipelineIndirectDeviceAddressInfoNV: ChainableBase {
         self.pipeline = pipeline
     }
 
-    public init(cStruct: VkPipelineIndirectDeviceAddressInfoNV, device: Device?) {
-        self.pipelineBindPoint = PipelineBindPoint(rawValue: numericBitCast(cStruct.pipelineBindPoint))!
+    public init(cStruct: VkPipelineIndirectDeviceAddressInfoNV, device: Device) {
+        self.pipelineBindPoint = PipelineBindPoint(rawValue: numericBitCast(cStruct.pipelineBindPoint.rawValue))!
         self.pipeline = Pipeline(handle: cStruct.pipeline, device: device)
     }
 
@@ -8291,7 +8291,7 @@ public struct BindPipelineIndirectCommandNV: CStructConvertible {
     }
 }
 
-public struct PhysicalDeviceFeatures2: ChainableBase, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceFeatures2: ChainableBase, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceFeatures2
 
     public static let structureType: StructureType = .physicalDeviceFeatures2
@@ -8322,7 +8322,7 @@ public struct PhysicalDeviceFeatures2: ChainableBase, DeviceCreateInfoExtension,
 
 public protocol PhysicalDeviceFeatures2Extension: Chainable {}
 
-public struct PhysicalDeviceProperties2: ChainableBase, OutStruct {
+public struct PhysicalDeviceProperties2: ChainableBase {
     public typealias CStruct = VkPhysicalDeviceProperties2
 
     public static let structureType: StructureType = .physicalDeviceProperties2
@@ -8349,7 +8349,7 @@ public struct PhysicalDeviceProperties2: ChainableBase, OutStruct {
 
 public protocol PhysicalDeviceProperties2Extension: Chainable {}
 
-public struct FormatProperties2: ChainableBase, OutStruct {
+public struct FormatProperties2: ChainableBase {
     public typealias CStruct = VkFormatProperties2
 
     public static let structureType: StructureType = .formatProperties2
@@ -8376,7 +8376,7 @@ public struct FormatProperties2: ChainableBase, OutStruct {
 
 public protocol FormatProperties2Extension: Chainable {}
 
-public struct ImageFormatProperties2: ChainableBase, OutStruct {
+public struct ImageFormatProperties2: ChainableBase {
     public typealias CStruct = VkImageFormatProperties2
 
     public static let structureType: StructureType = .imageFormatProperties2
@@ -8422,9 +8422,9 @@ public struct PhysicalDeviceImageFormatInfo2: ChainableBase {
     }
 
     public init(cStruct: VkPhysicalDeviceImageFormatInfo2) {
-        self.format = Format(rawValue: numericBitCast(cStruct.format))!
-        self.type = ImageType(rawValue: numericBitCast(cStruct.type))!
-        self.tiling = ImageTiling(rawValue: numericBitCast(cStruct.tiling))!
+        self.format = Format(rawValue: numericBitCast(cStruct.format.rawValue))!
+        self.type = ImageType(rawValue: numericBitCast(cStruct.type.rawValue))!
+        self.tiling = ImageTiling(rawValue: numericBitCast(cStruct.tiling.rawValue))!
         self.usage = ImageUsageFlags(rawValue: cStruct.usage)
         self.flags = ImageCreateFlags(rawValue: cStruct.flags)
     }
@@ -8448,7 +8448,7 @@ public struct PhysicalDeviceImageFormatInfo2: ChainableBase {
 
 public protocol PhysicalDeviceImageFormatInfo2Extension: Chainable {}
 
-public struct QueueFamilyProperties2: ChainableBase, OutStruct {
+public struct QueueFamilyProperties2: ChainableBase {
     public typealias CStruct = VkQueueFamilyProperties2
 
     public static let structureType: StructureType = .queueFamilyProperties2
@@ -8475,7 +8475,7 @@ public struct QueueFamilyProperties2: ChainableBase, OutStruct {
 
 public protocol QueueFamilyProperties2Extension: Chainable {}
 
-public struct PhysicalDeviceMemoryProperties2: ChainableBase, OutStruct {
+public struct PhysicalDeviceMemoryProperties2: ChainableBase {
     public typealias CStruct = VkPhysicalDeviceMemoryProperties2
 
     public static let structureType: StructureType = .physicalDeviceMemoryProperties2
@@ -8502,7 +8502,7 @@ public struct PhysicalDeviceMemoryProperties2: ChainableBase, OutStruct {
 
 public protocol PhysicalDeviceMemoryProperties2Extension: Chainable {}
 
-public struct SparseImageFormatProperties2: ChainableBase, OutStruct {
+public struct SparseImageFormatProperties2: ChainableBase {
     public typealias CStruct = VkSparseImageFormatProperties2
 
     public static let structureType: StructureType = .sparseImageFormatProperties2
@@ -8548,11 +8548,11 @@ public struct PhysicalDeviceSparseImageFormatInfo2: ChainableBase {
     }
 
     public init(cStruct: VkPhysicalDeviceSparseImageFormatInfo2) {
-        self.format = Format(rawValue: numericBitCast(cStruct.format))!
-        self.type = ImageType(rawValue: numericBitCast(cStruct.type))!
+        self.format = Format(rawValue: numericBitCast(cStruct.format.rawValue))!
+        self.type = ImageType(rawValue: numericBitCast(cStruct.type.rawValue))!
         self.samples = SampleCountFlags(rawValue: numericBitCast(cStruct.samples.rawValue))
         self.usage = ImageUsageFlags(rawValue: cStruct.usage)
-        self.tiling = ImageTiling(rawValue: numericBitCast(cStruct.tiling))!
+        self.tiling = ImageTiling(rawValue: numericBitCast(cStruct.tiling.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPhysicalDeviceSparseImageFormatInfo2>) throws(E) -> R) throws(E) -> R {
@@ -8574,7 +8574,7 @@ public struct PhysicalDeviceSparseImageFormatInfo2: ChainableBase {
 
 public protocol PhysicalDeviceSparseImageFormatInfo2Extension: Chainable {}
 
-public struct PhysicalDevicePushDescriptorProperties: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDevicePushDescriptorProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDevicePushDescriptorProperties
 
     public static let structureType: StructureType = .physicalDevicePushDescriptorProperties
@@ -8631,7 +8631,7 @@ public struct ConformanceVersion: CStructConvertible {
     }
 }
 
-public struct PhysicalDeviceDriverProperties: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceDriverProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceDriverProperties
 
     public static let structureType: StructureType = .physicalDeviceDriverProperties
@@ -8641,7 +8641,7 @@ public struct PhysicalDeviceDriverProperties: ChainableBase, PhysicalDevicePrope
     public let conformanceVersion: ConformanceVersion
 
     public init(cStruct: VkPhysicalDeviceDriverProperties) {
-        self.driverID = DriverId(rawValue: numericBitCast(cStruct.driverID))!
+        self.driverID = DriverId(rawValue: numericBitCast(cStruct.driverID.rawValue))!
         self.driverName = String(unsafeBytesOf: cStruct.driverName)
         self.driverInfo = String(unsafeBytesOf: cStruct.driverInfo)
         self.conformanceVersion = ConformanceVersion(cStruct: cStruct.conformanceVersion)
@@ -8754,7 +8754,7 @@ public struct PresentRegionsKHR: ChainableBase, PresentInfoKHRExtension {
 
 public protocol PresentRegionsKHRExtension: Chainable {}
 
-public struct PhysicalDeviceVariablePointersFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceVariablePointersFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceVariablePointersFeatures
 
     public static let structureType: StructureType = .physicalDeviceVariablePointersFeatures
@@ -8838,7 +8838,7 @@ public struct PhysicalDeviceExternalImageFormatInfo: ChainableBase, PhysicalDevi
 
 public protocol PhysicalDeviceExternalImageFormatInfoExtension: Chainable {}
 
-public struct ExternalImageFormatProperties: ChainableBase, ImageFormatProperties2Extension, OutStruct {
+public struct ExternalImageFormatProperties: ChainableBase, ImageFormatProperties2Extension {
     public typealias CStruct = VkExternalImageFormatProperties
 
     public static let structureType: StructureType = .externalImageFormatProperties
@@ -8902,7 +8902,7 @@ public struct PhysicalDeviceExternalBufferInfo: ChainableBase {
 
 public protocol PhysicalDeviceExternalBufferInfoExtension: Chainable {}
 
-public struct ExternalBufferProperties: ChainableBase, OutStruct {
+public struct ExternalBufferProperties: ChainableBase {
     public typealias CStruct = VkExternalBufferProperties
 
     public static let structureType: StructureType = .externalBufferProperties
@@ -8929,7 +8929,7 @@ public struct ExternalBufferProperties: ChainableBase, OutStruct {
 
 public protocol ExternalBufferPropertiesExtension: Chainable {}
 
-public struct PhysicalDeviceIDProperties: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceIDProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceIDProperties
 
     public static let structureType: StructureType = .physicalDeviceIdProperties
@@ -9167,7 +9167,7 @@ public struct ImportMemoryZirconHandleInfoFUCHSIA: ChainableBase, MemoryAllocate
 public protocol ImportMemoryZirconHandleInfoFUCHSIAExtension: Chainable {}
 
 #if VK_USE_PLATFORM_FUCHSIA
-public struct MemoryZirconHandlePropertiesFUCHSIA: ChainableBase, OutStruct {
+public struct MemoryZirconHandlePropertiesFUCHSIA: ChainableBase {
     public typealias CStruct = VkMemoryZirconHandlePropertiesFUCHSIA
 
     public static let structureType: StructureType = .memoryZirconHandlePropertiesFUCHSIA
@@ -9206,7 +9206,7 @@ public struct MemoryGetZirconHandleInfoFUCHSIA: ChainableBase {
         self.handleType = handleType
     }
 
-    public init(cStruct: VkMemoryGetZirconHandleInfoFUCHSIA, device: Device?) {
+    public init(cStruct: VkMemoryGetZirconHandleInfoFUCHSIA, device: Device) {
         self.memory = DeviceMemory(handle: cStruct.memory, device: device)
         self.handleType = ExternalMemoryHandleTypeFlags(rawValue: numericBitCast(cStruct.handleType.rawValue))
     }
@@ -9229,7 +9229,7 @@ public struct MemoryGetZirconHandleInfoFUCHSIA: ChainableBase {
 public protocol MemoryGetZirconHandleInfoFUCHSIAExtension: Chainable {}
 
 #if VK_USE_PLATFORM_WIN32_KHR
-public struct MemoryWin32HandlePropertiesKHR: ChainableBase, OutStruct {
+public struct MemoryWin32HandlePropertiesKHR: ChainableBase {
     public typealias CStruct = VkMemoryWin32HandlePropertiesKHR
 
     public static let structureType: StructureType = .memoryWin32HandlePropertiesKHR
@@ -9268,7 +9268,7 @@ public struct MemoryGetWin32HandleInfoKHR: ChainableBase {
         self.handleType = handleType
     }
 
-    public init(cStruct: VkMemoryGetWin32HandleInfoKHR, device: Device?) {
+    public init(cStruct: VkMemoryGetWin32HandleInfoKHR, device: Device) {
         self.memory = DeviceMemory(handle: cStruct.memory, device: device)
         self.handleType = ExternalMemoryHandleTypeFlags(rawValue: numericBitCast(cStruct.handleType.rawValue))
     }
@@ -9323,7 +9323,7 @@ public struct ImportMemoryFdInfoKHR: ChainableBase, MemoryAllocateInfoExtension 
 
 public protocol ImportMemoryFdInfoKHRExtension: Chainable {}
 
-public struct MemoryFdPropertiesKHR: ChainableBase, OutStruct {
+public struct MemoryFdPropertiesKHR: ChainableBase {
     public typealias CStruct = VkMemoryFdPropertiesKHR
 
     public static let structureType: StructureType = .memoryFdPropertiesKHR
@@ -9360,7 +9360,7 @@ public struct MemoryGetFdInfoKHR: ChainableBase {
         self.handleType = handleType
     }
 
-    public init(cStruct: VkMemoryGetFdInfoKHR, device: Device?) {
+    public init(cStruct: VkMemoryGetFdInfoKHR, device: Device) {
         self.memory = DeviceMemory(handle: cStruct.memory, device: device)
         self.handleType = ExternalMemoryHandleTypeFlags(rawValue: numericBitCast(cStruct.handleType.rawValue))
     }
@@ -9400,7 +9400,7 @@ public struct Win32KeyedMutexAcquireReleaseInfoKHR: ChainableBase, SubmitInfoExt
         self.releaseKeys = releaseKeys
     }
 
-    public init(cStruct: VkWin32KeyedMutexAcquireReleaseInfoKHR, device: Device?) {
+    public init(cStruct: VkWin32KeyedMutexAcquireReleaseInfoKHR, device: Device) {
         self.acquireSyncs = UnsafeBufferPointer(start: cStruct.pAcquireSyncs, count: Int(cStruct.acquireCount)).map{ DeviceMemory(handle: $0, device: device) }
         self.acquireKeys = Array(UnsafeBufferPointer(start: cStruct.pAcquireKeys, count: Int(cStruct.acquireCount)))
         self.acquireTimeouts = Array(UnsafeBufferPointer(start: cStruct.pAcquireTimeouts, count: Int(cStruct.acquireCount)))
@@ -9476,7 +9476,7 @@ public struct ImportMemoryMetalHandleInfoEXT: ChainableBase, MemoryAllocateInfoE
 public protocol ImportMemoryMetalHandleInfoEXTExtension: Chainable {}
 
 #if VK_USE_PLATFORM_METAL_EXT
-public struct MemoryMetalHandlePropertiesEXT: ChainableBase, OutStruct {
+public struct MemoryMetalHandlePropertiesEXT: ChainableBase {
     public typealias CStruct = VkMemoryMetalHandlePropertiesEXT
 
     public static let structureType: StructureType = .memoryMetalHandlePropertiesEXT
@@ -9515,7 +9515,7 @@ public struct MemoryGetMetalHandleInfoEXT: ChainableBase {
         self.handleType = handleType
     }
 
-    public init(cStruct: VkMemoryGetMetalHandleInfoEXT, device: Device?) {
+    public init(cStruct: VkMemoryGetMetalHandleInfoEXT, device: Device) {
         self.memory = DeviceMemory(handle: cStruct.memory, device: device)
         self.handleType = ExternalMemoryHandleTypeFlags(rawValue: numericBitCast(cStruct.handleType.rawValue))
     }
@@ -9566,7 +9566,7 @@ public struct PhysicalDeviceExternalSemaphoreInfo: ChainableBase {
 
 public protocol PhysicalDeviceExternalSemaphoreInfoExtension: Chainable {}
 
-public struct ExternalSemaphoreProperties: ChainableBase, OutStruct {
+public struct ExternalSemaphoreProperties: ChainableBase {
     public typealias CStruct = VkExternalSemaphoreProperties
 
     public static let structureType: StructureType = .externalSemaphoreProperties
@@ -9645,7 +9645,7 @@ public struct ImportSemaphoreWin32HandleInfoKHR: ChainableBase {
         self.name = name
     }
 
-    public init(cStruct: VkImportSemaphoreWin32HandleInfoKHR, device: Device?) {
+    public init(cStruct: VkImportSemaphoreWin32HandleInfoKHR, device: Device) {
         self.semaphore = Semaphore(handle: cStruct.semaphore, device: device)
         self.flags = SemaphoreImportFlags(rawValue: cStruct.flags)
         self.handleType = ExternalSemaphoreHandleTypeFlags(rawValue: numericBitCast(cStruct.handleType.rawValue))
@@ -9766,7 +9766,7 @@ public struct SemaphoreGetWin32HandleInfoKHR: ChainableBase {
         self.handleType = handleType
     }
 
-    public init(cStruct: VkSemaphoreGetWin32HandleInfoKHR, device: Device?) {
+    public init(cStruct: VkSemaphoreGetWin32HandleInfoKHR, device: Device) {
         self.semaphore = Semaphore(handle: cStruct.semaphore, device: device)
         self.handleType = ExternalSemaphoreHandleTypeFlags(rawValue: numericBitCast(cStruct.handleType.rawValue))
     }
@@ -9804,7 +9804,7 @@ public struct ImportSemaphoreFdInfoKHR: ChainableBase {
         self.fd = fd
     }
 
-    public init(cStruct: VkImportSemaphoreFdInfoKHR, device: Device?) {
+    public init(cStruct: VkImportSemaphoreFdInfoKHR, device: Device) {
         self.semaphore = Semaphore(handle: cStruct.semaphore, device: device)
         self.flags = SemaphoreImportFlags(rawValue: cStruct.flags)
         self.handleType = ExternalSemaphoreHandleTypeFlags(rawValue: numericBitCast(cStruct.handleType.rawValue))
@@ -9841,7 +9841,7 @@ public struct SemaphoreGetFdInfoKHR: ChainableBase {
         self.handleType = handleType
     }
 
-    public init(cStruct: VkSemaphoreGetFdInfoKHR, device: Device?) {
+    public init(cStruct: VkSemaphoreGetFdInfoKHR, device: Device) {
         self.semaphore = Semaphore(handle: cStruct.semaphore, device: device)
         self.handleType = ExternalSemaphoreHandleTypeFlags(rawValue: numericBitCast(cStruct.handleType.rawValue))
     }
@@ -9879,7 +9879,7 @@ public struct ImportSemaphoreZirconHandleInfoFUCHSIA: ChainableBase {
         self.zirconHandle = zirconHandle
     }
 
-    public init(cStruct: VkImportSemaphoreZirconHandleInfoFUCHSIA, device: Device?) {
+    public init(cStruct: VkImportSemaphoreZirconHandleInfoFUCHSIA, device: Device) {
         self.semaphore = Semaphore(handle: cStruct.semaphore, device: device)
         self.flags = SemaphoreImportFlags(rawValue: cStruct.flags)
         self.handleType = ExternalSemaphoreHandleTypeFlags(rawValue: numericBitCast(cStruct.handleType.rawValue))
@@ -9918,7 +9918,7 @@ public struct SemaphoreGetZirconHandleInfoFUCHSIA: ChainableBase {
         self.handleType = handleType
     }
 
-    public init(cStruct: VkSemaphoreGetZirconHandleInfoFUCHSIA, device: Device?) {
+    public init(cStruct: VkSemaphoreGetZirconHandleInfoFUCHSIA, device: Device) {
         self.semaphore = Semaphore(handle: cStruct.semaphore, device: device)
         self.handleType = ExternalSemaphoreHandleTypeFlags(rawValue: numericBitCast(cStruct.handleType.rawValue))
     }
@@ -9969,7 +9969,7 @@ public struct PhysicalDeviceExternalFenceInfo: ChainableBase {
 
 public protocol PhysicalDeviceExternalFenceInfoExtension: Chainable {}
 
-public struct ExternalFenceProperties: ChainableBase, OutStruct {
+public struct ExternalFenceProperties: ChainableBase {
     public typealias CStruct = VkExternalFenceProperties
 
     public static let structureType: StructureType = .externalFenceProperties
@@ -10048,7 +10048,7 @@ public struct ImportFenceWin32HandleInfoKHR: ChainableBase {
         self.name = name
     }
 
-    public init(cStruct: VkImportFenceWin32HandleInfoKHR, device: Device?) {
+    public init(cStruct: VkImportFenceWin32HandleInfoKHR, device: Device) {
         self.fence = Fence(handle: cStruct.fence, device: device)
         self.flags = FenceImportFlags(rawValue: cStruct.flags)
         self.handleType = ExternalFenceHandleTypeFlags(rawValue: numericBitCast(cStruct.handleType.rawValue))
@@ -10128,7 +10128,7 @@ public struct FenceGetWin32HandleInfoKHR: ChainableBase {
         self.handleType = handleType
     }
 
-    public init(cStruct: VkFenceGetWin32HandleInfoKHR, device: Device?) {
+    public init(cStruct: VkFenceGetWin32HandleInfoKHR, device: Device) {
         self.fence = Fence(handle: cStruct.fence, device: device)
         self.handleType = ExternalFenceHandleTypeFlags(rawValue: numericBitCast(cStruct.handleType.rawValue))
     }
@@ -10166,7 +10166,7 @@ public struct ImportFenceFdInfoKHR: ChainableBase {
         self.fd = fd
     }
 
-    public init(cStruct: VkImportFenceFdInfoKHR, device: Device?) {
+    public init(cStruct: VkImportFenceFdInfoKHR, device: Device) {
         self.fence = Fence(handle: cStruct.fence, device: device)
         self.flags = FenceImportFlags(rawValue: cStruct.flags)
         self.handleType = ExternalFenceHandleTypeFlags(rawValue: numericBitCast(cStruct.handleType.rawValue))
@@ -10203,7 +10203,7 @@ public struct FenceGetFdInfoKHR: ChainableBase {
         self.handleType = handleType
     }
 
-    public init(cStruct: VkFenceGetFdInfoKHR, device: Device?) {
+    public init(cStruct: VkFenceGetFdInfoKHR, device: Device) {
         self.fence = Fence(handle: cStruct.fence, device: device)
         self.handleType = ExternalFenceHandleTypeFlags(rawValue: numericBitCast(cStruct.handleType.rawValue))
     }
@@ -10224,7 +10224,7 @@ public struct FenceGetFdInfoKHR: ChainableBase {
 
 public protocol FenceGetFdInfoKHRExtension: Chainable {}
 
-public struct PhysicalDeviceMultiviewFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceMultiviewFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceMultiviewFeatures
 
     public static let structureType: StructureType = .physicalDeviceMultiviewFeatures
@@ -10261,7 +10261,7 @@ public struct PhysicalDeviceMultiviewFeatures: ChainableBase, PhysicalDeviceFeat
 
 public protocol PhysicalDeviceMultiviewFeaturesExtension: Chainable {}
 
-public struct PhysicalDeviceMultiviewProperties: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceMultiviewProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceMultiviewProperties
 
     public static let structureType: StructureType = .physicalDeviceMultiviewProperties
@@ -10335,7 +10335,7 @@ public struct RenderPassMultiviewCreateInfo: ChainableBase, RenderPassCreateInfo
 
 public protocol RenderPassMultiviewCreateInfoExtension: Chainable {}
 
-public struct SurfaceCapabilities2EXT: ChainableBase, OutStruct {
+public struct SurfaceCapabilities2EXT: ChainableBase {
     public typealias CStruct = VkSurfaceCapabilities2EXT
 
     public static let structureType: StructureType = .surfaceCapabilities2EXT
@@ -10407,7 +10407,7 @@ public struct DisplayPowerInfoEXT: ChainableBase {
     }
 
     public init(cStruct: VkDisplayPowerInfoEXT) {
-        self.powerState = DisplayPowerStateEXT(rawValue: numericBitCast(cStruct.powerState))!
+        self.powerState = DisplayPowerStateEXT(rawValue: numericBitCast(cStruct.powerState.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkDisplayPowerInfoEXT>) throws(E) -> R) throws(E) -> R {
@@ -10436,7 +10436,7 @@ public struct DeviceEventInfoEXT: ChainableBase {
     }
 
     public init(cStruct: VkDeviceEventInfoEXT) {
-        self.deviceEvent = DeviceEventTypeEXT(rawValue: numericBitCast(cStruct.deviceEvent))!
+        self.deviceEvent = DeviceEventTypeEXT(rawValue: numericBitCast(cStruct.deviceEvent.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkDeviceEventInfoEXT>) throws(E) -> R) throws(E) -> R {
@@ -10465,7 +10465,7 @@ public struct DisplayEventInfoEXT: ChainableBase {
     }
 
     public init(cStruct: VkDisplayEventInfoEXT) {
-        self.displayEvent = DisplayEventTypeEXT(rawValue: numericBitCast(cStruct.displayEvent))!
+        self.displayEvent = DisplayEventTypeEXT(rawValue: numericBitCast(cStruct.displayEvent.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkDisplayEventInfoEXT>) throws(E) -> R) throws(E) -> R {
@@ -10512,7 +10512,7 @@ public struct SwapchainCounterCreateInfoEXT: ChainableBase, SwapchainCreateInfoK
 
 public protocol SwapchainCounterCreateInfoEXTExtension: Chainable {}
 
-public struct PhysicalDeviceGroupProperties: ChainableBase, OutStruct {
+public struct PhysicalDeviceGroupProperties: ChainableBase {
     public typealias CStruct = VkPhysicalDeviceGroupProperties
 
     public static let structureType: StructureType = .physicalDeviceGroupProperties
@@ -10520,7 +10520,7 @@ public struct PhysicalDeviceGroupProperties: ChainableBase, OutStruct {
     public let physicalDevices: Array<PhysicalDevice>
     public let subsetAllocation: Bool
 
-    public init(cStruct: VkPhysicalDeviceGroupProperties, instance: Instance?) {
+    public init(cStruct: VkPhysicalDeviceGroupProperties, instance: Instance) {
         self.physicalDeviceCount = cStruct.physicalDeviceCount
         self.physicalDevices = withUnsafeBytes(of: cStruct.physicalDevices) { $0.bindMemory(to: VkPhysicalDevice?.self).prefix(Int(cStruct.physicalDeviceCount)).map{ PhysicalDevice(handle: $0, instance: instance) } }
         self.subsetAllocation = cStruct.subsetAllocation == VK_TRUE
@@ -10592,7 +10592,7 @@ public struct BindBufferMemoryInfo: ChainableBase {
         self.memoryOffset = memoryOffset
     }
 
-    public init(cStruct: VkBindBufferMemoryInfo, device: Device?) {
+    public init(cStruct: VkBindBufferMemoryInfo, device: Device) {
         self.buffer = Buffer(handle: cStruct.buffer, device: device)
         self.memory = DeviceMemory(handle: cStruct.memory, device: device)
         self.memoryOffset = cStruct.memoryOffset
@@ -10661,7 +10661,7 @@ public struct BindImageMemoryInfo: ChainableBase {
         self.memoryOffset = memoryOffset
     }
 
-    public init(cStruct: VkBindImageMemoryInfo, device: Device?) {
+    public init(cStruct: VkBindImageMemoryInfo, device: Device) {
         self.image = Image(handle: cStruct.image, device: device)
         self.memory = DeviceMemory(handle: cStruct.memory, device: device)
         self.memoryOffset = cStruct.memoryOffset
@@ -10867,7 +10867,7 @@ public struct DeviceGroupBindSparseInfo: ChainableBase, BindSparseInfoExtension 
 
 public protocol DeviceGroupBindSparseInfoExtension: Chainable {}
 
-public struct DeviceGroupPresentCapabilitiesKHR: ChainableBase, OutStruct {
+public struct DeviceGroupPresentCapabilitiesKHR: ChainableBase {
     public typealias CStruct = VkDeviceGroupPresentCapabilitiesKHR
 
     public static let structureType: StructureType = .deviceGroupPresentCapabilitiesKHR
@@ -10905,7 +10905,7 @@ public struct ImageSwapchainCreateInfoKHR: ChainableBase, ImageCreateInfoExtensi
         self.swapchain = swapchain
     }
 
-    public init(cStruct: VkImageSwapchainCreateInfoKHR, device: Device?) {
+    public init(cStruct: VkImageSwapchainCreateInfoKHR, device: Device) {
         self.swapchain = (cStruct.swapchain != nil) ? SwapchainKHR(handle: cStruct.swapchain, device: device) : nil
     }
 
@@ -10936,7 +10936,7 @@ public struct BindImageMemorySwapchainInfoKHR: ChainableBase, BindImageMemoryInf
         self.imageIndex = imageIndex
     }
 
-    public init(cStruct: VkBindImageMemorySwapchainInfoKHR, device: Device?) {
+    public init(cStruct: VkBindImageMemorySwapchainInfoKHR, device: Device) {
         self.swapchain = SwapchainKHR(handle: cStruct.swapchain, device: device)
         self.imageIndex = cStruct.imageIndex
     }
@@ -10975,7 +10975,7 @@ public struct AcquireNextImageInfoKHR: ChainableBase {
         self.deviceMask = deviceMask
     }
 
-    public init(cStruct: VkAcquireNextImageInfoKHR, device: Device?) {
+    public init(cStruct: VkAcquireNextImageInfoKHR, device: Device) {
         self.swapchain = SwapchainKHR(handle: cStruct.swapchain, device: device)
         self.timeout = cStruct.timeout
         self.semaphore = (cStruct.semaphore != nil) ? Semaphore(handle: cStruct.semaphore, device: device) : nil
@@ -11048,7 +11048,7 @@ public struct DeviceGroupDeviceCreateInfo: ChainableBase, DeviceCreateInfoExtens
         self.physicalDevices = physicalDevices
     }
 
-    public init(cStruct: VkDeviceGroupDeviceCreateInfo, instance: Instance?) {
+    public init(cStruct: VkDeviceGroupDeviceCreateInfo, instance: Instance) {
         self.physicalDevices = UnsafeBufferPointer(start: cStruct.pPhysicalDevices, count: Int(cStruct.physicalDeviceCount)).map{ PhysicalDevice(handle: $0, instance: instance) }
     }
 
@@ -11122,7 +11122,7 @@ public struct DescriptorUpdateTemplateEntry: CStructConvertible {
         self.dstBinding = cStruct.dstBinding
         self.dstArrayElement = cStruct.dstArrayElement
         self.descriptorCount = cStruct.descriptorCount
-        self.descriptorType = DescriptorType(rawValue: numericBitCast(cStruct.descriptorType))!
+        self.descriptorType = DescriptorType(rawValue: numericBitCast(cStruct.descriptorType.rawValue))!
         self.offset = cStruct.offset
         self.stride = cStruct.stride
     }
@@ -11161,12 +11161,12 @@ public struct DescriptorUpdateTemplateCreateInfo: ChainableBase {
         self.set = set
     }
 
-    public init(cStruct: VkDescriptorUpdateTemplateCreateInfo, device: Device?) {
+    public init(cStruct: VkDescriptorUpdateTemplateCreateInfo, device: Device) {
         self.flags = DescriptorUpdateTemplateCreateFlags(rawValue: cStruct.flags)
         self.descriptorUpdateEntries = UnsafeBufferPointer(start: cStruct.pDescriptorUpdateEntries, count: Int(cStruct.descriptorUpdateEntryCount)).map{ DescriptorUpdateTemplateEntry(cStruct: $0) }
-        self.templateType = DescriptorUpdateTemplateType(rawValue: numericBitCast(cStruct.templateType))!
+        self.templateType = DescriptorUpdateTemplateType(rawValue: numericBitCast(cStruct.templateType.rawValue))!
         self.descriptorSetLayout = DescriptorSetLayout(handle: cStruct.descriptorSetLayout, device: device)
-        self.pipelineBindPoint = PipelineBindPoint(rawValue: numericBitCast(cStruct.pipelineBindPoint))!
+        self.pipelineBindPoint = PipelineBindPoint(rawValue: numericBitCast(cStruct.pipelineBindPoint.rawValue))!
         self.pipelineLayout = PipelineLayout(handle: cStruct.pipelineLayout, device: device)
         self.set = cStruct.set
     }
@@ -11219,7 +11219,7 @@ public struct XYColorEXT: CStructConvertible {
     }
 }
 
-public struct PhysicalDevicePresentIdFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDevicePresentIdFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePresentIdFeaturesKHR
 
     public static let structureType: StructureType = .physicalDevicePresentIdFeaturesKHR
@@ -11280,7 +11280,7 @@ public struct PresentIdKHR: ChainableBase, PresentInfoKHRExtension {
 
 public protocol PresentIdKHRExtension: Chainable {}
 
-public struct PhysicalDevicePresentId2FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDevicePresentId2FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePresentId2FeaturesKHR
 
     public static let structureType: StructureType = .physicalDevicePresentId2FeaturesKHR
@@ -11374,7 +11374,7 @@ public struct PresentWait2InfoKHR: ChainableBase {
 
 public protocol PresentWait2InfoKHRExtension: Chainable {}
 
-public struct PhysicalDevicePresentWaitFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDevicePresentWaitFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePresentWaitFeaturesKHR
 
     public static let structureType: StructureType = .physicalDevicePresentWaitFeaturesKHR
@@ -11403,7 +11403,7 @@ public struct PhysicalDevicePresentWaitFeaturesKHR: ChainableBase, PhysicalDevic
 
 public protocol PhysicalDevicePresentWaitFeaturesKHRExtension: Chainable {}
 
-public struct PhysicalDevicePresentWait2FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDevicePresentWait2FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePresentWait2FeaturesKHR
 
     public static let structureType: StructureType = .physicalDevicePresentWait2FeaturesKHR
@@ -11432,7 +11432,7 @@ public struct PhysicalDevicePresentWait2FeaturesKHR: ChainableBase, PhysicalDevi
 
 public protocol PhysicalDevicePresentWait2FeaturesKHRExtension: Chainable {}
 
-public struct PhysicalDevicePresentTimingFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDevicePresentTimingFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePresentTimingFeaturesEXT
 
     public static let structureType: StructureType = .physicalDevicePresentTimingFeaturesEXT
@@ -11469,7 +11469,7 @@ public struct PhysicalDevicePresentTimingFeaturesEXT: ChainableBase, PhysicalDev
 
 public protocol PhysicalDevicePresentTimingFeaturesEXTExtension: Chainable {}
 
-public struct PresentTimingSurfaceCapabilitiesEXT: ChainableBase, SurfaceCapabilities2KHRExtension, OutStruct {
+public struct PresentTimingSurfaceCapabilitiesEXT: ChainableBase, SurfaceCapabilities2KHRExtension {
     public typealias CStruct = VkPresentTimingSurfaceCapabilitiesEXT
 
     public static let structureType: StructureType = .presentTimingSurfaceCapabilitiesEXT
@@ -11503,7 +11503,7 @@ public struct PresentTimingSurfaceCapabilitiesEXT: ChainableBase, SurfaceCapabil
 
 public protocol PresentTimingSurfaceCapabilitiesEXTExtension: Chainable {}
 
-public struct SwapchainTimingPropertiesEXT: ChainableBase, OutStruct {
+public struct SwapchainTimingPropertiesEXT: ChainableBase {
     public typealias CStruct = VkSwapchainTimingPropertiesEXT
 
     public static let structureType: StructureType = .swapchainTimingPropertiesEXT
@@ -11531,7 +11531,7 @@ public struct SwapchainTimingPropertiesEXT: ChainableBase, OutStruct {
 
 public protocol SwapchainTimingPropertiesEXTExtension: Chainable {}
 
-public struct SwapchainTimeDomainPropertiesEXT: ChainableBase, OutStruct {
+public struct SwapchainTimeDomainPropertiesEXT: ChainableBase {
     public typealias CStruct = VkSwapchainTimeDomainPropertiesEXT
 
     public static let structureType: StructureType = .swapchainTimeDomainPropertiesEXT
@@ -11593,7 +11593,7 @@ public struct PastPresentationTimingInfoEXT: ChainableBase {
         self.swapchain = swapchain
     }
 
-    public init(cStruct: VkPastPresentationTimingInfoEXT, device: Device?) {
+    public init(cStruct: VkPastPresentationTimingInfoEXT, device: Device) {
         self.flags = PastPresentationTimingFlagsEXT(rawValue: cStruct.flags)
         self.swapchain = SwapchainKHR(handle: cStruct.swapchain, device: device)
     }
@@ -11614,7 +11614,7 @@ public struct PastPresentationTimingInfoEXT: ChainableBase {
 
 public protocol PastPresentationTimingInfoEXTExtension: Chainable {}
 
-public struct PastPresentationTimingEXT: ChainableBase, OutStruct {
+public struct PastPresentationTimingEXT: ChainableBase {
     public typealias CStruct = VkPastPresentationTimingEXT
 
     public static let structureType: StructureType = .pastPresentationTimingEXT
@@ -11631,7 +11631,7 @@ public struct PastPresentationTimingEXT: ChainableBase, OutStruct {
         self.targetTime = cStruct.targetTime
         self.presentStageCount = cStruct.presentStageCount
         self.presentStages = cStruct.pPresentStages
-        self.timeDomain = TimeDomainKHR(rawValue: numericBitCast(cStruct.timeDomain))!
+        self.timeDomain = TimeDomainKHR(rawValue: numericBitCast(cStruct.timeDomain.rawValue))!
         self.timeDomainId = cStruct.timeDomainId
         self.reportComplete = cStruct.reportComplete == VK_TRUE
     }
@@ -11657,7 +11657,7 @@ public struct PastPresentationTimingEXT: ChainableBase, OutStruct {
 
 public protocol PastPresentationTimingEXTExtension: Chainable {}
 
-public struct PastPresentationTimingPropertiesEXT: ChainableBase, OutStruct {
+public struct PastPresentationTimingPropertiesEXT: ChainableBase {
     public typealias CStruct = VkPastPresentationTimingPropertiesEXT
 
     public static let structureType: StructureType = .pastPresentationTimingPropertiesEXT
@@ -11782,7 +11782,7 @@ public struct SwapchainCalibratedTimestampInfoEXT: ChainableBase, CalibratedTime
         self.timeDomainId = timeDomainId
     }
 
-    public init(cStruct: VkSwapchainCalibratedTimestampInfoEXT, device: Device?) {
+    public init(cStruct: VkSwapchainCalibratedTimestampInfoEXT, device: Device) {
         self.swapchain = SwapchainKHR(handle: cStruct.swapchain, device: device)
         self.presentStage = PresentStageFlagsEXT(rawValue: cStruct.presentStage)
         self.timeDomainId = cStruct.timeDomainId
@@ -11903,7 +11903,7 @@ public struct HdrVividDynamicMetadataHUAWEI: ChainableBase, HdrMetadataEXTExtens
 
 public protocol HdrVividDynamicMetadataHUAWEIExtension: Chainable {}
 
-public struct DisplayNativeHdrSurfaceCapabilitiesAMD: ChainableBase, SurfaceCapabilities2KHRExtension, OutStruct {
+public struct DisplayNativeHdrSurfaceCapabilitiesAMD: ChainableBase, SurfaceCapabilities2KHRExtension {
     public typealias CStruct = VkDisplayNativeHdrSurfaceCapabilitiesAMD
 
     public static let structureType: StructureType = .displayNativeHdrSurfaceCapabilitiesAMD
@@ -12238,10 +12238,10 @@ public struct ViewportSwizzleNV: CStructConvertible {
     }
 
     public init(cStruct: VkViewportSwizzleNV) {
-        self.x = ViewportCoordinateSwizzleNV(rawValue: numericBitCast(cStruct.x))!
-        self.y = ViewportCoordinateSwizzleNV(rawValue: numericBitCast(cStruct.y))!
-        self.z = ViewportCoordinateSwizzleNV(rawValue: numericBitCast(cStruct.z))!
-        self.w = ViewportCoordinateSwizzleNV(rawValue: numericBitCast(cStruct.w))!
+        self.x = ViewportCoordinateSwizzleNV(rawValue: numericBitCast(cStruct.x.rawValue))!
+        self.y = ViewportCoordinateSwizzleNV(rawValue: numericBitCast(cStruct.y.rawValue))!
+        self.z = ViewportCoordinateSwizzleNV(rawValue: numericBitCast(cStruct.z.rawValue))!
+        self.w = ViewportCoordinateSwizzleNV(rawValue: numericBitCast(cStruct.w.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(_ body: (UnsafePointer<VkViewportSwizzleNV>) throws(E) -> R) throws(E) -> R {
@@ -12290,7 +12290,7 @@ public struct PipelineViewportSwizzleStateCreateInfoNV: ChainableBase, PipelineV
 
 public protocol PipelineViewportSwizzleStateCreateInfoNVExtension: Chainable {}
 
-public struct PhysicalDeviceDiscardRectanglePropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceDiscardRectanglePropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceDiscardRectanglePropertiesEXT
 
     public static let structureType: StructureType = .physicalDeviceDiscardRectanglePropertiesEXT
@@ -12331,7 +12331,7 @@ public struct PipelineDiscardRectangleStateCreateInfoEXT: ChainableBase, Graphic
 
     public init(cStruct: VkPipelineDiscardRectangleStateCreateInfoEXT) {
         self.flags = PipelineDiscardRectangleStateCreateFlagsEXT(rawValue: cStruct.flags)
-        self.discardRectangleMode = DiscardRectangleModeEXT(rawValue: numericBitCast(cStruct.discardRectangleMode))!
+        self.discardRectangleMode = DiscardRectangleModeEXT(rawValue: numericBitCast(cStruct.discardRectangleMode.rawValue))!
         self.discardRectangles = UnsafeBufferPointer(start: cStruct.pDiscardRectangles, count: Int(cStruct.discardRectangleCount)).map{ Rect2D(cStruct: $0) }
     }
 
@@ -12355,7 +12355,7 @@ public struct PipelineDiscardRectangleStateCreateInfoEXT: ChainableBase, Graphic
 
 public protocol PipelineDiscardRectangleStateCreateInfoEXTExtension: Chainable {}
 
-public struct PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
 
     public static let structureType: StructureType = .physicalDeviceMultiviewPerViewAttributesPropertiesNVX
@@ -12450,7 +12450,7 @@ public struct PhysicalDeviceSurfaceInfo2KHR: ChainableBase {
         self.surface = surface
     }
 
-    public init(cStruct: VkPhysicalDeviceSurfaceInfo2KHR, instance: Instance?) {
+    public init(cStruct: VkPhysicalDeviceSurfaceInfo2KHR, instance: Instance) {
         self.surface = (cStruct.surface != nil) ? SurfaceKHR(handle: cStruct.surface, instance: instance) : nil
     }
 
@@ -12469,7 +12469,7 @@ public struct PhysicalDeviceSurfaceInfo2KHR: ChainableBase {
 
 public protocol PhysicalDeviceSurfaceInfo2KHRExtension: Chainable {}
 
-public struct SurfaceCapabilities2KHR: ChainableBase, OutStruct {
+public struct SurfaceCapabilities2KHR: ChainableBase {
     public typealias CStruct = VkSurfaceCapabilities2KHR
 
     public static let structureType: StructureType = .surfaceCapabilities2KHR
@@ -12496,7 +12496,7 @@ public struct SurfaceCapabilities2KHR: ChainableBase, OutStruct {
 
 public protocol SurfaceCapabilities2KHRExtension: Chainable {}
 
-public struct SurfaceFormat2KHR: ChainableBase, OutStruct {
+public struct SurfaceFormat2KHR: ChainableBase {
     public typealias CStruct = VkSurfaceFormat2KHR
 
     public static let structureType: StructureType = .surfaceFormat2KHR
@@ -12523,13 +12523,13 @@ public struct SurfaceFormat2KHR: ChainableBase, OutStruct {
 
 public protocol SurfaceFormat2KHRExtension: Chainable {}
 
-public struct DisplayProperties2KHR: ChainableBase, OutStruct {
+public struct DisplayProperties2KHR: ChainableBase {
     public typealias CStruct = VkDisplayProperties2KHR
 
     public static let structureType: StructureType = .displayProperties2KHR
     public let displayProperties: DisplayPropertiesKHR
 
-    public init(cStruct: VkDisplayProperties2KHR, physicalDevice: PhysicalDevice?) {
+    public init(cStruct: VkDisplayProperties2KHR, physicalDevice: PhysicalDevice) {
         self.displayProperties = DisplayPropertiesKHR(cStruct: cStruct.displayProperties, physicalDevice: physicalDevice)
     }
 
@@ -12550,13 +12550,13 @@ public struct DisplayProperties2KHR: ChainableBase, OutStruct {
 
 public protocol DisplayProperties2KHRExtension: Chainable {}
 
-public struct DisplayPlaneProperties2KHR: ChainableBase, OutStruct {
+public struct DisplayPlaneProperties2KHR: ChainableBase {
     public typealias CStruct = VkDisplayPlaneProperties2KHR
 
     public static let structureType: StructureType = .displayPlaneProperties2KHR
     public let displayPlaneProperties: DisplayPlanePropertiesKHR
 
-    public init(cStruct: VkDisplayPlaneProperties2KHR, physicalDevice: PhysicalDevice?) {
+    public init(cStruct: VkDisplayPlaneProperties2KHR, physicalDevice: PhysicalDevice) {
         self.displayPlaneProperties = DisplayPlanePropertiesKHR(cStruct: cStruct.displayPlaneProperties, physicalDevice: physicalDevice)
     }
 
@@ -12577,13 +12577,13 @@ public struct DisplayPlaneProperties2KHR: ChainableBase, OutStruct {
 
 public protocol DisplayPlaneProperties2KHRExtension: Chainable {}
 
-public struct DisplayModeProperties2KHR: ChainableBase, OutStruct {
+public struct DisplayModeProperties2KHR: ChainableBase {
     public typealias CStruct = VkDisplayModeProperties2KHR
 
     public static let structureType: StructureType = .displayModeProperties2KHR
     public let displayModeProperties: DisplayModePropertiesKHR
 
-    public init(cStruct: VkDisplayModeProperties2KHR, display: DisplayKHR?) {
+    public init(cStruct: VkDisplayModeProperties2KHR, display: DisplayKHR) {
         self.displayModeProperties = DisplayModePropertiesKHR(cStruct: cStruct.displayModeProperties, display: display)
     }
 
@@ -12604,7 +12604,7 @@ public struct DisplayModeProperties2KHR: ChainableBase, OutStruct {
 
 public protocol DisplayModeProperties2KHRExtension: Chainable {}
 
-public struct DisplayModeStereoPropertiesNV: ChainableBase, DisplayModeProperties2KHRExtension, OutStruct {
+public struct DisplayModeStereoPropertiesNV: ChainableBase, DisplayModeProperties2KHRExtension {
     public typealias CStruct = VkDisplayModeStereoPropertiesNV
 
     public static let structureType: StructureType = .displayModeStereoPropertiesNV
@@ -12641,7 +12641,7 @@ public struct DisplayPlaneInfo2KHR: ChainableBase {
         self.planeIndex = planeIndex
     }
 
-    public init(cStruct: VkDisplayPlaneInfo2KHR, display: DisplayKHR?) {
+    public init(cStruct: VkDisplayPlaneInfo2KHR, display: DisplayKHR) {
         self.mode = DisplayModeKHR(handle: cStruct.mode, display: display)
         self.planeIndex = cStruct.planeIndex
     }
@@ -12662,7 +12662,7 @@ public struct DisplayPlaneInfo2KHR: ChainableBase {
 
 public protocol DisplayPlaneInfo2KHRExtension: Chainable {}
 
-public struct DisplayPlaneCapabilities2KHR: ChainableBase, OutStruct {
+public struct DisplayPlaneCapabilities2KHR: ChainableBase {
     public typealias CStruct = VkDisplayPlaneCapabilities2KHR
 
     public static let structureType: StructureType = .displayPlaneCapabilities2KHR
@@ -12689,7 +12689,7 @@ public struct DisplayPlaneCapabilities2KHR: ChainableBase, OutStruct {
 
 public protocol DisplayPlaneCapabilities2KHRExtension: Chainable {}
 
-public struct SharedPresentSurfaceCapabilitiesKHR: ChainableBase, SurfaceCapabilities2KHRExtension, OutStruct {
+public struct SharedPresentSurfaceCapabilitiesKHR: ChainableBase, SurfaceCapabilities2KHRExtension {
     public typealias CStruct = VkSharedPresentSurfaceCapabilitiesKHR
 
     public static let structureType: StructureType = .sharedPresentSurfaceCapabilitiesKHR
@@ -12714,7 +12714,7 @@ public struct SharedPresentSurfaceCapabilitiesKHR: ChainableBase, SurfaceCapabil
 
 public protocol SharedPresentSurfaceCapabilitiesKHRExtension: Chainable {}
 
-public struct PhysicalDevice16BitStorageFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDevice16BitStorageFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevice16BitStorageFeatures
 
     public static let structureType: StructureType = .physicalDevice16bitStorageFeatures
@@ -12755,7 +12755,7 @@ public struct PhysicalDevice16BitStorageFeatures: ChainableBase, PhysicalDeviceF
 
 public protocol PhysicalDevice16BitStorageFeaturesExtension: Chainable {}
 
-public struct PhysicalDeviceSubgroupProperties: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceSubgroupProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceSubgroupProperties
 
     public static let structureType: StructureType = .physicalDeviceSubgroupProperties
@@ -12789,7 +12789,7 @@ public struct PhysicalDeviceSubgroupProperties: ChainableBase, PhysicalDevicePro
 
 public protocol PhysicalDeviceSubgroupPropertiesExtension: Chainable {}
 
-public struct PhysicalDeviceShaderSubgroupExtendedTypesFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderSubgroupExtendedTypesFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderSubgroupExtendedTypesFeatures
 
     public static let structureType: StructureType = .physicalDeviceShaderSubgroupExtendedTypesFeatures
@@ -12828,7 +12828,7 @@ public struct BufferMemoryRequirementsInfo2: ChainableBase {
         self.buffer = buffer
     }
 
-    public init(cStruct: VkBufferMemoryRequirementsInfo2, device: Device?) {
+    public init(cStruct: VkBufferMemoryRequirementsInfo2, device: Device) {
         self.buffer = Buffer(handle: cStruct.buffer, device: device)
     }
 
@@ -12888,7 +12888,7 @@ public struct ImageMemoryRequirementsInfo2: ChainableBase {
         self.image = image
     }
 
-    public init(cStruct: VkImageMemoryRequirementsInfo2, device: Device?) {
+    public init(cStruct: VkImageMemoryRequirementsInfo2, device: Device) {
         self.image = Image(handle: cStruct.image, device: device)
     }
 
@@ -12917,7 +12917,7 @@ public struct ImageSparseMemoryRequirementsInfo2: ChainableBase {
         self.image = image
     }
 
-    public init(cStruct: VkImageSparseMemoryRequirementsInfo2, device: Device?) {
+    public init(cStruct: VkImageSparseMemoryRequirementsInfo2, device: Device) {
         self.image = Image(handle: cStruct.image, device: device)
     }
 
@@ -12971,7 +12971,7 @@ public struct DeviceImageMemoryRequirements: ChainableBase {
 
 public protocol DeviceImageMemoryRequirementsExtension: Chainable {}
 
-public struct MemoryRequirements2: ChainableBase, OutStruct {
+public struct MemoryRequirements2: ChainableBase {
     public typealias CStruct = VkMemoryRequirements2
 
     public static let structureType: StructureType = .memoryRequirements2
@@ -12998,7 +12998,7 @@ public struct MemoryRequirements2: ChainableBase, OutStruct {
 
 public protocol MemoryRequirements2Extension: Chainable {}
 
-public struct SparseImageMemoryRequirements2: ChainableBase, OutStruct {
+public struct SparseImageMemoryRequirements2: ChainableBase {
     public typealias CStruct = VkSparseImageMemoryRequirements2
 
     public static let structureType: StructureType = .sparseImageMemoryRequirements2
@@ -13025,14 +13025,14 @@ public struct SparseImageMemoryRequirements2: ChainableBase, OutStruct {
 
 public protocol SparseImageMemoryRequirements2Extension: Chainable {}
 
-public struct PhysicalDevicePointClippingProperties: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDevicePointClippingProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDevicePointClippingProperties
 
     public static let structureType: StructureType = .physicalDevicePointClippingProperties
     public let pointClippingBehavior: PointClippingBehavior
 
     public init(cStruct: VkPhysicalDevicePointClippingProperties) {
-        self.pointClippingBehavior = PointClippingBehavior(rawValue: numericBitCast(cStruct.pointClippingBehavior))!
+        self.pointClippingBehavior = PointClippingBehavior(rawValue: numericBitCast(cStruct.pointClippingBehavior.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPhysicalDevicePointClippingProperties>) throws(E) -> R) throws(E) -> R {
@@ -13050,7 +13050,7 @@ public struct PhysicalDevicePointClippingProperties: ChainableBase, PhysicalDevi
 
 public protocol PhysicalDevicePointClippingPropertiesExtension: Chainable {}
 
-public struct MemoryDedicatedRequirements: ChainableBase, MemoryRequirements2Extension, OutStruct {
+public struct MemoryDedicatedRequirements: ChainableBase, MemoryRequirements2Extension {
     public typealias CStruct = VkMemoryDedicatedRequirements
 
     public static let structureType: StructureType = .memoryDedicatedRequirements
@@ -13090,7 +13090,7 @@ public struct MemoryDedicatedAllocateInfo: ChainableBase, MemoryAllocateInfoExte
         self.buffer = buffer
     }
 
-    public init(cStruct: VkMemoryDedicatedAllocateInfo, device: Device?) {
+    public init(cStruct: VkMemoryDedicatedAllocateInfo, device: Device) {
         self.image = (cStruct.image != nil) ? Image(handle: cStruct.image, device: device) : nil
         self.buffer = (cStruct.buffer != nil) ? Buffer(handle: cStruct.buffer, device: device) : nil
     }
@@ -13184,7 +13184,7 @@ public struct PipelineTessellationDomainOriginStateCreateInfo: ChainableBase, Pi
     }
 
     public init(cStruct: VkPipelineTessellationDomainOriginStateCreateInfo) {
-        self.domainOrigin = TessellationDomainOrigin(rawValue: numericBitCast(cStruct.domainOrigin))!
+        self.domainOrigin = TessellationDomainOrigin(rawValue: numericBitCast(cStruct.domainOrigin.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPipelineTessellationDomainOriginStateCreateInfo>) throws(E) -> R) throws(E) -> R {
@@ -13212,7 +13212,7 @@ public struct SamplerYcbcrConversionInfo: ChainableBase, SamplerCreateInfoExtens
         self.conversion = conversion
     }
 
-    public init(cStruct: VkSamplerYcbcrConversionInfo, device: Device?) {
+    public init(cStruct: VkSamplerYcbcrConversionInfo, device: Device) {
         self.conversion = SamplerYcbcrConversion(handle: cStruct.conversion, device: device)
     }
 
@@ -13256,13 +13256,13 @@ public struct SamplerYcbcrConversionCreateInfo: ChainableBase {
     }
 
     public init(cStruct: VkSamplerYcbcrConversionCreateInfo) {
-        self.format = Format(rawValue: numericBitCast(cStruct.format))!
-        self.ycbcrModel = SamplerYcbcrModelConversion(rawValue: numericBitCast(cStruct.ycbcrModel))!
-        self.ycbcrRange = SamplerYcbcrRange(rawValue: numericBitCast(cStruct.ycbcrRange))!
+        self.format = Format(rawValue: numericBitCast(cStruct.format.rawValue))!
+        self.ycbcrModel = SamplerYcbcrModelConversion(rawValue: numericBitCast(cStruct.ycbcrModel.rawValue))!
+        self.ycbcrRange = SamplerYcbcrRange(rawValue: numericBitCast(cStruct.ycbcrRange.rawValue))!
         self.components = ComponentMapping(cStruct: cStruct.components)
-        self.xChromaOffset = ChromaLocation(rawValue: numericBitCast(cStruct.xChromaOffset))!
-        self.yChromaOffset = ChromaLocation(rawValue: numericBitCast(cStruct.yChromaOffset))!
-        self.chromaFilter = Filter(rawValue: numericBitCast(cStruct.chromaFilter))!
+        self.xChromaOffset = ChromaLocation(rawValue: numericBitCast(cStruct.xChromaOffset.rawValue))!
+        self.yChromaOffset = ChromaLocation(rawValue: numericBitCast(cStruct.yChromaOffset.rawValue))!
+        self.chromaFilter = Filter(rawValue: numericBitCast(cStruct.chromaFilter.rawValue))!
         self.forceExplicitReconstruction = cStruct.forceExplicitReconstruction == VK_TRUE
     }
 
@@ -13348,7 +13348,7 @@ public struct ImagePlaneMemoryRequirementsInfo: ChainableBase, ImageMemoryRequir
 
 public protocol ImagePlaneMemoryRequirementsInfoExtension: Chainable {}
 
-public struct PhysicalDeviceSamplerYcbcrConversionFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceSamplerYcbcrConversionFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceSamplerYcbcrConversionFeatures
 
     public static let structureType: StructureType = .physicalDeviceSamplerYcbcrConversionFeatures
@@ -13377,7 +13377,7 @@ public struct PhysicalDeviceSamplerYcbcrConversionFeatures: ChainableBase, Physi
 
 public protocol PhysicalDeviceSamplerYcbcrConversionFeaturesExtension: Chainable {}
 
-public struct SamplerYcbcrConversionImageFormatProperties: ChainableBase, ImageFormatProperties2Extension, OutStruct {
+public struct SamplerYcbcrConversionImageFormatProperties: ChainableBase, ImageFormatProperties2Extension {
     public typealias CStruct = VkSamplerYcbcrConversionImageFormatProperties
 
     public static let structureType: StructureType = .samplerYcbcrConversionImageFormatProperties
@@ -13402,7 +13402,7 @@ public struct SamplerYcbcrConversionImageFormatProperties: ChainableBase, ImageF
 
 public protocol SamplerYcbcrConversionImageFormatPropertiesExtension: Chainable {}
 
-public struct TextureLODGatherFormatPropertiesAMD: ChainableBase, ImageFormatProperties2Extension, OutStruct {
+public struct TextureLODGatherFormatPropertiesAMD: ChainableBase, ImageFormatProperties2Extension {
     public typealias CStruct = VkTextureLODGatherFormatPropertiesAMD
 
     public static let structureType: StructureType = .textureLodGatherFormatPropertiesAMD
@@ -13441,7 +13441,7 @@ public struct ConditionalRenderingBeginInfoEXT: ChainableBase {
         self.flags = flags
     }
 
-    public init(cStruct: VkConditionalRenderingBeginInfoEXT, device: Device?) {
+    public init(cStruct: VkConditionalRenderingBeginInfoEXT, device: Device) {
         self.buffer = Buffer(handle: cStruct.buffer, device: device)
         self.offset = cStruct.offset
         self.flags = ConditionalRenderingFlagsEXT(rawValue: cStruct.flags)
@@ -13493,7 +13493,7 @@ public struct ProtectedSubmitInfo: ChainableBase, SubmitInfoExtension {
 
 public protocol ProtectedSubmitInfoExtension: Chainable {}
 
-public struct PhysicalDeviceProtectedMemoryFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceProtectedMemoryFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceProtectedMemoryFeatures
 
     public static let structureType: StructureType = .physicalDeviceProtectedMemoryFeatures
@@ -13522,7 +13522,7 @@ public struct PhysicalDeviceProtectedMemoryFeatures: ChainableBase, PhysicalDevi
 
 public protocol PhysicalDeviceProtectedMemoryFeaturesExtension: Chainable {}
 
-public struct PhysicalDeviceProtectedMemoryProperties: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceProtectedMemoryProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceProtectedMemoryProperties
 
     public static let structureType: StructureType = .physicalDeviceProtectedMemoryProperties
@@ -13621,7 +13621,7 @@ public struct PipelineCoverageToColorStateCreateInfoNV: ChainableBase, PipelineM
 
 public protocol PipelineCoverageToColorStateCreateInfoNVExtension: Chainable {}
 
-public struct PhysicalDeviceSamplerFilterMinmaxProperties: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceSamplerFilterMinmaxProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceSamplerFilterMinmaxProperties
 
     public static let structureType: StructureType = .physicalDeviceSamplerFilterMinmaxProperties
@@ -13841,7 +13841,7 @@ public struct PipelineSampleLocationsStateCreateInfoEXT: ChainableBase, Pipeline
 
 public protocol PipelineSampleLocationsStateCreateInfoEXTExtension: Chainable {}
 
-public struct PhysicalDeviceSampleLocationsPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceSampleLocationsPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceSampleLocationsPropertiesEXT
 
     public static let structureType: StructureType = .physicalDeviceSampleLocationsPropertiesEXT
@@ -13880,7 +13880,7 @@ public struct PhysicalDeviceSampleLocationsPropertiesEXT: ChainableBase, Physica
 
 public protocol PhysicalDeviceSampleLocationsPropertiesEXTExtension: Chainable {}
 
-public struct MultisamplePropertiesEXT: ChainableBase, OutStruct {
+public struct MultisamplePropertiesEXT: ChainableBase {
     public typealias CStruct = VkMultisamplePropertiesEXT
 
     public static let structureType: StructureType = .multisamplePropertiesEXT
@@ -13918,7 +13918,7 @@ public struct SamplerReductionModeCreateInfo: ChainableBase, SamplerCreateInfoEx
     }
 
     public init(cStruct: VkSamplerReductionModeCreateInfo) {
-        self.reductionMode = SamplerReductionMode(rawValue: numericBitCast(cStruct.reductionMode))!
+        self.reductionMode = SamplerReductionMode(rawValue: numericBitCast(cStruct.reductionMode.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkSamplerReductionModeCreateInfo>) throws(E) -> R) throws(E) -> R {
@@ -13936,7 +13936,7 @@ public struct SamplerReductionModeCreateInfo: ChainableBase, SamplerCreateInfoEx
 
 public protocol SamplerReductionModeCreateInfoExtension: Chainable {}
 
-public struct PhysicalDeviceBlendOperationAdvancedFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceBlendOperationAdvancedFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceBlendOperationAdvancedFeaturesEXT
@@ -13965,7 +13965,7 @@ public struct PhysicalDeviceBlendOperationAdvancedFeaturesEXT: ChainableBase, Ph
 
 public protocol PhysicalDeviceBlendOperationAdvancedFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceMultiDrawFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceMultiDrawFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceMultiDrawFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceMultiDrawFeaturesEXT
@@ -13994,7 +13994,7 @@ public struct PhysicalDeviceMultiDrawFeaturesEXT: ChainableBase, PhysicalDeviceF
 
 public protocol PhysicalDeviceMultiDrawFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceBlendOperationAdvancedPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceBlendOperationAdvancedPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
 
     public static let structureType: StructureType = .physicalDeviceBlendOperationAdvancedPropertiesEXT
@@ -14051,7 +14051,7 @@ public struct PipelineColorBlendAdvancedStateCreateInfoEXT: ChainableBase, Pipel
     public init(cStruct: VkPipelineColorBlendAdvancedStateCreateInfoEXT) {
         self.srcPremultiplied = cStruct.srcPremultiplied == VK_TRUE
         self.dstPremultiplied = cStruct.dstPremultiplied == VK_TRUE
-        self.blendOverlap = BlendOverlapEXT(rawValue: numericBitCast(cStruct.blendOverlap))!
+        self.blendOverlap = BlendOverlapEXT(rawValue: numericBitCast(cStruct.blendOverlap.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPipelineColorBlendAdvancedStateCreateInfoEXT>) throws(E) -> R) throws(E) -> R {
@@ -14071,7 +14071,7 @@ public struct PipelineColorBlendAdvancedStateCreateInfoEXT: ChainableBase, Pipel
 
 public protocol PipelineColorBlendAdvancedStateCreateInfoEXTExtension: Chainable {}
 
-public struct PhysicalDeviceInlineUniformBlockFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceInlineUniformBlockFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceInlineUniformBlockFeatures
 
     public static let structureType: StructureType = .physicalDeviceInlineUniformBlockFeatures
@@ -14104,7 +14104,7 @@ public struct PhysicalDeviceInlineUniformBlockFeatures: ChainableBase, PhysicalD
 
 public protocol PhysicalDeviceInlineUniformBlockFeaturesExtension: Chainable {}
 
-public struct PhysicalDeviceInlineUniformBlockProperties: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceInlineUniformBlockProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceInlineUniformBlockProperties
 
     public static let structureType: StructureType = .physicalDeviceInlineUniformBlockProperties
@@ -14221,7 +14221,7 @@ public struct PipelineCoverageModulationStateCreateInfoNV: ChainableBase, Pipeli
 
     public init(cStruct: VkPipelineCoverageModulationStateCreateInfoNV) {
         self.flags = PipelineCoverageModulationStateCreateFlagsNV(rawValue: cStruct.flags)
-        self.coverageModulationMode = CoverageModulationModeNV(rawValue: numericBitCast(cStruct.coverageModulationMode))!
+        self.coverageModulationMode = CoverageModulationModeNV(rawValue: numericBitCast(cStruct.coverageModulationMode.rawValue))!
         self.coverageModulationTableEnable = cStruct.coverageModulationTableEnable == VK_TRUE
         self.coverageModulationTable = (cStruct.pCoverageModulationTable != nil) ? Array(UnsafeBufferPointer(start: cStruct.pCoverageModulationTable, count: Int(cStruct.coverageModulationTableCount))) : nil
     }
@@ -14258,7 +14258,7 @@ public struct ImageFormatListCreateInfo: ChainableBase, ImageCreateInfoExtension
     }
 
     public init(cStruct: VkImageFormatListCreateInfo) {
-        self.viewFormats = UnsafeBufferPointer(start: cStruct.pViewFormats, count: Int(cStruct.viewFormatCount)).map{ Format(rawValue: numericBitCast($0))! }
+        self.viewFormats = UnsafeBufferPointer(start: cStruct.pViewFormats, count: Int(cStruct.viewFormatCount)).map{ Format(rawValue: numericBitCast($0.rawValue))! }
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkImageFormatListCreateInfo>) throws(E) -> R) throws(E) -> R {
@@ -14326,7 +14326,7 @@ public struct ShaderModuleValidationCacheCreateInfoEXT: ChainableBase, ShaderMod
         self.validationCache = validationCache
     }
 
-    public init(cStruct: VkShaderModuleValidationCacheCreateInfoEXT, device: Device?) {
+    public init(cStruct: VkShaderModuleValidationCacheCreateInfoEXT, device: Device) {
         self.validationCache = ValidationCacheEXT(handle: cStruct.validationCache, device: device)
     }
 
@@ -14345,7 +14345,7 @@ public struct ShaderModuleValidationCacheCreateInfoEXT: ChainableBase, ShaderMod
 
 public protocol ShaderModuleValidationCacheCreateInfoEXTExtension: Chainable {}
 
-public struct PhysicalDeviceMaintenance3Properties: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceMaintenance3Properties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceMaintenance3Properties
 
     public static let structureType: StructureType = .physicalDeviceMaintenance3Properties
@@ -14373,7 +14373,7 @@ public struct PhysicalDeviceMaintenance3Properties: ChainableBase, PhysicalDevic
 
 public protocol PhysicalDeviceMaintenance3PropertiesExtension: Chainable {}
 
-public struct PhysicalDeviceMaintenance4Features: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceMaintenance4Features: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceMaintenance4Features
 
     public static let structureType: StructureType = .physicalDeviceMaintenance4Features
@@ -14402,7 +14402,7 @@ public struct PhysicalDeviceMaintenance4Features: ChainableBase, PhysicalDeviceF
 
 public protocol PhysicalDeviceMaintenance4FeaturesExtension: Chainable {}
 
-public struct PhysicalDeviceMaintenance4Properties: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceMaintenance4Properties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceMaintenance4Properties
 
     public static let structureType: StructureType = .physicalDeviceMaintenance4Properties
@@ -14427,7 +14427,7 @@ public struct PhysicalDeviceMaintenance4Properties: ChainableBase, PhysicalDevic
 
 public protocol PhysicalDeviceMaintenance4PropertiesExtension: Chainable {}
 
-public struct PhysicalDeviceMaintenance5Features: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceMaintenance5Features: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceMaintenance5Features
 
     public static let structureType: StructureType = .physicalDeviceMaintenance5Features
@@ -14456,7 +14456,7 @@ public struct PhysicalDeviceMaintenance5Features: ChainableBase, PhysicalDeviceF
 
 public protocol PhysicalDeviceMaintenance5FeaturesExtension: Chainable {}
 
-public struct PhysicalDeviceMaintenance5Properties: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceMaintenance5Properties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceMaintenance5Properties
 
     public static let structureType: StructureType = .physicalDeviceMaintenance5Properties
@@ -14496,7 +14496,7 @@ public struct PhysicalDeviceMaintenance5Properties: ChainableBase, PhysicalDevic
 
 public protocol PhysicalDeviceMaintenance5PropertiesExtension: Chainable {}
 
-public struct PhysicalDeviceMaintenance6Features: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceMaintenance6Features: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceMaintenance6Features
 
     public static let structureType: StructureType = .physicalDeviceMaintenance6Features
@@ -14525,7 +14525,7 @@ public struct PhysicalDeviceMaintenance6Features: ChainableBase, PhysicalDeviceF
 
 public protocol PhysicalDeviceMaintenance6FeaturesExtension: Chainable {}
 
-public struct PhysicalDeviceMaintenance6Properties: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceMaintenance6Properties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceMaintenance6Properties
 
     public static let structureType: StructureType = .physicalDeviceMaintenance6Properties
@@ -14556,7 +14556,7 @@ public struct PhysicalDeviceMaintenance6Properties: ChainableBase, PhysicalDevic
 
 public protocol PhysicalDeviceMaintenance6PropertiesExtension: Chainable {}
 
-public struct PhysicalDeviceMaintenance7FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceMaintenance7FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceMaintenance7FeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceMaintenance7FeaturesKHR
@@ -14585,7 +14585,7 @@ public struct PhysicalDeviceMaintenance7FeaturesKHR: ChainableBase, PhysicalDevi
 
 public protocol PhysicalDeviceMaintenance7FeaturesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceMaintenance7PropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceMaintenance7PropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceMaintenance7PropertiesKHR
 
     public static let structureType: StructureType = .physicalDeviceMaintenance7PropertiesKHR
@@ -14631,7 +14631,7 @@ public struct PhysicalDeviceMaintenance7PropertiesKHR: ChainableBase, PhysicalDe
 
 public protocol PhysicalDeviceMaintenance7PropertiesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceLayeredApiPropertiesKHR: ChainableBase, OutStruct {
+public struct PhysicalDeviceLayeredApiPropertiesKHR: ChainableBase {
     public typealias CStruct = VkPhysicalDeviceLayeredApiPropertiesKHR
 
     public static let structureType: StructureType = .physicalDeviceLayeredApiPropertiesKHR
@@ -14643,7 +14643,7 @@ public struct PhysicalDeviceLayeredApiPropertiesKHR: ChainableBase, OutStruct {
     public init(cStruct: VkPhysicalDeviceLayeredApiPropertiesKHR) {
         self.vendorID = cStruct.vendorID
         self.deviceID = cStruct.deviceID
-        self.layeredAPI = PhysicalDeviceLayeredApiKHR(rawValue: numericBitCast(cStruct.layeredAPI))!
+        self.layeredAPI = PhysicalDeviceLayeredApiKHR(rawValue: numericBitCast(cStruct.layeredAPI.rawValue))!
         self.deviceName = String(unsafeBytesOf: cStruct.deviceName)
     }
 
@@ -14665,7 +14665,7 @@ public struct PhysicalDeviceLayeredApiPropertiesKHR: ChainableBase, OutStruct {
 
 public protocol PhysicalDeviceLayeredApiPropertiesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceLayeredApiPropertiesListKHR: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceLayeredApiPropertiesListKHR: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceLayeredApiPropertiesListKHR
 
     public static let structureType: StructureType = .physicalDeviceLayeredApiPropertiesListKHR
@@ -14698,7 +14698,7 @@ public struct PhysicalDeviceLayeredApiPropertiesListKHR: ChainableBase, Physical
 
 public protocol PhysicalDeviceLayeredApiPropertiesListKHRExtension: Chainable {}
 
-public struct PhysicalDeviceLayeredApiVulkanPropertiesKHR: ChainableBase, PhysicalDeviceLayeredApiPropertiesKHRExtension, OutStruct {
+public struct PhysicalDeviceLayeredApiVulkanPropertiesKHR: ChainableBase, PhysicalDeviceLayeredApiPropertiesKHRExtension {
     public typealias CStruct = VkPhysicalDeviceLayeredApiVulkanPropertiesKHR
 
     public static let structureType: StructureType = .physicalDeviceLayeredApiVulkanPropertiesKHR
@@ -14725,7 +14725,7 @@ public struct PhysicalDeviceLayeredApiVulkanPropertiesKHR: ChainableBase, Physic
 
 public protocol PhysicalDeviceLayeredApiVulkanPropertiesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceMaintenance8FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceMaintenance8FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceMaintenance8FeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceMaintenance8FeaturesKHR
@@ -14754,7 +14754,7 @@ public struct PhysicalDeviceMaintenance8FeaturesKHR: ChainableBase, PhysicalDevi
 
 public protocol PhysicalDeviceMaintenance8FeaturesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceMaintenance9FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceMaintenance9FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceMaintenance9FeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceMaintenance9FeaturesKHR
@@ -14783,7 +14783,7 @@ public struct PhysicalDeviceMaintenance9FeaturesKHR: ChainableBase, PhysicalDevi
 
 public protocol PhysicalDeviceMaintenance9FeaturesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceMaintenance9PropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceMaintenance9PropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceMaintenance9PropertiesKHR
 
     public static let structureType: StructureType = .physicalDeviceMaintenance9PropertiesKHR
@@ -14792,7 +14792,7 @@ public struct PhysicalDeviceMaintenance9PropertiesKHR: ChainableBase, PhysicalDe
 
     public init(cStruct: VkPhysicalDeviceMaintenance9PropertiesKHR) {
         self.image2DViewOf3DSparse = cStruct.image2DViewOf3DSparse == VK_TRUE
-        self.defaultVertexAttributeValue = DefaultVertexAttributeValueKHR(rawValue: numericBitCast(cStruct.defaultVertexAttributeValue))!
+        self.defaultVertexAttributeValue = DefaultVertexAttributeValueKHR(rawValue: numericBitCast(cStruct.defaultVertexAttributeValue.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPhysicalDeviceMaintenance9PropertiesKHR>) throws(E) -> R) throws(E) -> R {
@@ -14811,7 +14811,7 @@ public struct PhysicalDeviceMaintenance9PropertiesKHR: ChainableBase, PhysicalDe
 
 public protocol PhysicalDeviceMaintenance9PropertiesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceMaintenance11FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceMaintenance11FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceMaintenance11FeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceMaintenance11FeaturesKHR
@@ -14840,7 +14840,7 @@ public struct PhysicalDeviceMaintenance11FeaturesKHR: ChainableBase, PhysicalDev
 
 public protocol PhysicalDeviceMaintenance11FeaturesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceMaintenance10PropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceMaintenance10PropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceMaintenance10PropertiesKHR
 
     public static let structureType: StructureType = .physicalDeviceMaintenance10PropertiesKHR
@@ -14871,7 +14871,7 @@ public struct PhysicalDeviceMaintenance10PropertiesKHR: ChainableBase, PhysicalD
 
 public protocol PhysicalDeviceMaintenance10PropertiesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceMaintenance10FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceMaintenance10FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceMaintenance10FeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceMaintenance10FeaturesKHR
@@ -14900,7 +14900,7 @@ public struct PhysicalDeviceMaintenance10FeaturesKHR: ChainableBase, PhysicalDev
 
 public protocol PhysicalDeviceMaintenance10FeaturesKHRExtension: Chainable {}
 
-public struct QueueFamilyOwnershipTransferPropertiesKHR: ChainableBase, QueueFamilyProperties2Extension, OutStruct {
+public struct QueueFamilyOwnershipTransferPropertiesKHR: ChainableBase, QueueFamilyProperties2Extension {
     public typealias CStruct = VkQueueFamilyOwnershipTransferPropertiesKHR
 
     public static let structureType: StructureType = .queueFamilyOwnershipTransferPropertiesKHR
@@ -14925,7 +14925,7 @@ public struct QueueFamilyOwnershipTransferPropertiesKHR: ChainableBase, QueueFam
 
 public protocol QueueFamilyOwnershipTransferPropertiesKHRExtension: Chainable {}
 
-public struct QueueFamilyOptimalImageTransferGranularityPropertiesKHR: ChainableBase, QueueFamilyProperties2Extension, OutStruct {
+public struct QueueFamilyOptimalImageTransferGranularityPropertiesKHR: ChainableBase, QueueFamilyProperties2Extension {
     public typealias CStruct = VkQueueFamilyOptimalImageTransferGranularityPropertiesKHR
 
     public static let structureType: StructureType = .queueFamilyOptimalImageTransferGranularityPropertiesKHR
@@ -14970,9 +14970,9 @@ public struct RenderingAreaInfo: ChainableBase {
 
     public init(cStruct: VkRenderingAreaInfo) {
         self.viewMask = cStruct.viewMask
-        self.colorAttachmentFormats = UnsafeBufferPointer(start: cStruct.pColorAttachmentFormats, count: Int(cStruct.colorAttachmentCount)).map{ Format(rawValue: numericBitCast($0))! }
-        self.depthAttachmentFormat = Format(rawValue: numericBitCast(cStruct.depthAttachmentFormat))!
-        self.stencilAttachmentFormat = Format(rawValue: numericBitCast(cStruct.stencilAttachmentFormat))!
+        self.colorAttachmentFormats = UnsafeBufferPointer(start: cStruct.pColorAttachmentFormats, count: Int(cStruct.colorAttachmentCount)).map{ Format(rawValue: numericBitCast($0.rawValue))! }
+        self.depthAttachmentFormat = Format(rawValue: numericBitCast(cStruct.depthAttachmentFormat.rawValue))!
+        self.stencilAttachmentFormat = Format(rawValue: numericBitCast(cStruct.stencilAttachmentFormat.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkRenderingAreaInfo>) throws(E) -> R) throws(E) -> R {
@@ -14996,7 +14996,7 @@ public struct RenderingAreaInfo: ChainableBase {
 
 public protocol RenderingAreaInfoExtension: Chainable {}
 
-public struct DescriptorSetLayoutSupport: ChainableBase, OutStruct {
+public struct DescriptorSetLayoutSupport: ChainableBase {
     public typealias CStruct = VkDescriptorSetLayoutSupport
 
     public static let structureType: StructureType = .descriptorSetLayoutSupport
@@ -15021,7 +15021,7 @@ public struct DescriptorSetLayoutSupport: ChainableBase, OutStruct {
 
 public protocol DescriptorSetLayoutSupportExtension: Chainable {}
 
-public struct PhysicalDeviceShaderDrawParametersFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderDrawParametersFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderDrawParametersFeatures
 
     public static let structureType: StructureType = .physicalDeviceShaderDrawParametersFeatures
@@ -15050,7 +15050,7 @@ public struct PhysicalDeviceShaderDrawParametersFeatures: ChainableBase, Physica
 
 public protocol PhysicalDeviceShaderDrawParametersFeaturesExtension: Chainable {}
 
-public struct PhysicalDeviceShaderFloat16Int8Features: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderFloat16Int8Features: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderFloat16Int8Features
 
     public static let structureType: StructureType = .physicalDeviceShaderFloat16Int8Features
@@ -15083,7 +15083,7 @@ public struct PhysicalDeviceShaderFloat16Int8Features: ChainableBase, PhysicalDe
 
 public protocol PhysicalDeviceShaderFloat16Int8FeaturesExtension: Chainable {}
 
-public struct PhysicalDeviceFloatControlsProperties: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceFloatControlsProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceFloatControlsProperties
 
     public static let structureType: StructureType = .physicalDeviceFloatControlsProperties
@@ -15106,8 +15106,8 @@ public struct PhysicalDeviceFloatControlsProperties: ChainableBase, PhysicalDevi
     public let shaderRoundingModeRTZFloat64: Bool
 
     public init(cStruct: VkPhysicalDeviceFloatControlsProperties) {
-        self.denormBehaviorIndependence = ShaderFloatControlsIndependence(rawValue: numericBitCast(cStruct.denormBehaviorIndependence))!
-        self.roundingModeIndependence = ShaderFloatControlsIndependence(rawValue: numericBitCast(cStruct.roundingModeIndependence))!
+        self.denormBehaviorIndependence = ShaderFloatControlsIndependence(rawValue: numericBitCast(cStruct.denormBehaviorIndependence.rawValue))!
+        self.roundingModeIndependence = ShaderFloatControlsIndependence(rawValue: numericBitCast(cStruct.roundingModeIndependence.rawValue))!
         self.shaderSignedZeroInfNanPreserveFloat16 = cStruct.shaderSignedZeroInfNanPreserveFloat16 == VK_TRUE
         self.shaderSignedZeroInfNanPreserveFloat32 = cStruct.shaderSignedZeroInfNanPreserveFloat32 == VK_TRUE
         self.shaderSignedZeroInfNanPreserveFloat64 = cStruct.shaderSignedZeroInfNanPreserveFloat64 == VK_TRUE
@@ -15156,7 +15156,7 @@ public struct PhysicalDeviceFloatControlsProperties: ChainableBase, PhysicalDevi
 
 public protocol PhysicalDeviceFloatControlsPropertiesExtension: Chainable {}
 
-public struct PhysicalDeviceHostQueryResetFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceHostQueryResetFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceHostQueryResetFeatures
 
     public static let structureType: StructureType = .physicalDeviceHostQueryResetFeatures
@@ -15249,7 +15249,7 @@ public struct ShaderStatisticsInfoAMD: CStructConvertible {
     }
 }
 
-public struct PhysicalDeviceElapsedTimerQueryFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceElapsedTimerQueryFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceElapsedTimerQueryFeaturesQCOM
 
     public static let structureType: StructureType = .physicalDeviceElapsedTimerQueryFeaturesQCOM
@@ -15289,7 +15289,7 @@ public struct DeviceQueueGlobalPriorityCreateInfo: ChainableBase, DeviceQueueCre
     }
 
     public init(cStruct: VkDeviceQueueGlobalPriorityCreateInfo) {
-        self.globalPriority = QueueGlobalPriority(rawValue: numericBitCast(cStruct.globalPriority))!
+        self.globalPriority = QueueGlobalPriority(rawValue: numericBitCast(cStruct.globalPriority.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkDeviceQueueGlobalPriorityCreateInfo>) throws(E) -> R) throws(E) -> R {
@@ -15307,7 +15307,7 @@ public struct DeviceQueueGlobalPriorityCreateInfo: ChainableBase, DeviceQueueCre
 
 public protocol DeviceQueueGlobalPriorityCreateInfoExtension: Chainable {}
 
-public struct PhysicalDeviceGlobalPriorityQueryFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceGlobalPriorityQueryFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceGlobalPriorityQueryFeatures
 
     public static let structureType: StructureType = .physicalDeviceGlobalPriorityQueryFeatures
@@ -15336,7 +15336,7 @@ public struct PhysicalDeviceGlobalPriorityQueryFeatures: ChainableBase, Physical
 
 public protocol PhysicalDeviceGlobalPriorityQueryFeaturesExtension: Chainable {}
 
-public struct QueueFamilyGlobalPriorityProperties: ChainableBase, QueueFamilyProperties2Extension, OutStruct {
+public struct QueueFamilyGlobalPriorityProperties: ChainableBase, QueueFamilyProperties2Extension {
     public typealias CStruct = VkQueueFamilyGlobalPriorityProperties
 
     public static let structureType: StructureType = .queueFamilyGlobalPriorityProperties
@@ -15379,7 +15379,7 @@ public struct DebugUtilsObjectNameInfoEXT: ChainableBase, PipelineShaderStageCre
     }
 
     public init(cStruct: VkDebugUtilsObjectNameInfoEXT) {
-        self.objectType = ObjectType(rawValue: numericBitCast(cStruct.objectType))!
+        self.objectType = ObjectType(rawValue: numericBitCast(cStruct.objectType.rawValue))!
         self.objectHandle = cStruct.objectHandle
         self.objectName = (cStruct.pObjectName != nil) ? String(cString: cStruct.pObjectName) : nil
     }
@@ -15422,7 +15422,7 @@ public struct DebugUtilsObjectTagInfoEXT: ChainableBase {
     }
 
     public init(cStruct: VkDebugUtilsObjectTagInfoEXT) {
-        self.objectType = ObjectType(rawValue: numericBitCast(cStruct.objectType))!
+        self.objectType = ObjectType(rawValue: numericBitCast(cStruct.objectType.rawValue))!
         self.objectHandle = cStruct.objectHandle
         self.tagName = cStruct.tagName
         self.tagSize = cStruct.tagSize
@@ -15594,7 +15594,7 @@ public struct DebugUtilsMessengerCallbackDataEXT: ChainableBase {
 
 public protocol DebugUtilsMessengerCallbackDataEXTExtension: Chainable {}
 
-public struct PhysicalDeviceDeviceMemoryReportFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceDeviceMemoryReportFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDeviceMemoryReportFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceDeviceMemoryReportFeaturesEXT
@@ -15660,7 +15660,7 @@ public struct DeviceDeviceMemoryReportCreateInfoEXT: ChainableBase, DeviceCreate
 
 public protocol DeviceDeviceMemoryReportCreateInfoEXTExtension: Chainable {}
 
-public struct DeviceMemoryReportCallbackDataEXT: ChainableBase, OutStruct {
+public struct DeviceMemoryReportCallbackDataEXT: ChainableBase {
     public typealias CStruct = VkDeviceMemoryReportCallbackDataEXT
 
     public static let structureType: StructureType = .deviceMemoryReportCallbackDataEXT
@@ -15674,10 +15674,10 @@ public struct DeviceMemoryReportCallbackDataEXT: ChainableBase, OutStruct {
 
     public init(cStruct: VkDeviceMemoryReportCallbackDataEXT) {
         self.flags = DeviceMemoryReportFlagsEXT(rawValue: cStruct.flags)
-        self.type = DeviceMemoryReportEventTypeEXT(rawValue: numericBitCast(cStruct.type))!
+        self.type = DeviceMemoryReportEventTypeEXT(rawValue: numericBitCast(cStruct.type.rawValue))!
         self.memoryObjectId = cStruct.memoryObjectId
         self.size = cStruct.size
-        self.objectType = ObjectType(rawValue: numericBitCast(cStruct.objectType))!
+        self.objectType = ObjectType(rawValue: numericBitCast(cStruct.objectType.rawValue))!
         self.objectHandle = cStruct.objectHandle
         self.heapIndex = cStruct.heapIndex
     }
@@ -15736,7 +15736,7 @@ public struct ImportMemoryHostPointerInfoEXT: ChainableBase, MemoryAllocateInfoE
 
 public protocol ImportMemoryHostPointerInfoEXTExtension: Chainable {}
 
-public struct MemoryHostPointerPropertiesEXT: ChainableBase, OutStruct {
+public struct MemoryHostPointerPropertiesEXT: ChainableBase {
     public typealias CStruct = VkMemoryHostPointerPropertiesEXT
 
     public static let structureType: StructureType = .memoryHostPointerPropertiesEXT
@@ -15761,7 +15761,7 @@ public struct MemoryHostPointerPropertiesEXT: ChainableBase, OutStruct {
 
 public protocol MemoryHostPointerPropertiesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceExternalMemoryHostPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceExternalMemoryHostPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceExternalMemoryHostPropertiesEXT
 
     public static let structureType: StructureType = .physicalDeviceExternalMemoryHostPropertiesEXT
@@ -15786,7 +15786,7 @@ public struct PhysicalDeviceExternalMemoryHostPropertiesEXT: ChainableBase, Phys
 
 public protocol PhysicalDeviceExternalMemoryHostPropertiesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceConservativeRasterizationPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceConservativeRasterizationPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceConservativeRasterizationPropertiesEXT
 
     public static let structureType: StructureType = .physicalDeviceConservativeRasterizationPropertiesEXT
@@ -15846,7 +15846,7 @@ public struct CalibratedTimestampInfoKHR: ChainableBase {
     }
 
     public init(cStruct: VkCalibratedTimestampInfoKHR) {
-        self.timeDomain = TimeDomainKHR(rawValue: numericBitCast(cStruct.timeDomain))!
+        self.timeDomain = TimeDomainKHR(rawValue: numericBitCast(cStruct.timeDomain.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkCalibratedTimestampInfoKHR>) throws(E) -> R) throws(E) -> R {
@@ -15864,7 +15864,7 @@ public struct CalibratedTimestampInfoKHR: ChainableBase {
 
 public protocol CalibratedTimestampInfoKHRExtension: Chainable {}
 
-public struct PhysicalDeviceShaderCorePropertiesAMD: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceShaderCorePropertiesAMD: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceShaderCorePropertiesAMD
 
     public static let structureType: StructureType = .physicalDeviceShaderCorePropertiesAMD
@@ -15928,7 +15928,7 @@ public struct PhysicalDeviceShaderCorePropertiesAMD: ChainableBase, PhysicalDevi
 
 public protocol PhysicalDeviceShaderCorePropertiesAMDExtension: Chainable {}
 
-public struct PhysicalDeviceShaderCoreProperties2AMD: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceShaderCoreProperties2AMD: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceShaderCoreProperties2AMD
 
     public static let structureType: StructureType = .physicalDeviceShaderCoreProperties2AMD
@@ -15972,7 +15972,7 @@ public struct PipelineRasterizationConservativeStateCreateInfoEXT: ChainableBase
 
     public init(cStruct: VkPipelineRasterizationConservativeStateCreateInfoEXT) {
         self.flags = PipelineRasterizationConservativeStateCreateFlagsEXT(rawValue: cStruct.flags)
-        self.conservativeRasterizationMode = ConservativeRasterizationModeEXT(rawValue: numericBitCast(cStruct.conservativeRasterizationMode))!
+        self.conservativeRasterizationMode = ConservativeRasterizationModeEXT(rawValue: numericBitCast(cStruct.conservativeRasterizationMode.rawValue))!
         self.extraPrimitiveOverestimationSize = cStruct.extraPrimitiveOverestimationSize
     }
 
@@ -15993,7 +15993,7 @@ public struct PipelineRasterizationConservativeStateCreateInfoEXT: ChainableBase
 
 public protocol PipelineRasterizationConservativeStateCreateInfoEXTExtension: Chainable {}
 
-public struct PhysicalDeviceDescriptorIndexingFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceDescriptorIndexingFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDescriptorIndexingFeatures
 
     public static let structureType: StructureType = .physicalDeviceDescriptorIndexingFeatures
@@ -16098,7 +16098,7 @@ public struct PhysicalDeviceDescriptorIndexingFeatures: ChainableBase, PhysicalD
 
 public protocol PhysicalDeviceDescriptorIndexingFeaturesExtension: Chainable {}
 
-public struct PhysicalDeviceDescriptorIndexingProperties: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceDescriptorIndexingProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceDescriptorIndexingProperties
 
     public static let structureType: StructureType = .physicalDeviceDescriptorIndexingProperties
@@ -16253,7 +16253,7 @@ public struct DescriptorSetVariableDescriptorCountAllocateInfo: ChainableBase, D
 
 public protocol DescriptorSetVariableDescriptorCountAllocateInfoExtension: Chainable {}
 
-public struct DescriptorSetVariableDescriptorCountLayoutSupport: ChainableBase, DescriptorSetLayoutSupportExtension, OutStruct {
+public struct DescriptorSetVariableDescriptorCountLayoutSupport: ChainableBase, DescriptorSetLayoutSupportExtension {
     public typealias CStruct = VkDescriptorSetVariableDescriptorCountLayoutSupport
 
     public static let structureType: StructureType = .descriptorSetVariableDescriptorCountLayoutSupport
@@ -16306,14 +16306,14 @@ public struct AttachmentDescription2: ChainableBase {
 
     public init(cStruct: VkAttachmentDescription2) {
         self.flags = AttachmentDescriptionFlags(rawValue: cStruct.flags)
-        self.format = Format(rawValue: numericBitCast(cStruct.format))!
+        self.format = Format(rawValue: numericBitCast(cStruct.format.rawValue))!
         self.samples = SampleCountFlags(rawValue: numericBitCast(cStruct.samples.rawValue))
-        self.loadOp = AttachmentLoadOp(rawValue: numericBitCast(cStruct.loadOp))!
-        self.storeOp = AttachmentStoreOp(rawValue: numericBitCast(cStruct.storeOp))!
-        self.stencilLoadOp = AttachmentLoadOp(rawValue: numericBitCast(cStruct.stencilLoadOp))!
-        self.stencilStoreOp = AttachmentStoreOp(rawValue: numericBitCast(cStruct.stencilStoreOp))!
-        self.initialLayout = ImageLayout(rawValue: numericBitCast(cStruct.initialLayout))!
-        self.finalLayout = ImageLayout(rawValue: numericBitCast(cStruct.finalLayout))!
+        self.loadOp = AttachmentLoadOp(rawValue: numericBitCast(cStruct.loadOp.rawValue))!
+        self.storeOp = AttachmentStoreOp(rawValue: numericBitCast(cStruct.storeOp.rawValue))!
+        self.stencilLoadOp = AttachmentLoadOp(rawValue: numericBitCast(cStruct.stencilLoadOp.rawValue))!
+        self.stencilStoreOp = AttachmentStoreOp(rawValue: numericBitCast(cStruct.stencilStoreOp.rawValue))!
+        self.initialLayout = ImageLayout(rawValue: numericBitCast(cStruct.initialLayout.rawValue))!
+        self.finalLayout = ImageLayout(rawValue: numericBitCast(cStruct.finalLayout.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkAttachmentDescription2>) throws(E) -> R) throws(E) -> R {
@@ -16355,7 +16355,7 @@ public struct AttachmentReference2: ChainableBase {
 
     public init(cStruct: VkAttachmentReference2) {
         self.attachment = cStruct.attachment
-        self.layout = ImageLayout(rawValue: numericBitCast(cStruct.layout))!
+        self.layout = ImageLayout(rawValue: numericBitCast(cStruct.layout.rawValue))!
         self.aspectMask = ImageAspectFlags(rawValue: cStruct.aspectMask)
     }
 
@@ -16402,7 +16402,7 @@ public struct SubpassDescription2: ChainableBase {
 
     public init(cStruct: VkSubpassDescription2) {
         self.flags = SubpassDescriptionFlags(rawValue: cStruct.flags)
-        self.pipelineBindPoint = PipelineBindPoint(rawValue: numericBitCast(cStruct.pipelineBindPoint))!
+        self.pipelineBindPoint = PipelineBindPoint(rawValue: numericBitCast(cStruct.pipelineBindPoint.rawValue))!
         self.viewMask = cStruct.viewMask
         self.inputAttachments = UnsafeBufferPointer(start: cStruct.pInputAttachments, count: Int(cStruct.inputAttachmentCount)).map{ AttachmentReference2(cStruct: $0) }
         self.colorAttachments = UnsafeBufferPointer(start: cStruct.pColorAttachments, count: Int(cStruct.colorAttachmentCount)).map{ AttachmentReference2(cStruct: $0) }
@@ -16571,7 +16571,7 @@ public struct SubpassBeginInfo: ChainableBase {
     }
 
     public init(cStruct: VkSubpassBeginInfo) {
-        self.contents = SubpassContents(rawValue: numericBitCast(cStruct.contents))!
+        self.contents = SubpassContents(rawValue: numericBitCast(cStruct.contents.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkSubpassBeginInfo>) throws(E) -> R) throws(E) -> R {
@@ -16614,7 +16614,7 @@ public struct SubpassEndInfo: ChainableBase {
 
 public protocol SubpassEndInfoExtension: Chainable {}
 
-public struct PhysicalDeviceTimelineSemaphoreFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceTimelineSemaphoreFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceTimelineSemaphoreFeatures
 
     public static let structureType: StructureType = .physicalDeviceTimelineSemaphoreFeatures
@@ -16643,7 +16643,7 @@ public struct PhysicalDeviceTimelineSemaphoreFeatures: ChainableBase, PhysicalDe
 
 public protocol PhysicalDeviceTimelineSemaphoreFeaturesExtension: Chainable {}
 
-public struct PhysicalDeviceTimelineSemaphoreProperties: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceTimelineSemaphoreProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceTimelineSemaphoreProperties
 
     public static let structureType: StructureType = .physicalDeviceTimelineSemaphoreProperties
@@ -16681,7 +16681,7 @@ public struct SemaphoreTypeCreateInfo: ChainableBase, SemaphoreCreateInfoExtensi
     }
 
     public init(cStruct: VkSemaphoreTypeCreateInfo) {
-        self.semaphoreType = SemaphoreType(rawValue: numericBitCast(cStruct.semaphoreType))!
+        self.semaphoreType = SemaphoreType(rawValue: numericBitCast(cStruct.semaphoreType.rawValue))!
         self.initialValue = cStruct.initialValue
     }
 
@@ -16754,7 +16754,7 @@ public struct SemaphoreWaitInfo: ChainableBase {
         self.values = values
     }
 
-    public init(cStruct: VkSemaphoreWaitInfo, device: Device?) {
+    public init(cStruct: VkSemaphoreWaitInfo, device: Device) {
         self.flags = SemaphoreWaitFlags(rawValue: cStruct.flags)
         self.semaphores = UnsafeBufferPointer(start: cStruct.pSemaphores, count: Int(cStruct.semaphoreCount)).map{ Semaphore(handle: $0, device: device) }
         self.values = Array(UnsafeBufferPointer(start: cStruct.pValues, count: Int(cStruct.semaphoreCount)))
@@ -16794,7 +16794,7 @@ public struct SemaphoreSignalInfo: ChainableBase {
         self.value = value
     }
 
-    public init(cStruct: VkSemaphoreSignalInfo, device: Device?) {
+    public init(cStruct: VkSemaphoreSignalInfo, device: Device) {
         self.semaphore = Semaphore(handle: cStruct.semaphore, device: device)
         self.value = cStruct.value
     }
@@ -16871,7 +16871,7 @@ public struct PipelineVertexInputDivisorStateCreateInfo: ChainableBase, Pipeline
 
 public protocol PipelineVertexInputDivisorStateCreateInfoExtension: Chainable {}
 
-public struct PhysicalDeviceVertexAttributeDivisorPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceVertexAttributeDivisorPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT
 
     public static let structureType: StructureType = .physicalDeviceVertexAttributeDivisorPropertiesEXT
@@ -16896,7 +16896,7 @@ public struct PhysicalDeviceVertexAttributeDivisorPropertiesEXT: ChainableBase, 
 
 public protocol PhysicalDeviceVertexAttributeDivisorPropertiesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceVertexAttributeDivisorProperties: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceVertexAttributeDivisorProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceVertexAttributeDivisorProperties
 
     public static let structureType: StructureType = .physicalDeviceVertexAttributeDivisorProperties
@@ -16924,7 +16924,7 @@ public struct PhysicalDeviceVertexAttributeDivisorProperties: ChainableBase, Phy
 
 public protocol PhysicalDeviceVertexAttributeDivisorPropertiesExtension: Chainable {}
 
-public struct PhysicalDevicePCIBusInfoPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDevicePCIBusInfoPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDevicePCIBusInfoPropertiesEXT
 
     public static let structureType: StructureType = .physicalDevicePciBusInfoPropertiesEXT
@@ -16990,7 +16990,7 @@ public struct ImportAndroidHardwareBufferInfoANDROID: ChainableBase, MemoryAlloc
 public protocol ImportAndroidHardwareBufferInfoANDROIDExtension: Chainable {}
 
 #if VK_USE_PLATFORM_ANDROID_KHR
-public struct AndroidHardwareBufferUsageANDROID: ChainableBase, ImageFormatProperties2Extension, OutStruct {
+public struct AndroidHardwareBufferUsageANDROID: ChainableBase, ImageFormatProperties2Extension {
     public typealias CStruct = VkAndroidHardwareBufferUsageANDROID
 
     public static let structureType: StructureType = .androidHardwareBufferUsageANDROID
@@ -17017,7 +17017,7 @@ public struct AndroidHardwareBufferUsageANDROID: ChainableBase, ImageFormatPrope
 public protocol AndroidHardwareBufferUsageANDROIDExtension: Chainable {}
 
 #if VK_USE_PLATFORM_ANDROID_KHR
-public struct AndroidHardwareBufferPropertiesANDROID: ChainableBase, OutStruct {
+public struct AndroidHardwareBufferPropertiesANDROID: ChainableBase {
     public typealias CStruct = VkAndroidHardwareBufferPropertiesANDROID
 
     public static let structureType: StructureType = .androidHardwareBufferPropertiesANDROID
@@ -17057,7 +17057,7 @@ public struct MemoryGetAndroidHardwareBufferInfoANDROID: ChainableBase {
         self.memory = memory
     }
 
-    public init(cStruct: VkMemoryGetAndroidHardwareBufferInfoANDROID, device: Device?) {
+    public init(cStruct: VkMemoryGetAndroidHardwareBufferInfoANDROID, device: Device) {
         self.memory = DeviceMemory(handle: cStruct.memory, device: device)
     }
 
@@ -17078,7 +17078,7 @@ public struct MemoryGetAndroidHardwareBufferInfoANDROID: ChainableBase {
 public protocol MemoryGetAndroidHardwareBufferInfoANDROIDExtension: Chainable {}
 
 #if VK_USE_PLATFORM_ANDROID_KHR
-public struct AndroidHardwareBufferFormatPropertiesANDROID: ChainableBase, AndroidHardwareBufferPropertiesANDROIDExtension, OutStruct {
+public struct AndroidHardwareBufferFormatPropertiesANDROID: ChainableBase, AndroidHardwareBufferPropertiesANDROIDExtension {
     public typealias CStruct = VkAndroidHardwareBufferFormatPropertiesANDROID
 
     public static let structureType: StructureType = .androidHardwareBufferFormatPropertiesANDROID
@@ -17092,14 +17092,14 @@ public struct AndroidHardwareBufferFormatPropertiesANDROID: ChainableBase, Andro
     public let suggestedYChromaOffset: ChromaLocation
 
     public init(cStruct: VkAndroidHardwareBufferFormatPropertiesANDROID) {
-        self.format = Format(rawValue: numericBitCast(cStruct.format))!
+        self.format = Format(rawValue: numericBitCast(cStruct.format.rawValue))!
         self.externalFormat = cStruct.externalFormat
         self.formatFeatures = FormatFeatureFlags(rawValue: cStruct.formatFeatures)
         self.samplerYcbcrConversionComponents = ComponentMapping(cStruct: cStruct.samplerYcbcrConversionComponents)
-        self.suggestedYcbcrModel = SamplerYcbcrModelConversion(rawValue: numericBitCast(cStruct.suggestedYcbcrModel))!
-        self.suggestedYcbcrRange = SamplerYcbcrRange(rawValue: numericBitCast(cStruct.suggestedYcbcrRange))!
-        self.suggestedXChromaOffset = ChromaLocation(rawValue: numericBitCast(cStruct.suggestedXChromaOffset))!
-        self.suggestedYChromaOffset = ChromaLocation(rawValue: numericBitCast(cStruct.suggestedYChromaOffset))!
+        self.suggestedYcbcrModel = SamplerYcbcrModelConversion(rawValue: numericBitCast(cStruct.suggestedYcbcrModel.rawValue))!
+        self.suggestedYcbcrRange = SamplerYcbcrRange(rawValue: numericBitCast(cStruct.suggestedYcbcrRange.rawValue))!
+        self.suggestedXChromaOffset = ChromaLocation(rawValue: numericBitCast(cStruct.suggestedXChromaOffset.rawValue))!
+        self.suggestedYChromaOffset = ChromaLocation(rawValue: numericBitCast(cStruct.suggestedYChromaOffset.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkAndroidHardwareBufferFormatPropertiesANDROID>) throws(E) -> R) throws(E) -> R {
@@ -17157,7 +17157,7 @@ public struct CommandBufferInheritanceConditionalRenderingInfoEXT: ChainableBase
 public protocol CommandBufferInheritanceConditionalRenderingInfoEXTExtension: Chainable {}
 
 #if VK_USE_PLATFORM_ANDROID_KHR
-public struct ExternalFormatANDROID: ChainableBase, ImageCreateInfoExtension, SamplerYcbcrConversionCreateInfoExtension, AttachmentDescription2Extension, GraphicsPipelineCreateInfoExtension, CommandBufferInheritanceInfoExtension, OutStruct {
+public struct ExternalFormatANDROID: ChainableBase, ImageCreateInfoExtension, SamplerYcbcrConversionCreateInfoExtension, AttachmentDescription2Extension, GraphicsPipelineCreateInfoExtension, CommandBufferInheritanceInfoExtension {
     public typealias CStruct = VkExternalFormatANDROID
 
     public static let structureType: StructureType = .externalFormatANDROID
@@ -17187,7 +17187,7 @@ public struct ExternalFormatANDROID: ChainableBase, ImageCreateInfoExtension, Sa
 
 public protocol ExternalFormatANDROIDExtension: Chainable {}
 
-public struct PhysicalDevice8BitStorageFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDevice8BitStorageFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevice8BitStorageFeatures
 
     public static let structureType: StructureType = .physicalDevice8bitStorageFeatures
@@ -17224,7 +17224,7 @@ public struct PhysicalDevice8BitStorageFeatures: ChainableBase, PhysicalDeviceFe
 
 public protocol PhysicalDevice8BitStorageFeaturesExtension: Chainable {}
 
-public struct PhysicalDeviceConditionalRenderingFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceConditionalRenderingFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceConditionalRenderingFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceConditionalRenderingFeaturesEXT
@@ -17257,7 +17257,7 @@ public struct PhysicalDeviceConditionalRenderingFeaturesEXT: ChainableBase, Phys
 
 public protocol PhysicalDeviceConditionalRenderingFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceVulkanMemoryModelFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceVulkanMemoryModelFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceVulkanMemoryModelFeatures
 
     public static let structureType: StructureType = .physicalDeviceVulkanMemoryModelFeatures
@@ -17294,7 +17294,7 @@ public struct PhysicalDeviceVulkanMemoryModelFeatures: ChainableBase, PhysicalDe
 
 public protocol PhysicalDeviceVulkanMemoryModelFeaturesExtension: Chainable {}
 
-public struct PhysicalDeviceShaderAtomicInt64Features: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderAtomicInt64Features: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderAtomicInt64Features
 
     public static let structureType: StructureType = .physicalDeviceShaderAtomicInt64Features
@@ -17327,7 +17327,7 @@ public struct PhysicalDeviceShaderAtomicInt64Features: ChainableBase, PhysicalDe
 
 public protocol PhysicalDeviceShaderAtomicInt64FeaturesExtension: Chainable {}
 
-public struct PhysicalDeviceShaderAtomicFloatFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderAtomicFloatFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderAtomicFloatFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceShaderAtomicFloatFeaturesEXT
@@ -17400,7 +17400,7 @@ public struct PhysicalDeviceShaderAtomicFloatFeaturesEXT: ChainableBase, Physica
 
 public protocol PhysicalDeviceShaderAtomicFloatFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceShaderAtomicFloat2FeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderAtomicFloat2FeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderAtomicFloat2FeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceShaderAtomicFloat2FeaturesEXT
@@ -17473,7 +17473,7 @@ public struct PhysicalDeviceShaderAtomicFloat2FeaturesEXT: ChainableBase, Physic
 
 public protocol PhysicalDeviceShaderAtomicFloat2FeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceVertexAttributeDivisorFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceVertexAttributeDivisorFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceVertexAttributeDivisorFeatures
 
     public static let structureType: StructureType = .physicalDeviceVertexAttributeDivisorFeatures
@@ -17506,7 +17506,7 @@ public struct PhysicalDeviceVertexAttributeDivisorFeatures: ChainableBase, Physi
 
 public protocol PhysicalDeviceVertexAttributeDivisorFeaturesExtension: Chainable {}
 
-public struct QueueFamilyCheckpointPropertiesNV: ChainableBase, QueueFamilyProperties2Extension, OutStruct {
+public struct QueueFamilyCheckpointPropertiesNV: ChainableBase, QueueFamilyProperties2Extension {
     public typealias CStruct = VkQueueFamilyCheckpointPropertiesNV
 
     public static let structureType: StructureType = .queueFamilyCheckpointPropertiesNV
@@ -17531,7 +17531,7 @@ public struct QueueFamilyCheckpointPropertiesNV: ChainableBase, QueueFamilyPrope
 
 public protocol QueueFamilyCheckpointPropertiesNVExtension: Chainable {}
 
-public struct CheckpointDataNV: ChainableBase, OutStruct {
+public struct CheckpointDataNV: ChainableBase {
     public typealias CStruct = VkCheckpointDataNV
 
     public static let structureType: StructureType = .checkpointDataNV
@@ -17559,7 +17559,7 @@ public struct CheckpointDataNV: ChainableBase, OutStruct {
 
 public protocol CheckpointDataNVExtension: Chainable {}
 
-public struct PhysicalDeviceDepthStencilResolveProperties: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceDepthStencilResolveProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceDepthStencilResolveProperties
 
     public static let structureType: StructureType = .physicalDeviceDepthStencilResolveProperties
@@ -17643,7 +17643,7 @@ public struct ImageViewASTCDecodeModeEXT: ChainableBase, ImageViewCreateInfoExte
     }
 
     public init(cStruct: VkImageViewASTCDecodeModeEXT) {
-        self.decodeMode = Format(rawValue: numericBitCast(cStruct.decodeMode))!
+        self.decodeMode = Format(rawValue: numericBitCast(cStruct.decodeMode.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkImageViewASTCDecodeModeEXT>) throws(E) -> R) throws(E) -> R {
@@ -17661,7 +17661,7 @@ public struct ImageViewASTCDecodeModeEXT: ChainableBase, ImageViewCreateInfoExte
 
 public protocol ImageViewASTCDecodeModeEXTExtension: Chainable {}
 
-public struct PhysicalDeviceASTCDecodeFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceASTCDecodeFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceASTCDecodeFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceAstcDecodeFeaturesEXT
@@ -17690,7 +17690,7 @@ public struct PhysicalDeviceASTCDecodeFeaturesEXT: ChainableBase, PhysicalDevice
 
 public protocol PhysicalDeviceASTCDecodeFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceTransformFeedbackFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceTransformFeedbackFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceTransformFeedbackFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceTransformFeedbackFeaturesEXT
@@ -17723,7 +17723,7 @@ public struct PhysicalDeviceTransformFeedbackFeaturesEXT: ChainableBase, Physica
 
 public protocol PhysicalDeviceTransformFeedbackFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceTransformFeedbackPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceTransformFeedbackPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceTransformFeedbackPropertiesEXT
 
     public static let structureType: StructureType = .physicalDeviceTransformFeedbackPropertiesEXT
@@ -17808,7 +17808,7 @@ public struct PipelineRasterizationStateStreamCreateInfoEXT: ChainableBase, Pipe
 
 public protocol PipelineRasterizationStateStreamCreateInfoEXTExtension: Chainable {}
 
-public struct PhysicalDeviceRepresentativeFragmentTestFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceRepresentativeFragmentTestFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceRepresentativeFragmentTestFeaturesNV
 
     public static let structureType: StructureType = .physicalDeviceRepresentativeFragmentTestFeaturesNV
@@ -17866,7 +17866,7 @@ public struct PipelineRepresentativeFragmentTestStateCreateInfoNV: ChainableBase
 
 public protocol PipelineRepresentativeFragmentTestStateCreateInfoNVExtension: Chainable {}
 
-public struct PhysicalDeviceExclusiveScissorFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceExclusiveScissorFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceExclusiveScissorFeaturesNV
 
     public static let structureType: StructureType = .physicalDeviceExclusiveScissorFeaturesNV
@@ -17927,7 +17927,7 @@ public struct PipelineViewportExclusiveScissorStateCreateInfoNV: ChainableBase, 
 
 public protocol PipelineViewportExclusiveScissorStateCreateInfoNVExtension: Chainable {}
 
-public struct PhysicalDeviceCornerSampledImageFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceCornerSampledImageFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceCornerSampledImageFeaturesNV
 
     public static let structureType: StructureType = .physicalDeviceCornerSampledImageFeaturesNV
@@ -17956,7 +17956,7 @@ public struct PhysicalDeviceCornerSampledImageFeaturesNV: ChainableBase, Physica
 
 public protocol PhysicalDeviceCornerSampledImageFeaturesNVExtension: Chainable {}
 
-public struct PhysicalDeviceComputeShaderDerivativesFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceComputeShaderDerivativesFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceComputeShaderDerivativesFeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceComputeShaderDerivativesFeaturesKHR
@@ -17989,7 +17989,7 @@ public struct PhysicalDeviceComputeShaderDerivativesFeaturesKHR: ChainableBase, 
 
 public protocol PhysicalDeviceComputeShaderDerivativesFeaturesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceComputeShaderDerivativesPropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceComputeShaderDerivativesPropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceComputeShaderDerivativesPropertiesKHR
 
     public static let structureType: StructureType = .physicalDeviceComputeShaderDerivativesPropertiesKHR
@@ -18014,7 +18014,7 @@ public struct PhysicalDeviceComputeShaderDerivativesPropertiesKHR: ChainableBase
 
 public protocol PhysicalDeviceComputeShaderDerivativesPropertiesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceShaderImageFootprintFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderImageFootprintFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderImageFootprintFeaturesNV
 
     public static let structureType: StructureType = .physicalDeviceShaderImageFootprintFeaturesNV
@@ -18043,7 +18043,7 @@ public struct PhysicalDeviceShaderImageFootprintFeaturesNV: ChainableBase, Physi
 
 public protocol PhysicalDeviceShaderImageFootprintFeaturesNVExtension: Chainable {}
 
-public struct PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV
 
     public static let structureType: StructureType = .physicalDeviceDedicatedAllocationImageAliasingFeaturesNV
@@ -18072,7 +18072,7 @@ public struct PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV: Chainabl
 
 public protocol PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNVExtension: Chainable {}
 
-public struct PhysicalDeviceCopyMemoryIndirectFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceCopyMemoryIndirectFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceCopyMemoryIndirectFeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceCopyMemoryIndirectFeaturesKHR
@@ -18105,7 +18105,7 @@ public struct PhysicalDeviceCopyMemoryIndirectFeaturesKHR: ChainableBase, Physic
 
 public protocol PhysicalDeviceCopyMemoryIndirectFeaturesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceCopyMemoryIndirectFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceCopyMemoryIndirectFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceCopyMemoryIndirectFeaturesNV
 
     public static let structureType: StructureType = .physicalDeviceCopyMemoryIndirectFeaturesNV
@@ -18134,7 +18134,7 @@ public struct PhysicalDeviceCopyMemoryIndirectFeaturesNV: ChainableBase, Physica
 
 public protocol PhysicalDeviceCopyMemoryIndirectFeaturesNVExtension: Chainable {}
 
-public struct PhysicalDeviceCopyMemoryIndirectPropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceCopyMemoryIndirectPropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceCopyMemoryIndirectPropertiesKHR
 
     public static let structureType: StructureType = .physicalDeviceCopyMemoryIndirectPropertiesKHR
@@ -18159,7 +18159,7 @@ public struct PhysicalDeviceCopyMemoryIndirectPropertiesKHR: ChainableBase, Phys
 
 public protocol PhysicalDeviceCopyMemoryIndirectPropertiesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceMemoryDecompressionFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceMemoryDecompressionFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceMemoryDecompressionFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceMemoryDecompressionFeaturesEXT
@@ -18188,7 +18188,7 @@ public struct PhysicalDeviceMemoryDecompressionFeaturesEXT: ChainableBase, Physi
 
 public protocol PhysicalDeviceMemoryDecompressionFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceMemoryDecompressionPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceMemoryDecompressionPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceMemoryDecompressionPropertiesEXT
 
     public static let structureType: StructureType = .physicalDeviceMemoryDecompressionPropertiesEXT
@@ -18226,7 +18226,7 @@ public struct ShadingRatePaletteNV: CStructConvertible {
     }
 
     public init(cStruct: VkShadingRatePaletteNV) {
-        self.shadingRatePaletteEntries = UnsafeBufferPointer(start: cStruct.pShadingRatePaletteEntries, count: Int(cStruct.shadingRatePaletteEntryCount)).map{ ShadingRatePaletteEntryNV(rawValue: numericBitCast($0))! }
+        self.shadingRatePaletteEntries = UnsafeBufferPointer(start: cStruct.pShadingRatePaletteEntries, count: Int(cStruct.shadingRatePaletteEntryCount)).map{ ShadingRatePaletteEntryNV(rawValue: numericBitCast($0.rawValue))! }
     }
 
     public func withCStruct<R, E: Error>(_ body: (UnsafePointer<VkShadingRatePaletteNV>) throws(E) -> R) throws(E) -> R {
@@ -18275,7 +18275,7 @@ public struct PipelineViewportShadingRateImageStateCreateInfoNV: ChainableBase, 
 
 public protocol PipelineViewportShadingRateImageStateCreateInfoNVExtension: Chainable {}
 
-public struct PhysicalDeviceShadingRateImageFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShadingRateImageFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShadingRateImageFeaturesNV
 
     public static let structureType: StructureType = .physicalDeviceShadingRateImageFeaturesNV
@@ -18308,7 +18308,7 @@ public struct PhysicalDeviceShadingRateImageFeaturesNV: ChainableBase, PhysicalD
 
 public protocol PhysicalDeviceShadingRateImageFeaturesNVExtension: Chainable {}
 
-public struct PhysicalDeviceShadingRateImagePropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceShadingRateImagePropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceShadingRateImagePropertiesNV
 
     public static let structureType: StructureType = .physicalDeviceShadingRateImagePropertiesNV
@@ -18341,7 +18341,7 @@ public struct PhysicalDeviceShadingRateImagePropertiesNV: ChainableBase, Physica
 
 public protocol PhysicalDeviceShadingRateImagePropertiesNVExtension: Chainable {}
 
-public struct PhysicalDeviceInvocationMaskFeaturesHUAWEI: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceInvocationMaskFeaturesHUAWEI: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceInvocationMaskFeaturesHUAWEI
 
     public static let structureType: StructureType = .physicalDeviceInvocationMaskFeaturesHUAWEI
@@ -18412,7 +18412,7 @@ public struct CoarseSampleOrderCustomNV: CStructConvertible {
     }
 
     public init(cStruct: VkCoarseSampleOrderCustomNV) {
-        self.shadingRate = ShadingRatePaletteEntryNV(rawValue: numericBitCast(cStruct.shadingRate))!
+        self.shadingRate = ShadingRatePaletteEntryNV(rawValue: numericBitCast(cStruct.shadingRate.rawValue))!
         self.sampleCount = cStruct.sampleCount
         self.sampleLocations = UnsafeBufferPointer(start: cStruct.pSampleLocations, count: Int(cStruct.sampleLocationCount)).map{ CoarseSampleLocationNV(cStruct: $0) }
     }
@@ -18442,7 +18442,7 @@ public struct PipelineViewportCoarseSampleOrderStateCreateInfoNV: ChainableBase,
     }
 
     public init(cStruct: VkPipelineViewportCoarseSampleOrderStateCreateInfoNV) {
-        self.sampleOrderType = CoarseSampleOrderTypeNV(rawValue: numericBitCast(cStruct.sampleOrderType))!
+        self.sampleOrderType = CoarseSampleOrderTypeNV(rawValue: numericBitCast(cStruct.sampleOrderType.rawValue))!
         self.customSampleOrders = UnsafeBufferPointer(start: cStruct.pCustomSampleOrders, count: Int(cStruct.customSampleOrderCount)).map{ CoarseSampleOrderCustomNV(cStruct: $0) }
     }
 
@@ -18465,7 +18465,7 @@ public struct PipelineViewportCoarseSampleOrderStateCreateInfoNV: ChainableBase,
 
 public protocol PipelineViewportCoarseSampleOrderStateCreateInfoNVExtension: Chainable {}
 
-public struct PhysicalDeviceMeshShaderFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceMeshShaderFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceMeshShaderFeaturesNV
 
     public static let structureType: StructureType = .physicalDeviceMeshShaderFeaturesNV
@@ -18498,7 +18498,7 @@ public struct PhysicalDeviceMeshShaderFeaturesNV: ChainableBase, PhysicalDeviceF
 
 public protocol PhysicalDeviceMeshShaderFeaturesNVExtension: Chainable {}
 
-public struct PhysicalDeviceMeshShaderPropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceMeshShaderPropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceMeshShaderPropertiesNV
 
     public static let structureType: StructureType = .physicalDeviceMeshShaderPropertiesNV
@@ -18583,7 +18583,7 @@ public struct DrawMeshTasksIndirectCommandNV: CStructConvertible {
     }
 }
 
-public struct PhysicalDeviceMeshShaderFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceMeshShaderFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceMeshShaderFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceMeshShaderFeaturesEXT
@@ -18628,7 +18628,7 @@ public struct PhysicalDeviceMeshShaderFeaturesEXT: ChainableBase, PhysicalDevice
 
 public protocol PhysicalDeviceMeshShaderFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceMeshShaderPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceMeshShaderPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceMeshShaderPropertiesEXT
 
     public static let structureType: StructureType = .physicalDeviceMeshShaderPropertiesEXT
@@ -18781,7 +18781,7 @@ public struct RayTracingShaderGroupCreateInfoNV: ChainableBase {
     }
 
     public init(cStruct: VkRayTracingShaderGroupCreateInfoNV) {
-        self.type = RayTracingShaderGroupTypeKHR(rawValue: numericBitCast(cStruct.type))!
+        self.type = RayTracingShaderGroupTypeKHR(rawValue: numericBitCast(cStruct.type.rawValue))!
         self.generalShader = cStruct.generalShader
         self.closestHitShader = cStruct.closestHitShader
         self.anyHitShader = cStruct.anyHitShader
@@ -18828,7 +18828,7 @@ public struct RayTracingShaderGroupCreateInfoKHR: ChainableBase {
     }
 
     public init(cStruct: VkRayTracingShaderGroupCreateInfoKHR) {
-        self.type = RayTracingShaderGroupTypeKHR(rawValue: numericBitCast(cStruct.type))!
+        self.type = RayTracingShaderGroupTypeKHR(rawValue: numericBitCast(cStruct.type.rawValue))!
         self.generalShader = cStruct.generalShader
         self.closestHitShader = cStruct.closestHitShader
         self.anyHitShader = cStruct.anyHitShader
@@ -18878,7 +18878,7 @@ public struct RayTracingPipelineCreateInfoNV: ChainableBase {
         self.basePipelineIndex = basePipelineIndex
     }
 
-    public init(cStruct: VkRayTracingPipelineCreateInfoNV, device: Device?) {
+    public init(cStruct: VkRayTracingPipelineCreateInfoNV, device: Device) {
         self.flags = PipelineCreateFlags(rawValue: cStruct.flags)
         self.stages = UnsafeBufferPointer(start: cStruct.pStages, count: Int(cStruct.stageCount)).map{ PipelineShaderStageCreateInfo(cStruct: $0, device: device) }
         self.groups = UnsafeBufferPointer(start: cStruct.pGroups, count: Int(cStruct.groupCount)).map{ RayTracingShaderGroupCreateInfoNV(cStruct: $0) }
@@ -18925,7 +18925,7 @@ public struct PipelineLibraryCreateInfoKHR: ChainableBase, GraphicsPipelineCreat
         self.libraries = libraries
     }
 
-    public init(cStruct: VkPipelineLibraryCreateInfoKHR, device: Device?) {
+    public init(cStruct: VkPipelineLibraryCreateInfoKHR, device: Device) {
         self.libraries = UnsafeBufferPointer(start: cStruct.pLibraries, count: Int(cStruct.libraryCount)).map{ Pipeline(handle: $0, device: device) }
     }
 
@@ -19008,7 +19008,7 @@ public struct RayTracingPipelineCreateInfoKHR: ChainableBase {
         self.basePipelineIndex = basePipelineIndex
     }
 
-    public init(cStruct: VkRayTracingPipelineCreateInfoKHR, device: Device?) {
+    public init(cStruct: VkRayTracingPipelineCreateInfoKHR, device: Device) {
         self.flags = PipelineCreateFlags(rawValue: cStruct.flags)
         self.stages = UnsafeBufferPointer(start: cStruct.pStages, count: Int(cStruct.stageCount)).map{ PipelineShaderStageCreateInfo(cStruct: $0, device: device) }
         self.groups = UnsafeBufferPointer(start: cStruct.pGroups, count: Int(cStruct.groupCount)).map{ RayTracingShaderGroupCreateInfoKHR(cStruct: $0) }
@@ -19087,16 +19087,16 @@ public struct GeometryTrianglesNV: ChainableBase {
         self.transformOffset = transformOffset
     }
 
-    public init(cStruct: VkGeometryTrianglesNV, device: Device?) {
+    public init(cStruct: VkGeometryTrianglesNV, device: Device) {
         self.vertexData = (cStruct.vertexData != nil) ? Buffer(handle: cStruct.vertexData, device: device) : nil
         self.vertexOffset = cStruct.vertexOffset
         self.vertexCount = cStruct.vertexCount
         self.vertexStride = cStruct.vertexStride
-        self.vertexFormat = Format(rawValue: numericBitCast(cStruct.vertexFormat))!
+        self.vertexFormat = Format(rawValue: numericBitCast(cStruct.vertexFormat.rawValue))!
         self.indexData = (cStruct.indexData != nil) ? Buffer(handle: cStruct.indexData, device: device) : nil
         self.indexOffset = cStruct.indexOffset
         self.indexCount = cStruct.indexCount
-        self.indexType = IndexType(rawValue: numericBitCast(cStruct.indexType))!
+        self.indexType = IndexType(rawValue: numericBitCast(cStruct.indexType.rawValue))!
         self.transformData = (cStruct.transformData != nil) ? Buffer(handle: cStruct.transformData, device: device) : nil
         self.transformOffset = cStruct.transformOffset
     }
@@ -19142,7 +19142,7 @@ public struct GeometryAABBNV: ChainableBase {
         self.offset = offset
     }
 
-    public init(cStruct: VkGeometryAABBNV, device: Device?) {
+    public init(cStruct: VkGeometryAABBNV, device: Device) {
         self.aabbData = (cStruct.aabbData != nil) ? Buffer(handle: cStruct.aabbData, device: device) : nil
         self.numAABBs = cStruct.numAABBs
         self.stride = cStruct.stride
@@ -19178,7 +19178,7 @@ public struct GeometryDataNV: CStructConvertible {
         self.aabbs = aabbs
     }
 
-    public init(cStruct: VkGeometryDataNV, device: Device?) {
+    public init(cStruct: VkGeometryDataNV, device: Device) {
         self.triangles = GeometryTrianglesNV(cStruct: cStruct.triangles, device: device)
         self.aabbs = GeometryAABBNV(cStruct: cStruct.aabbs, device: device)
     }
@@ -19209,8 +19209,8 @@ public struct GeometryNV: ChainableBase {
         self.flags = flags
     }
 
-    public init(cStruct: VkGeometryNV, device: Device?) {
-        self.geometryType = GeometryTypeKHR(rawValue: numericBitCast(cStruct.geometryType))!
+    public init(cStruct: VkGeometryNV, device: Device) {
+        self.geometryType = GeometryTypeKHR(rawValue: numericBitCast(cStruct.geometryType.rawValue))!
         self.geometry = GeometryDataNV(cStruct: cStruct.geometry, device: device)
         self.flags = GeometryFlagsKHR(rawValue: cStruct.flags)
     }
@@ -19250,7 +19250,7 @@ public struct AccelerationStructureInfoNV: ChainableBase {
         self.geometries = geometries
     }
 
-    public init(cStruct: VkAccelerationStructureInfoNV, device: Device?) {
+    public init(cStruct: VkAccelerationStructureInfoNV, device: Device) {
         self.type = cStruct.type
         self.flags = BuildAccelerationStructureFlagsKHR(rawValue: cStruct.flags)
         self.instanceCount = cStruct.instanceCount
@@ -19290,7 +19290,7 @@ public struct AccelerationStructureCreateInfoNV: ChainableBase {
         self.info = info
     }
 
-    public init(cStruct: VkAccelerationStructureCreateInfoNV, device: Device?) {
+    public init(cStruct: VkAccelerationStructureCreateInfoNV, device: Device) {
         self.compactedSize = cStruct.compactedSize
         self.info = AccelerationStructureInfoNV(cStruct: cStruct.info, device: device)
     }
@@ -19329,7 +19329,7 @@ public struct BindAccelerationStructureMemoryInfoNV: ChainableBase {
         self.deviceIndices = deviceIndices
     }
 
-    public init(cStruct: VkBindAccelerationStructureMemoryInfoNV, device: Device?) {
+    public init(cStruct: VkBindAccelerationStructureMemoryInfoNV, device: Device) {
         self.accelerationStructure = AccelerationStructureNV(handle: cStruct.accelerationStructure, device: device)
         self.memory = DeviceMemory(handle: cStruct.memory, device: device)
         self.memoryOffset = cStruct.memoryOffset
@@ -19367,7 +19367,7 @@ public struct WriteDescriptorSetAccelerationStructureKHR: ChainableBase, WriteDe
         self.accelerationStructures = accelerationStructures
     }
 
-    public init(cStruct: VkWriteDescriptorSetAccelerationStructureKHR, device: Device?) {
+    public init(cStruct: VkWriteDescriptorSetAccelerationStructureKHR, device: Device) {
         self.accelerationStructures = UnsafeBufferPointer(start: cStruct.pAccelerationStructures, count: Int(cStruct.accelerationStructureCount)).map{ ($0 != nil) ? AccelerationStructureKHR(handle: $0, device: device) : nil }
     }
 
@@ -19399,7 +19399,7 @@ public struct WriteDescriptorSetAccelerationStructureNV: ChainableBase, WriteDes
         self.accelerationStructures = accelerationStructures
     }
 
-    public init(cStruct: VkWriteDescriptorSetAccelerationStructureNV, device: Device?) {
+    public init(cStruct: VkWriteDescriptorSetAccelerationStructureNV, device: Device) {
         self.accelerationStructures = UnsafeBufferPointer(start: cStruct.pAccelerationStructures, count: Int(cStruct.accelerationStructureCount)).map{ ($0 != nil) ? AccelerationStructureNV(handle: $0, device: device) : nil }
     }
 
@@ -19433,8 +19433,8 @@ public struct AccelerationStructureMemoryRequirementsInfoNV: ChainableBase {
         self.accelerationStructure = accelerationStructure
     }
 
-    public init(cStruct: VkAccelerationStructureMemoryRequirementsInfoNV, device: Device?) {
-        self.type = AccelerationStructureMemoryRequirementsTypeNV(rawValue: numericBitCast(cStruct.type))!
+    public init(cStruct: VkAccelerationStructureMemoryRequirementsInfoNV, device: Device) {
+        self.type = AccelerationStructureMemoryRequirementsTypeNV(rawValue: numericBitCast(cStruct.type.rawValue))!
         self.accelerationStructure = AccelerationStructureNV(handle: cStruct.accelerationStructure, device: device)
     }
 
@@ -19454,7 +19454,7 @@ public struct AccelerationStructureMemoryRequirementsInfoNV: ChainableBase {
 
 public protocol AccelerationStructureMemoryRequirementsInfoNVExtension: Chainable {}
 
-public struct PhysicalDeviceAccelerationStructureFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceAccelerationStructureFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceAccelerationStructureFeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceAccelerationStructureFeaturesKHR
@@ -19499,7 +19499,7 @@ public struct PhysicalDeviceAccelerationStructureFeaturesKHR: ChainableBase, Phy
 
 public protocol PhysicalDeviceAccelerationStructureFeaturesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceRayTracingPipelineFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceRayTracingPipelineFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceRayTracingPipelineFeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceRayTracingPipelineFeaturesKHR
@@ -19544,7 +19544,7 @@ public struct PhysicalDeviceRayTracingPipelineFeaturesKHR: ChainableBase, Physic
 
 public protocol PhysicalDeviceRayTracingPipelineFeaturesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceRayQueryFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceRayQueryFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceRayQueryFeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceRayQueryFeaturesKHR
@@ -19573,7 +19573,7 @@ public struct PhysicalDeviceRayQueryFeaturesKHR: ChainableBase, PhysicalDeviceFe
 
 public protocol PhysicalDeviceRayQueryFeaturesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceAccelerationStructurePropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceAccelerationStructurePropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceAccelerationStructurePropertiesKHR
 
     public static let structureType: StructureType = .physicalDeviceAccelerationStructurePropertiesKHR
@@ -19619,7 +19619,7 @@ public struct PhysicalDeviceAccelerationStructurePropertiesKHR: ChainableBase, P
 
 public protocol PhysicalDeviceAccelerationStructurePropertiesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceRayTracingPipelinePropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceRayTracingPipelinePropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceRayTracingPipelinePropertiesKHR
 
     public static let structureType: StructureType = .physicalDeviceRayTracingPipelinePropertiesKHR
@@ -19665,7 +19665,7 @@ public struct PhysicalDeviceRayTracingPipelinePropertiesKHR: ChainableBase, Phys
 
 public protocol PhysicalDeviceRayTracingPipelinePropertiesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceRayTracingPropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceRayTracingPropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceRayTracingPropertiesNV
 
     public static let structureType: StructureType = .physicalDeviceRayTracingPropertiesNV
@@ -19811,7 +19811,7 @@ public struct TraceRaysIndirectCommand2KHR: CStructConvertible {
     }
 }
 
-public struct PhysicalDeviceRayTracingMaintenance1FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceRayTracingMaintenance1FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceRayTracingMaintenance1FeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceRayTracingMaintenance1FeaturesKHR
@@ -19866,7 +19866,7 @@ public struct DrmFormatModifierPropertiesEXT: CStructConvertible {
     }
 }
 
-public struct DrmFormatModifierPropertiesListEXT: ChainableBase, FormatProperties2Extension, OutStruct {
+public struct DrmFormatModifierPropertiesListEXT: ChainableBase, FormatProperties2Extension {
     public typealias CStruct = VkDrmFormatModifierPropertiesListEXT
 
     public static let structureType: StructureType = .drmFormatModifierPropertiesListEXT
@@ -19910,7 +19910,7 @@ public struct PhysicalDeviceImageDrmFormatModifierInfoEXT: ChainableBase, Physic
 
     public init(cStruct: VkPhysicalDeviceImageDrmFormatModifierInfoEXT) {
         self.drmFormatModifier = cStruct.drmFormatModifier
-        self.sharingMode = SharingMode(rawValue: numericBitCast(cStruct.sharingMode))!
+        self.sharingMode = SharingMode(rawValue: numericBitCast(cStruct.sharingMode.rawValue))!
         self.queueFamilyIndices = Array(UnsafeBufferPointer(start: cStruct.pQueueFamilyIndices, count: Int(cStruct.queueFamilyIndexCount)))
     }
 
@@ -20002,7 +20002,7 @@ public struct ImageDrmFormatModifierExplicitCreateInfoEXT: ChainableBase, ImageC
 
 public protocol ImageDrmFormatModifierExplicitCreateInfoEXTExtension: Chainable {}
 
-public struct ImageDrmFormatModifierPropertiesEXT: ChainableBase, OutStruct {
+public struct ImageDrmFormatModifierPropertiesEXT: ChainableBase {
     public typealias CStruct = VkImageDrmFormatModifierPropertiesEXT
 
     public static let structureType: StructureType = .imageDrmFormatModifierPropertiesEXT
@@ -20067,7 +20067,7 @@ public struct DeviceMemoryOverallocationCreateInfoAMD: ChainableBase, DeviceCrea
     }
 
     public init(cStruct: VkDeviceMemoryOverallocationCreateInfoAMD) {
-        self.overallocationBehavior = MemoryOverallocationBehaviorAMD(rawValue: numericBitCast(cStruct.overallocationBehavior))!
+        self.overallocationBehavior = MemoryOverallocationBehaviorAMD(rawValue: numericBitCast(cStruct.overallocationBehavior.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkDeviceMemoryOverallocationCreateInfoAMD>) throws(E) -> R) throws(E) -> R {
@@ -20085,7 +20085,7 @@ public struct DeviceMemoryOverallocationCreateInfoAMD: ChainableBase, DeviceCrea
 
 public protocol DeviceMemoryOverallocationCreateInfoAMDExtension: Chainable {}
 
-public struct PhysicalDeviceFragmentDensityMapFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceFragmentDensityMapFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceFragmentDensityMapFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceFragmentDensityMapFeaturesEXT
@@ -20122,7 +20122,7 @@ public struct PhysicalDeviceFragmentDensityMapFeaturesEXT: ChainableBase, Physic
 
 public protocol PhysicalDeviceFragmentDensityMapFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceFragmentDensityMap2FeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceFragmentDensityMap2FeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceFragmentDensityMap2FeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceFragmentDensityMap2FeaturesEXT
@@ -20151,7 +20151,7 @@ public struct PhysicalDeviceFragmentDensityMap2FeaturesEXT: ChainableBase, Physi
 
 public protocol PhysicalDeviceFragmentDensityMap2FeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceFragmentDensityMapOffsetFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceFragmentDensityMapOffsetFeaturesEXT
@@ -20180,7 +20180,7 @@ public struct PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT: ChainableBase, 
 
 public protocol PhysicalDeviceFragmentDensityMapOffsetFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceFragmentDensityMapPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceFragmentDensityMapPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceFragmentDensityMapPropertiesEXT
 
     public static let structureType: StructureType = .physicalDeviceFragmentDensityMapPropertiesEXT
@@ -20215,7 +20215,7 @@ public struct PhysicalDeviceFragmentDensityMapPropertiesEXT: ChainableBase, Phys
 
 public protocol PhysicalDeviceFragmentDensityMapPropertiesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceFragmentDensityMap2PropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceFragmentDensityMap2PropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceFragmentDensityMap2PropertiesEXT
 
     public static let structureType: StructureType = .physicalDeviceFragmentDensityMap2PropertiesEXT
@@ -20249,7 +20249,7 @@ public struct PhysicalDeviceFragmentDensityMap2PropertiesEXT: ChainableBase, Phy
 
 public protocol PhysicalDeviceFragmentDensityMap2PropertiesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceFragmentDensityMapOffsetPropertiesEXT
 
     public static let structureType: StructureType = .physicalDeviceFragmentDensityMapOffsetPropertiesEXT
@@ -20339,7 +20339,7 @@ public struct RenderPassFragmentDensityMapOffsetEndInfoEXT: ChainableBase, Subpa
 
 public protocol RenderPassFragmentDensityMapOffsetEndInfoEXTExtension: Chainable {}
 
-public struct PhysicalDeviceScalarBlockLayoutFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceScalarBlockLayoutFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceScalarBlockLayoutFeatures
 
     public static let structureType: StructureType = .physicalDeviceScalarBlockLayoutFeatures
@@ -20368,7 +20368,7 @@ public struct PhysicalDeviceScalarBlockLayoutFeatures: ChainableBase, PhysicalDe
 
 public protocol PhysicalDeviceScalarBlockLayoutFeaturesExtension: Chainable {}
 
-public struct SurfaceProtectedCapabilitiesKHR: ChainableBase, SurfaceCapabilities2KHRExtension, OutStruct {
+public struct SurfaceProtectedCapabilitiesKHR: ChainableBase, SurfaceCapabilities2KHRExtension {
     public typealias CStruct = VkSurfaceProtectedCapabilitiesKHR
 
     public static let structureType: StructureType = .surfaceProtectedCapabilitiesKHR
@@ -20393,7 +20393,7 @@ public struct SurfaceProtectedCapabilitiesKHR: ChainableBase, SurfaceCapabilitie
 
 public protocol SurfaceProtectedCapabilitiesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceUniformBufferStandardLayoutFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceUniformBufferStandardLayoutFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceUniformBufferStandardLayoutFeatures
 
     public static let structureType: StructureType = .physicalDeviceUniformBufferStandardLayoutFeatures
@@ -20422,7 +20422,7 @@ public struct PhysicalDeviceUniformBufferStandardLayoutFeatures: ChainableBase, 
 
 public protocol PhysicalDeviceUniformBufferStandardLayoutFeaturesExtension: Chainable {}
 
-public struct PhysicalDeviceDepthClipEnableFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceDepthClipEnableFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDepthClipEnableFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceDepthClipEnableFeaturesEXT
@@ -20484,7 +20484,7 @@ public struct PipelineRasterizationDepthClipStateCreateInfoEXT: ChainableBase, P
 
 public protocol PipelineRasterizationDepthClipStateCreateInfoEXTExtension: Chainable {}
 
-public struct PhysicalDeviceMemoryBudgetPropertiesEXT: ChainableBase, PhysicalDeviceMemoryProperties2Extension, OutStruct {
+public struct PhysicalDeviceMemoryBudgetPropertiesEXT: ChainableBase, PhysicalDeviceMemoryProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceMemoryBudgetPropertiesEXT
 
     public static let structureType: StructureType = .physicalDeviceMemoryBudgetPropertiesEXT
@@ -20512,7 +20512,7 @@ public struct PhysicalDeviceMemoryBudgetPropertiesEXT: ChainableBase, PhysicalDe
 
 public protocol PhysicalDeviceMemoryBudgetPropertiesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceMemoryPriorityFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceMemoryPriorityFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceMemoryPriorityFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceMemoryPriorityFeaturesEXT
@@ -20570,7 +20570,7 @@ public struct MemoryPriorityAllocateInfoEXT: ChainableBase, MemoryAllocateInfoEx
 
 public protocol MemoryPriorityAllocateInfoEXTExtension: Chainable {}
 
-public struct PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePageableDeviceLocalMemoryFeaturesEXT
 
     public static let structureType: StructureType = .physicalDevicePageableDeviceLocalMemoryFeaturesEXT
@@ -20599,7 +20599,7 @@ public struct PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT: ChainableBase,
 
 public protocol PhysicalDevicePageableDeviceLocalMemoryFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceBufferDeviceAddressFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceBufferDeviceAddressFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceBufferDeviceAddressFeatures
 
     public static let structureType: StructureType = .physicalDeviceBufferDeviceAddressFeatures
@@ -20636,7 +20636,7 @@ public struct PhysicalDeviceBufferDeviceAddressFeatures: ChainableBase, Physical
 
 public protocol PhysicalDeviceBufferDeviceAddressFeaturesExtension: Chainable {}
 
-public struct PhysicalDeviceBufferDeviceAddressFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceBufferDeviceAddressFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceBufferDeviceAddressFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceBufferDeviceAddressFeaturesEXT
@@ -20683,7 +20683,7 @@ public struct BufferDeviceAddressInfo: ChainableBase {
         self.buffer = buffer
     }
 
-    public init(cStruct: VkBufferDeviceAddressInfo, device: Device?) {
+    public init(cStruct: VkBufferDeviceAddressInfo, device: Device) {
         self.buffer = Buffer(handle: cStruct.buffer, device: device)
     }
 
@@ -20760,7 +20760,7 @@ public struct BufferDeviceAddressCreateInfoEXT: ChainableBase, BufferCreateInfoE
 
 public protocol BufferDeviceAddressCreateInfoEXTExtension: Chainable {}
 
-public struct PhysicalDeviceImageViewImageFormatInfoEXT: ChainableBase, PhysicalDeviceImageFormatInfo2Extension, OutStruct {
+public struct PhysicalDeviceImageViewImageFormatInfoEXT: ChainableBase, PhysicalDeviceImageFormatInfo2Extension {
     public typealias CStruct = VkPhysicalDeviceImageViewImageFormatInfoEXT
 
     public static let structureType: StructureType = .physicalDeviceImageViewImageFormatInfoEXT
@@ -20771,7 +20771,7 @@ public struct PhysicalDeviceImageViewImageFormatInfoEXT: ChainableBase, Physical
     }
 
     public init(cStruct: VkPhysicalDeviceImageViewImageFormatInfoEXT) {
-        self.imageViewType = ImageViewType(rawValue: numericBitCast(cStruct.imageViewType))!
+        self.imageViewType = ImageViewType(rawValue: numericBitCast(cStruct.imageViewType.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPhysicalDeviceImageViewImageFormatInfoEXT>) throws(E) -> R) throws(E) -> R {
@@ -20789,7 +20789,7 @@ public struct PhysicalDeviceImageViewImageFormatInfoEXT: ChainableBase, Physical
 
 public protocol PhysicalDeviceImageViewImageFormatInfoEXTExtension: Chainable {}
 
-public struct FilterCubicImageViewImageFormatPropertiesEXT: ChainableBase, ImageFormatProperties2Extension, OutStruct {
+public struct FilterCubicImageViewImageFormatPropertiesEXT: ChainableBase, ImageFormatProperties2Extension {
     public typealias CStruct = VkFilterCubicImageViewImageFormatPropertiesEXT
 
     public static let structureType: StructureType = .filterCubicImageViewImageFormatPropertiesEXT
@@ -20817,7 +20817,7 @@ public struct FilterCubicImageViewImageFormatPropertiesEXT: ChainableBase, Image
 
 public protocol FilterCubicImageViewImageFormatPropertiesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceImagelessFramebufferFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceImagelessFramebufferFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceImagelessFramebufferFeatures
 
     public static let structureType: StructureType = .physicalDeviceImagelessFramebufferFeatures
@@ -20872,7 +20872,7 @@ public struct FramebufferAttachmentImageInfo: ChainableBase {
         self.width = cStruct.width
         self.height = cStruct.height
         self.layerCount = cStruct.layerCount
-        self.viewFormats = UnsafeBufferPointer(start: cStruct.pViewFormats, count: Int(cStruct.viewFormatCount)).map{ Format(rawValue: numericBitCast($0))! }
+        self.viewFormats = UnsafeBufferPointer(start: cStruct.pViewFormats, count: Int(cStruct.viewFormatCount)).map{ Format(rawValue: numericBitCast($0.rawValue))! }
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkFramebufferAttachmentImageInfo>) throws(E) -> R) throws(E) -> R {
@@ -20940,7 +20940,7 @@ public struct RenderPassAttachmentBeginInfo: ChainableBase, RenderPassBeginInfoE
         self.attachments = attachments
     }
 
-    public init(cStruct: VkRenderPassAttachmentBeginInfo, device: Device?) {
+    public init(cStruct: VkRenderPassAttachmentBeginInfo, device: Device) {
         self.attachments = UnsafeBufferPointer(start: cStruct.pAttachments, count: Int(cStruct.attachmentCount)).map{ ImageView(handle: $0, device: device) }
     }
 
@@ -20962,7 +20962,7 @@ public struct RenderPassAttachmentBeginInfo: ChainableBase, RenderPassBeginInfoE
 
 public protocol RenderPassAttachmentBeginInfoExtension: Chainable {}
 
-public struct PhysicalDeviceTextureCompressionASTCHDRFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceTextureCompressionASTCHDRFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceTextureCompressionASTCHDRFeatures
 
     public static let structureType: StructureType = .physicalDeviceTextureCompressionAstcHdrFeatures
@@ -20991,7 +20991,7 @@ public struct PhysicalDeviceTextureCompressionASTCHDRFeatures: ChainableBase, Ph
 
 public protocol PhysicalDeviceTextureCompressionASTCHDRFeaturesExtension: Chainable {}
 
-public struct PhysicalDeviceCooperativeMatrixFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceCooperativeMatrixFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceCooperativeMatrixFeaturesNV
 
     public static let structureType: StructureType = .physicalDeviceCooperativeMatrixFeaturesNV
@@ -21024,7 +21024,7 @@ public struct PhysicalDeviceCooperativeMatrixFeaturesNV: ChainableBase, Physical
 
 public protocol PhysicalDeviceCooperativeMatrixFeaturesNVExtension: Chainable {}
 
-public struct PhysicalDeviceCooperativeMatrixPropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceCooperativeMatrixPropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceCooperativeMatrixPropertiesNV
 
     public static let structureType: StructureType = .physicalDeviceCooperativeMatrixPropertiesNV
@@ -21049,7 +21049,7 @@ public struct PhysicalDeviceCooperativeMatrixPropertiesNV: ChainableBase, Physic
 
 public protocol PhysicalDeviceCooperativeMatrixPropertiesNVExtension: Chainable {}
 
-public struct CooperativeMatrixPropertiesNV: ChainableBase, OutStruct {
+public struct CooperativeMatrixPropertiesNV: ChainableBase {
     public typealias CStruct = VkCooperativeMatrixPropertiesNV
 
     public static let structureType: StructureType = .cooperativeMatrixPropertiesNV
@@ -21095,7 +21095,7 @@ public struct CooperativeMatrixPropertiesNV: ChainableBase, OutStruct {
 
 public protocol CooperativeMatrixPropertiesNVExtension: Chainable {}
 
-public struct PhysicalDeviceYcbcrImageArraysFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceYcbcrImageArraysFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceYcbcrImageArraysFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceYcbcrImageArraysFeaturesEXT
@@ -21138,9 +21138,9 @@ public struct ImageViewHandleInfoNVX: ChainableBase {
         self.sampler = sampler
     }
 
-    public init(cStruct: VkImageViewHandleInfoNVX, device: Device?) {
+    public init(cStruct: VkImageViewHandleInfoNVX, device: Device) {
         self.imageView = ImageView(handle: cStruct.imageView, device: device)
-        self.descriptorType = DescriptorType(rawValue: numericBitCast(cStruct.descriptorType))!
+        self.descriptorType = DescriptorType(rawValue: numericBitCast(cStruct.descriptorType.rawValue))!
         self.sampler = (cStruct.sampler != nil) ? Sampler(handle: cStruct.sampler, device: device) : nil
     }
 
@@ -21161,7 +21161,7 @@ public struct ImageViewHandleInfoNVX: ChainableBase {
 
 public protocol ImageViewHandleInfoNVXExtension: Chainable {}
 
-public struct ImageViewAddressPropertiesNVX: ChainableBase, OutStruct {
+public struct ImageViewAddressPropertiesNVX: ChainableBase {
     public typealias CStruct = VkImageViewAddressPropertiesNVX
 
     public static let structureType: StructureType = .imageViewAddressPropertiesNVX
@@ -21277,7 +21277,7 @@ public struct PipelineCreationFeedbackCreateInfo: ChainableBase, GraphicsPipelin
 public protocol PipelineCreationFeedbackCreateInfoExtension: Chainable {}
 
 #if VK_USE_PLATFORM_WIN32_KHR
-public struct SurfaceFullScreenExclusiveInfoEXT: ChainableBase, PhysicalDeviceSurfaceInfo2KHRExtension, SwapchainCreateInfoKHRExtension, OutStruct {
+public struct SurfaceFullScreenExclusiveInfoEXT: ChainableBase, PhysicalDeviceSurfaceInfo2KHRExtension, SwapchainCreateInfoKHRExtension {
     public typealias CStruct = VkSurfaceFullScreenExclusiveInfoEXT
 
     public static let structureType: StructureType = .surfaceFullScreenExclusiveInfoEXT
@@ -21288,7 +21288,7 @@ public struct SurfaceFullScreenExclusiveInfoEXT: ChainableBase, PhysicalDeviceSu
     }
 
     public init(cStruct: VkSurfaceFullScreenExclusiveInfoEXT) {
-        self.fullScreenExclusive = FullScreenExclusiveEXT(rawValue: numericBitCast(cStruct.fullScreenExclusive))!
+        self.fullScreenExclusive = FullScreenExclusiveEXT(rawValue: numericBitCast(cStruct.fullScreenExclusive.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkSurfaceFullScreenExclusiveInfoEXT>) throws(E) -> R) throws(E) -> R {
@@ -21339,7 +21339,7 @@ public struct SurfaceFullScreenExclusiveWin32InfoEXT: ChainableBase, PhysicalDev
 public protocol SurfaceFullScreenExclusiveWin32InfoEXTExtension: Chainable {}
 
 #if VK_USE_PLATFORM_WIN32_KHR
-public struct SurfaceCapabilitiesFullScreenExclusiveEXT: ChainableBase, SurfaceCapabilities2KHRExtension, OutStruct {
+public struct SurfaceCapabilitiesFullScreenExclusiveEXT: ChainableBase, SurfaceCapabilities2KHRExtension {
     public typealias CStruct = VkSurfaceCapabilitiesFullScreenExclusiveEXT
 
     public static let structureType: StructureType = .surfaceCapabilitiesFullScreenExclusiveEXT
@@ -21365,7 +21365,7 @@ public struct SurfaceCapabilitiesFullScreenExclusiveEXT: ChainableBase, SurfaceC
 
 public protocol SurfaceCapabilitiesFullScreenExclusiveEXTExtension: Chainable {}
 
-public struct PhysicalDevicePresentBarrierFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDevicePresentBarrierFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePresentBarrierFeaturesNV
 
     public static let structureType: StructureType = .physicalDevicePresentBarrierFeaturesNV
@@ -21394,7 +21394,7 @@ public struct PhysicalDevicePresentBarrierFeaturesNV: ChainableBase, PhysicalDev
 
 public protocol PhysicalDevicePresentBarrierFeaturesNVExtension: Chainable {}
 
-public struct SurfaceCapabilitiesPresentBarrierNV: ChainableBase, SurfaceCapabilities2KHRExtension, OutStruct {
+public struct SurfaceCapabilitiesPresentBarrierNV: ChainableBase, SurfaceCapabilities2KHRExtension {
     public typealias CStruct = VkSurfaceCapabilitiesPresentBarrierNV
 
     public static let structureType: StructureType = .surfaceCapabilitiesPresentBarrierNV
@@ -21419,7 +21419,7 @@ public struct SurfaceCapabilitiesPresentBarrierNV: ChainableBase, SurfaceCapabil
 
 public protocol SurfaceCapabilitiesPresentBarrierNVExtension: Chainable {}
 
-public struct SwapchainPresentBarrierCreateInfoNV: ChainableBase, SwapchainCreateInfoKHRExtension, OutStruct {
+public struct SwapchainPresentBarrierCreateInfoNV: ChainableBase, SwapchainCreateInfoKHRExtension {
     public typealias CStruct = VkSwapchainPresentBarrierCreateInfoNV
 
     public static let structureType: StructureType = .swapchainPresentBarrierCreateInfoNV
@@ -21448,7 +21448,7 @@ public struct SwapchainPresentBarrierCreateInfoNV: ChainableBase, SwapchainCreat
 
 public protocol SwapchainPresentBarrierCreateInfoNVExtension: Chainable {}
 
-public struct PhysicalDevicePerformanceQueryFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDevicePerformanceQueryFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePerformanceQueryFeaturesKHR
 
     public static let structureType: StructureType = .physicalDevicePerformanceQueryFeaturesKHR
@@ -21481,7 +21481,7 @@ public struct PhysicalDevicePerformanceQueryFeaturesKHR: ChainableBase, Physical
 
 public protocol PhysicalDevicePerformanceQueryFeaturesKHRExtension: Chainable {}
 
-public struct PhysicalDevicePerformanceQueryPropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDevicePerformanceQueryPropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDevicePerformanceQueryPropertiesKHR
 
     public static let structureType: StructureType = .physicalDevicePerformanceQueryPropertiesKHR
@@ -21506,7 +21506,7 @@ public struct PhysicalDevicePerformanceQueryPropertiesKHR: ChainableBase, Physic
 
 public protocol PhysicalDevicePerformanceQueryPropertiesKHRExtension: Chainable {}
 
-public struct PerformanceCounterKHR: ChainableBase, OutStruct {
+public struct PerformanceCounterKHR: ChainableBase {
     public typealias CStruct = VkPerformanceCounterKHR
 
     public static let structureType: StructureType = .performanceCounterKHR
@@ -21516,9 +21516,9 @@ public struct PerformanceCounterKHR: ChainableBase, OutStruct {
     public let uuid: (UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8)
 
     public init(cStruct: VkPerformanceCounterKHR) {
-        self.unit = PerformanceCounterUnitKHR(rawValue: numericBitCast(cStruct.unit))!
-        self.scope = PerformanceCounterScopeKHR(rawValue: numericBitCast(cStruct.scope))!
-        self.storage = PerformanceCounterStorageKHR(rawValue: numericBitCast(cStruct.storage))!
+        self.unit = PerformanceCounterUnitKHR(rawValue: numericBitCast(cStruct.unit.rawValue))!
+        self.scope = PerformanceCounterScopeKHR(rawValue: numericBitCast(cStruct.scope.rawValue))!
+        self.storage = PerformanceCounterStorageKHR(rawValue: numericBitCast(cStruct.storage.rawValue))!
         self.uuid = cStruct.uuid
     }
 
@@ -21540,7 +21540,7 @@ public struct PerformanceCounterKHR: ChainableBase, OutStruct {
 
 public protocol PerformanceCounterKHRExtension: Chainable {}
 
-public struct PerformanceCounterDescriptionKHR: ChainableBase, OutStruct {
+public struct PerformanceCounterDescriptionKHR: ChainableBase {
     public typealias CStruct = VkPerformanceCounterDescriptionKHR
 
     public static let structureType: StructureType = .performanceCounterDescriptionKHR
@@ -21701,7 +21701,7 @@ public struct HeadlessSurfaceCreateInfoEXT: ChainableBase {
 
 public protocol HeadlessSurfaceCreateInfoEXTExtension: Chainable {}
 
-public struct PhysicalDeviceCoverageReductionModeFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceCoverageReductionModeFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceCoverageReductionModeFeaturesNV
 
     public static let structureType: StructureType = .physicalDeviceCoverageReductionModeFeaturesNV
@@ -21744,7 +21744,7 @@ public struct PipelineCoverageReductionStateCreateInfoNV: ChainableBase, Pipelin
 
     public init(cStruct: VkPipelineCoverageReductionStateCreateInfoNV) {
         self.flags = PipelineCoverageReductionStateCreateFlagsNV(rawValue: cStruct.flags)
-        self.coverageReductionMode = CoverageReductionModeNV(rawValue: numericBitCast(cStruct.coverageReductionMode))!
+        self.coverageReductionMode = CoverageReductionModeNV(rawValue: numericBitCast(cStruct.coverageReductionMode.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPipelineCoverageReductionStateCreateInfoNV>) throws(E) -> R) throws(E) -> R {
@@ -21763,7 +21763,7 @@ public struct PipelineCoverageReductionStateCreateInfoNV: ChainableBase, Pipelin
 
 public protocol PipelineCoverageReductionStateCreateInfoNVExtension: Chainable {}
 
-public struct FramebufferMixedSamplesCombinationNV: ChainableBase, OutStruct {
+public struct FramebufferMixedSamplesCombinationNV: ChainableBase {
     public typealias CStruct = VkFramebufferMixedSamplesCombinationNV
 
     public static let structureType: StructureType = .framebufferMixedSamplesCombinationNV
@@ -21773,7 +21773,7 @@ public struct FramebufferMixedSamplesCombinationNV: ChainableBase, OutStruct {
     public let colorSamples: SampleCountFlags
 
     public init(cStruct: VkFramebufferMixedSamplesCombinationNV) {
-        self.coverageReductionMode = CoverageReductionModeNV(rawValue: numericBitCast(cStruct.coverageReductionMode))!
+        self.coverageReductionMode = CoverageReductionModeNV(rawValue: numericBitCast(cStruct.coverageReductionMode.rawValue))!
         self.rasterizationSamples = SampleCountFlags(rawValue: numericBitCast(cStruct.rasterizationSamples.rawValue))
         self.depthStencilSamples = SampleCountFlags(rawValue: cStruct.depthStencilSamples)
         self.colorSamples = SampleCountFlags(rawValue: cStruct.colorSamples)
@@ -21797,7 +21797,7 @@ public struct FramebufferMixedSamplesCombinationNV: ChainableBase, OutStruct {
 
 public protocol FramebufferMixedSamplesCombinationNVExtension: Chainable {}
 
-public struct PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderIntegerFunctions2FeaturesINTEL
 
     public static let structureType: StructureType = .physicalDeviceShaderIntegerFunctions2FeaturesINTEL
@@ -21833,7 +21833,7 @@ public struct PerformanceValueINTEL: CStructConvertible {
     public let data: VkPerformanceValueDataINTEL
 
     public init(cStruct: VkPerformanceValueINTEL) {
-        self.type = PerformanceValueTypeINTEL(rawValue: numericBitCast(cStruct.type))!
+        self.type = PerformanceValueTypeINTEL(rawValue: numericBitCast(cStruct.type.rawValue))!
         self.data = cStruct.data
     }
 
@@ -21885,7 +21885,7 @@ public struct QueryPoolPerformanceQueryCreateInfoINTEL: ChainableBase, QueryPool
     }
 
     public init(cStruct: VkQueryPoolPerformanceQueryCreateInfoINTEL) {
-        self.performanceCountersSampling = QueryPoolSamplingModeINTEL(rawValue: numericBitCast(cStruct.performanceCountersSampling))!
+        self.performanceCountersSampling = QueryPoolSamplingModeINTEL(rawValue: numericBitCast(cStruct.performanceCountersSampling.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkQueryPoolPerformanceQueryCreateInfoINTEL>) throws(E) -> R) throws(E) -> R {
@@ -21976,7 +21976,7 @@ public struct PerformanceOverrideInfoINTEL: ChainableBase {
     }
 
     public init(cStruct: VkPerformanceOverrideInfoINTEL) {
-        self.type = PerformanceOverrideTypeINTEL(rawValue: numericBitCast(cStruct.type))!
+        self.type = PerformanceOverrideTypeINTEL(rawValue: numericBitCast(cStruct.type.rawValue))!
         self.enable = cStruct.enable == VK_TRUE
         self.parameter = cStruct.parameter
     }
@@ -22009,7 +22009,7 @@ public struct PerformanceConfigurationAcquireInfoINTEL: ChainableBase {
     }
 
     public init(cStruct: VkPerformanceConfigurationAcquireInfoINTEL) {
-        self.type = PerformanceConfigurationTypeINTEL(rawValue: numericBitCast(cStruct.type))!
+        self.type = PerformanceConfigurationTypeINTEL(rawValue: numericBitCast(cStruct.type.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPerformanceConfigurationAcquireInfoINTEL>) throws(E) -> R) throws(E) -> R {
@@ -22027,7 +22027,7 @@ public struct PerformanceConfigurationAcquireInfoINTEL: ChainableBase {
 
 public protocol PerformanceConfigurationAcquireInfoINTELExtension: Chainable {}
 
-public struct PhysicalDeviceShaderClockFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderClockFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderClockFeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceShaderClockFeaturesKHR
@@ -22060,7 +22060,7 @@ public struct PhysicalDeviceShaderClockFeaturesKHR: ChainableBase, PhysicalDevic
 
 public protocol PhysicalDeviceShaderClockFeaturesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceIndexTypeUint8Features: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceIndexTypeUint8Features: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceIndexTypeUint8Features
 
     public static let structureType: StructureType = .physicalDeviceIndexTypeUint8Features
@@ -22089,7 +22089,7 @@ public struct PhysicalDeviceIndexTypeUint8Features: ChainableBase, PhysicalDevic
 
 public protocol PhysicalDeviceIndexTypeUint8FeaturesExtension: Chainable {}
 
-public struct PhysicalDeviceShaderSMBuiltinsPropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceShaderSMBuiltinsPropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceShaderSMBuiltinsPropertiesNV
 
     public static let structureType: StructureType = .physicalDeviceShaderSmBuiltinsPropertiesNV
@@ -22117,7 +22117,7 @@ public struct PhysicalDeviceShaderSMBuiltinsPropertiesNV: ChainableBase, Physica
 
 public protocol PhysicalDeviceShaderSMBuiltinsPropertiesNVExtension: Chainable {}
 
-public struct PhysicalDeviceShaderSMBuiltinsFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderSMBuiltinsFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderSMBuiltinsFeaturesNV
 
     public static let structureType: StructureType = .physicalDeviceShaderSmBuiltinsFeaturesNV
@@ -22146,7 +22146,7 @@ public struct PhysicalDeviceShaderSMBuiltinsFeaturesNV: ChainableBase, PhysicalD
 
 public protocol PhysicalDeviceShaderSMBuiltinsFeaturesNVExtension: Chainable {}
 
-public struct PhysicalDeviceFragmentShaderInterlockFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceFragmentShaderInterlockFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceFragmentShaderInterlockFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceFragmentShaderInterlockFeaturesEXT
@@ -22183,7 +22183,7 @@ public struct PhysicalDeviceFragmentShaderInterlockFeaturesEXT: ChainableBase, P
 
 public protocol PhysicalDeviceFragmentShaderInterlockFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceSeparateDepthStencilLayoutsFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceSeparateDepthStencilLayoutsFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceSeparateDepthStencilLayoutsFeatures
 
     public static let structureType: StructureType = .physicalDeviceSeparateDepthStencilLayoutsFeatures
@@ -22212,7 +22212,7 @@ public struct PhysicalDeviceSeparateDepthStencilLayoutsFeatures: ChainableBase, 
 
 public protocol PhysicalDeviceSeparateDepthStencilLayoutsFeaturesExtension: Chainable {}
 
-public struct AttachmentReferenceStencilLayout: ChainableBase, AttachmentReference2Extension, OutStruct {
+public struct AttachmentReferenceStencilLayout: ChainableBase, AttachmentReference2Extension {
     public typealias CStruct = VkAttachmentReferenceStencilLayout
 
     public static let structureType: StructureType = .attachmentReferenceStencilLayout
@@ -22223,7 +22223,7 @@ public struct AttachmentReferenceStencilLayout: ChainableBase, AttachmentReferen
     }
 
     public init(cStruct: VkAttachmentReferenceStencilLayout) {
-        self.stencilLayout = ImageLayout(rawValue: numericBitCast(cStruct.stencilLayout))!
+        self.stencilLayout = ImageLayout(rawValue: numericBitCast(cStruct.stencilLayout.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkAttachmentReferenceStencilLayout>) throws(E) -> R) throws(E) -> R {
@@ -22241,7 +22241,7 @@ public struct AttachmentReferenceStencilLayout: ChainableBase, AttachmentReferen
 
 public protocol AttachmentReferenceStencilLayoutExtension: Chainable {}
 
-public struct PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePrimitiveTopologyListRestartFeaturesEXT
 
     public static let structureType: StructureType = .physicalDevicePrimitiveTopologyListRestartFeaturesEXT
@@ -22274,7 +22274,7 @@ public struct PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT: ChainableBa
 
 public protocol PhysicalDevicePrimitiveTopologyListRestartFeaturesEXTExtension: Chainable {}
 
-public struct AttachmentDescriptionStencilLayout: ChainableBase, AttachmentDescription2Extension, OutStruct {
+public struct AttachmentDescriptionStencilLayout: ChainableBase, AttachmentDescription2Extension {
     public typealias CStruct = VkAttachmentDescriptionStencilLayout
 
     public static let structureType: StructureType = .attachmentDescriptionStencilLayout
@@ -22287,8 +22287,8 @@ public struct AttachmentDescriptionStencilLayout: ChainableBase, AttachmentDescr
     }
 
     public init(cStruct: VkAttachmentDescriptionStencilLayout) {
-        self.stencilInitialLayout = ImageLayout(rawValue: numericBitCast(cStruct.stencilInitialLayout))!
-        self.stencilFinalLayout = ImageLayout(rawValue: numericBitCast(cStruct.stencilFinalLayout))!
+        self.stencilInitialLayout = ImageLayout(rawValue: numericBitCast(cStruct.stencilInitialLayout.rawValue))!
+        self.stencilFinalLayout = ImageLayout(rawValue: numericBitCast(cStruct.stencilFinalLayout.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkAttachmentDescriptionStencilLayout>) throws(E) -> R) throws(E) -> R {
@@ -22307,7 +22307,7 @@ public struct AttachmentDescriptionStencilLayout: ChainableBase, AttachmentDescr
 
 public protocol AttachmentDescriptionStencilLayoutExtension: Chainable {}
 
-public struct PhysicalDevicePipelineExecutablePropertiesFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDevicePipelineExecutablePropertiesFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePipelineExecutablePropertiesFeaturesKHR
 
     public static let structureType: StructureType = .physicalDevicePipelineExecutablePropertiesFeaturesKHR
@@ -22346,7 +22346,7 @@ public struct PipelineInfoKHR: ChainableBase {
         self.pipeline = pipeline
     }
 
-    public init(cStruct: VkPipelineInfoKHR, device: Device?) {
+    public init(cStruct: VkPipelineInfoKHR, device: Device) {
         self.pipeline = Pipeline(handle: cStruct.pipeline, device: device)
     }
 
@@ -22365,7 +22365,7 @@ public struct PipelineInfoKHR: ChainableBase {
 
 public protocol PipelineInfoKHRExtension: Chainable {}
 
-public struct PipelineExecutablePropertiesKHR: ChainableBase, OutStruct {
+public struct PipelineExecutablePropertiesKHR: ChainableBase {
     public typealias CStruct = VkPipelineExecutablePropertiesKHR
 
     public static let structureType: StructureType = .pipelineExecutablePropertiesKHR
@@ -22411,7 +22411,7 @@ public struct PipelineExecutableInfoKHR: ChainableBase {
         self.executableIndex = executableIndex
     }
 
-    public init(cStruct: VkPipelineExecutableInfoKHR, device: Device?) {
+    public init(cStruct: VkPipelineExecutableInfoKHR, device: Device) {
         self.pipeline = Pipeline(handle: cStruct.pipeline, device: device)
         self.executableIndex = cStruct.executableIndex
     }
@@ -22432,7 +22432,7 @@ public struct PipelineExecutableInfoKHR: ChainableBase {
 
 public protocol PipelineExecutableInfoKHRExtension: Chainable {}
 
-public struct PipelineExecutableStatisticKHR: ChainableBase, OutStruct {
+public struct PipelineExecutableStatisticKHR: ChainableBase {
     public typealias CStruct = VkPipelineExecutableStatisticKHR
 
     public static let structureType: StructureType = .pipelineExecutableStatisticKHR
@@ -22444,7 +22444,7 @@ public struct PipelineExecutableStatisticKHR: ChainableBase, OutStruct {
     public init(cStruct: VkPipelineExecutableStatisticKHR) {
         self.name = String(unsafeBytesOf: cStruct.name)
         self.description = String(unsafeBytesOf: cStruct.description)
-        self.format = PipelineExecutableStatisticFormatKHR(rawValue: numericBitCast(cStruct.format))!
+        self.format = PipelineExecutableStatisticFormatKHR(rawValue: numericBitCast(cStruct.format.rawValue))!
         self.value = cStruct.value
     }
 
@@ -22466,7 +22466,7 @@ public struct PipelineExecutableStatisticKHR: ChainableBase, OutStruct {
 
 public protocol PipelineExecutableStatisticKHRExtension: Chainable {}
 
-public struct PipelineExecutableInternalRepresentationKHR: ChainableBase, OutStruct {
+public struct PipelineExecutableInternalRepresentationKHR: ChainableBase {
     public typealias CStruct = VkPipelineExecutableInternalRepresentationKHR
 
     public static let structureType: StructureType = .pipelineExecutableInternalRepresentationKHR
@@ -22503,7 +22503,7 @@ public struct PipelineExecutableInternalRepresentationKHR: ChainableBase, OutStr
 
 public protocol PipelineExecutableInternalRepresentationKHRExtension: Chainable {}
 
-public struct PhysicalDeviceShaderDemoteToHelperInvocationFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderDemoteToHelperInvocationFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderDemoteToHelperInvocationFeatures
 
     public static let structureType: StructureType = .physicalDeviceShaderDemoteToHelperInvocationFeatures
@@ -22532,7 +22532,7 @@ public struct PhysicalDeviceShaderDemoteToHelperInvocationFeatures: ChainableBas
 
 public protocol PhysicalDeviceShaderDemoteToHelperInvocationFeaturesExtension: Chainable {}
 
-public struct PhysicalDeviceTexelBufferAlignmentFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceTexelBufferAlignmentFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceTexelBufferAlignmentFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceTexelBufferAlignmentFeaturesEXT
@@ -22561,7 +22561,7 @@ public struct PhysicalDeviceTexelBufferAlignmentFeaturesEXT: ChainableBase, Phys
 
 public protocol PhysicalDeviceTexelBufferAlignmentFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceTexelBufferAlignmentProperties: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceTexelBufferAlignmentProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceTexelBufferAlignmentProperties
 
     public static let structureType: StructureType = .physicalDeviceTexelBufferAlignmentProperties
@@ -22595,7 +22595,7 @@ public struct PhysicalDeviceTexelBufferAlignmentProperties: ChainableBase, Physi
 
 public protocol PhysicalDeviceTexelBufferAlignmentPropertiesExtension: Chainable {}
 
-public struct PhysicalDeviceSubgroupSizeControlFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceSubgroupSizeControlFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceSubgroupSizeControlFeatures
 
     public static let structureType: StructureType = .physicalDeviceSubgroupSizeControlFeatures
@@ -22628,7 +22628,7 @@ public struct PhysicalDeviceSubgroupSizeControlFeatures: ChainableBase, Physical
 
 public protocol PhysicalDeviceSubgroupSizeControlFeaturesExtension: Chainable {}
 
-public struct PhysicalDeviceSubgroupSizeControlProperties: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceSubgroupSizeControlProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceSubgroupSizeControlProperties
 
     public static let structureType: StructureType = .physicalDeviceSubgroupSizeControlProperties
@@ -22691,7 +22691,7 @@ public struct PipelineShaderStageRequiredSubgroupSizeCreateInfo: ChainableBase, 
 
 public protocol PipelineShaderStageRequiredSubgroupSizeCreateInfoExtension: Chainable {}
 
-public struct SubpassShadingPipelineCreateInfoHUAWEI: ChainableBase, ComputePipelineCreateInfoExtension, OutStruct {
+public struct SubpassShadingPipelineCreateInfoHUAWEI: ChainableBase, ComputePipelineCreateInfoExtension {
     public typealias CStruct = VkSubpassShadingPipelineCreateInfoHUAWEI
 
     public static let structureType: StructureType = .subpassShadingPipelineCreateInfoHUAWEI
@@ -22703,7 +22703,7 @@ public struct SubpassShadingPipelineCreateInfoHUAWEI: ChainableBase, ComputePipe
         self.subpass = subpass
     }
 
-    public init(cStruct: VkSubpassShadingPipelineCreateInfoHUAWEI, device: Device?) {
+    public init(cStruct: VkSubpassShadingPipelineCreateInfoHUAWEI, device: Device) {
         self.renderPass = RenderPass(handle: cStruct.renderPass, device: device)
         self.subpass = cStruct.subpass
     }
@@ -22724,7 +22724,7 @@ public struct SubpassShadingPipelineCreateInfoHUAWEI: ChainableBase, ComputePipe
 
 public protocol SubpassShadingPipelineCreateInfoHUAWEIExtension: Chainable {}
 
-public struct PhysicalDeviceSubpassShadingPropertiesHUAWEI: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceSubpassShadingPropertiesHUAWEI: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceSubpassShadingPropertiesHUAWEI
 
     public static let structureType: StructureType = .physicalDeviceSubpassShadingPropertiesHUAWEI
@@ -22749,7 +22749,7 @@ public struct PhysicalDeviceSubpassShadingPropertiesHUAWEI: ChainableBase, Physi
 
 public protocol PhysicalDeviceSubpassShadingPropertiesHUAWEIExtension: Chainable {}
 
-public struct PhysicalDeviceClusterCullingShaderPropertiesHUAWEI: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceClusterCullingShaderPropertiesHUAWEI: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceClusterCullingShaderPropertiesHUAWEI
 
     public static let structureType: StructureType = .physicalDeviceClusterCullingShaderPropertiesHUAWEI
@@ -22822,7 +22822,7 @@ public struct DeviceMemoryOpaqueCaptureAddressInfo: ChainableBase {
         self.memory = memory
     }
 
-    public init(cStruct: VkDeviceMemoryOpaqueCaptureAddressInfo, device: Device?) {
+    public init(cStruct: VkDeviceMemoryOpaqueCaptureAddressInfo, device: Device) {
         self.memory = DeviceMemory(handle: cStruct.memory, device: device)
     }
 
@@ -22841,7 +22841,7 @@ public struct DeviceMemoryOpaqueCaptureAddressInfo: ChainableBase {
 
 public protocol DeviceMemoryOpaqueCaptureAddressInfoExtension: Chainable {}
 
-public struct PhysicalDeviceLineRasterizationFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceLineRasterizationFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceLineRasterizationFeatures
 
     public static let structureType: StructureType = .physicalDeviceLineRasterizationFeatures
@@ -22890,7 +22890,7 @@ public struct PhysicalDeviceLineRasterizationFeatures: ChainableBase, PhysicalDe
 
 public protocol PhysicalDeviceLineRasterizationFeaturesExtension: Chainable {}
 
-public struct PhysicalDeviceLineRasterizationProperties: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceLineRasterizationProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceLineRasterizationProperties
 
     public static let structureType: StructureType = .physicalDeviceLineRasterizationProperties
@@ -22932,7 +22932,7 @@ public struct PipelineRasterizationLineStateCreateInfo: ChainableBase, PipelineR
     }
 
     public init(cStruct: VkPipelineRasterizationLineStateCreateInfo) {
-        self.lineRasterizationMode = LineRasterizationMode(rawValue: numericBitCast(cStruct.lineRasterizationMode))!
+        self.lineRasterizationMode = LineRasterizationMode(rawValue: numericBitCast(cStruct.lineRasterizationMode.rawValue))!
         self.stippledLineEnable = cStruct.stippledLineEnable == VK_TRUE
         self.lineStippleFactor = cStruct.lineStippleFactor
         self.lineStipplePattern = cStruct.lineStipplePattern
@@ -22956,7 +22956,7 @@ public struct PipelineRasterizationLineStateCreateInfo: ChainableBase, PipelineR
 
 public protocol PipelineRasterizationLineStateCreateInfoExtension: Chainable {}
 
-public struct PhysicalDevicePipelineCreationCacheControlFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDevicePipelineCreationCacheControlFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePipelineCreationCacheControlFeatures
 
     public static let structureType: StructureType = .physicalDevicePipelineCreationCacheControlFeatures
@@ -22985,7 +22985,7 @@ public struct PhysicalDevicePipelineCreationCacheControlFeatures: ChainableBase,
 
 public protocol PhysicalDevicePipelineCreationCacheControlFeaturesExtension: Chainable {}
 
-public struct PhysicalDeviceVulkan11Features: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceVulkan11Features: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceVulkan11Features
 
     public static let structureType: StructureType = .physicalDeviceVulkan11Features
@@ -23058,7 +23058,7 @@ public struct PhysicalDeviceVulkan11Features: ChainableBase, PhysicalDeviceFeatu
 
 public protocol PhysicalDeviceVulkan11FeaturesExtension: Chainable {}
 
-public struct PhysicalDeviceVulkan11Properties: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceVulkan11Properties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceVulkan11Properties
 
     public static let structureType: StructureType = .physicalDeviceVulkan11Properties
@@ -23088,7 +23088,7 @@ public struct PhysicalDeviceVulkan11Properties: ChainableBase, PhysicalDevicePro
         self.subgroupSupportedStages = ShaderStageFlags(rawValue: cStruct.subgroupSupportedStages)
         self.subgroupSupportedOperations = SubgroupFeatureFlags(rawValue: cStruct.subgroupSupportedOperations)
         self.subgroupQuadOperationsInAllStages = cStruct.subgroupQuadOperationsInAllStages == VK_TRUE
-        self.pointClippingBehavior = PointClippingBehavior(rawValue: numericBitCast(cStruct.pointClippingBehavior))!
+        self.pointClippingBehavior = PointClippingBehavior(rawValue: numericBitCast(cStruct.pointClippingBehavior.rawValue))!
         self.maxMultiviewViewCount = cStruct.maxMultiviewViewCount
         self.maxMultiviewInstanceIndex = cStruct.maxMultiviewInstanceIndex
         self.protectedNoFault = cStruct.protectedNoFault == VK_TRUE
@@ -23125,7 +23125,7 @@ public struct PhysicalDeviceVulkan11Properties: ChainableBase, PhysicalDevicePro
 
 public protocol PhysicalDeviceVulkan11PropertiesExtension: Chainable {}
 
-public struct PhysicalDeviceVulkan12Features: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceVulkan12Features: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceVulkan12Features
 
     public static let structureType: StructureType = .physicalDeviceVulkan12Features
@@ -23338,7 +23338,7 @@ public struct PhysicalDeviceVulkan12Features: ChainableBase, PhysicalDeviceFeatu
 
 public protocol PhysicalDeviceVulkan12FeaturesExtension: Chainable {}
 
-public struct PhysicalDeviceVulkan12Properties: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceVulkan12Properties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceVulkan12Properties
 
     public static let structureType: StructureType = .physicalDeviceVulkan12Properties
@@ -23396,12 +23396,12 @@ public struct PhysicalDeviceVulkan12Properties: ChainableBase, PhysicalDevicePro
     public let framebufferIntegerColorSampleCounts: SampleCountFlags
 
     public init(cStruct: VkPhysicalDeviceVulkan12Properties) {
-        self.driverID = DriverId(rawValue: numericBitCast(cStruct.driverID))!
+        self.driverID = DriverId(rawValue: numericBitCast(cStruct.driverID.rawValue))!
         self.driverName = String(unsafeBytesOf: cStruct.driverName)
         self.driverInfo = String(unsafeBytesOf: cStruct.driverInfo)
         self.conformanceVersion = ConformanceVersion(cStruct: cStruct.conformanceVersion)
-        self.denormBehaviorIndependence = ShaderFloatControlsIndependence(rawValue: numericBitCast(cStruct.denormBehaviorIndependence))!
-        self.roundingModeIndependence = ShaderFloatControlsIndependence(rawValue: numericBitCast(cStruct.roundingModeIndependence))!
+        self.denormBehaviorIndependence = ShaderFloatControlsIndependence(rawValue: numericBitCast(cStruct.denormBehaviorIndependence.rawValue))!
+        self.roundingModeIndependence = ShaderFloatControlsIndependence(rawValue: numericBitCast(cStruct.roundingModeIndependence.rawValue))!
         self.shaderSignedZeroInfNanPreserveFloat16 = cStruct.shaderSignedZeroInfNanPreserveFloat16 == VK_TRUE
         self.shaderSignedZeroInfNanPreserveFloat32 = cStruct.shaderSignedZeroInfNanPreserveFloat32 == VK_TRUE
         self.shaderSignedZeroInfNanPreserveFloat64 = cStruct.shaderSignedZeroInfNanPreserveFloat64 == VK_TRUE
@@ -23518,7 +23518,7 @@ public struct PhysicalDeviceVulkan12Properties: ChainableBase, PhysicalDevicePro
 
 public protocol PhysicalDeviceVulkan12PropertiesExtension: Chainable {}
 
-public struct PhysicalDeviceVulkan13Features: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceVulkan13Features: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceVulkan13Features
 
     public static let structureType: StructureType = .physicalDeviceVulkan13Features
@@ -23603,7 +23603,7 @@ public struct PhysicalDeviceVulkan13Features: ChainableBase, PhysicalDeviceFeatu
 
 public protocol PhysicalDeviceVulkan13FeaturesExtension: Chainable {}
 
-public struct PhysicalDeviceVulkan13Properties: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceVulkan13Properties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceVulkan13Properties
 
     public static let structureType: StructureType = .physicalDeviceVulkan13Properties
@@ -23760,7 +23760,7 @@ public struct PhysicalDeviceVulkan13Properties: ChainableBase, PhysicalDevicePro
 
 public protocol PhysicalDeviceVulkan13PropertiesExtension: Chainable {}
 
-public struct PhysicalDeviceVulkan14Features: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceVulkan14Features: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceVulkan14Features
 
     public static let structureType: StructureType = .physicalDeviceVulkan14Features
@@ -23869,7 +23869,7 @@ public struct PhysicalDeviceVulkan14Features: ChainableBase, PhysicalDeviceFeatu
 
 public protocol PhysicalDeviceVulkan14FeaturesExtension: Chainable {}
 
-public struct PhysicalDeviceVulkan14Properties: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceVulkan14Properties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceVulkan14Properties
 
     public static let structureType: StructureType = .physicalDeviceVulkan14Properties
@@ -23915,10 +23915,10 @@ public struct PhysicalDeviceVulkan14Properties: ChainableBase, PhysicalDevicePro
         self.blockTexelViewCompatibleMultipleLayers = cStruct.blockTexelViewCompatibleMultipleLayers == VK_TRUE
         self.maxCombinedImageSamplerDescriptorCount = cStruct.maxCombinedImageSamplerDescriptorCount
         self.fragmentShadingRateClampCombinerInputs = cStruct.fragmentShadingRateClampCombinerInputs == VK_TRUE
-        self.defaultRobustnessStorageBuffers = PipelineRobustnessBufferBehavior(rawValue: numericBitCast(cStruct.defaultRobustnessStorageBuffers))!
-        self.defaultRobustnessUniformBuffers = PipelineRobustnessBufferBehavior(rawValue: numericBitCast(cStruct.defaultRobustnessUniformBuffers))!
-        self.defaultRobustnessVertexInputs = PipelineRobustnessBufferBehavior(rawValue: numericBitCast(cStruct.defaultRobustnessVertexInputs))!
-        self.defaultRobustnessImages = PipelineRobustnessImageBehavior(rawValue: numericBitCast(cStruct.defaultRobustnessImages))!
+        self.defaultRobustnessStorageBuffers = PipelineRobustnessBufferBehavior(rawValue: numericBitCast(cStruct.defaultRobustnessStorageBuffers.rawValue))!
+        self.defaultRobustnessUniformBuffers = PipelineRobustnessBufferBehavior(rawValue: numericBitCast(cStruct.defaultRobustnessUniformBuffers.rawValue))!
+        self.defaultRobustnessVertexInputs = PipelineRobustnessBufferBehavior(rawValue: numericBitCast(cStruct.defaultRobustnessVertexInputs.rawValue))!
+        self.defaultRobustnessImages = PipelineRobustnessImageBehavior(rawValue: numericBitCast(cStruct.defaultRobustnessImages.rawValue))!
         self.copySrcLayoutCount = cStruct.copySrcLayoutCount
         self.copySrcLayouts = cStruct.pCopySrcLayouts
         self.copyDstLayoutCount = cStruct.copyDstLayoutCount
@@ -23995,7 +23995,7 @@ public struct PipelineCompilerControlCreateInfoAMD: ChainableBase, GraphicsPipel
 
 public protocol PipelineCompilerControlCreateInfoAMDExtension: Chainable {}
 
-public struct PhysicalDeviceCoherentMemoryFeaturesAMD: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceCoherentMemoryFeaturesAMD: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceCoherentMemoryFeaturesAMD
 
     public static let structureType: StructureType = .physicalDeviceCoherentMemoryFeaturesAMD
@@ -24046,7 +24046,7 @@ public struct GpaPerfBlockPropertiesAMD: CStructConvertible {
     }
 
     public init(cStruct: VkGpaPerfBlockPropertiesAMD) {
-        self.blockType = GpaPerfBlockAMD(rawValue: numericBitCast(cStruct.blockType))!
+        self.blockType = GpaPerfBlockAMD(rawValue: numericBitCast(cStruct.blockType.rawValue))!
         self.flags = GpaPerfBlockPropertiesFlagsAMD(rawValue: cStruct.flags)
         self.instanceCount = cStruct.instanceCount
         self.maxEventID = cStruct.maxEventID
@@ -24068,7 +24068,7 @@ public struct GpaPerfBlockPropertiesAMD: CStructConvertible {
     }
 }
 
-public struct PhysicalDeviceGpaFeaturesAMD: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceGpaFeaturesAMD: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceGpaFeaturesAMD
 
     public static let structureType: StructureType = .physicalDeviceGpaFeaturesAMD
@@ -24109,7 +24109,7 @@ public struct PhysicalDeviceGpaFeaturesAMD: ChainableBase, PhysicalDeviceFeature
 
 public protocol PhysicalDeviceGpaFeaturesAMDExtension: Chainable {}
 
-public struct PhysicalDeviceGpaPropertiesAMD: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceGpaPropertiesAMD: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceGpaPropertiesAMD
 
     public static let structureType: StructureType = .physicalDeviceGpaPropertiesAMD
@@ -24146,7 +24146,7 @@ public struct PhysicalDeviceGpaPropertiesAMD: ChainableBase, PhysicalDevicePrope
 
 public protocol PhysicalDeviceGpaPropertiesAMDExtension: Chainable {}
 
-public struct PhysicalDeviceGpaProperties2AMD: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceGpaProperties2AMD: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceGpaProperties2AMD
 
     public static let structureType: StructureType = .physicalDeviceGpaProperties2AMD
@@ -24185,7 +24185,7 @@ public struct GpaPerfCounterAMD: CStructConvertible {
     }
 
     public init(cStruct: VkGpaPerfCounterAMD) {
-        self.blockType = GpaPerfBlockAMD(rawValue: numericBitCast(cStruct.blockType))!
+        self.blockType = GpaPerfBlockAMD(rawValue: numericBitCast(cStruct.blockType.rawValue))!
         self.blockInstance = cStruct.blockInstance
         self.eventID = cStruct.eventID
     }
@@ -24234,7 +24234,7 @@ public struct GpaSampleBeginInfoAMD: ChainableBase {
     }
 
     public init(cStruct: VkGpaSampleBeginInfoAMD) {
-        self.sampleType = GpaSampleTypeAMD(rawValue: numericBitCast(cStruct.sampleType))!
+        self.sampleType = GpaSampleTypeAMD(rawValue: numericBitCast(cStruct.sampleType.rawValue))!
         self.sampleInternalOperations = cStruct.sampleInternalOperations == VK_TRUE
         self.cacheFlushOnCounterCollection = cStruct.cacheFlushOnCounterCollection == VK_TRUE
         self.sqShaderMaskEnable = cStruct.sqShaderMaskEnable == VK_TRUE
@@ -24294,7 +24294,7 @@ public struct GpaDeviceClockModeInfoAMD: ChainableBase {
     }
 
     public init(cStruct: VkGpaDeviceClockModeInfoAMD) {
-        self.clockMode = GpaDeviceClockModeAMD(rawValue: numericBitCast(cStruct.clockMode))!
+        self.clockMode = GpaDeviceClockModeAMD(rawValue: numericBitCast(cStruct.clockMode.rawValue))!
         self.memoryClockRatioToPeak = cStruct.memoryClockRatioToPeak
         self.engineClockRatioToPeak = cStruct.engineClockRatioToPeak
     }
@@ -24316,7 +24316,7 @@ public struct GpaDeviceClockModeInfoAMD: ChainableBase {
 
 public protocol GpaDeviceClockModeInfoAMDExtension: Chainable {}
 
-public struct GpaDeviceGetClockInfoAMD: ChainableBase, OutStruct {
+public struct GpaDeviceGetClockInfoAMD: ChainableBase {
     public typealias CStruct = VkGpaDeviceGetClockInfoAMD
 
     public static let structureType: StructureType = .gpaDeviceGetClockInfoAMD
@@ -24367,7 +24367,7 @@ public struct GpaSessionCreateInfoAMD: ChainableBase {
         self.secondaryCopySource = secondaryCopySource
     }
 
-    public init(cStruct: VkGpaSessionCreateInfoAMD, device: Device?) {
+    public init(cStruct: VkGpaSessionCreateInfoAMD, device: Device) {
         self.secondaryCopySource = (cStruct.secondaryCopySource != nil) ? GpaSessionAMD(handle: cStruct.secondaryCopySource, device: device) : nil
     }
 
@@ -24386,7 +24386,7 @@ public struct GpaSessionCreateInfoAMD: ChainableBase {
 
 public protocol GpaSessionCreateInfoAMDExtension: Chainable {}
 
-public struct PhysicalDeviceToolProperties: ChainableBase, OutStruct {
+public struct PhysicalDeviceToolProperties: ChainableBase {
     public typealias CStruct = VkPhysicalDeviceToolProperties
 
     public static let structureType: StructureType = .physicalDeviceToolProperties
@@ -24437,7 +24437,7 @@ public struct SamplerCustomBorderColorCreateInfoEXT: ChainableBase, SamplerCreat
 
     public init(cStruct: VkSamplerCustomBorderColorCreateInfoEXT) {
         self.customBorderColor = cStruct.customBorderColor
-        self.format = Format(rawValue: numericBitCast(cStruct.format))!
+        self.format = Format(rawValue: numericBitCast(cStruct.format.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkSamplerCustomBorderColorCreateInfoEXT>) throws(E) -> R) throws(E) -> R {
@@ -24456,7 +24456,7 @@ public struct SamplerCustomBorderColorCreateInfoEXT: ChainableBase, SamplerCreat
 
 public protocol SamplerCustomBorderColorCreateInfoEXTExtension: Chainable {}
 
-public struct PhysicalDeviceCustomBorderColorPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceCustomBorderColorPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceCustomBorderColorPropertiesEXT
 
     public static let structureType: StructureType = .physicalDeviceCustomBorderColorPropertiesEXT
@@ -24481,7 +24481,7 @@ public struct PhysicalDeviceCustomBorderColorPropertiesEXT: ChainableBase, Physi
 
 public protocol PhysicalDeviceCustomBorderColorPropertiesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceCustomBorderColorFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceCustomBorderColorFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceCustomBorderColorFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceCustomBorderColorFeaturesEXT
@@ -24549,7 +24549,7 @@ public struct SamplerBorderColorComponentMappingCreateInfoEXT: ChainableBase, Sa
 
 public protocol SamplerBorderColorComponentMappingCreateInfoEXTExtension: Chainable {}
 
-public struct PhysicalDeviceBorderColorSwizzleFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceBorderColorSwizzleFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceBorderColorSwizzleFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceBorderColorSwizzleFeaturesEXT
@@ -24605,11 +24605,11 @@ public struct AccelerationStructureGeometryTrianglesDataKHR: ChainableBase {
     }
 
     public init(cStruct: VkAccelerationStructureGeometryTrianglesDataKHR) {
-        self.vertexFormat = Format(rawValue: numericBitCast(cStruct.vertexFormat))!
+        self.vertexFormat = Format(rawValue: numericBitCast(cStruct.vertexFormat.rawValue))!
         self.vertexData = cStruct.vertexData
         self.vertexStride = cStruct.vertexStride
         self.maxVertex = cStruct.maxVertex
-        self.indexType = IndexType(rawValue: numericBitCast(cStruct.indexType))!
+        self.indexType = IndexType(rawValue: numericBitCast(cStruct.indexType.rawValue))!
         self.indexData = cStruct.indexData
         self.transformData = cStruct.transformData
     }
@@ -24732,17 +24732,17 @@ public struct AccelerationStructureGeometryLinearSweptSpheresDataNV: ChainableBa
     }
 
     public init(cStruct: VkAccelerationStructureGeometryLinearSweptSpheresDataNV) {
-        self.vertexFormat = Format(rawValue: numericBitCast(cStruct.vertexFormat))!
+        self.vertexFormat = Format(rawValue: numericBitCast(cStruct.vertexFormat.rawValue))!
         self.vertexData = cStruct.vertexData
         self.vertexStride = cStruct.vertexStride
-        self.radiusFormat = Format(rawValue: numericBitCast(cStruct.radiusFormat))!
+        self.radiusFormat = Format(rawValue: numericBitCast(cStruct.radiusFormat.rawValue))!
         self.radiusData = cStruct.radiusData
         self.radiusStride = cStruct.radiusStride
-        self.indexType = IndexType(rawValue: numericBitCast(cStruct.indexType))!
+        self.indexType = IndexType(rawValue: numericBitCast(cStruct.indexType.rawValue))!
         self.indexData = cStruct.indexData
         self.indexStride = cStruct.indexStride
-        self.indexingMode = RayTracingLssIndexingModeNV(rawValue: numericBitCast(cStruct.indexingMode))!
-        self.endCapsMode = RayTracingLssPrimitiveEndCapsModeNV(rawValue: numericBitCast(cStruct.endCapsMode))!
+        self.indexingMode = RayTracingLssIndexingModeNV(rawValue: numericBitCast(cStruct.indexingMode.rawValue))!
+        self.endCapsMode = RayTracingLssPrimitiveEndCapsModeNV(rawValue: numericBitCast(cStruct.endCapsMode.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkAccelerationStructureGeometryLinearSweptSpheresDataNV>) throws(E) -> R) throws(E) -> R {
@@ -24797,13 +24797,13 @@ public struct AccelerationStructureGeometrySpheresDataNV: ChainableBase, Acceler
     }
 
     public init(cStruct: VkAccelerationStructureGeometrySpheresDataNV) {
-        self.vertexFormat = Format(rawValue: numericBitCast(cStruct.vertexFormat))!
+        self.vertexFormat = Format(rawValue: numericBitCast(cStruct.vertexFormat.rawValue))!
         self.vertexData = cStruct.vertexData
         self.vertexStride = cStruct.vertexStride
-        self.radiusFormat = Format(rawValue: numericBitCast(cStruct.radiusFormat))!
+        self.radiusFormat = Format(rawValue: numericBitCast(cStruct.radiusFormat.rawValue))!
         self.radiusData = cStruct.radiusData
         self.radiusStride = cStruct.radiusStride
-        self.indexType = IndexType(rawValue: numericBitCast(cStruct.indexType))!
+        self.indexType = IndexType(rawValue: numericBitCast(cStruct.indexType.rawValue))!
         self.indexData = cStruct.indexData
         self.indexStride = cStruct.indexStride
     }
@@ -24846,7 +24846,7 @@ public struct AccelerationStructureGeometryKHR: ChainableBase {
     }
 
     public init(cStruct: VkAccelerationStructureGeometryKHR) {
-        self.geometryType = GeometryTypeKHR(rawValue: numericBitCast(cStruct.geometryType))!
+        self.geometryType = GeometryTypeKHR(rawValue: numericBitCast(cStruct.geometryType.rawValue))!
         self.geometry = cStruct.geometry
         self.flags = GeometryFlagsKHR(rawValue: cStruct.flags)
     }
@@ -24892,10 +24892,10 @@ public struct AccelerationStructureBuildGeometryInfoKHR: ChainableBase {
         self.scratchData = scratchData
     }
 
-    public init(cStruct: VkAccelerationStructureBuildGeometryInfoKHR, device: Device?) {
-        self.type = AccelerationStructureTypeKHR(rawValue: numericBitCast(cStruct.type))!
+    public init(cStruct: VkAccelerationStructureBuildGeometryInfoKHR, device: Device) {
+        self.type = AccelerationStructureTypeKHR(rawValue: numericBitCast(cStruct.type.rawValue))!
         self.flags = BuildAccelerationStructureFlagsKHR(rawValue: cStruct.flags)
-        self.mode = BuildAccelerationStructureModeKHR(rawValue: numericBitCast(cStruct.mode))!
+        self.mode = BuildAccelerationStructureModeKHR(rawValue: numericBitCast(cStruct.mode.rawValue))!
         self.srcAccelerationStructure = (cStruct.srcAccelerationStructure != nil) ? AccelerationStructureKHR(handle: cStruct.srcAccelerationStructure, device: device) : nil
         self.dstAccelerationStructure = (cStruct.dstAccelerationStructure != nil) ? AccelerationStructureKHR(handle: cStruct.dstAccelerationStructure, device: device) : nil
         self.geometries = (cStruct.pGeometries != nil) ? UnsafeBufferPointer(start: cStruct.pGeometries, count: Int(cStruct.geometryCount)).map{ AccelerationStructureGeometryKHR(cStruct: $0) } : nil
@@ -24982,12 +24982,12 @@ public struct AccelerationStructureCreateInfoKHR: ChainableBase {
         self.deviceAddress = deviceAddress
     }
 
-    public init(cStruct: VkAccelerationStructureCreateInfoKHR, device: Device?) {
+    public init(cStruct: VkAccelerationStructureCreateInfoKHR, device: Device) {
         self.createFlags = AccelerationStructureCreateFlagsKHR(rawValue: cStruct.createFlags)
         self.buffer = Buffer(handle: cStruct.buffer, device: device)
         self.offset = cStruct.offset
         self.size = cStruct.size
-        self.type = AccelerationStructureTypeKHR(rawValue: numericBitCast(cStruct.type))!
+        self.type = AccelerationStructureTypeKHR(rawValue: numericBitCast(cStruct.type.rawValue))!
         self.deviceAddress = cStruct.deviceAddress
     }
 
@@ -25123,7 +25123,7 @@ public struct AccelerationStructureDeviceAddressInfoKHR: ChainableBase {
         self.accelerationStructure = accelerationStructure
     }
 
-    public init(cStruct: VkAccelerationStructureDeviceAddressInfoKHR, device: Device?) {
+    public init(cStruct: VkAccelerationStructureDeviceAddressInfoKHR, device: Device) {
         self.accelerationStructure = AccelerationStructureKHR(handle: cStruct.accelerationStructure, device: device)
     }
 
@@ -25185,10 +25185,10 @@ public struct CopyAccelerationStructureInfoKHR: ChainableBase {
         self.mode = mode
     }
 
-    public init(cStruct: VkCopyAccelerationStructureInfoKHR, device: Device?) {
+    public init(cStruct: VkCopyAccelerationStructureInfoKHR, device: Device) {
         self.src = AccelerationStructureKHR(handle: cStruct.src, device: device)
         self.dst = AccelerationStructureKHR(handle: cStruct.dst, device: device)
-        self.mode = CopyAccelerationStructureModeKHR(rawValue: numericBitCast(cStruct.mode))!
+        self.mode = CopyAccelerationStructureModeKHR(rawValue: numericBitCast(cStruct.mode.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkCopyAccelerationStructureInfoKHR>) throws(E) -> R) throws(E) -> R {
@@ -25222,10 +25222,10 @@ public struct CopyAccelerationStructureToMemoryInfoKHR: ChainableBase {
         self.mode = mode
     }
 
-    public init(cStruct: VkCopyAccelerationStructureToMemoryInfoKHR, device: Device?) {
+    public init(cStruct: VkCopyAccelerationStructureToMemoryInfoKHR, device: Device) {
         self.src = AccelerationStructureKHR(handle: cStruct.src, device: device)
         self.dst = cStruct.dst
-        self.mode = CopyAccelerationStructureModeKHR(rawValue: numericBitCast(cStruct.mode))!
+        self.mode = CopyAccelerationStructureModeKHR(rawValue: numericBitCast(cStruct.mode.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkCopyAccelerationStructureToMemoryInfoKHR>) throws(E) -> R) throws(E) -> R {
@@ -25259,10 +25259,10 @@ public struct CopyMemoryToAccelerationStructureInfoKHR: ChainableBase {
         self.mode = mode
     }
 
-    public init(cStruct: VkCopyMemoryToAccelerationStructureInfoKHR, device: Device?) {
+    public init(cStruct: VkCopyMemoryToAccelerationStructureInfoKHR, device: Device) {
         self.src = cStruct.src
         self.dst = AccelerationStructureKHR(handle: cStruct.dst, device: device)
-        self.mode = CopyAccelerationStructureModeKHR(rawValue: numericBitCast(cStruct.mode))!
+        self.mode = CopyAccelerationStructureModeKHR(rawValue: numericBitCast(cStruct.mode.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkCopyMemoryToAccelerationStructureInfoKHR>) throws(E) -> R) throws(E) -> R {
@@ -25282,7 +25282,7 @@ public struct CopyMemoryToAccelerationStructureInfoKHR: ChainableBase {
 
 public protocol CopyMemoryToAccelerationStructureInfoKHRExtension: Chainable {}
 
-public struct PhysicalDeviceExtendedDynamicStateFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceExtendedDynamicStateFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceExtendedDynamicStateFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceExtendedDynamicStateFeaturesEXT
@@ -25311,7 +25311,7 @@ public struct PhysicalDeviceExtendedDynamicStateFeaturesEXT: ChainableBase, Phys
 
 public protocol PhysicalDeviceExtendedDynamicStateFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceExtendedDynamicState2FeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceExtendedDynamicState2FeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceExtendedDynamicState2FeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceExtendedDynamicState2FeaturesEXT
@@ -25348,7 +25348,7 @@ public struct PhysicalDeviceExtendedDynamicState2FeaturesEXT: ChainableBase, Phy
 
 public protocol PhysicalDeviceExtendedDynamicState2FeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceExtendedDynamicState3FeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceExtendedDynamicState3FeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceExtendedDynamicState3FeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceExtendedDynamicState3FeaturesEXT
@@ -25497,7 +25497,7 @@ public struct PhysicalDeviceExtendedDynamicState3FeaturesEXT: ChainableBase, Phy
 
 public protocol PhysicalDeviceExtendedDynamicState3FeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceExtendedDynamicState3PropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceExtendedDynamicState3PropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceExtendedDynamicState3PropertiesEXT
 
     public static let structureType: StructureType = .physicalDeviceExtendedDynamicState3PropertiesEXT
@@ -25542,12 +25542,12 @@ public struct ColorBlendEquationEXT: CStructConvertible {
     }
 
     public init(cStruct: VkColorBlendEquationEXT) {
-        self.srcColorBlendFactor = BlendFactor(rawValue: numericBitCast(cStruct.srcColorBlendFactor))!
-        self.dstColorBlendFactor = BlendFactor(rawValue: numericBitCast(cStruct.dstColorBlendFactor))!
-        self.colorBlendOp = BlendOp(rawValue: numericBitCast(cStruct.colorBlendOp))!
-        self.srcAlphaBlendFactor = BlendFactor(rawValue: numericBitCast(cStruct.srcAlphaBlendFactor))!
-        self.dstAlphaBlendFactor = BlendFactor(rawValue: numericBitCast(cStruct.dstAlphaBlendFactor))!
-        self.alphaBlendOp = BlendOp(rawValue: numericBitCast(cStruct.alphaBlendOp))!
+        self.srcColorBlendFactor = BlendFactor(rawValue: numericBitCast(cStruct.srcColorBlendFactor.rawValue))!
+        self.dstColorBlendFactor = BlendFactor(rawValue: numericBitCast(cStruct.dstColorBlendFactor.rawValue))!
+        self.colorBlendOp = BlendOp(rawValue: numericBitCast(cStruct.colorBlendOp.rawValue))!
+        self.srcAlphaBlendFactor = BlendFactor(rawValue: numericBitCast(cStruct.srcAlphaBlendFactor.rawValue))!
+        self.dstAlphaBlendFactor = BlendFactor(rawValue: numericBitCast(cStruct.dstAlphaBlendFactor.rawValue))!
+        self.alphaBlendOp = BlendOp(rawValue: numericBitCast(cStruct.alphaBlendOp.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(_ body: (UnsafePointer<VkColorBlendEquationEXT>) throws(E) -> R) throws(E) -> R {
@@ -25580,10 +25580,10 @@ public struct ColorBlendAdvancedEXT: CStructConvertible {
     }
 
     public init(cStruct: VkColorBlendAdvancedEXT) {
-        self.advancedBlendOp = BlendOp(rawValue: numericBitCast(cStruct.advancedBlendOp))!
+        self.advancedBlendOp = BlendOp(rawValue: numericBitCast(cStruct.advancedBlendOp.rawValue))!
         self.srcPremultiplied = cStruct.srcPremultiplied == VK_TRUE
         self.dstPremultiplied = cStruct.dstPremultiplied == VK_TRUE
-        self.blendOverlap = BlendOverlapEXT(rawValue: numericBitCast(cStruct.blendOverlap))!
+        self.blendOverlap = BlendOverlapEXT(rawValue: numericBitCast(cStruct.blendOverlap.rawValue))!
         self.clampResults = cStruct.clampResults == VK_TRUE
     }
 
@@ -25691,7 +25691,7 @@ public struct CommandBufferInheritanceRenderPassTransformInfoQCOM: ChainableBase
 
 public protocol CommandBufferInheritanceRenderPassTransformInfoQCOMExtension: Chainable {}
 
-public struct PhysicalDevicePartitionedAccelerationStructureFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDevicePartitionedAccelerationStructureFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePartitionedAccelerationStructureFeaturesNV
 
     public static let structureType: StructureType = .physicalDevicePartitionedAccelerationStructureFeaturesNV
@@ -25720,7 +25720,7 @@ public struct PhysicalDevicePartitionedAccelerationStructureFeaturesNV: Chainabl
 
 public protocol PhysicalDevicePartitionedAccelerationStructureFeaturesNVExtension: Chainable {}
 
-public struct PhysicalDevicePartitionedAccelerationStructurePropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDevicePartitionedAccelerationStructurePropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDevicePartitionedAccelerationStructurePropertiesNV
 
     public static let structureType: StructureType = .physicalDevicePartitionedAccelerationStructurePropertiesNV
@@ -25759,7 +25759,7 @@ public struct BuildPartitionedAccelerationStructureIndirectCommandNV: CStructCon
     }
 
     public init(cStruct: VkBuildPartitionedAccelerationStructureIndirectCommandNV) {
-        self.opType = PartitionedAccelerationStructureOpTypeNV(rawValue: numericBitCast(cStruct.opType))!
+        self.opType = PartitionedAccelerationStructureOpTypeNV(rawValue: numericBitCast(cStruct.opType.rawValue))!
         self.argCount = cStruct.argCount
         self.argData = StridedDeviceAddressNV(cStruct: cStruct.argData)
     }
@@ -25775,7 +25775,7 @@ public struct BuildPartitionedAccelerationStructureIndirectCommandNV: CStructCon
     }
 }
 
-public struct PartitionedAccelerationStructureFlagsNV: ChainableBase, PartitionedAccelerationStructureInstancesInputNVExtension, OutStruct {
+public struct PartitionedAccelerationStructureFlagsNV: ChainableBase, PartitionedAccelerationStructureInstancesInputNVExtension {
     public typealias CStruct = VkPartitionedAccelerationStructureFlagsNV
 
     public static let structureType: StructureType = .partitionedAccelerationStructureFlagsNV
@@ -25910,7 +25910,7 @@ public struct PartitionedAccelerationStructureWritePartitionTranslationDataNV: C
     }
 }
 
-public struct WriteDescriptorSetPartitionedAccelerationStructureNV: ChainableBase, WriteDescriptorSetExtension, OutStruct {
+public struct WriteDescriptorSetPartitionedAccelerationStructureNV: ChainableBase, WriteDescriptorSetExtension {
     public typealias CStruct = VkWriteDescriptorSetPartitionedAccelerationStructureNV
 
     public static let structureType: StructureType = .writeDescriptorSetPartitionedAccelerationStructureNV
@@ -25942,7 +25942,7 @@ public struct WriteDescriptorSetPartitionedAccelerationStructureNV: ChainableBas
 
 public protocol WriteDescriptorSetPartitionedAccelerationStructureNVExtension: Chainable {}
 
-public struct PartitionedAccelerationStructureInstancesInputNV: ChainableBase, OutStruct {
+public struct PartitionedAccelerationStructureInstancesInputNV: ChainableBase {
     public typealias CStruct = VkPartitionedAccelerationStructureInstancesInputNV
 
     public static let structureType: StructureType = .partitionedAccelerationStructureInstancesInputNV
@@ -25987,7 +25987,7 @@ public struct PartitionedAccelerationStructureInstancesInputNV: ChainableBase, O
 
 public protocol PartitionedAccelerationStructureInstancesInputNVExtension: Chainable {}
 
-public struct BuildPartitionedAccelerationStructureInfoNV: ChainableBase, OutStruct {
+public struct BuildPartitionedAccelerationStructureInfoNV: ChainableBase {
     public typealias CStruct = VkBuildPartitionedAccelerationStructureInfoNV
 
     public static let structureType: StructureType = .buildPartitionedAccelerationStructureInfoNV
@@ -26038,7 +26038,7 @@ public struct BuildPartitionedAccelerationStructureInfoNV: ChainableBase, OutStr
 
 public protocol BuildPartitionedAccelerationStructureInfoNVExtension: Chainable {}
 
-public struct PhysicalDeviceDiagnosticsConfigFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceDiagnosticsConfigFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDiagnosticsConfigFeaturesNV
 
     public static let structureType: StructureType = .physicalDeviceDiagnosticsConfigFeaturesNV
@@ -26096,7 +26096,7 @@ public struct DeviceDiagnosticsConfigCreateInfoNV: ChainableBase, DeviceCreateIn
 
 public protocol DeviceDiagnosticsConfigCreateInfoNVExtension: Chainable {}
 
-public struct PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceZeroInitializeWorkgroupMemoryFeatures
 
     public static let structureType: StructureType = .physicalDeviceZeroInitializeWorkgroupMemoryFeatures
@@ -26125,7 +26125,7 @@ public struct PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures: ChainableBase
 
 public protocol PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesExtension: Chainable {}
 
-public struct PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR
@@ -26154,7 +26154,7 @@ public struct PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR: Chainab
 
 public protocol PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceRobustness2FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceRobustness2FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceRobustness2FeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceRobustness2FeaturesKHR
@@ -26191,7 +26191,7 @@ public struct PhysicalDeviceRobustness2FeaturesKHR: ChainableBase, PhysicalDevic
 
 public protocol PhysicalDeviceRobustness2FeaturesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceRobustness2PropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceRobustness2PropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceRobustness2PropertiesKHR
 
     public static let structureType: StructureType = .physicalDeviceRobustness2PropertiesKHR
@@ -26219,7 +26219,7 @@ public struct PhysicalDeviceRobustness2PropertiesKHR: ChainableBase, PhysicalDev
 
 public protocol PhysicalDeviceRobustness2PropertiesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceImageRobustnessFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceImageRobustnessFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceImageRobustnessFeatures
 
     public static let structureType: StructureType = .physicalDeviceImageRobustnessFeatures
@@ -26248,7 +26248,7 @@ public struct PhysicalDeviceImageRobustnessFeatures: ChainableBase, PhysicalDevi
 
 public protocol PhysicalDeviceImageRobustnessFeaturesExtension: Chainable {}
 
-public struct PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR
@@ -26290,7 +26290,7 @@ public struct PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR: ChainableB
 public protocol PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHRExtension: Chainable {}
 
 #if VK_ENABLE_BETA_EXTENSIONS
-public struct PhysicalDevicePortabilitySubsetFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDevicePortabilitySubsetFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePortabilitySubsetFeaturesKHR
 
     public static let structureType: StructureType = .physicalDevicePortabilitySubsetFeaturesKHR
@@ -26377,7 +26377,7 @@ public struct PhysicalDevicePortabilitySubsetFeaturesKHR: ChainableBase, Physica
 public protocol PhysicalDevicePortabilitySubsetFeaturesKHRExtension: Chainable {}
 
 #if VK_ENABLE_BETA_EXTENSIONS
-public struct PhysicalDevicePortabilitySubsetPropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDevicePortabilitySubsetPropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDevicePortabilitySubsetPropertiesKHR
 
     public static let structureType: StructureType = .physicalDevicePortabilitySubsetPropertiesKHR
@@ -26403,7 +26403,7 @@ public struct PhysicalDevicePortabilitySubsetPropertiesKHR: ChainableBase, Physi
 
 public protocol PhysicalDevicePortabilitySubsetPropertiesKHRExtension: Chainable {}
 
-public struct PhysicalDevice4444FormatsFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDevice4444FormatsFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevice4444FormatsFeaturesEXT
 
     public static let structureType: StructureType = .physicalDevice4444FormatsFeaturesEXT
@@ -26436,7 +26436,7 @@ public struct PhysicalDevice4444FormatsFeaturesEXT: ChainableBase, PhysicalDevic
 
 public protocol PhysicalDevice4444FormatsFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceSubpassShadingFeaturesHUAWEI: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceSubpassShadingFeaturesHUAWEI: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceSubpassShadingFeaturesHUAWEI
 
     public static let structureType: StructureType = .physicalDeviceSubpassShadingFeaturesHUAWEI
@@ -26465,7 +26465,7 @@ public struct PhysicalDeviceSubpassShadingFeaturesHUAWEI: ChainableBase, Physica
 
 public protocol PhysicalDeviceSubpassShadingFeaturesHUAWEIExtension: Chainable {}
 
-public struct PhysicalDeviceClusterCullingShaderFeaturesHUAWEI: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceClusterCullingShaderFeaturesHUAWEI: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceClusterCullingShaderFeaturesHUAWEI
 
     public static let structureType: StructureType = .physicalDeviceClusterCullingShaderFeaturesHUAWEI
@@ -26498,7 +26498,7 @@ public struct PhysicalDeviceClusterCullingShaderFeaturesHUAWEI: ChainableBase, P
 
 public protocol PhysicalDeviceClusterCullingShaderFeaturesHUAWEIExtension: Chainable {}
 
-public struct PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI: ChainableBase, PhysicalDeviceClusterCullingShaderFeaturesHUAWEIExtension, OutStruct {
+public struct PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI: ChainableBase, PhysicalDeviceClusterCullingShaderFeaturesHUAWEIExtension {
     public typealias CStruct = VkPhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI
 
     public static let structureType: StructureType = .physicalDeviceClusterCullingShaderVrsFeaturesHUAWEI
@@ -26788,7 +26788,7 @@ public struct CopyBufferInfo2: ChainableBase {
         self.regions = regions
     }
 
-    public init(cStruct: VkCopyBufferInfo2, device: Device?) {
+    public init(cStruct: VkCopyBufferInfo2, device: Device) {
         self.srcBuffer = Buffer(handle: cStruct.srcBuffer, device: device)
         self.dstBuffer = Buffer(handle: cStruct.dstBuffer, device: device)
         self.regions = UnsafeBufferPointer(start: cStruct.pRegions, count: Int(cStruct.regionCount)).map{ BufferCopy2(cStruct: $0) }
@@ -26832,11 +26832,11 @@ public struct CopyImageInfo2: ChainableBase {
         self.regions = regions
     }
 
-    public init(cStruct: VkCopyImageInfo2, device: Device?) {
+    public init(cStruct: VkCopyImageInfo2, device: Device) {
         self.srcImage = Image(handle: cStruct.srcImage, device: device)
-        self.srcImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.srcImageLayout))!
+        self.srcImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.srcImageLayout.rawValue))!
         self.dstImage = Image(handle: cStruct.dstImage, device: device)
-        self.dstImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.dstImageLayout))!
+        self.dstImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.dstImageLayout.rawValue))!
         self.regions = UnsafeBufferPointer(start: cStruct.pRegions, count: Int(cStruct.regionCount)).map{ ImageCopy2(cStruct: $0) }
     }
 
@@ -26882,13 +26882,13 @@ public struct BlitImageInfo2: ChainableBase {
         self.filter = filter
     }
 
-    public init(cStruct: VkBlitImageInfo2, device: Device?) {
+    public init(cStruct: VkBlitImageInfo2, device: Device) {
         self.srcImage = Image(handle: cStruct.srcImage, device: device)
-        self.srcImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.srcImageLayout))!
+        self.srcImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.srcImageLayout.rawValue))!
         self.dstImage = Image(handle: cStruct.dstImage, device: device)
-        self.dstImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.dstImageLayout))!
+        self.dstImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.dstImageLayout.rawValue))!
         self.regions = UnsafeBufferPointer(start: cStruct.pRegions, count: Int(cStruct.regionCount)).map{ ImageBlit2(cStruct: $0) }
-        self.filter = Filter(rawValue: numericBitCast(cStruct.filter))!
+        self.filter = Filter(rawValue: numericBitCast(cStruct.filter.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkBlitImageInfo2>) throws(E) -> R) throws(E) -> R {
@@ -26930,10 +26930,10 @@ public struct CopyBufferToImageInfo2: ChainableBase {
         self.regions = regions
     }
 
-    public init(cStruct: VkCopyBufferToImageInfo2, device: Device?) {
+    public init(cStruct: VkCopyBufferToImageInfo2, device: Device) {
         self.srcBuffer = Buffer(handle: cStruct.srcBuffer, device: device)
         self.dstImage = Image(handle: cStruct.dstImage, device: device)
-        self.dstImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.dstImageLayout))!
+        self.dstImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.dstImageLayout.rawValue))!
         self.regions = UnsafeBufferPointer(start: cStruct.pRegions, count: Int(cStruct.regionCount)).map{ BufferImageCopy2(cStruct: $0) }
     }
 
@@ -26974,9 +26974,9 @@ public struct CopyImageToBufferInfo2: ChainableBase {
         self.regions = regions
     }
 
-    public init(cStruct: VkCopyImageToBufferInfo2, device: Device?) {
+    public init(cStruct: VkCopyImageToBufferInfo2, device: Device) {
         self.srcImage = Image(handle: cStruct.srcImage, device: device)
-        self.srcImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.srcImageLayout))!
+        self.srcImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.srcImageLayout.rawValue))!
         self.dstBuffer = Buffer(handle: cStruct.dstBuffer, device: device)
         self.regions = UnsafeBufferPointer(start: cStruct.pRegions, count: Int(cStruct.regionCount)).map{ BufferImageCopy2(cStruct: $0) }
     }
@@ -27020,11 +27020,11 @@ public struct ResolveImageInfo2: ChainableBase {
         self.regions = regions
     }
 
-    public init(cStruct: VkResolveImageInfo2, device: Device?) {
+    public init(cStruct: VkResolveImageInfo2, device: Device) {
         self.srcImage = Image(handle: cStruct.srcImage, device: device)
-        self.srcImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.srcImageLayout))!
+        self.srcImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.srcImageLayout.rawValue))!
         self.dstImage = Image(handle: cStruct.dstImage, device: device)
-        self.dstImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.dstImageLayout))!
+        self.dstImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.dstImageLayout.rawValue))!
         self.regions = UnsafeBufferPointer(start: cStruct.pRegions, count: Int(cStruct.regionCount)).map{ ImageResolve2(cStruct: $0) }
     }
 
@@ -27050,7 +27050,7 @@ public struct ResolveImageInfo2: ChainableBase {
 
 public protocol ResolveImageInfo2Extension: Chainable {}
 
-public struct PhysicalDeviceShaderImageAtomicInt64FeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderImageAtomicInt64FeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderImageAtomicInt64FeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceShaderImageAtomicInt64FeaturesEXT
@@ -27155,7 +27155,7 @@ public struct PipelineFragmentShadingRateStateCreateInfoKHR: ChainableBase, Grap
 
 public protocol PipelineFragmentShadingRateStateCreateInfoKHRExtension: Chainable {}
 
-public struct PhysicalDeviceFragmentShadingRateFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceFragmentShadingRateFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceFragmentShadingRateFeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceFragmentShadingRateFeaturesKHR
@@ -27192,7 +27192,7 @@ public struct PhysicalDeviceFragmentShadingRateFeaturesKHR: ChainableBase, Physi
 
 public protocol PhysicalDeviceFragmentShadingRateFeaturesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceFragmentShadingRatePropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceFragmentShadingRatePropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceFragmentShadingRatePropertiesKHR
 
     public static let structureType: StructureType = .physicalDeviceFragmentShadingRatePropertiesKHR
@@ -27271,7 +27271,7 @@ public struct PhysicalDeviceFragmentShadingRatePropertiesKHR: ChainableBase, Phy
 
 public protocol PhysicalDeviceFragmentShadingRatePropertiesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceFragmentShadingRateKHR: ChainableBase, OutStruct {
+public struct PhysicalDeviceFragmentShadingRateKHR: ChainableBase {
     public typealias CStruct = VkPhysicalDeviceFragmentShadingRateKHR
 
     public static let structureType: StructureType = .physicalDeviceFragmentShadingRateKHR
@@ -27301,7 +27301,7 @@ public struct PhysicalDeviceFragmentShadingRateKHR: ChainableBase, OutStruct {
 
 public protocol PhysicalDeviceFragmentShadingRateKHRExtension: Chainable {}
 
-public struct PhysicalDeviceShaderTerminateInvocationFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderTerminateInvocationFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderTerminateInvocationFeatures
 
     public static let structureType: StructureType = .physicalDeviceShaderTerminateInvocationFeatures
@@ -27330,7 +27330,7 @@ public struct PhysicalDeviceShaderTerminateInvocationFeatures: ChainableBase, Ph
 
 public protocol PhysicalDeviceShaderTerminateInvocationFeaturesExtension: Chainable {}
 
-public struct PhysicalDeviceFragmentShadingRateEnumsFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceFragmentShadingRateEnumsFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceFragmentShadingRateEnumsFeaturesNV
 
     public static let structureType: StructureType = .physicalDeviceFragmentShadingRateEnumsFeaturesNV
@@ -27367,7 +27367,7 @@ public struct PhysicalDeviceFragmentShadingRateEnumsFeaturesNV: ChainableBase, P
 
 public protocol PhysicalDeviceFragmentShadingRateEnumsFeaturesNVExtension: Chainable {}
 
-public struct PhysicalDeviceFragmentShadingRateEnumsPropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceFragmentShadingRateEnumsPropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceFragmentShadingRateEnumsPropertiesNV
 
     public static let structureType: StructureType = .physicalDeviceFragmentShadingRateEnumsPropertiesNV
@@ -27407,8 +27407,8 @@ public struct PipelineFragmentShadingRateEnumStateCreateInfoNV: ChainableBase, G
     }
 
     public init(cStruct: VkPipelineFragmentShadingRateEnumStateCreateInfoNV) {
-        self.shadingRateType = FragmentShadingRateTypeNV(rawValue: numericBitCast(cStruct.shadingRateType))!
-        self.shadingRate = FragmentShadingRateNV(rawValue: numericBitCast(cStruct.shadingRate))!
+        self.shadingRateType = FragmentShadingRateTypeNV(rawValue: numericBitCast(cStruct.shadingRateType.rawValue))!
+        self.shadingRate = FragmentShadingRateNV(rawValue: numericBitCast(cStruct.shadingRate.rawValue))!
         self.combinerOps = cStruct.combinerOps
     }
 
@@ -27429,7 +27429,7 @@ public struct PipelineFragmentShadingRateEnumStateCreateInfoNV: ChainableBase, G
 
 public protocol PipelineFragmentShadingRateEnumStateCreateInfoNVExtension: Chainable {}
 
-public struct AccelerationStructureBuildSizesInfoKHR: ChainableBase, OutStruct {
+public struct AccelerationStructureBuildSizesInfoKHR: ChainableBase {
     public typealias CStruct = VkAccelerationStructureBuildSizesInfoKHR
 
     public static let structureType: StructureType = .accelerationStructureBuildSizesInfoKHR
@@ -27460,7 +27460,7 @@ public struct AccelerationStructureBuildSizesInfoKHR: ChainableBase, OutStruct {
 
 public protocol AccelerationStructureBuildSizesInfoKHRExtension: Chainable {}
 
-public struct PhysicalDeviceImage2DViewOf3DFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceImage2DViewOf3DFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceImage2DViewOf3DFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceImage2dViewOf3dFeaturesEXT
@@ -27493,7 +27493,7 @@ public struct PhysicalDeviceImage2DViewOf3DFeaturesEXT: ChainableBase, PhysicalD
 
 public protocol PhysicalDeviceImage2DViewOf3DFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceImageSlicedViewOf3DFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceImageSlicedViewOf3DFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceImageSlicedViewOf3DFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceImageSlicedViewOf3dFeaturesEXT
@@ -27522,7 +27522,7 @@ public struct PhysicalDeviceImageSlicedViewOf3DFeaturesEXT: ChainableBase, Physi
 
 public protocol PhysicalDeviceImageSlicedViewOf3DFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT
@@ -27551,7 +27551,7 @@ public struct PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT: Chain
 
 public protocol PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceLegacyVertexAttributesFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceLegacyVertexAttributesFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceLegacyVertexAttributesFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceLegacyVertexAttributesFeaturesEXT
@@ -27580,7 +27580,7 @@ public struct PhysicalDeviceLegacyVertexAttributesFeaturesEXT: ChainableBase, Ph
 
 public protocol PhysicalDeviceLegacyVertexAttributesFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceLegacyVertexAttributesPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceLegacyVertexAttributesPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceLegacyVertexAttributesPropertiesEXT
 
     public static let structureType: StructureType = .physicalDeviceLegacyVertexAttributesPropertiesEXT
@@ -27605,7 +27605,7 @@ public struct PhysicalDeviceLegacyVertexAttributesPropertiesEXT: ChainableBase, 
 
 public protocol PhysicalDeviceLegacyVertexAttributesPropertiesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceMutableDescriptorTypeFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceMutableDescriptorTypeFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceMutableDescriptorTypeFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceMutableDescriptorTypeFeaturesEXT
@@ -27644,7 +27644,7 @@ public struct MutableDescriptorTypeListEXT: CStructConvertible {
     }
 
     public init(cStruct: VkMutableDescriptorTypeListEXT) {
-        self.descriptorTypes = UnsafeBufferPointer(start: cStruct.pDescriptorTypes, count: Int(cStruct.descriptorTypeCount)).map{ DescriptorType(rawValue: numericBitCast($0))! }
+        self.descriptorTypes = UnsafeBufferPointer(start: cStruct.pDescriptorTypes, count: Int(cStruct.descriptorTypeCount)).map{ DescriptorType(rawValue: numericBitCast($0.rawValue))! }
     }
 
     public func withCStruct<R, E: Error>(_ body: (UnsafePointer<VkMutableDescriptorTypeListEXT>) throws(E) -> R) throws(E) -> R {
@@ -27689,7 +27689,7 @@ public struct MutableDescriptorTypeCreateInfoEXT: ChainableBase, DescriptorSetLa
 
 public protocol MutableDescriptorTypeCreateInfoEXTExtension: Chainable {}
 
-public struct PhysicalDeviceDepthClipControlFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceDepthClipControlFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDepthClipControlFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceDepthClipControlFeaturesEXT
@@ -27718,7 +27718,7 @@ public struct PhysicalDeviceDepthClipControlFeaturesEXT: ChainableBase, Physical
 
 public protocol PhysicalDeviceDepthClipControlFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceZeroInitializeDeviceMemoryFeaturesEXT
@@ -27747,7 +27747,7 @@ public struct PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT: ChainableBase
 
 public protocol PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXTExtension: Chainable {}
 
-public struct BeginCustomResolveInfoEXT: ChainableBase, OutStruct {
+public struct BeginCustomResolveInfoEXT: ChainableBase {
     public typealias CStruct = VkBeginCustomResolveInfoEXT
 
     public static let structureType: StructureType = .beginCustomResolveInfoEXT
@@ -27772,7 +27772,7 @@ public struct BeginCustomResolveInfoEXT: ChainableBase, OutStruct {
 
 public protocol BeginCustomResolveInfoEXTExtension: Chainable {}
 
-public struct PhysicalDeviceCustomResolveFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceCustomResolveFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceCustomResolveFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceCustomResolveFeaturesEXT
@@ -27819,9 +27819,9 @@ public struct CustomResolveCreateInfoEXT: ChainableBase, GraphicsPipelineCreateI
 
     public init(cStruct: VkCustomResolveCreateInfoEXT) {
         self.customResolve = cStruct.customResolve == VK_TRUE
-        self.colorAttachmentFormats = UnsafeBufferPointer(start: cStruct.pColorAttachmentFormats, count: Int(cStruct.colorAttachmentCount)).map{ Format(rawValue: numericBitCast($0))! }
-        self.depthAttachmentFormat = Format(rawValue: numericBitCast(cStruct.depthAttachmentFormat))!
-        self.stencilAttachmentFormat = Format(rawValue: numericBitCast(cStruct.stencilAttachmentFormat))!
+        self.colorAttachmentFormats = UnsafeBufferPointer(start: cStruct.pColorAttachmentFormats, count: Int(cStruct.colorAttachmentCount)).map{ Format(rawValue: numericBitCast($0.rawValue))! }
+        self.depthAttachmentFormat = Format(rawValue: numericBitCast(cStruct.depthAttachmentFormat.rawValue))!
+        self.stencilAttachmentFormat = Format(rawValue: numericBitCast(cStruct.stencilAttachmentFormat.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkCustomResolveCreateInfoEXT>) throws(E) -> R) throws(E) -> R {
@@ -27845,7 +27845,7 @@ public struct CustomResolveCreateInfoEXT: ChainableBase, GraphicsPipelineCreateI
 
 public protocol CustomResolveCreateInfoEXTExtension: Chainable {}
 
-public struct PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDeviceGeneratedCommandsFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceDeviceGeneratedCommandsFeaturesEXT
@@ -27878,7 +27878,7 @@ public struct PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT: ChainableBase, P
 
 public protocol PhysicalDeviceDeviceGeneratedCommandsFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceDeviceGeneratedCommandsPropertiesEXT
 
     public static let structureType: StructureType = .physicalDeviceDeviceGeneratedCommandsPropertiesEXT
@@ -27936,7 +27936,7 @@ public struct PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT: ChainableBase,
 
 public protocol PhysicalDeviceDeviceGeneratedCommandsPropertiesEXTExtension: Chainable {}
 
-public struct GeneratedCommandsPipelineInfoEXT: ChainableBase, GeneratedCommandsInfoEXTExtension, GeneratedCommandsMemoryRequirementsInfoEXTExtension, OutStruct {
+public struct GeneratedCommandsPipelineInfoEXT: ChainableBase, GeneratedCommandsInfoEXTExtension, GeneratedCommandsMemoryRequirementsInfoEXTExtension {
     public typealias CStruct = VkGeneratedCommandsPipelineInfoEXT
 
     public static let structureType: StructureType = .generatedCommandsPipelineInfoEXT
@@ -27946,7 +27946,7 @@ public struct GeneratedCommandsPipelineInfoEXT: ChainableBase, GeneratedCommands
         self.pipeline = pipeline
     }
 
-    public init(cStruct: VkGeneratedCommandsPipelineInfoEXT, device: Device?) {
+    public init(cStruct: VkGeneratedCommandsPipelineInfoEXT, device: Device) {
         self.pipeline = Pipeline(handle: cStruct.pipeline, device: device)
     }
 
@@ -27965,7 +27965,7 @@ public struct GeneratedCommandsPipelineInfoEXT: ChainableBase, GeneratedCommands
 
 public protocol GeneratedCommandsPipelineInfoEXTExtension: Chainable {}
 
-public struct GeneratedCommandsShaderInfoEXT: ChainableBase, GeneratedCommandsInfoEXTExtension, GeneratedCommandsMemoryRequirementsInfoEXTExtension, OutStruct {
+public struct GeneratedCommandsShaderInfoEXT: ChainableBase, GeneratedCommandsInfoEXTExtension, GeneratedCommandsMemoryRequirementsInfoEXTExtension {
     public typealias CStruct = VkGeneratedCommandsShaderInfoEXT
 
     public static let structureType: StructureType = .generatedCommandsShaderInfoEXT
@@ -27975,7 +27975,7 @@ public struct GeneratedCommandsShaderInfoEXT: ChainableBase, GeneratedCommandsIn
         self.shaders = shaders
     }
 
-    public init(cStruct: VkGeneratedCommandsShaderInfoEXT, device: Device?) {
+    public init(cStruct: VkGeneratedCommandsShaderInfoEXT, device: Device) {
         self.shaders = UnsafeBufferPointer(start: cStruct.pShaders, count: Int(cStruct.shaderCount)).map{ ShaderEXT(handle: $0, device: device) }
     }
 
@@ -28013,7 +28013,7 @@ public struct GeneratedCommandsMemoryRequirementsInfoEXT: ChainableBase {
         self.maxDrawCount = maxDrawCount
     }
 
-    public init(cStruct: VkGeneratedCommandsMemoryRequirementsInfoEXT, device: Device?) {
+    public init(cStruct: VkGeneratedCommandsMemoryRequirementsInfoEXT, device: Device) {
         self.indirectExecutionSet = (cStruct.indirectExecutionSet != nil) ? IndirectExecutionSetEXT(handle: cStruct.indirectExecutionSet, device: device) : nil
         self.indirectCommandsLayout = IndirectCommandsLayoutEXT(handle: cStruct.indirectCommandsLayout, device: device)
         self.maxSequenceCount = cStruct.maxSequenceCount
@@ -28050,7 +28050,7 @@ public struct IndirectExecutionSetPipelineInfoEXT: ChainableBase {
         self.maxPipelineCount = maxPipelineCount
     }
 
-    public init(cStruct: VkIndirectExecutionSetPipelineInfoEXT, device: Device?) {
+    public init(cStruct: VkIndirectExecutionSetPipelineInfoEXT, device: Device) {
         self.initialPipeline = Pipeline(handle: cStruct.initialPipeline, device: device)
         self.maxPipelineCount = cStruct.maxPipelineCount
     }
@@ -28081,7 +28081,7 @@ public struct IndirectExecutionSetShaderLayoutInfoEXT: ChainableBase {
         self.setLayouts = setLayouts
     }
 
-    public init(cStruct: VkIndirectExecutionSetShaderLayoutInfoEXT, device: Device?) {
+    public init(cStruct: VkIndirectExecutionSetShaderLayoutInfoEXT, device: Device) {
         self.setLayouts = UnsafeBufferPointer(start: cStruct.pSetLayouts, count: Int(cStruct.setLayoutCount)).map{ ($0 != nil) ? DescriptorSetLayout(handle: $0, device: device) : nil }
     }
 
@@ -28119,7 +28119,7 @@ public struct IndirectExecutionSetShaderInfoEXT: ChainableBase {
         self.pushConstantRanges = pushConstantRanges
     }
 
-    public init(cStruct: VkIndirectExecutionSetShaderInfoEXT, device: Device?) {
+    public init(cStruct: VkIndirectExecutionSetShaderInfoEXT, device: Device) {
         self.initialShaders = UnsafeBufferPointer(start: cStruct.pInitialShaders, count: Int(cStruct.shaderCount)).map{ ShaderEXT(handle: $0, device: device) }
         self.setLayoutInfos = (cStruct.pSetLayoutInfos != nil) ? UnsafeBufferPointer(start: cStruct.pSetLayoutInfos, count: Int(cStruct.shaderCount)).map{ IndirectExecutionSetShaderLayoutInfoEXT(cStruct: $0, device: device) } : nil
         self.maxShaderCount = cStruct.maxShaderCount
@@ -28165,7 +28165,7 @@ public struct IndirectExecutionSetCreateInfoEXT: ChainableBase {
     }
 
     public init(cStruct: VkIndirectExecutionSetCreateInfoEXT) {
-        self.type = IndirectExecutionSetInfoTypeEXT(rawValue: numericBitCast(cStruct.type))!
+        self.type = IndirectExecutionSetInfoTypeEXT(rawValue: numericBitCast(cStruct.type.rawValue))!
         self.info = cStruct.info
     }
 
@@ -28213,7 +28213,7 @@ public struct GeneratedCommandsInfoEXT: ChainableBase {
         self.maxDrawCount = maxDrawCount
     }
 
-    public init(cStruct: VkGeneratedCommandsInfoEXT, device: Device?) {
+    public init(cStruct: VkGeneratedCommandsInfoEXT, device: Device) {
         self.shaderStages = ShaderStageFlags(rawValue: cStruct.shaderStages)
         self.indirectExecutionSet = (cStruct.indirectExecutionSet != nil) ? IndirectExecutionSetEXT(handle: cStruct.indirectExecutionSet, device: device) : nil
         self.indirectCommandsLayout = IndirectCommandsLayoutEXT(handle: cStruct.indirectCommandsLayout, device: device)
@@ -28262,7 +28262,7 @@ public struct WriteIndirectExecutionSetPipelineEXT: ChainableBase {
         self.pipeline = pipeline
     }
 
-    public init(cStruct: VkWriteIndirectExecutionSetPipelineEXT, device: Device?) {
+    public init(cStruct: VkWriteIndirectExecutionSetPipelineEXT, device: Device) {
         self.index = cStruct.index
         self.pipeline = Pipeline(handle: cStruct.pipeline, device: device)
     }
@@ -28295,7 +28295,7 @@ public struct WriteIndirectExecutionSetShaderEXT: ChainableBase {
         self.shader = shader
     }
 
-    public init(cStruct: VkWriteIndirectExecutionSetShaderEXT, device: Device?) {
+    public init(cStruct: VkWriteIndirectExecutionSetShaderEXT, device: Device) {
         self.index = cStruct.index
         self.shader = ShaderEXT(handle: cStruct.shader, device: device)
     }
@@ -28331,7 +28331,7 @@ public struct IndirectCommandsLayoutTokenEXT: ChainableBase {
     }
 
     public init(cStruct: VkIndirectCommandsLayoutTokenEXT) {
-        self.type = IndirectCommandsTokenTypeEXT(rawValue: numericBitCast(cStruct.type))!
+        self.type = IndirectCommandsTokenTypeEXT(rawValue: numericBitCast(cStruct.type.rawValue))!
         self.data = cStruct.data
         self.offset = cStruct.offset
     }
@@ -28371,7 +28371,7 @@ public struct IndirectCommandsLayoutCreateInfoEXT: ChainableBase {
         self.tokens = tokens
     }
 
-    public init(cStruct: VkIndirectCommandsLayoutCreateInfoEXT, device: Device?) {
+    public init(cStruct: VkIndirectCommandsLayoutCreateInfoEXT, device: Device) {
         self.flags = IndirectCommandsLayoutUsageFlagsEXT(rawValue: cStruct.flags)
         self.shaderStages = ShaderStageFlags(rawValue: cStruct.shaderStages)
         self.indirectStride = cStruct.indirectStride
@@ -28513,7 +28513,7 @@ public struct BindIndexBufferIndirectCommandEXT: CStructConvertible {
     public init(cStruct: VkBindIndexBufferIndirectCommandEXT) {
         self.bufferAddress = cStruct.bufferAddress
         self.size = cStruct.size
-        self.indexType = IndexType(rawValue: numericBitCast(cStruct.indexType))!
+        self.indexType = IndexType(rawValue: numericBitCast(cStruct.indexType.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(_ body: (UnsafePointer<VkBindIndexBufferIndirectCommandEXT>) throws(E) -> R) throws(E) -> R {
@@ -28559,7 +28559,7 @@ public struct IndirectCommandsExecutionSetTokenEXT: CStructConvertible {
     }
 
     public init(cStruct: VkIndirectCommandsExecutionSetTokenEXT) {
-        self.type = IndirectExecutionSetInfoTypeEXT(rawValue: numericBitCast(cStruct.type))!
+        self.type = IndirectExecutionSetInfoTypeEXT(rawValue: numericBitCast(cStruct.type.rawValue))!
         self.shaderStages = ShaderStageFlags(rawValue: cStruct.shaderStages)
     }
 
@@ -28600,7 +28600,7 @@ public struct PipelineViewportDepthClipControlCreateInfoEXT: ChainableBase, Pipe
 
 public protocol PipelineViewportDepthClipControlCreateInfoEXTExtension: Chainable {}
 
-public struct PhysicalDeviceDepthClampControlFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceDepthClampControlFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDepthClampControlFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceDepthClampControlFeaturesEXT
@@ -28666,7 +28666,7 @@ public struct PipelineViewportDepthClampControlCreateInfoEXT: ChainableBase, Pip
     }
 
     public init(cStruct: VkPipelineViewportDepthClampControlCreateInfoEXT) {
-        self.depthClampMode = DepthClampModeEXT(rawValue: numericBitCast(cStruct.depthClampMode))!
+        self.depthClampMode = DepthClampModeEXT(rawValue: numericBitCast(cStruct.depthClampMode.rawValue))!
         self.depthClampRange = (cStruct.pDepthClampRange != nil) ? DepthClampRangeEXT(cStruct: cStruct.pDepthClampRange.pointee) : nil
     }
 
@@ -28688,7 +28688,7 @@ public struct PipelineViewportDepthClampControlCreateInfoEXT: ChainableBase, Pip
 
 public protocol PipelineViewportDepthClampControlCreateInfoEXTExtension: Chainable {}
 
-public struct PhysicalDeviceVertexInputDynamicStateFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceVertexInputDynamicStateFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceVertexInputDynamicStateFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceVertexInputDynamicStateFeaturesEXT
@@ -28717,7 +28717,7 @@ public struct PhysicalDeviceVertexInputDynamicStateFeaturesEXT: ChainableBase, P
 
 public protocol PhysicalDeviceVertexInputDynamicStateFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceExternalMemoryRDMAFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceExternalMemoryRDMAFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceExternalMemoryRDMAFeaturesNV
 
     public static let structureType: StructureType = .physicalDeviceExternalMemoryRdmaFeaturesNV
@@ -28746,7 +28746,7 @@ public struct PhysicalDeviceExternalMemoryRDMAFeaturesNV: ChainableBase, Physica
 
 public protocol PhysicalDeviceExternalMemoryRDMAFeaturesNVExtension: Chainable {}
 
-public struct PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR
@@ -28775,7 +28775,7 @@ public struct PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR: Chainab
 
 public protocol PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHRExtension: Chainable {}
 
-public struct VertexInputBindingDescription2EXT: ChainableBase, OutStruct {
+public struct VertexInputBindingDescription2EXT: ChainableBase {
     public typealias CStruct = VkVertexInputBindingDescription2EXT
 
     public static let structureType: StructureType = .vertexInputBindingDescription2EXT
@@ -28794,7 +28794,7 @@ public struct VertexInputBindingDescription2EXT: ChainableBase, OutStruct {
     public init(cStruct: VkVertexInputBindingDescription2EXT) {
         self.binding = cStruct.binding
         self.stride = cStruct.stride
-        self.inputRate = VertexInputRate(rawValue: numericBitCast(cStruct.inputRate))!
+        self.inputRate = VertexInputRate(rawValue: numericBitCast(cStruct.inputRate.rawValue))!
         self.divisor = cStruct.divisor
     }
 
@@ -28816,7 +28816,7 @@ public struct VertexInputBindingDescription2EXT: ChainableBase, OutStruct {
 
 public protocol VertexInputBindingDescription2EXTExtension: Chainable {}
 
-public struct VertexInputAttributeDescription2EXT: ChainableBase, OutStruct {
+public struct VertexInputAttributeDescription2EXT: ChainableBase {
     public typealias CStruct = VkVertexInputAttributeDescription2EXT
 
     public static let structureType: StructureType = .vertexInputAttributeDescription2EXT
@@ -28835,7 +28835,7 @@ public struct VertexInputAttributeDescription2EXT: ChainableBase, OutStruct {
     public init(cStruct: VkVertexInputAttributeDescription2EXT) {
         self.location = cStruct.location
         self.binding = cStruct.binding
-        self.format = Format(rawValue: numericBitCast(cStruct.format))!
+        self.format = Format(rawValue: numericBitCast(cStruct.format.rawValue))!
         self.offset = cStruct.offset
     }
 
@@ -28857,7 +28857,7 @@ public struct VertexInputAttributeDescription2EXT: ChainableBase, OutStruct {
 
 public protocol VertexInputAttributeDescription2EXTExtension: Chainable {}
 
-public struct PhysicalDeviceColorWriteEnableFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceColorWriteEnableFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceColorWriteEnableFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceColorWriteEnableFeaturesEXT
@@ -28987,13 +28987,13 @@ public struct ImageMemoryBarrier2: ChainableBase {
         self.subresourceRange = subresourceRange
     }
 
-    public init(cStruct: VkImageMemoryBarrier2, device: Device?) {
+    public init(cStruct: VkImageMemoryBarrier2, device: Device) {
         self.srcStageMask = PipelineStageFlags2(rawValue: cStruct.srcStageMask)
         self.srcAccessMask = AccessFlags2(rawValue: cStruct.srcAccessMask)
         self.dstStageMask = PipelineStageFlags2(rawValue: cStruct.dstStageMask)
         self.dstAccessMask = AccessFlags2(rawValue: cStruct.dstAccessMask)
-        self.oldLayout = ImageLayout(rawValue: numericBitCast(cStruct.oldLayout))!
-        self.newLayout = ImageLayout(rawValue: numericBitCast(cStruct.newLayout))!
+        self.oldLayout = ImageLayout(rawValue: numericBitCast(cStruct.oldLayout.rawValue))!
+        self.newLayout = ImageLayout(rawValue: numericBitCast(cStruct.newLayout.rawValue))!
         self.srcQueueFamilyIndex = cStruct.srcQueueFamilyIndex
         self.dstQueueFamilyIndex = cStruct.dstQueueFamilyIndex
         self.image = Image(handle: cStruct.image, device: device)
@@ -29052,7 +29052,7 @@ public struct BufferMemoryBarrier2: ChainableBase {
         self.size = size
     }
 
-    public init(cStruct: VkBufferMemoryBarrier2, device: Device?) {
+    public init(cStruct: VkBufferMemoryBarrier2, device: Device) {
         self.srcStageMask = PipelineStageFlags2(rawValue: cStruct.srcStageMask)
         self.srcAccessMask = AccessFlags2(rawValue: cStruct.srcAccessMask)
         self.dstStageMask = PipelineStageFlags2(rawValue: cStruct.dstStageMask)
@@ -29136,7 +29136,7 @@ public struct DependencyInfo: ChainableBase {
         self.imageMemoryBarriers = imageMemoryBarriers
     }
 
-    public init(cStruct: VkDependencyInfo, device: Device?) {
+    public init(cStruct: VkDependencyInfo, device: Device) {
         self.dependencyFlags = DependencyFlags(rawValue: cStruct.dependencyFlags)
         self.memoryBarriers = UnsafeBufferPointer(start: cStruct.pMemoryBarriers, count: Int(cStruct.memoryBarrierCount)).map{ MemoryBarrier2(cStruct: $0) }
         self.bufferMemoryBarriers = UnsafeBufferPointer(start: cStruct.pBufferMemoryBarriers, count: Int(cStruct.bufferMemoryBarrierCount)).map{ BufferMemoryBarrier2(cStruct: $0, device: device) }
@@ -29186,7 +29186,7 @@ public struct SemaphoreSubmitInfo: ChainableBase {
         self.deviceIndex = deviceIndex
     }
 
-    public init(cStruct: VkSemaphoreSubmitInfo, device: Device?) {
+    public init(cStruct: VkSemaphoreSubmitInfo, device: Device) {
         self.semaphore = Semaphore(handle: cStruct.semaphore, device: device)
         self.value = cStruct.value
         self.stageMask = PipelineStageFlags2(rawValue: cStruct.stageMask)
@@ -29223,7 +29223,7 @@ public struct CommandBufferSubmitInfo: ChainableBase {
         self.deviceMask = deviceMask
     }
 
-    public init(cStruct: VkCommandBufferSubmitInfo, commandPool: CommandPool?) {
+    public init(cStruct: VkCommandBufferSubmitInfo, commandPool: CommandPool) {
         self.commandBuffer = CommandBuffer(handle: cStruct.commandBuffer, commandPool: commandPool)
         self.deviceMask = cStruct.deviceMask
     }
@@ -29260,7 +29260,7 @@ public struct SubmitInfo2: ChainableBase {
         self.signalSemaphoreInfos = signalSemaphoreInfos
     }
 
-    public init(cStruct: VkSubmitInfo2, device: Device?, commandPool: CommandPool?) {
+    public init(cStruct: VkSubmitInfo2, device: Device, commandPool: CommandPool) {
         self.flags = SubmitFlags(rawValue: cStruct.flags)
         self.waitSemaphoreInfos = UnsafeBufferPointer(start: cStruct.pWaitSemaphoreInfos, count: Int(cStruct.waitSemaphoreInfoCount)).map{ SemaphoreSubmitInfo(cStruct: $0, device: device) }
         self.commandBufferInfos = UnsafeBufferPointer(start: cStruct.pCommandBufferInfos, count: Int(cStruct.commandBufferInfoCount)).map{ CommandBufferSubmitInfo(cStruct: $0, commandPool: commandPool) }
@@ -29294,7 +29294,7 @@ public struct SubmitInfo2: ChainableBase {
 
 public protocol SubmitInfo2Extension: Chainable {}
 
-public struct QueueFamilyCheckpointProperties2NV: ChainableBase, QueueFamilyProperties2Extension, OutStruct {
+public struct QueueFamilyCheckpointProperties2NV: ChainableBase, QueueFamilyProperties2Extension {
     public typealias CStruct = VkQueueFamilyCheckpointProperties2NV
 
     public static let structureType: StructureType = .queueFamilyCheckpointProperties2NV
@@ -29319,7 +29319,7 @@ public struct QueueFamilyCheckpointProperties2NV: ChainableBase, QueueFamilyProp
 
 public protocol QueueFamilyCheckpointProperties2NVExtension: Chainable {}
 
-public struct CheckpointData2NV: ChainableBase, OutStruct {
+public struct CheckpointData2NV: ChainableBase {
     public typealias CStruct = VkCheckpointData2NV
 
     public static let structureType: StructureType = .checkpointData2NV
@@ -29347,7 +29347,7 @@ public struct CheckpointData2NV: ChainableBase, OutStruct {
 
 public protocol CheckpointData2NVExtension: Chainable {}
 
-public struct PhysicalDeviceSynchronization2Features: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceSynchronization2Features: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceSynchronization2Features
 
     public static let structureType: StructureType = .physicalDeviceSynchronization2Features
@@ -29376,7 +29376,7 @@ public struct PhysicalDeviceSynchronization2Features: ChainableBase, PhysicalDev
 
 public protocol PhysicalDeviceSynchronization2FeaturesExtension: Chainable {}
 
-public struct PhysicalDeviceUnifiedImageLayoutsFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceUnifiedImageLayoutsFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceUnifiedImageLayoutsFeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceUnifiedImageLayoutsFeaturesKHR
@@ -29409,7 +29409,7 @@ public struct PhysicalDeviceUnifiedImageLayoutsFeaturesKHR: ChainableBase, Physi
 
 public protocol PhysicalDeviceUnifiedImageLayoutsFeaturesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceHostImageCopyFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceHostImageCopyFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceHostImageCopyFeatures
 
     public static let structureType: StructureType = .physicalDeviceHostImageCopyFeatures
@@ -29438,7 +29438,7 @@ public struct PhysicalDeviceHostImageCopyFeatures: ChainableBase, PhysicalDevice
 
 public protocol PhysicalDeviceHostImageCopyFeaturesExtension: Chainable {}
 
-public struct PhysicalDeviceHostImageCopyProperties: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceHostImageCopyProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceHostImageCopyProperties
 
     public static let structureType: StructureType = .physicalDeviceHostImageCopyProperties
@@ -29613,10 +29613,10 @@ public struct CopyMemoryToImageInfo: ChainableBase {
         self.regions = regions
     }
 
-    public init(cStruct: VkCopyMemoryToImageInfo, device: Device?) {
+    public init(cStruct: VkCopyMemoryToImageInfo, device: Device) {
         self.flags = HostImageCopyFlags(rawValue: cStruct.flags)
         self.dstImage = Image(handle: cStruct.dstImage, device: device)
-        self.dstImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.dstImageLayout))!
+        self.dstImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.dstImageLayout.rawValue))!
         self.regions = UnsafeBufferPointer(start: cStruct.pRegions, count: Int(cStruct.regionCount)).map{ MemoryToImageCopy(cStruct: $0) }
     }
 
@@ -29657,10 +29657,10 @@ public struct CopyImageToMemoryInfo: ChainableBase {
         self.regions = regions
     }
 
-    public init(cStruct: VkCopyImageToMemoryInfo, device: Device?) {
+    public init(cStruct: VkCopyImageToMemoryInfo, device: Device) {
         self.flags = HostImageCopyFlags(rawValue: cStruct.flags)
         self.srcImage = Image(handle: cStruct.srcImage, device: device)
-        self.srcImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.srcImageLayout))!
+        self.srcImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.srcImageLayout.rawValue))!
         self.regions = UnsafeBufferPointer(start: cStruct.pRegions, count: Int(cStruct.regionCount)).map{ ImageToMemoryCopy(cStruct: $0) }
     }
 
@@ -29705,12 +29705,12 @@ public struct CopyImageToImageInfo: ChainableBase {
         self.regions = regions
     }
 
-    public init(cStruct: VkCopyImageToImageInfo, device: Device?) {
+    public init(cStruct: VkCopyImageToImageInfo, device: Device) {
         self.flags = HostImageCopyFlags(rawValue: cStruct.flags)
         self.srcImage = Image(handle: cStruct.srcImage, device: device)
-        self.srcImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.srcImageLayout))!
+        self.srcImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.srcImageLayout.rawValue))!
         self.dstImage = Image(handle: cStruct.dstImage, device: device)
-        self.dstImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.dstImageLayout))!
+        self.dstImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.dstImageLayout.rawValue))!
         self.regions = UnsafeBufferPointer(start: cStruct.pRegions, count: Int(cStruct.regionCount)).map{ ImageCopy2(cStruct: $0) }
     }
 
@@ -29753,10 +29753,10 @@ public struct HostImageLayoutTransitionInfo: ChainableBase {
         self.subresourceRange = subresourceRange
     }
 
-    public init(cStruct: VkHostImageLayoutTransitionInfo, device: Device?) {
+    public init(cStruct: VkHostImageLayoutTransitionInfo, device: Device) {
         self.image = Image(handle: cStruct.image, device: device)
-        self.oldLayout = ImageLayout(rawValue: numericBitCast(cStruct.oldLayout))!
-        self.newLayout = ImageLayout(rawValue: numericBitCast(cStruct.newLayout))!
+        self.oldLayout = ImageLayout(rawValue: numericBitCast(cStruct.oldLayout.rawValue))!
+        self.newLayout = ImageLayout(rawValue: numericBitCast(cStruct.newLayout.rawValue))!
         self.subresourceRange = ImageSubresourceRange(cStruct: cStruct.subresourceRange)
     }
 
@@ -29780,7 +29780,7 @@ public struct HostImageLayoutTransitionInfo: ChainableBase {
 
 public protocol HostImageLayoutTransitionInfoExtension: Chainable {}
 
-public struct SubresourceHostMemcpySize: ChainableBase, SubresourceLayout2Extension, OutStruct {
+public struct SubresourceHostMemcpySize: ChainableBase, SubresourceLayout2Extension {
     public typealias CStruct = VkSubresourceHostMemcpySize
 
     public static let structureType: StructureType = .subresourceHostMemcpySize
@@ -29805,7 +29805,7 @@ public struct SubresourceHostMemcpySize: ChainableBase, SubresourceLayout2Extens
 
 public protocol SubresourceHostMemcpySizeExtension: Chainable {}
 
-public struct HostImageCopyDevicePerformanceQuery: ChainableBase, ImageFormatProperties2Extension, OutStruct {
+public struct HostImageCopyDevicePerformanceQuery: ChainableBase, ImageFormatProperties2Extension {
     public typealias CStruct = VkHostImageCopyDevicePerformanceQuery
 
     public static let structureType: StructureType = .hostImageCopyDevicePerformanceQuery
@@ -29833,7 +29833,7 @@ public struct HostImageCopyDevicePerformanceQuery: ChainableBase, ImageFormatPro
 
 public protocol HostImageCopyDevicePerformanceQueryExtension: Chainable {}
 
-public struct PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePrimitivesGeneratedQueryFeaturesEXT
 
     public static let structureType: StructureType = .physicalDevicePrimitivesGeneratedQueryFeaturesEXT
@@ -29870,7 +29870,7 @@ public struct PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT: ChainableBase, 
 
 public protocol PhysicalDevicePrimitivesGeneratedQueryFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceLegacyDitheringFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceLegacyDitheringFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceLegacyDitheringFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceLegacyDitheringFeaturesEXT
@@ -29899,7 +29899,7 @@ public struct PhysicalDeviceLegacyDitheringFeaturesEXT: ChainableBase, PhysicalD
 
 public protocol PhysicalDeviceLegacyDitheringFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceMultisampledRenderToSingleSampledFeaturesEXT
@@ -29928,7 +29928,7 @@ public struct PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT: Chaina
 
 public protocol PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXTExtension: Chainable {}
 
-public struct SurfaceCapabilitiesPresentId2KHR: ChainableBase, SurfaceCapabilities2KHRExtension, OutStruct {
+public struct SurfaceCapabilitiesPresentId2KHR: ChainableBase, SurfaceCapabilities2KHRExtension {
     public typealias CStruct = VkSurfaceCapabilitiesPresentId2KHR
 
     public static let structureType: StructureType = .surfaceCapabilitiesPresentId2KHR
@@ -29957,7 +29957,7 @@ public struct SurfaceCapabilitiesPresentId2KHR: ChainableBase, SurfaceCapabiliti
 
 public protocol SurfaceCapabilitiesPresentId2KHRExtension: Chainable {}
 
-public struct SurfaceCapabilitiesPresentWait2KHR: ChainableBase, SurfaceCapabilities2KHRExtension, OutStruct {
+public struct SurfaceCapabilitiesPresentWait2KHR: ChainableBase, SurfaceCapabilities2KHRExtension {
     public typealias CStruct = VkSurfaceCapabilitiesPresentWait2KHR
 
     public static let structureType: StructureType = .surfaceCapabilitiesPresentWait2KHR
@@ -29986,7 +29986,7 @@ public struct SurfaceCapabilitiesPresentWait2KHR: ChainableBase, SurfaceCapabili
 
 public protocol SurfaceCapabilitiesPresentWait2KHRExtension: Chainable {}
 
-public struct SubpassResolvePerformanceQueryEXT: ChainableBase, FormatProperties2Extension, OutStruct {
+public struct SubpassResolvePerformanceQueryEXT: ChainableBase, FormatProperties2Extension {
     public typealias CStruct = VkSubpassResolvePerformanceQueryEXT
 
     public static let structureType: StructureType = .subpassResolvePerformanceQueryEXT
@@ -30044,7 +30044,7 @@ public struct MultisampledRenderToSingleSampledInfoEXT: ChainableBase, SubpassDe
 
 public protocol MultisampledRenderToSingleSampledInfoEXTExtension: Chainable {}
 
-public struct PhysicalDevicePipelineProtectedAccessFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDevicePipelineProtectedAccessFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePipelineProtectedAccessFeatures
 
     public static let structureType: StructureType = .physicalDevicePipelineProtectedAccessFeatures
@@ -30073,7 +30073,7 @@ public struct PhysicalDevicePipelineProtectedAccessFeatures: ChainableBase, Phys
 
 public protocol PhysicalDevicePipelineProtectedAccessFeaturesExtension: Chainable {}
 
-public struct QueueFamilyVideoPropertiesKHR: ChainableBase, QueueFamilyProperties2Extension, OutStruct {
+public struct QueueFamilyVideoPropertiesKHR: ChainableBase, QueueFamilyProperties2Extension {
     public typealias CStruct = VkQueueFamilyVideoPropertiesKHR
 
     public static let structureType: StructureType = .queueFamilyVideoPropertiesKHR
@@ -30098,7 +30098,7 @@ public struct QueueFamilyVideoPropertiesKHR: ChainableBase, QueueFamilyPropertie
 
 public protocol QueueFamilyVideoPropertiesKHRExtension: Chainable {}
 
-public struct QueueFamilyQueryResultStatusPropertiesKHR: ChainableBase, QueueFamilyProperties2Extension, OutStruct {
+public struct QueueFamilyQueryResultStatusPropertiesKHR: ChainableBase, QueueFamilyProperties2Extension {
     public typealias CStruct = VkQueueFamilyQueryResultStatusPropertiesKHR
 
     public static let structureType: StructureType = .queueFamilyQueryResultStatusPropertiesKHR
@@ -30225,7 +30225,7 @@ public struct PhysicalDeviceVideoFormatInfoKHR: ChainableBase {
 
 public protocol PhysicalDeviceVideoFormatInfoKHRExtension: Chainable {}
 
-public struct VideoFormatPropertiesKHR: ChainableBase, OutStruct {
+public struct VideoFormatPropertiesKHR: ChainableBase {
     public typealias CStruct = VkVideoFormatPropertiesKHR
 
     public static let structureType: StructureType = .videoFormatPropertiesKHR
@@ -30237,11 +30237,11 @@ public struct VideoFormatPropertiesKHR: ChainableBase, OutStruct {
     public let imageUsageFlags: ImageUsageFlags
 
     public init(cStruct: VkVideoFormatPropertiesKHR) {
-        self.format = Format(rawValue: numericBitCast(cStruct.format))!
+        self.format = Format(rawValue: numericBitCast(cStruct.format.rawValue))!
         self.componentMapping = ComponentMapping(cStruct: cStruct.componentMapping)
         self.imageCreateFlags = ImageCreateFlags(rawValue: cStruct.imageCreateFlags)
-        self.imageType = ImageType(rawValue: numericBitCast(cStruct.imageType))!
-        self.imageTiling = ImageTiling(rawValue: numericBitCast(cStruct.imageTiling))!
+        self.imageType = ImageType(rawValue: numericBitCast(cStruct.imageType.rawValue))!
+        self.imageTiling = ImageTiling(rawValue: numericBitCast(cStruct.imageTiling.rawValue))!
         self.imageUsageFlags = ImageUsageFlags(rawValue: cStruct.imageUsageFlags)
     }
 
@@ -30267,7 +30267,7 @@ public struct VideoFormatPropertiesKHR: ChainableBase, OutStruct {
 
 public protocol VideoFormatPropertiesKHRExtension: Chainable {}
 
-public struct VideoEncodeQuantizationMapCapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension, OutStruct {
+public struct VideoEncodeQuantizationMapCapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension {
     public typealias CStruct = VkVideoEncodeQuantizationMapCapabilitiesKHR
 
     public static let structureType: StructureType = .videoEncodeQuantizationMapCapabilitiesKHR
@@ -30294,7 +30294,7 @@ public struct VideoEncodeQuantizationMapCapabilitiesKHR: ChainableBase, VideoCap
 
 public protocol VideoEncodeQuantizationMapCapabilitiesKHRExtension: Chainable {}
 
-public struct VideoEncodeH264QuantizationMapCapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension, OutStruct {
+public struct VideoEncodeH264QuantizationMapCapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension {
     public typealias CStruct = VkVideoEncodeH264QuantizationMapCapabilitiesKHR
 
     public static let structureType: StructureType = .videoEncodeH264QuantizationMapCapabilitiesKHR
@@ -30322,7 +30322,7 @@ public struct VideoEncodeH264QuantizationMapCapabilitiesKHR: ChainableBase, Vide
 
 public protocol VideoEncodeH264QuantizationMapCapabilitiesKHRExtension: Chainable {}
 
-public struct VideoEncodeH265QuantizationMapCapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension, OutStruct {
+public struct VideoEncodeH265QuantizationMapCapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension {
     public typealias CStruct = VkVideoEncodeH265QuantizationMapCapabilitiesKHR
 
     public static let structureType: StructureType = .videoEncodeH265QuantizationMapCapabilitiesKHR
@@ -30350,7 +30350,7 @@ public struct VideoEncodeH265QuantizationMapCapabilitiesKHR: ChainableBase, Vide
 
 public protocol VideoEncodeH265QuantizationMapCapabilitiesKHRExtension: Chainable {}
 
-public struct VideoEncodeAV1QuantizationMapCapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension, OutStruct {
+public struct VideoEncodeAV1QuantizationMapCapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension {
     public typealias CStruct = VkVideoEncodeAV1QuantizationMapCapabilitiesKHR
 
     public static let structureType: StructureType = .videoEncodeAv1QuantizationMapCapabilitiesKHR
@@ -30378,7 +30378,7 @@ public struct VideoEncodeAV1QuantizationMapCapabilitiesKHR: ChainableBase, Video
 
 public protocol VideoEncodeAV1QuantizationMapCapabilitiesKHRExtension: Chainable {}
 
-public struct VideoFormatQuantizationMapPropertiesKHR: ChainableBase, VideoFormatPropertiesKHRExtension, OutStruct {
+public struct VideoFormatQuantizationMapPropertiesKHR: ChainableBase, VideoFormatPropertiesKHRExtension {
     public typealias CStruct = VkVideoFormatQuantizationMapPropertiesKHR
 
     public static let structureType: StructureType = .videoFormatQuantizationMapPropertiesKHR
@@ -30405,7 +30405,7 @@ public struct VideoFormatQuantizationMapPropertiesKHR: ChainableBase, VideoForma
 
 public protocol VideoFormatQuantizationMapPropertiesKHRExtension: Chainable {}
 
-public struct VideoFormatH265QuantizationMapPropertiesKHR: ChainableBase, VideoFormatPropertiesKHRExtension, OutStruct {
+public struct VideoFormatH265QuantizationMapPropertiesKHR: ChainableBase, VideoFormatPropertiesKHRExtension {
     public typealias CStruct = VkVideoFormatH265QuantizationMapPropertiesKHR
 
     public static let structureType: StructureType = .videoFormatH265QuantizationMapPropertiesKHR
@@ -30430,7 +30430,7 @@ public struct VideoFormatH265QuantizationMapPropertiesKHR: ChainableBase, VideoF
 
 public protocol VideoFormatH265QuantizationMapPropertiesKHRExtension: Chainable {}
 
-public struct VideoFormatAV1QuantizationMapPropertiesKHR: ChainableBase, VideoFormatPropertiesKHRExtension, OutStruct {
+public struct VideoFormatAV1QuantizationMapPropertiesKHR: ChainableBase, VideoFormatPropertiesKHRExtension {
     public typealias CStruct = VkVideoFormatAV1QuantizationMapPropertiesKHR
 
     public static let structureType: StructureType = .videoFormatAv1QuantizationMapPropertiesKHR
@@ -30455,7 +30455,7 @@ public struct VideoFormatAV1QuantizationMapPropertiesKHR: ChainableBase, VideoFo
 
 public protocol VideoFormatAV1QuantizationMapPropertiesKHRExtension: Chainable {}
 
-public struct VideoCapabilitiesKHR: ChainableBase, OutStruct {
+public struct VideoCapabilitiesKHR: ChainableBase {
     public typealias CStruct = VkVideoCapabilitiesKHR
 
     public static let structureType: StructureType = .videoCapabilitiesKHR
@@ -30512,7 +30512,7 @@ public struct VideoCapabilitiesKHR: ChainableBase, OutStruct {
 
 public protocol VideoCapabilitiesKHRExtension: Chainable {}
 
-public struct VideoSessionMemoryRequirementsKHR: ChainableBase, OutStruct {
+public struct VideoSessionMemoryRequirementsKHR: ChainableBase {
     public typealias CStruct = VkVideoSessionMemoryRequirementsKHR
 
     public static let structureType: StructureType = .videoSessionMemoryRequirementsKHR
@@ -30558,7 +30558,7 @@ public struct BindVideoSessionMemoryInfoKHR: ChainableBase {
         self.memorySize = memorySize
     }
 
-    public init(cStruct: VkBindVideoSessionMemoryInfoKHR, device: Device?) {
+    public init(cStruct: VkBindVideoSessionMemoryInfoKHR, device: Device) {
         self.memoryBindIndex = cStruct.memoryBindIndex
         self.memory = DeviceMemory(handle: cStruct.memory, device: device)
         self.memoryOffset = cStruct.memoryOffset
@@ -30599,7 +30599,7 @@ public struct VideoPictureResourceInfoKHR: ChainableBase {
         self.imageViewBinding = imageViewBinding
     }
 
-    public init(cStruct: VkVideoPictureResourceInfoKHR, device: Device?) {
+    public init(cStruct: VkVideoPictureResourceInfoKHR, device: Device) {
         self.codedOffset = Offset2D(cStruct: cStruct.codedOffset)
         self.codedExtent = Extent2D(cStruct: cStruct.codedExtent)
         self.baseArrayLayer = cStruct.baseArrayLayer
@@ -30640,7 +30640,7 @@ public struct VideoReferenceSlotInfoKHR: ChainableBase {
         self.pictureResource = pictureResource
     }
 
-    public init(cStruct: VkVideoReferenceSlotInfoKHR, device: Device?) {
+    public init(cStruct: VkVideoReferenceSlotInfoKHR, device: Device) {
         self.slotIndex = cStruct.slotIndex
         self.pictureResource = (cStruct.pPictureResource != nil) ? VideoPictureResourceInfoKHR(cStruct: cStruct.pPictureResource.pointee, device: device) : nil
     }
@@ -30663,7 +30663,7 @@ public struct VideoReferenceSlotInfoKHR: ChainableBase {
 
 public protocol VideoReferenceSlotInfoKHRExtension: Chainable {}
 
-public struct VideoDecodeCapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension, OutStruct {
+public struct VideoDecodeCapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension {
     public typealias CStruct = VkVideoDecodeCapabilitiesKHR
 
     public static let structureType: StructureType = .videoDecodeCapabilitiesKHR
@@ -30739,7 +30739,7 @@ public struct VideoDecodeInfoKHR: ChainableBase {
         self.referenceSlots = referenceSlots
     }
 
-    public init(cStruct: VkVideoDecodeInfoKHR, device: Device?) {
+    public init(cStruct: VkVideoDecodeInfoKHR, device: Device) {
         self.flags = VideoDecodeFlagsKHR(rawValue: cStruct.flags)
         self.srcBuffer = Buffer(handle: cStruct.srcBuffer, device: device)
         self.srcBufferOffset = cStruct.srcBufferOffset
@@ -30777,7 +30777,7 @@ public struct VideoDecodeInfoKHR: ChainableBase {
 
 public protocol VideoDecodeInfoKHRExtension: Chainable {}
 
-public struct PhysicalDeviceVideoMaintenance1FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceVideoMaintenance1FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceVideoMaintenance1FeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceVideoMaintenance1FeaturesKHR
@@ -30806,7 +30806,7 @@ public struct PhysicalDeviceVideoMaintenance1FeaturesKHR: ChainableBase, Physica
 
 public protocol PhysicalDeviceVideoMaintenance1FeaturesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceVideoMaintenance2FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceVideoMaintenance2FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceVideoMaintenance2FeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceVideoMaintenance2FeaturesKHR
@@ -30849,7 +30849,7 @@ public struct VideoInlineQueryInfoKHR: ChainableBase, VideoDecodeInfoKHRExtensio
         self.queryCount = queryCount
     }
 
-    public init(cStruct: VkVideoInlineQueryInfoKHR, device: Device?) {
+    public init(cStruct: VkVideoInlineQueryInfoKHR, device: Device) {
         self.queryPool = (cStruct.queryPool != nil) ? QueryPool(handle: cStruct.queryPool, device: device) : nil
         self.firstQuery = cStruct.firstQuery
         self.queryCount = cStruct.queryCount
@@ -30905,7 +30905,7 @@ public struct VideoDecodeH264ProfileInfoKHR: ChainableBase, VideoProfileInfoKHRE
 
 public protocol VideoDecodeH264ProfileInfoKHRExtension: Chainable {}
 
-public struct VideoDecodeH264CapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension, OutStruct {
+public struct VideoDecodeH264CapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension {
     public typealias CStruct = VkVideoDecodeH264CapabilitiesKHR
 
     public static let structureType: StructureType = .videoDecodeH264CapabilitiesKHR
@@ -31140,7 +31140,7 @@ public struct VideoDecodeH265ProfileInfoKHR: ChainableBase, VideoProfileInfoKHRE
 
 public protocol VideoDecodeH265ProfileInfoKHRExtension: Chainable {}
 
-public struct VideoDecodeH265CapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension, OutStruct {
+public struct VideoDecodeH265CapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension {
     public typealias CStruct = VkVideoDecodeH265CapabilitiesKHR
 
     public static let structureType: StructureType = .videoDecodeH265CapabilitiesKHR
@@ -31356,7 +31356,7 @@ public struct VideoDecodeH265DpbSlotInfoKHR: ChainableBase, VideoReferenceSlotIn
 
 public protocol VideoDecodeH265DpbSlotInfoKHRExtension: Chainable {}
 
-public struct PhysicalDeviceVideoDecodeVP9FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceVideoDecodeVP9FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceVideoDecodeVP9FeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceVideoDecodeVp9FeaturesKHR
@@ -31414,7 +31414,7 @@ public struct VideoDecodeVP9ProfileInfoKHR: ChainableBase, VideoProfileInfoKHREx
 
 public protocol VideoDecodeVP9ProfileInfoKHRExtension: Chainable {}
 
-public struct VideoDecodeVP9CapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension, OutStruct {
+public struct VideoDecodeVP9CapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension {
     public typealias CStruct = VkVideoDecodeVP9CapabilitiesKHR
 
     public static let structureType: StructureType = .videoDecodeVp9CapabilitiesKHR
@@ -31517,7 +31517,7 @@ public struct VideoDecodeAV1ProfileInfoKHR: ChainableBase, VideoProfileInfoKHREx
 
 public protocol VideoDecodeAV1ProfileInfoKHRExtension: Chainable {}
 
-public struct VideoDecodeAV1CapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension, OutStruct {
+public struct VideoDecodeAV1CapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension {
     public typealias CStruct = VkVideoDecodeAV1CapabilitiesKHR
 
     public static let structureType: StructureType = .videoDecodeAv1CapabilitiesKHR
@@ -31709,9 +31709,9 @@ public struct VideoSessionCreateInfoKHR: ChainableBase {
         self.queueFamilyIndex = cStruct.queueFamilyIndex
         self.flags = VideoSessionCreateFlagsKHR(rawValue: cStruct.flags)
         self.videoProfile = VideoProfileInfoKHR(cStruct: cStruct.pVideoProfile.pointee)
-        self.pictureFormat = Format(rawValue: numericBitCast(cStruct.pictureFormat))!
+        self.pictureFormat = Format(rawValue: numericBitCast(cStruct.pictureFormat.rawValue))!
         self.maxCodedExtent = Extent2D(cStruct: cStruct.maxCodedExtent)
-        self.referencePictureFormat = Format(rawValue: numericBitCast(cStruct.referencePictureFormat))!
+        self.referencePictureFormat = Format(rawValue: numericBitCast(cStruct.referencePictureFormat.rawValue))!
         self.maxDpbSlots = cStruct.maxDpbSlots
         self.maxActiveReferencePictures = cStruct.maxActiveReferencePictures
         self.stdHeaderVersion = ExtensionProperties(cStruct: cStruct.pStdHeaderVersion.pointee)
@@ -31760,7 +31760,7 @@ public struct VideoSessionParametersCreateInfoKHR: ChainableBase {
         self.videoSession = videoSession
     }
 
-    public init(cStruct: VkVideoSessionParametersCreateInfoKHR, device: Device?) {
+    public init(cStruct: VkVideoSessionParametersCreateInfoKHR, device: Device) {
         self.flags = VideoSessionParametersCreateFlagsKHR(rawValue: cStruct.flags)
         self.videoSessionParametersTemplate = (cStruct.videoSessionParametersTemplate != nil) ? VideoSessionParametersKHR(handle: cStruct.videoSessionParametersTemplate, device: device) : nil
         self.videoSession = VideoSessionKHR(handle: cStruct.videoSession, device: device)
@@ -31822,7 +31822,7 @@ public struct VideoEncodeSessionParametersGetInfoKHR: ChainableBase {
         self.videoSessionParameters = videoSessionParameters
     }
 
-    public init(cStruct: VkVideoEncodeSessionParametersGetInfoKHR, device: Device?) {
+    public init(cStruct: VkVideoEncodeSessionParametersGetInfoKHR, device: Device) {
         self.videoSessionParameters = VideoSessionParametersKHR(handle: cStruct.videoSessionParameters, device: device)
     }
 
@@ -31841,7 +31841,7 @@ public struct VideoEncodeSessionParametersGetInfoKHR: ChainableBase {
 
 public protocol VideoEncodeSessionParametersGetInfoKHRExtension: Chainable {}
 
-public struct VideoEncodeSessionParametersFeedbackInfoKHR: ChainableBase, OutStruct {
+public struct VideoEncodeSessionParametersFeedbackInfoKHR: ChainableBase {
     public typealias CStruct = VkVideoEncodeSessionParametersFeedbackInfoKHR
 
     public static let structureType: StructureType = .videoEncodeSessionParametersFeedbackInfoKHR
@@ -31882,7 +31882,7 @@ public struct VideoBeginCodingInfoKHR: ChainableBase {
         self.referenceSlots = referenceSlots
     }
 
-    public init(cStruct: VkVideoBeginCodingInfoKHR, device: Device?) {
+    public init(cStruct: VkVideoBeginCodingInfoKHR, device: Device) {
         self.flags = VideoBeginCodingFlagsKHR(rawValue: cStruct.flags)
         self.videoSession = VideoSessionKHR(handle: cStruct.videoSession, device: device)
         self.videoSessionParameters = (cStruct.videoSessionParameters != nil) ? VideoSessionParametersKHR(handle: cStruct.videoSessionParameters, device: device) : nil
@@ -31985,7 +31985,7 @@ public struct VideoEncodeUsageInfoKHR: ChainableBase, VideoProfileInfoKHRExtensi
     public init(cStruct: VkVideoEncodeUsageInfoKHR) {
         self.videoUsageHints = VideoEncodeUsageFlagsKHR(rawValue: cStruct.videoUsageHints)
         self.videoContentHints = VideoEncodeContentFlagsKHR(rawValue: cStruct.videoContentHints)
-        self.tuningMode = VideoEncodeTuningModeKHR(rawValue: numericBitCast(cStruct.tuningMode))!
+        self.tuningMode = VideoEncodeTuningModeKHR(rawValue: numericBitCast(cStruct.tuningMode.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkVideoEncodeUsageInfoKHR>) throws(E) -> R) throws(E) -> R {
@@ -32029,7 +32029,7 @@ public struct VideoEncodeInfoKHR: ChainableBase {
         self.precedingExternallyEncodedBytes = precedingExternallyEncodedBytes
     }
 
-    public init(cStruct: VkVideoEncodeInfoKHR, device: Device?) {
+    public init(cStruct: VkVideoEncodeInfoKHR, device: Device) {
         self.flags = VideoEncodeFlagsKHR(rawValue: cStruct.flags)
         self.dstBuffer = Buffer(handle: cStruct.dstBuffer, device: device)
         self.dstBufferOffset = cStruct.dstBufferOffset
@@ -32081,7 +32081,7 @@ public struct VideoEncodeQuantizationMapInfoKHR: ChainableBase, VideoEncodeInfoK
         self.quantizationMapExtent = quantizationMapExtent
     }
 
-    public init(cStruct: VkVideoEncodeQuantizationMapInfoKHR, device: Device?) {
+    public init(cStruct: VkVideoEncodeQuantizationMapInfoKHR, device: Device) {
         self.quantizationMap = (cStruct.quantizationMap != nil) ? ImageView(handle: cStruct.quantizationMap, device: device) : nil
         self.quantizationMapExtent = Extent2D(cStruct: cStruct.quantizationMapExtent)
     }
@@ -32135,7 +32135,7 @@ public struct VideoEncodeQuantizationMapSessionParametersCreateInfoKHR: Chainabl
 
 public protocol VideoEncodeQuantizationMapSessionParametersCreateInfoKHRExtension: Chainable {}
 
-public struct PhysicalDeviceVideoEncodeQuantizationMapFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceVideoEncodeQuantizationMapFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceVideoEncodeQuantizationMapFeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceVideoEncodeQuantizationMapFeaturesKHR
@@ -32257,7 +32257,7 @@ public struct PhysicalDeviceVideoEncodeQualityLevelInfoKHR: ChainableBase {
 
 public protocol PhysicalDeviceVideoEncodeQualityLevelInfoKHRExtension: Chainable {}
 
-public struct VideoEncodeQualityLevelPropertiesKHR: ChainableBase, OutStruct {
+public struct VideoEncodeQualityLevelPropertiesKHR: ChainableBase {
     public typealias CStruct = VkVideoEncodeQualityLevelPropertiesKHR
 
     public static let structureType: StructureType = .videoEncodeQualityLevelPropertiesKHR
@@ -32374,7 +32374,7 @@ public struct VideoEncodeRateControlInfoKHR: ChainableBase, VideoCodingControlIn
 
 public protocol VideoEncodeRateControlInfoKHRExtension: Chainable {}
 
-public struct VideoEncodeCapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension, OutStruct {
+public struct VideoEncodeCapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension {
     public typealias CStruct = VkVideoEncodeCapabilitiesKHR
 
     public static let structureType: StructureType = .videoEncodeCapabilitiesKHR
@@ -32419,7 +32419,7 @@ public struct VideoEncodeCapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExt
 
 public protocol VideoEncodeCapabilitiesKHRExtension: Chainable {}
 
-public struct VideoEncodeH264CapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension, OutStruct {
+public struct VideoEncodeH264CapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension {
     public typealias CStruct = VkVideoEncodeH264CapabilitiesKHR
 
     public static let structureType: StructureType = .videoEncodeH264CapabilitiesKHR
@@ -32508,7 +32508,7 @@ public struct VideoEncodeH264QpKHR: CStructConvertible {
     }
 }
 
-public struct VideoEncodeH264QualityLevelPropertiesKHR: ChainableBase, VideoEncodeQualityLevelPropertiesKHRExtension, OutStruct {
+public struct VideoEncodeH264QualityLevelPropertiesKHR: ChainableBase, VideoEncodeQualityLevelPropertiesKHRExtension {
     public typealias CStruct = VkVideoEncodeH264QualityLevelPropertiesKHR
 
     public static let structureType: StructureType = .videoEncodeH264QualityLevelPropertiesKHR
@@ -32711,7 +32711,7 @@ public struct VideoEncodeH264SessionParametersGetInfoKHR: ChainableBase, VideoEn
 
 public protocol VideoEncodeH264SessionParametersGetInfoKHRExtension: Chainable {}
 
-public struct VideoEncodeH264SessionParametersFeedbackInfoKHR: ChainableBase, VideoEncodeSessionParametersFeedbackInfoKHRExtension, OutStruct {
+public struct VideoEncodeH264SessionParametersFeedbackInfoKHR: ChainableBase, VideoEncodeSessionParametersFeedbackInfoKHRExtension {
     public typealias CStruct = VkVideoEncodeH264SessionParametersFeedbackInfoKHR
 
     public static let structureType: StructureType = .videoEncodeH264SessionParametersFeedbackInfoKHR
@@ -33039,7 +33039,7 @@ public struct VideoEncodeH264RateControlLayerInfoKHR: ChainableBase, VideoEncode
 
 public protocol VideoEncodeH264RateControlLayerInfoKHRExtension: Chainable {}
 
-public struct VideoEncodeH265CapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension, OutStruct {
+public struct VideoEncodeH265CapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension {
     public typealias CStruct = VkVideoEncodeH265CapabilitiesKHR
 
     public static let structureType: StructureType = .videoEncodeH265CapabilitiesKHR
@@ -33139,7 +33139,7 @@ public struct VideoEncodeH265QpKHR: CStructConvertible {
     }
 }
 
-public struct VideoEncodeH265QualityLevelPropertiesKHR: ChainableBase, VideoEncodeQualityLevelPropertiesKHRExtension, OutStruct {
+public struct VideoEncodeH265QualityLevelPropertiesKHR: ChainableBase, VideoEncodeQualityLevelPropertiesKHRExtension {
     public typealias CStruct = VkVideoEncodeH265QualityLevelPropertiesKHR
 
     public static let structureType: StructureType = .videoEncodeH265QualityLevelPropertiesKHR
@@ -33358,7 +33358,7 @@ public struct VideoEncodeH265SessionParametersGetInfoKHR: ChainableBase, VideoEn
 
 public protocol VideoEncodeH265SessionParametersGetInfoKHRExtension: Chainable {}
 
-public struct VideoEncodeH265SessionParametersFeedbackInfoKHR: ChainableBase, VideoEncodeSessionParametersFeedbackInfoKHRExtension, OutStruct {
+public struct VideoEncodeH265SessionParametersFeedbackInfoKHR: ChainableBase, VideoEncodeSessionParametersFeedbackInfoKHRExtension {
     public typealias CStruct = VkVideoEncodeH265SessionParametersFeedbackInfoKHR
 
     public static let structureType: StructureType = .videoEncodeH265SessionParametersFeedbackInfoKHR
@@ -33685,7 +33685,7 @@ public struct VideoEncodeH265DpbSlotInfoKHR: ChainableBase, VideoReferenceSlotIn
 
 public protocol VideoEncodeH265DpbSlotInfoKHRExtension: Chainable {}
 
-public struct VideoEncodeAV1CapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension, OutStruct {
+public struct VideoEncodeAV1CapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension {
     public typealias CStruct = VkVideoEncodeAV1CapabilitiesKHR
 
     public static let structureType: StructureType = .videoEncodeAv1CapabilitiesKHR
@@ -33815,7 +33815,7 @@ public struct VideoEncodeAV1QIndexKHR: CStructConvertible {
     }
 }
 
-public struct VideoEncodeAV1QualityLevelPropertiesKHR: ChainableBase, VideoEncodeQualityLevelPropertiesKHRExtension, OutStruct {
+public struct VideoEncodeAV1QualityLevelPropertiesKHR: ChainableBase, VideoEncodeQualityLevelPropertiesKHRExtension {
     public typealias CStruct = VkVideoEncodeAV1QualityLevelPropertiesKHR
 
     public static let structureType: StructureType = .videoEncodeAv1QualityLevelPropertiesKHR
@@ -33884,7 +33884,7 @@ public struct VideoEncodeAV1QualityLevelPropertiesKHR: ChainableBase, VideoEncod
 
 public protocol VideoEncodeAV1QualityLevelPropertiesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceVideoEncodeAV1FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceVideoEncodeAV1FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceVideoEncodeAV1FeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceVideoEncodeAv1FeaturesKHR
@@ -34038,8 +34038,8 @@ public struct VideoEncodeAV1PictureInfoKHR: ChainableBase, VideoEncodeInfoKHRExt
     }
 
     public init(cStruct: VkVideoEncodeAV1PictureInfoKHR) {
-        self.predictionMode = VideoEncodeAV1PredictionModeKHR(rawValue: numericBitCast(cStruct.predictionMode))!
-        self.rateControlGroup = VideoEncodeAV1RateControlGroupKHR(rawValue: numericBitCast(cStruct.rateControlGroup))!
+        self.predictionMode = VideoEncodeAV1PredictionModeKHR(rawValue: numericBitCast(cStruct.predictionMode.rawValue))!
+        self.rateControlGroup = VideoEncodeAV1RateControlGroupKHR(rawValue: numericBitCast(cStruct.rateControlGroup.rawValue))!
         self.constantQIndex = cStruct.constantQIndex
         self.stdPictureInfo = cStruct.pStdPictureInfo
         self.referenceNameSlotIndices = cStruct.referenceNameSlotIndices
@@ -34266,7 +34266,7 @@ public struct VideoEncodeAV1RateControlLayerInfoKHR: ChainableBase, VideoEncodeR
 
 public protocol VideoEncodeAV1RateControlLayerInfoKHRExtension: Chainable {}
 
-public struct PhysicalDeviceInheritedViewportScissorFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceInheritedViewportScissorFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceInheritedViewportScissorFeaturesNV
 
     public static let structureType: StructureType = .physicalDeviceInheritedViewportScissorFeaturesNV
@@ -34334,7 +34334,7 @@ public struct CommandBufferInheritanceViewportScissorInfoNV: ChainableBase, Comm
 
 public protocol CommandBufferInheritanceViewportScissorInfoNVExtension: Chainable {}
 
-public struct PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceYcbcr2Plane444FormatsFeaturesEXT
@@ -34363,7 +34363,7 @@ public struct PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT: ChainableBase, Phy
 
 public protocol PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceProvokingVertexFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceProvokingVertexFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceProvokingVertexFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceProvokingVertexFeaturesEXT
@@ -34396,7 +34396,7 @@ public struct PhysicalDeviceProvokingVertexFeaturesEXT: ChainableBase, PhysicalD
 
 public protocol PhysicalDeviceProvokingVertexFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceProvokingVertexPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceProvokingVertexPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceProvokingVertexPropertiesEXT
 
     public static let structureType: StructureType = .physicalDeviceProvokingVertexPropertiesEXT
@@ -34435,7 +34435,7 @@ public struct PipelineRasterizationProvokingVertexStateCreateInfoEXT: ChainableB
     }
 
     public init(cStruct: VkPipelineRasterizationProvokingVertexStateCreateInfoEXT) {
-        self.provokingVertexMode = ProvokingVertexModeEXT(rawValue: numericBitCast(cStruct.provokingVertexMode))!
+        self.provokingVertexMode = ProvokingVertexModeEXT(rawValue: numericBitCast(cStruct.provokingVertexMode.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPipelineRasterizationProvokingVertexStateCreateInfoEXT>) throws(E) -> R) throws(E) -> R {
@@ -34453,7 +34453,7 @@ public struct PipelineRasterizationProvokingVertexStateCreateInfoEXT: ChainableB
 
 public protocol PipelineRasterizationProvokingVertexStateCreateInfoEXTExtension: Chainable {}
 
-public struct VideoEncodeIntraRefreshCapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension, OutStruct {
+public struct VideoEncodeIntraRefreshCapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension {
     public typealias CStruct = VkVideoEncodeIntraRefreshCapabilitiesKHR
 
     public static let structureType: StructureType = .videoEncodeIntraRefreshCapabilitiesKHR
@@ -34581,7 +34581,7 @@ public struct VideoReferenceIntraRefreshInfoKHR: ChainableBase, VideoReferenceSl
 
 public protocol VideoReferenceIntraRefreshInfoKHRExtension: Chainable {}
 
-public struct PhysicalDeviceVideoEncodeIntraRefreshFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceVideoEncodeIntraRefreshFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceVideoEncodeIntraRefreshFeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceVideoEncodeIntraRefreshFeaturesKHR
@@ -34684,7 +34684,7 @@ public struct CuFunctionCreateInfoNVX: ChainableBase {
         self.name = name
     }
 
-    public init(cStruct: VkCuFunctionCreateInfoNVX, device: Device?) {
+    public init(cStruct: VkCuFunctionCreateInfoNVX, device: Device) {
         self.module = CuModuleNVX(handle: cStruct.module, device: device)
         self.name = String(cString: cStruct.pName)
     }
@@ -34739,7 +34739,7 @@ public struct CuLaunchInfoNVX: ChainableBase {
         self.extras = extras
     }
 
-    public init(cStruct: VkCuLaunchInfoNVX, device: Device?) {
+    public init(cStruct: VkCuLaunchInfoNVX, device: Device) {
         self.function = CuFunctionNVX(handle: cStruct.function, device: device)
         self.gridDimX = cStruct.gridDimX
         self.gridDimY = cStruct.gridDimY
@@ -34780,7 +34780,7 @@ public struct CuLaunchInfoNVX: ChainableBase {
 
 public protocol CuLaunchInfoNVXExtension: Chainable {}
 
-public struct PhysicalDeviceDescriptorBufferFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceDescriptorBufferFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDescriptorBufferFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceDescriptorBufferFeaturesEXT
@@ -34821,7 +34821,7 @@ public struct PhysicalDeviceDescriptorBufferFeaturesEXT: ChainableBase, Physical
 
 public protocol PhysicalDeviceDescriptorBufferFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceDescriptorBufferPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceDescriptorBufferPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceDescriptorBufferPropertiesEXT
 
     public static let structureType: StructureType = .physicalDeviceDescriptorBufferPropertiesEXT
@@ -34942,7 +34942,7 @@ public struct PhysicalDeviceDescriptorBufferPropertiesEXT: ChainableBase, Physic
 
 public protocol PhysicalDeviceDescriptorBufferPropertiesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceDescriptorBufferDensityMapPropertiesEXT
 
     public static let structureType: StructureType = .physicalDeviceDescriptorBufferDensityMapPropertiesEXT
@@ -34967,7 +34967,7 @@ public struct PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT: ChainableBa
 
 public protocol PhysicalDeviceDescriptorBufferDensityMapPropertiesEXTExtension: Chainable {}
 
-public struct DescriptorAddressInfoEXT: ChainableBase, OutStruct {
+public struct DescriptorAddressInfoEXT: ChainableBase {
     public typealias CStruct = VkDescriptorAddressInfoEXT
 
     public static let structureType: StructureType = .descriptorAddressInfoEXT
@@ -34984,7 +34984,7 @@ public struct DescriptorAddressInfoEXT: ChainableBase, OutStruct {
     public init(cStruct: VkDescriptorAddressInfoEXT) {
         self.address = cStruct.address
         self.range = cStruct.range
-        self.format = Format(rawValue: numericBitCast(cStruct.format))!
+        self.format = Format(rawValue: numericBitCast(cStruct.format.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkDescriptorAddressInfoEXT>) throws(E) -> R) throws(E) -> R {
@@ -35047,7 +35047,7 @@ public struct DescriptorBufferBindingPushDescriptorBufferHandleEXT: ChainableBas
         self.buffer = buffer
     }
 
-    public init(cStruct: VkDescriptorBufferBindingPushDescriptorBufferHandleEXT, device: Device?) {
+    public init(cStruct: VkDescriptorBufferBindingPushDescriptorBufferHandleEXT, device: Device) {
         self.buffer = Buffer(handle: cStruct.buffer, device: device)
     }
 
@@ -35079,7 +35079,7 @@ public struct DescriptorGetInfoEXT: ChainableBase {
     }
 
     public init(cStruct: VkDescriptorGetInfoEXT) {
-        self.type = DescriptorType(rawValue: numericBitCast(cStruct.type))!
+        self.type = DescriptorType(rawValue: numericBitCast(cStruct.type.rawValue))!
         self.data = cStruct.data
     }
 
@@ -35109,7 +35109,7 @@ public struct BufferCaptureDescriptorDataInfoEXT: ChainableBase {
         self.buffer = buffer
     }
 
-    public init(cStruct: VkBufferCaptureDescriptorDataInfoEXT, device: Device?) {
+    public init(cStruct: VkBufferCaptureDescriptorDataInfoEXT, device: Device) {
         self.buffer = Buffer(handle: cStruct.buffer, device: device)
     }
 
@@ -35138,7 +35138,7 @@ public struct ImageCaptureDescriptorDataInfoEXT: ChainableBase {
         self.image = image
     }
 
-    public init(cStruct: VkImageCaptureDescriptorDataInfoEXT, device: Device?) {
+    public init(cStruct: VkImageCaptureDescriptorDataInfoEXT, device: Device) {
         self.image = Image(handle: cStruct.image, device: device)
     }
 
@@ -35167,7 +35167,7 @@ public struct ImageViewCaptureDescriptorDataInfoEXT: ChainableBase {
         self.imageView = imageView
     }
 
-    public init(cStruct: VkImageViewCaptureDescriptorDataInfoEXT, device: Device?) {
+    public init(cStruct: VkImageViewCaptureDescriptorDataInfoEXT, device: Device) {
         self.imageView = ImageView(handle: cStruct.imageView, device: device)
     }
 
@@ -35196,7 +35196,7 @@ public struct SamplerCaptureDescriptorDataInfoEXT: ChainableBase {
         self.sampler = sampler
     }
 
-    public init(cStruct: VkSamplerCaptureDescriptorDataInfoEXT, device: Device?) {
+    public init(cStruct: VkSamplerCaptureDescriptorDataInfoEXT, device: Device) {
         self.sampler = Sampler(handle: cStruct.sampler, device: device)
     }
 
@@ -35227,7 +35227,7 @@ public struct AccelerationStructureCaptureDescriptorDataInfoEXT: ChainableBase {
         self.accelerationStructureNV = accelerationStructureNV
     }
 
-    public init(cStruct: VkAccelerationStructureCaptureDescriptorDataInfoEXT, device: Device?) {
+    public init(cStruct: VkAccelerationStructureCaptureDescriptorDataInfoEXT, device: Device) {
         self.accelerationStructure = (cStruct.accelerationStructure != nil) ? AccelerationStructureKHR(handle: cStruct.accelerationStructure, device: device) : nil
         self.accelerationStructureNV = (cStruct.accelerationStructureNV != nil) ? AccelerationStructureNV(handle: cStruct.accelerationStructureNV, device: device) : nil
     }
@@ -35277,7 +35277,7 @@ public struct OpaqueCaptureDescriptorDataCreateInfoEXT: ChainableBase, BufferCre
 
 public protocol OpaqueCaptureDescriptorDataCreateInfoEXTExtension: Chainable {}
 
-public struct PhysicalDeviceShaderIntegerDotProductFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderIntegerDotProductFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderIntegerDotProductFeatures
 
     public static let structureType: StructureType = .physicalDeviceShaderIntegerDotProductFeatures
@@ -35306,7 +35306,7 @@ public struct PhysicalDeviceShaderIntegerDotProductFeatures: ChainableBase, Phys
 
 public protocol PhysicalDeviceShaderIntegerDotProductFeaturesExtension: Chainable {}
 
-public struct PhysicalDeviceShaderIntegerDotProductProperties: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceShaderIntegerDotProductProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceShaderIntegerDotProductProperties
 
     public static let structureType: StructureType = .physicalDeviceShaderIntegerDotProductProperties
@@ -35418,7 +35418,7 @@ public struct PhysicalDeviceShaderIntegerDotProductProperties: ChainableBase, Ph
 
 public protocol PhysicalDeviceShaderIntegerDotProductPropertiesExtension: Chainable {}
 
-public struct PhysicalDeviceDrmPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceDrmPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceDrmPropertiesEXT
 
     public static let structureType: StructureType = .physicalDeviceDrmPropertiesEXT
@@ -35458,7 +35458,7 @@ public struct PhysicalDeviceDrmPropertiesEXT: ChainableBase, PhysicalDevicePrope
 
 public protocol PhysicalDeviceDrmPropertiesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceFragmentShaderBarycentricFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceFragmentShaderBarycentricFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceFragmentShaderBarycentricFeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceFragmentShaderBarycentricFeaturesKHR
@@ -35487,7 +35487,7 @@ public struct PhysicalDeviceFragmentShaderBarycentricFeaturesKHR: ChainableBase,
 
 public protocol PhysicalDeviceFragmentShaderBarycentricFeaturesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceFragmentShaderBarycentricPropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceFragmentShaderBarycentricPropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceFragmentShaderBarycentricPropertiesKHR
 
     public static let structureType: StructureType = .physicalDeviceFragmentShaderBarycentricPropertiesKHR
@@ -35512,7 +35512,7 @@ public struct PhysicalDeviceFragmentShaderBarycentricPropertiesKHR: ChainableBas
 
 public protocol PhysicalDeviceFragmentShaderBarycentricPropertiesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceShaderFmaFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderFmaFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderFmaFeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceShaderFmaFeaturesKHR
@@ -35549,7 +35549,7 @@ public struct PhysicalDeviceShaderFmaFeaturesKHR: ChainableBase, PhysicalDeviceF
 
 public protocol PhysicalDeviceShaderFmaFeaturesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceRayTracingMotionBlurFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceRayTracingMotionBlurFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceRayTracingMotionBlurFeaturesNV
 
     public static let structureType: StructureType = .physicalDeviceRayTracingMotionBlurFeaturesNV
@@ -35582,7 +35582,7 @@ public struct PhysicalDeviceRayTracingMotionBlurFeaturesNV: ChainableBase, Physi
 
 public protocol PhysicalDeviceRayTracingMotionBlurFeaturesNVExtension: Chainable {}
 
-public struct PhysicalDeviceRayTracingValidationFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceRayTracingValidationFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceRayTracingValidationFeaturesNV
 
     public static let structureType: StructureType = .physicalDeviceRayTracingValidationFeaturesNV
@@ -35611,7 +35611,7 @@ public struct PhysicalDeviceRayTracingValidationFeaturesNV: ChainableBase, Physi
 
 public protocol PhysicalDeviceRayTracingValidationFeaturesNVExtension: Chainable {}
 
-public struct PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV
 
     public static let structureType: StructureType = .physicalDeviceRayTracingLinearSweptSpheresFeaturesNV
@@ -35896,7 +35896,7 @@ public struct AccelerationStructureMotionInstanceNV: CStructConvertible {
     }
 
     public init(cStruct: VkAccelerationStructureMotionInstanceNV) {
-        self.type = AccelerationStructureMotionInstanceTypeNV(rawValue: numericBitCast(cStruct.type))!
+        self.type = AccelerationStructureMotionInstanceTypeNV(rawValue: numericBitCast(cStruct.type.rawValue))!
         self.flags = AccelerationStructureMotionInstanceFlagsNV(rawValue: cStruct.flags)
         self.data = cStruct.data
     }
@@ -35922,7 +35922,7 @@ public struct MemoryGetRemoteAddressInfoNV: ChainableBase {
         self.handleType = handleType
     }
 
-    public init(cStruct: VkMemoryGetRemoteAddressInfoNV, device: Device?) {
+    public init(cStruct: VkMemoryGetRemoteAddressInfoNV, device: Device) {
         self.memory = DeviceMemory(handle: cStruct.memory, device: device)
         self.handleType = ExternalMemoryHandleTypeFlags(rawValue: numericBitCast(cStruct.handleType.rawValue))
     }
@@ -35956,7 +35956,7 @@ public struct ImportMemoryBufferCollectionFUCHSIA: ChainableBase, MemoryAllocate
         self.index = index
     }
 
-    public init(cStruct: VkImportMemoryBufferCollectionFUCHSIA, device: Device?) {
+    public init(cStruct: VkImportMemoryBufferCollectionFUCHSIA, device: Device) {
         self.collection = BufferCollectionFUCHSIA(handle: cStruct.collection, device: device)
         self.index = cStruct.index
     }
@@ -35991,7 +35991,7 @@ public struct BufferCollectionImageCreateInfoFUCHSIA: ChainableBase, ImageCreate
         self.index = index
     }
 
-    public init(cStruct: VkBufferCollectionImageCreateInfoFUCHSIA, device: Device?) {
+    public init(cStruct: VkBufferCollectionImageCreateInfoFUCHSIA, device: Device) {
         self.collection = BufferCollectionFUCHSIA(handle: cStruct.collection, device: device)
         self.index = cStruct.index
     }
@@ -36026,7 +36026,7 @@ public struct BufferCollectionBufferCreateInfoFUCHSIA: ChainableBase, BufferCrea
         self.index = index
     }
 
-    public init(cStruct: VkBufferCollectionBufferCreateInfoFUCHSIA, device: Device?) {
+    public init(cStruct: VkBufferCollectionBufferCreateInfoFUCHSIA, device: Device) {
         self.collection = BufferCollectionFUCHSIA(handle: cStruct.collection, device: device)
         self.index = cStruct.index
     }
@@ -36111,7 +36111,7 @@ public struct SysmemColorSpaceFUCHSIA: ChainableBase {
 public protocol SysmemColorSpaceFUCHSIAExtension: Chainable {}
 
 #if VK_USE_PLATFORM_FUCHSIA
-public struct BufferCollectionPropertiesFUCHSIA: ChainableBase, OutStruct {
+public struct BufferCollectionPropertiesFUCHSIA: ChainableBase {
     public typealias CStruct = VkBufferCollectionPropertiesFUCHSIA
 
     public static let structureType: StructureType = .bufferCollectionPropertiesFUCHSIA
@@ -36135,10 +36135,10 @@ public struct BufferCollectionPropertiesFUCHSIA: ChainableBase, OutStruct {
         self.formatFeatures = FormatFeatureFlags(rawValue: cStruct.formatFeatures)
         self.sysmemColorSpaceIndex = SysmemColorSpaceFUCHSIA(cStruct: cStruct.sysmemColorSpaceIndex)
         self.samplerYcbcrConversionComponents = ComponentMapping(cStruct: cStruct.samplerYcbcrConversionComponents)
-        self.suggestedYcbcrModel = SamplerYcbcrModelConversion(rawValue: numericBitCast(cStruct.suggestedYcbcrModel))!
-        self.suggestedYcbcrRange = SamplerYcbcrRange(rawValue: numericBitCast(cStruct.suggestedYcbcrRange))!
-        self.suggestedXChromaOffset = ChromaLocation(rawValue: numericBitCast(cStruct.suggestedXChromaOffset))!
-        self.suggestedYChromaOffset = ChromaLocation(rawValue: numericBitCast(cStruct.suggestedYChromaOffset))!
+        self.suggestedYcbcrModel = SamplerYcbcrModelConversion(rawValue: numericBitCast(cStruct.suggestedYcbcrModel.rawValue))!
+        self.suggestedYcbcrRange = SamplerYcbcrRange(rawValue: numericBitCast(cStruct.suggestedYcbcrRange.rawValue))!
+        self.suggestedXChromaOffset = ChromaLocation(rawValue: numericBitCast(cStruct.suggestedXChromaOffset.rawValue))!
+        self.suggestedYChromaOffset = ChromaLocation(rawValue: numericBitCast(cStruct.suggestedYChromaOffset.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkBufferCollectionPropertiesFUCHSIA>) throws(E) -> R) throws(E) -> R {
@@ -36405,7 +36405,7 @@ public struct CudaFunctionCreateInfoNV: ChainableBase {
         self.name = name
     }
 
-    public init(cStruct: VkCudaFunctionCreateInfoNV, device: Device?) {
+    public init(cStruct: VkCudaFunctionCreateInfoNV, device: Device) {
         self.module = CudaModuleNV(handle: cStruct.module, device: device)
         self.name = String(cString: cStruct.pName)
     }
@@ -36462,7 +36462,7 @@ public struct CudaLaunchInfoNV: ChainableBase {
         self.extras = extras
     }
 
-    public init(cStruct: VkCudaLaunchInfoNV, device: Device?) {
+    public init(cStruct: VkCudaLaunchInfoNV, device: Device) {
         self.function = CudaFunctionNV(handle: cStruct.function, device: device)
         self.gridDimX = cStruct.gridDimX
         self.gridDimY = cStruct.gridDimY
@@ -36504,7 +36504,7 @@ public struct CudaLaunchInfoNV: ChainableBase {
 
 public protocol CudaLaunchInfoNVExtension: Chainable {}
 
-public struct PhysicalDeviceRGBA10X6FormatsFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceRGBA10X6FormatsFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceRGBA10X6FormatsFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceRgba10x6FormatsFeaturesEXT
@@ -36533,7 +36533,7 @@ public struct PhysicalDeviceRGBA10X6FormatsFeaturesEXT: ChainableBase, PhysicalD
 
 public protocol PhysicalDeviceRGBA10X6FormatsFeaturesEXTExtension: Chainable {}
 
-public struct FormatProperties3: ChainableBase, FormatProperties2Extension, OutStruct {
+public struct FormatProperties3: ChainableBase, FormatProperties2Extension {
     public typealias CStruct = VkFormatProperties3
 
     public static let structureType: StructureType = .formatProperties3
@@ -36586,7 +36586,7 @@ public struct DrmFormatModifierProperties2EXT: CStructConvertible {
     }
 }
 
-public struct DrmFormatModifierPropertiesList2EXT: ChainableBase, FormatProperties2Extension, OutStruct {
+public struct DrmFormatModifierPropertiesList2EXT: ChainableBase, FormatProperties2Extension {
     public typealias CStruct = VkDrmFormatModifierPropertiesList2EXT
 
     public static let structureType: StructureType = .drmFormatModifierPropertiesList2EXT
@@ -36615,7 +36615,7 @@ public struct DrmFormatModifierPropertiesList2EXT: ChainableBase, FormatProperti
 public protocol DrmFormatModifierPropertiesList2EXTExtension: Chainable {}
 
 #if VK_USE_PLATFORM_ANDROID_KHR
-public struct AndroidHardwareBufferFormatProperties2ANDROID: ChainableBase, AndroidHardwareBufferPropertiesANDROIDExtension, OutStruct {
+public struct AndroidHardwareBufferFormatProperties2ANDROID: ChainableBase, AndroidHardwareBufferPropertiesANDROIDExtension {
     public typealias CStruct = VkAndroidHardwareBufferFormatProperties2ANDROID
 
     public static let structureType: StructureType = .androidHardwareBufferFormatProperties2ANDROID
@@ -36629,14 +36629,14 @@ public struct AndroidHardwareBufferFormatProperties2ANDROID: ChainableBase, Andr
     public let suggestedYChromaOffset: ChromaLocation
 
     public init(cStruct: VkAndroidHardwareBufferFormatProperties2ANDROID) {
-        self.format = Format(rawValue: numericBitCast(cStruct.format))!
+        self.format = Format(rawValue: numericBitCast(cStruct.format.rawValue))!
         self.externalFormat = cStruct.externalFormat
         self.formatFeatures = FormatFeatureFlags2(rawValue: cStruct.formatFeatures)
         self.samplerYcbcrConversionComponents = ComponentMapping(cStruct: cStruct.samplerYcbcrConversionComponents)
-        self.suggestedYcbcrModel = SamplerYcbcrModelConversion(rawValue: numericBitCast(cStruct.suggestedYcbcrModel))!
-        self.suggestedYcbcrRange = SamplerYcbcrRange(rawValue: numericBitCast(cStruct.suggestedYcbcrRange))!
-        self.suggestedXChromaOffset = ChromaLocation(rawValue: numericBitCast(cStruct.suggestedXChromaOffset))!
-        self.suggestedYChromaOffset = ChromaLocation(rawValue: numericBitCast(cStruct.suggestedYChromaOffset))!
+        self.suggestedYcbcrModel = SamplerYcbcrModelConversion(rawValue: numericBitCast(cStruct.suggestedYcbcrModel.rawValue))!
+        self.suggestedYcbcrRange = SamplerYcbcrRange(rawValue: numericBitCast(cStruct.suggestedYcbcrRange.rawValue))!
+        self.suggestedXChromaOffset = ChromaLocation(rawValue: numericBitCast(cStruct.suggestedXChromaOffset.rawValue))!
+        self.suggestedYChromaOffset = ChromaLocation(rawValue: numericBitCast(cStruct.suggestedYChromaOffset.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkAndroidHardwareBufferFormatProperties2ANDROID>) throws(E) -> R) throws(E) -> R {
@@ -36682,9 +36682,9 @@ public struct PipelineRenderingCreateInfo: ChainableBase, GraphicsPipelineCreate
 
     public init(cStruct: VkPipelineRenderingCreateInfo) {
         self.viewMask = cStruct.viewMask
-        self.colorAttachmentFormats = UnsafeBufferPointer(start: cStruct.pColorAttachmentFormats, count: Int(cStruct.colorAttachmentCount)).map{ Format(rawValue: numericBitCast($0))! }
-        self.depthAttachmentFormat = Format(rawValue: numericBitCast(cStruct.depthAttachmentFormat))!
-        self.stencilAttachmentFormat = Format(rawValue: numericBitCast(cStruct.stencilAttachmentFormat))!
+        self.colorAttachmentFormats = UnsafeBufferPointer(start: cStruct.pColorAttachmentFormats, count: Int(cStruct.colorAttachmentCount)).map{ Format(rawValue: numericBitCast($0.rawValue))! }
+        self.depthAttachmentFormat = Format(rawValue: numericBitCast(cStruct.depthAttachmentFormat.rawValue))!
+        self.stencilAttachmentFormat = Format(rawValue: numericBitCast(cStruct.stencilAttachmentFormat.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPipelineRenderingCreateInfo>) throws(E) -> R) throws(E) -> R {
@@ -36732,14 +36732,14 @@ public struct RenderingAttachmentInfo: ChainableBase {
         self.clearValue = clearValue
     }
 
-    public init(cStruct: VkRenderingAttachmentInfo, device: Device?) {
+    public init(cStruct: VkRenderingAttachmentInfo, device: Device) {
         self.imageView = (cStruct.imageView != nil) ? ImageView(handle: cStruct.imageView, device: device) : nil
-        self.imageLayout = ImageLayout(rawValue: numericBitCast(cStruct.imageLayout))!
+        self.imageLayout = ImageLayout(rawValue: numericBitCast(cStruct.imageLayout.rawValue))!
         self.resolveMode = ResolveModeFlags(rawValue: numericBitCast(cStruct.resolveMode.rawValue))
         self.resolveImageView = (cStruct.resolveImageView != nil) ? ImageView(handle: cStruct.resolveImageView, device: device) : nil
-        self.resolveImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.resolveImageLayout))!
-        self.loadOp = AttachmentLoadOp(rawValue: numericBitCast(cStruct.loadOp))!
-        self.storeOp = AttachmentStoreOp(rawValue: numericBitCast(cStruct.storeOp))!
+        self.resolveImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.resolveImageLayout.rawValue))!
+        self.loadOp = AttachmentLoadOp(rawValue: numericBitCast(cStruct.loadOp.rawValue))!
+        self.storeOp = AttachmentStoreOp(rawValue: numericBitCast(cStruct.storeOp.rawValue))!
         self.clearValue = cStruct.clearValue
     }
 
@@ -36787,7 +36787,7 @@ public struct RenderingInfo: ChainableBase {
         self.stencilAttachment = stencilAttachment
     }
 
-    public init(cStruct: VkRenderingInfo, device: Device?) {
+    public init(cStruct: VkRenderingInfo, device: Device) {
         self.flags = RenderingFlags(rawValue: cStruct.flags)
         self.renderArea = Rect2D(cStruct: cStruct.renderArea)
         self.layerCount = cStruct.layerCount
@@ -36866,9 +36866,9 @@ public struct RenderingFragmentShadingRateAttachmentInfoKHR: ChainableBase, Rend
         self.shadingRateAttachmentTexelSize = shadingRateAttachmentTexelSize
     }
 
-    public init(cStruct: VkRenderingFragmentShadingRateAttachmentInfoKHR, device: Device?) {
+    public init(cStruct: VkRenderingFragmentShadingRateAttachmentInfoKHR, device: Device) {
         self.imageView = (cStruct.imageView != nil) ? ImageView(handle: cStruct.imageView, device: device) : nil
-        self.imageLayout = ImageLayout(rawValue: numericBitCast(cStruct.imageLayout))!
+        self.imageLayout = ImageLayout(rawValue: numericBitCast(cStruct.imageLayout.rawValue))!
         self.shadingRateAttachmentTexelSize = Extent2D(cStruct: cStruct.shadingRateAttachmentTexelSize)
     }
 
@@ -36903,9 +36903,9 @@ public struct RenderingFragmentDensityMapAttachmentInfoEXT: ChainableBase, Rende
         self.imageLayout = imageLayout
     }
 
-    public init(cStruct: VkRenderingFragmentDensityMapAttachmentInfoEXT, device: Device?) {
+    public init(cStruct: VkRenderingFragmentDensityMapAttachmentInfoEXT, device: Device) {
         self.imageView = ImageView(handle: cStruct.imageView, device: device)
-        self.imageLayout = ImageLayout(rawValue: numericBitCast(cStruct.imageLayout))!
+        self.imageLayout = ImageLayout(rawValue: numericBitCast(cStruct.imageLayout.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkRenderingFragmentDensityMapAttachmentInfoEXT>) throws(E) -> R) throws(E) -> R {
@@ -36924,7 +36924,7 @@ public struct RenderingFragmentDensityMapAttachmentInfoEXT: ChainableBase, Rende
 
 public protocol RenderingFragmentDensityMapAttachmentInfoEXTExtension: Chainable {}
 
-public struct PhysicalDeviceDynamicRenderingFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceDynamicRenderingFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDynamicRenderingFeatures
 
     public static let structureType: StructureType = .physicalDeviceDynamicRenderingFeatures
@@ -36976,9 +36976,9 @@ public struct CommandBufferInheritanceRenderingInfo: ChainableBase, CommandBuffe
     public init(cStruct: VkCommandBufferInheritanceRenderingInfo) {
         self.flags = RenderingFlags(rawValue: cStruct.flags)
         self.viewMask = cStruct.viewMask
-        self.colorAttachmentFormats = UnsafeBufferPointer(start: cStruct.pColorAttachmentFormats, count: Int(cStruct.colorAttachmentCount)).map{ Format(rawValue: numericBitCast($0))! }
-        self.depthAttachmentFormat = Format(rawValue: numericBitCast(cStruct.depthAttachmentFormat))!
-        self.stencilAttachmentFormat = Format(rawValue: numericBitCast(cStruct.stencilAttachmentFormat))!
+        self.colorAttachmentFormats = UnsafeBufferPointer(start: cStruct.pColorAttachmentFormats, count: Int(cStruct.colorAttachmentCount)).map{ Format(rawValue: numericBitCast($0.rawValue))! }
+        self.depthAttachmentFormat = Format(rawValue: numericBitCast(cStruct.depthAttachmentFormat.rawValue))!
+        self.stencilAttachmentFormat = Format(rawValue: numericBitCast(cStruct.stencilAttachmentFormat.rawValue))!
         self.rasterizationSamples = SampleCountFlags(rawValue: numericBitCast(cStruct.rasterizationSamples.rawValue))
     }
 
@@ -37074,7 +37074,7 @@ public struct MultiviewPerViewAttributesInfoNVX: ChainableBase, CommandBufferInh
 
 public protocol MultiviewPerViewAttributesInfoNVXExtension: Chainable {}
 
-public struct PhysicalDeviceImageViewMinLodFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceImageViewMinLodFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceImageViewMinLodFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceImageViewMinLodFeaturesEXT
@@ -37132,7 +37132,7 @@ public struct ImageViewMinLodCreateInfoEXT: ChainableBase, ImageViewCreateInfoEx
 
 public protocol ImageViewMinLodCreateInfoEXTExtension: Chainable {}
 
-public struct PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT
@@ -37169,7 +37169,7 @@ public struct PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT: Chain
 
 public protocol PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceLinearColorAttachmentFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceLinearColorAttachmentFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceLinearColorAttachmentFeaturesNV
 
     public static let structureType: StructureType = .physicalDeviceLinearColorAttachmentFeaturesNV
@@ -37198,7 +37198,7 @@ public struct PhysicalDeviceLinearColorAttachmentFeaturesNV: ChainableBase, Phys
 
 public protocol PhysicalDeviceLinearColorAttachmentFeaturesNVExtension: Chainable {}
 
-public struct PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceGraphicsPipelineLibraryFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceGraphicsPipelineLibraryFeaturesEXT
@@ -37227,7 +37227,7 @@ public struct PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT: ChainableBase, P
 
 public protocol PhysicalDeviceGraphicsPipelineLibraryFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDevicePipelineBinaryFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDevicePipelineBinaryFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePipelineBinaryFeaturesKHR
 
     public static let structureType: StructureType = .physicalDevicePipelineBinaryFeaturesKHR
@@ -37285,7 +37285,7 @@ public struct DevicePipelineBinaryInternalCacheControlKHR: ChainableBase, Device
 
 public protocol DevicePipelineBinaryInternalCacheControlKHRExtension: Chainable {}
 
-public struct PhysicalDevicePipelineBinaryPropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDevicePipelineBinaryPropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDevicePipelineBinaryPropertiesKHR
 
     public static let structureType: StructureType = .physicalDevicePipelineBinaryPropertiesKHR
@@ -37322,7 +37322,7 @@ public struct PhysicalDevicePipelineBinaryPropertiesKHR: ChainableBase, Physical
 
 public protocol PhysicalDevicePipelineBinaryPropertiesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceGraphicsPipelineLibraryPropertiesEXT
 
     public static let structureType: StructureType = .physicalDeviceGraphicsPipelineLibraryPropertiesEXT
@@ -37379,7 +37379,7 @@ public struct GraphicsPipelineLibraryCreateInfoEXT: ChainableBase, GraphicsPipel
 
 public protocol GraphicsPipelineLibraryCreateInfoEXTExtension: Chainable {}
 
-public struct PhysicalDeviceDataGraphNeuralAcceleratorStatisticsFeaturesARM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceDataGraphNeuralAcceleratorStatisticsFeaturesARM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDataGraphNeuralAcceleratorStatisticsFeaturesARM
 
     public static let structureType: StructureType = .physicalDeviceDataGraphNeuralAcceleratorStatisticsFeaturesARM
@@ -37448,7 +37448,7 @@ public struct DataGraphPipelineSessionNeuralStatisticsCreateInfoARM: ChainableBa
     }
 
     public init(cStruct: VkDataGraphPipelineSessionNeuralStatisticsCreateInfoARM) {
-        self.mode = NeuralAcceleratorStatisticsModeARM(rawValue: numericBitCast(cStruct.mode))!
+        self.mode = NeuralAcceleratorStatisticsModeARM(rawValue: numericBitCast(cStruct.mode.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkDataGraphPipelineSessionNeuralStatisticsCreateInfoARM>) throws(E) -> R) throws(E) -> R {
@@ -37466,7 +37466,7 @@ public struct DataGraphPipelineSessionNeuralStatisticsCreateInfoARM: ChainableBa
 
 public protocol DataGraphPipelineSessionNeuralStatisticsCreateInfoARMExtension: Chainable {}
 
-public struct PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDescriptorSetHostMappingFeaturesVALVE
 
     public static let structureType: StructureType = .physicalDeviceDescriptorSetHostMappingFeaturesVALVE
@@ -37507,7 +37507,7 @@ public struct DescriptorSetBindingReferenceVALVE: ChainableBase {
         self.binding = binding
     }
 
-    public init(cStruct: VkDescriptorSetBindingReferenceVALVE, device: Device?) {
+    public init(cStruct: VkDescriptorSetBindingReferenceVALVE, device: Device) {
         self.descriptorSetLayout = DescriptorSetLayout(handle: cStruct.descriptorSetLayout, device: device)
         self.binding = cStruct.binding
     }
@@ -37528,7 +37528,7 @@ public struct DescriptorSetBindingReferenceVALVE: ChainableBase {
 
 public protocol DescriptorSetBindingReferenceVALVEExtension: Chainable {}
 
-public struct DescriptorSetLayoutHostMappingInfoVALVE: ChainableBase, OutStruct {
+public struct DescriptorSetLayoutHostMappingInfoVALVE: ChainableBase {
     public typealias CStruct = VkDescriptorSetLayoutHostMappingInfoVALVE
 
     public static let structureType: StructureType = .descriptorSetLayoutHostMappingInfoVALVE
@@ -37561,7 +37561,7 @@ public struct DescriptorSetLayoutHostMappingInfoVALVE: ChainableBase, OutStruct 
 
 public protocol DescriptorSetLayoutHostMappingInfoVALVEExtension: Chainable {}
 
-public struct PhysicalDeviceNestedCommandBufferFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceNestedCommandBufferFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceNestedCommandBufferFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceNestedCommandBufferFeaturesEXT
@@ -37598,7 +37598,7 @@ public struct PhysicalDeviceNestedCommandBufferFeaturesEXT: ChainableBase, Physi
 
 public protocol PhysicalDeviceNestedCommandBufferFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceNestedCommandBufferPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceNestedCommandBufferPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceNestedCommandBufferPropertiesEXT
 
     public static let structureType: StructureType = .physicalDeviceNestedCommandBufferPropertiesEXT
@@ -37623,7 +37623,7 @@ public struct PhysicalDeviceNestedCommandBufferPropertiesEXT: ChainableBase, Phy
 
 public protocol PhysicalDeviceNestedCommandBufferPropertiesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceShaderModuleIdentifierFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderModuleIdentifierFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderModuleIdentifierFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceShaderModuleIdentifierFeaturesEXT
@@ -37652,7 +37652,7 @@ public struct PhysicalDeviceShaderModuleIdentifierFeaturesEXT: ChainableBase, Ph
 
 public protocol PhysicalDeviceShaderModuleIdentifierFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceShaderModuleIdentifierPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceShaderModuleIdentifierPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceShaderModuleIdentifierPropertiesEXT
 
     public static let structureType: StructureType = .physicalDeviceShaderModuleIdentifierPropertiesEXT
@@ -37709,7 +37709,7 @@ public struct PipelineShaderStageModuleIdentifierCreateInfoEXT: ChainableBase, P
 
 public protocol PipelineShaderStageModuleIdentifierCreateInfoEXTExtension: Chainable {}
 
-public struct ShaderModuleIdentifierEXT: ChainableBase, OutStruct {
+public struct ShaderModuleIdentifierEXT: ChainableBase {
     public typealias CStruct = VkShaderModuleIdentifierEXT
 
     public static let structureType: StructureType = .shaderModuleIdentifierEXT
@@ -37774,7 +37774,7 @@ public struct ImageCompressionControlEXT: ChainableBase, ImageCreateInfoExtensio
 
 public protocol ImageCompressionControlEXTExtension: Chainable {}
 
-public struct PhysicalDeviceImageCompressionControlFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceImageCompressionControlFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceImageCompressionControlFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceImageCompressionControlFeaturesEXT
@@ -37803,7 +37803,7 @@ public struct PhysicalDeviceImageCompressionControlFeaturesEXT: ChainableBase, P
 
 public protocol PhysicalDeviceImageCompressionControlFeaturesEXTExtension: Chainable {}
 
-public struct ImageCompressionPropertiesEXT: ChainableBase, ImageFormatProperties2Extension, SurfaceFormat2KHRExtension, SubresourceLayout2Extension, OutStruct {
+public struct ImageCompressionPropertiesEXT: ChainableBase, ImageFormatProperties2Extension, SurfaceFormat2KHRExtension, SubresourceLayout2Extension {
     public typealias CStruct = VkImageCompressionPropertiesEXT
 
     public static let structureType: StructureType = .imageCompressionPropertiesEXT
@@ -37831,7 +37831,7 @@ public struct ImageCompressionPropertiesEXT: ChainableBase, ImageFormatPropertie
 
 public protocol ImageCompressionPropertiesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceImageCompressionControlSwapchainFeaturesEXT
@@ -37860,7 +37860,7 @@ public struct PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT: Chainab
 
 public protocol PhysicalDeviceImageCompressionControlSwapchainFeaturesEXTExtension: Chainable {}
 
-public struct ImageSubresource2: ChainableBase, OutStruct {
+public struct ImageSubresource2: ChainableBase {
     public typealias CStruct = VkImageSubresource2
 
     public static let structureType: StructureType = .imageSubresource2
@@ -37891,7 +37891,7 @@ public struct ImageSubresource2: ChainableBase, OutStruct {
 
 public protocol ImageSubresource2Extension: Chainable {}
 
-public struct SubresourceLayout2: ChainableBase, OutStruct {
+public struct SubresourceLayout2: ChainableBase {
     public typealias CStruct = VkSubresourceLayout2
 
     public static let structureType: StructureType = .subresourceLayout2
@@ -38000,7 +38000,7 @@ public struct RenderPassSubpassFeedbackInfoEXT: CStructConvertible {
     public let postMergeIndex: UInt32
 
     public init(cStruct: VkRenderPassSubpassFeedbackInfoEXT) {
-        self.subpassMergeStatus = SubpassMergeStatusEXT(rawValue: numericBitCast(cStruct.subpassMergeStatus))!
+        self.subpassMergeStatus = SubpassMergeStatusEXT(rawValue: numericBitCast(cStruct.subpassMergeStatus.rawValue))!
         self.description = String(unsafeBytesOf: cStruct.description)
         self.postMergeIndex = cStruct.postMergeIndex
     }
@@ -38043,7 +38043,7 @@ public struct RenderPassSubpassFeedbackCreateInfoEXT: ChainableBase, SubpassDesc
 
 public protocol RenderPassSubpassFeedbackCreateInfoEXTExtension: Chainable {}
 
-public struct PhysicalDeviceSubpassMergeFeedbackFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceSubpassMergeFeedbackFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceSubpassMergeFeedbackFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceSubpassMergeFeedbackFeaturesEXT
@@ -38128,10 +38128,10 @@ public struct MicromapBuildInfoEXT: ChainableBase {
         self.triangleArrayStride = triangleArrayStride
     }
 
-    public init(cStruct: VkMicromapBuildInfoEXT, device: Device?) {
-        self.type = MicromapTypeEXT(rawValue: numericBitCast(cStruct.type))!
+    public init(cStruct: VkMicromapBuildInfoEXT, device: Device) {
+        self.type = MicromapTypeEXT(rawValue: numericBitCast(cStruct.type.rawValue))!
         self.flags = BuildMicromapFlagsEXT(rawValue: cStruct.flags)
-        self.mode = BuildMicromapModeEXT(rawValue: numericBitCast(cStruct.mode))!
+        self.mode = BuildMicromapModeEXT(rawValue: numericBitCast(cStruct.mode.rawValue))!
         self.dstMicromap = (cStruct.dstMicromap != nil) ? MicromapEXT(handle: cStruct.dstMicromap, device: device) : nil
         self.usageCounts = (cStruct.pUsageCounts != nil) ? UnsafeBufferPointer(start: cStruct.pUsageCounts, count: Int(cStruct.usageCountsCount)).map{ MicromapUsageEXT(cStruct: $0) } : nil
         self.usageCounts2 = (cStruct.ppUsageCounts != nil) ? Array(UnsafeBufferPointer(start: cStruct.ppUsageCounts, count: Int(cStruct.usageCountsCount))) : nil
@@ -38186,7 +38186,7 @@ public struct MicromapUsageKHR: CStructConvertible {
     public init(cStruct: VkMicromapUsageKHR) {
         self.count = cStruct.count
         self.subdivisionLevel = cStruct.subdivisionLevel
-        self.format = OpacityMicromapFormatKHR(rawValue: numericBitCast(cStruct.format))!
+        self.format = OpacityMicromapFormatKHR(rawValue: numericBitCast(cStruct.format.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(_ body: (UnsafePointer<VkMicromapUsageKHR>) throws(E) -> R) throws(E) -> R {
@@ -38268,12 +38268,12 @@ public struct MicromapCreateInfoEXT: ChainableBase {
         self.deviceAddress = deviceAddress
     }
 
-    public init(cStruct: VkMicromapCreateInfoEXT, device: Device?) {
+    public init(cStruct: VkMicromapCreateInfoEXT, device: Device) {
         self.createFlags = MicromapCreateFlagsEXT(rawValue: cStruct.createFlags)
         self.buffer = Buffer(handle: cStruct.buffer, device: device)
         self.offset = cStruct.offset
         self.size = cStruct.size
-        self.type = MicromapTypeEXT(rawValue: numericBitCast(cStruct.type))!
+        self.type = MicromapTypeEXT(rawValue: numericBitCast(cStruct.type.rawValue))!
         self.deviceAddress = cStruct.deviceAddress
     }
 
@@ -38340,10 +38340,10 @@ public struct CopyMicromapInfoEXT: ChainableBase {
         self.mode = mode
     }
 
-    public init(cStruct: VkCopyMicromapInfoEXT, device: Device?) {
+    public init(cStruct: VkCopyMicromapInfoEXT, device: Device) {
         self.src = MicromapEXT(handle: cStruct.src, device: device)
         self.dst = MicromapEXT(handle: cStruct.dst, device: device)
-        self.mode = CopyMicromapModeEXT(rawValue: numericBitCast(cStruct.mode))!
+        self.mode = CopyMicromapModeEXT(rawValue: numericBitCast(cStruct.mode.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkCopyMicromapInfoEXT>) throws(E) -> R) throws(E) -> R {
@@ -38377,10 +38377,10 @@ public struct CopyMicromapToMemoryInfoEXT: ChainableBase {
         self.mode = mode
     }
 
-    public init(cStruct: VkCopyMicromapToMemoryInfoEXT, device: Device?) {
+    public init(cStruct: VkCopyMicromapToMemoryInfoEXT, device: Device) {
         self.src = MicromapEXT(handle: cStruct.src, device: device)
         self.dst = cStruct.dst
-        self.mode = CopyMicromapModeEXT(rawValue: numericBitCast(cStruct.mode))!
+        self.mode = CopyMicromapModeEXT(rawValue: numericBitCast(cStruct.mode.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkCopyMicromapToMemoryInfoEXT>) throws(E) -> R) throws(E) -> R {
@@ -38414,10 +38414,10 @@ public struct CopyMemoryToMicromapInfoEXT: ChainableBase {
         self.mode = mode
     }
 
-    public init(cStruct: VkCopyMemoryToMicromapInfoEXT, device: Device?) {
+    public init(cStruct: VkCopyMemoryToMicromapInfoEXT, device: Device) {
         self.src = cStruct.src
         self.dst = MicromapEXT(handle: cStruct.dst, device: device)
-        self.mode = CopyMicromapModeEXT(rawValue: numericBitCast(cStruct.mode))!
+        self.mode = CopyMicromapModeEXT(rawValue: numericBitCast(cStruct.mode.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkCopyMemoryToMicromapInfoEXT>) throws(E) -> R) throws(E) -> R {
@@ -38502,7 +38502,7 @@ public struct MicromapTriangleKHR: CStructConvertible {
     }
 }
 
-public struct PhysicalDeviceOpacityMicromapFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceOpacityMicromapFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceOpacityMicromapFeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceOpacityMicromapFeaturesKHR
@@ -38531,7 +38531,7 @@ public struct PhysicalDeviceOpacityMicromapFeaturesKHR: ChainableBase, PhysicalD
 
 public protocol PhysicalDeviceOpacityMicromapFeaturesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceOpacityMicromapFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceOpacityMicromapFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceOpacityMicromapFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceOpacityMicromapFeaturesEXT
@@ -38568,7 +38568,7 @@ public struct PhysicalDeviceOpacityMicromapFeaturesEXT: ChainableBase, PhysicalD
 
 public protocol PhysicalDeviceOpacityMicromapFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceOpacityMicromapPropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceOpacityMicromapPropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceOpacityMicromapPropertiesKHR
 
     public static let structureType: StructureType = .physicalDeviceOpacityMicromapPropertiesKHR
@@ -38602,7 +38602,7 @@ public struct PhysicalDeviceOpacityMicromapPropertiesKHR: ChainableBase, Physica
 
 public protocol PhysicalDeviceOpacityMicromapPropertiesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceOpacityMicromapPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceOpacityMicromapPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceOpacityMicromapPropertiesEXT
 
     public static let structureType: StructureType = .physicalDeviceOpacityMicromapPropertiesEXT
@@ -38630,7 +38630,7 @@ public struct PhysicalDeviceOpacityMicromapPropertiesEXT: ChainableBase, Physica
 
 public protocol PhysicalDeviceOpacityMicromapPropertiesEXTExtension: Chainable {}
 
-public struct AccelerationStructureTrianglesOpacityMicromapKHR: ChainableBase, AccelerationStructureGeometryTrianglesDataKHRExtension, AccelerationStructureDenseGeometryFormatTrianglesDataAMDXExtension, OutStruct {
+public struct AccelerationStructureTrianglesOpacityMicromapKHR: ChainableBase, AccelerationStructureGeometryTrianglesDataKHRExtension, AccelerationStructureDenseGeometryFormatTrianglesDataAMDXExtension {
     public typealias CStruct = VkAccelerationStructureTrianglesOpacityMicromapKHR
 
     public static let structureType: StructureType = .accelerationStructureTrianglesOpacityMicromapKHR
@@ -38648,8 +38648,8 @@ public struct AccelerationStructureTrianglesOpacityMicromapKHR: ChainableBase, A
         self.micromap = micromap
     }
 
-    public init(cStruct: VkAccelerationStructureTrianglesOpacityMicromapKHR, device: Device?) {
-        self.indexType = IndexType(rawValue: numericBitCast(cStruct.indexType))!
+    public init(cStruct: VkAccelerationStructureTrianglesOpacityMicromapKHR, device: Device) {
+        self.indexType = IndexType(rawValue: numericBitCast(cStruct.indexType.rawValue))!
         self.indexBuffer = cStruct.indexBuffer
         self.indexStride = cStruct.indexStride
         self.baseTriangle = cStruct.baseTriangle
@@ -38675,7 +38675,7 @@ public struct AccelerationStructureTrianglesOpacityMicromapKHR: ChainableBase, A
 
 public protocol AccelerationStructureTrianglesOpacityMicromapKHRExtension: Chainable {}
 
-public struct AccelerationStructureTrianglesOpacityMicromapEXT: ChainableBase, AccelerationStructureGeometryTrianglesDataKHRExtension, AccelerationStructureDenseGeometryFormatTrianglesDataAMDXExtension, OutStruct {
+public struct AccelerationStructureTrianglesOpacityMicromapEXT: ChainableBase, AccelerationStructureGeometryTrianglesDataKHRExtension, AccelerationStructureDenseGeometryFormatTrianglesDataAMDXExtension {
     public typealias CStruct = VkAccelerationStructureTrianglesOpacityMicromapEXT
 
     public static let structureType: StructureType = .accelerationStructureTrianglesOpacityMicromapEXT
@@ -38697,8 +38697,8 @@ public struct AccelerationStructureTrianglesOpacityMicromapEXT: ChainableBase, A
         self.micromap = micromap
     }
 
-    public init(cStruct: VkAccelerationStructureTrianglesOpacityMicromapEXT, device: Device?) {
-        self.indexType = IndexType(rawValue: numericBitCast(cStruct.indexType))!
+    public init(cStruct: VkAccelerationStructureTrianglesOpacityMicromapEXT, device: Device) {
+        self.indexType = IndexType(rawValue: numericBitCast(cStruct.indexType.rawValue))!
         self.indexBuffer = cStruct.indexBuffer
         self.indexStride = cStruct.indexStride
         self.baseTriangle = cStruct.baseTriangle
@@ -38734,7 +38734,7 @@ public struct AccelerationStructureTrianglesOpacityMicromapEXT: ChainableBase, A
 public protocol AccelerationStructureTrianglesOpacityMicromapEXTExtension: Chainable {}
 
 #if VK_ENABLE_BETA_EXTENSIONS
-public struct PhysicalDeviceDisplacementMicromapFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceDisplacementMicromapFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDisplacementMicromapFeaturesNV
 
     public static let structureType: StructureType = .physicalDeviceDisplacementMicromapFeaturesNV
@@ -38765,7 +38765,7 @@ public struct PhysicalDeviceDisplacementMicromapFeaturesNV: ChainableBase, Physi
 public protocol PhysicalDeviceDisplacementMicromapFeaturesNVExtension: Chainable {}
 
 #if VK_ENABLE_BETA_EXTENSIONS
-public struct PhysicalDeviceDisplacementMicromapPropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceDisplacementMicromapPropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceDisplacementMicromapPropertiesNV
 
     public static let structureType: StructureType = .physicalDeviceDisplacementMicromapPropertiesNV
@@ -38792,7 +38792,7 @@ public struct PhysicalDeviceDisplacementMicromapPropertiesNV: ChainableBase, Phy
 public protocol PhysicalDeviceDisplacementMicromapPropertiesNVExtension: Chainable {}
 
 #if VK_ENABLE_BETA_EXTENSIONS
-public struct AccelerationStructureTrianglesDisplacementMicromapNV: ChainableBase, AccelerationStructureGeometryTrianglesDataKHRExtension, OutStruct {
+public struct AccelerationStructureTrianglesDisplacementMicromapNV: ChainableBase, AccelerationStructureGeometryTrianglesDataKHRExtension {
     public typealias CStruct = VkAccelerationStructureTrianglesDisplacementMicromapNV
 
     public static let structureType: StructureType = .accelerationStructureTrianglesDisplacementMicromapNV
@@ -38830,16 +38830,16 @@ public struct AccelerationStructureTrianglesDisplacementMicromapNV: ChainableBas
         self.micromap = micromap
     }
 
-    public init(cStruct: VkAccelerationStructureTrianglesDisplacementMicromapNV, device: Device?) {
-        self.displacementBiasAndScaleFormat = Format(rawValue: numericBitCast(cStruct.displacementBiasAndScaleFormat))!
-        self.displacementVectorFormat = Format(rawValue: numericBitCast(cStruct.displacementVectorFormat))!
+    public init(cStruct: VkAccelerationStructureTrianglesDisplacementMicromapNV, device: Device) {
+        self.displacementBiasAndScaleFormat = Format(rawValue: numericBitCast(cStruct.displacementBiasAndScaleFormat.rawValue))!
+        self.displacementVectorFormat = Format(rawValue: numericBitCast(cStruct.displacementVectorFormat.rawValue))!
         self.displacementBiasAndScaleBuffer = cStruct.displacementBiasAndScaleBuffer
         self.displacementBiasAndScaleStride = cStruct.displacementBiasAndScaleStride
         self.displacementVectorBuffer = cStruct.displacementVectorBuffer
         self.displacementVectorStride = cStruct.displacementVectorStride
         self.displacedMicromapPrimitiveFlags = cStruct.displacedMicromapPrimitiveFlags
         self.displacedMicromapPrimitiveFlagsStride = cStruct.displacedMicromapPrimitiveFlagsStride
-        self.indexType = IndexType(rawValue: numericBitCast(cStruct.indexType))!
+        self.indexType = IndexType(rawValue: numericBitCast(cStruct.indexType.rawValue))!
         self.indexBuffer = cStruct.indexBuffer
         self.indexStride = cStruct.indexStride
         self.baseTriangle = cStruct.baseTriangle
@@ -38883,7 +38883,7 @@ public struct AccelerationStructureTrianglesDisplacementMicromapNV: ChainableBas
 
 public protocol AccelerationStructureTrianglesDisplacementMicromapNVExtension: Chainable {}
 
-public struct PipelinePropertiesIdentifierEXT: ChainableBase, OutStruct {
+public struct PipelinePropertiesIdentifierEXT: ChainableBase {
     public typealias CStruct = VkPipelinePropertiesIdentifierEXT
 
     public static let structureType: StructureType = .pipelinePropertiesIdentifierEXT
@@ -38908,7 +38908,7 @@ public struct PipelinePropertiesIdentifierEXT: ChainableBase, OutStruct {
 
 public protocol PipelinePropertiesIdentifierEXTExtension: Chainable {}
 
-public struct PhysicalDevicePipelinePropertiesFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDevicePipelinePropertiesFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePipelinePropertiesFeaturesEXT
 
     public static let structureType: StructureType = .physicalDevicePipelinePropertiesFeaturesEXT
@@ -38937,7 +38937,7 @@ public struct PhysicalDevicePipelinePropertiesFeaturesEXT: ChainableBase, Physic
 
 public protocol PhysicalDevicePipelinePropertiesFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD
 
     public static let structureType: StructureType = .physicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD
@@ -39097,7 +39097,7 @@ public struct ExportMetalCommandQueueInfoEXT: ChainableBase, ExportMetalObjectsI
         self.mtlCommandQueue = mtlCommandQueue
     }
 
-    public init(cStruct: VkExportMetalCommandQueueInfoEXT, device: Device?) {
+    public init(cStruct: VkExportMetalCommandQueueInfoEXT, device: Device) {
         self.queue = Queue(handle: cStruct.queue, device: device)
         self.mtlCommandQueue = cStruct.mtlCommandQueue
     }
@@ -39132,7 +39132,7 @@ public struct ExportMetalBufferInfoEXT: ChainableBase, ExportMetalObjectsInfoEXT
         self.mtlBuffer = mtlBuffer
     }
 
-    public init(cStruct: VkExportMetalBufferInfoEXT, device: Device?) {
+    public init(cStruct: VkExportMetalBufferInfoEXT, device: Device) {
         self.memory = DeviceMemory(handle: cStruct.memory, device: device)
         self.mtlBuffer = cStruct.mtlBuffer
     }
@@ -39204,7 +39204,7 @@ public struct ExportMetalTextureInfoEXT: ChainableBase, ExportMetalObjectsInfoEX
         self.mtlTexture = mtlTexture
     }
 
-    public init(cStruct: VkExportMetalTextureInfoEXT, device: Device?) {
+    public init(cStruct: VkExportMetalTextureInfoEXT, device: Device) {
         self.image = (cStruct.image != nil) ? Image(handle: cStruct.image, device: device) : nil
         self.imageView = (cStruct.imageView != nil) ? ImageView(handle: cStruct.imageView, device: device) : nil
         self.bufferView = (cStruct.bufferView != nil) ? BufferView(handle: cStruct.bufferView, device: device) : nil
@@ -39280,7 +39280,7 @@ public struct ExportMetalIOSurfaceInfoEXT: ChainableBase, ExportMetalObjectsInfo
         self.ioSurface = ioSurface
     }
 
-    public init(cStruct: VkExportMetalIOSurfaceInfoEXT, device: Device?) {
+    public init(cStruct: VkExportMetalIOSurfaceInfoEXT, device: Device) {
         self.image = Image(handle: cStruct.image, device: device)
         self.ioSurface = cStruct.ioSurface
     }
@@ -39348,7 +39348,7 @@ public struct ExportMetalSharedEventInfoEXT: ChainableBase, ExportMetalObjectsIn
         self.mtlSharedEvent = mtlSharedEvent
     }
 
-    public init(cStruct: VkExportMetalSharedEventInfoEXT, device: Device?) {
+    public init(cStruct: VkExportMetalSharedEventInfoEXT, device: Device) {
         self.semaphore = (cStruct.semaphore != nil) ? Semaphore(handle: cStruct.semaphore, device: device) : nil
         self.event = (cStruct.event != nil) ? Event(handle: cStruct.event, device: device) : nil
         self.mtlSharedEvent = cStruct.mtlSharedEvent
@@ -39403,7 +39403,7 @@ public struct ImportMetalSharedEventInfoEXT: ChainableBase, SemaphoreCreateInfoE
 
 public protocol ImportMetalSharedEventInfoEXTExtension: Chainable {}
 
-public struct PhysicalDeviceNonSeamlessCubeMapFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceNonSeamlessCubeMapFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceNonSeamlessCubeMapFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceNonSeamlessCubeMapFeaturesEXT
@@ -39432,7 +39432,7 @@ public struct PhysicalDeviceNonSeamlessCubeMapFeaturesEXT: ChainableBase, Physic
 
 public protocol PhysicalDeviceNonSeamlessCubeMapFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDevicePipelineRobustnessFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDevicePipelineRobustnessFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePipelineRobustnessFeatures
 
     public static let structureType: StructureType = .physicalDevicePipelineRobustnessFeatures
@@ -39478,10 +39478,10 @@ public struct PipelineRobustnessCreateInfo: ChainableBase, GraphicsPipelineCreat
     }
 
     public init(cStruct: VkPipelineRobustnessCreateInfo) {
-        self.storageBuffers = PipelineRobustnessBufferBehavior(rawValue: numericBitCast(cStruct.storageBuffers))!
-        self.uniformBuffers = PipelineRobustnessBufferBehavior(rawValue: numericBitCast(cStruct.uniformBuffers))!
-        self.vertexInputs = PipelineRobustnessBufferBehavior(rawValue: numericBitCast(cStruct.vertexInputs))!
-        self.images = PipelineRobustnessImageBehavior(rawValue: numericBitCast(cStruct.images))!
+        self.storageBuffers = PipelineRobustnessBufferBehavior(rawValue: numericBitCast(cStruct.storageBuffers.rawValue))!
+        self.uniformBuffers = PipelineRobustnessBufferBehavior(rawValue: numericBitCast(cStruct.uniformBuffers.rawValue))!
+        self.vertexInputs = PipelineRobustnessBufferBehavior(rawValue: numericBitCast(cStruct.vertexInputs.rawValue))!
+        self.images = PipelineRobustnessImageBehavior(rawValue: numericBitCast(cStruct.images.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPipelineRobustnessCreateInfo>) throws(E) -> R) throws(E) -> R {
@@ -39502,7 +39502,7 @@ public struct PipelineRobustnessCreateInfo: ChainableBase, GraphicsPipelineCreat
 
 public protocol PipelineRobustnessCreateInfoExtension: Chainable {}
 
-public struct PhysicalDevicePipelineRobustnessProperties: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDevicePipelineRobustnessProperties: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDevicePipelineRobustnessProperties
 
     public static let structureType: StructureType = .physicalDevicePipelineRobustnessProperties
@@ -39512,10 +39512,10 @@ public struct PhysicalDevicePipelineRobustnessProperties: ChainableBase, Physica
     public let defaultRobustnessImages: PipelineRobustnessImageBehavior
 
     public init(cStruct: VkPhysicalDevicePipelineRobustnessProperties) {
-        self.defaultRobustnessStorageBuffers = PipelineRobustnessBufferBehavior(rawValue: numericBitCast(cStruct.defaultRobustnessStorageBuffers))!
-        self.defaultRobustnessUniformBuffers = PipelineRobustnessBufferBehavior(rawValue: numericBitCast(cStruct.defaultRobustnessUniformBuffers))!
-        self.defaultRobustnessVertexInputs = PipelineRobustnessBufferBehavior(rawValue: numericBitCast(cStruct.defaultRobustnessVertexInputs))!
-        self.defaultRobustnessImages = PipelineRobustnessImageBehavior(rawValue: numericBitCast(cStruct.defaultRobustnessImages))!
+        self.defaultRobustnessStorageBuffers = PipelineRobustnessBufferBehavior(rawValue: numericBitCast(cStruct.defaultRobustnessStorageBuffers.rawValue))!
+        self.defaultRobustnessUniformBuffers = PipelineRobustnessBufferBehavior(rawValue: numericBitCast(cStruct.defaultRobustnessUniformBuffers.rawValue))!
+        self.defaultRobustnessVertexInputs = PipelineRobustnessBufferBehavior(rawValue: numericBitCast(cStruct.defaultRobustnessVertexInputs.rawValue))!
+        self.defaultRobustnessImages = PipelineRobustnessImageBehavior(rawValue: numericBitCast(cStruct.defaultRobustnessImages.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPhysicalDevicePipelineRobustnessProperties>) throws(E) -> R) throws(E) -> R {
@@ -39577,7 +39577,7 @@ public struct ImageViewSampleWeightCreateInfoQCOM: ChainableBase, ImageViewCreat
 
 public protocol ImageViewSampleWeightCreateInfoQCOMExtension: Chainable {}
 
-public struct PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM
 
     public static let structureType: StructureType = .physicalDeviceShaderMultipleWaitQueuesFeaturesQCOM
@@ -39606,7 +39606,7 @@ public struct PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM: ChainableBase,
 
 public protocol PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOMExtension: Chainable {}
 
-public struct PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM
 
     public static let structureType: StructureType = .physicalDeviceShaderMultipleWaitQueuesPropertiesQCOM
@@ -39631,7 +39631,7 @@ public struct PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM: ChainableBas
 
 public protocol PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOMExtension: Chainable {}
 
-public struct PhysicalDeviceImageProcessingFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceImageProcessingFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceImageProcessingFeaturesQCOM
 
     public static let structureType: StructureType = .physicalDeviceImageProcessingFeaturesQCOM
@@ -39668,7 +39668,7 @@ public struct PhysicalDeviceImageProcessingFeaturesQCOM: ChainableBase, Physical
 
 public protocol PhysicalDeviceImageProcessingFeaturesQCOMExtension: Chainable {}
 
-public struct PhysicalDeviceImageProcessingPropertiesQCOM: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceImageProcessingPropertiesQCOM: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceImageProcessingPropertiesQCOM
 
     public static let structureType: StructureType = .physicalDeviceImageProcessingPropertiesQCOM
@@ -39708,7 +39708,7 @@ public struct PhysicalDeviceImageProcessingPropertiesQCOM: ChainableBase, Physic
 
 public protocol PhysicalDeviceImageProcessingPropertiesQCOMExtension: Chainable {}
 
-public struct PhysicalDeviceTilePropertiesFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceTilePropertiesFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceTilePropertiesFeaturesQCOM
 
     public static let structureType: StructureType = .physicalDeviceTilePropertiesFeaturesQCOM
@@ -39737,7 +39737,7 @@ public struct PhysicalDeviceTilePropertiesFeaturesQCOM: ChainableBase, PhysicalD
 
 public protocol PhysicalDeviceTilePropertiesFeaturesQCOMExtension: Chainable {}
 
-public struct TilePropertiesQCOM: ChainableBase, OutStruct {
+public struct TilePropertiesQCOM: ChainableBase {
     public typealias CStruct = VkTilePropertiesQCOM
 
     public static let structureType: StructureType = .tilePropertiesQCOM
@@ -39790,7 +39790,7 @@ public struct TileMemoryBindInfoQCOM: ChainableBase, CommandBufferInheritanceInf
         self.memory = memory
     }
 
-    public init(cStruct: VkTileMemoryBindInfoQCOM, device: Device?) {
+    public init(cStruct: VkTileMemoryBindInfoQCOM, device: Device) {
         self.memory = DeviceMemory(handle: cStruct.memory, device: device)
     }
 
@@ -39809,7 +39809,7 @@ public struct TileMemoryBindInfoQCOM: ChainableBase, CommandBufferInheritanceInf
 
 public protocol TileMemoryBindInfoQCOMExtension: Chainable {}
 
-public struct PhysicalDeviceAmigoProfilingFeaturesSEC: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceAmigoProfilingFeaturesSEC: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceAmigoProfilingFeaturesSEC
 
     public static let structureType: StructureType = .physicalDeviceAmigoProfilingFeaturesSEC
@@ -39871,7 +39871,7 @@ public struct AmigoProfilingSubmitInfoSEC: ChainableBase, SubmitInfoExtension {
 
 public protocol AmigoProfilingSubmitInfoSECExtension: Chainable {}
 
-public struct PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT
@@ -39929,7 +39929,7 @@ public struct AttachmentFeedbackLoopInfoEXT: ChainableBase, RenderingAttachmentI
 
 public protocol AttachmentFeedbackLoopInfoEXTExtension: Chainable {}
 
-public struct PhysicalDeviceAddressBindingReportFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceAddressBindingReportFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceAddressBindingReportFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceAddressBindingReportFeaturesEXT
@@ -40024,7 +40024,7 @@ public struct ResolveImageModeInfoKHR: ChainableBase, ResolveImageInfo2Extension
 
 public protocol ResolveImageModeInfoKHRExtension: Chainable {}
 
-public struct DeviceAddressBindingCallbackDataEXT: ChainableBase, DebugUtilsMessengerCallbackDataEXTExtension, OutStruct {
+public struct DeviceAddressBindingCallbackDataEXT: ChainableBase, DebugUtilsMessengerCallbackDataEXTExtension {
     public typealias CStruct = VkDeviceAddressBindingCallbackDataEXT
 
     public static let structureType: StructureType = .deviceAddressBindingCallbackDataEXT
@@ -40044,7 +40044,7 @@ public struct DeviceAddressBindingCallbackDataEXT: ChainableBase, DebugUtilsMess
         self.flags = DeviceAddressBindingFlagsEXT(rawValue: cStruct.flags)
         self.baseAddress = cStruct.baseAddress
         self.size = cStruct.size
-        self.bindingType = DeviceAddressBindingTypeEXT(rawValue: numericBitCast(cStruct.bindingType))!
+        self.bindingType = DeviceAddressBindingTypeEXT(rawValue: numericBitCast(cStruct.bindingType.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkDeviceAddressBindingCallbackDataEXT>) throws(E) -> R) throws(E) -> R {
@@ -40065,7 +40065,7 @@ public struct DeviceAddressBindingCallbackDataEXT: ChainableBase, DebugUtilsMess
 
 public protocol DeviceAddressBindingCallbackDataEXTExtension: Chainable {}
 
-public struct PhysicalDeviceOpticalFlowFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceOpticalFlowFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceOpticalFlowFeaturesNV
 
     public static let structureType: StructureType = .physicalDeviceOpticalFlowFeaturesNV
@@ -40094,7 +40094,7 @@ public struct PhysicalDeviceOpticalFlowFeaturesNV: ChainableBase, PhysicalDevice
 
 public protocol PhysicalDeviceOpticalFlowFeaturesNVExtension: Chainable {}
 
-public struct PhysicalDeviceOpticalFlowPropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceOpticalFlowPropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceOpticalFlowPropertiesNV
 
     public static let structureType: StructureType = .physicalDeviceOpticalFlowPropertiesNV
@@ -40178,14 +40178,14 @@ public struct OpticalFlowImageFormatInfoNV: ChainableBase, PhysicalDeviceImageFo
 
 public protocol OpticalFlowImageFormatInfoNVExtension: Chainable {}
 
-public struct OpticalFlowImageFormatPropertiesNV: ChainableBase, OutStruct {
+public struct OpticalFlowImageFormatPropertiesNV: ChainableBase {
     public typealias CStruct = VkOpticalFlowImageFormatPropertiesNV
 
     public static let structureType: StructureType = .opticalFlowImageFormatPropertiesNV
     public let format: Format
 
     public init(cStruct: VkOpticalFlowImageFormatPropertiesNV) {
-        self.format = Format(rawValue: numericBitCast(cStruct.format))!
+        self.format = Format(rawValue: numericBitCast(cStruct.format.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkOpticalFlowImageFormatPropertiesNV>) throws(E) -> R) throws(E) -> R {
@@ -40203,7 +40203,7 @@ public struct OpticalFlowImageFormatPropertiesNV: ChainableBase, OutStruct {
 
 public protocol OpticalFlowImageFormatPropertiesNVExtension: Chainable {}
 
-public struct OpticalFlowSessionCreateInfoNV: ChainableBase, OutStruct {
+public struct OpticalFlowSessionCreateInfoNV: ChainableBase {
     public typealias CStruct = VkOpticalFlowSessionCreateInfoNV
 
     public static let structureType: StructureType = .opticalFlowSessionCreateInfoNV
@@ -40232,12 +40232,12 @@ public struct OpticalFlowSessionCreateInfoNV: ChainableBase, OutStruct {
     public init(cStruct: VkOpticalFlowSessionCreateInfoNV) {
         self.width = cStruct.width
         self.height = cStruct.height
-        self.imageFormat = Format(rawValue: numericBitCast(cStruct.imageFormat))!
-        self.flowVectorFormat = Format(rawValue: numericBitCast(cStruct.flowVectorFormat))!
-        self.costFormat = Format(rawValue: numericBitCast(cStruct.costFormat))!
+        self.imageFormat = Format(rawValue: numericBitCast(cStruct.imageFormat.rawValue))!
+        self.flowVectorFormat = Format(rawValue: numericBitCast(cStruct.flowVectorFormat.rawValue))!
+        self.costFormat = Format(rawValue: numericBitCast(cStruct.costFormat.rawValue))!
         self.outputGridSize = OpticalFlowGridSizeFlagsNV(rawValue: cStruct.outputGridSize)
         self.hintGridSize = OpticalFlowGridSizeFlagsNV(rawValue: cStruct.hintGridSize)
-        self.performanceLevel = OpticalFlowPerformanceLevelNV(rawValue: numericBitCast(cStruct.performanceLevel))!
+        self.performanceLevel = OpticalFlowPerformanceLevelNV(rawValue: numericBitCast(cStruct.performanceLevel.rawValue))!
         self.flags = OpticalFlowSessionCreateFlagsNV(rawValue: cStruct.flags)
     }
 
@@ -40264,7 +40264,7 @@ public struct OpticalFlowSessionCreateInfoNV: ChainableBase, OutStruct {
 
 public protocol OpticalFlowSessionCreateInfoNVExtension: Chainable {}
 
-public struct OpticalFlowSessionCreatePrivateDataInfoNV: ChainableBase, OpticalFlowSessionCreateInfoNVExtension, OutStruct {
+public struct OpticalFlowSessionCreatePrivateDataInfoNV: ChainableBase, OpticalFlowSessionCreateInfoNVExtension {
     public typealias CStruct = VkOpticalFlowSessionCreatePrivateDataInfoNV
 
     public static let structureType: StructureType = .opticalFlowSessionCreatePrivateDataInfoNV
@@ -40301,7 +40301,7 @@ public struct OpticalFlowSessionCreatePrivateDataInfoNV: ChainableBase, OpticalF
 
 public protocol OpticalFlowSessionCreatePrivateDataInfoNVExtension: Chainable {}
 
-public struct OpticalFlowExecuteInfoNV: ChainableBase, OutStruct {
+public struct OpticalFlowExecuteInfoNV: ChainableBase {
     public typealias CStruct = VkOpticalFlowExecuteInfoNV
 
     public static let structureType: StructureType = .opticalFlowExecuteInfoNV
@@ -40337,7 +40337,7 @@ public struct OpticalFlowExecuteInfoNV: ChainableBase, OutStruct {
 
 public protocol OpticalFlowExecuteInfoNVExtension: Chainable {}
 
-public struct PhysicalDeviceFaultFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceFaultFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceFaultFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceFaultFeaturesEXT
@@ -40378,7 +40378,7 @@ public struct DeviceFaultAddressInfoKHR: CStructConvertible {
     public let addressPrecision: VkDeviceSize
 
     public init(cStruct: VkDeviceFaultAddressInfoKHR) {
-        self.addressType = DeviceFaultAddressTypeKHR(rawValue: numericBitCast(cStruct.addressType))!
+        self.addressType = DeviceFaultAddressTypeKHR(rawValue: numericBitCast(cStruct.addressType.rawValue))!
         self.reportedAddress = cStruct.reportedAddress
         self.addressPrecision = cStruct.addressPrecision
     }
@@ -40414,7 +40414,7 @@ public struct DeviceFaultVendorInfoKHR: CStructConvertible {
     }
 }
 
-public struct DeviceFaultInfoKHR: ChainableBase, OutStruct {
+public struct DeviceFaultInfoKHR: ChainableBase {
     public typealias CStruct = VkDeviceFaultInfoKHR
 
     public static let structureType: StructureType = .deviceFaultInfoKHR
@@ -40460,7 +40460,7 @@ public struct DeviceFaultInfoKHR: ChainableBase, OutStruct {
 
 public protocol DeviceFaultInfoKHRExtension: Chainable {}
 
-public struct DeviceFaultDebugInfoKHR: ChainableBase, OutStruct {
+public struct DeviceFaultDebugInfoKHR: ChainableBase {
     public typealias CStruct = VkDeviceFaultDebugInfoKHR
 
     public static let structureType: StructureType = .deviceFaultDebugInfoKHR
@@ -40488,7 +40488,7 @@ public struct DeviceFaultDebugInfoKHR: ChainableBase, OutStruct {
 
 public protocol DeviceFaultDebugInfoKHRExtension: Chainable {}
 
-public struct DeviceFaultCountsEXT: ChainableBase, OutStruct {
+public struct DeviceFaultCountsEXT: ChainableBase {
     public typealias CStruct = VkDeviceFaultCountsEXT
 
     public static let structureType: StructureType = .deviceFaultCountsEXT
@@ -40525,7 +40525,7 @@ public struct DeviceFaultCountsEXT: ChainableBase, OutStruct {
 
 public protocol DeviceFaultCountsEXTExtension: Chainable {}
 
-public struct DeviceFaultInfoEXT: ChainableBase, OutStruct {
+public struct DeviceFaultInfoEXT: ChainableBase {
     public typealias CStruct = VkDeviceFaultInfoEXT
 
     public static let structureType: StructureType = .deviceFaultInfoEXT
@@ -40590,7 +40590,7 @@ public struct DeviceFaultVendorBinaryHeaderVersionOneKHR: CStructConvertible {
 
     public init(cStruct: VkDeviceFaultVendorBinaryHeaderVersionOneKHR) {
         self.headerSize = cStruct.headerSize
-        self.headerVersion = DeviceFaultVendorBinaryHeaderVersionKHR(rawValue: numericBitCast(cStruct.headerVersion))!
+        self.headerVersion = DeviceFaultVendorBinaryHeaderVersionKHR(rawValue: numericBitCast(cStruct.headerVersion.rawValue))!
         self.vendorID = cStruct.vendorID
         self.deviceID = cStruct.deviceID
         self.driverVersion = cStruct.driverVersion
@@ -40619,7 +40619,7 @@ public struct DeviceFaultVendorBinaryHeaderVersionOneKHR: CStructConvertible {
     }
 }
 
-public struct PhysicalDeviceFaultFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceFaultFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceFaultFeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceFaultFeaturesKHR
@@ -40660,7 +40660,7 @@ public struct PhysicalDeviceFaultFeaturesKHR: ChainableBase, PhysicalDeviceFeatu
 
 public protocol PhysicalDeviceFaultFeaturesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceFaultPropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceFaultPropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceFaultPropertiesKHR
 
     public static let structureType: StructureType = .physicalDeviceFaultPropertiesKHR
@@ -40685,7 +40685,7 @@ public struct PhysicalDeviceFaultPropertiesKHR: ChainableBase, PhysicalDevicePro
 
 public protocol PhysicalDeviceFaultPropertiesKHRExtension: Chainable {}
 
-public struct PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT
 
     public static let structureType: StructureType = .physicalDevicePipelineLibraryGroupHandlesFeaturesEXT
@@ -40764,7 +40764,7 @@ public struct DepthBiasRepresentationInfoEXT: ChainableBase, DepthBiasInfoEXTExt
     }
 
     public init(cStruct: VkDepthBiasRepresentationInfoEXT) {
-        self.depthBiasRepresentation = DepthBiasRepresentationEXT(rawValue: numericBitCast(cStruct.depthBiasRepresentation))!
+        self.depthBiasRepresentation = DepthBiasRepresentationEXT(rawValue: numericBitCast(cStruct.depthBiasRepresentation.rawValue))!
         self.depthBiasExact = cStruct.depthBiasExact == VK_TRUE
     }
 
@@ -40888,7 +40888,7 @@ public struct DecompressMemoryInfoEXT: ChainableBase {
 
 public protocol DecompressMemoryInfoEXTExtension: Chainable {}
 
-public struct PhysicalDeviceShaderCoreBuiltinsPropertiesARM: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceShaderCoreBuiltinsPropertiesARM: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceShaderCoreBuiltinsPropertiesARM
 
     public static let structureType: StructureType = .physicalDeviceShaderCoreBuiltinsPropertiesARM
@@ -40919,7 +40919,7 @@ public struct PhysicalDeviceShaderCoreBuiltinsPropertiesARM: ChainableBase, Phys
 
 public protocol PhysicalDeviceShaderCoreBuiltinsPropertiesARMExtension: Chainable {}
 
-public struct PhysicalDeviceShaderCoreBuiltinsFeaturesARM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderCoreBuiltinsFeaturesARM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderCoreBuiltinsFeaturesARM
 
     public static let structureType: StructureType = .physicalDeviceShaderCoreBuiltinsFeaturesARM
@@ -40970,7 +40970,7 @@ public struct FrameBoundaryEXT: ChainableBase, SubmitInfoExtension, SubmitInfo2E
         self.tag = tag
     }
 
-    public init(cStruct: VkFrameBoundaryEXT, device: Device?) {
+    public init(cStruct: VkFrameBoundaryEXT, device: Device) {
         self.flags = FrameBoundaryFlagsEXT(rawValue: cStruct.flags)
         self.frameID = cStruct.frameID
         self.images = (cStruct.pImages != nil) ? UnsafeBufferPointer(start: cStruct.pImages, count: Int(cStruct.imageCount)).map{ Image(handle: $0, device: device) } : nil
@@ -41007,7 +41007,7 @@ public struct FrameBoundaryEXT: ChainableBase, SubmitInfoExtension, SubmitInfo2E
 
 public protocol FrameBoundaryEXTExtension: Chainable {}
 
-public struct PhysicalDeviceFrameBoundaryFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceFrameBoundaryFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceFrameBoundaryFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceFrameBoundaryFeaturesEXT
@@ -41036,7 +41036,7 @@ public struct PhysicalDeviceFrameBoundaryFeaturesEXT: ChainableBase, PhysicalDev
 
 public protocol PhysicalDeviceFrameBoundaryFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT
@@ -41065,7 +41065,7 @@ public struct PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT: Chaina
 
 public protocol PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceInternallySynchronizedQueuesFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceInternallySynchronizedQueuesFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceInternallySynchronizedQueuesFeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceInternallySynchronizedQueuesFeaturesKHR
@@ -41094,7 +41094,7 @@ public struct PhysicalDeviceInternallySynchronizedQueuesFeaturesKHR: ChainableBa
 
 public protocol PhysicalDeviceInternallySynchronizedQueuesFeaturesKHRExtension: Chainable {}
 
-public struct SurfacePresentModeKHR: ChainableBase, PhysicalDeviceSurfaceInfo2KHRExtension, OutStruct {
+public struct SurfacePresentModeKHR: ChainableBase, PhysicalDeviceSurfaceInfo2KHRExtension {
     public typealias CStruct = VkSurfacePresentModeKHR
 
     public static let structureType: StructureType = .surfacePresentModeKHR
@@ -41105,7 +41105,7 @@ public struct SurfacePresentModeKHR: ChainableBase, PhysicalDeviceSurfaceInfo2KH
     }
 
     public init(cStruct: VkSurfacePresentModeKHR) {
-        self.presentMode = PresentModeKHR(rawValue: numericBitCast(cStruct.presentMode))!
+        self.presentMode = PresentModeKHR(rawValue: numericBitCast(cStruct.presentMode.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkSurfacePresentModeKHR>) throws(E) -> R) throws(E) -> R {
@@ -41123,7 +41123,7 @@ public struct SurfacePresentModeKHR: ChainableBase, PhysicalDeviceSurfaceInfo2KH
 
 public protocol SurfacePresentModeKHRExtension: Chainable {}
 
-public struct SurfacePresentScalingCapabilitiesKHR: ChainableBase, SurfaceCapabilities2KHRExtension, OutStruct {
+public struct SurfacePresentScalingCapabilitiesKHR: ChainableBase, SurfaceCapabilities2KHRExtension {
     public typealias CStruct = VkSurfacePresentScalingCapabilitiesKHR
 
     public static let structureType: StructureType = .surfacePresentScalingCapabilitiesKHR
@@ -41172,7 +41172,7 @@ public struct SurfacePresentScalingCapabilitiesKHR: ChainableBase, SurfaceCapabi
 
 public protocol SurfacePresentScalingCapabilitiesKHRExtension: Chainable {}
 
-public struct SurfacePresentModeCompatibilityKHR: ChainableBase, SurfaceCapabilities2KHRExtension, OutStruct {
+public struct SurfacePresentModeCompatibilityKHR: ChainableBase, SurfaceCapabilities2KHRExtension {
     public typealias CStruct = VkSurfacePresentModeCompatibilityKHR
 
     public static let structureType: StructureType = .surfacePresentModeCompatibilityKHR
@@ -41205,7 +41205,7 @@ public struct SurfacePresentModeCompatibilityKHR: ChainableBase, SurfaceCapabili
 
 public protocol SurfacePresentModeCompatibilityKHRExtension: Chainable {}
 
-public struct PhysicalDeviceSwapchainMaintenance1FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceSwapchainMaintenance1FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceSwapchainMaintenance1FeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceSwapchainMaintenance1FeaturesKHR
@@ -41244,7 +41244,7 @@ public struct SwapchainPresentFenceInfoKHR: ChainableBase, PresentInfoKHRExtensi
         self.fences = fences
     }
 
-    public init(cStruct: VkSwapchainPresentFenceInfoKHR, device: Device?) {
+    public init(cStruct: VkSwapchainPresentFenceInfoKHR, device: Device) {
         self.fences = UnsafeBufferPointer(start: cStruct.pFences, count: Int(cStruct.swapchainCount)).map{ ($0 != nil) ? Fence(handle: $0, device: device) : nil }
     }
 
@@ -41277,7 +41277,7 @@ public struct SwapchainPresentModesCreateInfoKHR: ChainableBase, SwapchainCreate
     }
 
     public init(cStruct: VkSwapchainPresentModesCreateInfoKHR) {
-        self.presentModes = UnsafeBufferPointer(start: cStruct.pPresentModes, count: Int(cStruct.presentModeCount)).map{ PresentModeKHR(rawValue: numericBitCast($0))! }
+        self.presentModes = UnsafeBufferPointer(start: cStruct.pPresentModes, count: Int(cStruct.presentModeCount)).map{ PresentModeKHR(rawValue: numericBitCast($0.rawValue))! }
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkSwapchainPresentModesCreateInfoKHR>) throws(E) -> R) throws(E) -> R {
@@ -41309,7 +41309,7 @@ public struct SwapchainPresentModeInfoKHR: ChainableBase, PresentInfoKHRExtensio
     }
 
     public init(cStruct: VkSwapchainPresentModeInfoKHR) {
-        self.presentModes = UnsafeBufferPointer(start: cStruct.pPresentModes, count: Int(cStruct.swapchainCount)).map{ PresentModeKHR(rawValue: numericBitCast($0))! }
+        self.presentModes = UnsafeBufferPointer(start: cStruct.pPresentModes, count: Int(cStruct.swapchainCount)).map{ PresentModeKHR(rawValue: numericBitCast($0.rawValue))! }
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkSwapchainPresentModeInfoKHR>) throws(E) -> R) throws(E) -> R {
@@ -41379,7 +41379,7 @@ public struct ReleaseSwapchainImagesInfoKHR: ChainableBase {
         self.imageIndices = imageIndices
     }
 
-    public init(cStruct: VkReleaseSwapchainImagesInfoKHR, device: Device?) {
+    public init(cStruct: VkReleaseSwapchainImagesInfoKHR, device: Device) {
         self.swapchain = SwapchainKHR(handle: cStruct.swapchain, device: device)
         self.imageIndices = Array(UnsafeBufferPointer(start: cStruct.pImageIndices, count: Int(cStruct.imageIndexCount)))
     }
@@ -41403,7 +41403,7 @@ public struct ReleaseSwapchainImagesInfoKHR: ChainableBase {
 
 public protocol ReleaseSwapchainImagesInfoKHRExtension: Chainable {}
 
-public struct PhysicalDeviceDepthBiasControlFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceDepthBiasControlFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDepthBiasControlFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceDepthBiasControlFeaturesEXT
@@ -41444,7 +41444,7 @@ public struct PhysicalDeviceDepthBiasControlFeaturesEXT: ChainableBase, Physical
 
 public protocol PhysicalDeviceDepthBiasControlFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceRayTracingInvocationReorderFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceRayTracingInvocationReorderFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceRayTracingInvocationReorderFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceRayTracingInvocationReorderFeaturesEXT
@@ -41473,7 +41473,7 @@ public struct PhysicalDeviceRayTracingInvocationReorderFeaturesEXT: ChainableBas
 
 public protocol PhysicalDeviceRayTracingInvocationReorderFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceRayTracingInvocationReorderFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceRayTracingInvocationReorderFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceRayTracingInvocationReorderFeaturesNV
 
     public static let structureType: StructureType = .physicalDeviceRayTracingInvocationReorderFeaturesNV
@@ -41502,7 +41502,7 @@ public struct PhysicalDeviceRayTracingInvocationReorderFeaturesNV: ChainableBase
 
 public protocol PhysicalDeviceRayTracingInvocationReorderFeaturesNVExtension: Chainable {}
 
-public struct PhysicalDeviceRayTracingInvocationReorderPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceRayTracingInvocationReorderPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceRayTracingInvocationReorderPropertiesEXT
 
     public static let structureType: StructureType = .physicalDeviceRayTracingInvocationReorderPropertiesEXT
@@ -41510,7 +41510,7 @@ public struct PhysicalDeviceRayTracingInvocationReorderPropertiesEXT: ChainableB
     public let maxShaderBindingTableRecordIndex: UInt32
 
     public init(cStruct: VkPhysicalDeviceRayTracingInvocationReorderPropertiesEXT) {
-        self.rayTracingInvocationReorderReorderingHint = RayTracingInvocationReorderModeEXT(rawValue: numericBitCast(cStruct.rayTracingInvocationReorderReorderingHint))!
+        self.rayTracingInvocationReorderReorderingHint = RayTracingInvocationReorderModeEXT(rawValue: numericBitCast(cStruct.rayTracingInvocationReorderReorderingHint.rawValue))!
         self.maxShaderBindingTableRecordIndex = cStruct.maxShaderBindingTableRecordIndex
     }
 
@@ -41530,14 +41530,14 @@ public struct PhysicalDeviceRayTracingInvocationReorderPropertiesEXT: ChainableB
 
 public protocol PhysicalDeviceRayTracingInvocationReorderPropertiesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceRayTracingInvocationReorderPropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceRayTracingInvocationReorderPropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceRayTracingInvocationReorderPropertiesNV
 
     public static let structureType: StructureType = .physicalDeviceRayTracingInvocationReorderPropertiesNV
     public let rayTracingInvocationReorderReorderingHint: RayTracingInvocationReorderModeEXT
 
     public init(cStruct: VkPhysicalDeviceRayTracingInvocationReorderPropertiesNV) {
-        self.rayTracingInvocationReorderReorderingHint = RayTracingInvocationReorderModeEXT(rawValue: numericBitCast(cStruct.rayTracingInvocationReorderReorderingHint))!
+        self.rayTracingInvocationReorderReorderingHint = RayTracingInvocationReorderModeEXT(rawValue: numericBitCast(cStruct.rayTracingInvocationReorderReorderingHint.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPhysicalDeviceRayTracingInvocationReorderPropertiesNV>) throws(E) -> R) throws(E) -> R {
@@ -41555,7 +41555,7 @@ public struct PhysicalDeviceRayTracingInvocationReorderPropertiesNV: ChainableBa
 
 public protocol PhysicalDeviceRayTracingInvocationReorderPropertiesNVExtension: Chainable {}
 
-public struct PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceExtendedSparseAddressSpaceFeaturesNV
 
     public static let structureType: StructureType = .physicalDeviceExtendedSparseAddressSpaceFeaturesNV
@@ -41584,7 +41584,7 @@ public struct PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV: ChainableBase,
 
 public protocol PhysicalDeviceExtendedSparseAddressSpaceFeaturesNVExtension: Chainable {}
 
-public struct PhysicalDeviceExtendedSparseAddressSpacePropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceExtendedSparseAddressSpacePropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceExtendedSparseAddressSpacePropertiesNV
 
     public static let structureType: StructureType = .physicalDeviceExtendedSparseAddressSpacePropertiesNV
@@ -41615,7 +41615,7 @@ public struct PhysicalDeviceExtendedSparseAddressSpacePropertiesNV: ChainableBas
 
 public protocol PhysicalDeviceExtendedSparseAddressSpacePropertiesNVExtension: Chainable {}
 
-public struct DirectDriverLoadingInfoLUNARG: ChainableBase, OutStruct {
+public struct DirectDriverLoadingInfoLUNARG: ChainableBase {
     public typealias CStruct = VkDirectDriverLoadingInfoLUNARG
 
     public static let structureType: StructureType = .directDriverLoadingInfoLUNARG
@@ -41661,7 +41661,7 @@ public struct DirectDriverLoadingListLUNARG: ChainableBase, InstanceCreateInfoEx
     }
 
     public init(cStruct: VkDirectDriverLoadingListLUNARG) {
-        self.mode = DirectDriverLoadingModeLUNARG(rawValue: numericBitCast(cStruct.mode))!
+        self.mode = DirectDriverLoadingModeLUNARG(rawValue: numericBitCast(cStruct.mode.rawValue))!
         self.drivers = UnsafeBufferPointer(start: cStruct.pDrivers, count: Int(cStruct.driverCount)).map{ DirectDriverLoadingInfoLUNARG(cStruct: $0) }
     }
 
@@ -41684,7 +41684,7 @@ public struct DirectDriverLoadingListLUNARG: ChainableBase, InstanceCreateInfoEx
 
 public protocol DirectDriverLoadingListLUNARGExtension: Chainable {}
 
-public struct PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM
 
     public static let structureType: StructureType = .physicalDeviceMultiviewPerViewViewportsFeaturesQCOM
@@ -41713,7 +41713,7 @@ public struct PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM: ChainableBase
 
 public protocol PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOMExtension: Chainable {}
 
-public struct PhysicalDeviceRayTracingPositionFetchFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceRayTracingPositionFetchFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceRayTracingPositionFetchFeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceRayTracingPositionFetchFeaturesKHR
@@ -41779,7 +41779,7 @@ public struct DeviceImageSubresourceInfo: ChainableBase {
 
 public protocol DeviceImageSubresourceInfoExtension: Chainable {}
 
-public struct PhysicalDeviceShaderCorePropertiesARM: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceShaderCorePropertiesARM: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceShaderCorePropertiesARM
 
     public static let structureType: StructureType = .physicalDeviceShaderCorePropertiesARM
@@ -41810,7 +41810,7 @@ public struct PhysicalDeviceShaderCorePropertiesARM: ChainableBase, PhysicalDevi
 
 public protocol PhysicalDeviceShaderCorePropertiesARMExtension: Chainable {}
 
-public struct PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM
 
     public static let structureType: StructureType = .physicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM
@@ -41916,7 +41916,7 @@ public struct MemoryMapInfo: ChainableBase {
         self.size = size
     }
 
-    public init(cStruct: VkMemoryMapInfo, device: Device?) {
+    public init(cStruct: VkMemoryMapInfo, device: Device) {
         self.flags = MemoryMapFlags(rawValue: cStruct.flags)
         self.memory = DeviceMemory(handle: cStruct.memory, device: device)
         self.offset = cStruct.offset
@@ -41953,7 +41953,7 @@ public struct MemoryUnmapInfo: ChainableBase {
         self.memory = memory
     }
 
-    public init(cStruct: VkMemoryUnmapInfo, device: Device?) {
+    public init(cStruct: VkMemoryUnmapInfo, device: Device) {
         self.flags = MemoryUnmapFlags(rawValue: cStruct.flags)
         self.memory = DeviceMemory(handle: cStruct.memory, device: device)
     }
@@ -41974,7 +41974,7 @@ public struct MemoryUnmapInfo: ChainableBase {
 
 public protocol MemoryUnmapInfoExtension: Chainable {}
 
-public struct PhysicalDeviceShaderObjectFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderObjectFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderObjectFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceShaderObjectFeaturesEXT
@@ -42003,7 +42003,7 @@ public struct PhysicalDeviceShaderObjectFeaturesEXT: ChainableBase, PhysicalDevi
 
 public protocol PhysicalDeviceShaderObjectFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceShaderObjectPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceShaderObjectPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceShaderObjectPropertiesEXT
 
     public static let structureType: StructureType = .physicalDeviceShaderObjectPropertiesEXT
@@ -42059,11 +42059,11 @@ public struct ShaderCreateInfoEXT: ChainableBase {
         self.specializationInfo = specializationInfo
     }
 
-    public init(cStruct: VkShaderCreateInfoEXT, device: Device?) {
+    public init(cStruct: VkShaderCreateInfoEXT, device: Device) {
         self.flags = ShaderCreateFlagsEXT(rawValue: cStruct.flags)
         self.stage = ShaderStageFlags(rawValue: numericBitCast(cStruct.stage.rawValue))
         self.nextStage = ShaderStageFlags(rawValue: cStruct.nextStage)
-        self.codeType = ShaderCodeTypeEXT(rawValue: numericBitCast(cStruct.codeType))!
+        self.codeType = ShaderCodeTypeEXT(rawValue: numericBitCast(cStruct.codeType.rawValue))!
         self.codeSize = cStruct.codeSize
         self.code = cStruct.pCode
         self.name = (cStruct.pName != nil) ? String(cString: cStruct.pName) : nil
@@ -42106,7 +42106,7 @@ public struct ShaderCreateInfoEXT: ChainableBase {
 
 public protocol ShaderCreateInfoEXTExtension: Chainable {}
 
-public struct PhysicalDeviceShaderTileImageFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderTileImageFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderTileImageFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceShaderTileImageFeaturesEXT
@@ -42143,7 +42143,7 @@ public struct PhysicalDeviceShaderTileImageFeaturesEXT: ChainableBase, PhysicalD
 
 public protocol PhysicalDeviceShaderTileImageFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceShaderTileImagePropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceShaderTileImagePropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceShaderTileImagePropertiesEXT
 
     public static let structureType: StructureType = .physicalDeviceShaderTileImagePropertiesEXT
@@ -42206,7 +42206,7 @@ public struct ImportScreenBufferInfoQNX: ChainableBase, MemoryAllocateInfoExtens
 public protocol ImportScreenBufferInfoQNXExtension: Chainable {}
 
 #if VK_USE_PLATFORM_SCREEN_QNX
-public struct ScreenBufferPropertiesQNX: ChainableBase, OutStruct {
+public struct ScreenBufferPropertiesQNX: ChainableBase {
     public typealias CStruct = VkScreenBufferPropertiesQNX
 
     public static let structureType: StructureType = .screenBufferPropertiesQNX
@@ -42236,7 +42236,7 @@ public struct ScreenBufferPropertiesQNX: ChainableBase, OutStruct {
 public protocol ScreenBufferPropertiesQNXExtension: Chainable {}
 
 #if VK_USE_PLATFORM_SCREEN_QNX
-public struct ScreenBufferFormatPropertiesQNX: ChainableBase, ScreenBufferPropertiesQNXExtension, OutStruct {
+public struct ScreenBufferFormatPropertiesQNX: ChainableBase, ScreenBufferPropertiesQNXExtension {
     public typealias CStruct = VkScreenBufferFormatPropertiesQNX
 
     public static let structureType: StructureType = .screenBufferFormatPropertiesQNX
@@ -42251,15 +42251,15 @@ public struct ScreenBufferFormatPropertiesQNX: ChainableBase, ScreenBufferProper
     public let suggestedYChromaOffset: ChromaLocation
 
     public init(cStruct: VkScreenBufferFormatPropertiesQNX) {
-        self.format = Format(rawValue: numericBitCast(cStruct.format))!
+        self.format = Format(rawValue: numericBitCast(cStruct.format.rawValue))!
         self.externalFormat = cStruct.externalFormat
         self.screenUsage = cStruct.screenUsage
         self.formatFeatures = FormatFeatureFlags(rawValue: cStruct.formatFeatures)
         self.samplerYcbcrConversionComponents = ComponentMapping(cStruct: cStruct.samplerYcbcrConversionComponents)
-        self.suggestedYcbcrModel = SamplerYcbcrModelConversion(rawValue: numericBitCast(cStruct.suggestedYcbcrModel))!
-        self.suggestedYcbcrRange = SamplerYcbcrRange(rawValue: numericBitCast(cStruct.suggestedYcbcrRange))!
-        self.suggestedXChromaOffset = ChromaLocation(rawValue: numericBitCast(cStruct.suggestedXChromaOffset))!
-        self.suggestedYChromaOffset = ChromaLocation(rawValue: numericBitCast(cStruct.suggestedYChromaOffset))!
+        self.suggestedYcbcrModel = SamplerYcbcrModelConversion(rawValue: numericBitCast(cStruct.suggestedYcbcrModel.rawValue))!
+        self.suggestedYcbcrRange = SamplerYcbcrRange(rawValue: numericBitCast(cStruct.suggestedYcbcrRange.rawValue))!
+        self.suggestedXChromaOffset = ChromaLocation(rawValue: numericBitCast(cStruct.suggestedXChromaOffset.rawValue))!
+        self.suggestedYChromaOffset = ChromaLocation(rawValue: numericBitCast(cStruct.suggestedYChromaOffset.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkScreenBufferFormatPropertiesQNX>) throws(E) -> R) throws(E) -> R {
@@ -42289,7 +42289,7 @@ public struct ScreenBufferFormatPropertiesQNX: ChainableBase, ScreenBufferProper
 public protocol ScreenBufferFormatPropertiesQNXExtension: Chainable {}
 
 #if VK_USE_PLATFORM_SCREEN_QNX
-public struct ExternalFormatQNX: ChainableBase, ImageCreateInfoExtension, SamplerYcbcrConversionCreateInfoExtension, OutStruct {
+public struct ExternalFormatQNX: ChainableBase, ImageCreateInfoExtension, SamplerYcbcrConversionCreateInfoExtension {
     public typealias CStruct = VkExternalFormatQNX
 
     public static let structureType: StructureType = .externalFormatQNX
@@ -42320,7 +42320,7 @@ public struct ExternalFormatQNX: ChainableBase, ImageCreateInfoExtension, Sample
 public protocol ExternalFormatQNXExtension: Chainable {}
 
 #if VK_USE_PLATFORM_SCREEN_QNX
-public struct PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceExternalMemoryScreenBufferFeaturesQNX
 
     public static let structureType: StructureType = .physicalDeviceExternalMemoryScreenBufferFeaturesQNX
@@ -42350,7 +42350,7 @@ public struct PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX: ChainableBase
 
 public protocol PhysicalDeviceExternalMemoryScreenBufferFeaturesQNXExtension: Chainable {}
 
-public struct PhysicalDeviceCooperativeMatrixFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceCooperativeMatrixFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceCooperativeMatrixFeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceCooperativeMatrixFeaturesKHR
@@ -42383,7 +42383,7 @@ public struct PhysicalDeviceCooperativeMatrixFeaturesKHR: ChainableBase, Physica
 
 public protocol PhysicalDeviceCooperativeMatrixFeaturesKHRExtension: Chainable {}
 
-public struct CooperativeMatrixPropertiesKHR: ChainableBase, OutStruct {
+public struct CooperativeMatrixPropertiesKHR: ChainableBase {
     public typealias CStruct = VkCooperativeMatrixPropertiesKHR
 
     public static let structureType: StructureType = .cooperativeMatrixPropertiesKHR
@@ -42401,12 +42401,12 @@ public struct CooperativeMatrixPropertiesKHR: ChainableBase, OutStruct {
         self.MSize = cStruct.MSize
         self.NSize = cStruct.NSize
         self.KSize = cStruct.KSize
-        self.AType = ComponentTypeKHR(rawValue: numericBitCast(cStruct.AType))!
-        self.BType = ComponentTypeKHR(rawValue: numericBitCast(cStruct.BType))!
-        self.CType = ComponentTypeKHR(rawValue: numericBitCast(cStruct.CType))!
-        self.ResultType = ComponentTypeKHR(rawValue: numericBitCast(cStruct.ResultType))!
+        self.AType = ComponentTypeKHR(rawValue: numericBitCast(cStruct.AType.rawValue))!
+        self.BType = ComponentTypeKHR(rawValue: numericBitCast(cStruct.BType.rawValue))!
+        self.CType = ComponentTypeKHR(rawValue: numericBitCast(cStruct.CType.rawValue))!
+        self.ResultType = ComponentTypeKHR(rawValue: numericBitCast(cStruct.ResultType.rawValue))!
         self.saturatingAccumulation = cStruct.saturatingAccumulation == VK_TRUE
-        self.scope = ScopeKHR(rawValue: numericBitCast(cStruct.scope))!
+        self.scope = ScopeKHR(rawValue: numericBitCast(cStruct.scope.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkCooperativeMatrixPropertiesKHR>) throws(E) -> R) throws(E) -> R {
@@ -42432,7 +42432,7 @@ public struct CooperativeMatrixPropertiesKHR: ChainableBase, OutStruct {
 
 public protocol CooperativeMatrixPropertiesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceCooperativeMatrixPropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceCooperativeMatrixPropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceCooperativeMatrixPropertiesKHR
 
     public static let structureType: StructureType = .physicalDeviceCooperativeMatrixPropertiesKHR
@@ -42457,7 +42457,7 @@ public struct PhysicalDeviceCooperativeMatrixPropertiesKHR: ChainableBase, Physi
 
 public protocol PhysicalDeviceCooperativeMatrixPropertiesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceCooperativeMatrixConversionFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceCooperativeMatrixConversionFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceCooperativeMatrixConversionFeaturesQCOM
 
     public static let structureType: StructureType = .physicalDeviceCooperativeMatrixConversionFeaturesQCOM
@@ -42487,7 +42487,7 @@ public struct PhysicalDeviceCooperativeMatrixConversionFeaturesQCOM: ChainableBa
 public protocol PhysicalDeviceCooperativeMatrixConversionFeaturesQCOMExtension: Chainable {}
 
 #if VK_ENABLE_BETA_EXTENSIONS
-public struct PhysicalDeviceShaderEnqueuePropertiesAMDX: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceShaderEnqueuePropertiesAMDX: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceShaderEnqueuePropertiesAMDX
 
     public static let structureType: StructureType = .physicalDeviceShaderEnqueuePropertiesAMDX
@@ -42532,7 +42532,7 @@ public struct PhysicalDeviceShaderEnqueuePropertiesAMDX: ChainableBase, Physical
 public protocol PhysicalDeviceShaderEnqueuePropertiesAMDXExtension: Chainable {}
 
 #if VK_ENABLE_BETA_EXTENSIONS
-public struct PhysicalDeviceShaderEnqueueFeaturesAMDX: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderEnqueueFeaturesAMDX: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderEnqueueFeaturesAMDX
 
     public static let structureType: StructureType = .physicalDeviceShaderEnqueueFeaturesAMDX
@@ -42587,7 +42587,7 @@ public struct ExecutionGraphPipelineCreateInfoAMDX: ChainableBase {
         self.basePipelineIndex = basePipelineIndex
     }
 
-    public init(cStruct: VkExecutionGraphPipelineCreateInfoAMDX, device: Device?) {
+    public init(cStruct: VkExecutionGraphPipelineCreateInfoAMDX, device: Device) {
         self.flags = PipelineCreateFlags(rawValue: cStruct.flags)
         self.stages = (cStruct.pStages != nil) ? UnsafeBufferPointer(start: cStruct.pStages, count: Int(cStruct.stageCount)).map{ PipelineShaderStageCreateInfo(cStruct: $0, device: device) } : nil
         self.libraryInfo = (cStruct.pLibraryInfo != nil) ? PipelineLibraryCreateInfoKHR(cStruct: cStruct.pLibraryInfo.pointee, device: device) : nil
@@ -42660,7 +42660,7 @@ public struct PipelineShaderStageNodeCreateInfoAMDX: ChainableBase, PipelineShad
 public protocol PipelineShaderStageNodeCreateInfoAMDXExtension: Chainable {}
 
 #if VK_ENABLE_BETA_EXTENSIONS
-public struct ExecutionGraphPipelineScratchSizeAMDX: ChainableBase, OutStruct {
+public struct ExecutionGraphPipelineScratchSizeAMDX: ChainableBase {
     public typealias CStruct = VkExecutionGraphPipelineScratchSizeAMDX
 
     public static let structureType: StructureType = .executionGraphPipelineScratchSizeAMDX
@@ -42762,7 +42762,7 @@ public struct DispatchGraphCountInfoAMDX: CStructConvertible {
 }
 #endif
 
-public struct PhysicalDeviceAntiLagFeaturesAMD: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceAntiLagFeaturesAMD: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceAntiLagFeaturesAMD
 
     public static let structureType: StructureType = .physicalDeviceAntiLagFeaturesAMD
@@ -42791,7 +42791,7 @@ public struct PhysicalDeviceAntiLagFeaturesAMD: ChainableBase, PhysicalDeviceFea
 
 public protocol PhysicalDeviceAntiLagFeaturesAMDExtension: Chainable {}
 
-public struct AntiLagPresentationInfoAMD: ChainableBase, OutStruct {
+public struct AntiLagPresentationInfoAMD: ChainableBase {
     public typealias CStruct = VkAntiLagPresentationInfoAMD
 
     public static let structureType: StructureType = .antiLagPresentationInfoAMD
@@ -42804,7 +42804,7 @@ public struct AntiLagPresentationInfoAMD: ChainableBase, OutStruct {
     }
 
     public init(cStruct: VkAntiLagPresentationInfoAMD) {
-        self.stage = AntiLagStageAMD(rawValue: numericBitCast(cStruct.stage))!
+        self.stage = AntiLagStageAMD(rawValue: numericBitCast(cStruct.stage.rawValue))!
         self.frameIndex = cStruct.frameIndex
     }
 
@@ -42839,7 +42839,7 @@ public struct AntiLagDataAMD: ChainableBase {
     }
 
     public init(cStruct: VkAntiLagDataAMD) {
-        self.mode = AntiLagModeAMD(rawValue: numericBitCast(cStruct.mode))!
+        self.mode = AntiLagModeAMD(rawValue: numericBitCast(cStruct.mode.rawValue))!
         self.maxFPS = cStruct.maxFPS
         self.presentationInfo = (cStruct.pPresentationInfo != nil) ? AntiLagPresentationInfoAMD(cStruct: cStruct.pPresentationInfo.pointee) : nil
     }
@@ -42892,7 +42892,7 @@ public struct BindMemoryStatus: ChainableBase, BindBufferMemoryInfoExtension, Bi
 
 public protocol BindMemoryStatusExtension: Chainable {}
 
-public struct PhysicalDeviceTileMemoryHeapFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceTileMemoryHeapFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceTileMemoryHeapFeaturesQCOM
 
     public static let structureType: StructureType = .physicalDeviceTileMemoryHeapFeaturesQCOM
@@ -42921,7 +42921,7 @@ public struct PhysicalDeviceTileMemoryHeapFeaturesQCOM: ChainableBase, PhysicalD
 
 public protocol PhysicalDeviceTileMemoryHeapFeaturesQCOMExtension: Chainable {}
 
-public struct PhysicalDeviceTileMemoryHeapPropertiesQCOM: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceTileMemoryHeapPropertiesQCOM: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceTileMemoryHeapPropertiesQCOM
 
     public static let structureType: StructureType = .physicalDeviceTileMemoryHeapPropertiesQCOM
@@ -42983,7 +42983,7 @@ public struct TileMemorySizeInfoQCOM: ChainableBase, RenderPassCreateInfoExtensi
 
 public protocol TileMemorySizeInfoQCOMExtension: Chainable {}
 
-public struct TileMemoryRequirementsQCOM: ChainableBase, MemoryRequirements2Extension, OutStruct {
+public struct TileMemoryRequirementsQCOM: ChainableBase, MemoryRequirements2Extension {
     public typealias CStruct = VkTileMemoryRequirementsQCOM
 
     public static let structureType: StructureType = .tileMemoryRequirementsQCOM
@@ -43034,7 +43034,7 @@ public struct BindDescriptorSetsInfo: ChainableBase {
         self.dynamicOffsets = dynamicOffsets
     }
 
-    public init(cStruct: VkBindDescriptorSetsInfo, device: Device?, descriptorPool: DescriptorPool?) {
+    public init(cStruct: VkBindDescriptorSetsInfo, device: Device, descriptorPool: DescriptorPool) {
         self.stageFlags = ShaderStageFlags(rawValue: cStruct.stageFlags)
         self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout, device: device) : nil
         self.firstSet = cStruct.firstSet
@@ -43085,7 +43085,7 @@ public struct PushConstantsInfo: ChainableBase {
         self.values = values
     }
 
-    public init(cStruct: VkPushConstantsInfo, device: Device?) {
+    public init(cStruct: VkPushConstantsInfo, device: Device) {
         self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout, device: device) : nil
         self.stageFlags = ShaderStageFlags(rawValue: cStruct.stageFlags)
         self.offset = cStruct.offset
@@ -43128,7 +43128,7 @@ public struct PushDescriptorSetInfo: ChainableBase {
         self.descriptorWrites = descriptorWrites
     }
 
-    public init(cStruct: VkPushDescriptorSetInfo, device: Device?, descriptorPool: DescriptorPool?) {
+    public init(cStruct: VkPushDescriptorSetInfo, device: Device, descriptorPool: DescriptorPool) {
         self.stageFlags = ShaderStageFlags(rawValue: cStruct.stageFlags)
         self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout, device: device) : nil
         self.set = cStruct.set
@@ -43172,7 +43172,7 @@ public struct PushDescriptorSetWithTemplateInfo: ChainableBase {
         self.data = data
     }
 
-    public init(cStruct: VkPushDescriptorSetWithTemplateInfo, device: Device?) {
+    public init(cStruct: VkPushDescriptorSetWithTemplateInfo, device: Device) {
         self.descriptorUpdateTemplate = DescriptorUpdateTemplate(handle: cStruct.descriptorUpdateTemplate, device: device)
         self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout, device: device) : nil
         self.set = cStruct.set
@@ -43215,7 +43215,7 @@ public struct SetDescriptorBufferOffsetsInfoEXT: ChainableBase {
         self.offsets = offsets
     }
 
-    public init(cStruct: VkSetDescriptorBufferOffsetsInfoEXT, device: Device?) {
+    public init(cStruct: VkSetDescriptorBufferOffsetsInfoEXT, device: Device) {
         self.stageFlags = ShaderStageFlags(rawValue: cStruct.stageFlags)
         self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout, device: device) : nil
         self.firstSet = cStruct.firstSet
@@ -43261,7 +43261,7 @@ public struct BindDescriptorBufferEmbeddedSamplersInfoEXT: ChainableBase {
         self.set = set
     }
 
-    public init(cStruct: VkBindDescriptorBufferEmbeddedSamplersInfoEXT, device: Device?) {
+    public init(cStruct: VkBindDescriptorBufferEmbeddedSamplersInfoEXT, device: Device) {
         self.stageFlags = ShaderStageFlags(rawValue: cStruct.stageFlags)
         self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout, device: device) : nil
         self.set = cStruct.set
@@ -43284,7 +43284,7 @@ public struct BindDescriptorBufferEmbeddedSamplersInfoEXT: ChainableBase {
 
 public protocol BindDescriptorBufferEmbeddedSamplersInfoEXTExtension: Chainable {}
 
-public struct PhysicalDeviceCubicClampFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceCubicClampFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceCubicClampFeaturesQCOM
 
     public static let structureType: StructureType = .physicalDeviceCubicClampFeaturesQCOM
@@ -43313,7 +43313,7 @@ public struct PhysicalDeviceCubicClampFeaturesQCOM: ChainableBase, PhysicalDevic
 
 public protocol PhysicalDeviceCubicClampFeaturesQCOMExtension: Chainable {}
 
-public struct PhysicalDeviceYcbcrDegammaFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceYcbcrDegammaFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceYcbcrDegammaFeaturesQCOM
 
     public static let structureType: StructureType = .physicalDeviceYcbcrDegammaFeaturesQCOM
@@ -43342,7 +43342,7 @@ public struct PhysicalDeviceYcbcrDegammaFeaturesQCOM: ChainableBase, PhysicalDev
 
 public protocol PhysicalDeviceYcbcrDegammaFeaturesQCOMExtension: Chainable {}
 
-public struct SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM: ChainableBase, SamplerYcbcrConversionCreateInfoExtension, OutStruct {
+public struct SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM: ChainableBase, SamplerYcbcrConversionCreateInfoExtension {
     public typealias CStruct = VkSamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM
 
     public static let structureType: StructureType = .samplerYcbcrConversionYcbcrDegammaCreateInfoQCOM
@@ -43375,7 +43375,7 @@ public struct SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM: ChainableBase, S
 
 public protocol SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOMExtension: Chainable {}
 
-public struct PhysicalDeviceCubicWeightsFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceCubicWeightsFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceCubicWeightsFeaturesQCOM
 
     public static let structureType: StructureType = .physicalDeviceCubicWeightsFeaturesQCOM
@@ -43415,7 +43415,7 @@ public struct SamplerCubicWeightsCreateInfoQCOM: ChainableBase, SamplerCreateInf
     }
 
     public init(cStruct: VkSamplerCubicWeightsCreateInfoQCOM) {
-        self.cubicWeights = CubicFilterWeightsQCOM(rawValue: numericBitCast(cStruct.cubicWeights))!
+        self.cubicWeights = CubicFilterWeightsQCOM(rawValue: numericBitCast(cStruct.cubicWeights.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkSamplerCubicWeightsCreateInfoQCOM>) throws(E) -> R) throws(E) -> R {
@@ -43444,7 +43444,7 @@ public struct BlitImageCubicWeightsInfoQCOM: ChainableBase, BlitImageInfo2Extens
     }
 
     public init(cStruct: VkBlitImageCubicWeightsInfoQCOM) {
-        self.cubicWeights = CubicFilterWeightsQCOM(rawValue: numericBitCast(cStruct.cubicWeights))!
+        self.cubicWeights = CubicFilterWeightsQCOM(rawValue: numericBitCast(cStruct.cubicWeights.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkBlitImageCubicWeightsInfoQCOM>) throws(E) -> R) throws(E) -> R {
@@ -43462,7 +43462,7 @@ public struct BlitImageCubicWeightsInfoQCOM: ChainableBase, BlitImageInfo2Extens
 
 public protocol BlitImageCubicWeightsInfoQCOMExtension: Chainable {}
 
-public struct PhysicalDeviceImageProcessing2FeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceImageProcessing2FeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceImageProcessing2FeaturesQCOM
 
     public static let structureType: StructureType = .physicalDeviceImageProcessing2FeaturesQCOM
@@ -43491,7 +43491,7 @@ public struct PhysicalDeviceImageProcessing2FeaturesQCOM: ChainableBase, Physica
 
 public protocol PhysicalDeviceImageProcessing2FeaturesQCOMExtension: Chainable {}
 
-public struct PhysicalDeviceImageProcessing2PropertiesQCOM: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceImageProcessing2PropertiesQCOM: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceImageProcessing2PropertiesQCOM
 
     public static let structureType: StructureType = .physicalDeviceImageProcessing2PropertiesQCOM
@@ -43532,7 +43532,7 @@ public struct SamplerBlockMatchWindowCreateInfoQCOM: ChainableBase, SamplerCreat
 
     public init(cStruct: VkSamplerBlockMatchWindowCreateInfoQCOM) {
         self.windowExtent = Extent2D(cStruct: cStruct.windowExtent)
-        self.windowCompareMode = BlockMatchWindowCompareModeQCOM(rawValue: numericBitCast(cStruct.windowCompareMode))!
+        self.windowCompareMode = BlockMatchWindowCompareModeQCOM(rawValue: numericBitCast(cStruct.windowCompareMode.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkSamplerBlockMatchWindowCreateInfoQCOM>) throws(E) -> R) throws(E) -> R {
@@ -43553,7 +43553,7 @@ public struct SamplerBlockMatchWindowCreateInfoQCOM: ChainableBase, SamplerCreat
 
 public protocol SamplerBlockMatchWindowCreateInfoQCOMExtension: Chainable {}
 
-public struct PhysicalDeviceImageProcessing3FeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceImageProcessing3FeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceImageProcessing3FeaturesQCOM
 
     public static let structureType: StructureType = .physicalDeviceImageProcessing3FeaturesQCOM
@@ -43590,7 +43590,7 @@ public struct PhysicalDeviceImageProcessing3FeaturesQCOM: ChainableBase, Physica
 
 public protocol PhysicalDeviceImageProcessing3FeaturesQCOMExtension: Chainable {}
 
-public struct PhysicalDeviceDescriptorPoolOverallocationFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceDescriptorPoolOverallocationFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDescriptorPoolOverallocationFeaturesNV
 
     public static let structureType: StructureType = .physicalDeviceDescriptorPoolOverallocationFeaturesNV
@@ -43619,14 +43619,14 @@ public struct PhysicalDeviceDescriptorPoolOverallocationFeaturesNV: ChainableBas
 
 public protocol PhysicalDeviceDescriptorPoolOverallocationFeaturesNVExtension: Chainable {}
 
-public struct PhysicalDeviceLayeredDriverPropertiesMSFT: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceLayeredDriverPropertiesMSFT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceLayeredDriverPropertiesMSFT
 
     public static let structureType: StructureType = .physicalDeviceLayeredDriverPropertiesMSFT
     public let underlyingAPI: LayeredDriverUnderlyingApiMSFT
 
     public init(cStruct: VkPhysicalDeviceLayeredDriverPropertiesMSFT) {
-        self.underlyingAPI = LayeredDriverUnderlyingApiMSFT(rawValue: numericBitCast(cStruct.underlyingAPI))!
+        self.underlyingAPI = LayeredDriverUnderlyingApiMSFT(rawValue: numericBitCast(cStruct.underlyingAPI.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPhysicalDeviceLayeredDriverPropertiesMSFT>) throws(E) -> R) throws(E) -> R {
@@ -43644,7 +43644,7 @@ public struct PhysicalDeviceLayeredDriverPropertiesMSFT: ChainableBase, Physical
 
 public protocol PhysicalDeviceLayeredDriverPropertiesMSFTExtension: Chainable {}
 
-public struct PhysicalDevicePerStageDescriptorSetFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDevicePerStageDescriptorSetFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePerStageDescriptorSetFeaturesNV
 
     public static let structureType: StructureType = .physicalDevicePerStageDescriptorSetFeaturesNV
@@ -43678,7 +43678,7 @@ public struct PhysicalDevicePerStageDescriptorSetFeaturesNV: ChainableBase, Phys
 public protocol PhysicalDevicePerStageDescriptorSetFeaturesNVExtension: Chainable {}
 
 #if VK_USE_PLATFORM_ANDROID_KHR
-public struct PhysicalDeviceExternalFormatResolveFeaturesANDROID: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceExternalFormatResolveFeaturesANDROID: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceExternalFormatResolveFeaturesANDROID
 
     public static let structureType: StructureType = .physicalDeviceExternalFormatResolveFeaturesANDROID
@@ -43709,7 +43709,7 @@ public struct PhysicalDeviceExternalFormatResolveFeaturesANDROID: ChainableBase,
 public protocol PhysicalDeviceExternalFormatResolveFeaturesANDROIDExtension: Chainable {}
 
 #if VK_USE_PLATFORM_ANDROID_KHR
-public struct PhysicalDeviceExternalFormatResolvePropertiesANDROID: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceExternalFormatResolvePropertiesANDROID: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceExternalFormatResolvePropertiesANDROID
 
     public static let structureType: StructureType = .physicalDeviceExternalFormatResolvePropertiesANDROID
@@ -43719,8 +43719,8 @@ public struct PhysicalDeviceExternalFormatResolvePropertiesANDROID: ChainableBas
 
     public init(cStruct: VkPhysicalDeviceExternalFormatResolvePropertiesANDROID) {
         self.nullColorAttachmentWithExternalFormatResolve = cStruct.nullColorAttachmentWithExternalFormatResolve == VK_TRUE
-        self.externalFormatResolveChromaOffsetX = ChromaLocation(rawValue: numericBitCast(cStruct.externalFormatResolveChromaOffsetX))!
-        self.externalFormatResolveChromaOffsetY = ChromaLocation(rawValue: numericBitCast(cStruct.externalFormatResolveChromaOffsetY))!
+        self.externalFormatResolveChromaOffsetX = ChromaLocation(rawValue: numericBitCast(cStruct.externalFormatResolveChromaOffsetX.rawValue))!
+        self.externalFormatResolveChromaOffsetY = ChromaLocation(rawValue: numericBitCast(cStruct.externalFormatResolveChromaOffsetY.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPhysicalDeviceExternalFormatResolvePropertiesANDROID>) throws(E) -> R) throws(E) -> R {
@@ -43742,14 +43742,14 @@ public struct PhysicalDeviceExternalFormatResolvePropertiesANDROID: ChainableBas
 public protocol PhysicalDeviceExternalFormatResolvePropertiesANDROIDExtension: Chainable {}
 
 #if VK_USE_PLATFORM_ANDROID_KHR
-public struct AndroidHardwareBufferFormatResolvePropertiesANDROID: ChainableBase, AndroidHardwareBufferPropertiesANDROIDExtension, OutStruct {
+public struct AndroidHardwareBufferFormatResolvePropertiesANDROID: ChainableBase, AndroidHardwareBufferPropertiesANDROIDExtension {
     public typealias CStruct = VkAndroidHardwareBufferFormatResolvePropertiesANDROID
 
     public static let structureType: StructureType = .androidHardwareBufferFormatResolvePropertiesANDROID
     public let colorAttachmentFormat: Format
 
     public init(cStruct: VkAndroidHardwareBufferFormatResolvePropertiesANDROID) {
-        self.colorAttachmentFormat = Format(rawValue: numericBitCast(cStruct.colorAttachmentFormat))!
+        self.colorAttachmentFormat = Format(rawValue: numericBitCast(cStruct.colorAttachmentFormat.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkAndroidHardwareBufferFormatResolvePropertiesANDROID>) throws(E) -> R) throws(E) -> R {
@@ -43817,7 +43817,7 @@ public struct LatencySleepInfoNV: ChainableBase {
         self.value = value
     }
 
-    public init(cStruct: VkLatencySleepInfoNV, device: Device?) {
+    public init(cStruct: VkLatencySleepInfoNV, device: Device) {
         self.signalSemaphore = Semaphore(handle: cStruct.signalSemaphore, device: device)
         self.value = cStruct.value
     }
@@ -43852,7 +43852,7 @@ public struct SetLatencyMarkerInfoNV: ChainableBase {
 
     public init(cStruct: VkSetLatencyMarkerInfoNV) {
         self.presentID = cStruct.presentID
-        self.marker = LatencyMarkerNV(rawValue: numericBitCast(cStruct.marker))!
+        self.marker = LatencyMarkerNV(rawValue: numericBitCast(cStruct.marker.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkSetLatencyMarkerInfoNV>) throws(E) -> R) throws(E) -> R {
@@ -43871,7 +43871,7 @@ public struct SetLatencyMarkerInfoNV: ChainableBase {
 
 public protocol SetLatencyMarkerInfoNVExtension: Chainable {}
 
-public struct LatencyTimingsFrameReportNV: ChainableBase, OutStruct {
+public struct LatencyTimingsFrameReportNV: ChainableBase {
     public typealias CStruct = VkLatencyTimingsFrameReportNV
 
     public static let structureType: StructureType = .latencyTimingsFrameReportNV
@@ -43979,7 +43979,7 @@ public struct OutOfBandQueueTypeInfoNV: ChainableBase {
     }
 
     public init(cStruct: VkOutOfBandQueueTypeInfoNV) {
-        self.queueType = OutOfBandQueueTypeNV(rawValue: numericBitCast(cStruct.queueType))!
+        self.queueType = OutOfBandQueueTypeNV(rawValue: numericBitCast(cStruct.queueType.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkOutOfBandQueueTypeInfoNV>) throws(E) -> R) throws(E) -> R {
@@ -44089,7 +44089,7 @@ public struct LatencySurfaceCapabilitiesNV: ChainableBase, SurfaceCapabilities2K
 public protocol LatencySurfaceCapabilitiesNVExtension: Chainable {}
 
 #if VK_ENABLE_BETA_EXTENSIONS
-public struct PhysicalDeviceCudaKernelLaunchFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceCudaKernelLaunchFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceCudaKernelLaunchFeaturesNV
 
     public static let structureType: StructureType = .physicalDeviceCudaKernelLaunchFeaturesNV
@@ -44120,7 +44120,7 @@ public struct PhysicalDeviceCudaKernelLaunchFeaturesNV: ChainableBase, PhysicalD
 public protocol PhysicalDeviceCudaKernelLaunchFeaturesNVExtension: Chainable {}
 
 #if VK_ENABLE_BETA_EXTENSIONS
-public struct PhysicalDeviceCudaKernelLaunchPropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceCudaKernelLaunchPropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceCudaKernelLaunchPropertiesNV
 
     public static let structureType: StructureType = .physicalDeviceCudaKernelLaunchPropertiesNV
@@ -44149,7 +44149,7 @@ public struct PhysicalDeviceCudaKernelLaunchPropertiesNV: ChainableBase, Physica
 
 public protocol PhysicalDeviceCudaKernelLaunchPropertiesNVExtension: Chainable {}
 
-public struct DeviceQueueShaderCoreControlCreateInfoARM: ChainableBase, DeviceQueueCreateInfoExtension, DeviceCreateInfoExtension, OutStruct {
+public struct DeviceQueueShaderCoreControlCreateInfoARM: ChainableBase, DeviceQueueCreateInfoExtension, DeviceCreateInfoExtension {
     public typealias CStruct = VkDeviceQueueShaderCoreControlCreateInfoARM
 
     public static let structureType: StructureType = .deviceQueueShaderCoreControlCreateInfoARM
@@ -44178,7 +44178,7 @@ public struct DeviceQueueShaderCoreControlCreateInfoARM: ChainableBase, DeviceQu
 
 public protocol DeviceQueueShaderCoreControlCreateInfoARMExtension: Chainable {}
 
-public struct PhysicalDeviceSchedulingControlsFeaturesARM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceSchedulingControlsFeaturesARM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceSchedulingControlsFeaturesARM
 
     public static let structureType: StructureType = .physicalDeviceSchedulingControlsFeaturesARM
@@ -44207,7 +44207,7 @@ public struct PhysicalDeviceSchedulingControlsFeaturesARM: ChainableBase, Physic
 
 public protocol PhysicalDeviceSchedulingControlsFeaturesARMExtension: Chainable {}
 
-public struct PhysicalDeviceSchedulingControlsPropertiesARM: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceSchedulingControlsPropertiesARM: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceSchedulingControlsPropertiesARM
 
     public static let structureType: StructureType = .physicalDeviceSchedulingControlsPropertiesARM
@@ -44232,7 +44232,7 @@ public struct PhysicalDeviceSchedulingControlsPropertiesARM: ChainableBase, Phys
 
 public protocol PhysicalDeviceSchedulingControlsPropertiesARMExtension: Chainable {}
 
-public struct PhysicalDeviceSchedulingControlsDispatchParametersPropertiesARM: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceSchedulingControlsDispatchParametersPropertiesARM: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceSchedulingControlsDispatchParametersPropertiesARM
 
     public static let structureType: StructureType = .physicalDeviceSchedulingControlsDispatchParametersPropertiesARM
@@ -44263,7 +44263,7 @@ public struct PhysicalDeviceSchedulingControlsDispatchParametersPropertiesARM: C
 
 public protocol PhysicalDeviceSchedulingControlsDispatchParametersPropertiesARMExtension: Chainable {}
 
-public struct DispatchParametersARM: ChainableBase, OutStruct {
+public struct DispatchParametersARM: ChainableBase {
     public typealias CStruct = VkDispatchParametersARM
 
     public static let structureType: StructureType = .dispatchParametersARM
@@ -44300,7 +44300,7 @@ public struct DispatchParametersARM: ChainableBase, OutStruct {
 
 public protocol DispatchParametersARMExtension: Chainable {}
 
-public struct PhysicalDeviceRelaxedLineRasterizationFeaturesIMG: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceRelaxedLineRasterizationFeaturesIMG: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceRelaxedLineRasterizationFeaturesIMG
 
     public static let structureType: StructureType = .physicalDeviceRelaxedLineRasterizationFeaturesIMG
@@ -44329,7 +44329,7 @@ public struct PhysicalDeviceRelaxedLineRasterizationFeaturesIMG: ChainableBase, 
 
 public protocol PhysicalDeviceRelaxedLineRasterizationFeaturesIMGExtension: Chainable {}
 
-public struct PhysicalDeviceRenderPassStripedFeaturesARM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceRenderPassStripedFeaturesARM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceRenderPassStripedFeaturesARM
 
     public static let structureType: StructureType = .physicalDeviceRenderPassStripedFeaturesARM
@@ -44358,7 +44358,7 @@ public struct PhysicalDeviceRenderPassStripedFeaturesARM: ChainableBase, Physica
 
 public protocol PhysicalDeviceRenderPassStripedFeaturesARMExtension: Chainable {}
 
-public struct PhysicalDeviceRenderPassStripedPropertiesARM: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceRenderPassStripedPropertiesARM: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceRenderPassStripedPropertiesARM
 
     public static let structureType: StructureType = .physicalDeviceRenderPassStripedPropertiesARM
@@ -44461,7 +44461,7 @@ public struct RenderPassStripeSubmitInfoARM: ChainableBase, CommandBufferSubmitI
         self.stripeSemaphoreInfos = stripeSemaphoreInfos
     }
 
-    public init(cStruct: VkRenderPassStripeSubmitInfoARM, device: Device?) {
+    public init(cStruct: VkRenderPassStripeSubmitInfoARM, device: Device) {
         self.stripeSemaphoreInfos = UnsafeBufferPointer(start: cStruct.pStripeSemaphoreInfos, count: Int(cStruct.stripeSemaphoreInfoCount)).map{ SemaphoreSubmitInfo(cStruct: $0, device: device) }
     }
 
@@ -44483,7 +44483,7 @@ public struct RenderPassStripeSubmitInfoARM: ChainableBase, CommandBufferSubmitI
 
 public protocol RenderPassStripeSubmitInfoARMExtension: Chainable {}
 
-public struct PhysicalDevicePipelineOpacityMicromapFeaturesARM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDevicePipelineOpacityMicromapFeaturesARM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePipelineOpacityMicromapFeaturesARM
 
     public static let structureType: StructureType = .physicalDevicePipelineOpacityMicromapFeaturesARM
@@ -44512,7 +44512,7 @@ public struct PhysicalDevicePipelineOpacityMicromapFeaturesARM: ChainableBase, P
 
 public protocol PhysicalDevicePipelineOpacityMicromapFeaturesARMExtension: Chainable {}
 
-public struct PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderMaximalReconvergenceFeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceShaderMaximalReconvergenceFeaturesKHR
@@ -44541,7 +44541,7 @@ public struct PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR: ChainableBase
 
 public protocol PhysicalDeviceShaderMaximalReconvergenceFeaturesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceShaderSubgroupRotateFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderSubgroupRotateFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderSubgroupRotateFeatures
 
     public static let structureType: StructureType = .physicalDeviceShaderSubgroupRotateFeatures
@@ -44574,7 +44574,7 @@ public struct PhysicalDeviceShaderSubgroupRotateFeatures: ChainableBase, Physica
 
 public protocol PhysicalDeviceShaderSubgroupRotateFeaturesExtension: Chainable {}
 
-public struct PhysicalDeviceShaderExpectAssumeFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderExpectAssumeFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderExpectAssumeFeatures
 
     public static let structureType: StructureType = .physicalDeviceShaderExpectAssumeFeatures
@@ -44603,7 +44603,7 @@ public struct PhysicalDeviceShaderExpectAssumeFeatures: ChainableBase, PhysicalD
 
 public protocol PhysicalDeviceShaderExpectAssumeFeaturesExtension: Chainable {}
 
-public struct PhysicalDeviceShaderFloatControls2Features: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderFloatControls2Features: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderFloatControls2Features
 
     public static let structureType: StructureType = .physicalDeviceShaderFloatControls2Features
@@ -44632,7 +44632,7 @@ public struct PhysicalDeviceShaderFloatControls2Features: ChainableBase, Physica
 
 public protocol PhysicalDeviceShaderFloatControls2FeaturesExtension: Chainable {}
 
-public struct PhysicalDeviceDynamicRenderingLocalReadFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceDynamicRenderingLocalReadFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDynamicRenderingLocalReadFeatures
 
     public static let structureType: StructureType = .physicalDeviceDynamicRenderingLocalReadFeatures
@@ -44733,7 +44733,7 @@ public struct RenderingInputAttachmentIndexInfo: ChainableBase, GraphicsPipeline
 
 public protocol RenderingInputAttachmentIndexInfoExtension: Chainable {}
 
-public struct PhysicalDeviceShaderQuadControlFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderQuadControlFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderQuadControlFeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceShaderQuadControlFeaturesKHR
@@ -44762,7 +44762,7 @@ public struct PhysicalDeviceShaderQuadControlFeaturesKHR: ChainableBase, Physica
 
 public protocol PhysicalDeviceShaderQuadControlFeaturesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderAtomicFloat16VectorFeaturesNV
 
     public static let structureType: StructureType = .physicalDeviceShaderAtomicFloat16VectorFeaturesNV
@@ -44791,7 +44791,7 @@ public struct PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV: ChainableBase, 
 
 public protocol PhysicalDeviceShaderAtomicFloat16VectorFeaturesNVExtension: Chainable {}
 
-public struct PhysicalDeviceMapMemoryPlacedFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceMapMemoryPlacedFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceMapMemoryPlacedFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceMapMemoryPlacedFeaturesEXT
@@ -44828,7 +44828,7 @@ public struct PhysicalDeviceMapMemoryPlacedFeaturesEXT: ChainableBase, PhysicalD
 
 public protocol PhysicalDeviceMapMemoryPlacedFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceMapMemoryPlacedPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceMapMemoryPlacedPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceMapMemoryPlacedPropertiesEXT
 
     public static let structureType: StructureType = .physicalDeviceMapMemoryPlacedPropertiesEXT
@@ -44882,7 +44882,7 @@ public struct MemoryMapPlacedInfoEXT: ChainableBase, MemoryMapInfoExtension {
 
 public protocol MemoryMapPlacedInfoEXTExtension: Chainable {}
 
-public struct PhysicalDeviceShaderBfloat16FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderBfloat16FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderBfloat16FeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceShaderBfloat16FeaturesKHR
@@ -44919,7 +44919,7 @@ public struct PhysicalDeviceShaderBfloat16FeaturesKHR: ChainableBase, PhysicalDe
 
 public protocol PhysicalDeviceShaderBfloat16FeaturesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceRawAccessChainsFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceRawAccessChainsFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceRawAccessChainsFeaturesNV
 
     public static let structureType: StructureType = .physicalDeviceRawAccessChainsFeaturesNV
@@ -44948,7 +44948,7 @@ public struct PhysicalDeviceRawAccessChainsFeaturesNV: ChainableBase, PhysicalDe
 
 public protocol PhysicalDeviceRawAccessChainsFeaturesNVExtension: Chainable {}
 
-public struct PhysicalDeviceCommandBufferInheritanceFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceCommandBufferInheritanceFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceCommandBufferInheritanceFeaturesNV
 
     public static let structureType: StructureType = .physicalDeviceCommandBufferInheritanceFeaturesNV
@@ -44977,7 +44977,7 @@ public struct PhysicalDeviceCommandBufferInheritanceFeaturesNV: ChainableBase, P
 
 public protocol PhysicalDeviceCommandBufferInheritanceFeaturesNVExtension: Chainable {}
 
-public struct PhysicalDeviceImageAlignmentControlFeaturesMESA: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceImageAlignmentControlFeaturesMESA: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceImageAlignmentControlFeaturesMESA
 
     public static let structureType: StructureType = .physicalDeviceImageAlignmentControlFeaturesMESA
@@ -45006,7 +45006,7 @@ public struct PhysicalDeviceImageAlignmentControlFeaturesMESA: ChainableBase, Ph
 
 public protocol PhysicalDeviceImageAlignmentControlFeaturesMESAExtension: Chainable {}
 
-public struct PhysicalDeviceImageAlignmentControlPropertiesMESA: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceImageAlignmentControlPropertiesMESA: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceImageAlignmentControlPropertiesMESA
 
     public static let structureType: StructureType = .physicalDeviceImageAlignmentControlPropertiesMESA
@@ -45060,7 +45060,7 @@ public struct ImageAlignmentControlCreateInfoMESA: ChainableBase, ImageCreateInf
 
 public protocol ImageAlignmentControlCreateInfoMESAExtension: Chainable {}
 
-public struct PhysicalDeviceShaderReplicatedCompositesFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderReplicatedCompositesFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderReplicatedCompositesFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceShaderReplicatedCompositesFeaturesEXT
@@ -45089,7 +45089,7 @@ public struct PhysicalDeviceShaderReplicatedCompositesFeaturesEXT: ChainableBase
 
 public protocol PhysicalDeviceShaderReplicatedCompositesFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePresentModeFifoLatestReadyFeaturesKHR
 
     public static let structureType: StructureType = .physicalDevicePresentModeFifoLatestReadyFeaturesKHR
@@ -45118,7 +45118,7 @@ public struct PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR: ChainableBase
 
 public protocol PhysicalDevicePresentModeFifoLatestReadyFeaturesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceCooperativeMatrix2FeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceCooperativeMatrix2FeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceCooperativeMatrix2FeaturesNV
 
     public static let structureType: StructureType = .physicalDeviceCooperativeMatrix2FeaturesNV
@@ -45171,7 +45171,7 @@ public struct PhysicalDeviceCooperativeMatrix2FeaturesNV: ChainableBase, Physica
 
 public protocol PhysicalDeviceCooperativeMatrix2FeaturesNVExtension: Chainable {}
 
-public struct PhysicalDeviceCooperativeMatrix2PropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceCooperativeMatrix2PropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceCooperativeMatrix2PropertiesNV
 
     public static let structureType: StructureType = .physicalDeviceCooperativeMatrix2PropertiesNV
@@ -45202,7 +45202,7 @@ public struct PhysicalDeviceCooperativeMatrix2PropertiesNV: ChainableBase, Physi
 
 public protocol PhysicalDeviceCooperativeMatrix2PropertiesNVExtension: Chainable {}
 
-public struct CooperativeMatrixFlexibleDimensionsPropertiesNV: ChainableBase, OutStruct {
+public struct CooperativeMatrixFlexibleDimensionsPropertiesNV: ChainableBase {
     public typealias CStruct = VkCooperativeMatrixFlexibleDimensionsPropertiesNV
 
     public static let structureType: StructureType = .cooperativeMatrixFlexibleDimensionsPropertiesNV
@@ -45221,12 +45221,12 @@ public struct CooperativeMatrixFlexibleDimensionsPropertiesNV: ChainableBase, Ou
         self.MGranularity = cStruct.MGranularity
         self.NGranularity = cStruct.NGranularity
         self.KGranularity = cStruct.KGranularity
-        self.AType = ComponentTypeKHR(rawValue: numericBitCast(cStruct.AType))!
-        self.BType = ComponentTypeKHR(rawValue: numericBitCast(cStruct.BType))!
-        self.CType = ComponentTypeKHR(rawValue: numericBitCast(cStruct.CType))!
-        self.ResultType = ComponentTypeKHR(rawValue: numericBitCast(cStruct.ResultType))!
+        self.AType = ComponentTypeKHR(rawValue: numericBitCast(cStruct.AType.rawValue))!
+        self.BType = ComponentTypeKHR(rawValue: numericBitCast(cStruct.BType.rawValue))!
+        self.CType = ComponentTypeKHR(rawValue: numericBitCast(cStruct.CType.rawValue))!
+        self.ResultType = ComponentTypeKHR(rawValue: numericBitCast(cStruct.ResultType.rawValue))!
         self.saturatingAccumulation = cStruct.saturatingAccumulation == VK_TRUE
-        self.scope = ScopeKHR(rawValue: numericBitCast(cStruct.scope))!
+        self.scope = ScopeKHR(rawValue: numericBitCast(cStruct.scope.rawValue))!
         self.workgroupInvocations = cStruct.workgroupInvocations
     }
 
@@ -45254,7 +45254,7 @@ public struct CooperativeMatrixFlexibleDimensionsPropertiesNV: ChainableBase, Ou
 
 public protocol CooperativeMatrixFlexibleDimensionsPropertiesNVExtension: Chainable {}
 
-public struct PhysicalDeviceHdrVividFeaturesHUAWEI: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceHdrVividFeaturesHUAWEI: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceHdrVividFeaturesHUAWEI
 
     public static let structureType: StructureType = .physicalDeviceHdrVividFeaturesHUAWEI
@@ -45283,7 +45283,7 @@ public struct PhysicalDeviceHdrVividFeaturesHUAWEI: ChainableBase, PhysicalDevic
 
 public protocol PhysicalDeviceHdrVividFeaturesHUAWEIExtension: Chainable {}
 
-public struct PhysicalDeviceVertexAttributeRobustnessFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceVertexAttributeRobustnessFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceVertexAttributeRobustnessFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceVertexAttributeRobustnessFeaturesEXT
@@ -45313,7 +45313,7 @@ public struct PhysicalDeviceVertexAttributeRobustnessFeaturesEXT: ChainableBase,
 public protocol PhysicalDeviceVertexAttributeRobustnessFeaturesEXTExtension: Chainable {}
 
 #if VK_ENABLE_BETA_EXTENSIONS
-public struct PhysicalDeviceDenseGeometryFormatFeaturesAMDX: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceDenseGeometryFormatFeaturesAMDX: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDenseGeometryFormatFeaturesAMDX
 
     public static let structureType: StructureType = .physicalDeviceDenseGeometryFormatFeaturesAMDX
@@ -45373,7 +45373,7 @@ public struct AccelerationStructureDenseGeometryFormatTrianglesDataAMDX: Chainab
         self.numVertices = cStruct.numVertices
         self.maxPrimitiveIndex = cStruct.maxPrimitiveIndex
         self.maxGeometryIndex = cStruct.maxGeometryIndex
-        self.format = CompressedTriangleFormatAMDX(rawValue: numericBitCast(cStruct.format))!
+        self.format = CompressedTriangleFormatAMDX(rawValue: numericBitCast(cStruct.format.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkAccelerationStructureDenseGeometryFormatTrianglesDataAMDX>) throws(E) -> R) throws(E) -> R {
@@ -45398,7 +45398,7 @@ public struct AccelerationStructureDenseGeometryFormatTrianglesDataAMDX: Chainab
 
 public protocol AccelerationStructureDenseGeometryFormatTrianglesDataAMDXExtension: Chainable {}
 
-public struct PhysicalDeviceDepthClampZeroOneFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceDepthClampZeroOneFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDepthClampZeroOneFeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceDepthClampZeroOneFeaturesKHR
@@ -45427,7 +45427,7 @@ public struct PhysicalDeviceDepthClampZeroOneFeaturesKHR: ChainableBase, Physica
 
 public protocol PhysicalDeviceDepthClampZeroOneFeaturesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceCooperativeVectorFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceCooperativeVectorFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceCooperativeVectorFeaturesNV
 
     public static let structureType: StructureType = .physicalDeviceCooperativeVectorFeaturesNV
@@ -45460,7 +45460,7 @@ public struct PhysicalDeviceCooperativeVectorFeaturesNV: ChainableBase, Physical
 
 public protocol PhysicalDeviceCooperativeVectorFeaturesNVExtension: Chainable {}
 
-public struct CooperativeVectorPropertiesNV: ChainableBase, OutStruct {
+public struct CooperativeVectorPropertiesNV: ChainableBase {
     public typealias CStruct = VkCooperativeVectorPropertiesNV
 
     public static let structureType: StructureType = .cooperativeVectorPropertiesNV
@@ -45481,11 +45481,11 @@ public struct CooperativeVectorPropertiesNV: ChainableBase, OutStruct {
     }
 
     public init(cStruct: VkCooperativeVectorPropertiesNV) {
-        self.inputType = ComponentTypeKHR(rawValue: numericBitCast(cStruct.inputType))!
-        self.inputInterpretation = ComponentTypeKHR(rawValue: numericBitCast(cStruct.inputInterpretation))!
-        self.matrixInterpretation = ComponentTypeKHR(rawValue: numericBitCast(cStruct.matrixInterpretation))!
-        self.biasInterpretation = ComponentTypeKHR(rawValue: numericBitCast(cStruct.biasInterpretation))!
-        self.resultType = ComponentTypeKHR(rawValue: numericBitCast(cStruct.resultType))!
+        self.inputType = ComponentTypeKHR(rawValue: numericBitCast(cStruct.inputType.rawValue))!
+        self.inputInterpretation = ComponentTypeKHR(rawValue: numericBitCast(cStruct.inputInterpretation.rawValue))!
+        self.matrixInterpretation = ComponentTypeKHR(rawValue: numericBitCast(cStruct.matrixInterpretation.rawValue))!
+        self.biasInterpretation = ComponentTypeKHR(rawValue: numericBitCast(cStruct.biasInterpretation.rawValue))!
+        self.resultType = ComponentTypeKHR(rawValue: numericBitCast(cStruct.resultType.rawValue))!
         self.transpose = cStruct.transpose == VK_TRUE
     }
 
@@ -45509,7 +45509,7 @@ public struct CooperativeVectorPropertiesNV: ChainableBase, OutStruct {
 
 public protocol CooperativeVectorPropertiesNVExtension: Chainable {}
 
-public struct PhysicalDeviceCooperativeVectorPropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceCooperativeVectorPropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceCooperativeVectorPropertiesNV
 
     public static let structureType: StructureType = .physicalDeviceCooperativeVectorPropertiesNV
@@ -45580,13 +45580,13 @@ public struct ConvertCooperativeVectorMatrixInfoNV: ChainableBase {
         self.srcData = cStruct.srcData
         self.dstSize = cStruct.pDstSize
         self.dstData = cStruct.dstData
-        self.srcComponentType = ComponentTypeKHR(rawValue: numericBitCast(cStruct.srcComponentType))!
-        self.dstComponentType = ComponentTypeKHR(rawValue: numericBitCast(cStruct.dstComponentType))!
+        self.srcComponentType = ComponentTypeKHR(rawValue: numericBitCast(cStruct.srcComponentType.rawValue))!
+        self.dstComponentType = ComponentTypeKHR(rawValue: numericBitCast(cStruct.dstComponentType.rawValue))!
         self.numRows = cStruct.numRows
         self.numColumns = cStruct.numColumns
-        self.srcLayout = CooperativeVectorMatrixLayoutNV(rawValue: numericBitCast(cStruct.srcLayout))!
+        self.srcLayout = CooperativeVectorMatrixLayoutNV(rawValue: numericBitCast(cStruct.srcLayout.rawValue))!
         self.srcStride = cStruct.srcStride
-        self.dstLayout = CooperativeVectorMatrixLayoutNV(rawValue: numericBitCast(cStruct.dstLayout))!
+        self.dstLayout = CooperativeVectorMatrixLayoutNV(rawValue: numericBitCast(cStruct.dstLayout.rawValue))!
         self.dstStride = cStruct.dstStride
     }
 
@@ -45616,7 +45616,7 @@ public struct ConvertCooperativeVectorMatrixInfoNV: ChainableBase {
 
 public protocol ConvertCooperativeVectorMatrixInfoNVExtension: Chainable {}
 
-public struct PhysicalDeviceTileShadingFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceTileShadingFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceTileShadingFeaturesQCOM
 
     public static let structureType: StructureType = .physicalDeviceTileShadingFeaturesQCOM
@@ -45697,7 +45697,7 @@ public struct PhysicalDeviceTileShadingFeaturesQCOM: ChainableBase, PhysicalDevi
 
 public protocol PhysicalDeviceTileShadingFeaturesQCOMExtension: Chainable {}
 
-public struct PhysicalDeviceTileShadingPropertiesQCOM: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceTileShadingPropertiesQCOM: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceTileShadingPropertiesQCOM
 
     public static let structureType: StructureType = .physicalDeviceTileShadingPropertiesQCOM
@@ -45845,7 +45845,7 @@ public struct DispatchTileInfoQCOM: ChainableBase {
 
 public protocol DispatchTileInfoQCOMExtension: Chainable {}
 
-public struct PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE
 
     public static let structureType: StructureType = .physicalDeviceFragmentDensityMapLayeredPropertiesVALVE
@@ -45870,7 +45870,7 @@ public struct PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE: ChainableB
 
 public protocol PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVEExtension: Chainable {}
 
-public struct PhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE
 
     public static let structureType: StructureType = .physicalDeviceFragmentDensityMapLayeredFeaturesVALVE
@@ -45961,7 +45961,7 @@ public struct SetPresentConfigNV: ChainableBase, PresentInfoKHRExtension {
 
 public protocol SetPresentConfigNVExtension: Chainable {}
 
-public struct PhysicalDevicePresentMeteringFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDevicePresentMeteringFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePresentMeteringFeaturesNV
 
     public static let structureType: StructureType = .physicalDevicePresentMeteringFeaturesNV
@@ -46029,7 +46029,7 @@ public struct ExternalComputeQueueCreateInfoNV: ChainableBase {
         self.preferredQueue = preferredQueue
     }
 
-    public init(cStruct: VkExternalComputeQueueCreateInfoNV, device: Device?) {
+    public init(cStruct: VkExternalComputeQueueCreateInfoNV, device: Device) {
         self.preferredQueue = Queue(handle: cStruct.preferredQueue, device: device)
     }
 
@@ -46077,7 +46077,7 @@ public struct ExternalComputeQueueDataParamsNV: ChainableBase {
 
 public protocol ExternalComputeQueueDataParamsNVExtension: Chainable {}
 
-public struct PhysicalDeviceExternalComputeQueuePropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceExternalComputeQueuePropertiesNV: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceExternalComputeQueuePropertiesNV
 
     public static let structureType: StructureType = .physicalDeviceExternalComputeQueuePropertiesNV
@@ -46105,7 +46105,7 @@ public struct PhysicalDeviceExternalComputeQueuePropertiesNV: ChainableBase, Phy
 
 public protocol PhysicalDeviceExternalComputeQueuePropertiesNVExtension: Chainable {}
 
-public struct PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT
@@ -46134,7 +46134,7 @@ public struct PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT: Chainabl
 
 public protocol PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceShaderMixedFloatDotProductFeaturesVALVE: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderMixedFloatDotProductFeaturesVALVE: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderMixedFloatDotProductFeaturesVALVE
 
     public static let structureType: StructureType = .physicalDeviceShaderMixedFloatDotProductFeaturesVALVE
@@ -46175,7 +46175,7 @@ public struct PhysicalDeviceShaderMixedFloatDotProductFeaturesVALVE: ChainableBa
 
 public protocol PhysicalDeviceShaderMixedFloatDotProductFeaturesVALVEExtension: Chainable {}
 
-public struct PhysicalDevicePrimitiveRestartIndexFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDevicePrimitiveRestartIndexFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePrimitiveRestartIndexFeaturesEXT
 
     public static let structureType: StructureType = .physicalDevicePrimitiveRestartIndexFeaturesEXT
@@ -46204,7 +46204,7 @@ public struct PhysicalDevicePrimitiveRestartIndexFeaturesEXT: ChainableBase, Phy
 
 public protocol PhysicalDevicePrimitiveRestartIndexFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceFormatPackFeaturesARM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceFormatPackFeaturesARM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceFormatPackFeaturesARM
 
     public static let structureType: StructureType = .physicalDeviceFormatPackFeaturesARM
@@ -46233,7 +46233,7 @@ public struct PhysicalDeviceFormatPackFeaturesARM: ChainableBase, PhysicalDevice
 
 public protocol PhysicalDeviceFormatPackFeaturesARMExtension: Chainable {}
 
-public struct PhysicalDeviceThrottleHintFeaturesSEC: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceThrottleHintFeaturesSEC: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceThrottleHintFeaturesSEC
 
     public static let structureType: StructureType = .physicalDeviceThrottleHintFeaturesSEC
@@ -46273,7 +46273,7 @@ public struct ThrottleHintSubmitInfoSEC: ChainableBase, SubmitInfoExtension {
     }
 
     public init(cStruct: VkThrottleHintSubmitInfoSEC) {
-        self.throttleHint = ThrottleHintTypeSEC(rawValue: numericBitCast(cStruct.throttleHint))!
+        self.throttleHint = ThrottleHintTypeSEC(rawValue: numericBitCast(cStruct.throttleHint.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkThrottleHintSubmitInfoSEC>) throws(E) -> R) throws(E) -> R {
@@ -46310,8 +46310,8 @@ public struct TensorDescriptionARM: ChainableBase, DataGraphPipelineResourceInfo
     }
 
     public init(cStruct: VkTensorDescriptionARM) {
-        self.tiling = TensorTilingARM(rawValue: numericBitCast(cStruct.tiling))!
-        self.format = Format(rawValue: numericBitCast(cStruct.format))!
+        self.tiling = TensorTilingARM(rawValue: numericBitCast(cStruct.tiling.rawValue))!
+        self.format = Format(rawValue: numericBitCast(cStruct.format.rawValue))!
         self.dimensions = Array(UnsafeBufferPointer(start: cStruct.pDimensions, count: Int(cStruct.dimensionCount)))
         self.strides = (cStruct.pStrides != nil) ? Array(UnsafeBufferPointer(start: cStruct.pStrides, count: Int(cStruct.dimensionCount))) : nil
         self.usage = TensorUsageFlagsARM(rawValue: cStruct.usage)
@@ -46360,7 +46360,7 @@ public struct TensorCreateInfoARM: ChainableBase {
     public init(cStruct: VkTensorCreateInfoARM) {
         self.flags = TensorCreateFlagsARM(rawValue: cStruct.flags)
         self.description = TensorDescriptionARM(cStruct: cStruct.pDescription.pointee)
-        self.sharingMode = SharingMode(rawValue: numericBitCast(cStruct.sharingMode))!
+        self.sharingMode = SharingMode(rawValue: numericBitCast(cStruct.sharingMode.rawValue))!
         self.queueFamilyIndices = Array(UnsafeBufferPointer(start: cStruct.pQueueFamilyIndices, count: Int(cStruct.queueFamilyIndexCount)))
     }
 
@@ -46401,10 +46401,10 @@ public struct TensorViewCreateInfoARM: ChainableBase {
         self.format = format
     }
 
-    public init(cStruct: VkTensorViewCreateInfoARM, device: Device?) {
+    public init(cStruct: VkTensorViewCreateInfoARM, device: Device) {
         self.flags = TensorViewCreateFlagsARM(rawValue: cStruct.flags)
         self.tensor = TensorARM(handle: cStruct.tensor, device: device)
-        self.format = Format(rawValue: numericBitCast(cStruct.format))!
+        self.format = Format(rawValue: numericBitCast(cStruct.format.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkTensorViewCreateInfoARM>) throws(E) -> R) throws(E) -> R {
@@ -46434,7 +46434,7 @@ public struct TensorMemoryRequirementsInfoARM: ChainableBase {
         self.tensor = tensor
     }
 
-    public init(cStruct: VkTensorMemoryRequirementsInfoARM, device: Device?) {
+    public init(cStruct: VkTensorMemoryRequirementsInfoARM, device: Device) {
         self.tensor = TensorARM(handle: cStruct.tensor, device: device)
     }
 
@@ -46467,7 +46467,7 @@ public struct BindTensorMemoryInfoARM: ChainableBase {
         self.memoryOffset = memoryOffset
     }
 
-    public init(cStruct: VkBindTensorMemoryInfoARM, device: Device?) {
+    public init(cStruct: VkBindTensorMemoryInfoARM, device: Device) {
         self.tensor = TensorARM(handle: cStruct.tensor, device: device)
         self.memory = DeviceMemory(handle: cStruct.memory, device: device)
         self.memoryOffset = cStruct.memoryOffset
@@ -46500,7 +46500,7 @@ public struct WriteDescriptorSetTensorARM: ChainableBase, WriteDescriptorSetExte
         self.tensorViews = tensorViews
     }
 
-    public init(cStruct: VkWriteDescriptorSetTensorARM, device: Device?) {
+    public init(cStruct: VkWriteDescriptorSetTensorARM, device: Device) {
         self.tensorViews = UnsafeBufferPointer(start: cStruct.pTensorViews, count: Int(cStruct.tensorViewCount)).map{ ($0 != nil) ? TensorViewARM(handle: $0, device: device) : nil }
     }
 
@@ -46522,7 +46522,7 @@ public struct WriteDescriptorSetTensorARM: ChainableBase, WriteDescriptorSetExte
 
 public protocol WriteDescriptorSetTensorARMExtension: Chainable {}
 
-public struct TensorFormatPropertiesARM: ChainableBase, FormatProperties2Extension, OutStruct {
+public struct TensorFormatPropertiesARM: ChainableBase, FormatProperties2Extension {
     public typealias CStruct = VkTensorFormatPropertiesARM
 
     public static let structureType: StructureType = .tensorFormatPropertiesARM
@@ -46550,7 +46550,7 @@ public struct TensorFormatPropertiesARM: ChainableBase, FormatProperties2Extensi
 
 public protocol TensorFormatPropertiesARMExtension: Chainable {}
 
-public struct PhysicalDeviceTensorPropertiesARM: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceTensorPropertiesARM: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceTensorPropertiesARM
 
     public static let structureType: StructureType = .physicalDeviceTensorPropertiesARM
@@ -46633,7 +46633,7 @@ public struct TensorMemoryBarrierARM: ChainableBase, DependencyInfoExtension {
         self.tensor = tensor
     }
 
-    public init(cStruct: VkTensorMemoryBarrierARM, device: Device?) {
+    public init(cStruct: VkTensorMemoryBarrierARM, device: Device) {
         self.srcStageMask = PipelineStageFlags2(rawValue: cStruct.srcStageMask)
         self.srcAccessMask = AccessFlags2(rawValue: cStruct.srcAccessMask)
         self.dstStageMask = PipelineStageFlags2(rawValue: cStruct.dstStageMask)
@@ -46674,7 +46674,7 @@ public struct TensorDependencyInfoARM: ChainableBase, DependencyInfoExtension {
         self.tensorMemoryBarriers = tensorMemoryBarriers
     }
 
-    public init(cStruct: VkTensorDependencyInfoARM, device: Device?) {
+    public init(cStruct: VkTensorDependencyInfoARM, device: Device) {
         self.tensorMemoryBarriers = UnsafeBufferPointer(start: cStruct.pTensorMemoryBarriers, count: Int(cStruct.tensorMemoryBarrierCount)).map{ TensorMemoryBarrierARM(cStruct: $0, device: device) }
     }
 
@@ -46696,7 +46696,7 @@ public struct TensorDependencyInfoARM: ChainableBase, DependencyInfoExtension {
 
 public protocol TensorDependencyInfoARMExtension: Chainable {}
 
-public struct PhysicalDeviceTensorFeaturesARM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceTensorFeaturesARM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceTensorFeaturesARM
 
     public static let structureType: StructureType = .physicalDeviceTensorFeaturesARM
@@ -46834,7 +46834,7 @@ public struct CopyTensorInfoARM: ChainableBase {
         self.regions = regions
     }
 
-    public init(cStruct: VkCopyTensorInfoARM, device: Device?) {
+    public init(cStruct: VkCopyTensorInfoARM, device: Device) {
         self.srcTensor = TensorARM(handle: cStruct.srcTensor, device: device)
         self.dstTensor = TensorARM(handle: cStruct.dstTensor, device: device)
         self.regions = UnsafeBufferPointer(start: cStruct.pRegions, count: Int(cStruct.regionCount)).map{ TensorCopyARM(cStruct: $0) }
@@ -46870,7 +46870,7 @@ public struct MemoryDedicatedAllocateInfoTensorARM: ChainableBase, MemoryAllocat
         self.tensor = tensor
     }
 
-    public init(cStruct: VkMemoryDedicatedAllocateInfoTensorARM, device: Device?) {
+    public init(cStruct: VkMemoryDedicatedAllocateInfoTensorARM, device: Device) {
         self.tensor = TensorARM(handle: cStruct.tensor, device: device)
     }
 
@@ -46889,7 +46889,7 @@ public struct MemoryDedicatedAllocateInfoTensorARM: ChainableBase, MemoryAllocat
 
 public protocol MemoryDedicatedAllocateInfoTensorARMExtension: Chainable {}
 
-public struct PhysicalDeviceDescriptorBufferTensorPropertiesARM: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceDescriptorBufferTensorPropertiesARM: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceDescriptorBufferTensorPropertiesARM
 
     public static let structureType: StructureType = .physicalDeviceDescriptorBufferTensorPropertiesARM
@@ -46926,7 +46926,7 @@ public struct PhysicalDeviceDescriptorBufferTensorPropertiesARM: ChainableBase, 
 
 public protocol PhysicalDeviceDescriptorBufferTensorPropertiesARMExtension: Chainable {}
 
-public struct PhysicalDeviceDescriptorBufferTensorFeaturesARM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceDescriptorBufferTensorFeaturesARM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDescriptorBufferTensorFeaturesARM
 
     public static let structureType: StructureType = .physicalDeviceDescriptorBufferTensorFeaturesARM
@@ -46965,7 +46965,7 @@ public struct TensorCaptureDescriptorDataInfoARM: ChainableBase {
         self.tensor = tensor
     }
 
-    public init(cStruct: VkTensorCaptureDescriptorDataInfoARM, device: Device?) {
+    public init(cStruct: VkTensorCaptureDescriptorDataInfoARM, device: Device) {
         self.tensor = TensorARM(handle: cStruct.tensor, device: device)
     }
 
@@ -46994,7 +46994,7 @@ public struct TensorViewCaptureDescriptorDataInfoARM: ChainableBase {
         self.tensorView = tensorView
     }
 
-    public init(cStruct: VkTensorViewCaptureDescriptorDataInfoARM, device: Device?) {
+    public init(cStruct: VkTensorViewCaptureDescriptorDataInfoARM, device: Device) {
         self.tensorView = TensorViewARM(handle: cStruct.tensorView, device: device)
     }
 
@@ -47023,7 +47023,7 @@ public struct DescriptorGetTensorInfoARM: ChainableBase, DescriptorGetInfoEXTExt
         self.tensorView = tensorView
     }
 
-    public init(cStruct: VkDescriptorGetTensorInfoARM, device: Device?) {
+    public init(cStruct: VkDescriptorGetTensorInfoARM, device: Device) {
         self.tensorView = (cStruct.tensorView != nil) ? TensorViewARM(handle: cStruct.tensorView, device: device) : nil
     }
 
@@ -47052,7 +47052,7 @@ public struct FrameBoundaryTensorsARM: ChainableBase, SubmitInfoExtension, Submi
         self.tensors = tensors
     }
 
-    public init(cStruct: VkFrameBoundaryTensorsARM, device: Device?) {
+    public init(cStruct: VkFrameBoundaryTensorsARM, device: Device) {
         self.tensors = UnsafeBufferPointer(start: cStruct.pTensors, count: Int(cStruct.tensorCount)).map{ TensorARM(handle: $0, device: device) }
     }
 
@@ -47173,7 +47173,7 @@ public struct ExternalMemoryTensorCreateInfoARM: ChainableBase, TensorCreateInfo
 
 public protocol ExternalMemoryTensorCreateInfoARMExtension: Chainable {}
 
-public struct PhysicalDeviceShaderFloat8FeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderFloat8FeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderFloat8FeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceShaderFloat8FeaturesEXT
@@ -47241,7 +47241,7 @@ public struct SurfaceCreateInfoOHOS: ChainableBase {
 
 public protocol SurfaceCreateInfoOHOSExtension: Chainable {}
 
-public struct PhysicalDeviceDataGraphFeaturesARM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceDataGraphFeaturesARM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDataGraphFeaturesARM
 
     public static let structureType: StructureType = .physicalDeviceDataGraphFeaturesARM
@@ -47404,7 +47404,7 @@ public struct DataGraphPipelineResourceInfoImageLayoutARM: ChainableBase, DataGr
     }
 
     public init(cStruct: VkDataGraphPipelineResourceInfoImageLayoutARM) {
-        self.layout = ImageLayout(rawValue: numericBitCast(cStruct.layout))!
+        self.layout = ImageLayout(rawValue: numericBitCast(cStruct.layout.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkDataGraphPipelineResourceInfoImageLayoutARM>) throws(E) -> R) throws(E) -> R {
@@ -47467,7 +47467,7 @@ public struct DataGraphPipelineCreateInfoARM: ChainableBase {
         self.resourceInfos = resourceInfos
     }
 
-    public init(cStruct: VkDataGraphPipelineCreateInfoARM, device: Device?) {
+    public init(cStruct: VkDataGraphPipelineCreateInfoARM, device: Device) {
         self.flags = PipelineCreateFlags2(rawValue: cStruct.flags)
         self.layout = PipelineLayout(handle: cStruct.layout, device: device)
         self.resourceInfos = UnsafeBufferPointer(start: cStruct.pResourceInfos, count: Int(cStruct.resourceInfoCount)).map{ DataGraphPipelineResourceInfoARM(cStruct: $0) }
@@ -47509,7 +47509,7 @@ public struct DataGraphPipelineShaderModuleCreateInfoARM: ChainableBase, DataGra
         self.constants = constants
     }
 
-    public init(cStruct: VkDataGraphPipelineShaderModuleCreateInfoARM, device: Device?) {
+    public init(cStruct: VkDataGraphPipelineShaderModuleCreateInfoARM, device: Device) {
         self.module = (cStruct.module != nil) ? ShaderModule(handle: cStruct.module, device: device) : nil
         self.name = String(cString: cStruct.pName)
         self.specializationInfo = (cStruct.pSpecializationInfo != nil) ? SpecializationInfo(cStruct: cStruct.pSpecializationInfo.pointee) : nil
@@ -47553,7 +47553,7 @@ public struct DataGraphPipelineSessionCreateInfoARM: ChainableBase {
         self.dataGraphPipeline = dataGraphPipeline
     }
 
-    public init(cStruct: VkDataGraphPipelineSessionCreateInfoARM, device: Device?) {
+    public init(cStruct: VkDataGraphPipelineSessionCreateInfoARM, device: Device) {
         self.flags = DataGraphPipelineSessionCreateFlagsARM(rawValue: cStruct.flags)
         self.dataGraphPipeline = Pipeline(handle: cStruct.dataGraphPipeline, device: device)
     }
@@ -47584,7 +47584,7 @@ public struct DataGraphPipelineSessionBindPointRequirementsInfoARM: ChainableBas
         self.session = session
     }
 
-    public init(cStruct: VkDataGraphPipelineSessionBindPointRequirementsInfoARM, device: Device?) {
+    public init(cStruct: VkDataGraphPipelineSessionBindPointRequirementsInfoARM, device: Device) {
         self.session = DataGraphPipelineSessionARM(handle: cStruct.session, device: device)
     }
 
@@ -47603,7 +47603,7 @@ public struct DataGraphPipelineSessionBindPointRequirementsInfoARM: ChainableBas
 
 public protocol DataGraphPipelineSessionBindPointRequirementsInfoARMExtension: Chainable {}
 
-public struct DataGraphPipelineSessionBindPointRequirementARM: ChainableBase, OutStruct {
+public struct DataGraphPipelineSessionBindPointRequirementARM: ChainableBase {
     public typealias CStruct = VkDataGraphPipelineSessionBindPointRequirementARM
 
     public static let structureType: StructureType = .dataGraphPipelineSessionBindPointRequirementARM
@@ -47612,8 +47612,8 @@ public struct DataGraphPipelineSessionBindPointRequirementARM: ChainableBase, Ou
     public let numObjects: UInt32
 
     public init(cStruct: VkDataGraphPipelineSessionBindPointRequirementARM) {
-        self.bindPoint = DataGraphPipelineSessionBindPointARM(rawValue: numericBitCast(cStruct.bindPoint))!
-        self.bindPointType = DataGraphPipelineSessionBindPointTypeARM(rawValue: numericBitCast(cStruct.bindPointType))!
+        self.bindPoint = DataGraphPipelineSessionBindPointARM(rawValue: numericBitCast(cStruct.bindPoint.rawValue))!
+        self.bindPointType = DataGraphPipelineSessionBindPointTypeARM(rawValue: numericBitCast(cStruct.bindPointType.rawValue))!
         self.numObjects = cStruct.numObjects
     }
 
@@ -47648,9 +47648,9 @@ public struct DataGraphPipelineSessionMemoryRequirementsInfoARM: ChainableBase {
         self.objectIndex = objectIndex
     }
 
-    public init(cStruct: VkDataGraphPipelineSessionMemoryRequirementsInfoARM, device: Device?) {
+    public init(cStruct: VkDataGraphPipelineSessionMemoryRequirementsInfoARM, device: Device) {
         self.session = DataGraphPipelineSessionARM(handle: cStruct.session, device: device)
-        self.bindPoint = DataGraphPipelineSessionBindPointARM(rawValue: numericBitCast(cStruct.bindPoint))!
+        self.bindPoint = DataGraphPipelineSessionBindPointARM(rawValue: numericBitCast(cStruct.bindPoint.rawValue))!
         self.objectIndex = cStruct.objectIndex
     }
 
@@ -47689,9 +47689,9 @@ public struct BindDataGraphPipelineSessionMemoryInfoARM: ChainableBase {
         self.memoryOffset = memoryOffset
     }
 
-    public init(cStruct: VkBindDataGraphPipelineSessionMemoryInfoARM, device: Device?) {
+    public init(cStruct: VkBindDataGraphPipelineSessionMemoryInfoARM, device: Device) {
         self.session = DataGraphPipelineSessionARM(handle: cStruct.session, device: device)
-        self.bindPoint = DataGraphPipelineSessionBindPointARM(rawValue: numericBitCast(cStruct.bindPoint))!
+        self.bindPoint = DataGraphPipelineSessionBindPointARM(rawValue: numericBitCast(cStruct.bindPoint.rawValue))!
         self.objectIndex = cStruct.objectIndex
         self.memory = DeviceMemory(handle: cStruct.memory, device: device)
         self.memoryOffset = cStruct.memoryOffset
@@ -47726,7 +47726,7 @@ public struct DataGraphPipelineInfoARM: ChainableBase {
         self.dataGraphPipeline = dataGraphPipeline
     }
 
-    public init(cStruct: VkDataGraphPipelineInfoARM, device: Device?) {
+    public init(cStruct: VkDataGraphPipelineInfoARM, device: Device) {
         self.dataGraphPipeline = Pipeline(handle: cStruct.dataGraphPipeline, device: device)
     }
 
@@ -47745,7 +47745,7 @@ public struct DataGraphPipelineInfoARM: ChainableBase {
 
 public protocol DataGraphPipelineInfoARMExtension: Chainable {}
 
-public struct DataGraphPipelinePropertyQueryResultARM: ChainableBase, OutStruct {
+public struct DataGraphPipelinePropertyQueryResultARM: ChainableBase {
     public typealias CStruct = VkDataGraphPipelinePropertyQueryResultARM
 
     public static let structureType: StructureType = .dataGraphPipelinePropertyQueryResultARM
@@ -47762,7 +47762,7 @@ public struct DataGraphPipelinePropertyQueryResultARM: ChainableBase, OutStruct 
     }
 
     public init(cStruct: VkDataGraphPipelinePropertyQueryResultARM) {
-        self.property = DataGraphPipelinePropertyARM(rawValue: numericBitCast(cStruct.property))!
+        self.property = DataGraphPipelinePropertyARM(rawValue: numericBitCast(cStruct.property.rawValue))!
         self.isText = cStruct.isText == VK_TRUE
         self.dataSize = cStruct.dataSize
         self.data = cStruct.pData
@@ -47818,7 +47818,7 @@ public struct DataGraphPipelineIdentifierCreateInfoARM: ChainableBase, DataGraph
 
 public protocol DataGraphPipelineIdentifierCreateInfoARMExtension: Chainable {}
 
-public struct DataGraphPipelineDispatchInfoARM: ChainableBase, OutStruct {
+public struct DataGraphPipelineDispatchInfoARM: ChainableBase {
     public typealias CStruct = VkDataGraphPipelineDispatchInfoARM
 
     public static let structureType: StructureType = .dataGraphPipelineDispatchInfoARM
@@ -47859,7 +47859,7 @@ public struct PhysicalDeviceDataGraphProcessingEngineARM: CStructConvertible {
     }
 
     public init(cStruct: VkPhysicalDeviceDataGraphProcessingEngineARM) {
-        self.type = PhysicalDeviceDataGraphProcessingEngineTypeARM(rawValue: numericBitCast(cStruct.type))!
+        self.type = PhysicalDeviceDataGraphProcessingEngineTypeARM(rawValue: numericBitCast(cStruct.type.rawValue))!
         self.isForeign = cStruct.isForeign == VK_TRUE
     }
 
@@ -47885,7 +47885,7 @@ public struct PhysicalDeviceDataGraphOperationSupportARM: CStructConvertible {
     }
 
     public init(cStruct: VkPhysicalDeviceDataGraphOperationSupportARM) {
-        self.operationType = PhysicalDeviceDataGraphOperationTypeARM(rawValue: numericBitCast(cStruct.operationType))!
+        self.operationType = PhysicalDeviceDataGraphOperationTypeARM(rawValue: numericBitCast(cStruct.operationType.rawValue))!
         self.name = String(unsafeBytesOf: cStruct.name)
         self.version = cStruct.version
     }
@@ -47899,7 +47899,7 @@ public struct PhysicalDeviceDataGraphOperationSupportARM: CStructConvertible {
     }
 }
 
-public struct QueueFamilyDataGraphPropertiesARM: ChainableBase, OutStruct {
+public struct QueueFamilyDataGraphPropertiesARM: ChainableBase {
     public typealias CStruct = VkQueueFamilyDataGraphPropertiesARM
 
     public static let structureType: StructureType = .queueFamilyDataGraphPropertiesARM
@@ -47945,7 +47945,7 @@ public struct PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM: Chainab
 
     public init(cStruct: VkPhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM) {
         self.queueFamilyIndex = cStruct.queueFamilyIndex
-        self.engineType = PhysicalDeviceDataGraphProcessingEngineTypeARM(rawValue: numericBitCast(cStruct.engineType))!
+        self.engineType = PhysicalDeviceDataGraphProcessingEngineTypeARM(rawValue: numericBitCast(cStruct.engineType.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM>) throws(E) -> R) throws(E) -> R {
@@ -47964,7 +47964,7 @@ public struct PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM: Chainab
 
 public protocol PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARMExtension: Chainable {}
 
-public struct QueueFamilyDataGraphProcessingEnginePropertiesARM: ChainableBase, OutStruct {
+public struct QueueFamilyDataGraphProcessingEnginePropertiesARM: ChainableBase {
     public typealias CStruct = VkQueueFamilyDataGraphProcessingEnginePropertiesARM
 
     public static let structureType: StructureType = .queueFamilyDataGraphProcessingEnginePropertiesARM
@@ -48025,7 +48025,7 @@ public struct DataGraphProcessingEngineCreateInfoARM: ChainableBase, DataGraphPi
 
 public protocol DataGraphProcessingEngineCreateInfoARMExtension: Chainable {}
 
-public struct PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePipelineCacheIncrementalModeFeaturesSEC
 
     public static let structureType: StructureType = .physicalDevicePipelineCacheIncrementalModeFeaturesSEC
@@ -48085,7 +48085,7 @@ public struct DataGraphPipelineBuiltinModelCreateInfoQCOM: ChainableBase, DataGr
 
 public protocol DataGraphPipelineBuiltinModelCreateInfoQCOMExtension: Chainable {}
 
-public struct PhysicalDeviceDataGraphModelFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceDataGraphModelFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDataGraphModelFeaturesQCOM
 
     public static let structureType: StructureType = .physicalDeviceDataGraphModelFeaturesQCOM
@@ -48114,7 +48114,7 @@ public struct PhysicalDeviceDataGraphModelFeaturesQCOM: ChainableBase, PhysicalD
 
 public protocol PhysicalDeviceDataGraphModelFeaturesQCOMExtension: Chainable {}
 
-public struct PhysicalDeviceShaderUntypedPointersFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderUntypedPointersFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderUntypedPointersFeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceShaderUntypedPointersFeaturesKHR
@@ -48143,7 +48143,7 @@ public struct PhysicalDeviceShaderUntypedPointersFeaturesKHR: ChainableBase, Phy
 
 public protocol PhysicalDeviceShaderUntypedPointersFeaturesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceVideoEncodeRgbConversionFeaturesVALVE: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceVideoEncodeRgbConversionFeaturesVALVE: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceVideoEncodeRgbConversionFeaturesVALVE
 
     public static let structureType: StructureType = .physicalDeviceVideoEncodeRgbConversionFeaturesVALVE
@@ -48172,7 +48172,7 @@ public struct PhysicalDeviceVideoEncodeRgbConversionFeaturesVALVE: ChainableBase
 
 public protocol PhysicalDeviceVideoEncodeRgbConversionFeaturesVALVEExtension: Chainable {}
 
-public struct VideoEncodeRgbConversionCapabilitiesVALVE: ChainableBase, VideoCapabilitiesKHRExtension, OutStruct {
+public struct VideoEncodeRgbConversionCapabilitiesVALVE: ChainableBase, VideoCapabilitiesKHRExtension {
     public typealias CStruct = VkVideoEncodeRgbConversionCapabilitiesVALVE
 
     public static let structureType: StructureType = .videoEncodeRgbConversionCapabilitiesVALVE
@@ -48276,7 +48276,7 @@ public struct VideoEncodeSessionRgbConversionCreateInfoVALVE: ChainableBase, Vid
 
 public protocol VideoEncodeSessionRgbConversionCreateInfoVALVEExtension: Chainable {}
 
-public struct PhysicalDeviceShader64BitIndexingFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShader64BitIndexingFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShader64BitIndexingFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceShader64BitIndexingFeaturesEXT
@@ -48306,7 +48306,7 @@ public struct PhysicalDeviceShader64BitIndexingFeaturesEXT: ChainableBase, Physi
 public protocol PhysicalDeviceShader64BitIndexingFeaturesEXTExtension: Chainable {}
 
 #if VK_USE_PLATFORM_OHOS
-public struct NativeBufferUsageOHOS: ChainableBase, ImageFormatProperties2Extension, OutStruct {
+public struct NativeBufferUsageOHOS: ChainableBase, ImageFormatProperties2Extension {
     public typealias CStruct = VkNativeBufferUsageOHOS
 
     public static let structureType: StructureType = .nativeBufferUsageOHOS
@@ -48333,7 +48333,7 @@ public struct NativeBufferUsageOHOS: ChainableBase, ImageFormatProperties2Extens
 public protocol NativeBufferUsageOHOSExtension: Chainable {}
 
 #if VK_USE_PLATFORM_OHOS
-public struct NativeBufferPropertiesOHOS: ChainableBase, OutStruct {
+public struct NativeBufferPropertiesOHOS: ChainableBase {
     public typealias CStruct = VkNativeBufferPropertiesOHOS
 
     public static let structureType: StructureType = .nativeBufferPropertiesOHOS
@@ -48363,7 +48363,7 @@ public struct NativeBufferPropertiesOHOS: ChainableBase, OutStruct {
 public protocol NativeBufferPropertiesOHOSExtension: Chainable {}
 
 #if VK_USE_PLATFORM_OHOS
-public struct NativeBufferFormatPropertiesOHOS: ChainableBase, NativeBufferPropertiesOHOSExtension, OutStruct {
+public struct NativeBufferFormatPropertiesOHOS: ChainableBase, NativeBufferPropertiesOHOSExtension {
     public typealias CStruct = VkNativeBufferFormatPropertiesOHOS
 
     public static let structureType: StructureType = .nativeBufferFormatPropertiesOHOS
@@ -48377,14 +48377,14 @@ public struct NativeBufferFormatPropertiesOHOS: ChainableBase, NativeBufferPrope
     public let suggestedYChromaOffset: ChromaLocation
 
     public init(cStruct: VkNativeBufferFormatPropertiesOHOS) {
-        self.format = Format(rawValue: numericBitCast(cStruct.format))!
+        self.format = Format(rawValue: numericBitCast(cStruct.format.rawValue))!
         self.externalFormat = cStruct.externalFormat
         self.formatFeatures = FormatFeatureFlags(rawValue: cStruct.formatFeatures)
         self.samplerYcbcrConversionComponents = ComponentMapping(cStruct: cStruct.samplerYcbcrConversionComponents)
-        self.suggestedYcbcrModel = SamplerYcbcrModelConversion(rawValue: numericBitCast(cStruct.suggestedYcbcrModel))!
-        self.suggestedYcbcrRange = SamplerYcbcrRange(rawValue: numericBitCast(cStruct.suggestedYcbcrRange))!
-        self.suggestedXChromaOffset = ChromaLocation(rawValue: numericBitCast(cStruct.suggestedXChromaOffset))!
-        self.suggestedYChromaOffset = ChromaLocation(rawValue: numericBitCast(cStruct.suggestedYChromaOffset))!
+        self.suggestedYcbcrModel = SamplerYcbcrModelConversion(rawValue: numericBitCast(cStruct.suggestedYcbcrModel.rawValue))!
+        self.suggestedYcbcrRange = SamplerYcbcrRange(rawValue: numericBitCast(cStruct.suggestedYcbcrRange.rawValue))!
+        self.suggestedXChromaOffset = ChromaLocation(rawValue: numericBitCast(cStruct.suggestedXChromaOffset.rawValue))!
+        self.suggestedYChromaOffset = ChromaLocation(rawValue: numericBitCast(cStruct.suggestedYChromaOffset.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkNativeBufferFormatPropertiesOHOS>) throws(E) -> R) throws(E) -> R {
@@ -48454,7 +48454,7 @@ public struct MemoryGetNativeBufferInfoOHOS: ChainableBase {
         self.memory = memory
     }
 
-    public init(cStruct: VkMemoryGetNativeBufferInfoOHOS, device: Device?) {
+    public init(cStruct: VkMemoryGetNativeBufferInfoOHOS, device: Device) {
         self.memory = DeviceMemory(handle: cStruct.memory, device: device)
     }
 
@@ -48475,7 +48475,7 @@ public struct MemoryGetNativeBufferInfoOHOS: ChainableBase {
 public protocol MemoryGetNativeBufferInfoOHOSExtension: Chainable {}
 
 #if VK_USE_PLATFORM_OHOS
-public struct ExternalFormatOHOS: ChainableBase, ImageCreateInfoExtension, SamplerYcbcrConversionCreateInfoExtension, AttachmentDescription2Extension, GraphicsPipelineCreateInfoExtension, CommandBufferInheritanceInfoExtension, OutStruct {
+public struct ExternalFormatOHOS: ChainableBase, ImageCreateInfoExtension, SamplerYcbcrConversionCreateInfoExtension, AttachmentDescription2Extension, GraphicsPipelineCreateInfoExtension, CommandBufferInheritanceInfoExtension {
     public typealias CStruct = VkExternalFormatOHOS
 
     public static let structureType: StructureType = .externalFormatOHOS
@@ -48505,7 +48505,7 @@ public struct ExternalFormatOHOS: ChainableBase, ImageCreateInfoExtension, Sampl
 
 public protocol ExternalFormatOHOSExtension: Chainable {}
 
-public struct PerfHintInfoQCOM: ChainableBase, OutStruct {
+public struct PerfHintInfoQCOM: ChainableBase {
     public typealias CStruct = VkPerfHintInfoQCOM
 
     public static let structureType: StructureType = .perfHintInfoQCOM
@@ -48518,7 +48518,7 @@ public struct PerfHintInfoQCOM: ChainableBase, OutStruct {
     }
 
     public init(cStruct: VkPerfHintInfoQCOM) {
-        self.type = PerfHintTypeQCOM(rawValue: numericBitCast(cStruct.type))!
+        self.type = PerfHintTypeQCOM(rawValue: numericBitCast(cStruct.type.rawValue))!
         self.scale = cStruct.scale
     }
 
@@ -48538,7 +48538,7 @@ public struct PerfHintInfoQCOM: ChainableBase, OutStruct {
 
 public protocol PerfHintInfoQCOMExtension: Chainable {}
 
-public struct PhysicalDeviceQueuePerfHintFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceQueuePerfHintFeaturesQCOM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceQueuePerfHintFeaturesQCOM
 
     public static let structureType: StructureType = .physicalDeviceQueuePerfHintFeaturesQCOM
@@ -48567,7 +48567,7 @@ public struct PhysicalDeviceQueuePerfHintFeaturesQCOM: ChainableBase, PhysicalDe
 
 public protocol PhysicalDeviceQueuePerfHintFeaturesQCOMExtension: Chainable {}
 
-public struct PhysicalDeviceQueuePerfHintPropertiesQCOM: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceQueuePerfHintPropertiesQCOM: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceQueuePerfHintPropertiesQCOM
 
     public static let structureType: StructureType = .physicalDeviceQueuePerfHintPropertiesQCOM
@@ -48592,7 +48592,7 @@ public struct PhysicalDeviceQueuePerfHintPropertiesQCOM: ChainableBase, Physical
 
 public protocol PhysicalDeviceQueuePerfHintPropertiesQCOMExtension: Chainable {}
 
-public struct PhysicalDevicePerformanceCountersByRegionFeaturesARM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDevicePerformanceCountersByRegionFeaturesARM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePerformanceCountersByRegionFeaturesARM
 
     public static let structureType: StructureType = .physicalDevicePerformanceCountersByRegionFeaturesARM
@@ -48621,7 +48621,7 @@ public struct PhysicalDevicePerformanceCountersByRegionFeaturesARM: ChainableBas
 
 public protocol PhysicalDevicePerformanceCountersByRegionFeaturesARMExtension: Chainable {}
 
-public struct PhysicalDevicePerformanceCountersByRegionPropertiesARM: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDevicePerformanceCountersByRegionPropertiesARM: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDevicePerformanceCountersByRegionPropertiesARM
 
     public static let structureType: StructureType = .physicalDevicePerformanceCountersByRegionPropertiesARM
@@ -48660,7 +48660,7 @@ public struct PhysicalDevicePerformanceCountersByRegionPropertiesARM: ChainableB
 
 public protocol PhysicalDevicePerformanceCountersByRegionPropertiesARMExtension: Chainable {}
 
-public struct PerformanceCounterARM: ChainableBase, OutStruct {
+public struct PerformanceCounterARM: ChainableBase {
     public typealias CStruct = VkPerformanceCounterARM
 
     public static let structureType: StructureType = .performanceCounterARM
@@ -48685,7 +48685,7 @@ public struct PerformanceCounterARM: ChainableBase, OutStruct {
 
 public protocol PerformanceCounterARMExtension: Chainable {}
 
-public struct PerformanceCounterDescriptionARM: ChainableBase, OutStruct {
+public struct PerformanceCounterDescriptionARM: ChainableBase {
     public typealias CStruct = VkPerformanceCounterDescriptionARM
 
     public static let structureType: StructureType = .performanceCounterDescriptionARM
@@ -48713,7 +48713,7 @@ public struct PerformanceCounterDescriptionARM: ChainableBase, OutStruct {
 
 public protocol PerformanceCounterDescriptionARMExtension: Chainable {}
 
-public struct RenderPassPerformanceCountersByRegionBeginInfoARM: ChainableBase, RenderPassBeginInfoExtension, RenderingInfoExtension, OutStruct {
+public struct RenderPassPerformanceCountersByRegionBeginInfoARM: ChainableBase, RenderPassBeginInfoExtension, RenderingInfoExtension {
     public typealias CStruct = VkRenderPassPerformanceCountersByRegionBeginInfoARM
 
     public static let structureType: StructureType = .renderPassPerformanceCountersByRegionBeginInfoARM
@@ -48790,7 +48790,7 @@ public struct ComputeOccupancyPriorityParametersNV: ChainableBase {
 
 public protocol ComputeOccupancyPriorityParametersNVExtension: Chainable {}
 
-public struct PhysicalDeviceComputeOccupancyPriorityFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceComputeOccupancyPriorityFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceComputeOccupancyPriorityFeaturesNV
 
     public static let structureType: StructureType = .physicalDeviceComputeOccupancyPriorityFeaturesNV
@@ -48819,7 +48819,7 @@ public struct PhysicalDeviceComputeOccupancyPriorityFeaturesNV: ChainableBase, P
 
 public protocol PhysicalDeviceComputeOccupancyPriorityFeaturesNVExtension: Chainable {}
 
-public struct PhysicalDeviceShaderLongVectorFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderLongVectorFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderLongVectorFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceShaderLongVectorFeaturesEXT
@@ -48848,7 +48848,7 @@ public struct PhysicalDeviceShaderLongVectorFeaturesEXT: ChainableBase, Physical
 
 public protocol PhysicalDeviceShaderLongVectorFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceShaderLongVectorPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceShaderLongVectorPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceShaderLongVectorPropertiesEXT
 
     public static let structureType: StructureType = .physicalDeviceShaderLongVectorPropertiesEXT
@@ -48873,7 +48873,7 @@ public struct PhysicalDeviceShaderLongVectorPropertiesEXT: ChainableBase, Physic
 
 public protocol PhysicalDeviceShaderLongVectorPropertiesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceTextureCompressionASTC3DFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceTextureCompressionASTC3DFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceTextureCompressionASTC3DFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceTextureCompressionAstc3dFeaturesEXT
@@ -48902,7 +48902,7 @@ public struct PhysicalDeviceTextureCompressionASTC3DFeaturesEXT: ChainableBase, 
 
 public protocol PhysicalDeviceTextureCompressionASTC3DFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceShaderSubgroupPartitionedFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderSubgroupPartitionedFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderSubgroupPartitionedFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceShaderSubgroupPartitionedFeaturesEXT
@@ -48992,7 +48992,7 @@ public struct TexelBufferDescriptorInfoEXT: ChainableBase {
     }
 
     public init(cStruct: VkTexelBufferDescriptorInfoEXT) {
-        self.format = Format(rawValue: numericBitCast(cStruct.format))!
+        self.format = Format(rawValue: numericBitCast(cStruct.format.rawValue))!
         self.addressRange = cStruct.addressRange
     }
 
@@ -49024,9 +49024,9 @@ public struct ImageDescriptorInfoEXT: ChainableBase {
         self.layout = layout
     }
 
-    public init(cStruct: VkImageDescriptorInfoEXT, device: Device?) {
+    public init(cStruct: VkImageDescriptorInfoEXT, device: Device) {
         self.view = ImageViewCreateInfo(cStruct: cStruct.pView.pointee, device: device)
-        self.layout = ImageLayout(rawValue: numericBitCast(cStruct.layout))!
+        self.layout = ImageLayout(rawValue: numericBitCast(cStruct.layout.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkImageDescriptorInfoEXT>) throws(E) -> R) throws(E) -> R {
@@ -49060,7 +49060,7 @@ public struct ResourceDescriptorInfoEXT: ChainableBase {
     }
 
     public init(cStruct: VkResourceDescriptorInfoEXT) {
-        self.type = DescriptorType(rawValue: numericBitCast(cStruct.type))!
+        self.type = DescriptorType(rawValue: numericBitCast(cStruct.type.rawValue))!
         self.data = cStruct.data
     }
 
@@ -49503,7 +49503,7 @@ public struct DescriptorSetAndBindingMappingEXT: ChainableBase {
         self.firstBinding = cStruct.firstBinding
         self.bindingCount = cStruct.bindingCount
         self.resourceMask = SpirvResourceTypeFlagsEXT(rawValue: cStruct.resourceMask)
-        self.source = DescriptorMappingSourceEXT(rawValue: numericBitCast(cStruct.source))!
+        self.source = DescriptorMappingSourceEXT(rawValue: numericBitCast(cStruct.source.rawValue))!
         self.sourceData = cStruct.sourceData
     }
 
@@ -49681,7 +49681,7 @@ public struct SubsampledImageFormatPropertiesEXT: ChainableBase, ImageFormatProp
 
 public protocol SubsampledImageFormatPropertiesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceShaderSplitBarrierFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderSplitBarrierFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderSplitBarrierFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceShaderSplitBarrierFeaturesEXT
@@ -49710,7 +49710,7 @@ public struct PhysicalDeviceShaderSplitBarrierFeaturesEXT: ChainableBase, Physic
 
 public protocol PhysicalDeviceShaderSplitBarrierFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceShaderSplitBarrierPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceShaderSplitBarrierPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceShaderSplitBarrierPropertiesEXT
 
     public static let structureType: StructureType = .physicalDeviceShaderSplitBarrierPropertiesEXT
@@ -49735,7 +49735,7 @@ public struct PhysicalDeviceShaderSplitBarrierPropertiesEXT: ChainableBase, Phys
 
 public protocol PhysicalDeviceShaderSplitBarrierPropertiesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceDescriptorHeapFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceDescriptorHeapFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDescriptorHeapFeaturesEXT
 
     public static let structureType: StructureType = .physicalDeviceDescriptorHeapFeaturesEXT
@@ -49768,7 +49768,7 @@ public struct PhysicalDeviceDescriptorHeapFeaturesEXT: ChainableBase, PhysicalDe
 
 public protocol PhysicalDeviceDescriptorHeapFeaturesEXTExtension: Chainable {}
 
-public struct PhysicalDeviceDescriptorHeapPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceDescriptorHeapPropertiesEXT: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceDescriptorHeapPropertiesEXT
 
     public static let structureType: StructureType = .physicalDeviceDescriptorHeapPropertiesEXT
@@ -49884,7 +49884,7 @@ public struct CommandBufferInheritanceDescriptorHeapInfoEXT: ChainableBase, Comm
 
 public protocol CommandBufferInheritanceDescriptorHeapInfoEXTExtension: Chainable {}
 
-public struct PhysicalDeviceDescriptorHeapTensorPropertiesARM: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceDescriptorHeapTensorPropertiesARM: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceDescriptorHeapTensorPropertiesARM
 
     public static let structureType: StructureType = .physicalDeviceDescriptorHeapTensorPropertiesARM
@@ -49915,7 +49915,7 @@ public struct PhysicalDeviceDescriptorHeapTensorPropertiesARM: ChainableBase, Ph
 
 public protocol PhysicalDeviceDescriptorHeapTensorPropertiesARMExtension: Chainable {}
 
-public struct PhysicalDeviceShaderInstrumentationFeaturesARM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderInstrumentationFeaturesARM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderInstrumentationFeaturesARM
 
     public static let structureType: StructureType = .physicalDeviceShaderInstrumentationFeaturesARM
@@ -49944,7 +49944,7 @@ public struct PhysicalDeviceShaderInstrumentationFeaturesARM: ChainableBase, Phy
 
 public protocol PhysicalDeviceShaderInstrumentationFeaturesARMExtension: Chainable {}
 
-public struct PhysicalDeviceShaderInstrumentationPropertiesARM: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceShaderInstrumentationPropertiesARM: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceShaderInstrumentationPropertiesARM
 
     public static let structureType: StructureType = .physicalDeviceShaderInstrumentationPropertiesARM
@@ -49972,7 +49972,7 @@ public struct PhysicalDeviceShaderInstrumentationPropertiesARM: ChainableBase, P
 
 public protocol PhysicalDeviceShaderInstrumentationPropertiesARMExtension: Chainable {}
 
-public struct ShaderInstrumentationCreateInfoARM: ChainableBase, OutStruct {
+public struct ShaderInstrumentationCreateInfoARM: ChainableBase {
     public typealias CStruct = VkShaderInstrumentationCreateInfoARM
 
     public static let structureType: StructureType = .shaderInstrumentationCreateInfoARM
@@ -49997,7 +49997,7 @@ public struct ShaderInstrumentationCreateInfoARM: ChainableBase, OutStruct {
 
 public protocol ShaderInstrumentationCreateInfoARMExtension: Chainable {}
 
-public struct ShaderInstrumentationMetricDescriptionARM: ChainableBase, OutStruct {
+public struct ShaderInstrumentationMetricDescriptionARM: ChainableBase {
     public typealias CStruct = VkShaderInstrumentationMetricDescriptionARM
 
     public static let structureType: StructureType = .shaderInstrumentationMetricDescriptionARM
@@ -50193,7 +50193,7 @@ public struct DeviceMemoryImageCopyKHR: ChainableBase {
         self.addressRowLength = cStruct.addressRowLength
         self.addressImageHeight = cStruct.addressImageHeight
         self.imageSubresource = ImageSubresourceLayers(cStruct: cStruct.imageSubresource)
-        self.imageLayout = ImageLayout(rawValue: numericBitCast(cStruct.imageLayout))!
+        self.imageLayout = ImageLayout(rawValue: numericBitCast(cStruct.imageLayout.rawValue))!
         self.imageOffset = Offset3D(cStruct: cStruct.imageOffset)
         self.imageExtent = Extent3D(cStruct: cStruct.imageExtent)
     }
@@ -50240,7 +50240,7 @@ public struct CopyDeviceMemoryImageInfoKHR: ChainableBase {
         self.regions = regions
     }
 
-    public init(cStruct: VkCopyDeviceMemoryImageInfoKHR, device: Device?) {
+    public init(cStruct: VkCopyDeviceMemoryImageInfoKHR, device: Device) {
         self.image = Image(handle: cStruct.image, device: device)
         self.regions = UnsafeBufferPointer(start: cStruct.pRegions, count: Int(cStruct.regionCount)).map{ DeviceMemoryImageCopyKHR(cStruct: $0) }
     }
@@ -50355,7 +50355,7 @@ public struct MemoryRangeBarriersInfoKHR: ChainableBase, DependencyInfoExtension
 
 public protocol MemoryRangeBarriersInfoKHRExtension: Chainable {}
 
-public struct PhysicalDeviceDeviceAddressCommandsFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceDeviceAddressCommandsFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDeviceAddressCommandsFeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceDeviceAddressCommandsFeaturesKHR
@@ -50443,7 +50443,7 @@ public struct AccelerationStructureCreateInfo2KHR: ChainableBase {
         self.createFlags = AccelerationStructureCreateFlagsKHR(rawValue: cStruct.createFlags)
         self.addressRange = DeviceAddressRangeKHR(cStruct: cStruct.addressRange)
         self.addressFlags = AddressCommandFlagsKHR(rawValue: cStruct.addressFlags)
-        self.type = AccelerationStructureTypeKHR(rawValue: numericBitCast(cStruct.type))!
+        self.type = AccelerationStructureTypeKHR(rawValue: numericBitCast(cStruct.type.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkAccelerationStructureCreateInfo2KHR>) throws(E) -> R) throws(E) -> R {
@@ -50483,7 +50483,7 @@ public struct BindIndexBuffer3InfoKHR: ChainableBase {
     public init(cStruct: VkBindIndexBuffer3InfoKHR) {
         self.addressRange = DeviceAddressRangeKHR(cStruct: cStruct.addressRange)
         self.addressFlags = AddressCommandFlagsKHR(rawValue: cStruct.addressFlags)
-        self.indexType = IndexType(rawValue: numericBitCast(cStruct.indexType))!
+        self.indexType = IndexType(rawValue: numericBitCast(cStruct.indexType.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkBindIndexBuffer3InfoKHR>) throws(E) -> R) throws(E) -> R {
@@ -50745,7 +50745,7 @@ public struct MemoryMarkerInfoAMD: ChainableBase {
 
 public protocol MemoryMarkerInfoAMDExtension: Chainable {}
 
-public struct PhysicalDeviceShaderConstantDataFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderConstantDataFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderConstantDataFeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceShaderConstantDataFeaturesKHR
@@ -50774,7 +50774,7 @@ public struct PhysicalDeviceShaderConstantDataFeaturesKHR: ChainableBase, Physic
 
 public protocol PhysicalDeviceShaderConstantDataFeaturesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceShaderAbortFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceShaderAbortFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceShaderAbortFeaturesKHR
 
     public static let structureType: StructureType = .physicalDeviceShaderAbortFeaturesKHR
@@ -50803,7 +50803,7 @@ public struct PhysicalDeviceShaderAbortFeaturesKHR: ChainableBase, PhysicalDevic
 
 public protocol PhysicalDeviceShaderAbortFeaturesKHRExtension: Chainable {}
 
-public struct PhysicalDeviceShaderAbortPropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension, OutStruct {
+public struct PhysicalDeviceShaderAbortPropertiesKHR: ChainableBase, PhysicalDeviceProperties2Extension {
     public typealias CStruct = VkPhysicalDeviceShaderAbortPropertiesKHR
 
     public static let structureType: StructureType = .physicalDeviceShaderAbortPropertiesKHR
@@ -50832,7 +50832,7 @@ public struct PhysicalDeviceShaderAbortPropertiesKHR: ChainableBase, PhysicalDev
 
 public protocol PhysicalDeviceShaderAbortPropertiesKHRExtension: Chainable {}
 
-public struct DeviceFaultShaderAbortMessageInfoKHR: ChainableBase, DeviceFaultDebugInfoKHRExtension, OutStruct {
+public struct DeviceFaultShaderAbortMessageInfoKHR: ChainableBase, DeviceFaultDebugInfoKHRExtension {
     public typealias CStruct = VkDeviceFaultShaderAbortMessageInfoKHR
 
     public static let structureType: StructureType = .deviceFaultShaderAbortMessageInfoKHR
@@ -50879,7 +50879,7 @@ public struct DataGraphTOSANameQualityARM: CStructConvertible {
     }
 }
 
-public struct QueueFamilyDataGraphTOSAPropertiesARM: ChainableBase, OutStruct {
+public struct QueueFamilyDataGraphTOSAPropertiesARM: ChainableBase {
     public typealias CStruct = VkQueueFamilyDataGraphTOSAPropertiesARM
 
     public static let structureType: StructureType = .queueFamilyDataGraphTosaPropertiesARM
@@ -50890,7 +50890,7 @@ public struct QueueFamilyDataGraphTOSAPropertiesARM: ChainableBase, OutStruct {
     public init(cStruct: VkQueueFamilyDataGraphTOSAPropertiesARM) {
         self.profiles = UnsafeBufferPointer(start: cStruct.pProfiles, count: Int(cStruct.profileCount)).map{ DataGraphTOSANameQualityARM(cStruct: $0) }
         self.extensions = UnsafeBufferPointer(start: cStruct.pExtensions, count: Int(cStruct.extensionCount)).map{ DataGraphTOSANameQualityARM(cStruct: $0) }
-        self.level = DataGraphTOSALevelARM(rawValue: numericBitCast(cStruct.level))!
+        self.level = DataGraphTOSALevelARM(rawValue: numericBitCast(cStruct.level.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkQueueFamilyDataGraphTOSAPropertiesARM>) throws(E) -> R) throws(E) -> R {
@@ -50916,7 +50916,7 @@ public struct QueueFamilyDataGraphTOSAPropertiesARM: ChainableBase, OutStruct {
 
 public protocol QueueFamilyDataGraphTOSAPropertiesARMExtension: Chainable {}
 
-public struct DataGraphPipelineSingleNodeConnectionARM: ChainableBase, OutStruct {
+public struct DataGraphPipelineSingleNodeConnectionARM: ChainableBase {
     public typealias CStruct = VkDataGraphPipelineSingleNodeConnectionARM
 
     public static let structureType: StructureType = .dataGraphPipelineSingleNodeConnectionARM
@@ -50933,7 +50933,7 @@ public struct DataGraphPipelineSingleNodeConnectionARM: ChainableBase, OutStruct
     public init(cStruct: VkDataGraphPipelineSingleNodeConnectionARM) {
         self.set = cStruct.set
         self.binding = cStruct.binding
-        self.connection = DataGraphPipelineNodeConnectionTypeARM(rawValue: numericBitCast(cStruct.connection))!
+        self.connection = DataGraphPipelineNodeConnectionTypeARM(rawValue: numericBitCast(cStruct.connection.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkDataGraphPipelineSingleNodeConnectionARM>) throws(E) -> R) throws(E) -> R {
@@ -50953,7 +50953,7 @@ public struct DataGraphPipelineSingleNodeConnectionARM: ChainableBase, OutStruct
 
 public protocol DataGraphPipelineSingleNodeConnectionARMExtension: Chainable {}
 
-public struct PhysicalDeviceDataGraphOpticalFlowFeaturesARM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension, OutStruct {
+public struct PhysicalDeviceDataGraphOpticalFlowFeaturesARM: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDataGraphOpticalFlowFeaturesARM
 
     public static let structureType: StructureType = .physicalDeviceDataGraphOpticalFlowFeaturesARM
@@ -50982,7 +50982,7 @@ public struct PhysicalDeviceDataGraphOpticalFlowFeaturesARM: ChainableBase, Phys
 
 public protocol PhysicalDeviceDataGraphOpticalFlowFeaturesARMExtension: Chainable {}
 
-public struct QueueFamilyDataGraphOpticalFlowPropertiesARM: ChainableBase, OutStruct {
+public struct QueueFamilyDataGraphOpticalFlowPropertiesARM: ChainableBase {
     public typealias CStruct = VkQueueFamilyDataGraphOpticalFlowPropertiesARM
 
     public static let structureType: StructureType = .queueFamilyDataGraphOpticalFlowPropertiesARM
@@ -51057,14 +51057,14 @@ public struct DataGraphOpticalFlowImageFormatInfoARM: ChainableBase, PhysicalDev
 
 public protocol DataGraphOpticalFlowImageFormatInfoARMExtension: Chainable {}
 
-public struct DataGraphOpticalFlowImageFormatPropertiesARM: ChainableBase, OutStruct {
+public struct DataGraphOpticalFlowImageFormatPropertiesARM: ChainableBase {
     public typealias CStruct = VkDataGraphOpticalFlowImageFormatPropertiesARM
 
     public static let structureType: StructureType = .dataGraphOpticalFlowImageFormatPropertiesARM
     public let format: Format
 
     public init(cStruct: VkDataGraphOpticalFlowImageFormatPropertiesARM) {
-        self.format = Format(rawValue: numericBitCast(cStruct.format))!
+        self.format = Format(rawValue: numericBitCast(cStruct.format.rawValue))!
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkDataGraphOpticalFlowImageFormatPropertiesARM>) throws(E) -> R) throws(E) -> R {
@@ -51082,7 +51082,7 @@ public struct DataGraphOpticalFlowImageFormatPropertiesARM: ChainableBase, OutSt
 
 public protocol DataGraphOpticalFlowImageFormatPropertiesARMExtension: Chainable {}
 
-public struct DataGraphPipelineSingleNodeCreateInfoARM: ChainableBase, DataGraphPipelineCreateInfoARMExtension, OutStruct {
+public struct DataGraphPipelineSingleNodeCreateInfoARM: ChainableBase, DataGraphPipelineCreateInfoARMExtension {
     public typealias CStruct = VkDataGraphPipelineSingleNodeCreateInfoARM
 
     public static let structureType: StructureType = .dataGraphPipelineSingleNodeCreateInfoARM
@@ -51095,7 +51095,7 @@ public struct DataGraphPipelineSingleNodeCreateInfoARM: ChainableBase, DataGraph
     }
 
     public init(cStruct: VkDataGraphPipelineSingleNodeCreateInfoARM) {
-        self.nodeType = DataGraphPipelineNodeTypeARM(rawValue: numericBitCast(cStruct.nodeType))!
+        self.nodeType = DataGraphPipelineNodeTypeARM(rawValue: numericBitCast(cStruct.nodeType.rawValue))!
         self.connections = UnsafeBufferPointer(start: cStruct.pConnections, count: Int(cStruct.connectionCount)).map{ DataGraphPipelineSingleNodeConnectionARM(cStruct: $0) }
     }
 
@@ -51118,7 +51118,7 @@ public struct DataGraphPipelineSingleNodeCreateInfoARM: ChainableBase, DataGraph
 
 public protocol DataGraphPipelineSingleNodeCreateInfoARMExtension: Chainable {}
 
-public struct DataGraphPipelineOpticalFlowCreateInfoARM: ChainableBase, DataGraphPipelineCreateInfoARMExtension, OutStruct {
+public struct DataGraphPipelineOpticalFlowCreateInfoARM: ChainableBase, DataGraphPipelineCreateInfoARMExtension {
     public typealias CStruct = VkDataGraphPipelineOpticalFlowCreateInfoARM
 
     public static let structureType: StructureType = .dataGraphPipelineOpticalFlowCreateInfoARM
@@ -51147,12 +51147,12 @@ public struct DataGraphPipelineOpticalFlowCreateInfoARM: ChainableBase, DataGrap
     public init(cStruct: VkDataGraphPipelineOpticalFlowCreateInfoARM) {
         self.width = cStruct.width
         self.height = cStruct.height
-        self.imageFormat = Format(rawValue: numericBitCast(cStruct.imageFormat))!
-        self.flowVectorFormat = Format(rawValue: numericBitCast(cStruct.flowVectorFormat))!
-        self.costFormat = Format(rawValue: numericBitCast(cStruct.costFormat))!
+        self.imageFormat = Format(rawValue: numericBitCast(cStruct.imageFormat.rawValue))!
+        self.flowVectorFormat = Format(rawValue: numericBitCast(cStruct.flowVectorFormat.rawValue))!
+        self.costFormat = Format(rawValue: numericBitCast(cStruct.costFormat.rawValue))!
         self.outputGridSize = DataGraphOpticalFlowGridSizeFlagsARM(rawValue: cStruct.outputGridSize)
         self.hintGridSize = DataGraphOpticalFlowGridSizeFlagsARM(rawValue: cStruct.hintGridSize)
-        self.performanceLevel = DataGraphOpticalFlowPerformanceLevelARM(rawValue: numericBitCast(cStruct.performanceLevel))!
+        self.performanceLevel = DataGraphOpticalFlowPerformanceLevelARM(rawValue: numericBitCast(cStruct.performanceLevel.rawValue))!
         self.flags = DataGraphOpticalFlowCreateFlagsARM(rawValue: cStruct.flags)
     }
 
@@ -51179,7 +51179,7 @@ public struct DataGraphPipelineOpticalFlowCreateInfoARM: ChainableBase, DataGrap
 
 public protocol DataGraphPipelineOpticalFlowCreateInfoARMExtension: Chainable {}
 
-public struct DataGraphPipelineOpticalFlowDispatchInfoARM: ChainableBase, DataGraphPipelineDispatchInfoARMExtension, OutStruct {
+public struct DataGraphPipelineOpticalFlowDispatchInfoARM: ChainableBase, DataGraphPipelineDispatchInfoARMExtension {
     public typealias CStruct = VkDataGraphPipelineOpticalFlowDispatchInfoARM
 
     public static let structureType: StructureType = .dataGraphPipelineOpticalFlowDispatchInfoARM

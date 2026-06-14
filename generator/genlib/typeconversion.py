@@ -153,7 +153,7 @@ bool_conversion = Conversion(
 
 def enum_conversion(c_enum: str, swift_enum: str) -> Conversion:
     return Conversion(
-        swift_value_template=f'{swift_enum}(rawValue: numericBitCast($value))!',
+        swift_value_template=f'{swift_enum}(rawValue: numericBitCast($value.rawValue))!',
         c_value_template=f'{c_enum}(rawValue: {c_enum}.RawValue($value.rawValue))'
     )
 

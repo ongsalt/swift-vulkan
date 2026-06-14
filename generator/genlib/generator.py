@@ -143,7 +143,7 @@ class Generator(BaseGenerator):
         parent_classes = struct.parent_classes
 
         for p in parent_classes:
-            params.append(f'{p.reference_name}: {p.name}?')
+            params.append(f'{p.reference_name}: {p.name}')
 
         c_values = {
             member.name: f'cStruct.{member.name}' for member in struct.c_struct.members}
@@ -206,7 +206,7 @@ class Generator(BaseGenerator):
     def generate_class_init(self, cls: SwiftClass):
         params = []
         if cls.c_handle:
-            params.append(f'handle: {cls.c_handle.name}?')
+            params.append(f'handle: {cls.c_handle.name}!')
         if cls.parent:
             params.append(f'{cls.parent.reference_name}: {cls.parent.name}!')
 
