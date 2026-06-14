@@ -10,11 +10,10 @@ if __name__ == '__main__':
     importer = Importer(c_context)
     swift_context = importer.import_all()
 
-    for struct in c_context.structs:
-        lenghts: set[str] = set()
-        for member in struct.members:
-            if type(member.type.length) == str and member.noautovalidity and member.type.optional:
-                print(f'{struct.name}::{member.name}: {member.type.type_name}[{member.type.length}]')
+    
+    for struct in swift_context.structs:
+        if 'PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV' in struct.name:
+            print(struct.name) 
 
-    # for command in c_context.commands:
+    # PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV
 

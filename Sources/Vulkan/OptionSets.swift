@@ -29,6 +29,8 @@ public struct QueryPoolCreateFlags: OptionSet, StringConvertibleOptionSet {
 public struct RenderPassCreateFlags: OptionSet, StringConvertibleOptionSet {
     public let rawValue: UInt32
 
+    public static let reserved3IMG = RenderPassCreateFlags(rawValue: 8)
+    public static let reserved0KHR = RenderPassCreateFlags(rawValue: 1)
     public static let transformQCOM = RenderPassCreateFlags(rawValue: 2)
     public static let perLayerFragmentDensityVALVE = RenderPassCreateFlags(rawValue: 4)
 
@@ -37,6 +39,8 @@ public struct RenderPassCreateFlags: OptionSet, StringConvertibleOptionSet {
     }
 
     static let descriptions: [(Self, String)] = [
+        (.reserved3IMG, "reserved3IMG"),
+        (.reserved0KHR, "reserved0KHR"),
         (.transformQCOM, "transformQCOM"),
         (.perLayerFragmentDensityVALVE, "perLayerFragmentDensityVALVE"),
     ]
@@ -116,6 +120,17 @@ public struct PipelineDepthStencilStateCreateFlags: OptionSet, StringConvertible
     ]
 }
 
+public struct PipelineDepthStencilStateCreateFlags: OptionSet, StringConvertibleOptionSet {
+    public let rawValue: UInt32
+
+    public init(rawValue: UInt32) {
+        self.rawValue = rawValue
+    }
+
+    static let descriptions: [(Self, String)] = [
+    ]
+}
+
 public struct PipelineDynamicStateCreateFlags: OptionSet, StringConvertibleOptionSet {
     public let rawValue: UInt32
 
@@ -138,6 +153,17 @@ public struct PipelineColorBlendStateCreateFlags: OptionSet, StringConvertibleOp
 
     static let descriptions: [(Self, String)] = [
         (.rasterizationOrderAttachmentAccessEXT, "rasterizationOrderAttachmentAccessEXT"),
+    ]
+}
+
+public struct PipelineColorBlendStateCreateFlags: OptionSet, StringConvertibleOptionSet {
+    public let rawValue: UInt32
+
+    public init(rawValue: UInt32) {
+        self.rawValue = rawValue
+    }
+
+    static let descriptions: [(Self, String)] = [
     ]
 }
 
@@ -210,6 +236,7 @@ public struct PipelineVertexInputStateCreateFlags: OptionSet, StringConvertibleO
 public struct PipelineShaderStageCreateFlags: OptionSet, StringConvertibleOptionSet {
     public let rawValue: UInt32
 
+    public static let reserved3KHR = PipelineShaderStageCreateFlags(rawValue: 8)
     public static let allowVaryingSubgroupSize = PipelineShaderStageCreateFlags(rawValue: 1)
     public static let requireFullSubgroups = PipelineShaderStageCreateFlags(rawValue: 2)
 
@@ -218,6 +245,7 @@ public struct PipelineShaderStageCreateFlags: OptionSet, StringConvertibleOption
     }
 
     static let descriptions: [(Self, String)] = [
+        (.reserved3KHR, "reserved3KHR"),
         (.allowVaryingSubgroupSize, "allowVaryingSubgroupSize"),
         (.requireFullSubgroups, "requireFullSubgroups"),
     ]
@@ -264,6 +292,7 @@ public struct InstanceCreateFlags: OptionSet, StringConvertibleOptionSet {
     public let rawValue: UInt32
 
     public static let enumeratePortabilityKHR = InstanceCreateFlags(rawValue: 1)
+    public static let reserved616EXT = InstanceCreateFlags(rawValue: 2)
 
     public init(rawValue: UInt32) {
         self.rawValue = rawValue
@@ -271,6 +300,7 @@ public struct InstanceCreateFlags: OptionSet, StringConvertibleOptionSet {
 
     static let descriptions: [(Self, String)] = [
         (.enumeratePortabilityKHR, "enumeratePortabilityKHR"),
+        (.reserved616EXT, "reserved616EXT"),
     ]
 }
 
@@ -288,6 +318,7 @@ public struct DeviceCreateFlags: OptionSet, StringConvertibleOptionSet {
 public struct DeviceQueueCreateFlags: OptionSet, StringConvertibleOptionSet {
     public let rawValue: UInt32
 
+    public static let reserved1QCOM = DeviceQueueCreateFlags(rawValue: 2)
     public static let internallySynchronizedKHR = DeviceQueueCreateFlags(rawValue: 4)
     public static let protected = DeviceQueueCreateFlags(rawValue: 1)
 
@@ -296,6 +327,7 @@ public struct DeviceQueueCreateFlags: OptionSet, StringConvertibleOptionSet {
     }
 
     static let descriptions: [(Self, String)] = [
+        (.reserved1QCOM, "reserved1QCOM"),
         (.internallySynchronizedKHR, "internallySynchronizedKHR"),
         (.protected, "protected"),
     ]
@@ -310,8 +342,13 @@ public struct QueueFlags: OptionSet, StringConvertibleOptionSet {
     public static let sparseBinding = QueueFlags(rawValue: 8)
     public static let videoDecodeKHR = QueueFlags(rawValue: 32)
     public static let videoEncodeKHR = QueueFlags(rawValue: 64)
+    public static let reserved7QCOM = QueueFlags(rawValue: 128)
     public static let opticalFlowNV = QueueFlags(rawValue: 256)
     public static let dataGraphARM = QueueFlags(rawValue: 1024)
+    public static let reserved12EXT = QueueFlags(rawValue: 4096)
+    public static let reserved9EXT = QueueFlags(rawValue: 512)
+    public static let reserved13EXT = QueueFlags(rawValue: 8192)
+    public static let reserved11ARM = QueueFlags(rawValue: 2048)
     public static let protected = QueueFlags(rawValue: 16)
 
     public init(rawValue: UInt32) {
@@ -325,8 +362,13 @@ public struct QueueFlags: OptionSet, StringConvertibleOptionSet {
         (.sparseBinding, "sparseBinding"),
         (.videoDecodeKHR, "videoDecodeKHR"),
         (.videoEncodeKHR, "videoEncodeKHR"),
+        (.reserved7QCOM, "reserved7QCOM"),
         (.opticalFlowNV, "opticalFlowNV"),
         (.dataGraphARM, "dataGraphARM"),
+        (.reserved12EXT, "reserved12EXT"),
+        (.reserved9EXT, "reserved9EXT"),
+        (.reserved13EXT, "reserved13EXT"),
+        (.reserved11ARM, "reserved11ARM"),
         (.protected, "protected"),
     ]
 }
@@ -468,6 +510,7 @@ public struct BufferUsageFlags: OptionSet, StringConvertibleOptionSet {
     public static let transformFeedbackBufferEXT = BufferUsageFlags(rawValue: 2048)
     public static let transformFeedbackCounterBufferEXT = BufferUsageFlags(rawValue: 4096)
     public static let conditionalRenderingEXT = BufferUsageFlags(rawValue: 512)
+    public static let executionGraphScratchAMDX = BufferUsageFlags(rawValue: 33554432)
     public static let descriptorHeapEXT = BufferUsageFlags(rawValue: 268435456)
     public static let accelerationStructureBuildInputReadOnlyKHR = BufferUsageFlags(rawValue: 524288)
     public static let accelerationStructureStorageKHR = BufferUsageFlags(rawValue: 1048576)
@@ -501,6 +544,7 @@ public struct BufferUsageFlags: OptionSet, StringConvertibleOptionSet {
         (.transformFeedbackBufferEXT, "transformFeedbackBufferEXT"),
         (.transformFeedbackCounterBufferEXT, "transformFeedbackCounterBufferEXT"),
         (.conditionalRenderingEXT, "conditionalRenderingEXT"),
+        (.executionGraphScratchAMDX, "executionGraphScratchAMDX"),
         (.descriptorHeapEXT, "descriptorHeapEXT"),
         (.accelerationStructureBuildInputReadOnlyKHR, "accelerationStructureBuildInputReadOnlyKHR"),
         (.accelerationStructureStorageKHR, "accelerationStructureStorageKHR"),
@@ -523,6 +567,7 @@ public struct BufferCreateFlags: OptionSet, StringConvertibleOptionSet {
     public static let sparseBinding = BufferCreateFlags(rawValue: 1)
     public static let sparseResidency = BufferCreateFlags(rawValue: 2)
     public static let sparseAliased = BufferCreateFlags(rawValue: 4)
+    public static let reserved7IMG = BufferCreateFlags(rawValue: 128)
     public static let descriptorBufferCaptureReplayEXT = BufferCreateFlags(rawValue: 32)
     public static let videoProfileIndependentKHR = BufferCreateFlags(rawValue: 64)
     public static let protected = BufferCreateFlags(rawValue: 8)
@@ -536,6 +581,7 @@ public struct BufferCreateFlags: OptionSet, StringConvertibleOptionSet {
         (.sparseBinding, "sparseBinding"),
         (.sparseResidency, "sparseResidency"),
         (.sparseAliased, "sparseAliased"),
+        (.reserved7IMG, "reserved7IMG"),
         (.descriptorBufferCaptureReplayEXT, "descriptorBufferCaptureReplayEXT"),
         (.videoProfileIndependentKHR, "videoProfileIndependentKHR"),
         (.protected, "protected"),
@@ -564,6 +610,8 @@ public struct ShaderStageFlags: OptionSet, StringConvertibleOptionSet {
     public static let meshEXT = ShaderStageFlags(rawValue: 128)
     public static let subpassShadingHUAWEI = ShaderStageFlags(rawValue: 16384)
     public static let clusterCullingHUAWEI = ShaderStageFlags(rawValue: 524288)
+    public static let reserved15NV = ShaderStageFlags(rawValue: 32768)
+    public static let reserved16HUAWEI = ShaderStageFlags(rawValue: 65536)
 
     public init(rawValue: UInt32) {
         self.rawValue = rawValue
@@ -588,6 +636,8 @@ public struct ShaderStageFlags: OptionSet, StringConvertibleOptionSet {
         (.meshEXT, "meshEXT"),
         (.subpassShadingHUAWEI, "subpassShadingHUAWEI"),
         (.clusterCullingHUAWEI, "clusterCullingHUAWEI"),
+        (.reserved15NV, "reserved15NV"),
+        (.reserved16HUAWEI, "reserved16HUAWEI"),
     ]
 }
 
@@ -614,10 +664,16 @@ public struct ImageUsageFlags: OptionSet, StringConvertibleOptionSet {
     public static let invocationMaskHUAWEI = ImageUsageFlags(rawValue: 262144)
     public static let sampleWeightQCOM = ImageUsageFlags(rawValue: 1048576)
     public static let sampleBlockMatchQCOM = ImageUsageFlags(rawValue: 2097152)
+    public static let reserved24BitCoreavi = ImageUsageFlags(rawValue: 16777216)
     public static let tensorAliasingARM = ImageUsageFlags(rawValue: 8388608)
+    public static let reserved28EXT = ImageUsageFlags(rawValue: 268435456)
     public static let tileMemoryQCOM = ImageUsageFlags(rawValue: 134217728)
     public static let videoEncodeQuantizationDeltaMapKHR = ImageUsageFlags(rawValue: 33554432)
     public static let videoEncodeEmphasisMapKHR = ImageUsageFlags(rawValue: 67108864)
+    public static let reserved29KHR = ImageUsageFlags(rawValue: 536870912)
+    public static let reserved30KHR = ImageUsageFlags(rawValue: 1073741824)
+    public static let reserved16HUAWEI = ImageUsageFlags(rawValue: 65536)
+    public static let reserved27HUAWEI = ImageUsageFlags(rawValue: 131072)
     public static let hostTransfer = ImageUsageFlags(rawValue: 4194304)
 
     public init(rawValue: UInt32) {
@@ -645,10 +701,16 @@ public struct ImageUsageFlags: OptionSet, StringConvertibleOptionSet {
         (.invocationMaskHUAWEI, "invocationMaskHUAWEI"),
         (.sampleWeightQCOM, "sampleWeightQCOM"),
         (.sampleBlockMatchQCOM, "sampleBlockMatchQCOM"),
+        (.reserved24BitCoreavi, "reserved24BitCoreavi"),
         (.tensorAliasingARM, "tensorAliasingARM"),
+        (.reserved28EXT, "reserved28EXT"),
         (.tileMemoryQCOM, "tileMemoryQCOM"),
         (.videoEncodeQuantizationDeltaMapKHR, "videoEncodeQuantizationDeltaMapKHR"),
         (.videoEncodeEmphasisMapKHR, "videoEncodeEmphasisMapKHR"),
+        (.reserved29KHR, "reserved29KHR"),
+        (.reserved30KHR, "reserved30KHR"),
+        (.reserved16HUAWEI, "reserved16HUAWEI"),
+        (.reserved27HUAWEI, "reserved27HUAWEI"),
         (.hostTransfer, "hostTransfer"),
     ]
 }
@@ -662,6 +724,7 @@ public struct ImageCreateFlags: OptionSet, StringConvertibleOptionSet {
     public static let typeMutableFormat = ImageCreateFlags(rawValue: 8)
     public static let typeCubeCompatible = ImageCreateFlags(rawValue: 16)
     public static let typeCornerSampledNV = ImageCreateFlags(rawValue: 8192)
+    public static let typeReserved21IMG = ImageCreateFlags(rawValue: 2097152)
     public static let typeDescriptorHeapCaptureReplayEXT = ImageCreateFlags(rawValue: 65536)
     public static let typeSampleLocationsCompatibleDepthEXT = ImageCreateFlags(rawValue: 4096)
     public static let typeSubsampledEXT = ImageCreateFlags(rawValue: 16384)
@@ -689,6 +752,7 @@ public struct ImageCreateFlags: OptionSet, StringConvertibleOptionSet {
         (.typeMutableFormat, "typeMutableFormat"),
         (.typeCubeCompatible, "typeCubeCompatible"),
         (.typeCornerSampledNV, "typeCornerSampledNV"),
+        (.typeReserved21IMG, "typeReserved21IMG"),
         (.typeDescriptorHeapCaptureReplayEXT, "typeDescriptorHeapCaptureReplayEXT"),
         (.typeSampleLocationsCompatibleDepthEXT, "typeSampleLocationsCompatibleDepthEXT"),
         (.typeSubsampledEXT, "typeSubsampledEXT"),
@@ -751,6 +815,7 @@ public struct PipelineCreateFlags: OptionSet, StringConvertibleOptionSet {
     public static let rayTracingAllowMotionNV = PipelineCreateFlags(rawValue: 1048576)
     public static let colorAttachmentFeedbackLoopEXT = PipelineCreateFlags(rawValue: 33554432)
     public static let depthStencilAttachmentFeedbackLoopEXT = PipelineCreateFlags(rawValue: 67108864)
+    public static let rayTracingDisplacementMicromapNV = PipelineCreateFlags(rawValue: 268435456)
     public static let rayTracingOpacityMicromapKHR = PipelineCreateFlags(rawValue: 16777216)
     public static let dispatchBase = PipelineCreateFlags(rawValue: 16)
     public static let viewIndexFromDeviceIndex = PipelineCreateFlags(rawValue: 8)
@@ -787,6 +852,7 @@ public struct PipelineCreateFlags: OptionSet, StringConvertibleOptionSet {
         (.rayTracingAllowMotionNV, "rayTracingAllowMotionNV"),
         (.colorAttachmentFeedbackLoopEXT, "colorAttachmentFeedbackLoopEXT"),
         (.depthStencilAttachmentFeedbackLoopEXT, "depthStencilAttachmentFeedbackLoopEXT"),
+        (.rayTracingDisplacementMicromapNV, "rayTracingDisplacementMicromapNV"),
         (.rayTracingOpacityMicromapKHR, "rayTracingOpacityMicromapKHR"),
         (.dispatchBase, "dispatchBase"),
         (.viewIndexFromDeviceIndex, "viewIndexFromDeviceIndex"),
@@ -999,6 +1065,7 @@ public struct CommandPoolResetFlags: OptionSet, StringConvertibleOptionSet {
     public let rawValue: UInt32
 
     public static let releaseResources = CommandPoolResetFlags(rawValue: 1)
+    public static let reserved1BitCoreavi = CommandPoolResetFlags(rawValue: 2)
 
     public init(rawValue: UInt32) {
         self.rawValue = rawValue
@@ -1006,6 +1073,7 @@ public struct CommandPoolResetFlags: OptionSet, StringConvertibleOptionSet {
 
     static let descriptions: [(Self, String)] = [
         (.releaseResources, "releaseResources"),
+        (.reserved1BitCoreavi, "reserved1BitCoreavi"),
     ]
 }
 
@@ -1029,6 +1097,8 @@ public struct CommandBufferUsageFlags: OptionSet, StringConvertibleOptionSet {
     public static let oneTimeSubmit = CommandBufferUsageFlags(rawValue: 1)
     public static let renderPassContinue = CommandBufferUsageFlags(rawValue: 2)
     public static let simultaneousUse = CommandBufferUsageFlags(rawValue: 4)
+    public static let reserved3HUAWEI = CommandBufferUsageFlags(rawValue: 8)
+    public static let reserved4HUAWEI = CommandBufferUsageFlags(rawValue: 16)
 
     public init(rawValue: UInt32) {
         self.rawValue = rawValue
@@ -1038,6 +1108,8 @@ public struct CommandBufferUsageFlags: OptionSet, StringConvertibleOptionSet {
         (.oneTimeSubmit, "oneTimeSubmit"),
         (.renderPassContinue, "renderPassContinue"),
         (.simultaneousUse, "simultaneousUse"),
+        (.reserved3HUAWEI, "reserved3HUAWEI"),
+        (.reserved4HUAWEI, "reserved4HUAWEI"),
     ]
 }
 
@@ -1120,6 +1192,7 @@ public struct ImageAspectFlags: OptionSet, StringConvertibleOptionSet {
     public static let memoryPlane1EXT = ImageAspectFlags(rawValue: 256)
     public static let memoryPlane2EXT = ImageAspectFlags(rawValue: 512)
     public static let memoryPlane3EXT = ImageAspectFlags(rawValue: 1024)
+    public static let reserved11HUAWEI = ImageAspectFlags(rawValue: 2048)
     public static let plane0 = ImageAspectFlags(rawValue: 16)
     public static let plane1 = ImageAspectFlags(rawValue: 32)
     public static let plane2 = ImageAspectFlags(rawValue: 64)
@@ -1138,6 +1211,7 @@ public struct ImageAspectFlags: OptionSet, StringConvertibleOptionSet {
         (.memoryPlane1EXT, "memoryPlane1EXT"),
         (.memoryPlane2EXT, "memoryPlane2EXT"),
         (.memoryPlane3EXT, "memoryPlane3EXT"),
+        (.reserved11HUAWEI, "reserved11HUAWEI"),
         (.plane0, "plane0"),
         (.plane1, "plane1"),
         (.plane2, "plane2"),
@@ -1395,6 +1469,7 @@ public struct DependencyFlags: OptionSet, StringConvertibleOptionSet {
     public static let feedbackLoopEXT = DependencyFlags(rawValue: 8)
     public static let queueFamilyOwnershipTransferUseAllStagesKHR = DependencyFlags(rawValue: 32)
     public static let asymmetricEventKHR = DependencyFlags(rawValue: 64)
+    public static let extension586IMG = DependencyFlags(rawValue: 16)
     public static let deviceGroup = DependencyFlags(rawValue: 4)
     public static let viewLocal = DependencyFlags(rawValue: 2)
 
@@ -1407,6 +1482,7 @@ public struct DependencyFlags: OptionSet, StringConvertibleOptionSet {
         (.feedbackLoopEXT, "feedbackLoopEXT"),
         (.queueFamilyOwnershipTransferUseAllStagesKHR, "queueFamilyOwnershipTransferUseAllStagesKHR"),
         (.asymmetricEventKHR, "asymmetricEventKHR"),
+        (.extension586IMG, "extension586IMG"),
         (.deviceGroup, "deviceGroup"),
         (.viewLocal, "viewLocal"),
     ]
@@ -1586,6 +1662,7 @@ public struct BuildAccelerationStructureFlagsKHR: OptionSet, StringConvertibleOp
     public static let lowMemory = BuildAccelerationStructureFlagsKHR(rawValue: 16)
     public static let motionNV = BuildAccelerationStructureFlagsKHR(rawValue: 32)
     public static let allowOpacityMicromapDataUpdateEXT = BuildAccelerationStructureFlagsKHR(rawValue: 256)
+    public static let allowDisplacementMicromapUpdateNV = BuildAccelerationStructureFlagsKHR(rawValue: 512)
     public static let allowDataAccess = BuildAccelerationStructureFlagsKHR(rawValue: 2048)
     public static let allowClusterOpacityMicromapsNV = BuildAccelerationStructureFlagsKHR(rawValue: 4096)
     public static let allowOpacityMicromapUpdate = BuildAccelerationStructureFlagsKHR(rawValue: 64)
@@ -1604,6 +1681,7 @@ public struct BuildAccelerationStructureFlagsKHR: OptionSet, StringConvertibleOp
         (.lowMemory, "lowMemory"),
         (.motionNV, "motionNV"),
         (.allowOpacityMicromapDataUpdateEXT, "allowOpacityMicromapDataUpdateEXT"),
+        (.allowDisplacementMicromapUpdateNV, "allowDisplacementMicromapUpdateNV"),
         (.allowDataAccess, "allowDataAccess"),
         (.allowClusterOpacityMicromapsNV, "allowClusterOpacityMicromapsNV"),
         (.allowOpacityMicromapUpdate, "allowOpacityMicromapUpdate"),
@@ -1753,6 +1831,17 @@ public struct DeviceDiagnosticsConfigFlagsNV: OptionSet, StringConvertibleOption
     ]
 }
 
+public struct RefreshObjectFlagsKHR: OptionSet, StringConvertibleOptionSet {
+    public let rawValue: UInt32
+
+    public init(rawValue: UInt32) {
+        self.rawValue = rawValue
+    }
+
+    static let descriptions: [(Self, String)] = [
+    ]
+}
+
 public struct AccessFlags2: OptionSet, StringConvertibleOptionSet {
     public let rawValue: UInt64
 
@@ -1781,8 +1870,11 @@ public struct AccessFlags2: OptionSet, StringConvertibleOptionSet {
     public static let videoDecodeWriteKHR = AccessFlags2(rawValue: 68719476736)
     public static let samplerHeapReadEXT = AccessFlags2(rawValue: 144115188075855872)
     public static let resourceHeapReadEXT = AccessFlags2(rawValue: 288230376151711744)
+    public static let reserved46INTEL = AccessFlags2(rawValue: 70368744177664)
     public static let videoEncodeReadKHR = AccessFlags2(rawValue: 137438953472)
     public static let videoEncodeWriteKHR = AccessFlags2(rawValue: 274877906944)
+    public static let reserved53KHR = AccessFlags2(rawValue: 9007199254740992)
+    public static let reserved54KHR = AccessFlags2(rawValue: 18014398509481984)
     public static let shaderTileAttachmentReadQCOM = AccessFlags2(rawValue: 2251799813685248)
     public static let shaderTileAttachmentWriteQCOM = AccessFlags2(rawValue: 4503599627370496)
     public static let transformFeedbackWriteEXT = AccessFlags2(rawValue: 33554432)
@@ -1807,6 +1899,14 @@ public struct AccessFlags2: OptionSet, StringConvertibleOptionSet {
     public static let dataGraphWriteARM = AccessFlags2(rawValue: 281474976710656)
     public static let memoryDecompressionReadEXT = AccessFlags2(rawValue: 36028797018963968)
     public static let memoryDecompressionWriteEXT = AccessFlags2(rawValue: 72057594037927936)
+    public static let reserved62EXT = AccessFlags2(rawValue: 4611686018427387904)
+    public static let reserved63EXT = AccessFlags2(rawValue: 9223372036854775808)
+    public static let reserved60KHR = AccessFlags2(rawValue: 1152921504606846976)
+    public static let reserved61KHR = AccessFlags2(rawValue: 2305843009213693952)
+    public static let reserved28AMD = AccessFlags2(rawValue: 268435456)
+    public static let reserved29AMD = AccessFlags2(rawValue: 536870912)
+    public static let reserved49ARM = AccessFlags2(rawValue: 562949953421312)
+    public static let reserved50ARM = AccessFlags2(rawValue: 1125899906842624)
 
     public init(rawValue: UInt64) {
         self.rawValue = rawValue
@@ -1838,8 +1938,11 @@ public struct AccessFlags2: OptionSet, StringConvertibleOptionSet {
         (.videoDecodeWriteKHR, "videoDecodeWriteKHR"),
         (.samplerHeapReadEXT, "samplerHeapReadEXT"),
         (.resourceHeapReadEXT, "resourceHeapReadEXT"),
+        (.reserved46INTEL, "reserved46INTEL"),
         (.videoEncodeReadKHR, "videoEncodeReadKHR"),
         (.videoEncodeWriteKHR, "videoEncodeWriteKHR"),
+        (.reserved53KHR, "reserved53KHR"),
+        (.reserved54KHR, "reserved54KHR"),
         (.shaderTileAttachmentReadQCOM, "shaderTileAttachmentReadQCOM"),
         (.shaderTileAttachmentWriteQCOM, "shaderTileAttachmentWriteQCOM"),
         (.transformFeedbackWriteEXT, "transformFeedbackWriteEXT"),
@@ -1864,6 +1967,14 @@ public struct AccessFlags2: OptionSet, StringConvertibleOptionSet {
         (.dataGraphWriteARM, "dataGraphWriteARM"),
         (.memoryDecompressionReadEXT, "memoryDecompressionReadEXT"),
         (.memoryDecompressionWriteEXT, "memoryDecompressionWriteEXT"),
+        (.reserved62EXT, "reserved62EXT"),
+        (.reserved63EXT, "reserved63EXT"),
+        (.reserved60KHR, "reserved60KHR"),
+        (.reserved61KHR, "reserved61KHR"),
+        (.reserved28AMD, "reserved28AMD"),
+        (.reserved29AMD, "reserved29AMD"),
+        (.reserved49ARM, "reserved49ARM"),
+        (.reserved50ARM, "reserved50ARM"),
     ]
 }
 
@@ -1897,6 +2008,7 @@ public struct PipelineStageFlags2: OptionSet, StringConvertibleOptionSet {
     public static let preRasterizationShaders = PipelineStageFlags2(rawValue: 274877906944)
     public static let videoDecodeKHR = PipelineStageFlags2(rawValue: 67108864)
     public static let videoEncodeKHR = PipelineStageFlags2(rawValue: 134217728)
+    public static let reserved50KHR = PipelineStageFlags2(rawValue: 1125899906842624)
     public static let transformFeedbackEXT = PipelineStageFlags2(rawValue: 16777216)
     public static let conditionalRenderingEXT = PipelineStageFlags2(rawValue: 262144)
     public static let commandPreprocessEXT = PipelineStageFlags2(rawValue: 131072)
@@ -1916,6 +2028,11 @@ public struct PipelineStageFlags2: OptionSet, StringConvertibleOptionSet {
     public static let dataGraphARM = PipelineStageFlags2(rawValue: 4398046511104)
     public static let copyIndirectKHR = PipelineStageFlags2(rawValue: 70368744177664)
     public static let memoryDecompressionEXT = PipelineStageFlags2(rawValue: 35184372088832)
+    public static let reserved49EXT = PipelineStageFlags2(rawValue: 562949953421312)
+    public static let reserved47KHR = PipelineStageFlags2(rawValue: 140737488355328)
+    public static let reserved31AMD = PipelineStageFlags2(rawValue: 2147483648)
+    public static let reserved43ARM = PipelineStageFlags2(rawValue: 8796093022208)
+    public static let reserved48HUAWEI = PipelineStageFlags2(rawValue: 281474976710656)
 
     public init(rawValue: UInt64) {
         self.rawValue = rawValue
@@ -1949,6 +2066,7 @@ public struct PipelineStageFlags2: OptionSet, StringConvertibleOptionSet {
         (.preRasterizationShaders, "preRasterizationShaders"),
         (.videoDecodeKHR, "videoDecodeKHR"),
         (.videoEncodeKHR, "videoEncodeKHR"),
+        (.reserved50KHR, "reserved50KHR"),
         (.transformFeedbackEXT, "transformFeedbackEXT"),
         (.conditionalRenderingEXT, "conditionalRenderingEXT"),
         (.commandPreprocessEXT, "commandPreprocessEXT"),
@@ -1968,6 +2086,11 @@ public struct PipelineStageFlags2: OptionSet, StringConvertibleOptionSet {
         (.dataGraphARM, "dataGraphARM"),
         (.copyIndirectKHR, "copyIndirectKHR"),
         (.memoryDecompressionEXT, "memoryDecompressionEXT"),
+        (.reserved49EXT, "reserved49EXT"),
+        (.reserved47KHR, "reserved47KHR"),
+        (.reserved31AMD, "reserved31AMD"),
+        (.reserved43ARM, "reserved43ARM"),
+        (.reserved48HUAWEI, "reserved48HUAWEI"),
     ]
 }
 
@@ -2042,6 +2165,7 @@ public struct FormatFeatureFlags2: OptionSet, StringConvertibleOptionSet {
     public static let opticalFlowVectorNV = FormatFeatureFlags2(rawValue: 2199023255552)
     public static let opticalFlowCostNV = FormatFeatureFlags2(rawValue: 4398046511104)
     public static let tensorDataGraphARM = FormatFeatureFlags2(rawValue: 281474976710656)
+    public static let reserved60EXT = FormatFeatureFlags2(rawValue: 1152921504606846976)
     public static let copyImageIndirectDstKHR = FormatFeatureFlags2(rawValue: 576460752303423488)
     public static let videoEncodeQuantizationDeltaMapKHR = FormatFeatureFlags2(rawValue: 562949953421312)
     public static let videoEncodeEmphasisMapKHR = FormatFeatureFlags2(rawValue: 1125899906842624)
@@ -2052,6 +2176,8 @@ public struct FormatFeatureFlags2: OptionSet, StringConvertibleOptionSet {
     public static let dataGraphOpticalFlowImageARM = FormatFeatureFlags2(rawValue: 72057594037927936)
     public static let dataGraphOpticalFlowVectorARM = FormatFeatureFlags2(rawValue: 144115188075855872)
     public static let dataGraphOpticalFlowCostARM = FormatFeatureFlags2(rawValue: 288230376151711744)
+    public static let reserved47ARM = FormatFeatureFlags2(rawValue: 140737488355328)
+    public static let reserved61HUAWEI = FormatFeatureFlags2(rawValue: 2305843009213693952)
     public static let sampledImageFilterCubic = FormatFeatureFlags2(rawValue: 8192)
     public static let hostImageTransfer = FormatFeatureFlags2(rawValue: 70368744177664)
 
@@ -2106,6 +2232,7 @@ public struct FormatFeatureFlags2: OptionSet, StringConvertibleOptionSet {
         (.opticalFlowVectorNV, "opticalFlowVectorNV"),
         (.opticalFlowCostNV, "opticalFlowCostNV"),
         (.tensorDataGraphARM, "tensorDataGraphARM"),
+        (.reserved60EXT, "reserved60EXT"),
         (.copyImageIndirectDstKHR, "copyImageIndirectDstKHR"),
         (.videoEncodeQuantizationDeltaMapKHR, "videoEncodeQuantizationDeltaMapKHR"),
         (.videoEncodeEmphasisMapKHR, "videoEncodeEmphasisMapKHR"),
@@ -2116,6 +2243,8 @@ public struct FormatFeatureFlags2: OptionSet, StringConvertibleOptionSet {
         (.dataGraphOpticalFlowImageARM, "dataGraphOpticalFlowImageARM"),
         (.dataGraphOpticalFlowVectorARM, "dataGraphOpticalFlowVectorARM"),
         (.dataGraphOpticalFlowCostARM, "dataGraphOpticalFlowCostARM"),
+        (.reserved47ARM, "reserved47ARM"),
+        (.reserved61HUAWEI, "reserved61HUAWEI"),
         (.sampledImageFilterCubic, "sampledImageFilterCubic"),
         (.hostImageTransfer, "hostImageTransfer"),
     ]
@@ -2127,12 +2256,16 @@ public struct RenderingFlags: OptionSet, StringConvertibleOptionSet {
     public static let contentsSecondaryCommandBuffers = RenderingFlags(rawValue: 1)
     public static let suspending = RenderingFlags(rawValue: 2)
     public static let resuming = RenderingFlags(rawValue: 4)
+    public static let reserved9IMG = RenderingFlags(rawValue: 512)
     public static let enableLegacyDitheringEXT = RenderingFlags(rawValue: 8)
     public static let contentsInlineKHR = RenderingFlags(rawValue: 16)
     public static let perLayerFragmentDensityVALVE = RenderingFlags(rawValue: 32)
     public static let fragmentRegionEXT = RenderingFlags(rawValue: 64)
     public static let customResolveEXT = RenderingFlags(rawValue: 128)
     public static let localReadConcurrentAccessControlKHR = RenderingFlags(rawValue: 256)
+    public static let reserved10VALVE = RenderingFlags(rawValue: 1024)
+    public static let reserved11VALVE = RenderingFlags(rawValue: 2048)
+    public static let reserved12VALVE = RenderingFlags(rawValue: 4096)
 
     public init(rawValue: UInt32) {
         self.rawValue = rawValue
@@ -2142,12 +2275,16 @@ public struct RenderingFlags: OptionSet, StringConvertibleOptionSet {
         (.contentsSecondaryCommandBuffers, "contentsSecondaryCommandBuffers"),
         (.suspending, "suspending"),
         (.resuming, "resuming"),
+        (.reserved9IMG, "reserved9IMG"),
         (.enableLegacyDitheringEXT, "enableLegacyDitheringEXT"),
         (.contentsInlineKHR, "contentsInlineKHR"),
         (.perLayerFragmentDensityVALVE, "perLayerFragmentDensityVALVE"),
         (.fragmentRegionEXT, "fragmentRegionEXT"),
         (.customResolveEXT, "customResolveEXT"),
         (.localReadConcurrentAccessControlKHR, "localReadConcurrentAccessControlKHR"),
+        (.reserved10VALVE, "reserved10VALVE"),
+        (.reserved11VALVE, "reserved11VALVE"),
+        (.reserved12VALVE, "reserved12VALVE"),
     ]
 }
 
@@ -2276,7 +2413,10 @@ public struct PipelineCreateFlags2: OptionSet, StringConvertibleOptionSet {
     public static let typeEarlyReturnOnFailure = PipelineCreateFlags2(rawValue: 512)
     public static let typeNoProtectedAccess = PipelineCreateFlags2(rawValue: 134217728)
     public static let typeProtectedAccessOnly = PipelineCreateFlags2(rawValue: 1073741824)
+    public static let typeReserved46IMG = PipelineCreateFlags2(rawValue: 70368744177664)
+    public static let typeExecutionGraphAMDX = PipelineCreateFlags2(rawValue: 4294967296)
     public static let typeDescriptorHeapEXT = PipelineCreateFlags2(rawValue: 68719476736)
+    public static let typePipelineCreateReserved44KHR = PipelineCreateFlags2(rawValue: 17592186044416)
     public static let typeRayTracingAllowSpheresAndLinearSweptSpheresNV = PipelineCreateFlags2(rawValue: 8589934592)
     public static let typeEnableLegacyDitheringEXT = PipelineCreateFlags2(rawValue: 17179869184)
     public static let typeDeferCompileNV = PipelineCreateFlags2(rawValue: 32)
@@ -2304,10 +2444,14 @@ public struct PipelineCreateFlags2: OptionSet, StringConvertibleOptionSet {
     public static let typeInstrumentShadersARM = PipelineCreateFlags2(rawValue: 549755813888)
     public static let typeCaptureDataKHR = PipelineCreateFlags2(rawValue: 2147483648)
     public static let typeIndirectBindableEXT = PipelineCreateFlags2(rawValue: 274877906944)
+    public static let typeReserved35KHR = PipelineCreateFlags2(rawValue: 34359738368)
     public static let typePerLayerFragmentDensityVALVE = PipelineCreateFlags2(rawValue: 1099511627776)
     public static let typeRayTracingOpacityMicromapKHR = PipelineCreateFlags2(rawValue: 16777216)
     public static let typeOpacityMicromapDisallowMixedSpecialIndexKHR = PipelineCreateFlags2(rawValue: 2199023255552)
     public static let type64BitIndexingEXT = PipelineCreateFlags2(rawValue: 8796093022208)
+    public static let typeReserved45EXT = PipelineCreateFlags2(rawValue: 35184372088832)
+    public static let typeReserved47AMD = PipelineCreateFlags2(rawValue: 140737488355328)
+    public static let typeReserved48HUAWEI = PipelineCreateFlags2(rawValue: 281474976710656)
 
     public init(rawValue: UInt64) {
         self.rawValue = rawValue
@@ -2323,7 +2467,10 @@ public struct PipelineCreateFlags2: OptionSet, StringConvertibleOptionSet {
         (.typeEarlyReturnOnFailure, "typeEarlyReturnOnFailure"),
         (.typeNoProtectedAccess, "typeNoProtectedAccess"),
         (.typeProtectedAccessOnly, "typeProtectedAccessOnly"),
+        (.typeReserved46IMG, "typeReserved46IMG"),
+        (.typeExecutionGraphAMDX, "typeExecutionGraphAMDX"),
         (.typeDescriptorHeapEXT, "typeDescriptorHeapEXT"),
+        (.typePipelineCreateReserved44KHR, "typePipelineCreateReserved44KHR"),
         (.typeRayTracingAllowSpheresAndLinearSweptSpheresNV, "typeRayTracingAllowSpheresAndLinearSweptSpheresNV"),
         (.typeEnableLegacyDitheringEXT, "typeEnableLegacyDitheringEXT"),
         (.typeDeferCompileNV, "typeDeferCompileNV"),
@@ -2351,10 +2498,14 @@ public struct PipelineCreateFlags2: OptionSet, StringConvertibleOptionSet {
         (.typeInstrumentShadersARM, "typeInstrumentShadersARM"),
         (.typeCaptureDataKHR, "typeCaptureDataKHR"),
         (.typeIndirectBindableEXT, "typeIndirectBindableEXT"),
+        (.typeReserved35KHR, "typeReserved35KHR"),
         (.typePerLayerFragmentDensityVALVE, "typePerLayerFragmentDensityVALVE"),
         (.typeRayTracingOpacityMicromapKHR, "typeRayTracingOpacityMicromapKHR"),
         (.typeOpacityMicromapDisallowMixedSpecialIndexKHR, "typeOpacityMicromapDisallowMixedSpecialIndexKHR"),
         (.type64BitIndexingEXT, "type64BitIndexingEXT"),
+        (.typeReserved45EXT, "typeReserved45EXT"),
+        (.typeReserved47AMD, "typeReserved47AMD"),
+        (.typeReserved48HUAWEI, "typeReserved48HUAWEI"),
     ]
 }
 
@@ -2370,6 +2521,7 @@ public struct BufferUsageFlags2: OptionSet, StringConvertibleOptionSet {
     public static let indexBuffer = BufferUsageFlags2(rawValue: 64)
     public static let vertexBuffer = BufferUsageFlags2(rawValue: 128)
     public static let indirectBuffer = BufferUsageFlags2(rawValue: 256)
+    public static let executionGraphScratchAMDX = BufferUsageFlags2(rawValue: 33554432)
     public static let descriptorHeapEXT = BufferUsageFlags2(rawValue: 268435456)
     public static let micromapBuildInputReadOnlyEXT = BufferUsageFlags2(rawValue: 8388608)
     public static let micromapStorageEXT = BufferUsageFlags2(rawValue: 16777216)
@@ -2386,10 +2538,17 @@ public struct BufferUsageFlags2: OptionSet, StringConvertibleOptionSet {
     public static let samplerDescriptorBufferEXT = BufferUsageFlags2(rawValue: 2097152)
     public static let resourceDescriptorBufferEXT = BufferUsageFlags2(rawValue: 4194304)
     public static let pushDescriptorsDescriptorBufferEXT = BufferUsageFlags2(rawValue: 67108864)
+    public static let compressedDataDgf1AMDX = BufferUsageFlags2(rawValue: 8589934592)
     public static let dataGraphForeignDescriptorARM = BufferUsageFlags2(rawValue: 536870912)
+    public static let reserved34EXT = BufferUsageFlags2(rawValue: 17179869184)
     public static let tileMemoryQCOM = BufferUsageFlags2(rawValue: 134217728)
     public static let memoryDecompressionEXT = BufferUsageFlags2(rawValue: 4294967296)
     public static let preprocessBufferEXT = BufferUsageFlags2(rawValue: 2147483648)
+    public static let reserved18EXT = BufferUsageFlags2(rawValue: 262144)
+    public static let reserved30EXT = BufferUsageFlags2(rawValue: 1073741824)
+    public static let reserved35KHR = BufferUsageFlags2(rawValue: 34359738368)
+    public static let reserved36KHR = BufferUsageFlags2(rawValue: 68719476736)
+    public static let reserved37HUAWEI = BufferUsageFlags2(rawValue: 137438953472)
     public static let shaderDeviceAddress = BufferUsageFlags2(rawValue: 131072)
 
     public init(rawValue: UInt64) {
@@ -2406,6 +2565,7 @@ public struct BufferUsageFlags2: OptionSet, StringConvertibleOptionSet {
         (.indexBuffer, "indexBuffer"),
         (.vertexBuffer, "vertexBuffer"),
         (.indirectBuffer, "indirectBuffer"),
+        (.executionGraphScratchAMDX, "executionGraphScratchAMDX"),
         (.descriptorHeapEXT, "descriptorHeapEXT"),
         (.micromapBuildInputReadOnlyEXT, "micromapBuildInputReadOnlyEXT"),
         (.micromapStorageEXT, "micromapStorageEXT"),
@@ -2422,10 +2582,17 @@ public struct BufferUsageFlags2: OptionSet, StringConvertibleOptionSet {
         (.samplerDescriptorBufferEXT, "samplerDescriptorBufferEXT"),
         (.resourceDescriptorBufferEXT, "resourceDescriptorBufferEXT"),
         (.pushDescriptorsDescriptorBufferEXT, "pushDescriptorsDescriptorBufferEXT"),
+        (.compressedDataDgf1AMDX, "compressedDataDgf1AMDX"),
         (.dataGraphForeignDescriptorARM, "dataGraphForeignDescriptorARM"),
+        (.reserved34EXT, "reserved34EXT"),
         (.tileMemoryQCOM, "tileMemoryQCOM"),
         (.memoryDecompressionEXT, "memoryDecompressionEXT"),
         (.preprocessBufferEXT, "preprocessBufferEXT"),
+        (.reserved18EXT, "reserved18EXT"),
+        (.reserved30EXT, "reserved30EXT"),
+        (.reserved35KHR, "reserved35KHR"),
+        (.reserved36KHR, "reserved36KHR"),
+        (.reserved37HUAWEI, "reserved37HUAWEI"),
         (.shaderDeviceAddress, "shaderDeviceAddress"),
     ]
 }
@@ -2768,9 +2935,12 @@ public struct SwapchainCreateFlagsKHR: OptionSet, StringConvertibleOptionSet {
     public static let protected = SwapchainCreateFlagsKHR(rawValue: 2)
     public static let mutableFormat = SwapchainCreateFlagsKHR(rawValue: 4)
     public static let presentTimingEXT = SwapchainCreateFlagsKHR(rawValue: 512)
+    public static let reserved5EXT = SwapchainCreateFlagsKHR(rawValue: 32)
+    public static let reserved4EXT = SwapchainCreateFlagsKHR(rawValue: 16)
     public static let presentId2 = SwapchainCreateFlagsKHR(rawValue: 64)
     public static let presentWait2 = SwapchainCreateFlagsKHR(rawValue: 128)
     public static let deferredMemoryAllocation = SwapchainCreateFlagsKHR(rawValue: 8)
+    public static let reserved8EXT = SwapchainCreateFlagsKHR(rawValue: 256)
 
     public init(rawValue: UInt32) {
         self.rawValue = rawValue
@@ -2781,9 +2951,12 @@ public struct SwapchainCreateFlagsKHR: OptionSet, StringConvertibleOptionSet {
         (.protected, "protected"),
         (.mutableFormat, "mutableFormat"),
         (.presentTimingEXT, "presentTimingEXT"),
+        (.reserved5EXT, "reserved5EXT"),
+        (.reserved4EXT, "reserved4EXT"),
         (.presentId2, "presentId2"),
         (.presentWait2, "presentWait2"),
         (.deferredMemoryAllocation, "deferredMemoryAllocation"),
+        (.reserved8EXT, "reserved8EXT"),
     ]
 }
 
@@ -3162,9 +3335,17 @@ public struct ExternalMemoryHandleTypeFlags: OptionSet, StringConvertibleOptionS
     public static let d3d12Heap = ExternalMemoryHandleTypeFlags(rawValue: 32)
     public static let d3d12Resource = ExternalMemoryHandleTypeFlags(rawValue: 64)
     public static let dmaBufEXT = ExternalMemoryHandleTypeFlags(rawValue: 512)
+    public static let androidHardwareBufferANDROID = ExternalMemoryHandleTypeFlags(rawValue: 1024)
     public static let hostAllocationEXT = ExternalMemoryHandleTypeFlags(rawValue: 128)
     public static let hostMappedForeignMemoryEXT = ExternalMemoryHandleTypeFlags(rawValue: 256)
+    public static let zirconVmoFUCHSIA = ExternalMemoryHandleTypeFlags(rawValue: 2048)
     public static let rdmaAddressNV = ExternalMemoryHandleTypeFlags(rawValue: 4096)
+    public static let sciBufNV = ExternalMemoryHandleTypeFlags(rawValue: 8192)
+    public static let ohNativeBufferOHOS = ExternalMemoryHandleTypeFlags(rawValue: 32768)
+    public static let screenBufferQNX = ExternalMemoryHandleTypeFlags(rawValue: 16384)
+    public static let mtlbufferEXT = ExternalMemoryHandleTypeFlags(rawValue: 65536)
+    public static let mtltextureEXT = ExternalMemoryHandleTypeFlags(rawValue: 131072)
+    public static let mtlheapEXT = ExternalMemoryHandleTypeFlags(rawValue: 262144)
 
     public init(rawValue: UInt32) {
         self.rawValue = rawValue
@@ -3179,9 +3360,17 @@ public struct ExternalMemoryHandleTypeFlags: OptionSet, StringConvertibleOptionS
         (.d3d12Heap, "d3d12Heap"),
         (.d3d12Resource, "d3d12Resource"),
         (.dmaBufEXT, "dmaBufEXT"),
+        (.androidHardwareBufferANDROID, "androidHardwareBufferANDROID"),
         (.hostAllocationEXT, "hostAllocationEXT"),
         (.hostMappedForeignMemoryEXT, "hostMappedForeignMemoryEXT"),
+        (.zirconVmoFUCHSIA, "zirconVmoFUCHSIA"),
         (.rdmaAddressNV, "rdmaAddressNV"),
+        (.sciBufNV, "sciBufNV"),
+        (.ohNativeBufferOHOS, "ohNativeBufferOHOS"),
+        (.screenBufferQNX, "screenBufferQNX"),
+        (.mtlbufferEXT, "mtlbufferEXT"),
+        (.mtltextureEXT, "mtltextureEXT"),
+        (.mtlheapEXT, "mtlheapEXT"),
     ]
 }
 
@@ -3211,6 +3400,8 @@ public struct ExternalSemaphoreHandleTypeFlags: OptionSet, StringConvertibleOpti
     public static let opaqueWin32Kmt = ExternalSemaphoreHandleTypeFlags(rawValue: 4)
     public static let d3d12Fence = ExternalSemaphoreHandleTypeFlags(rawValue: 8)
     public static let syncFd = ExternalSemaphoreHandleTypeFlags(rawValue: 16)
+    public static let zirconEventFUCHSIA = ExternalSemaphoreHandleTypeFlags(rawValue: 128)
+    public static let sciSyncObjNV = ExternalSemaphoreHandleTypeFlags(rawValue: 32)
 
     public init(rawValue: UInt32) {
         self.rawValue = rawValue
@@ -3222,6 +3413,8 @@ public struct ExternalSemaphoreHandleTypeFlags: OptionSet, StringConvertibleOpti
         (.opaqueWin32Kmt, "opaqueWin32Kmt"),
         (.d3d12Fence, "d3d12Fence"),
         (.syncFd, "syncFd"),
+        (.zirconEventFUCHSIA, "zirconEventFUCHSIA"),
+        (.sciSyncObjNV, "sciSyncObjNV"),
     ]
 }
 
@@ -3262,6 +3455,8 @@ public struct ExternalFenceHandleTypeFlags: OptionSet, StringConvertibleOptionSe
     public static let opaqueWin32 = ExternalFenceHandleTypeFlags(rawValue: 2)
     public static let opaqueWin32Kmt = ExternalFenceHandleTypeFlags(rawValue: 4)
     public static let syncFd = ExternalFenceHandleTypeFlags(rawValue: 8)
+    public static let sciSyncObjNV = ExternalFenceHandleTypeFlags(rawValue: 16)
+    public static let sciSyncFenceNV = ExternalFenceHandleTypeFlags(rawValue: 32)
 
     public init(rawValue: UInt32) {
         self.rawValue = rawValue
@@ -3272,6 +3467,8 @@ public struct ExternalFenceHandleTypeFlags: OptionSet, StringConvertibleOptionSe
         (.opaqueWin32, "opaqueWin32"),
         (.opaqueWin32Kmt, "opaqueWin32Kmt"),
         (.syncFd, "syncFd"),
+        (.sciSyncObjNV, "sciSyncObjNV"),
+        (.sciSyncFenceNV, "sciSyncFenceNV"),
     ]
 }
 
@@ -3476,6 +3673,7 @@ public struct DescriptorBindingFlags: OptionSet, StringConvertibleOptionSet {
     public static let updateUnusedWhilePending = DescriptorBindingFlags(rawValue: 2)
     public static let partiallyBound = DescriptorBindingFlags(rawValue: 4)
     public static let variableDescriptorCount = DescriptorBindingFlags(rawValue: 8)
+    public static let reserved4QCOM = DescriptorBindingFlags(rawValue: 16)
 
     public init(rawValue: UInt32) {
         self.rawValue = rawValue
@@ -3486,6 +3684,7 @@ public struct DescriptorBindingFlags: OptionSet, StringConvertibleOptionSet {
         (.updateUnusedWhilePending, "updateUnusedWhilePending"),
         (.partiallyBound, "partiallyBound"),
         (.variableDescriptorCount, "variableDescriptorCount"),
+        (.reserved4QCOM, "reserved4QCOM"),
     ]
 }
 
@@ -3511,6 +3710,7 @@ public struct ResolveModeFlags: OptionSet, StringConvertibleOptionSet {
     public static let average = ResolveModeFlags(rawValue: 2)
     public static let min = ResolveModeFlags(rawValue: 4)
     public static let max = ResolveModeFlags(rawValue: 8)
+    public static let externalFormatDownsampleANDROID = ResolveModeFlags(rawValue: 16)
     public static let customEXT = ResolveModeFlags(rawValue: 32)
 
     public init(rawValue: UInt32) {
@@ -3523,6 +3723,7 @@ public struct ResolveModeFlags: OptionSet, StringConvertibleOptionSet {
         (.average, "average"),
         (.min, "min"),
         (.max, "max"),
+        (.externalFormatDownsampleANDROID, "externalFormatDownsampleANDROID"),
         (.customEXT, "customEXT"),
     ]
 }
@@ -3548,6 +3749,22 @@ public struct PipelineRasterizationDepthClipStateCreateFlagsEXT: OptionSet, Stri
     static let descriptions: [(Self, String)] = [
     ]
 }
+
+#if VK_USE_PLATFORM_ANDROID_KHR
+public struct SwapchainImageUsageFlagsANDROID: OptionSet, StringConvertibleOptionSet {
+    public let rawValue: UInt32
+
+    public static let shared = SwapchainImageUsageFlagsANDROID(rawValue: 1)
+
+    public init(rawValue: UInt32) {
+        self.rawValue = rawValue
+    }
+
+    static let descriptions: [(Self, String)] = [
+        (.shared, "shared"),
+    ]
+}
+#endif
 
 public struct ToolPurposeFlags: OptionSet, StringConvertibleOptionSet {
     public let rawValue: UInt32
@@ -3974,7 +4191,9 @@ public struct ShaderCreateFlagsEXT: OptionSet, StringConvertibleOptionSet {
     public let rawValue: UInt32
 
     public static let typeLinkStage = ShaderCreateFlagsEXT(rawValue: 1)
+    public static let typeReserved17IMG = ShaderCreateFlagsEXT(rawValue: 131072)
     public static let typeDescriptorHeap = ShaderCreateFlagsEXT(rawValue: 1024)
+    public static let typeReserved16KHR = ShaderCreateFlagsEXT(rawValue: 65536)
     public static let typeInstrumentShaderARM = ShaderCreateFlagsEXT(rawValue: 2048)
     public static let typeAllowVaryingSubgroupSize = ShaderCreateFlagsEXT(rawValue: 2)
     public static let typeRequireFullSubgroups = ShaderCreateFlagsEXT(rawValue: 4)
@@ -3983,6 +4202,8 @@ public struct ShaderCreateFlagsEXT: OptionSet, StringConvertibleOptionSet {
     public static let typeFragmentShadingRateAttachment = ShaderCreateFlagsEXT(rawValue: 32)
     public static let typeFragmentDensityMapAttachment = ShaderCreateFlagsEXT(rawValue: 64)
     public static let typeIndirectBindable = ShaderCreateFlagsEXT(rawValue: 128)
+    public static let typeReserved8 = ShaderCreateFlagsEXT(rawValue: 256)
+    public static let typeReserved9 = ShaderCreateFlagsEXT(rawValue: 512)
     public static let typeOpacityMicromapDisallowMixedSpecialIndex = ShaderCreateFlagsEXT(rawValue: 4096)
     public static let type64BitIndexing = ShaderCreateFlagsEXT(rawValue: 32768)
     public static let typeIndependentSetsKHR = ShaderCreateFlagsEXT(rawValue: 262144)
@@ -3993,7 +4214,9 @@ public struct ShaderCreateFlagsEXT: OptionSet, StringConvertibleOptionSet {
 
     static let descriptions: [(Self, String)] = [
         (.typeLinkStage, "typeLinkStage"),
+        (.typeReserved17IMG, "typeReserved17IMG"),
         (.typeDescriptorHeap, "typeDescriptorHeap"),
+        (.typeReserved16KHR, "typeReserved16KHR"),
         (.typeInstrumentShaderARM, "typeInstrumentShaderARM"),
         (.typeAllowVaryingSubgroupSize, "typeAllowVaryingSubgroupSize"),
         (.typeRequireFullSubgroups, "typeRequireFullSubgroups"),
@@ -4002,6 +4225,8 @@ public struct ShaderCreateFlagsEXT: OptionSet, StringConvertibleOptionSet {
         (.typeFragmentShadingRateAttachment, "typeFragmentShadingRateAttachment"),
         (.typeFragmentDensityMapAttachment, "typeFragmentDensityMapAttachment"),
         (.typeIndirectBindable, "typeIndirectBindable"),
+        (.typeReserved8, "typeReserved8"),
+        (.typeReserved9, "typeReserved9"),
         (.typeOpacityMicromapDisallowMixedSpecialIndex, "typeOpacityMicromapDisallowMixedSpecialIndex"),
         (.type64BitIndexing, "type64BitIndexing"),
         (.typeIndependentSetsKHR, "typeIndependentSetsKHR"),
@@ -4104,6 +4329,22 @@ public struct PresentTimingInfoFlagsEXT: OptionSet, StringConvertibleOptionSet {
         (.presentAtNearestRefreshCycle, "presentAtNearestRefreshCycle"),
     ]
 }
+
+#if VK_USE_PLATFORM_OHOS
+public struct SwapchainImageUsageFlagsOHOS: OptionSet, StringConvertibleOptionSet {
+    public let rawValue: UInt32
+
+    public static let shared = SwapchainImageUsageFlagsOHOS(rawValue: 1)
+
+    public init(rawValue: UInt32) {
+        self.rawValue = rawValue
+    }
+
+    static let descriptions: [(Self, String)] = [
+        (.shared, "shared"),
+    ]
+}
+#endif
 
 public struct PerformanceCounterDescriptionFlagsARM: OptionSet, StringConvertibleOptionSet {
     public let rawValue: UInt32
@@ -4504,6 +4745,13 @@ public struct VideoEncodeFeedbackFlagsKHR: OptionSet, StringConvertibleOptionSet
     public static let bitstreamBufferOffset = VideoEncodeFeedbackFlagsKHR(rawValue: 1)
     public static let bitstreamBytesWritten = VideoEncodeFeedbackFlagsKHR(rawValue: 2)
     public static let bitstreamHasOverrides = VideoEncodeFeedbackFlagsKHR(rawValue: 4)
+    public static let reserved3 = VideoEncodeFeedbackFlagsKHR(rawValue: 8)
+    public static let reserved4 = VideoEncodeFeedbackFlagsKHR(rawValue: 16)
+    public static let reserved5 = VideoEncodeFeedbackFlagsKHR(rawValue: 32)
+    public static let reserved6 = VideoEncodeFeedbackFlagsKHR(rawValue: 64)
+    public static let reserved7 = VideoEncodeFeedbackFlagsKHR(rawValue: 128)
+    public static let reserved8 = VideoEncodeFeedbackFlagsKHR(rawValue: 256)
+    public static let reserved9 = VideoEncodeFeedbackFlagsKHR(rawValue: 512)
 
     public init(rawValue: UInt32) {
         self.rawValue = rawValue
@@ -4513,6 +4761,13 @@ public struct VideoEncodeFeedbackFlagsKHR: OptionSet, StringConvertibleOptionSet
         (.bitstreamBufferOffset, "bitstreamBufferOffset"),
         (.bitstreamBytesWritten, "bitstreamBytesWritten"),
         (.bitstreamHasOverrides, "bitstreamHasOverrides"),
+        (.reserved3, "reserved3"),
+        (.reserved4, "reserved4"),
+        (.reserved5, "reserved5"),
+        (.reserved6, "reserved6"),
+        (.reserved7, "reserved7"),
+        (.reserved8, "reserved8"),
+        (.reserved9, "reserved9"),
     ]
 }
 

@@ -1,6 +1,6 @@
 from __future__ import annotations
 import re
-from xml.etree.ElementTree import ElementTree, parse
+from xml.etree.ElementTree import Element, ElementTree, parse
 from itertools import zip_longest
 from dataclasses import dataclass, field
 
@@ -79,30 +79,27 @@ class CCommand:
 @dataclass(eq=False)
 class CExtension:
     name: str
+    requires: list[CRequire]
     supported: str | None = None
     platform: str | None = None
-    protect: str | None = None
-    types: list[str] = field(default_factory=list)
-    enums: list[CEnum] = field(default_factory=list)
-    commands: list[str] = field(default_factory=list)
-    supported_apis: list[str] = field(default_factory=list)
-    ignored_names: list[str] = field(default_factory=list)
-
-
-blacklisted_extensions = set()
-
-
+    protect: str | None = None    
+    # supported_apis: list[str] = field(default_factory=list)
+    
 @dataclass(eq=False)
 class CFeature:
     name: str
     api: list[str]
-    type_names: set[str]
-    command_names: set[str]
+    requires: list[CRequire]
     apitype: str | None = None
 
-    def __post_init__(self):
-        self.type_names = set(self.type_names)
-        self.command_names = set(self.command_names)
+@dataclass(eq=False)
+class CRequire:
+    # supported_apis: list[str] = field(default_factory=list)
+    # TODO: comment tags
+    commands: list[str] = field(default_factory=list)
+    enum_cases: dict[str, list[CEnum.Case]] = field(default_factory=dict)
+    types: list[str] = field(default_factory=list)
+
 
 
 @dataclass(eq=False)
@@ -124,33 +121,29 @@ class CContext:
         self.structs: list[CStruct] = []
         self.commands: list[CCommand] = []
         self.aliases: list[CAlias] = []
+        self.ignored_names: list[str] = []
 
     def parse(self, source):
         tree = parse(source)
         # TODO: parse feature block instead of doing this
-        # self._filter_vulkansc(tree.getroot())
         self.parse_tree(tree)
-
-    # def _filter_vulkansc(self, element: ElementTree.Element):
-    #     for child in list(element):
-    #         if 'api' in child.attrib:
-    #             apis = child.attrib['api'].split(',')
-    #             if 'vulkansc' in apis and 'vulkan' not in apis:
-    #                 element.remove(child)
-    #                 continue
-    #         self._filter_vulkansc(child)
 
     def parse_tree(self, tree: ElementTree):
         self.parse_platforms(tree)
         self.parse_extension_tags(tree)
         self.parse_extensions(tree)
         self.parse_features(tree)
+
+        known_enum_extensions = self.get_known_enum_extensions()
+        # print(*self.ignored_names, sep="\n")
+        # print(len(self.ignored_names))
+
         # types
         # not seen here: include, define, funcpointer
         self.parse_handles(tree)
-        self.parse_enums(tree)
-        self.parse_bitmasks(tree)
-        self.parse_enum_extends_in_features(tree)
+        self.parse_enums(tree, known_enum_extensions)
+        self.parse_bitmasks(tree, known_enum_extensions)
+        self.parse_enum_extends(tree)
         self.parse_structs(tree)
         self.parse_commands(tree)
 
@@ -161,16 +154,11 @@ class CContext:
 
     def parse_features(self, tree: ElementTree):
         for feature in tree.findall('./feature'):
-            type_names: list[str] = []
-            command_names: list[str] = []
-
-            for type in feature.findall('./require/type'):
-                name = type.attrib['name']
-                type_names.append(name)
-
-            for command in feature.findall('./require/command'):
-                name = command.attrib['name']
-                command_names.append(name)
+            requires: list[CRequire] = []
+            should_ignore_feature = self.should_ignore(feature)
+            for e_require in feature.findall('./require'):
+                should_ignore = self.should_ignore(e_require) or should_ignore_feature
+                requires.append(self.parse_require_block(e_require, should_ignore))
 
             apitype = None
             if apitype in feature.attrib:
@@ -179,15 +167,15 @@ class CContext:
             c_feature = CFeature(
                 name=feature.attrib['name'],
                 api=feature.attrib['api'].split(","),
-                type_names=type_names,
-                command_names=command_names,
+                requires=requires,
                 apitype=apitype
             )
             self.features.append(c_feature)
 
-    def parse_enum_extends_in_features(self, tree: ElementTree):
+    def parse_enum_extends(self, tree: ElementTree):
         enums = {e.name: e for e in self.enums}
         bitmask_flags = {b.enum.name: b.enum for b in self.bitmasks if b.enum}
+
         for e_enum in tree.findall('./feature/require/enum[@extends]'):
             extension_number = None
             if 'extnumber' in e_enum.attrib:
@@ -203,9 +191,10 @@ class CContext:
                 enum = enums[extends]
             elif extends in bitmask_flags:
                 enum = bitmask_flags[extends]
-            
+
             if not enum:
-                print(f"warning: enum {e_enum.attrib['extends']} not found (value={value})")
+                print(
+                    f"warning: enum {e_enum.attrib['extends']} not found (value={value})")
                 continue
 
             # check for duplicated case
@@ -214,63 +203,83 @@ class CContext:
                     if c.value == c_case.value:
                         break
                     else:
-                        print(f"warning: duplicated enum case with different values: {enum.name}{c.name} = {c.value}, {c_case.value}")
+                        print(
+                            f"warning: duplicated enum case with different values: {enum.name}{c.name} = {c.value}, {c_case.value}")
             else:
                 enum.cases.append(c_case)
 
-
     def parse_extensions(self, tree: ElementTree):
         for e_extension in tree.findall('./extensions/extension'):
-            extension_number = int(e_extension.attrib['number'])
+            supported = e_extension.attrib['supported']
+            
+            should_ignore_extension = supported in ('vulkansc', 'disabled')
 
+            extension_number = int(e_extension.attrib['number'])
             name = e_extension.attrib['name']
             platform = e_extension.get('platform')
 
-            enums: dict[str, list[CEnum.Case]] = {}
-            types: list[str] = []
-            commands: list[str] = []
-            ignored_names: list[str] = []
-
+            requires: list[CRequire] = []
             for e_require in e_extension.findall('./require'):
-                if self.should_ignore(api=parse_api(e_require)):
-                    ignored_names.extend(t.attrib['name']
-                                         for t in e_require.findall('./type'))
-                    ignored_names.extend(t.attrib['name']
-                                         for t in e_require.findall('./command'))
-                    ignored_names.extend(t.attrib['name']
-                                         for t in e_require.findall('./enum'))
-
-                types.extend(t.attrib['name']
-                             for t in e_require.findall('./type'))
-                commands.extend(t.attrib['name']
-                                for t in e_require.findall('./command'))
-                for e_enum in e_require.findall('./enum[@extends]'):
-                    if 'alias' in e_enum.attrib:
-                        continue
-                    c_case = CEnum.Case(
-                        e_enum.attrib['name'], parse_enum_value(e_enum, extension_number))
-                    enums.setdefault(
-                        e_enum.attrib['extends'], []).append(c_case)
-
-                # supported_apis = e_require.attrib['supported'].split(",")
+                should_ignore = self.should_ignore(e_require) or should_ignore_extension
+                requires.append(self.parse_require_block(e_require, should_ignore, extension_number))
 
             c_extension = CExtension(
                 name=name,
-                supported=e_extension.attrib['supported'],
+                requires=requires,
+                supported=supported,
                 platform=platform,
                 protect=self.platform_protects[platform] if platform else None,
-                types=types,
-                enums=[CEnum(enum_name, cases)
-                       for enum_name, cases in enums.items()],
-                commands=commands,
-                ignored_names=ignored_names,
-                # supported_apis=supported_apis
             )
             self.extensions.append(c_extension)
 
     def parse_extension_tags(self, tree: ElementTree):
         for tag in tree.findall('./tags/tag'):
             self.extension_tags.append(tag.attrib['name'])
+
+    def parse_require_block(self, tree: Element, ignored: bool, extension_number: int | None = None, ) -> CRequire:
+        types: list[str] = []
+        for t in tree.findall('./type'):
+            name = t.attrib['name']
+            types.append(name)
+            if ignored:
+                self.ignored_names.append(name)
+
+        commands: list[str] = []
+        for c in tree.findall('./command'):
+            name = c.attrib['name']
+            commands.append(name)
+            if ignored:
+                self.ignored_names.append(name)
+
+        # we wont skip enum case unless it case name colission, handled in import_enums 
+
+        # this may include bitmask flag too
+        enum_cases: dict[str, list[CEnum.Case]] = {}
+        for e_enum in tree.findall('./enum[@extends]'):
+            if 'alias' in e_enum.attrib:
+                continue
+            value = parse_enum_value(e_enum, extension_number)
+            c_case = CEnum.Case(e_enum.attrib['name'], value)
+            extends = e_enum.attrib['extends']
+
+            enum_cases.setdefault(extends, []).append(c_case)
+
+        return CRequire(enum_cases=enum_cases, commands=commands, types=types)
+
+    def get_known_enum_extensions(self):
+        requires: list[CRequire] = []
+        for extension in self.extensions:
+            requires.extend(extension.requires)
+        for features in self.features:
+            requires.extend(features.requires)
+
+        known_enum_extensions: dict[str, list[CEnum.Case]] = {}
+        for r in requires:
+            for enum, cases in r.enum_cases.items():
+                known_enum_extensions.setdefault(enum, []).extend(cases)
+
+        return known_enum_extensions
+        
 
     def parse_handles(self, tree: ElementTree):
         handles: dict[str, CHandle] = {}
@@ -286,12 +295,11 @@ class CContext:
                     alias.protect = None
                 continue
 
-            handle_name = e_handle.find('./name').text
-            if self.should_ignore(type_=handle_name, api=parse_api(e_handle)):
+            handle_name: str = e_handle.find('./name').text
+            if self.should_ignore(e_handle, name=handle_name):
                 continue
 
-            handle = CHandle(
-                handle_name, protect=self.find_protect(type_=handle_name))
+            handle = CHandle(handle_name, protect=self.find_protect(type_=handle_name))
             self.handles.append(handle)
             handles[handle_name] = handle
             parents[handle_name] = e_handle.get('parent')
@@ -302,12 +310,12 @@ class CContext:
             except KeyError:
                 pass
 
-    def parse_enums(self, tree: ElementTree):
+    def parse_enums(self, tree: ElementTree, known_enum_extensions: dict[str, list[CEnum.Case]]):    
         for e_enum in tree.findall('./enums[@type="enum"]'):
             enum_name = e_enum.attrib['name']
 
-            if self.should_ignore(type_=enum_name, api=parse_api(e_enum)):
-                continue
+            # if self.should_ignore(e_enum, name=enum_name):
+            #     continue
 
             cases = {}
             for e_case in e_enum.findall('./enum'):
@@ -315,27 +323,27 @@ class CContext:
                     continue
                 cases[e_case.attrib['name']] = parse_enum_value(e_case)
 
-            for extension in self.extensions:
-                if extension.supported in ('vulkansc', 'disabled') or extension.platform:
-                    continue
-                for ext_enum in extension.enums:
-                    if ext_enum.name == enum_name:
-                        for ext_case in ext_enum.cases:
-                            cases[ext_case.name] = ext_case.value
+            # if extension.supported in ('vulkansc', 'disabled') or extension.platform:
+            #     continue
+
+            if enum_name in known_enum_extensions:
+                ext_cases = known_enum_extensions[enum_name]
+                for ext_case in ext_cases:
+                    cases[ext_case.name] = ext_case.value                
 
             c_enum = CEnum(enum_name, [CEnum.Case(name, value)
                            for name, value in cases.items()], protect=self.find_protect(type_=enum_name))
             self.enums.append(c_enum)
 
-    def parse_bitmasks(self, tree: ElementTree):
+    def parse_bitmasks(self, tree: ElementTree, known_enum_extensions: dict[str, list[CEnum.Case]]):
         for e_bitmask in tree.findall('./types/type[@category="bitmask"]'):
             if 'alias' in e_bitmask.attrib:
                 continue
 
-            bitmask_name = e_bitmask.find('./name').text
+            bitmask_name: str = e_bitmask.find('./name').text
 
-            if self.should_ignore(type_=bitmask_name, api=parse_api(e_bitmask)):
-                continue
+            # if self.should_ignore(e_bitmask):
+            #     continue
 
             bitvalues = e_bitmask.get('bitvalues')
             c_bitmask = CBitmask(bitmask_name, is64=bitvalues is not None,
@@ -344,19 +352,16 @@ class CContext:
             name = e_bitmask.get('requires') or bitvalues
             if name:
                 cases = {}
-                e_enum = tree.find(f'./enums[@name="{name}"]')
+                e_enum: Element = tree.find(f'./enums[@name="{name}"]')
                 for e_case in e_enum.findall('./enum'):
                     if 'alias' in e_case.attrib:
                         continue
                     cases[e_case.attrib['name']] = parse_enum_value(e_case)
 
-                for extension in self.extensions:
-                    if extension.supported in ('vulkansc', 'disabled') or extension.platform:
-                        continue
-                    for ext_enum in extension.enums:
-                        if ext_enum.name == name:
-                            for ext_case in ext_enum.cases:
-                                cases[ext_case.name] = ext_case.value
+                if name in known_enum_extensions:
+                    ext_cases = known_enum_extensions[name]
+                    for ext_case in ext_cases:
+                        cases[ext_case.name] = ext_case.value                
 
                 c_bitmask.enum = CEnum(name, [CEnum.Case(
                     name, value) for name, value in cases.items()])
@@ -364,26 +369,26 @@ class CContext:
             self.bitmasks.append(c_bitmask)
 
     def parse_structs(self, tree: ElementTree):
-        bases: list[str] = []
         for struct in tree.findall('./types/type[@category="struct"]'):
             if 'alias' in struct.attrib:
                 continue
-
-            if self.should_ignore(type_=struct.attrib['name'], api=parse_api(struct)):
+            
+            name = struct.attrib['name']
+            if self.should_ignore(struct, name=name):
                 continue
-
+            
             extends: list[str] = []
             if 'structextends' in struct.attrib:
-                for name in struct.attrib['structextends'].split(","):
-                    if self.should_ignore(type_=name):  # wtf is this
+                for ext_name in struct.attrib['structextends'].split(","):
+                    if self.should_ignore(name=ext_name):  # wtf is this
                         continue
-                    extends.append(name)
+                    extends.append(ext_name)
 
-            c_struct = CStruct(struct.attrib['name'], returned_only=struct.get(
+            c_struct = CStruct(name, returned_only=struct.get(
                 'returnedonly') == 'true', struct_extends=extends, protect=self.find_protect(type_=struct.attrib['name']))
 
             for member in struct.findall('./member'):
-                if self.should_ignore(api=parse_api(member)):
+                if self.should_ignore(member):
                     continue
                 member = parse_member(member, tree)
                 c_struct.members.append(member)
@@ -400,49 +405,41 @@ class CContext:
 
             proto = parse_member(e_command.find('./proto'), tree)
 
-            if self.should_ignore(command=proto.name, api=parse_api(e_command)):
+            if self.should_ignore(e_command, name=proto.name):
                 continue
 
             c_command = CCommand(proto.name, proto.type,
                                  protect=self.find_protect(command=proto.name))
             for e_param in e_command.findall('./param'):
-                if self.should_ignore(api=parse_api(e_param)):
+                if self.should_ignore(e_param):
                     continue
                 c_command.params.append(parse_member(e_param, tree))
 
             self.commands.append(c_command)
 
-    def find_extension(self, type_: str = None, command: str = None) -> CExtension | None:
+    def find_extension(self, type_: str | None = None, command: str | None = None) -> CExtension | None:
         for extension in self.extensions:
-            if (type_ and type_ in extension.types) or (command and command in extension.commands):
-                return extension
+            for require in extension.requires:
+                if (type_ and type_ in require.types) or (command and command in require.commands):
+                    return extension
 
-    def find_features(self, type_: str = None, command: str = None) -> list[CFeature]:
-        features: list[CFeature] = []
-        for feature in self.features:
-            if (type_ and type_ in feature.type_names) or (command and command in feature.command_names):
-                features.append(feature)
-        return features
-
-    def find_protect(self, type_: str = None, command: str = None) -> str | None:
+    def find_protect(self, type_: str | None = None, command: str | None = None) -> str | None:
         extension = self.find_extension(type_, command)
         if extension:
             return extension.protect
 
-    def should_ignore(self, type_: str = None, command: str = None, api: str | None = None) -> bool:
-        if api == 'vulkansc':
+    def should_ignore(self, node: Element | None = None, name: str | None = None) -> bool:
+        if node and parse_api(node) == 'vulkansc':
             return True
-        extension = self.find_extension(type_, command)
-        if extension and ((type_ or command) in extension.ignored_names or extension.supported in ('disabled', 'vulkansc')):
+            
+        if name and name in self.ignored_names:
+            # print(f'ignored: {name}')
             return True
-
-        features = self.find_features(type_, command)
-        if len(features) == 1 and len(features[0].api) == 1 and 'vulkansc' in features[0].api:
-            return True
+        
         return False
 
 
-def parse_enum_value(e_enum: ElementTree, extension_number: int = None) -> str:
+def parse_enum_value(e_enum: Element, extension_number: int | None = None) -> str:
     if 'offset' in e_enum.attrib:
         if 'extnumber' in e_enum.attrib:
             extension_number = int(e_enum.attrib['extnumber'])
@@ -457,7 +454,7 @@ def parse_enum_value(e_enum: ElementTree, extension_number: int = None) -> str:
         return e_enum.attrib['value']
 
 
-def parse_member(member: ElementTree, tree: ElementTree) -> CMember:
+def parse_member(member: Element, tree: ElementTree) -> CMember:
     e_type = member.find('./type')
     type_string = (member.text or '') + e_type.text + (e_type.tail or '')
 
@@ -515,7 +512,9 @@ def parse_member(member: ElementTree, tree: ElementTree) -> CMember:
     return CMember(name, c_type, values, noautovalidity)
 
 
-def parse_api(element: ElementTree) -> str | None:
+def parse_api(element: Element) -> str | None:
     if 'api' in element.attrib:
         return element.attrib['api']
     return None
+
+# api attribute can appear in a enum, type, member, command, param, feature, require, [remove, deprecate]

@@ -28,7 +28,6 @@ class SwiftMember:
     default_value: str | None = None
 
 
-
 @dataclass(eq=False)
 class SwiftStruct:
     c_struct: CStruct
@@ -43,6 +42,7 @@ class SwiftStruct:
     @property
     def extension_name(self):
         return f'{self.name}Extension'
+
 
 @dataclass(eq=False)
 class SwiftCommand:
@@ -117,9 +117,10 @@ class Importer:
     def __init__(self, c_context: CContext):
         self.c_context = c_context
         self.swift_context = SwiftContext()
-        self.imported_enums: dict[str, str] = {}
-        self.imported_option_sets: dict[str, str] = {}
-        self.imported_option_set_bits: dict[str, str] = {}
+        self.imported_enums: dict[str, SwiftEnum] = {}
+        self.imported_structure_types: dict[str, str] = {}
+        self.imported_option_sets: dict[str, SwiftOptionSet] = {}
+        self.imported_option_set_bits: dict[str, SwiftOptionSet] = {}
         self.imported_structs: dict[str, SwiftStruct] = {}
         self.imported_classes: dict[str, SwiftClass] = {}
         self.imported_aliases: dict[str, SwiftAlias] = {}
@@ -189,13 +190,16 @@ class Importer:
 
             swift_enum.cases.append(
                 SwiftEnum.Case(name=name, value=case.value))
+            if swift_enum.name == "StructureType":
+                self.imported_structure_types[case.name] = name
 
         if starts_with_digit:
             for case in swift_enum.cases:
                 case.name = 'type' + case.name[0].upper() + case.name[1:]
 
         self.swift_context.enums.append(swift_enum)
-        self.imported_enums[c_enum.name] = swift_enum.name
+        self.imported_enums[c_enum.name] = swift_enum
+
         return swift_enum
 
     def import_bitmask(self, c_bitmask: CBitmask) -> SwiftOptionSet:
@@ -212,7 +216,7 @@ class Importer:
 
             if prefix.endswith('Flags'):
                 prefix = prefix[:-5]
-            elif prefix[:-1].endswith('Flags'): # without version number
+            elif prefix[:-1].endswith('Flags'):  # without version number
                 prefix = prefix[:-6] + prefix[-1]
 
             starts_with_digit = False
@@ -244,10 +248,10 @@ class Importer:
                 for case in option_set.cases:
                     case.name = 'type' + case.name[0].upper() + case.name[1:]
 
-            self.imported_option_set_bits[c_bitmask.enum.name] = option_set.name
+            self.imported_option_set_bits[c_bitmask.enum.name] = option_set
 
         self.swift_context.option_sets.append(option_set)
-        self.imported_option_sets[c_bitmask.name] = option_set.name
+        self.imported_option_sets[c_bitmask.name] = option_set
         return option_set
 
     def import_struct(self, c_struct: CStruct) -> SwiftStruct:
@@ -258,7 +262,7 @@ class Importer:
 
         convertible_from_c_struct = True
         parent_classes: list[SwiftClass] = []
-        
+
         for member in c_struct.members:
             type_name = member.type.type_name
             if type_name in self.c_structs:
@@ -382,7 +386,6 @@ class Importer:
         if name.startswith('cmd'):
             name = name[3].lower() + name[4:]
 
-
         c_return_type = c_command.return_type
         throws = False
         if c_return_type.name == 'VkResult':
@@ -420,11 +423,14 @@ class Importer:
                     output_param = output_params[0].name
                     ty = output_params[0].type.pointer_to
                     assert ty is not None
-                    return_type, return_conversion = self.get_type_conversion(ty, force_optional=False)
-                    output_param_implicit_type, _ = self.get_type_conversion(ty, implicit_only=True, force_optional=False)
+                    return_type, return_conversion = self.get_type_conversion(
+                        ty, force_optional=False)
+                    output_param_implicit_type, _ = self.get_type_conversion(
+                        ty, implicit_only=True, force_optional=False)
                     unwrap_output_param = self.is_pointer_type(ty)
 
-                    output_param_type_struct = self.imported_structs.get(output_param_implicit_type, None)
+                    output_param_type_struct = self.imported_structs.get(
+                        output_param_implicit_type, None)
                     if output_param_type_struct:
                         for key, value in output_param_type_struct.member_conversions.static_values:
                             if key == 'sType':
@@ -432,14 +438,13 @@ class Importer:
 
                     if ty.name in self.imported_enums:
                         output_param_custom_initializer = f'{output_param_implicit_type}(rawValue: 0)'
-                
 
             # TODO: multiple out array
             elif len(output_params) == 2 and output_params[1].type.length == output_params[0].name:
                 enumeration_pointer_params = output_params[1].name
                 enumeration_count_param = output_params[0].name
                 return_type, return_conversion = self.get_array_conversion(
-                    output_params[1].type, force_optional=False)                
+                    output_params[1].type, force_optional=False)
                 enumeration_is_bytes_array = output_params[1].type.pointer_to.name == 'void'
 
         class_params = [param for param, _ in class_params_and_classes]
@@ -568,9 +573,17 @@ class Importer:
                     optional_lengths.add(c_member.name)
                 continue
 
+            # currently every "values" field is used to specify VkStructureType
             if len(c_member.values) == 1:
-                conversions.add_static_value(c_member.name, c_member.values[0])
+                # treat it as sType
+                # swift_name = self.imported_structure_types[c_name]
+                # tc.enum_conversion('VkStructureType', 'StructureType')
+                c_name = c_member.values[0]
+                conversions.add_static_value(c_member.name, c_name)
                 continue
+            elif len(c_member.values) > 1:
+                print(
+                    f'warning: unhandled case where c_member.values > 1 at {c_struct and c_struct.name}')
 
             if c_command and c_member.name == 'pAllocator':
                 conversions.add_static_value(c_member.name, 'nil')
@@ -595,7 +608,6 @@ class Importer:
             # elif type(c_member.type.length) == int and c_member.type.length >= 16:
             #     swift_type, conversion = 'Array<MemoryType>', tc.tuple_array_conversion(
             #         tc.struct_array_conversion('MemoryType', 'memoryTypeCount'), 'VkMemoryType', c_member.type.length)
-
 
             elif c_struct and c_struct.name == 'VkPhysicalDeviceMemoryProperties' and c_member.name == 'memoryTypes':
                 swift_type, conversion = 'Array<MemoryType>', tc.tuple_array_conversion(
@@ -628,10 +640,10 @@ class Importer:
             is_closure = bool(c_member.type.name and c_member.type.name.startswith(
                 'PFN_') and not c_member.type.optional)
 
-
             # if this is a features struct we make everything default to false
-            force_default = c_struct is not None and 'Features' in c_struct.name                
-            default_value = self.get_default_value(swift_type, c_member.type, optional_lengths, forced=force_default)
+            force_default = c_struct is not None and 'Features' in c_struct.name
+            default_value = self.get_default_value(
+                swift_type, c_member.type, optional_lengths, forced=force_default)
 
             member = SwiftMember(
                 name=swift_name, type=swift_type, is_closure=is_closure, default_value=default_value)
@@ -649,12 +661,11 @@ class Importer:
             if name in self.imported_structs and p.type.pointer_to and p.type.pointer_to.const and not p.type.name:
                 swift_struct = self.imported_structs[name]
                 if swift_struct.c_struct.is_chainable:
-                    # if out == True:
-                    #     print(
-                    #         f"warning: {c_command.name} contains multiple chainable parameter")
+                    if out == True:
+                        print(
+                            f"warning: {c_command.name} contains multiple chainable parameter")
                     out = True
-                    break
-
+                    # break
 
         return out
 
@@ -672,13 +683,13 @@ class Importer:
                     return 'Bool', tc.bool_conversion
                 if c_type.name in self.imported_enums:
                     swift_enum = self.imported_enums[c_type.name]
-                    return swift_enum, tc.enum_conversion(c_type.name, swift_enum)
+                    return swift_enum.name, tc.enum_conversion(c_type.name, swift_enum.name)
                 if c_type.name in self.imported_option_sets:
                     option_set = self.imported_option_sets[c_type.name]
-                    return option_set, tc.option_set_conversion(option_set)
+                    return option_set.name, tc.option_set_conversion(option_set.name)
                 if c_type.name in self.imported_option_set_bits:
                     option_set = self.imported_option_set_bits[c_type.name]
-                    return option_set, tc.option_set_bit_conversion(c_type.name, option_set)
+                    return option_set.name, tc.option_set_bit_conversion(c_type.name, option_set.name, option_set.c_bitmask.is64)
                 if c_type.name in self.imported_structs:
                     swift_struct = self.imported_structs[c_type.name]
                     parent_names = [
@@ -718,14 +729,15 @@ class Importer:
 
                 if is_array_convertible(c_type):
                     should_transform_chainable = transform_chainable and c_type.pointer_to.name in self.imported_structs
-                    name, conversion = self.get_array_conversion(c_type, force_optional=False if should_transform_chainable else None)
+                    name, conversion = self.get_array_conversion(
+                        c_type, force_optional=False if should_transform_chainable else None)
                     if should_transform_chainable:
                         swift_struct = self.imported_structs[c_type.pointer_to.name]
                         if swift_struct.c_struct.is_chainable:
                             ty_name = name
                             if ty_name.endswith('?'):
                                 ty_name = ty_name[:-1]
-                            ty_name = ty_name[6:][:-1] 
+                            ty_name = ty_name[6:][:-1]
                             # trim Array<...>
                             name = f"(AnyChainableArray<{ty_name}>)"
 
@@ -822,14 +834,13 @@ class Importer:
             if string.endswith(tag):
                 return string[:-len(tag)].rstrip('_'), tag
         return string, None
-    
 
     def get_default_value(self, swift_type: str | None, c_type: CType, optional_lengths: set[str] | None = None, forced: bool = False) -> str | None:
         if swift_type and swift_type.endswith('?'):
             return 'nil'
-        
+
         ty = c_type
-        if ty.length and type(ty.length) == str and ty.length != 'null-terminated': 
+        if ty.length and type(ty.length) == str and ty.length != 'null-terminated':
             if optional_lengths and ty.length in optional_lengths:
                 if ty.optional:
                     return 'nil'
@@ -850,7 +861,7 @@ class Importer:
                 return '[]'
             elif ty.name in self.imported_classes:
                 return 'nil'
-        
+
         # if this is a struct and the init of the struct can be written as .init()
         if swift_type and c_type.type_name in self.imported_structs and not c_type.length:
             struct = self.imported_structs[c_type.type_name]
@@ -910,5 +921,3 @@ def get_member_name(c_name: str, c_type: CType) -> str:
     if c_type.pointer_to and c_name.startswith('p'):
         return get_member_name(c_name[1].lower() + c_name[2:], c_type.pointer_to)
     return c_name
-
-

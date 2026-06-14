@@ -140,6 +140,7 @@ public enum BorderColor: UInt32 {
 public enum PipelineBindPoint: UInt32 {
     case graphics = 0
     case compute = 1
+    case executionGraphAMDX = 1000134000
     case rayTracingKHR = 1000165000
     case subpassShadingHUAWEI = 1000369003
     case dataGraphARM = 1000507000
@@ -712,6 +713,14 @@ public enum StructureType: UInt32 {
     case displayModeCreateInfoKHR = 1000002000
     case displaySurfaceCreateInfoKHR = 1000002001
     case displayPresentInfoKHR = 1000003000
+    case xlibSurfaceCreateInfoKHR = 1000004000
+    case xcbSurfaceCreateInfoKHR = 1000005000
+    case waylandSurfaceCreateInfoKHR = 1000006000
+    case androidSurfaceCreateInfoKHR = 1000008000
+    case win32SurfaceCreateInfoKHR = 1000009000
+    case nativeBufferANDROID = 1000010000
+    case swapchainImageCreateInfoANDROID = 1000010001
+    case physicalDevicePresentationPropertiesANDROID = 1000010002
     case debugReportCallbackCreateInfoEXT = 1000011000
     case pipelineRasterizationStateRasterizationOrderAMD = 1000018000
     case debugMarkerObjectNameInfoEXT = 1000022000
@@ -784,15 +793,30 @@ public enum StructureType: UInt32 {
     case videoDecodeH264SessionParametersAddInfoKHR = 1000040005
     case videoDecodeH264DpbSlotInfoKHR = 1000040006
     case textureLodGatherFormatPropertiesAMD = 1000041000
+    case streamDescriptorSurfaceCreateInfoGGP = 1000049000
     case physicalDeviceCornerSampledImageFeaturesNV = 1000050000
+    case privateVendorInfoPlaceholderOffset0NV = 1000051000
     case externalMemoryImageCreateInfoNV = 1000056000
     case exportMemoryAllocateInfoNV = 1000056001
+    case importMemoryWin32HandleInfoNV = 1000057000
+    case exportMemoryWin32HandleInfoNV = 1000057001
+    case win32KeyedMutexAcquireReleaseInfoNV = 1000058000
     case validationFlagsEXT = 1000061000
+    case viSurfaceCreateInfoNN = 1000062000
     case imageViewAstcDecodeModeEXT = 1000067000
     case physicalDeviceAstcDecodeFeaturesEXT = 1000067001
+    case importMemoryWin32HandleInfoKHR = 1000073000
+    case exportMemoryWin32HandleInfoKHR = 1000073001
+    case memoryWin32HandlePropertiesKHR = 1000073002
+    case memoryGetWin32HandleInfoKHR = 1000073003
     case importMemoryFdInfoKHR = 1000074000
     case memoryFdPropertiesKHR = 1000074001
     case memoryGetFdInfoKHR = 1000074002
+    case win32KeyedMutexAcquireReleaseInfoKHR = 1000075000
+    case importSemaphoreWin32HandleInfoKHR = 1000078000
+    case exportSemaphoreWin32HandleInfoKHR = 1000078001
+    case d3d12FenceSubmitInfoKHR = 1000078002
+    case semaphoreGetWin32HandleInfoKHR = 1000078003
     case importSemaphoreFdInfoKHR = 1000079000
     case semaphoreGetFdInfoKHR = 1000079001
     case commandBufferInheritanceConditionalRenderingInfoEXT = 1000081000
@@ -818,6 +842,9 @@ public enum StructureType: UInt32 {
     case hdrMetadataEXT = 1000105000
     case physicalDeviceRelaxedLineRasterizationFeaturesIMG = 1000110000
     case sharedPresentSurfaceCapabilitiesKHR = 1000111000
+    case importFenceWin32HandleInfoKHR = 1000114000
+    case exportFenceWin32HandleInfoKHR = 1000114001
+    case fenceGetWin32HandleInfoKHR = 1000114002
     case importFenceFdInfoKHR = 1000115000
     case fenceGetFdInfoKHR = 1000115001
     case physicalDevicePerformanceQueryFeaturesKHR = 1000116000
@@ -836,11 +863,20 @@ public enum StructureType: UInt32 {
     case displayModeProperties2KHR = 1000121002
     case displayPlaneInfo2KHR = 1000121003
     case displayPlaneCapabilities2KHR = 1000121004
+    case iosSurfaceCreateInfoMVK = 1000122000
+    case macosSurfaceCreateInfoMVK = 1000123000
     case debugUtilsObjectNameInfoEXT = 1000128000
     case debugUtilsObjectTagInfoEXT = 1000128001
     case debugUtilsLabelEXT = 1000128002
     case debugUtilsMessengerCallbackDataEXT = 1000128003
     case debugUtilsMessengerCreateInfoEXT = 1000128004
+    case androidHardwareBufferUsageANDROID = 1000129000
+    case androidHardwareBufferPropertiesANDROID = 1000129001
+    case androidHardwareBufferFormatPropertiesANDROID = 1000129002
+    case importAndroidHardwareBufferInfoANDROID = 1000129003
+    case memoryGetAndroidHardwareBufferInfoANDROID = 1000129004
+    case externalFormatANDROID = 1000129005
+    case androidHardwareBufferFormatProperties2ANDROID = 1000129006
     case physicalDeviceGpaFeaturesAMD = 1000133000
     case physicalDeviceGpaPropertiesAMD = 1000133001
     case gpaSampleBeginInfoAMD = 1000133002
@@ -848,6 +884,11 @@ public enum StructureType: UInt32 {
     case gpaDeviceClockModeInfoAMD = 1000133004
     case physicalDeviceGpaProperties2AMD = 1000133005
     case gpaDeviceGetClockInfoAMD = 1000133006
+    case physicalDeviceShaderEnqueueFeaturesAMDX = 1000134000
+    case physicalDeviceShaderEnqueuePropertiesAMDX = 1000134001
+    case executionGraphPipelineScratchSizeAMDX = 1000134002
+    case executionGraphPipelineCreateInfoAMDX = 1000134003
+    case pipelineShaderStageNodeCreateInfoAMDX = 1000134004
     case texelBufferDescriptorInfoEXT = 1000135000
     case imageDescriptorInfoEXT = 1000135001
     case resourceDescriptorInfoEXT = 1000135002
@@ -906,6 +947,8 @@ public enum StructureType: UInt32 {
     case drmFormatModifierPropertiesList2EXT = 1000158006
     case validationCacheCreateInfoEXT = 1000160000
     case shaderModuleValidationCacheCreateInfoEXT = 1000160001
+    case physicalDevicePortabilitySubsetFeaturesKHR = 1000163000
+    case physicalDevicePortabilitySubsetPropertiesKHR = 1000163001
     case pipelineViewportShadingRateImageStateCreateInfoNV = 1000164000
     case physicalDeviceShadingRateImageFeaturesNV = 1000164001
     case physicalDeviceShadingRateImagePropertiesNV = 1000164002
@@ -941,6 +984,7 @@ public enum StructureType: UInt32 {
     case videoDecodeH265DpbSlotInfoKHR = 1000187005
     case deviceMemoryOverallocationCreateInfoAMD = 1000189000
     case physicalDeviceVertexAttributeDivisorPropertiesEXT = 1000190000
+    case presentFrameTokenGGP = 1000191000
     case physicalDeviceMeshShaderFeaturesNV = 1000202000
     case physicalDeviceMeshShaderPropertiesNV = 1000202001
     case physicalDeviceShaderImageFootprintFeaturesNV = 1000204000
@@ -970,6 +1014,8 @@ public enum StructureType: UInt32 {
     case physicalDevicePciBusInfoPropertiesEXT = 1000212000
     case displayNativeHdrSurfaceCapabilitiesAMD = 1000213000
     case swapchainDisplayNativeHdrCreateInfoAMD = 1000213001
+    case imagepipeSurfaceCreateInfoFUCHSIA = 1000214000
+    case metalSurfaceCreateInfoEXT = 1000217000
     case physicalDeviceFragmentDensityMapFeaturesEXT = 1000218000
     case physicalDeviceFragmentDensityMapPropertiesEXT = 1000218001
     case renderPassFragmentDensityMapCreateInfoEXT = 1000218002
@@ -1008,6 +1054,9 @@ public enum StructureType: UInt32 {
     case physicalDeviceProvokingVertexFeaturesEXT = 1000254000
     case pipelineRasterizationProvokingVertexStateCreateInfoEXT = 1000254001
     case physicalDeviceProvokingVertexPropertiesEXT = 1000254002
+    case surfaceFullScreenExclusiveInfoEXT = 1000255000
+    case surfaceCapabilitiesFullScreenExclusiveEXT = 1000255002
+    case surfaceFullScreenExclusiveWin32InfoEXT = 1000255001
     case headlessSurfaceCreateInfoEXT = 1000256000
     case physicalDeviceShaderAtomicFloatFeaturesEXT = 1000260000
     case physicalDeviceExtendedDynamicStateFeaturesEXT = 1000267000
@@ -1071,6 +1120,12 @@ public enum StructureType: UInt32 {
     case physicalDeviceShaderMultipleWaitQueuesPropertiesQCOM = 1000304001
     case physicalDeviceShaderSplitBarrierFeaturesEXT = 1000305000
     case physicalDeviceShaderSplitBarrierPropertiesEXT = 1000305001
+    case cudaModuleCreateInfoNV = 1000307000
+    case cudaFunctionCreateInfoNV = 1000307001
+    case cudaLaunchInfoNV = 1000307002
+    case physicalDeviceCudaKernelLaunchFeaturesNV = 1000307003
+    case physicalDeviceCudaKernelLaunchPropertiesNV = 1000307004
+    case refreshObjectListKHR = 1000308000
     case physicalDeviceTileShadingFeaturesQCOM = 1000309000
     case physicalDeviceTileShadingPropertiesQCOM = 1000309001
     case renderPassTileShadingCreateInfoQCOM = 1000309002
@@ -1078,6 +1133,18 @@ public enum StructureType: UInt32 {
     case perTileEndInfoQCOM = 1000309004
     case dispatchTileInfoQCOM = 1000309005
     case queryLowLatencySupportNV = 1000310000
+    case exportMetalObjectCreateInfoEXT = 1000311000
+    case exportMetalObjectsInfoEXT = 1000311001
+    case exportMetalDeviceInfoEXT = 1000311002
+    case exportMetalCommandQueueInfoEXT = 1000311003
+    case exportMetalBufferInfoEXT = 1000311004
+    case importMetalBufferInfoEXT = 1000311005
+    case exportMetalTextureInfoEXT = 1000311006
+    case importMetalTextureInfoEXT = 1000311007
+    case exportMetalIoSurfaceInfoEXT = 1000311008
+    case importMetalIoSurfaceInfoEXT = 1000311009
+    case exportMetalSharedEventInfoEXT = 1000311010
+    case importMetalSharedEventInfoEXT = 1000311011
     case physicalDeviceDescriptorBufferPropertiesEXT = 1000316000
     case physicalDeviceDescriptorBufferDensityMapPropertiesEXT = 1000316001
     case physicalDeviceDescriptorBufferFeaturesEXT = 1000316002
@@ -1136,6 +1203,7 @@ public enum StructureType: UInt32 {
     case deviceFaultCountsEXT = 1000341001
     case deviceFaultInfoEXT = 1000341002
     case physicalDeviceRgba10x6FormatsFeaturesEXT = 1000344000
+    case directfbSurfaceCreateInfoEXT = 1000346000
     case physicalDeviceVertexInputDynamicStateFeaturesEXT = 1000352000
     case vertexInputBindingDescription2EXT = 1000352001
     case vertexInputAttributeDescription2EXT = 1000352002
@@ -1145,6 +1213,21 @@ public enum StructureType: UInt32 {
     case physicalDeviceDepthClipControlFeaturesEXT = 1000355000
     case pipelineViewportDepthClipControlCreateInfoEXT = 1000355001
     case physicalDevicePrimitiveTopologyListRestartFeaturesEXT = 1000356000
+    case importMemoryZirconHandleInfoFUCHSIA = 1000364000
+    case memoryZirconHandlePropertiesFUCHSIA = 1000364001
+    case memoryGetZirconHandleInfoFUCHSIA = 1000364002
+    case importSemaphoreZirconHandleInfoFUCHSIA = 1000365000
+    case semaphoreGetZirconHandleInfoFUCHSIA = 1000365001
+    case bufferCollectionCreateInfoFUCHSIA = 1000366000
+    case importMemoryBufferCollectionFUCHSIA = 1000366001
+    case bufferCollectionImageCreateInfoFUCHSIA = 1000366002
+    case bufferCollectionPropertiesFUCHSIA = 1000366003
+    case bufferConstraintsInfoFUCHSIA = 1000366004
+    case bufferCollectionBufferCreateInfoFUCHSIA = 1000366005
+    case imageConstraintsInfoFUCHSIA = 1000366006
+    case imageFormatConstraintsInfoFUCHSIA = 1000366007
+    case sysmemColorSpaceFUCHSIA = 1000366008
+    case bufferCollectionConstraintsInfoFUCHSIA = 1000366009
     case subpassShadingPipelineCreateInfoHUAWEI = 1000369000
     case physicalDeviceSubpassShadingFeaturesHUAWEI = 1000369001
     case physicalDeviceSubpassShadingPropertiesHUAWEI = 1000369002
@@ -1153,12 +1236,26 @@ public enum StructureType: UInt32 {
     case physicalDeviceExternalMemoryRdmaFeaturesNV = 1000371001
     case pipelinePropertiesIdentifierEXT = 1000372000
     case physicalDevicePipelinePropertiesFeaturesEXT = 1000372001
+    case importFenceSciSyncInfoNV = 1000373000
+    case exportFenceSciSyncInfoNV = 1000373001
+    case fenceGetSciSyncInfoNV = 1000373002
+    case sciSyncAttributesInfoNV = 1000373003
+    case importSemaphoreSciSyncInfoNV = 1000373004
+    case exportSemaphoreSciSyncInfoNV = 1000373005
+    case semaphoreGetSciSyncInfoNV = 1000373006
+    case physicalDeviceExternalSciSyncFeaturesNV = 1000373007
+    case importMemorySciBufInfoNV = 1000374000
+    case exportMemorySciBufInfoNV = 1000374001
+    case memoryGetSciBufInfoNV = 1000374002
+    case memorySciBufPropertiesNV = 1000374003
+    case physicalDeviceExternalMemorySciBufFeaturesNV = 1000374004
     case physicalDeviceFrameBoundaryFeaturesEXT = 1000375000
     case frameBoundaryEXT = 1000375001
     case physicalDeviceMultisampledRenderToSingleSampledFeaturesEXT = 1000376000
     case subpassResolvePerformanceQueryEXT = 1000376001
     case multisampledRenderToSingleSampledInfoEXT = 1000376002
     case physicalDeviceExtendedDynamicState2FeaturesEXT = 1000377000
+    case screenSurfaceCreateInfoQNX = 1000378000
     case physicalDeviceColorWriteEnableFeaturesEXT = 1000381000
     case pipelineColorWriteCreateInfoEXT = 1000381001
     case physicalDevicePrimitivesGeneratedQueryFeaturesEXT = 1000382000
@@ -1185,6 +1282,9 @@ public enum StructureType: UInt32 {
     case micromapCreateInfoEXT = 1000396007
     case micromapBuildSizesInfoEXT = 1000396008
     case accelerationStructureTrianglesOpacityMicromapEXT = 1000396009
+    case physicalDeviceDisplacementMicromapFeaturesNV = 1000397000
+    case physicalDeviceDisplacementMicromapPropertiesNV = 1000397001
+    case accelerationStructureTrianglesDisplacementMicromapNV = 1000397002
     case physicalDeviceClusterCullingShaderFeaturesHUAWEI = 1000404000
     case physicalDeviceClusterCullingShaderPropertiesHUAWEI = 1000404001
     case physicalDeviceClusterCullingShaderVrsFeaturesHUAWEI = 1000404002
@@ -1217,12 +1317,19 @@ public enum StructureType: UInt32 {
     case accelerationStructureGeometrySpheresDataNV = 1000429010
     case physicalDeviceLinearColorAttachmentFeaturesNV = 1000430000
     case physicalDeviceShaderMaximalReconvergenceFeaturesKHR = 1000434000
+    case applicationParametersEXT = 1000435000
     case physicalDeviceImageCompressionControlSwapchainFeaturesEXT = 1000437000
     case physicalDeviceImageProcessingFeaturesQCOM = 1000440000
     case physicalDeviceImageProcessingPropertiesQCOM = 1000440001
     case imageViewSampleWeightCreateInfoQCOM = 1000440002
     case physicalDeviceNestedCommandBufferFeaturesEXT = 1000451000
     case physicalDeviceNestedCommandBufferPropertiesEXT = 1000451001
+    case nativeBufferUsageOHOS = 1000452000
+    case nativeBufferPropertiesOHOS = 1000452001
+    case nativeBufferFormatPropertiesOHOS = 1000452002
+    case importNativeBufferInfoOHOS = 1000452003
+    case memoryGetNativeBufferInfoOHOS = 1000452004
+    case externalFormatOHOS = 1000452005
     case externalMemoryAcquireUnmodifiedEXT = 1000453000
     case physicalDeviceExtendedDynamicState3FeaturesEXT = 1000455000
     case physicalDeviceExtendedDynamicState3PropertiesEXT = 1000455001
@@ -1269,9 +1376,14 @@ public enum StructureType: UInt32 {
     case opticalFlowExecuteInfoNV = 1000464005
     case opticalFlowSessionCreatePrivateDataInfoNV = 1000464010
     case physicalDeviceLegacyDitheringFeaturesEXT = 1000465000
+    case physicalDeviceExternalFormatResolveFeaturesANDROID = 1000468000
+    case physicalDeviceExternalFormatResolvePropertiesANDROID = 1000468001
+    case androidHardwareBufferFormatResolvePropertiesANDROID = 1000468002
     case physicalDeviceAntiLagFeaturesAMD = 1000476000
     case antiLagDataAMD = 1000476001
     case antiLagPresentationInfoAMD = 1000476002
+    case physicalDeviceDenseGeometryFormatFeaturesAMDX = 1000478000
+    case accelerationStructureDenseGeometryFormatTrianglesDataAMDX = 1000478001
     case surfaceCapabilitiesPresentId2KHR = 1000479000
     case presentId2KHR = 1000479001
     case physicalDevicePresentId2FeaturesKHR = 1000479002
@@ -1306,6 +1418,10 @@ public enum StructureType: UInt32 {
     case swapchainPresentScalingCreateInfoKHR = 1000275004
     case releaseSwapchainImagesInfoKHR = 1000275005
     case physicalDeviceMultiviewPerViewViewportsFeaturesQCOM = 1000488000
+    case semaphoreSciSyncPoolCreateInfoNV = 1000489000
+    case semaphoreSciSyncCreateInfoNV = 1000489001
+    case physicalDeviceExternalSciSync2FeaturesNV = 1000489002
+    case deviceSemaphoreSciSyncPoolReservationCreateInfoNV = 1000489003
     case physicalDeviceRayTracingInvocationReorderFeaturesNV = 1000490000
     case physicalDeviceRayTracingInvocationReorderPropertiesNV = 1000490001
     case physicalDeviceCooperativeVectorFeaturesNV = 1000491000
@@ -1396,6 +1512,11 @@ public enum StructureType: UInt32 {
     case physicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT = 1000524000
     case physicalDeviceUnifiedImageLayoutsFeaturesKHR = 1000527000
     case attachmentFeedbackLoopInfoEXT = 1000527001
+    case screenBufferPropertiesQNX = 1000529000
+    case screenBufferFormatPropertiesQNX = 1000529001
+    case importScreenBufferInfoQNX = 1000529002
+    case externalFormatQNX = 1000529003
+    case physicalDeviceExternalMemoryScreenBufferFeaturesQNX = 1000529004
     case physicalDeviceLayeredDriverPropertiesMSFT = 1000530000
     case calibratedTimestampInfoKHR = 1000184000
     case setDescriptorBufferOffsetsInfoEXT = 1000545007
@@ -1498,12 +1619,19 @@ public enum StructureType: UInt32 {
     case videoDecodeH264InlineSessionParametersInfoKHR = 1000586001
     case videoDecodeH265InlineSessionParametersInfoKHR = 1000586002
     case videoDecodeAv1InlineSessionParametersInfoKHR = 1000586003
+    case surfaceCreateInfoOHOS = 1000685000
+    case nativeBufferOHOS = 1000453001
+    case swapchainImageCreateInfoOHOS = 1000453002
+    case physicalDevicePresentationPropertiesOHOS = 1000453003
     case physicalDeviceHdrVividFeaturesHUAWEI = 1000590000
     case hdrVividDynamicMetadataHUAWEI = 1000590001
     case physicalDeviceCooperativeMatrix2FeaturesNV = 1000593000
     case cooperativeMatrixFlexibleDimensionsPropertiesNV = 1000593001
     case physicalDeviceCooperativeMatrix2PropertiesNV = 1000593002
     case physicalDevicePipelineOpacityMicromapFeaturesARM = 1000596000
+    case importMemoryMetalHandleInfoEXT = 1000602000
+    case memoryMetalHandlePropertiesEXT = 1000602001
+    case memoryGetMetalHandleInfoEXT = 1000602002
     case physicalDeviceDepthClampZeroOneFeaturesKHR = 1000421000
     case physicalDevicePerformanceCountersByRegionFeaturesARM = 1000605000
     case physicalDevicePerformanceCountersByRegionPropertiesARM = 1000605001
@@ -1561,6 +1689,7 @@ public enum StructureType: UInt32 {
     case physicalDeviceMaintenance11FeaturesKHR = 1000657000
     case queueFamilyOptimalImageTransferGranularityPropertiesKHR = 1000657001
     case physicalDeviceShaderSubgroupPartitionedFeaturesEXT = 1000662000
+    case ubmSurfaceCreateInfoSEC = 1000664000
     case physicalDeviceShaderMixedFloatDotProductFeaturesVALVE = 1000673000
     case physicalDeviceThrottleHintFeaturesSEC = 1000674000
     case throttleHintSubmitInfoSEC = 1000674001
@@ -1836,6 +1965,7 @@ public enum Result: Int32, Error {
     case errorVideoStdVersionNotSupportedKHR = -1000023005
     case errorInvalidDrmFormatModifierPlaneLayoutEXT = -1000158000
     case errorPresentTimingQueueFullEXT = -1000208000
+    case errorFullScreenExclusiveModeLostEXT = -1000255000
     case threadIdleKHR = 1000268000
     case threadDoneKHR = 1000268001
     case operationDeferredKHR = 1000268002
@@ -1981,12 +2111,16 @@ public enum ObjectType: UInt32 {
     case performanceConfigurationINTEL = 1000210000
     case deferredOperationKHR = 1000268000
     case indirectCommandsLayoutNV = 1000277000
+    case cudaModuleNV = 1000307000
+    case cudaFunctionNV = 1000307001
+    case bufferCollectionFUCHSIA = 1000366000
     case micromapEXT = 1000396000
     case tensorARM = 1000460000
     case tensorViewARM = 1000460001
     case opticalFlowSessionNV = 1000464000
     case shaderEXT = 1000482000
     case pipelineBinaryKHR = 1000483000
+    case semaphoreSciSyncPoolNV = 1000489000
     case dataGraphPipelineSessionARM = 1000507000
     case externalComputeQueueNV = 1000556000
     case indirectCommandsLayoutEXT = 1000572000
@@ -2117,6 +2251,9 @@ public enum DebugReportObjectTypeEXT: UInt32 {
     case cuFunctionNvx = 1000029001
     case accelerationStructureKhr = 1000150000
     case accelerationStructureNv = 1000165000
+    case cudaModuleNv = 1000307000
+    case cudaFunctionNv = 1000307001
+    case bufferCollectionFuchsia = 1000366000
 }
 
 public enum DeviceMemoryReportEventTypeEXT: UInt32 {
@@ -2398,6 +2535,7 @@ public enum GeometryTypeKHR: UInt32 {
     case instances = 2
     case spheresNV = 1000429004
     case linearSweptSpheresNV = 1000429005
+    case denseGeometryFormatTrianglesAMDX = 1000478000
     case micromap = 1000623000
 }
 
@@ -2521,6 +2659,31 @@ public enum LineRasterizationMode: UInt32 {
     case rectangularSmooth = 3
 }
 
+public enum FaultLevel: UInt32 {
+    case unassigned = 0
+    case critical = 1
+    case recoverable = 2
+    case warning = 3
+}
+
+public enum FaultType: UInt32 {
+    case invalid = 0
+    case unassigned = 1
+    case implementation = 2
+    case system = 3
+    case physicalDevice = 4
+    case commandBufferFull = 5
+    case invalidApiUsage = 6
+}
+
+public enum FaultQueryBehavior: UInt32 {
+    case getAndClearAllFaults = 0
+}
+
+public enum PipelineMatchControl: UInt32 {
+    case applicationUuidExactMatch = 0
+}
+
 public enum FragmentShadingRateCombinerOpKHR: UInt32 {
     case keep = 0
     case replace = 1
@@ -2566,9 +2729,28 @@ public enum SubpassMergeStatusEXT: UInt32 {
     case notMergedUnspecified = 13
 }
 
+#if VK_USE_PLATFORM_SCI
+public enum SciSyncClientTypeNV: UInt32 {
+    case signaler = 0
+    case waiter = 1
+    case signalerWaiter = 2
+}
+#endif
+
+#if VK_USE_PLATFORM_SCI
+public enum SciSyncPrimitiveTypeNV: UInt32 {
+    case fence = 0
+    case semaphore = 1
+}
+#endif
+
 public enum ProvokingVertexModeEXT: UInt32 {
     case firstVertex = 0
     case lastVertex = 1
+}
+
+public enum PipelineCacheValidationVersion: UInt32 {
+    case safetyCriticalOne = 1
 }
 
 public enum AccelerationStructureMotionInstanceTypeNV: UInt32 {
@@ -2651,6 +2833,7 @@ public enum OpticalFlowSessionBindingPointNV: UInt32 {
 
 public enum MicromapTypeEXT: UInt32 {
     case opacityMicromap = 0
+    case displacementMicromapNV = 1000397000
 }
 
 public enum CopyMicromapModeEXT: UInt32 {
