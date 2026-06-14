@@ -11,7 +11,7 @@ public struct Offset2D: CStructConvertible {
         self.y = y
     }
 
-    init(cStruct: VkOffset2D) {
+    public init(cStruct: VkOffset2D) {
         self.x = cStruct.x
         self.y = cStruct.y
     }
@@ -37,7 +37,7 @@ public struct Offset3D: CStructConvertible {
         self.z = z
     }
 
-    init(cStruct: VkOffset3D) {
+    public init(cStruct: VkOffset3D) {
         self.x = cStruct.x
         self.y = cStruct.y
         self.z = cStruct.z
@@ -63,7 +63,7 @@ public struct Extent2D: CStructConvertible {
         self.height = height
     }
 
-    init(cStruct: VkExtent2D) {
+    public init(cStruct: VkExtent2D) {
         self.width = cStruct.width
         self.height = cStruct.height
     }
@@ -89,7 +89,7 @@ public struct Extent3D: CStructConvertible {
         self.depth = depth
     }
 
-    init(cStruct: VkExtent3D) {
+    public init(cStruct: VkExtent3D) {
         self.width = cStruct.width
         self.height = cStruct.height
         self.depth = cStruct.depth
@@ -123,7 +123,7 @@ public struct Viewport: CStructConvertible {
         self.maxDepth = maxDepth
     }
 
-    init(cStruct: VkViewport) {
+    public init(cStruct: VkViewport) {
         self.x = cStruct.x
         self.y = cStruct.y
         self.width = cStruct.width
@@ -155,7 +155,7 @@ public struct Rect2D: CStructConvertible {
         self.extent = extent
     }
 
-    init(cStruct: VkRect2D) {
+    public init(cStruct: VkRect2D) {
         self.offset = Offset2D(cStruct: cStruct.offset)
         self.extent = Extent2D(cStruct: cStruct.extent)
     }
@@ -185,7 +185,7 @@ public struct ClearRect: CStructConvertible {
         self.layerCount = layerCount
     }
 
-    init(cStruct: VkClearRect) {
+    public init(cStruct: VkClearRect) {
         self.rect = Rect2D(cStruct: cStruct.rect)
         self.baseArrayLayer = cStruct.baseArrayLayer
         self.layerCount = cStruct.layerCount
@@ -217,7 +217,7 @@ public struct ComponentMapping: CStructConvertible {
         self.a = a
     }
 
-    init(cStruct: VkComponentMapping) {
+    public init(cStruct: VkComponentMapping) {
         self.r = ComponentSwizzle(rawValue: unsafeBitCast(cStruct.r, to: UInt32.self))!
         self.g = ComponentSwizzle(rawValue: unsafeBitCast(cStruct.g, to: UInt32.self))!
         self.b = ComponentSwizzle(rawValue: unsafeBitCast(cStruct.b, to: UInt32.self))!
@@ -344,7 +344,7 @@ public struct PhysicalDeviceLimits: CStructConvertible {
     public let optimalBufferCopyRowPitchAlignment: VkDeviceSize
     public let nonCoherentAtomSize: VkDeviceSize
 
-    init(cStruct: VkPhysicalDeviceLimits) {
+    public init(cStruct: VkPhysicalDeviceLimits) {
         self.maxImageDimension1D = cStruct.maxImageDimension1D
         self.maxImageDimension2D = cStruct.maxImageDimension2D
         self.maxImageDimension3D = cStruct.maxImageDimension3D
@@ -574,7 +574,7 @@ public struct PhysicalDeviceSparseProperties: CStructConvertible {
     public let residencyAlignedMipSize: Bool
     public let residencyNonResidentStrict: Bool
 
-    init(cStruct: VkPhysicalDeviceSparseProperties) {
+    public init(cStruct: VkPhysicalDeviceSparseProperties) {
         self.residencyStandard2DBlockShape = cStruct.residencyStandard2DBlockShape == VK_TRUE
         self.residencyStandard2DMultisampleBlockShape = cStruct.residencyStandard2DMultisampleBlockShape == VK_TRUE
         self.residencyStandard3DBlockShape = cStruct.residencyStandard3DBlockShape == VK_TRUE
@@ -606,7 +606,7 @@ public struct PhysicalDeviceProperties: CStructConvertible {
     public let limits: PhysicalDeviceLimits
     public let sparseProperties: PhysicalDeviceSparseProperties
 
-    init(cStruct: VkPhysicalDeviceProperties) {
+    public init(cStruct: VkPhysicalDeviceProperties) {
         self.apiVersion = Version(rawValue: cStruct.apiVersion)
         self.driverVersion = cStruct.driverVersion
         self.vendorID = cStruct.vendorID
@@ -643,7 +643,7 @@ public struct ExtensionProperties: CStructConvertible {
     public let extensionName: String
     public let specVersion: UInt32
 
-    init(cStruct: VkExtensionProperties) {
+    public init(cStruct: VkExtensionProperties) {
         self.extensionName = String(unsafeBytesOf: cStruct.extensionName)
         self.specVersion = cStruct.specVersion
     }
@@ -664,7 +664,7 @@ public struct LayerProperties: CStructConvertible {
     public let implementationVersion: UInt32
     public let description: String
 
-    init(cStruct: VkLayerProperties) {
+    public init(cStruct: VkLayerProperties) {
         self.layerName = String(unsafeBytesOf: cStruct.layerName)
         self.specVersion = Version(rawValue: cStruct.specVersion)
         self.implementationVersion = cStruct.implementationVersion
@@ -698,7 +698,7 @@ public struct ApplicationInfo: ChainableBase {
         self.apiVersion = apiVersion
     }
 
-    init(cStruct: VkApplicationInfo) {
+    public init(cStruct: VkApplicationInfo) {
         self.applicationName = (cStruct.pApplicationName != nil) ? String(cString: cStruct.pApplicationName) : nil
         self.applicationVersion = cStruct.applicationVersion
         self.engineName = (cStruct.pEngineName != nil) ? String(cString: cStruct.pEngineName) : nil
@@ -748,7 +748,7 @@ public struct AllocationCallbacks: CStructConvertible {
         self.pfnInternalFree = pfnInternalFree
     }
 
-    init(cStruct: VkAllocationCallbacks) {
+    public init(cStruct: VkAllocationCallbacks) {
         self.userData = cStruct.pUserData
         self.pfnAllocation = cStruct.pfnAllocation
         self.pfnReallocation = cStruct.pfnReallocation
@@ -782,7 +782,7 @@ public struct DeviceQueueCreateInfo: ChainableBase {
         self.queuePriorities = queuePriorities
     }
 
-    init(cStruct: VkDeviceQueueCreateInfo) {
+    public init(cStruct: VkDeviceQueueCreateInfo) {
         self.flags = DeviceQueueCreateFlags(rawValue: cStruct.flags)
         self.queueFamilyIndex = cStruct.queueFamilyIndex
         self.queuePriorities = Array(UnsafeBufferPointer(start: cStruct.pQueuePriorities, count: Int(cStruct.queueCount)))
@@ -925,7 +925,7 @@ public struct PhysicalDeviceFeatures: CStructConvertible {
         self.inheritedQueries = inheritedQueries
     }
 
-    init(cStruct: VkPhysicalDeviceFeatures) {
+    public init(cStruct: VkPhysicalDeviceFeatures) {
         self.robustBufferAccess = cStruct.robustBufferAccess == VK_TRUE
         self.fullDrawIndexUint32 = cStruct.fullDrawIndexUint32 == VK_TRUE
         self.imageCubeArray = cStruct.imageCubeArray == VK_TRUE
@@ -1061,7 +1061,7 @@ public struct DeviceCreateInfo: ChainableBase {
         self.enabledFeatures = enabledFeatures
     }
 
-    init(cStruct: VkDeviceCreateInfo) {
+    public init(cStruct: VkDeviceCreateInfo) {
         self.flags = DeviceCreateFlags(rawValue: cStruct.flags)
         self.queueCreateInfos = UnsafeBufferPointer(start: cStruct.pQueueCreateInfos, count: Int(cStruct.queueCreateInfoCount)).map{ DeviceQueueCreateInfo(cStruct: $0) }
         self.enabledLayerNames = UnsafeBufferPointer(start: cStruct.ppEnabledLayerNames, count: Int(cStruct.enabledLayerCount)).map{ String(cString: $0!) }
@@ -1114,7 +1114,7 @@ public struct InstanceCreateInfo: ChainableBase {
         self.enabledExtensionNames = enabledExtensionNames
     }
 
-    init(cStruct: VkInstanceCreateInfo) {
+    public init(cStruct: VkInstanceCreateInfo) {
         self.flags = InstanceCreateFlags(rawValue: cStruct.flags)
         self.applicationInfo = (cStruct.pApplicationInfo != nil) ? ApplicationInfo(cStruct: cStruct.pApplicationInfo.pointee) : nil
         self.enabledLayerNames = UnsafeBufferPointer(start: cStruct.ppEnabledLayerNames, count: Int(cStruct.enabledLayerCount)).map{ String(cString: $0!) }
@@ -1155,7 +1155,7 @@ public struct QueueFamilyProperties: CStructConvertible {
     public let timestampValidBits: UInt32
     public let minImageTransferGranularity: Extent3D
 
-    init(cStruct: VkQueueFamilyProperties) {
+    public init(cStruct: VkQueueFamilyProperties) {
         self.queueFlags = QueueFlags(rawValue: cStruct.queueFlags)
         self.queueCount = cStruct.queueCount
         self.timestampValidBits = cStruct.timestampValidBits
@@ -1180,7 +1180,7 @@ public struct MemoryType: CStructConvertible {
     public let propertyFlags: MemoryPropertyFlags
     public let heapIndex: UInt32
 
-    init(cStruct: VkMemoryType) {
+    public init(cStruct: VkMemoryType) {
         self.propertyFlags = MemoryPropertyFlags(rawValue: cStruct.propertyFlags)
         self.heapIndex = cStruct.heapIndex
     }
@@ -1199,7 +1199,7 @@ public struct MemoryHeap: CStructConvertible {
     public let size: VkDeviceSize
     public let flags: MemoryHeapFlags
 
-    init(cStruct: VkMemoryHeap) {
+    public init(cStruct: VkMemoryHeap) {
         self.size = cStruct.size
         self.flags = MemoryHeapFlags(rawValue: cStruct.flags)
     }
@@ -1220,7 +1220,7 @@ public struct PhysicalDeviceMemoryProperties: CStructConvertible {
     public let memoryHeapCount: UInt32
     public let memoryHeaps: Array<MemoryHeap>
 
-    init(cStruct: VkPhysicalDeviceMemoryProperties) {
+    public init(cStruct: VkPhysicalDeviceMemoryProperties) {
         self.memoryTypeCount = cStruct.memoryTypeCount
         self.memoryTypes = withUnsafeBytes(of: cStruct.memoryTypes) { $0.bindMemory(to: VkMemoryType.self).prefix(Int(cStruct.memoryTypeCount)).map{ MemoryType(cStruct: $0) } }
         self.memoryHeapCount = cStruct.memoryHeapCount
@@ -1252,7 +1252,7 @@ public struct MemoryAllocateInfo: ChainableBase {
         self.memoryTypeIndex = memoryTypeIndex
     }
 
-    init(cStruct: VkMemoryAllocateInfo) {
+    public init(cStruct: VkMemoryAllocateInfo) {
         self.allocationSize = cStruct.allocationSize
         self.memoryTypeIndex = cStruct.memoryTypeIndex
     }
@@ -1280,7 +1280,7 @@ public struct MemoryRequirements: CStructConvertible {
     public let alignment: VkDeviceSize
     public let memoryTypeBits: UInt32
 
-    init(cStruct: VkMemoryRequirements) {
+    public init(cStruct: VkMemoryRequirements) {
         self.size = cStruct.size
         self.alignment = cStruct.alignment
         self.memoryTypeBits = cStruct.memoryTypeBits
@@ -1302,7 +1302,7 @@ public struct SparseImageFormatProperties: CStructConvertible {
     public let imageGranularity: Extent3D
     public let flags: SparseImageFormatFlags
 
-    init(cStruct: VkSparseImageFormatProperties) {
+    public init(cStruct: VkSparseImageFormatProperties) {
         self.aspectMask = ImageAspectFlags(rawValue: cStruct.aspectMask)
         self.imageGranularity = Extent3D(cStruct: cStruct.imageGranularity)
         self.flags = SparseImageFormatFlags(rawValue: cStruct.flags)
@@ -1328,7 +1328,7 @@ public struct SparseImageMemoryRequirements: CStructConvertible {
     public let imageMipTailOffset: VkDeviceSize
     public let imageMipTailStride: VkDeviceSize
 
-    init(cStruct: VkSparseImageMemoryRequirements) {
+    public init(cStruct: VkSparseImageMemoryRequirements) {
         self.formatProperties = SparseImageFormatProperties(cStruct: cStruct.formatProperties)
         self.imageMipTailFirstLod = cStruct.imageMipTailFirstLod
         self.imageMipTailSize = cStruct.imageMipTailSize
@@ -1362,7 +1362,7 @@ public struct MappedMemoryRange: ChainableBase {
         self.size = size
     }
 
-    init(cStruct: VkMappedMemoryRange, device: Device) {
+    public init(cStruct: VkMappedMemoryRange, device: Device) {
         self.memory = DeviceMemory(handle: cStruct.memory, device: device)
         self.offset = cStruct.offset
         self.size = cStruct.size
@@ -1392,7 +1392,7 @@ public struct FormatProperties: CStructConvertible {
     public let optimalTilingFeatures: FormatFeatureFlags
     public let bufferFeatures: FormatFeatureFlags
 
-    init(cStruct: VkFormatProperties) {
+    public init(cStruct: VkFormatProperties) {
         self.linearTilingFeatures = FormatFeatureFlags(rawValue: cStruct.linearTilingFeatures)
         self.optimalTilingFeatures = FormatFeatureFlags(rawValue: cStruct.optimalTilingFeatures)
         self.bufferFeatures = FormatFeatureFlags(rawValue: cStruct.bufferFeatures)
@@ -1416,7 +1416,7 @@ public struct ImageFormatProperties: CStructConvertible {
     public let sampleCounts: SampleCountFlags
     public let maxResourceSize: VkDeviceSize
 
-    init(cStruct: VkImageFormatProperties) {
+    public init(cStruct: VkImageFormatProperties) {
         self.maxExtent = Extent3D(cStruct: cStruct.maxExtent)
         self.maxMipLevels = cStruct.maxMipLevels
         self.maxArrayLayers = cStruct.maxArrayLayers
@@ -1450,7 +1450,7 @@ public struct DescriptorBufferInfo: CStructConvertible {
         self.range = range
     }
 
-    init(cStruct: VkDescriptorBufferInfo, device: Device) {
+    public init(cStruct: VkDescriptorBufferInfo, device: Device) {
         self.buffer = (cStruct.buffer != nil) ? Buffer(handle: cStruct.buffer, device: device) : nil
         self.offset = cStruct.offset
         self.range = cStruct.range
@@ -1478,7 +1478,7 @@ public struct DescriptorImageInfo: CStructConvertible {
         self.imageLayout = imageLayout
     }
 
-    init(cStruct: VkDescriptorImageInfo, device: Device) {
+    public init(cStruct: VkDescriptorImageInfo, device: Device) {
         self.sampler = Sampler(handle: cStruct.sampler, device: device)
         self.imageView = ImageView(handle: cStruct.imageView, device: device)
         self.imageLayout = ImageLayout(rawValue: unsafeBitCast(cStruct.imageLayout, to: UInt32.self))!
@@ -1514,7 +1514,7 @@ public struct CopyDescriptorSet: ChainableBase {
         self.descriptorCount = descriptorCount
     }
 
-    init(cStruct: VkCopyDescriptorSet, descriptorPool: DescriptorPool) {
+    public init(cStruct: VkCopyDescriptorSet, descriptorPool: DescriptorPool) {
         self.srcSet = DescriptorSet(handle: cStruct.srcSet, descriptorPool: descriptorPool)
         self.srcBinding = cStruct.srcBinding
         self.srcArrayElement = cStruct.srcArrayElement
@@ -1554,7 +1554,7 @@ public struct BufferUsageFlags2CreateInfo: ChainableBase, BufferViewCreateInfoEx
         self.usage = usage
     }
 
-    init(cStruct: VkBufferUsageFlags2CreateInfo) {
+    public init(cStruct: VkBufferUsageFlags2CreateInfo) {
         self.usage = BufferUsageFlags2(rawValue: cStruct.usage)
     }
 
@@ -1590,7 +1590,7 @@ public struct BufferCreateInfo: ChainableBase {
         self.queueFamilyIndices = queueFamilyIndices
     }
 
-    init(cStruct: VkBufferCreateInfo) {
+    public init(cStruct: VkBufferCreateInfo) {
         self.flags = BufferCreateFlags(rawValue: cStruct.flags)
         self.size = cStruct.size
         self.usage = BufferUsageFlags(rawValue: cStruct.usage)
@@ -1637,7 +1637,7 @@ public struct BufferViewCreateInfo: ChainableBase {
         self.range = range
     }
 
-    init(cStruct: VkBufferViewCreateInfo, device: Device) {
+    public init(cStruct: VkBufferViewCreateInfo, device: Device) {
         self.flags = BufferViewCreateFlags(rawValue: cStruct.flags)
         self.buffer = Buffer(handle: cStruct.buffer, device: device)
         self.format = Format(rawValue: unsafeBitCast(cStruct.format, to: UInt32.self))!
@@ -1677,7 +1677,7 @@ public struct ImageSubresource: CStructConvertible {
         self.arrayLayer = arrayLayer
     }
 
-    init(cStruct: VkImageSubresource) {
+    public init(cStruct: VkImageSubresource) {
         self.aspectMask = ImageAspectFlags(rawValue: cStruct.aspectMask)
         self.mipLevel = cStruct.mipLevel
         self.arrayLayer = cStruct.arrayLayer
@@ -1707,7 +1707,7 @@ public struct ImageSubresourceLayers: CStructConvertible {
         self.layerCount = layerCount
     }
 
-    init(cStruct: VkImageSubresourceLayers) {
+    public init(cStruct: VkImageSubresourceLayers) {
         self.aspectMask = ImageAspectFlags(rawValue: cStruct.aspectMask)
         self.mipLevel = cStruct.mipLevel
         self.baseArrayLayer = cStruct.baseArrayLayer
@@ -1741,7 +1741,7 @@ public struct ImageSubresourceRange: CStructConvertible {
         self.layerCount = layerCount
     }
 
-    init(cStruct: VkImageSubresourceRange) {
+    public init(cStruct: VkImageSubresourceRange) {
         self.aspectMask = ImageAspectFlags(rawValue: cStruct.aspectMask)
         self.baseMipLevel = cStruct.baseMipLevel
         self.levelCount = cStruct.levelCount
@@ -1771,7 +1771,7 @@ public struct MemoryBarrier: ChainableBase {
         self.dstAccessMask = dstAccessMask
     }
 
-    init(cStruct: VkMemoryBarrier) {
+    public init(cStruct: VkMemoryBarrier) {
         self.srcAccessMask = AccessFlags(rawValue: cStruct.srcAccessMask)
         self.dstAccessMask = AccessFlags(rawValue: cStruct.dstAccessMask)
     }
@@ -1813,7 +1813,7 @@ public struct BufferMemoryBarrier: ChainableBase {
         self.size = size
     }
 
-    init(cStruct: VkBufferMemoryBarrier, device: Device) {
+    public init(cStruct: VkBufferMemoryBarrier, device: Device) {
         self.srcAccessMask = AccessFlags(rawValue: cStruct.srcAccessMask)
         self.dstAccessMask = AccessFlags(rawValue: cStruct.dstAccessMask)
         self.srcQueueFamilyIndex = cStruct.srcQueueFamilyIndex
@@ -1867,7 +1867,7 @@ public struct ImageMemoryBarrier: ChainableBase {
         self.subresourceRange = subresourceRange
     }
 
-    init(cStruct: VkImageMemoryBarrier, device: Device) {
+    public init(cStruct: VkImageMemoryBarrier, device: Device) {
         self.srcAccessMask = AccessFlags(rawValue: cStruct.srcAccessMask)
         self.dstAccessMask = AccessFlags(rawValue: cStruct.dstAccessMask)
         self.oldLayout = ImageLayout(rawValue: unsafeBitCast(cStruct.oldLayout, to: UInt32.self))!
@@ -1933,7 +1933,7 @@ public struct ImageCreateInfo: ChainableBase {
         self.initialLayout = initialLayout
     }
 
-    init(cStruct: VkImageCreateInfo) {
+    public init(cStruct: VkImageCreateInfo) {
         self.flags = ImageCreateFlags(rawValue: cStruct.flags)
         self.imageType = ImageType(rawValue: unsafeBitCast(cStruct.imageType, to: UInt32.self))!
         self.format = Format(rawValue: unsafeBitCast(cStruct.format, to: UInt32.self))!
@@ -1996,7 +1996,7 @@ public struct SubresourceLayout: CStructConvertible {
         self.depthPitch = depthPitch
     }
 
-    init(cStruct: VkSubresourceLayout) {
+    public init(cStruct: VkSubresourceLayout) {
         self.offset = cStruct.offset
         self.size = cStruct.size
         self.rowPitch = cStruct.rowPitch
@@ -2034,7 +2034,7 @@ public struct ImageViewCreateInfo: ChainableBase {
         self.subresourceRange = subresourceRange
     }
 
-    init(cStruct: VkImageViewCreateInfo, device: Device) {
+    public init(cStruct: VkImageViewCreateInfo, device: Device) {
         self.flags = ImageViewCreateFlags(rawValue: cStruct.flags)
         self.image = Image(handle: cStruct.image, device: device)
         self.viewType = ImageViewType(rawValue: unsafeBitCast(cStruct.viewType, to: UInt32.self))!
@@ -2080,7 +2080,7 @@ public struct BufferCopy: CStructConvertible {
         self.size = size
     }
 
-    init(cStruct: VkBufferCopy) {
+    public init(cStruct: VkBufferCopy) {
         self.srcOffset = cStruct.srcOffset
         self.dstOffset = cStruct.dstOffset
         self.size = cStruct.size
@@ -2112,7 +2112,7 @@ public struct SparseMemoryBind: CStructConvertible {
         self.flags = flags
     }
 
-    init(cStruct: VkSparseMemoryBind, device: Device) {
+    public init(cStruct: VkSparseMemoryBind, device: Device) {
         self.resourceOffset = cStruct.resourceOffset
         self.size = cStruct.size
         self.memory = (cStruct.memory != nil) ? DeviceMemory(handle: cStruct.memory, device: device) : nil
@@ -2150,7 +2150,7 @@ public struct SparseImageMemoryBind: CStructConvertible {
         self.flags = flags
     }
 
-    init(cStruct: VkSparseImageMemoryBind, device: Device) {
+    public init(cStruct: VkSparseImageMemoryBind, device: Device) {
         self.subresource = ImageSubresource(cStruct: cStruct.subresource)
         self.offset = Offset3D(cStruct: cStruct.offset)
         self.extent = Extent3D(cStruct: cStruct.extent)
@@ -2188,7 +2188,7 @@ public struct SparseBufferMemoryBindInfo: CStructConvertible {
         self.binds = binds
     }
 
-    init(cStruct: VkSparseBufferMemoryBindInfo, device: Device) {
+    public init(cStruct: VkSparseBufferMemoryBindInfo, device: Device) {
         self.buffer = Buffer(handle: cStruct.buffer, device: device)
         self.binds = UnsafeBufferPointer(start: cStruct.pBinds, count: Int(cStruct.bindCount)).map{ SparseMemoryBind(cStruct: $0, device: device) }
     }
@@ -2215,7 +2215,7 @@ public struct SparseImageOpaqueMemoryBindInfo: CStructConvertible {
         self.binds = binds
     }
 
-    init(cStruct: VkSparseImageOpaqueMemoryBindInfo, device: Device) {
+    public init(cStruct: VkSparseImageOpaqueMemoryBindInfo, device: Device) {
         self.image = Image(handle: cStruct.image, device: device)
         self.binds = UnsafeBufferPointer(start: cStruct.pBinds, count: Int(cStruct.bindCount)).map{ SparseMemoryBind(cStruct: $0, device: device) }
     }
@@ -2242,7 +2242,7 @@ public struct SparseImageMemoryBindInfo: CStructConvertible {
         self.binds = binds
     }
 
-    init(cStruct: VkSparseImageMemoryBindInfo, device: Device) {
+    public init(cStruct: VkSparseImageMemoryBindInfo, device: Device) {
         self.image = Image(handle: cStruct.image, device: device)
         self.binds = UnsafeBufferPointer(start: cStruct.pBinds, count: Int(cStruct.bindCount)).map{ SparseImageMemoryBind(cStruct: $0, device: device) }
     }
@@ -2275,7 +2275,7 @@ public struct BindSparseInfo: ChainableBase {
         self.signalSemaphores = signalSemaphores
     }
 
-    init(cStruct: VkBindSparseInfo, device: Device) {
+    public init(cStruct: VkBindSparseInfo, device: Device) {
         self.waitSemaphores = UnsafeBufferPointer(start: cStruct.pWaitSemaphores, count: Int(cStruct.waitSemaphoreCount)).map{ Semaphore(handle: $0, device: device) }
         self.bufferBinds = UnsafeBufferPointer(start: cStruct.pBufferBinds, count: Int(cStruct.bufferBindCount)).map{ SparseBufferMemoryBindInfo(cStruct: $0, device: device) }
         self.imageOpaqueBinds = UnsafeBufferPointer(start: cStruct.pImageOpaqueBinds, count: Int(cStruct.imageOpaqueBindCount)).map{ SparseImageOpaqueMemoryBindInfo(cStruct: $0, device: device) }
@@ -2334,7 +2334,7 @@ public struct ImageCopy: CStructConvertible {
         self.extent = extent
     }
 
-    init(cStruct: VkImageCopy) {
+    public init(cStruct: VkImageCopy) {
         self.srcSubresource = ImageSubresourceLayers(cStruct: cStruct.srcSubresource)
         self.srcOffset = Offset3D(cStruct: cStruct.srcOffset)
         self.dstSubresource = ImageSubresourceLayers(cStruct: cStruct.dstSubresource)
@@ -2378,7 +2378,7 @@ public struct ImageBlit: CStructConvertible {
         self.dstOffsets = dstOffsets
     }
 
-    init(cStruct: VkImageBlit) {
+    public init(cStruct: VkImageBlit) {
         self.srcSubresource = ImageSubresourceLayers(cStruct: cStruct.srcSubresource)
         self.srcOffsets = cStruct.srcOffsets
         self.dstSubresource = ImageSubresourceLayers(cStruct: cStruct.dstSubresource)
@@ -2418,7 +2418,7 @@ public struct BufferImageCopy: CStructConvertible {
         self.imageExtent = imageExtent
     }
 
-    init(cStruct: VkBufferImageCopy) {
+    public init(cStruct: VkBufferImageCopy) {
         self.bufferOffset = cStruct.bufferOffset
         self.bufferRowLength = cStruct.bufferRowLength
         self.bufferImageHeight = cStruct.bufferImageHeight
@@ -2458,7 +2458,7 @@ public struct StridedDeviceAddressRangeKHR: CStructConvertible {
         self.stride = stride
     }
 
-    init(cStruct: VkStridedDeviceAddressRangeKHR) {
+    public init(cStruct: VkStridedDeviceAddressRangeKHR) {
         self.address = cStruct.address
         self.size = cStruct.size
         self.stride = cStruct.stride
@@ -2486,7 +2486,7 @@ public struct CopyMemoryIndirectCommandKHR: CStructConvertible {
         self.size = size
     }
 
-    init(cStruct: VkCopyMemoryIndirectCommandKHR) {
+    public init(cStruct: VkCopyMemoryIndirectCommandKHR) {
         self.srcAddress = cStruct.srcAddress
         self.dstAddress = cStruct.dstAddress
         self.size = cStruct.size
@@ -2516,7 +2516,7 @@ public struct CopyMemoryIndirectInfoKHR: ChainableBase {
         self.copyAddressRange = copyAddressRange
     }
 
-    init(cStruct: VkCopyMemoryIndirectInfoKHR) {
+    public init(cStruct: VkCopyMemoryIndirectInfoKHR) {
         self.srcCopyFlags = AddressCopyFlagsKHR(rawValue: cStruct.srcCopyFlags)
         self.dstCopyFlags = AddressCopyFlagsKHR(rawValue: cStruct.dstCopyFlags)
         self.copyCount = cStruct.copyCount
@@ -2562,7 +2562,7 @@ public struct CopyMemoryToImageIndirectCommandKHR: CStructConvertible {
         self.imageExtent = imageExtent
     }
 
-    init(cStruct: VkCopyMemoryToImageIndirectCommandKHR) {
+    public init(cStruct: VkCopyMemoryToImageIndirectCommandKHR) {
         self.srcAddress = cStruct.srcAddress
         self.bufferRowLength = cStruct.bufferRowLength
         self.bufferImageHeight = cStruct.bufferImageHeight
@@ -2606,7 +2606,7 @@ public struct CopyMemoryToImageIndirectInfoKHR: ChainableBase {
         self.imageSubresources = imageSubresources
     }
 
-    init(cStruct: VkCopyMemoryToImageIndirectInfoKHR, device: Device) {
+    public init(cStruct: VkCopyMemoryToImageIndirectInfoKHR, device: Device) {
         self.srcCopyFlags = AddressCopyFlagsKHR(rawValue: cStruct.srcCopyFlags)
         self.copyAddressRange = StridedDeviceAddressRangeKHR(cStruct: cStruct.copyAddressRange)
         self.dstImage = Image(handle: cStruct.dstImage, device: device)
@@ -2655,7 +2655,7 @@ public struct ImageResolve: CStructConvertible {
         self.extent = extent
     }
 
-    init(cStruct: VkImageResolve) {
+    public init(cStruct: VkImageResolve) {
         self.srcSubresource = ImageSubresourceLayers(cStruct: cStruct.srcSubresource)
         self.srcOffset = Offset3D(cStruct: cStruct.srcOffset)
         self.dstSubresource = ImageSubresourceLayers(cStruct: cStruct.dstSubresource)
@@ -2697,7 +2697,7 @@ public struct ShaderModuleCreateInfo: ChainableBase, PipelineShaderStageCreateIn
         self.code = code
     }
 
-    init(cStruct: VkShaderModuleCreateInfo) {
+    public init(cStruct: VkShaderModuleCreateInfo) {
         self.flags = ShaderModuleCreateFlags(rawValue: cStruct.flags)
         self.codeSize = cStruct.codeSize
         self.code = cStruct.pCode
@@ -2731,7 +2731,7 @@ public struct DescriptorSetLayoutCreateInfo: ChainableBase {
         self.bindings = bindings
     }
 
-    init(cStruct: VkDescriptorSetLayoutCreateInfo, device: Device) {
+    public init(cStruct: VkDescriptorSetLayoutCreateInfo, device: Device) {
         self.flags = DescriptorSetLayoutCreateFlags(rawValue: cStruct.flags)
         self.bindings = UnsafeBufferPointer(start: cStruct.pBindings, count: Int(cStruct.bindingCount)).map{ DescriptorSetLayoutBinding(cStruct: $0, device: device) }
     }
@@ -2766,7 +2766,7 @@ public struct DescriptorPoolSize: CStructConvertible {
         self.descriptorCount = descriptorCount
     }
 
-    init(cStruct: VkDescriptorPoolSize) {
+    public init(cStruct: VkDescriptorPoolSize) {
         self.type = DescriptorType(rawValue: unsafeBitCast(cStruct.type, to: UInt32.self))!
         self.descriptorCount = cStruct.descriptorCount
     }
@@ -2792,7 +2792,7 @@ public struct DescriptorPoolCreateInfo: ChainableBase {
         self.poolSizes = poolSizes
     }
 
-    init(cStruct: VkDescriptorPoolCreateInfo) {
+    public init(cStruct: VkDescriptorPoolCreateInfo) {
         self.flags = DescriptorPoolCreateFlags(rawValue: cStruct.flags)
         self.maxSets = cStruct.maxSets
         self.poolSizes = UnsafeBufferPointer(start: cStruct.pPoolSizes, count: Int(cStruct.poolSizeCount)).map{ DescriptorPoolSize(cStruct: $0) }
@@ -2829,7 +2829,7 @@ public struct DescriptorSetAllocateInfo: ChainableBase {
         self.setLayouts = setLayouts
     }
 
-    init(cStruct: VkDescriptorSetAllocateInfo, device: Device) {
+    public init(cStruct: VkDescriptorSetAllocateInfo, device: Device) {
         self.descriptorPool = DescriptorPool(handle: cStruct.descriptorPool, device: device)
         self.setLayouts = UnsafeBufferPointer(start: cStruct.pSetLayouts, count: Int(cStruct.descriptorSetCount)).map{ DescriptorSetLayout(handle: $0, device: device) }
     }
@@ -2866,7 +2866,7 @@ public struct SpecializationMapEntry: CStructConvertible {
         self.size = size
     }
 
-    init(cStruct: VkSpecializationMapEntry) {
+    public init(cStruct: VkSpecializationMapEntry) {
         self.constantID = cStruct.constantID
         self.offset = cStruct.offset
         self.size = cStruct.size
@@ -2894,7 +2894,7 @@ public struct SpecializationInfo: CStructConvertible {
         self.data = data
     }
 
-    init(cStruct: VkSpecializationInfo) {
+    public init(cStruct: VkSpecializationInfo) {
         self.mapEntries = UnsafeBufferPointer(start: cStruct.pMapEntries, count: Int(cStruct.mapEntryCount)).map{ SpecializationMapEntry(cStruct: $0) }
         self.dataSize = cStruct.dataSize
         self.data = cStruct.pData
@@ -2929,7 +2929,7 @@ public struct PipelineShaderStageCreateInfo: ChainableBase {
         self.specializationInfo = specializationInfo
     }
 
-    init(cStruct: VkPipelineShaderStageCreateInfo, device: Device) {
+    public init(cStruct: VkPipelineShaderStageCreateInfo, device: Device) {
         self.flags = PipelineShaderStageCreateFlags(rawValue: cStruct.flags)
         self.stage = ShaderStageFlags(rawValue: unsafeBitCast(cStruct.stage.rawValue, to: UInt32.self))
         self.module = (cStruct.module != nil) ? ShaderModule(handle: cStruct.module, device: device) : nil
@@ -2977,7 +2977,7 @@ public struct ComputePipelineCreateInfo: ChainableBase {
         self.basePipelineIndex = basePipelineIndex
     }
 
-    init(cStruct: VkComputePipelineCreateInfo, device: Device) {
+    public init(cStruct: VkComputePipelineCreateInfo, device: Device) {
         self.flags = PipelineCreateFlags(rawValue: cStruct.flags)
         self.stage = PipelineShaderStageCreateInfo(cStruct: cStruct.stage, device: device)
         self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout, device: device) : nil
@@ -3019,7 +3019,7 @@ public struct ComputePipelineIndirectBufferInfoNV: ChainableBase, ComputePipelin
         self.pipelineDeviceAddressCaptureReplay = pipelineDeviceAddressCaptureReplay
     }
 
-    init(cStruct: VkComputePipelineIndirectBufferInfoNV) {
+    public init(cStruct: VkComputePipelineIndirectBufferInfoNV) {
         self.deviceAddress = cStruct.deviceAddress
         self.size = cStruct.size
         self.pipelineDeviceAddressCaptureReplay = cStruct.pipelineDeviceAddressCaptureReplay
@@ -3051,7 +3051,7 @@ public struct PipelineCreateFlags2CreateInfo: ChainableBase, ComputePipelineCrea
         self.flags = flags
     }
 
-    init(cStruct: VkPipelineCreateFlags2CreateInfo) {
+    public init(cStruct: VkPipelineCreateFlags2CreateInfo) {
         self.flags = PipelineCreateFlags2(rawValue: cStruct.flags)
     }
 
@@ -3083,7 +3083,7 @@ public struct VertexInputBindingDescription: CStructConvertible {
         self.inputRate = inputRate
     }
 
-    init(cStruct: VkVertexInputBindingDescription) {
+    public init(cStruct: VkVertexInputBindingDescription) {
         self.binding = cStruct.binding
         self.stride = cStruct.stride
         self.inputRate = VertexInputRate(rawValue: unsafeBitCast(cStruct.inputRate, to: UInt32.self))!
@@ -3113,7 +3113,7 @@ public struct VertexInputAttributeDescription: CStructConvertible {
         self.offset = offset
     }
 
-    init(cStruct: VkVertexInputAttributeDescription) {
+    public init(cStruct: VkVertexInputAttributeDescription) {
         self.location = cStruct.location
         self.binding = cStruct.binding
         self.format = Format(rawValue: unsafeBitCast(cStruct.format, to: UInt32.self))!
@@ -3143,7 +3143,7 @@ public struct PipelineVertexInputStateCreateInfo: ChainableBase {
         self.vertexAttributeDescriptions = vertexAttributeDescriptions
     }
 
-    init(cStruct: VkPipelineVertexInputStateCreateInfo) {
+    public init(cStruct: VkPipelineVertexInputStateCreateInfo) {
         self.flags = PipelineVertexInputStateCreateFlags(rawValue: cStruct.flags)
         self.vertexBindingDescriptions = UnsafeBufferPointer(start: cStruct.pVertexBindingDescriptions, count: Int(cStruct.vertexBindingDescriptionCount)).map{ VertexInputBindingDescription(cStruct: $0) }
         self.vertexAttributeDescriptions = UnsafeBufferPointer(start: cStruct.pVertexAttributeDescriptions, count: Int(cStruct.vertexAttributeDescriptionCount)).map{ VertexInputAttributeDescription(cStruct: $0) }
@@ -3185,7 +3185,7 @@ public struct PipelineInputAssemblyStateCreateInfo: ChainableBase {
         self.primitiveRestartEnable = primitiveRestartEnable
     }
 
-    init(cStruct: VkPipelineInputAssemblyStateCreateInfo) {
+    public init(cStruct: VkPipelineInputAssemblyStateCreateInfo) {
         self.flags = PipelineInputAssemblyStateCreateFlags(rawValue: cStruct.flags)
         self.topology = PrimitiveTopology(rawValue: unsafeBitCast(cStruct.topology, to: UInt32.self))!
         self.primitiveRestartEnable = cStruct.primitiveRestartEnable == VK_TRUE
@@ -3219,7 +3219,7 @@ public struct PipelineTessellationStateCreateInfo: ChainableBase {
         self.patchControlPoints = patchControlPoints
     }
 
-    init(cStruct: VkPipelineTessellationStateCreateInfo) {
+    public init(cStruct: VkPipelineTessellationStateCreateInfo) {
         self.flags = PipelineTessellationStateCreateFlags(rawValue: cStruct.flags)
         self.patchControlPoints = cStruct.patchControlPoints
     }
@@ -3253,7 +3253,7 @@ public struct PipelineViewportStateCreateInfo: ChainableBase {
         self.scissors = scissors
     }
 
-    init(cStruct: VkPipelineViewportStateCreateInfo) {
+    public init(cStruct: VkPipelineViewportStateCreateInfo) {
         self.flags = PipelineViewportStateCreateFlags(rawValue: cStruct.flags)
         self.viewports = (cStruct.pViewports != nil) ? UnsafeBufferPointer(start: cStruct.pViewports, count: Int(cStruct.viewportCount)).map{ Viewport(cStruct: $0) } : nil
         self.scissors = (cStruct.pScissors != nil) ? UnsafeBufferPointer(start: cStruct.pScissors, count: Int(cStruct.scissorCount)).map{ Rect2D(cStruct: $0) } : nil
@@ -3311,7 +3311,7 @@ public struct PipelineRasterizationStateCreateInfo: ChainableBase {
         self.lineWidth = lineWidth
     }
 
-    init(cStruct: VkPipelineRasterizationStateCreateInfo) {
+    public init(cStruct: VkPipelineRasterizationStateCreateInfo) {
         self.flags = PipelineRasterizationStateCreateFlags(rawValue: cStruct.flags)
         self.depthClampEnable = cStruct.depthClampEnable == VK_TRUE
         self.rasterizerDiscardEnable = cStruct.rasterizerDiscardEnable == VK_TRUE
@@ -3371,7 +3371,7 @@ public struct PipelineMultisampleStateCreateInfo: ChainableBase {
         self.alphaToOneEnable = alphaToOneEnable
     }
 
-    init(cStruct: VkPipelineMultisampleStateCreateInfo) {
+    public init(cStruct: VkPipelineMultisampleStateCreateInfo) {
         self.flags = PipelineMultisampleStateCreateFlags(rawValue: cStruct.flags)
         self.rasterizationSamples = SampleCountFlags(rawValue: unsafeBitCast(cStruct.rasterizationSamples.rawValue, to: UInt32.self))
         self.sampleShadingEnable = cStruct.sampleShadingEnable == VK_TRUE
@@ -3425,7 +3425,7 @@ public struct PipelineColorBlendAttachmentState: CStructConvertible {
         self.colorWriteMask = colorWriteMask
     }
 
-    init(cStruct: VkPipelineColorBlendAttachmentState) {
+    public init(cStruct: VkPipelineColorBlendAttachmentState) {
         self.blendEnable = cStruct.blendEnable == VK_TRUE
         self.srcColorBlendFactor = BlendFactor(rawValue: unsafeBitCast(cStruct.srcColorBlendFactor, to: UInt32.self))!
         self.dstColorBlendFactor = BlendFactor(rawValue: unsafeBitCast(cStruct.dstColorBlendFactor, to: UInt32.self))!
@@ -3467,7 +3467,7 @@ public struct PipelineColorBlendStateCreateInfo: ChainableBase {
         self.blendConstants = blendConstants
     }
 
-    init(cStruct: VkPipelineColorBlendStateCreateInfo) {
+    public init(cStruct: VkPipelineColorBlendStateCreateInfo) {
         self.flags = PipelineColorBlendStateCreateFlags(rawValue: cStruct.flags)
         self.logicOpEnable = cStruct.logicOpEnable == VK_TRUE
         self.logicOp = LogicOp(rawValue: unsafeBitCast(cStruct.logicOp, to: UInt32.self))!
@@ -3508,7 +3508,7 @@ public struct PipelineDynamicStateCreateInfo: ChainableBase {
         self.dynamicStates = dynamicStates
     }
 
-    init(cStruct: VkPipelineDynamicStateCreateInfo) {
+    public init(cStruct: VkPipelineDynamicStateCreateInfo) {
         self.flags = PipelineDynamicStateCreateFlags(rawValue: cStruct.flags)
         self.dynamicStates = UnsafeBufferPointer(start: cStruct.pDynamicStates, count: Int(cStruct.dynamicStateCount)).map{ DynamicState(rawValue: unsafeBitCast($0, to: UInt32.self))! }
     }
@@ -3553,7 +3553,7 @@ public struct StencilOpState: CStructConvertible {
         self.reference = reference
     }
 
-    init(cStruct: VkStencilOpState) {
+    public init(cStruct: VkStencilOpState) {
         self.failOp = StencilOp(rawValue: unsafeBitCast(cStruct.failOp, to: UInt32.self))!
         self.passOp = StencilOp(rawValue: unsafeBitCast(cStruct.passOp, to: UInt32.self))!
         self.depthFailOp = StencilOp(rawValue: unsafeBitCast(cStruct.depthFailOp, to: UInt32.self))!
@@ -3603,7 +3603,7 @@ public struct PipelineDepthStencilStateCreateInfo: ChainableBase {
         self.maxDepthBounds = maxDepthBounds
     }
 
-    init(cStruct: VkPipelineDepthStencilStateCreateInfo) {
+    public init(cStruct: VkPipelineDepthStencilStateCreateInfo) {
         self.flags = PipelineDepthStencilStateCreateFlags(rawValue: cStruct.flags)
         self.depthTestEnable = cStruct.depthTestEnable == VK_TRUE
         self.depthWriteEnable = cStruct.depthWriteEnable == VK_TRUE
@@ -3683,7 +3683,7 @@ public struct GraphicsPipelineCreateInfo: ChainableBase {
         self.basePipelineIndex = basePipelineIndex
     }
 
-    init(cStruct: VkGraphicsPipelineCreateInfo, device: Device) {
+    public init(cStruct: VkGraphicsPipelineCreateInfo, device: Device) {
         self.flags = PipelineCreateFlags(rawValue: cStruct.flags)
         self.stages = (cStruct.pStages != nil) ? UnsafeBufferPointer(start: cStruct.pStages, count: Int(cStruct.stageCount)).map{ PipelineShaderStageCreateInfo(cStruct: $0, device: device) } : nil
         self.vertexInputState = (cStruct.pVertexInputState != nil) ? PipelineVertexInputStateCreateInfo(cStruct: cStruct.pVertexInputState.pointee) : nil
@@ -3766,7 +3766,7 @@ public struct PipelineCacheCreateInfo: ChainableBase {
         self.initialData = initialData
     }
 
-    init(cStruct: VkPipelineCacheCreateInfo) {
+    public init(cStruct: VkPipelineCacheCreateInfo) {
         self.flags = PipelineCacheCreateFlags(rawValue: cStruct.flags)
         self.initialDataSize = cStruct.initialDataSize
         self.initialData = cStruct.pInitialData
@@ -3806,7 +3806,7 @@ public struct PipelineCacheHeaderVersionOne: CStructConvertible {
         self.pipelineCacheUUID = pipelineCacheUUID
     }
 
-    init(cStruct: VkPipelineCacheHeaderVersionOne) {
+    public init(cStruct: VkPipelineCacheHeaderVersionOne) {
         self.headerSize = cStruct.headerSize
         self.headerVersion = PipelineCacheHeaderVersion(rawValue: unsafeBitCast(cStruct.headerVersion, to: UInt32.self))!
         self.vendorID = cStruct.vendorID
@@ -3842,7 +3842,7 @@ public struct PipelineCacheHeaderVersionDataGraphQCOM: CStructConvertible {
         self.toolchainVersion = toolchainVersion
     }
 
-    init(cStruct: VkPipelineCacheHeaderVersionDataGraphQCOM) {
+    public init(cStruct: VkPipelineCacheHeaderVersionDataGraphQCOM) {
         self.headerSize = cStruct.headerSize
         self.headerVersion = PipelineCacheHeaderVersion(rawValue: unsafeBitCast(cStruct.headerVersion, to: UInt32.self))!
         self.cacheType = DataGraphModelCacheTypeQCOM(rawValue: unsafeBitCast(cStruct.cacheType, to: UInt32.self))!
@@ -3874,7 +3874,7 @@ public struct PushConstantRange: CStructConvertible {
         self.size = size
     }
 
-    init(cStruct: VkPushConstantRange) {
+    public init(cStruct: VkPushConstantRange) {
         self.stageFlags = ShaderStageFlags(rawValue: cStruct.stageFlags)
         self.offset = cStruct.offset
         self.size = cStruct.size
@@ -3900,7 +3900,7 @@ public struct PipelineBinaryKeyKHR: ChainableBase {
         self.key = key
     }
 
-    init(cStruct: VkPipelineBinaryKeyKHR) {
+    public init(cStruct: VkPipelineBinaryKeyKHR) {
         self.keySize = cStruct.keySize
         self.key = cStruct.key
     }
@@ -3932,7 +3932,7 @@ public struct PipelineBinaryDataKHR: CStructConvertible {
         self.data = data
     }
 
-    init(cStruct: VkPipelineBinaryDataKHR) {
+    public init(cStruct: VkPipelineBinaryDataKHR) {
         self.dataSize = cStruct.dataSize
         self.data = cStruct.pData
     }
@@ -3956,7 +3956,7 @@ public struct PipelineBinaryKeysAndDataKHR: CStructConvertible {
         self.pipelineBinaryData = pipelineBinaryData
     }
 
-    init(cStruct: VkPipelineBinaryKeysAndDataKHR) {
+    public init(cStruct: VkPipelineBinaryKeysAndDataKHR) {
         self.pipelineBinaryKeys = UnsafeBufferPointer(start: cStruct.pPipelineBinaryKeys, count: Int(cStruct.binaryCount)).map{ PipelineBinaryKeyKHR(cStruct: $0) }
         self.pipelineBinaryData = UnsafeBufferPointer(start: cStruct.pPipelineBinaryData, count: Int(cStruct.binaryCount)).map{ PipelineBinaryDataKHR(cStruct: $0) }
     }
@@ -3981,7 +3981,7 @@ public struct PipelineCreateInfoKHR: ChainableBase {
     public init() {
     }
 
-    init(cStruct: VkPipelineCreateInfoKHR) {
+    public init(cStruct: VkPipelineCreateInfoKHR) {
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPipelineCreateInfoKHR>) throws(E) -> R) throws(E) -> R {
@@ -4011,7 +4011,7 @@ public struct PipelineBinaryCreateInfoKHR: ChainableBase {
         self.pipelineCreateInfo = pipelineCreateInfo
     }
 
-    init(cStruct: VkPipelineBinaryCreateInfoKHR, device: Device) {
+    public init(cStruct: VkPipelineBinaryCreateInfoKHR, device: Device) {
         self.keysAndDataInfo = (cStruct.pKeysAndDataInfo != nil) ? PipelineBinaryKeysAndDataKHR(cStruct: cStruct.pKeysAndDataInfo.pointee) : nil
         self.pipeline = (cStruct.pipeline != nil) ? Pipeline(handle: cStruct.pipeline, device: device) : nil
         self.pipelineCreateInfo = (cStruct.pPipelineCreateInfo != nil) ? PipelineCreateInfoKHR(cStruct: cStruct.pPipelineCreateInfo.pointee) : nil
@@ -4049,7 +4049,7 @@ public struct PipelineBinaryHandlesInfoKHR: ChainableBase {
         self.pipelineBinaries = pipelineBinaries
     }
 
-    init(cStruct: VkPipelineBinaryHandlesInfoKHR, device: Device) {
+    public init(cStruct: VkPipelineBinaryHandlesInfoKHR, device: Device) {
         self.pipelineBinaryCount = cStruct.pipelineBinaryCount
         self.pipelineBinaries = cStruct.pPipelineBinaries
     }
@@ -4079,7 +4079,7 @@ public struct PipelineBinaryInfoKHR: ChainableBase, GraphicsPipelineCreateInfoEx
         self.pipelineBinaries = pipelineBinaries
     }
 
-    init(cStruct: VkPipelineBinaryInfoKHR, device: Device) {
+    public init(cStruct: VkPipelineBinaryInfoKHR, device: Device) {
         self.pipelineBinaries = UnsafeBufferPointer(start: cStruct.pPipelineBinaries, count: Int(cStruct.binaryCount)).map{ PipelineBinaryKHR(handle: $0, device: device) }
     }
 
@@ -4110,7 +4110,7 @@ public struct ReleaseCapturedPipelineDataInfoKHR: ChainableBase {
         self.pipeline = pipeline
     }
 
-    init(cStruct: VkReleaseCapturedPipelineDataInfoKHR, device: Device) {
+    public init(cStruct: VkReleaseCapturedPipelineDataInfoKHR, device: Device) {
         self.pipeline = Pipeline(handle: cStruct.pipeline, device: device)
     }
 
@@ -4138,7 +4138,7 @@ public struct PipelineBinaryDataInfoKHR: ChainableBase {
         self.pipelineBinary = pipelineBinary
     }
 
-    init(cStruct: VkPipelineBinaryDataInfoKHR, device: Device) {
+    public init(cStruct: VkPipelineBinaryDataInfoKHR, device: Device) {
         self.pipelineBinary = PipelineBinaryKHR(handle: cStruct.pipelineBinary, device: device)
     }
 
@@ -4170,7 +4170,7 @@ public struct PipelineLayoutCreateInfo: ChainableBase, BindDescriptorSetsInfoExt
         self.pushConstantRanges = pushConstantRanges
     }
 
-    init(cStruct: VkPipelineLayoutCreateInfo, device: Device) {
+    public init(cStruct: VkPipelineLayoutCreateInfo, device: Device) {
         self.flags = PipelineLayoutCreateFlags(rawValue: cStruct.flags)
         self.setLayouts = UnsafeBufferPointer(start: cStruct.pSetLayouts, count: Int(cStruct.setLayoutCount)).map{ ($0 != nil) ? DescriptorSetLayout(handle: $0, device: device) : nil }
         self.pushConstantRanges = UnsafeBufferPointer(start: cStruct.pPushConstantRanges, count: Int(cStruct.pushConstantRangeCount)).map{ PushConstantRange(cStruct: $0) }
@@ -4238,7 +4238,7 @@ public struct SamplerCreateInfo: ChainableBase {
         self.unnormalizedCoordinates = unnormalizedCoordinates
     }
 
-    init(cStruct: VkSamplerCreateInfo) {
+    public init(cStruct: VkSamplerCreateInfo) {
         self.flags = SamplerCreateFlags(rawValue: cStruct.flags)
         self.magFilter = Filter(rawValue: unsafeBitCast(cStruct.magFilter, to: UInt32.self))!
         self.minFilter = Filter(rawValue: unsafeBitCast(cStruct.minFilter, to: UInt32.self))!
@@ -4298,7 +4298,7 @@ public struct CommandPoolCreateInfo: ChainableBase {
         self.queueFamilyIndex = queueFamilyIndex
     }
 
-    init(cStruct: VkCommandPoolCreateInfo) {
+    public init(cStruct: VkCommandPoolCreateInfo) {
         self.flags = CommandPoolCreateFlags(rawValue: cStruct.flags)
         self.queueFamilyIndex = cStruct.queueFamilyIndex
     }
@@ -4332,7 +4332,7 @@ public struct CommandBufferAllocateInfo: ChainableBase {
         self.commandBufferCount = commandBufferCount
     }
 
-    init(cStruct: VkCommandBufferAllocateInfo, device: Device) {
+    public init(cStruct: VkCommandBufferAllocateInfo, device: Device) {
         self.commandPool = CommandPool(handle: cStruct.commandPool, device: device)
         self.level = CommandBufferLevel(rawValue: unsafeBitCast(cStruct.level, to: UInt32.self))!
         self.commandBufferCount = cStruct.commandBufferCount
@@ -4374,7 +4374,7 @@ public struct CommandBufferInheritanceInfo: ChainableBase {
         self.pipelineStatistics = pipelineStatistics
     }
 
-    init(cStruct: VkCommandBufferInheritanceInfo, device: Device) {
+    public init(cStruct: VkCommandBufferInheritanceInfo, device: Device) {
         self.renderPass = (cStruct.renderPass != nil) ? RenderPass(handle: cStruct.renderPass, device: device) : nil
         self.subpass = cStruct.subpass
         self.framebuffer = (cStruct.framebuffer != nil) ? Framebuffer(handle: cStruct.framebuffer, device: device) : nil
@@ -4414,7 +4414,7 @@ public struct CommandBufferBeginInfo: ChainableBase {
         self.inheritanceInfo = inheritanceInfo
     }
 
-    init(cStruct: VkCommandBufferBeginInfo, device: Device) {
+    public init(cStruct: VkCommandBufferBeginInfo, device: Device) {
         self.flags = CommandBufferUsageFlags(rawValue: cStruct.flags)
         self.inheritanceInfo = (cStruct.pInheritanceInfo != nil) ? CommandBufferInheritanceInfo(cStruct: cStruct.pInheritanceInfo.pointee, device: device) : nil
     }
@@ -4452,7 +4452,7 @@ public struct RenderPassBeginInfo: ChainableBase {
         self.clearValues = clearValues
     }
 
-    init(cStruct: VkRenderPassBeginInfo, device: Device) {
+    public init(cStruct: VkRenderPassBeginInfo, device: Device) {
         self.renderPass = RenderPass(handle: cStruct.renderPass, device: device)
         self.framebuffer = Framebuffer(handle: cStruct.framebuffer, device: device)
         self.renderArea = Rect2D(cStruct: cStruct.renderArea)
@@ -4493,7 +4493,7 @@ public struct ClearDepthStencilValue: CStructConvertible {
         self.stencil = stencil
     }
 
-    init(cStruct: VkClearDepthStencilValue) {
+    public init(cStruct: VkClearDepthStencilValue) {
         self.depth = cStruct.depth
         self.stencil = cStruct.stencil
     }
@@ -4519,7 +4519,7 @@ public struct ClearAttachment: CStructConvertible {
         self.clearValue = clearValue
     }
 
-    init(cStruct: VkClearAttachment) {
+    public init(cStruct: VkClearAttachment) {
         self.aspectMask = ImageAspectFlags(rawValue: cStruct.aspectMask)
         self.colorAttachment = cStruct.colorAttachment
         self.clearValue = cStruct.clearValue
@@ -4559,7 +4559,7 @@ public struct AttachmentDescription: CStructConvertible {
         self.finalLayout = finalLayout
     }
 
-    init(cStruct: VkAttachmentDescription) {
+    public init(cStruct: VkAttachmentDescription) {
         self.flags = AttachmentDescriptionFlags(rawValue: cStruct.flags)
         self.format = Format(rawValue: unsafeBitCast(cStruct.format, to: UInt32.self))!
         self.samples = SampleCountFlags(rawValue: unsafeBitCast(cStruct.samples.rawValue, to: UInt32.self))
@@ -4597,7 +4597,7 @@ public struct AttachmentReference: CStructConvertible {
         self.layout = layout
     }
 
-    init(cStruct: VkAttachmentReference) {
+    public init(cStruct: VkAttachmentReference) {
         self.attachment = cStruct.attachment
         self.layout = ImageLayout(rawValue: unsafeBitCast(cStruct.layout, to: UInt32.self))!
     }
@@ -4631,7 +4631,7 @@ public struct SubpassDescription: CStructConvertible {
         self.preserveAttachments = preserveAttachments
     }
 
-    init(cStruct: VkSubpassDescription) {
+    public init(cStruct: VkSubpassDescription) {
         self.flags = SubpassDescriptionFlags(rawValue: cStruct.flags)
         self.pipelineBindPoint = PipelineBindPoint(rawValue: unsafeBitCast(cStruct.pipelineBindPoint, to: UInt32.self))!
         self.inputAttachments = UnsafeBufferPointer(start: cStruct.pInputAttachments, count: Int(cStruct.inputAttachmentCount)).map{ AttachmentReference(cStruct: $0) }
@@ -4688,7 +4688,7 @@ public struct SubpassDependency: CStructConvertible {
         self.dependencyFlags = dependencyFlags
     }
 
-    init(cStruct: VkSubpassDependency) {
+    public init(cStruct: VkSubpassDependency) {
         self.srcSubpass = cStruct.srcSubpass
         self.dstSubpass = cStruct.dstSubpass
         self.srcStageMask = PipelineStageFlags(rawValue: cStruct.srcStageMask)
@@ -4726,7 +4726,7 @@ public struct RenderPassCreateInfo: ChainableBase {
         self.dependencies = dependencies
     }
 
-    init(cStruct: VkRenderPassCreateInfo) {
+    public init(cStruct: VkRenderPassCreateInfo) {
         self.flags = RenderPassCreateFlags(rawValue: cStruct.flags)
         self.attachments = UnsafeBufferPointer(start: cStruct.pAttachments, count: Int(cStruct.attachmentCount)).map{ AttachmentDescription(cStruct: $0) }
         self.subpasses = UnsafeBufferPointer(start: cStruct.pSubpasses, count: Int(cStruct.subpassCount)).map{ SubpassDescription(cStruct: $0) }
@@ -4769,7 +4769,7 @@ public struct EventCreateInfo: ChainableBase {
         self.flags = flags
     }
 
-    init(cStruct: VkEventCreateInfo) {
+    public init(cStruct: VkEventCreateInfo) {
         self.flags = EventCreateFlags(rawValue: cStruct.flags)
     }
 
@@ -4797,7 +4797,7 @@ public struct FenceCreateInfo: ChainableBase {
         self.flags = flags
     }
 
-    init(cStruct: VkFenceCreateInfo) {
+    public init(cStruct: VkFenceCreateInfo) {
         self.flags = FenceCreateFlags(rawValue: cStruct.flags)
     }
 
@@ -4825,7 +4825,7 @@ public struct SemaphoreCreateInfo: ChainableBase {
         self.flags = flags
     }
 
-    init(cStruct: VkSemaphoreCreateInfo) {
+    public init(cStruct: VkSemaphoreCreateInfo) {
         self.flags = SemaphoreCreateFlags(rawValue: cStruct.flags)
     }
 
@@ -4859,7 +4859,7 @@ public struct QueryPoolCreateInfo: ChainableBase {
         self.pipelineStatistics = pipelineStatistics
     }
 
-    init(cStruct: VkQueryPoolCreateInfo) {
+    public init(cStruct: VkQueryPoolCreateInfo) {
         self.flags = QueryPoolCreateFlags(rawValue: cStruct.flags)
         self.queryType = QueryType(rawValue: unsafeBitCast(cStruct.queryType, to: UInt32.self))!
         self.queryCount = cStruct.queryCount
@@ -4903,7 +4903,7 @@ public struct FramebufferCreateInfo: ChainableBase {
         self.layers = layers
     }
 
-    init(cStruct: VkFramebufferCreateInfo, device: Device) {
+    public init(cStruct: VkFramebufferCreateInfo, device: Device) {
         self.flags = FramebufferCreateFlags(rawValue: cStruct.flags)
         self.renderPass = RenderPass(handle: cStruct.renderPass, device: device)
         self.attachments = UnsafeBufferPointer(start: cStruct.pAttachments, count: Int(cStruct.attachmentCount)).map{ ImageView(handle: $0, device: device) }
@@ -4950,7 +4950,7 @@ public struct DrawIndirectCommand: CStructConvertible {
         self.firstInstance = firstInstance
     }
 
-    init(cStruct: VkDrawIndirectCommand) {
+    public init(cStruct: VkDrawIndirectCommand) {
         self.vertexCount = cStruct.vertexCount
         self.instanceCount = cStruct.instanceCount
         self.firstVertex = cStruct.firstVertex
@@ -4984,7 +4984,7 @@ public struct DrawIndexedIndirectCommand: CStructConvertible {
         self.firstInstance = firstInstance
     }
 
-    init(cStruct: VkDrawIndexedIndirectCommand) {
+    public init(cStruct: VkDrawIndexedIndirectCommand) {
         self.indexCount = cStruct.indexCount
         self.instanceCount = cStruct.instanceCount
         self.firstIndex = cStruct.firstIndex
@@ -5016,7 +5016,7 @@ public struct DispatchIndirectCommand: CStructConvertible {
         self.z = z
     }
 
-    init(cStruct: VkDispatchIndirectCommand) {
+    public init(cStruct: VkDispatchIndirectCommand) {
         self.x = cStruct.x
         self.y = cStruct.y
         self.z = cStruct.z
@@ -5042,7 +5042,7 @@ public struct MultiDrawInfoEXT: CStructConvertible {
         self.vertexCount = vertexCount
     }
 
-    init(cStruct: VkMultiDrawInfoEXT) {
+    public init(cStruct: VkMultiDrawInfoEXT) {
         self.firstVertex = cStruct.firstVertex
         self.vertexCount = cStruct.vertexCount
     }
@@ -5068,7 +5068,7 @@ public struct MultiDrawIndexedInfoEXT: CStructConvertible {
         self.vertexOffset = vertexOffset
     }
 
-    init(cStruct: VkMultiDrawIndexedInfoEXT) {
+    public init(cStruct: VkMultiDrawIndexedInfoEXT) {
         self.firstIndex = cStruct.firstIndex
         self.indexCount = cStruct.indexCount
         self.vertexOffset = cStruct.vertexOffset
@@ -5098,7 +5098,7 @@ public struct SubmitInfo: ChainableBase {
         self.signalSemaphores = signalSemaphores
     }
 
-    init(cStruct: VkSubmitInfo, device: Device, commandPool: CommandPool) {
+    public init(cStruct: VkSubmitInfo, device: Device, commandPool: CommandPool) {
         self.waitSemaphores = UnsafeBufferPointer(start: cStruct.pWaitSemaphores, count: Int(cStruct.waitSemaphoreCount)).map{ Semaphore(handle: $0, device: device) }
         self.waitDstStageMask = UnsafeBufferPointer(start: cStruct.pWaitDstStageMask, count: Int(cStruct.waitSemaphoreCount)).map{ PipelineStageFlags(rawValue: $0) }
         self.commandBuffers = UnsafeBufferPointer(start: cStruct.pCommandBuffers, count: Int(cStruct.commandBufferCount)).map{ CommandBuffer(handle: $0, commandPool: commandPool) }
@@ -5145,7 +5145,7 @@ public struct DisplayPropertiesKHR: CStructConvertible {
     public let planeReorderPossible: Bool
     public let persistentContent: Bool
 
-    init(cStruct: VkDisplayPropertiesKHR, physicalDevice: PhysicalDevice) {
+    public init(cStruct: VkDisplayPropertiesKHR, physicalDevice: PhysicalDevice) {
         self.display = DisplayKHR(handle: cStruct.display, physicalDevice: physicalDevice)
         self.displayName = String(cString: cStruct.displayName)
         self.physicalDimensions = Extent2D(cStruct: cStruct.physicalDimensions)
@@ -5180,7 +5180,7 @@ public struct DisplayPlanePropertiesKHR: CStructConvertible {
     public let currentDisplay: DisplayKHR
     public let currentStackIndex: UInt32
 
-    init(cStruct: VkDisplayPlanePropertiesKHR, physicalDevice: PhysicalDevice) {
+    public init(cStruct: VkDisplayPlanePropertiesKHR, physicalDevice: PhysicalDevice) {
         self.currentDisplay = DisplayKHR(handle: cStruct.currentDisplay, physicalDevice: physicalDevice)
         self.currentStackIndex = cStruct.currentStackIndex
     }
@@ -5204,7 +5204,7 @@ public struct DisplayModeParametersKHR: CStructConvertible {
         self.refreshRate = refreshRate
     }
 
-    init(cStruct: VkDisplayModeParametersKHR) {
+    public init(cStruct: VkDisplayModeParametersKHR) {
         self.visibleRegion = Extent2D(cStruct: cStruct.visibleRegion)
         self.refreshRate = cStruct.refreshRate
     }
@@ -5225,7 +5225,7 @@ public struct DisplayModePropertiesKHR: CStructConvertible {
     public let displayMode: DisplayModeKHR
     public let parameters: DisplayModeParametersKHR
 
-    init(cStruct: VkDisplayModePropertiesKHR, display: DisplayKHR) {
+    public init(cStruct: VkDisplayModePropertiesKHR, display: DisplayKHR) {
         self.displayMode = DisplayModeKHR(handle: cStruct.displayMode, display: display)
         self.parameters = DisplayModeParametersKHR(cStruct: cStruct.parameters)
     }
@@ -5251,7 +5251,7 @@ public struct DisplayModeCreateInfoKHR: ChainableBase {
         self.parameters = parameters
     }
 
-    init(cStruct: VkDisplayModeCreateInfoKHR) {
+    public init(cStruct: VkDisplayModeCreateInfoKHR) {
         self.flags = DisplayModeCreateFlagsKHR(rawValue: cStruct.flags)
         self.parameters = DisplayModeParametersKHR(cStruct: cStruct.parameters)
     }
@@ -5287,7 +5287,7 @@ public struct DisplayPlaneCapabilitiesKHR: CStructConvertible {
     public let minDstExtent: Extent2D
     public let maxDstExtent: Extent2D
 
-    init(cStruct: VkDisplayPlaneCapabilitiesKHR) {
+    public init(cStruct: VkDisplayPlaneCapabilitiesKHR) {
         self.supportedAlpha = DisplayPlaneAlphaFlagsKHR(rawValue: cStruct.supportedAlpha)
         self.minSrcPosition = Offset2D(cStruct: cStruct.minSrcPosition)
         self.maxSrcPosition = Offset2D(cStruct: cStruct.maxSrcPosition)
@@ -5353,7 +5353,7 @@ public struct DisplaySurfaceCreateInfoKHR: ChainableBase {
         self.imageExtent = imageExtent
     }
 
-    init(cStruct: VkDisplaySurfaceCreateInfoKHR, display: DisplayKHR) {
+    public init(cStruct: VkDisplaySurfaceCreateInfoKHR, display: DisplayKHR) {
         self.flags = DisplaySurfaceCreateFlagsKHR(rawValue: cStruct.flags)
         self.displayMode = DisplayModeKHR(handle: cStruct.displayMode, display: display)
         self.planeIndex = cStruct.planeIndex
@@ -5397,7 +5397,7 @@ public struct DisplaySurfaceStereoCreateInfoNV: ChainableBase, DisplaySurfaceCre
         self.stereoType = stereoType
     }
 
-    init(cStruct: VkDisplaySurfaceStereoCreateInfoNV) {
+    public init(cStruct: VkDisplaySurfaceStereoCreateInfoNV) {
         self.stereoType = DisplaySurfaceStereoTypeNV(rawValue: unsafeBitCast(cStruct.stereoType, to: UInt32.self))!
     }
 
@@ -5429,7 +5429,7 @@ public struct DisplayPresentInfoKHR: ChainableBase, PresentInfoKHRExtension {
         self.persistent = persistent
     }
 
-    init(cStruct: VkDisplayPresentInfoKHR) {
+    public init(cStruct: VkDisplayPresentInfoKHR) {
         self.srcRect = Rect2D(cStruct: cStruct.srcRect)
         self.dstRect = Rect2D(cStruct: cStruct.dstRect)
         self.persistent = cStruct.persistent == VK_TRUE
@@ -5470,7 +5470,7 @@ public struct SurfaceCapabilitiesKHR: CStructConvertible {
     public let supportedCompositeAlpha: CompositeAlphaFlagsKHR
     public let supportedUsageFlags: ImageUsageFlags
 
-    init(cStruct: VkSurfaceCapabilitiesKHR) {
+    public init(cStruct: VkSurfaceCapabilitiesKHR) {
         self.minImageCount = cStruct.minImageCount
         self.maxImageCount = cStruct.maxImageCount
         self.currentExtent = Extent2D(cStruct: cStruct.currentExtent)
@@ -5517,7 +5517,7 @@ public struct AndroidSurfaceCreateInfoKHR: ChainableBase {
         self.window = window
     }
 
-    init(cStruct: VkAndroidSurfaceCreateInfoKHR) {
+    public init(cStruct: VkAndroidSurfaceCreateInfoKHR) {
         self.flags = AndroidSurfaceCreateFlagsKHR(rawValue: cStruct.flags)
         self.window = cStruct.window
     }
@@ -5551,7 +5551,7 @@ public struct ViSurfaceCreateInfoNN: ChainableBase {
         self.window = window
     }
 
-    init(cStruct: VkViSurfaceCreateInfoNN) {
+    public init(cStruct: VkViSurfaceCreateInfoNN) {
         self.flags = ViSurfaceCreateFlagsNN(rawValue: cStruct.flags)
         self.window = cStruct.window
     }
@@ -5587,7 +5587,7 @@ public struct WaylandSurfaceCreateInfoKHR: ChainableBase {
         self.surface = surface
     }
 
-    init(cStruct: VkWaylandSurfaceCreateInfoKHR) {
+    public init(cStruct: VkWaylandSurfaceCreateInfoKHR) {
         self.flags = WaylandSurfaceCreateFlagsKHR(rawValue: cStruct.flags)
         self.display = cStruct.display
         self.surface = cStruct.surface
@@ -5625,7 +5625,7 @@ public struct UbmSurfaceCreateInfoSEC: ChainableBase {
         self.surface = surface
     }
 
-    init(cStruct: VkUbmSurfaceCreateInfoSEC) {
+    public init(cStruct: VkUbmSurfaceCreateInfoSEC) {
         self.flags = UbmSurfaceCreateFlagsSEC(rawValue: cStruct.flags)
         self.device = cStruct.device
         self.surface = cStruct.surface
@@ -5663,7 +5663,7 @@ public struct Win32SurfaceCreateInfoKHR: ChainableBase {
         self.hwnd = hwnd
     }
 
-    init(cStruct: VkWin32SurfaceCreateInfoKHR) {
+    public init(cStruct: VkWin32SurfaceCreateInfoKHR) {
         self.flags = Win32SurfaceCreateFlagsKHR(rawValue: cStruct.flags)
         self.hinstance = cStruct.hinstance
         self.hwnd = cStruct.hwnd
@@ -5701,7 +5701,7 @@ public struct XlibSurfaceCreateInfoKHR: ChainableBase {
         self.window = window
     }
 
-    init(cStruct: VkXlibSurfaceCreateInfoKHR) {
+    public init(cStruct: VkXlibSurfaceCreateInfoKHR) {
         self.flags = XlibSurfaceCreateFlagsKHR(rawValue: cStruct.flags)
         self.dpy = cStruct.dpy
         self.window = cStruct.window
@@ -5739,7 +5739,7 @@ public struct XcbSurfaceCreateInfoKHR: ChainableBase {
         self.window = window
     }
 
-    init(cStruct: VkXcbSurfaceCreateInfoKHR) {
+    public init(cStruct: VkXcbSurfaceCreateInfoKHR) {
         self.flags = XcbSurfaceCreateFlagsKHR(rawValue: cStruct.flags)
         self.connection = cStruct.connection
         self.window = cStruct.window
@@ -5777,7 +5777,7 @@ public struct DirectFBSurfaceCreateInfoEXT: ChainableBase {
         self.surface = surface
     }
 
-    init(cStruct: VkDirectFBSurfaceCreateInfoEXT) {
+    public init(cStruct: VkDirectFBSurfaceCreateInfoEXT) {
         self.flags = DirectFBSurfaceCreateFlagsEXT(rawValue: cStruct.flags)
         self.dfb = cStruct.dfb
         self.surface = cStruct.surface
@@ -5813,7 +5813,7 @@ public struct ImagePipeSurfaceCreateInfoFUCHSIA: ChainableBase {
         self.imagePipeHandle = imagePipeHandle
     }
 
-    init(cStruct: VkImagePipeSurfaceCreateInfoFUCHSIA) {
+    public init(cStruct: VkImagePipeSurfaceCreateInfoFUCHSIA) {
         self.flags = ImagePipeSurfaceCreateFlagsFUCHSIA(rawValue: cStruct.flags)
         self.imagePipeHandle = cStruct.imagePipeHandle
     }
@@ -5847,7 +5847,7 @@ public struct StreamDescriptorSurfaceCreateInfoGGP: ChainableBase {
         self.streamDescriptor = streamDescriptor
     }
 
-    init(cStruct: VkStreamDescriptorSurfaceCreateInfoGGP) {
+    public init(cStruct: VkStreamDescriptorSurfaceCreateInfoGGP) {
         self.flags = StreamDescriptorSurfaceCreateFlagsGGP(rawValue: cStruct.flags)
         self.streamDescriptor = cStruct.streamDescriptor
     }
@@ -5883,7 +5883,7 @@ public struct ScreenSurfaceCreateInfoQNX: ChainableBase {
         self.window = window
     }
 
-    init(cStruct: VkScreenSurfaceCreateInfoQNX) {
+    public init(cStruct: VkScreenSurfaceCreateInfoQNX) {
         self.flags = ScreenSurfaceCreateFlagsQNX(rawValue: cStruct.flags)
         self.context = cStruct.context
         self.window = cStruct.window
@@ -5913,7 +5913,7 @@ public struct SurfaceFormatKHR: CStructConvertible {
     public let format: Format
     public let colorSpace: ColorSpaceKHR
 
-    init(cStruct: VkSurfaceFormatKHR) {
+    public init(cStruct: VkSurfaceFormatKHR) {
         self.format = Format(rawValue: unsafeBitCast(cStruct.format, to: UInt32.self))!
         self.colorSpace = ColorSpaceKHR(rawValue: unsafeBitCast(cStruct.colorSpace, to: UInt32.self))!
     }
@@ -5963,7 +5963,7 @@ public struct SwapchainCreateInfoKHR: ChainableBase {
         self.oldSwapchain = oldSwapchain
     }
 
-    init(cStruct: VkSwapchainCreateInfoKHR, instance: Instance, device: Device) {
+    public init(cStruct: VkSwapchainCreateInfoKHR, instance: Instance, device: Device) {
         self.flags = SwapchainCreateFlagsKHR(rawValue: cStruct.flags)
         self.surface = SurfaceKHR(handle: cStruct.surface, instance: instance)
         self.minImageCount = cStruct.minImageCount
@@ -6030,7 +6030,7 @@ public struct PresentInfoKHR: ChainableBase {
         self.results = results
     }
 
-    init(cStruct: VkPresentInfoKHR, device: Device) {
+    public init(cStruct: VkPresentInfoKHR, device: Device) {
         self.waitSemaphores = UnsafeBufferPointer(start: cStruct.pWaitSemaphores, count: Int(cStruct.waitSemaphoreCount)).map{ Semaphore(handle: $0, device: device) }
         self.swapchains = UnsafeBufferPointer(start: cStruct.pSwapchains, count: Int(cStruct.swapchainCount)).map{ SwapchainKHR(handle: $0, device: device) }
         self.imageIndices = Array(UnsafeBufferPointer(start: cStruct.pImageIndices, count: Int(cStruct.swapchainCount)))
@@ -6076,7 +6076,7 @@ public struct DebugReportCallbackCreateInfoEXT: ChainableBase, InstanceCreateInf
         self.userData = userData
     }
 
-    init(cStruct: VkDebugReportCallbackCreateInfoEXT) {
+    public init(cStruct: VkDebugReportCallbackCreateInfoEXT) {
         self.flags = DebugReportFlagsEXT(rawValue: cStruct.flags)
         self.pfnCallback = cStruct.pfnCallback
         self.userData = cStruct.pUserData
@@ -6108,7 +6108,7 @@ public struct ValidationFlagsEXT: ChainableBase, InstanceCreateInfoExtension {
         self.disabledValidationChecks = disabledValidationChecks
     }
 
-    init(cStruct: VkValidationFlagsEXT) {
+    public init(cStruct: VkValidationFlagsEXT) {
         self.disabledValidationChecks = UnsafeBufferPointer(start: cStruct.pDisabledValidationChecks, count: Int(cStruct.disabledValidationCheckCount)).map{ ValidationCheckEXT(rawValue: unsafeBitCast($0, to: UInt32.self))! }
     }
 
@@ -6141,7 +6141,7 @@ public struct ValidationFeaturesEXT: ChainableBase, InstanceCreateInfoExtension,
         self.disabledValidationFeatures = disabledValidationFeatures
     }
 
-    init(cStruct: VkValidationFeaturesEXT) {
+    public init(cStruct: VkValidationFeaturesEXT) {
         self.enabledValidationFeatures = UnsafeBufferPointer(start: cStruct.pEnabledValidationFeatures, count: Int(cStruct.enabledValidationFeatureCount)).map{ ValidationFeatureEnableEXT(rawValue: unsafeBitCast($0, to: UInt32.self))! }
         self.disabledValidationFeatures = UnsafeBufferPointer(start: cStruct.pDisabledValidationFeatures, count: Int(cStruct.disabledValidationFeatureCount)).map{ ValidationFeatureDisableEXT(rawValue: unsafeBitCast($0, to: UInt32.self))! }
     }
@@ -6185,7 +6185,7 @@ public struct LayerSettingEXT: CStructConvertible {
         self.values = values
     }
 
-    init(cStruct: VkLayerSettingEXT) {
+    public init(cStruct: VkLayerSettingEXT) {
         self.layerName = String(cString: cStruct.pLayerName)
         self.settingName = String(cString: cStruct.pSettingName)
         self.type = LayerSettingTypeEXT(rawValue: unsafeBitCast(cStruct.type, to: UInt32.self))!
@@ -6217,7 +6217,7 @@ public struct LayerSettingsCreateInfoEXT: ChainableBase, InstanceCreateInfoExten
         self.settings = settings
     }
 
-    init(cStruct: VkLayerSettingsCreateInfoEXT) {
+    public init(cStruct: VkLayerSettingsCreateInfoEXT) {
         self.settings = UnsafeBufferPointer(start: cStruct.pSettings, count: Int(cStruct.settingCount)).map{ LayerSettingEXT(cStruct: $0) }
     }
 
@@ -6248,7 +6248,7 @@ public struct PipelineRasterizationStateRasterizationOrderAMD: ChainableBase, Pi
         self.rasterizationOrder = rasterizationOrder
     }
 
-    init(cStruct: VkPipelineRasterizationStateRasterizationOrderAMD) {
+    public init(cStruct: VkPipelineRasterizationStateRasterizationOrderAMD) {
         self.rasterizationOrder = RasterizationOrderAMD(rawValue: unsafeBitCast(cStruct.rasterizationOrder, to: UInt32.self))!
     }
 
@@ -6280,7 +6280,7 @@ public struct DebugMarkerObjectNameInfoEXT: ChainableBase {
         self.objectName = objectName
     }
 
-    init(cStruct: VkDebugMarkerObjectNameInfoEXT) {
+    public init(cStruct: VkDebugMarkerObjectNameInfoEXT) {
         self.objectType = DebugReportObjectTypeEXT(rawValue: unsafeBitCast(cStruct.objectType, to: UInt32.self))!
         self.object = cStruct.object
         self.objectName = String(cString: cStruct.pObjectName)
@@ -6322,7 +6322,7 @@ public struct DebugMarkerObjectTagInfoEXT: ChainableBase {
         self.tag = tag
     }
 
-    init(cStruct: VkDebugMarkerObjectTagInfoEXT) {
+    public init(cStruct: VkDebugMarkerObjectTagInfoEXT) {
         self.objectType = DebugReportObjectTypeEXT(rawValue: unsafeBitCast(cStruct.objectType, to: UInt32.self))!
         self.object = cStruct.object
         self.tagName = cStruct.tagName
@@ -6360,7 +6360,7 @@ public struct DebugMarkerMarkerInfoEXT: ChainableBase {
         self.color = color
     }
 
-    init(cStruct: VkDebugMarkerMarkerInfoEXT) {
+    public init(cStruct: VkDebugMarkerMarkerInfoEXT) {
         self.markerName = String(cString: cStruct.pMarkerName)
         self.color = cStruct.color
     }
@@ -6392,7 +6392,7 @@ public struct DedicatedAllocationImageCreateInfoNV: ChainableBase, ImageCreateIn
         self.dedicatedAllocation = dedicatedAllocation
     }
 
-    init(cStruct: VkDedicatedAllocationImageCreateInfoNV) {
+    public init(cStruct: VkDedicatedAllocationImageCreateInfoNV) {
         self.dedicatedAllocation = cStruct.dedicatedAllocation == VK_TRUE
     }
 
@@ -6420,7 +6420,7 @@ public struct DedicatedAllocationBufferCreateInfoNV: ChainableBase, BufferCreate
         self.dedicatedAllocation = dedicatedAllocation
     }
 
-    init(cStruct: VkDedicatedAllocationBufferCreateInfoNV) {
+    public init(cStruct: VkDedicatedAllocationBufferCreateInfoNV) {
         self.dedicatedAllocation = cStruct.dedicatedAllocation == VK_TRUE
     }
 
@@ -6450,7 +6450,7 @@ public struct DedicatedAllocationMemoryAllocateInfoNV: ChainableBase, MemoryAllo
         self.buffer = buffer
     }
 
-    init(cStruct: VkDedicatedAllocationMemoryAllocateInfoNV, device: Device) {
+    public init(cStruct: VkDedicatedAllocationMemoryAllocateInfoNV, device: Device) {
         self.image = (cStruct.image != nil) ? Image(handle: cStruct.image, device: device) : nil
         self.buffer = (cStruct.buffer != nil) ? Buffer(handle: cStruct.buffer, device: device) : nil
     }
@@ -6479,7 +6479,7 @@ public struct ExternalImageFormatPropertiesNV: CStructConvertible {
     public let exportFromImportedHandleTypes: ExternalMemoryHandleTypeFlagsNV
     public let compatibleHandleTypes: ExternalMemoryHandleTypeFlagsNV
 
-    init(cStruct: VkExternalImageFormatPropertiesNV) {
+    public init(cStruct: VkExternalImageFormatPropertiesNV) {
         self.imageFormatProperties = ImageFormatProperties(cStruct: cStruct.imageFormatProperties)
         self.externalMemoryFeatures = ExternalMemoryFeatureFlagsNV(rawValue: cStruct.externalMemoryFeatures)
         self.exportFromImportedHandleTypes = ExternalMemoryHandleTypeFlagsNV(rawValue: cStruct.exportFromImportedHandleTypes)
@@ -6507,7 +6507,7 @@ public struct ExternalMemoryImageCreateInfoNV: ChainableBase, ImageCreateInfoExt
         self.handleTypes = handleTypes
     }
 
-    init(cStruct: VkExternalMemoryImageCreateInfoNV) {
+    public init(cStruct: VkExternalMemoryImageCreateInfoNV) {
         self.handleTypes = ExternalMemoryHandleTypeFlagsNV(rawValue: cStruct.handleTypes)
     }
 
@@ -6535,7 +6535,7 @@ public struct ExportMemoryAllocateInfoNV: ChainableBase, MemoryAllocateInfoExten
         self.handleTypes = handleTypes
     }
 
-    init(cStruct: VkExportMemoryAllocateInfoNV) {
+    public init(cStruct: VkExportMemoryAllocateInfoNV) {
         self.handleTypes = ExternalMemoryHandleTypeFlagsNV(rawValue: cStruct.handleTypes)
     }
 
@@ -6566,7 +6566,7 @@ public struct ImportMemoryWin32HandleInfoNV: ChainableBase, MemoryAllocateInfoEx
         self.handle = handle
     }
 
-    init(cStruct: VkImportMemoryWin32HandleInfoNV) {
+    public init(cStruct: VkImportMemoryWin32HandleInfoNV) {
         self.handleType = ExternalMemoryHandleTypeFlagsNV(rawValue: cStruct.handleType)
         self.handle = cStruct.handle
     }
@@ -6600,7 +6600,7 @@ public struct ExportMemoryWin32HandleInfoNV: ChainableBase, MemoryAllocateInfoEx
         self.dwAccess = dwAccess
     }
 
-    init(cStruct: VkExportMemoryWin32HandleInfoNV) {
+    public init(cStruct: VkExportMemoryWin32HandleInfoNV) {
         self.attributes = cStruct.pAttributes
         self.dwAccess = cStruct.dwAccess
     }
@@ -6640,7 +6640,7 @@ public struct Win32KeyedMutexAcquireReleaseInfoNV: ChainableBase, SubmitInfoExte
         self.releaseKeys = releaseKeys
     }
 
-    init(cStruct: VkWin32KeyedMutexAcquireReleaseInfoNV, device: Device) {
+    public init(cStruct: VkWin32KeyedMutexAcquireReleaseInfoNV, device: Device) {
         self.acquireSyncs = UnsafeBufferPointer(start: cStruct.pAcquireSyncs, count: Int(cStruct.acquireCount)).map{ DeviceMemory(handle: $0, device: device) }
         self.acquireKeys = Array(UnsafeBufferPointer(start: cStruct.pAcquireKeys, count: Int(cStruct.acquireCount)))
         self.acquireTimeoutMilliseconds = Array(UnsafeBufferPointer(start: cStruct.pAcquireTimeoutMilliseconds, count: Int(cStruct.acquireCount)))
@@ -6689,7 +6689,7 @@ public struct PhysicalDeviceDeviceGeneratedCommandsFeaturesNV: ChainableBase, Ph
         self.deviceGeneratedCommands = deviceGeneratedCommands
     }
 
-    init(cStruct: VkPhysicalDeviceDeviceGeneratedCommandsFeaturesNV) {
+    public init(cStruct: VkPhysicalDeviceDeviceGeneratedCommandsFeaturesNV) {
         self.deviceGeneratedCommands = cStruct.deviceGeneratedCommands == VK_TRUE
     }
 
@@ -6717,7 +6717,7 @@ public struct PushConstantBankInfoNV: ChainableBase, DescriptorSetAndBindingMapp
         self.bank = bank
     }
 
-    init(cStruct: VkPushConstantBankInfoNV) {
+    public init(cStruct: VkPushConstantBankInfoNV) {
         self.bank = cStruct.bank
     }
 
@@ -6745,7 +6745,7 @@ public struct PhysicalDevicePushConstantBankFeaturesNV: ChainableBase, PhysicalD
         self.pushConstantBank = pushConstantBank
     }
 
-    init(cStruct: VkPhysicalDevicePushConstantBankFeaturesNV) {
+    public init(cStruct: VkPhysicalDevicePushConstantBankFeaturesNV) {
         self.pushConstantBank = cStruct.pushConstantBank == VK_TRUE
     }
 
@@ -6772,7 +6772,7 @@ public struct PhysicalDevicePushConstantBankPropertiesNV: ChainableBase, Physica
     public let maxGraphicsPushDataBanks: UInt32
     public let maxComputePushDataBanks: UInt32
 
-    init(cStruct: VkPhysicalDevicePushConstantBankPropertiesNV) {
+    public init(cStruct: VkPhysicalDevicePushConstantBankPropertiesNV) {
         self.maxGraphicsPushConstantBanks = cStruct.maxGraphicsPushConstantBanks
         self.maxComputePushConstantBanks = cStruct.maxComputePushConstantBanks
         self.maxGraphicsPushDataBanks = cStruct.maxGraphicsPushDataBanks
@@ -6810,7 +6810,7 @@ public struct PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV: ChainableB
         self.deviceGeneratedComputeCaptureReplay = deviceGeneratedComputeCaptureReplay
     }
 
-    init(cStruct: VkPhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV) {
+    public init(cStruct: VkPhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV) {
         self.deviceGeneratedCompute = cStruct.deviceGeneratedCompute == VK_TRUE
         self.deviceGeneratedComputePipelines = cStruct.deviceGeneratedComputePipelines == VK_TRUE
         self.deviceGeneratedComputeCaptureReplay = cStruct.deviceGeneratedComputeCaptureReplay == VK_TRUE
@@ -6842,7 +6842,7 @@ public struct DevicePrivateDataCreateInfo: ChainableBase, DeviceCreateInfoExtens
         self.privateDataSlotRequestCount = privateDataSlotRequestCount
     }
 
-    init(cStruct: VkDevicePrivateDataCreateInfo) {
+    public init(cStruct: VkDevicePrivateDataCreateInfo) {
         self.privateDataSlotRequestCount = cStruct.privateDataSlotRequestCount
     }
 
@@ -6870,7 +6870,7 @@ public struct PrivateDataSlotCreateInfo: ChainableBase {
         self.flags = flags
     }
 
-    init(cStruct: VkPrivateDataSlotCreateInfo) {
+    public init(cStruct: VkPrivateDataSlotCreateInfo) {
         self.flags = PrivateDataSlotCreateFlags(rawValue: cStruct.flags)
     }
 
@@ -6898,7 +6898,7 @@ public struct PhysicalDevicePrivateDataFeatures: ChainableBase, PhysicalDeviceFe
         self.privateData = privateData
     }
 
-    init(cStruct: VkPhysicalDevicePrivateDataFeatures) {
+    public init(cStruct: VkPhysicalDevicePrivateDataFeatures) {
         self.privateData = cStruct.privateData == VK_TRUE
     }
 
@@ -6930,7 +6930,7 @@ public struct PhysicalDeviceDeviceGeneratedCommandsPropertiesNV: ChainableBase, 
     public let minSequencesIndexBufferOffsetAlignment: UInt32
     public let minIndirectCommandsBufferOffsetAlignment: UInt32
 
-    init(cStruct: VkPhysicalDeviceDeviceGeneratedCommandsPropertiesNV) {
+    public init(cStruct: VkPhysicalDeviceDeviceGeneratedCommandsPropertiesNV) {
         self.maxGraphicsShaderGroupCount = cStruct.maxGraphicsShaderGroupCount
         self.maxIndirectSequenceCount = cStruct.maxIndirectSequenceCount
         self.maxIndirectCommandsTokenCount = cStruct.maxIndirectCommandsTokenCount
@@ -6974,7 +6974,7 @@ public struct PhysicalDeviceClusterAccelerationStructureFeaturesNV: ChainableBas
         self.clusterAccelerationStructure = clusterAccelerationStructure
     }
 
-    init(cStruct: VkPhysicalDeviceClusterAccelerationStructureFeaturesNV) {
+    public init(cStruct: VkPhysicalDeviceClusterAccelerationStructureFeaturesNV) {
         self.clusterAccelerationStructure = cStruct.clusterAccelerationStructure == VK_TRUE
     }
 
@@ -7005,7 +7005,7 @@ public struct PhysicalDeviceClusterAccelerationStructurePropertiesNV: ChainableB
     public let clusterTemplateBoundsByteAlignment: UInt32
     public let maxClusterGeometryIndex: UInt32
 
-    init(cStruct: VkPhysicalDeviceClusterAccelerationStructurePropertiesNV) {
+    public init(cStruct: VkPhysicalDeviceClusterAccelerationStructurePropertiesNV) {
         self.maxVerticesPerCluster = cStruct.maxVerticesPerCluster
         self.maxTrianglesPerCluster = cStruct.maxTrianglesPerCluster
         self.clusterScratchByteAlignment = cStruct.clusterScratchByteAlignment
@@ -7049,7 +7049,7 @@ public struct StridedDeviceAddressNV: CStructConvertible {
         self.strideInBytes = strideInBytes
     }
 
-    init(cStruct: VkStridedDeviceAddressNV) {
+    public init(cStruct: VkStridedDeviceAddressNV) {
         self.startAddress = cStruct.startAddress
         self.strideInBytes = cStruct.strideInBytes
     }
@@ -7071,7 +7071,7 @@ public struct RayTracingPipelineClusterAccelerationStructureCreateInfoNV: Chaina
         self.allowClusterAccelerationStructure = allowClusterAccelerationStructure
     }
 
-    init(cStruct: VkRayTracingPipelineClusterAccelerationStructureCreateInfoNV) {
+    public init(cStruct: VkRayTracingPipelineClusterAccelerationStructureCreateInfoNV) {
         self.allowClusterAccelerationStructure = cStruct.allowClusterAccelerationStructure == VK_TRUE
     }
 
@@ -7103,7 +7103,7 @@ public struct ClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV: CStru
         self.geometryFlags = geometryFlags
     }
 
-    init(cStruct: VkClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV) {
+    public init(cStruct: VkClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV) {
         self.geometryIndex = cStruct.geometryIndex
         self.reserved = cStruct.reserved
         self.geometryFlags = cStruct.geometryFlags
@@ -7127,7 +7127,7 @@ public struct ClusterAccelerationStructureMoveObjectsInfoNV: CStructConvertible 
         self.srcAccelerationStructure = srcAccelerationStructure
     }
 
-    init(cStruct: VkClusterAccelerationStructureMoveObjectsInfoNV) {
+    public init(cStruct: VkClusterAccelerationStructureMoveObjectsInfoNV) {
         self.srcAccelerationStructure = cStruct.srcAccelerationStructure
     }
 
@@ -7151,7 +7151,7 @@ public struct ClusterAccelerationStructureBuildClustersBottomLevelInfoNV: CStruc
         self.clusterReferences = clusterReferences
     }
 
-    init(cStruct: VkClusterAccelerationStructureBuildClustersBottomLevelInfoNV) {
+    public init(cStruct: VkClusterAccelerationStructureBuildClustersBottomLevelInfoNV) {
         self.clusterReferencesCount = cStruct.clusterReferencesCount
         self.clusterReferencesStride = cStruct.clusterReferencesStride
         self.clusterReferences = cStruct.clusterReferences
@@ -7175,7 +7175,7 @@ public struct ClusterAccelerationStructureGetTemplateIndicesInfoNV: CStructConve
         self.clusterTemplateAddress = clusterTemplateAddress
     }
 
-    init(cStruct: VkClusterAccelerationStructureGetTemplateIndicesInfoNV) {
+    public init(cStruct: VkClusterAccelerationStructureGetTemplateIndicesInfoNV) {
         self.clusterTemplateAddress = cStruct.clusterTemplateAddress
     }
 
@@ -7227,7 +7227,7 @@ public struct ClusterAccelerationStructureBuildTriangleClusterInfoNV: CStructCon
         self.opacityMicromapIndexBuffer = opacityMicromapIndexBuffer
     }
 
-    init(cStruct: VkClusterAccelerationStructureBuildTriangleClusterInfoNV) {
+    public init(cStruct: VkClusterAccelerationStructureBuildTriangleClusterInfoNV) {
         self.clusterID = cStruct.clusterID
         self.clusterFlags = ClusterAccelerationStructureClusterFlagsNV(rawValue: cStruct.clusterFlags)
         self.triangleCount = cStruct.triangleCount
@@ -7315,7 +7315,7 @@ public struct ClusterAccelerationStructureBuildTriangleClusterTemplateInfoNV: CS
         self.instantiationBoundingBoxLimit = instantiationBoundingBoxLimit
     }
 
-    init(cStruct: VkClusterAccelerationStructureBuildTriangleClusterTemplateInfoNV) {
+    public init(cStruct: VkClusterAccelerationStructureBuildTriangleClusterTemplateInfoNV) {
         self.clusterID = cStruct.clusterID
         self.clusterFlags = ClusterAccelerationStructureClusterFlagsNV(rawValue: cStruct.clusterFlags)
         self.triangleCount = cStruct.triangleCount
@@ -7379,7 +7379,7 @@ public struct ClusterAccelerationStructureInstantiateClusterInfoNV: CStructConve
         self.vertexBuffer = vertexBuffer
     }
 
-    init(cStruct: VkClusterAccelerationStructureInstantiateClusterInfoNV) {
+    public init(cStruct: VkClusterAccelerationStructureInstantiateClusterInfoNV) {
         self.clusterIdOffset = cStruct.clusterIdOffset
         self.geometryIndexOffset = cStruct.geometryIndexOffset
         self.reserved = cStruct.reserved
@@ -7411,7 +7411,7 @@ public struct ClusterAccelerationStructureClustersBottomLevelInputNV: ChainableB
         self.maxClusterCountPerAccelerationStructure = maxClusterCountPerAccelerationStructure
     }
 
-    init(cStruct: VkClusterAccelerationStructureClustersBottomLevelInputNV) {
+    public init(cStruct: VkClusterAccelerationStructureClustersBottomLevelInputNV) {
         self.maxTotalClusterCount = cStruct.maxTotalClusterCount
         self.maxClusterCountPerAccelerationStructure = cStruct.maxClusterCountPerAccelerationStructure
     }
@@ -7455,7 +7455,7 @@ public struct ClusterAccelerationStructureTriangleClusterInputNV: ChainableBase 
         self.minPositionTruncateBitCount = minPositionTruncateBitCount
     }
 
-    init(cStruct: VkClusterAccelerationStructureTriangleClusterInputNV) {
+    public init(cStruct: VkClusterAccelerationStructureTriangleClusterInputNV) {
         self.vertexFormat = Format(rawValue: unsafeBitCast(cStruct.vertexFormat, to: UInt32.self))!
         self.maxGeometryIndexValue = cStruct.maxGeometryIndexValue
         self.maxClusterUniqueGeometryCount = cStruct.maxClusterUniqueGeometryCount
@@ -7501,7 +7501,7 @@ public struct ClusterAccelerationStructureMoveObjectsInputNV: ChainableBase {
         self.maxMovedBytes = maxMovedBytes
     }
 
-    init(cStruct: VkClusterAccelerationStructureMoveObjectsInputNV) {
+    public init(cStruct: VkClusterAccelerationStructureMoveObjectsInputNV) {
         self.type = ClusterAccelerationStructureTypeNV(rawValue: unsafeBitCast(cStruct.type, to: UInt32.self))!
         self.noMoveOverlap = cStruct.noMoveOverlap == VK_TRUE
         self.maxMovedBytes = cStruct.maxMovedBytes
@@ -7541,7 +7541,7 @@ public struct ClusterAccelerationStructureInputInfoNV: ChainableBase {
         self.opInput = opInput
     }
 
-    init(cStruct: VkClusterAccelerationStructureInputInfoNV) {
+    public init(cStruct: VkClusterAccelerationStructureInputInfoNV) {
         self.maxAccelerationStructureCount = cStruct.maxAccelerationStructureCount
         self.flags = BuildAccelerationStructureFlagsKHR(rawValue: cStruct.flags)
         self.opType = ClusterAccelerationStructureOpTypeNV(rawValue: unsafeBitCast(cStruct.opType, to: UInt32.self))!
@@ -7581,7 +7581,7 @@ public struct StridedDeviceAddressRegionKHR: CStructConvertible {
         self.size = size
     }
 
-    init(cStruct: VkStridedDeviceAddressRegionKHR) {
+    public init(cStruct: VkStridedDeviceAddressRegionKHR) {
         self.deviceAddress = cStruct.deviceAddress
         self.stride = cStruct.stride
         self.size = cStruct.size
@@ -7619,7 +7619,7 @@ public struct ClusterAccelerationStructureCommandsInfoNV: ChainableBase {
         self.addressResolutionFlags = addressResolutionFlags
     }
 
-    init(cStruct: VkClusterAccelerationStructureCommandsInfoNV) {
+    public init(cStruct: VkClusterAccelerationStructureCommandsInfoNV) {
         self.input = ClusterAccelerationStructureInputInfoNV(cStruct: cStruct.input)
         self.dstImplicitData = cStruct.dstImplicitData
         self.scratchData = cStruct.scratchData
@@ -7665,7 +7665,7 @@ public struct PhysicalDeviceMultiDrawPropertiesEXT: ChainableBase, PhysicalDevic
 
     public let maxMultiDrawCount: UInt32
 
-    init(cStruct: VkPhysicalDeviceMultiDrawPropertiesEXT) {
+    public init(cStruct: VkPhysicalDeviceMultiDrawPropertiesEXT) {
         self.maxMultiDrawCount = cStruct.maxMultiDrawCount
     }
 
@@ -7697,7 +7697,7 @@ public struct GraphicsShaderGroupCreateInfoNV: ChainableBase {
         self.tessellationState = tessellationState
     }
 
-    init(cStruct: VkGraphicsShaderGroupCreateInfoNV, device: Device) {
+    public init(cStruct: VkGraphicsShaderGroupCreateInfoNV, device: Device) {
         self.stages = UnsafeBufferPointer(start: cStruct.pStages, count: Int(cStruct.stageCount)).map{ PipelineShaderStageCreateInfo(cStruct: $0, device: device) }
         self.vertexInputState = (cStruct.pVertexInputState != nil) ? PipelineVertexInputStateCreateInfo(cStruct: cStruct.pVertexInputState.pointee) : nil
         self.tessellationState = (cStruct.pTessellationState != nil) ? PipelineTessellationStateCreateInfo(cStruct: cStruct.pTessellationState.pointee) : nil
@@ -7738,7 +7738,7 @@ public struct GraphicsPipelineShaderGroupsCreateInfoNV: ChainableBase, GraphicsP
         self.pipelines = pipelines
     }
 
-    init(cStruct: VkGraphicsPipelineShaderGroupsCreateInfoNV, device: Device) {
+    public init(cStruct: VkGraphicsPipelineShaderGroupsCreateInfoNV, device: Device) {
         self.groups = UnsafeBufferPointer(start: cStruct.pGroups, count: Int(cStruct.groupCount)).map{ GraphicsShaderGroupCreateInfoNV(cStruct: $0, device: device) }
         self.pipelines = UnsafeBufferPointer(start: cStruct.pPipelines, count: Int(cStruct.pipelineCount)).map{ Pipeline(handle: $0, device: device) }
     }
@@ -7774,7 +7774,7 @@ public struct BindShaderGroupIndirectCommandNV: CStructConvertible {
         self.groupIndex = groupIndex
     }
 
-    init(cStruct: VkBindShaderGroupIndirectCommandNV) {
+    public init(cStruct: VkBindShaderGroupIndirectCommandNV) {
         self.groupIndex = cStruct.groupIndex
     }
 
@@ -7798,7 +7798,7 @@ public struct BindIndexBufferIndirectCommandNV: CStructConvertible {
         self.indexType = indexType
     }
 
-    init(cStruct: VkBindIndexBufferIndirectCommandNV) {
+    public init(cStruct: VkBindIndexBufferIndirectCommandNV) {
         self.bufferAddress = cStruct.bufferAddress
         self.size = cStruct.size
         self.indexType = IndexType(rawValue: unsafeBitCast(cStruct.indexType, to: UInt32.self))!
@@ -7826,7 +7826,7 @@ public struct BindVertexBufferIndirectCommandNV: CStructConvertible {
         self.stride = stride
     }
 
-    init(cStruct: VkBindVertexBufferIndirectCommandNV) {
+    public init(cStruct: VkBindVertexBufferIndirectCommandNV) {
         self.bufferAddress = cStruct.bufferAddress
         self.size = cStruct.size
         self.stride = cStruct.stride
@@ -7850,7 +7850,7 @@ public struct SetStateFlagsIndirectCommandNV: CStructConvertible {
         self.data = data
     }
 
-    init(cStruct: VkSetStateFlagsIndirectCommandNV) {
+    public init(cStruct: VkSetStateFlagsIndirectCommandNV) {
         self.data = cStruct.data
     }
 
@@ -7872,7 +7872,7 @@ public struct IndirectCommandsStreamNV: CStructConvertible {
         self.offset = offset
     }
 
-    init(cStruct: VkIndirectCommandsStreamNV, device: Device) {
+    public init(cStruct: VkIndirectCommandsStreamNV, device: Device) {
         self.buffer = Buffer(handle: cStruct.buffer, device: device)
         self.offset = cStruct.offset
     }
@@ -7916,7 +7916,7 @@ public struct IndirectCommandsLayoutTokenNV: ChainableBase {
         self.indexTypeValues = indexTypeValues
     }
 
-    init(cStruct: VkIndirectCommandsLayoutTokenNV, device: Device) {
+    public init(cStruct: VkIndirectCommandsLayoutTokenNV, device: Device) {
         self.tokenType = IndirectCommandsTokenTypeNV(rawValue: unsafeBitCast(cStruct.tokenType, to: UInt32.self))!
         self.stream = cStruct.stream
         self.offset = cStruct.offset
@@ -7977,7 +7977,7 @@ public struct IndirectCommandsLayoutCreateInfoNV: ChainableBase {
         self.streamStrides = streamStrides
     }
 
-    init(cStruct: VkIndirectCommandsLayoutCreateInfoNV, device: Device) {
+    public init(cStruct: VkIndirectCommandsLayoutCreateInfoNV, device: Device) {
         self.flags = IndirectCommandsLayoutUsageFlagsNV(rawValue: cStruct.flags)
         self.pipelineBindPoint = PipelineBindPoint(rawValue: unsafeBitCast(cStruct.pipelineBindPoint, to: UInt32.self))!
         self.tokens = UnsafeBufferPointer(start: cStruct.pTokens, count: Int(cStruct.tokenCount)).map{ IndirectCommandsLayoutTokenNV(cStruct: $0, device: device) }
@@ -8039,7 +8039,7 @@ public struct GeneratedCommandsInfoNV: ChainableBase {
         self.sequencesIndexOffset = sequencesIndexOffset
     }
 
-    init(cStruct: VkGeneratedCommandsInfoNV, device: Device) {
+    public init(cStruct: VkGeneratedCommandsInfoNV, device: Device) {
         self.pipelineBindPoint = PipelineBindPoint(rawValue: unsafeBitCast(cStruct.pipelineBindPoint, to: UInt32.self))!
         self.pipeline = (cStruct.pipeline != nil) ? Pipeline(handle: cStruct.pipeline, device: device) : nil
         self.indirectCommandsLayout = IndirectCommandsLayoutNV(handle: cStruct.indirectCommandsLayout, device: device)
@@ -8098,7 +8098,7 @@ public struct GeneratedCommandsMemoryRequirementsInfoNV: ChainableBase {
         self.maxSequencesCount = maxSequencesCount
     }
 
-    init(cStruct: VkGeneratedCommandsMemoryRequirementsInfoNV, device: Device) {
+    public init(cStruct: VkGeneratedCommandsMemoryRequirementsInfoNV, device: Device) {
         self.pipelineBindPoint = PipelineBindPoint(rawValue: unsafeBitCast(cStruct.pipelineBindPoint, to: UInt32.self))!
         self.pipeline = (cStruct.pipeline != nil) ? Pipeline(handle: cStruct.pipeline, device: device) : nil
         self.indirectCommandsLayout = IndirectCommandsLayoutNV(handle: cStruct.indirectCommandsLayout, device: device)
@@ -8134,7 +8134,7 @@ public struct PipelineIndirectDeviceAddressInfoNV: ChainableBase {
         self.pipeline = pipeline
     }
 
-    init(cStruct: VkPipelineIndirectDeviceAddressInfoNV, device: Device) {
+    public init(cStruct: VkPipelineIndirectDeviceAddressInfoNV, device: Device) {
         self.pipelineBindPoint = PipelineBindPoint(rawValue: unsafeBitCast(cStruct.pipelineBindPoint, to: UInt32.self))!
         self.pipeline = Pipeline(handle: cStruct.pipeline, device: device)
     }
@@ -8164,7 +8164,7 @@ public struct BindPipelineIndirectCommandNV: CStructConvertible {
         self.pipelineAddress = pipelineAddress
     }
 
-    init(cStruct: VkBindPipelineIndirectCommandNV) {
+    public init(cStruct: VkBindPipelineIndirectCommandNV) {
         self.pipelineAddress = cStruct.pipelineAddress
     }
 
@@ -8184,7 +8184,7 @@ public struct PhysicalDeviceFeatures2: ChainableBase, DeviceCreateInfoExtension 
         self.features = features
     }
 
-    init(cStruct: VkPhysicalDeviceFeatures2) {
+    public init(cStruct: VkPhysicalDeviceFeatures2) {
         self.features = PhysicalDeviceFeatures(cStruct: cStruct.features)
     }
 
@@ -8210,7 +8210,7 @@ public struct PhysicalDeviceProperties2: ChainableBase {
 
     public let properties: PhysicalDeviceProperties
 
-    init(cStruct: VkPhysicalDeviceProperties2) {
+    public init(cStruct: VkPhysicalDeviceProperties2) {
         self.properties = PhysicalDeviceProperties(cStruct: cStruct.properties)
     }
 
@@ -8236,7 +8236,7 @@ public struct FormatProperties2: ChainableBase {
 
     public let formatProperties: FormatProperties
 
-    init(cStruct: VkFormatProperties2) {
+    public init(cStruct: VkFormatProperties2) {
         self.formatProperties = FormatProperties(cStruct: cStruct.formatProperties)
     }
 
@@ -8262,7 +8262,7 @@ public struct ImageFormatProperties2: ChainableBase {
 
     public let imageFormatProperties: ImageFormatProperties
 
-    init(cStruct: VkImageFormatProperties2) {
+    public init(cStruct: VkImageFormatProperties2) {
         self.imageFormatProperties = ImageFormatProperties(cStruct: cStruct.imageFormatProperties)
     }
 
@@ -8300,7 +8300,7 @@ public struct PhysicalDeviceImageFormatInfo2: ChainableBase {
         self.flags = flags
     }
 
-    init(cStruct: VkPhysicalDeviceImageFormatInfo2) {
+    public init(cStruct: VkPhysicalDeviceImageFormatInfo2) {
         self.format = Format(rawValue: unsafeBitCast(cStruct.format, to: UInt32.self))!
         self.type = ImageType(rawValue: unsafeBitCast(cStruct.type, to: UInt32.self))!
         self.tiling = ImageTiling(rawValue: unsafeBitCast(cStruct.tiling, to: UInt32.self))!
@@ -8332,7 +8332,7 @@ public struct QueueFamilyProperties2: ChainableBase {
 
     public let queueFamilyProperties: QueueFamilyProperties
 
-    init(cStruct: VkQueueFamilyProperties2) {
+    public init(cStruct: VkQueueFamilyProperties2) {
         self.queueFamilyProperties = QueueFamilyProperties(cStruct: cStruct.queueFamilyProperties)
     }
 
@@ -8358,7 +8358,7 @@ public struct PhysicalDeviceMemoryProperties2: ChainableBase {
 
     public let memoryProperties: PhysicalDeviceMemoryProperties
 
-    init(cStruct: VkPhysicalDeviceMemoryProperties2) {
+    public init(cStruct: VkPhysicalDeviceMemoryProperties2) {
         self.memoryProperties = PhysicalDeviceMemoryProperties(cStruct: cStruct.memoryProperties)
     }
 
@@ -8384,7 +8384,7 @@ public struct SparseImageFormatProperties2: ChainableBase {
 
     public let properties: SparseImageFormatProperties
 
-    init(cStruct: VkSparseImageFormatProperties2) {
+    public init(cStruct: VkSparseImageFormatProperties2) {
         self.properties = SparseImageFormatProperties(cStruct: cStruct.properties)
     }
 
@@ -8422,7 +8422,7 @@ public struct PhysicalDeviceSparseImageFormatInfo2: ChainableBase {
         self.tiling = tiling
     }
 
-    init(cStruct: VkPhysicalDeviceSparseImageFormatInfo2) {
+    public init(cStruct: VkPhysicalDeviceSparseImageFormatInfo2) {
         self.format = Format(rawValue: unsafeBitCast(cStruct.format, to: UInt32.self))!
         self.type = ImageType(rawValue: unsafeBitCast(cStruct.type, to: UInt32.self))!
         self.samples = SampleCountFlags(rawValue: unsafeBitCast(cStruct.samples.rawValue, to: UInt32.self))
@@ -8454,7 +8454,7 @@ public struct PhysicalDevicePushDescriptorProperties: ChainableBase, PhysicalDev
 
     public let maxPushDescriptors: UInt32
 
-    init(cStruct: VkPhysicalDevicePushDescriptorProperties) {
+    public init(cStruct: VkPhysicalDevicePushDescriptorProperties) {
         self.maxPushDescriptors = cStruct.maxPushDescriptors
     }
 
@@ -8488,7 +8488,7 @@ public struct ConformanceVersion: CStructConvertible {
         self.patch = patch
     }
 
-    init(cStruct: VkConformanceVersion) {
+    public init(cStruct: VkConformanceVersion) {
         self.major = cStruct.major
         self.minor = cStruct.minor
         self.subminor = cStruct.subminor
@@ -8513,7 +8513,7 @@ public struct PhysicalDeviceDriverProperties: ChainableBase, PhysicalDevicePrope
     public let driverInfo: String
     public let conformanceVersion: ConformanceVersion
 
-    init(cStruct: VkPhysicalDeviceDriverProperties) {
+    public init(cStruct: VkPhysicalDeviceDriverProperties) {
         self.driverID = DriverId(rawValue: unsafeBitCast(cStruct.driverID, to: UInt32.self))!
         self.driverName = String(unsafeBytesOf: cStruct.driverName)
         self.driverInfo = String(unsafeBytesOf: cStruct.driverInfo)
@@ -8553,7 +8553,7 @@ public struct RectLayerKHR: CStructConvertible {
         self.layer = layer
     }
 
-    init(cStruct: VkRectLayerKHR) {
+    public init(cStruct: VkRectLayerKHR) {
         self.offset = Offset2D(cStruct: cStruct.offset)
         self.extent = Extent2D(cStruct: cStruct.extent)
         self.layer = cStruct.layer
@@ -8581,7 +8581,7 @@ public struct PresentRegionKHR: CStructConvertible {
         self.rectangles = rectangles
     }
 
-    init(cStruct: VkPresentRegionKHR) {
+    public init(cStruct: VkPresentRegionKHR) {
         self.rectangles = (cStruct.pRectangles != nil) ? UnsafeBufferPointer(start: cStruct.pRectangles, count: Int(cStruct.rectangleCount)).map{ RectLayerKHR(cStruct: $0) } : nil
     }
 
@@ -8604,7 +8604,7 @@ public struct PresentRegionsKHR: ChainableBase, PresentInfoKHRExtension {
         self.regions = regions
     }
 
-    init(cStruct: VkPresentRegionsKHR) {
+    public init(cStruct: VkPresentRegionsKHR) {
         self.regions = (cStruct.pRegions != nil) ? UnsafeBufferPointer(start: cStruct.pRegions, count: Int(cStruct.swapchainCount)).map{ PresentRegionKHR(cStruct: $0) } : nil
     }
 
@@ -8637,7 +8637,7 @@ public struct PhysicalDeviceVariablePointersFeatures: ChainableBase, PhysicalDev
         self.variablePointers = variablePointers
     }
 
-    init(cStruct: VkPhysicalDeviceVariablePointersFeatures) {
+    public init(cStruct: VkPhysicalDeviceVariablePointersFeatures) {
         self.variablePointersStorageBuffer = cStruct.variablePointersStorageBuffer == VK_TRUE
         self.variablePointers = cStruct.variablePointers == VK_TRUE
     }
@@ -8665,7 +8665,7 @@ public struct ExternalMemoryProperties: CStructConvertible {
     public let exportFromImportedHandleTypes: ExternalMemoryHandleTypeFlags
     public let compatibleHandleTypes: ExternalMemoryHandleTypeFlags
 
-    init(cStruct: VkExternalMemoryProperties) {
+    public init(cStruct: VkExternalMemoryProperties) {
         self.externalMemoryFeatures = ExternalMemoryFeatureFlags(rawValue: cStruct.externalMemoryFeatures)
         self.exportFromImportedHandleTypes = ExternalMemoryHandleTypeFlags(rawValue: cStruct.exportFromImportedHandleTypes)
         self.compatibleHandleTypes = ExternalMemoryHandleTypeFlags(rawValue: cStruct.compatibleHandleTypes)
@@ -8689,7 +8689,7 @@ public struct PhysicalDeviceExternalImageFormatInfo: ChainableBase, PhysicalDevi
         self.handleType = handleType
     }
 
-    init(cStruct: VkPhysicalDeviceExternalImageFormatInfo) {
+    public init(cStruct: VkPhysicalDeviceExternalImageFormatInfo) {
         self.handleType = ExternalMemoryHandleTypeFlags(rawValue: unsafeBitCast(cStruct.handleType.rawValue, to: UInt32.self))
     }
 
@@ -8713,7 +8713,7 @@ public struct ExternalImageFormatProperties: ChainableBase, ImageFormatPropertie
 
     public let externalMemoryProperties: ExternalMemoryProperties
 
-    init(cStruct: VkExternalImageFormatProperties) {
+    public init(cStruct: VkExternalImageFormatProperties) {
         self.externalMemoryProperties = ExternalMemoryProperties(cStruct: cStruct.externalMemoryProperties)
     }
 
@@ -8747,7 +8747,7 @@ public struct PhysicalDeviceExternalBufferInfo: ChainableBase {
         self.handleType = handleType
     }
 
-    init(cStruct: VkPhysicalDeviceExternalBufferInfo) {
+    public init(cStruct: VkPhysicalDeviceExternalBufferInfo) {
         self.flags = BufferCreateFlags(rawValue: cStruct.flags)
         self.usage = BufferUsageFlags(rawValue: cStruct.usage)
         self.handleType = ExternalMemoryHandleTypeFlags(rawValue: unsafeBitCast(cStruct.handleType.rawValue, to: UInt32.self))
@@ -8775,7 +8775,7 @@ public struct ExternalBufferProperties: ChainableBase {
 
     public let externalMemoryProperties: ExternalMemoryProperties
 
-    init(cStruct: VkExternalBufferProperties) {
+    public init(cStruct: VkExternalBufferProperties) {
         self.externalMemoryProperties = ExternalMemoryProperties(cStruct: cStruct.externalMemoryProperties)
     }
 
@@ -8805,7 +8805,7 @@ public struct PhysicalDeviceIDProperties: ChainableBase, PhysicalDevicePropertie
     public let deviceNodeMask: UInt32
     public let deviceLUIDValid: Bool
 
-    init(cStruct: VkPhysicalDeviceIDProperties) {
+    public init(cStruct: VkPhysicalDeviceIDProperties) {
         self.deviceUUID = cStruct.deviceUUID
         self.driverUUID = cStruct.driverUUID
         self.deviceLUID = cStruct.deviceLUID
@@ -8841,7 +8841,7 @@ public struct ExternalMemoryImageCreateInfo: ChainableBase, ImageCreateInfoExten
         self.handleTypes = handleTypes
     }
 
-    init(cStruct: VkExternalMemoryImageCreateInfo) {
+    public init(cStruct: VkExternalMemoryImageCreateInfo) {
         self.handleTypes = ExternalMemoryHandleTypeFlags(rawValue: cStruct.handleTypes)
     }
 
@@ -8869,7 +8869,7 @@ public struct ExternalMemoryBufferCreateInfo: ChainableBase, BufferCreateInfoExt
         self.handleTypes = handleTypes
     }
 
-    init(cStruct: VkExternalMemoryBufferCreateInfo) {
+    public init(cStruct: VkExternalMemoryBufferCreateInfo) {
         self.handleTypes = ExternalMemoryHandleTypeFlags(rawValue: cStruct.handleTypes)
     }
 
@@ -8897,7 +8897,7 @@ public struct ExportMemoryAllocateInfo: ChainableBase, MemoryAllocateInfoExtensi
         self.handleTypes = handleTypes
     }
 
-    init(cStruct: VkExportMemoryAllocateInfo) {
+    public init(cStruct: VkExportMemoryAllocateInfo) {
         self.handleTypes = ExternalMemoryHandleTypeFlags(rawValue: cStruct.handleTypes)
     }
 
@@ -8930,7 +8930,7 @@ public struct ImportMemoryWin32HandleInfoKHR: ChainableBase, MemoryAllocateInfoE
         self.name = name
     }
 
-    init(cStruct: VkImportMemoryWin32HandleInfoKHR) {
+    public init(cStruct: VkImportMemoryWin32HandleInfoKHR) {
         self.handleType = ExternalMemoryHandleTypeFlags(rawValue: unsafeBitCast(cStruct.handleType.rawValue, to: UInt32.self))
         self.handle = cStruct.handle
         self.name = cStruct.name
@@ -8968,7 +8968,7 @@ public struct ExportMemoryWin32HandleInfoKHR: ChainableBase, MemoryAllocateInfoE
         self.name = name
     }
 
-    init(cStruct: VkExportMemoryWin32HandleInfoKHR) {
+    public init(cStruct: VkExportMemoryWin32HandleInfoKHR) {
         self.attributes = cStruct.pAttributes
         self.dwAccess = cStruct.dwAccess
         self.name = cStruct.name
@@ -9004,7 +9004,7 @@ public struct ImportMemoryZirconHandleInfoFUCHSIA: ChainableBase, MemoryAllocate
         self.handle = handle
     }
 
-    init(cStruct: VkImportMemoryZirconHandleInfoFUCHSIA) {
+    public init(cStruct: VkImportMemoryZirconHandleInfoFUCHSIA) {
         self.handleType = ExternalMemoryHandleTypeFlags(rawValue: unsafeBitCast(cStruct.handleType.rawValue, to: UInt32.self))
         self.handle = cStruct.handle
     }
@@ -9032,7 +9032,7 @@ public struct MemoryZirconHandlePropertiesFUCHSIA: ChainableBase {
 
     public let memoryTypeBits: UInt32
 
-    init(cStruct: VkMemoryZirconHandlePropertiesFUCHSIA) {
+    public init(cStruct: VkMemoryZirconHandlePropertiesFUCHSIA) {
         self.memoryTypeBits = cStruct.memoryTypeBits
     }
 
@@ -9064,7 +9064,7 @@ public struct MemoryGetZirconHandleInfoFUCHSIA: ChainableBase {
         self.handleType = handleType
     }
 
-    init(cStruct: VkMemoryGetZirconHandleInfoFUCHSIA, device: Device) {
+    public init(cStruct: VkMemoryGetZirconHandleInfoFUCHSIA, device: Device) {
         self.memory = DeviceMemory(handle: cStruct.memory, device: device)
         self.handleType = ExternalMemoryHandleTypeFlags(rawValue: unsafeBitCast(cStruct.handleType.rawValue, to: UInt32.self))
     }
@@ -9092,7 +9092,7 @@ public struct MemoryWin32HandlePropertiesKHR: ChainableBase {
 
     public let memoryTypeBits: UInt32
 
-    init(cStruct: VkMemoryWin32HandlePropertiesKHR) {
+    public init(cStruct: VkMemoryWin32HandlePropertiesKHR) {
         self.memoryTypeBits = cStruct.memoryTypeBits
     }
 
@@ -9124,7 +9124,7 @@ public struct MemoryGetWin32HandleInfoKHR: ChainableBase {
         self.handleType = handleType
     }
 
-    init(cStruct: VkMemoryGetWin32HandleInfoKHR, device: Device) {
+    public init(cStruct: VkMemoryGetWin32HandleInfoKHR, device: Device) {
         self.memory = DeviceMemory(handle: cStruct.memory, device: device)
         self.handleType = ExternalMemoryHandleTypeFlags(rawValue: unsafeBitCast(cStruct.handleType.rawValue, to: UInt32.self))
     }
@@ -9157,7 +9157,7 @@ public struct ImportMemoryFdInfoKHR: ChainableBase, MemoryAllocateInfoExtension 
         self.fd = fd
     }
 
-    init(cStruct: VkImportMemoryFdInfoKHR) {
+    public init(cStruct: VkImportMemoryFdInfoKHR) {
         self.handleType = ExternalMemoryHandleTypeFlags(rawValue: unsafeBitCast(cStruct.handleType.rawValue, to: UInt32.self))
         self.fd = cStruct.fd
     }
@@ -9183,7 +9183,7 @@ public struct MemoryFdPropertiesKHR: ChainableBase {
 
     public let memoryTypeBits: UInt32
 
-    init(cStruct: VkMemoryFdPropertiesKHR) {
+    public init(cStruct: VkMemoryFdPropertiesKHR) {
         self.memoryTypeBits = cStruct.memoryTypeBits
     }
 
@@ -9213,7 +9213,7 @@ public struct MemoryGetFdInfoKHR: ChainableBase {
         self.handleType = handleType
     }
 
-    init(cStruct: VkMemoryGetFdInfoKHR, device: Device) {
+    public init(cStruct: VkMemoryGetFdInfoKHR, device: Device) {
         self.memory = DeviceMemory(handle: cStruct.memory, device: device)
         self.handleType = ExternalMemoryHandleTypeFlags(rawValue: unsafeBitCast(cStruct.handleType.rawValue, to: UInt32.self))
     }
@@ -9252,7 +9252,7 @@ public struct Win32KeyedMutexAcquireReleaseInfoKHR: ChainableBase, SubmitInfoExt
         self.releaseKeys = releaseKeys
     }
 
-    init(cStruct: VkWin32KeyedMutexAcquireReleaseInfoKHR, device: Device) {
+    public init(cStruct: VkWin32KeyedMutexAcquireReleaseInfoKHR, device: Device) {
         self.acquireSyncs = UnsafeBufferPointer(start: cStruct.pAcquireSyncs, count: Int(cStruct.acquireCount)).map{ DeviceMemory(handle: $0, device: device) }
         self.acquireKeys = Array(UnsafeBufferPointer(start: cStruct.pAcquireKeys, count: Int(cStruct.acquireCount)))
         self.acquireTimeouts = Array(UnsafeBufferPointer(start: cStruct.pAcquireTimeouts, count: Int(cStruct.acquireCount)))
@@ -9304,7 +9304,7 @@ public struct ImportMemoryMetalHandleInfoEXT: ChainableBase, MemoryAllocateInfoE
         self.handle = handle
     }
 
-    init(cStruct: VkImportMemoryMetalHandleInfoEXT) {
+    public init(cStruct: VkImportMemoryMetalHandleInfoEXT) {
         self.handleType = ExternalMemoryHandleTypeFlags(rawValue: unsafeBitCast(cStruct.handleType.rawValue, to: UInt32.self))
         self.handle = cStruct.handle
     }
@@ -9332,7 +9332,7 @@ public struct MemoryMetalHandlePropertiesEXT: ChainableBase {
 
     public let memoryTypeBits: UInt32
 
-    init(cStruct: VkMemoryMetalHandlePropertiesEXT) {
+    public init(cStruct: VkMemoryMetalHandlePropertiesEXT) {
         self.memoryTypeBits = cStruct.memoryTypeBits
     }
 
@@ -9364,7 +9364,7 @@ public struct MemoryGetMetalHandleInfoEXT: ChainableBase {
         self.handleType = handleType
     }
 
-    init(cStruct: VkMemoryGetMetalHandleInfoEXT, device: Device) {
+    public init(cStruct: VkMemoryGetMetalHandleInfoEXT, device: Device) {
         self.memory = DeviceMemory(handle: cStruct.memory, device: device)
         self.handleType = ExternalMemoryHandleTypeFlags(rawValue: unsafeBitCast(cStruct.handleType.rawValue, to: UInt32.self))
     }
@@ -9395,7 +9395,7 @@ public struct PhysicalDeviceExternalSemaphoreInfo: ChainableBase {
         self.handleType = handleType
     }
 
-    init(cStruct: VkPhysicalDeviceExternalSemaphoreInfo) {
+    public init(cStruct: VkPhysicalDeviceExternalSemaphoreInfo) {
         self.handleType = ExternalSemaphoreHandleTypeFlags(rawValue: unsafeBitCast(cStruct.handleType.rawValue, to: UInt32.self))
     }
 
@@ -9421,7 +9421,7 @@ public struct ExternalSemaphoreProperties: ChainableBase {
     public let compatibleHandleTypes: ExternalSemaphoreHandleTypeFlags
     public let externalSemaphoreFeatures: ExternalSemaphoreFeatureFlags
 
-    init(cStruct: VkExternalSemaphoreProperties) {
+    public init(cStruct: VkExternalSemaphoreProperties) {
         self.exportFromImportedHandleTypes = ExternalSemaphoreHandleTypeFlags(rawValue: cStruct.exportFromImportedHandleTypes)
         self.compatibleHandleTypes = ExternalSemaphoreHandleTypeFlags(rawValue: cStruct.compatibleHandleTypes)
         self.externalSemaphoreFeatures = ExternalSemaphoreFeatureFlags(rawValue: cStruct.externalSemaphoreFeatures)
@@ -9453,7 +9453,7 @@ public struct ExportSemaphoreCreateInfo: ChainableBase, SemaphoreCreateInfoExten
         self.handleTypes = handleTypes
     }
 
-    init(cStruct: VkExportSemaphoreCreateInfo) {
+    public init(cStruct: VkExportSemaphoreCreateInfo) {
         self.handleTypes = ExternalSemaphoreHandleTypeFlags(rawValue: cStruct.handleTypes)
     }
 
@@ -9490,7 +9490,7 @@ public struct ImportSemaphoreWin32HandleInfoKHR: ChainableBase {
         self.name = name
     }
 
-    init(cStruct: VkImportSemaphoreWin32HandleInfoKHR, device: Device) {
+    public init(cStruct: VkImportSemaphoreWin32HandleInfoKHR, device: Device) {
         self.semaphore = Semaphore(handle: cStruct.semaphore, device: device)
         self.flags = SemaphoreImportFlags(rawValue: cStruct.flags)
         self.handleType = ExternalSemaphoreHandleTypeFlags(rawValue: unsafeBitCast(cStruct.handleType.rawValue, to: UInt32.self))
@@ -9532,7 +9532,7 @@ public struct ExportSemaphoreWin32HandleInfoKHR: ChainableBase, SemaphoreCreateI
         self.name = name
     }
 
-    init(cStruct: VkExportSemaphoreWin32HandleInfoKHR) {
+    public init(cStruct: VkExportSemaphoreWin32HandleInfoKHR) {
         self.attributes = cStruct.pAttributes
         self.dwAccess = cStruct.dwAccess
         self.name = cStruct.name
@@ -9568,7 +9568,7 @@ public struct D3D12FenceSubmitInfoKHR: ChainableBase, SubmitInfoExtension {
         self.signalSemaphoreValues = signalSemaphoreValues
     }
 
-    init(cStruct: VkD3D12FenceSubmitInfoKHR) {
+    public init(cStruct: VkD3D12FenceSubmitInfoKHR) {
         self.waitSemaphoreValues = (cStruct.pWaitSemaphoreValues != nil) ? Array(UnsafeBufferPointer(start: cStruct.pWaitSemaphoreValues, count: Int(cStruct.waitSemaphoreValuesCount))) : nil
         self.signalSemaphoreValues = (cStruct.pSignalSemaphoreValues != nil) ? Array(UnsafeBufferPointer(start: cStruct.pSignalSemaphoreValues, count: Int(cStruct.signalSemaphoreValuesCount))) : nil
     }
@@ -9608,7 +9608,7 @@ public struct SemaphoreGetWin32HandleInfoKHR: ChainableBase {
         self.handleType = handleType
     }
 
-    init(cStruct: VkSemaphoreGetWin32HandleInfoKHR, device: Device) {
+    public init(cStruct: VkSemaphoreGetWin32HandleInfoKHR, device: Device) {
         self.semaphore = Semaphore(handle: cStruct.semaphore, device: device)
         self.handleType = ExternalSemaphoreHandleTypeFlags(rawValue: unsafeBitCast(cStruct.handleType.rawValue, to: UInt32.self))
     }
@@ -9645,7 +9645,7 @@ public struct ImportSemaphoreFdInfoKHR: ChainableBase {
         self.fd = fd
     }
 
-    init(cStruct: VkImportSemaphoreFdInfoKHR, device: Device) {
+    public init(cStruct: VkImportSemaphoreFdInfoKHR, device: Device) {
         self.semaphore = Semaphore(handle: cStruct.semaphore, device: device)
         self.flags = SemaphoreImportFlags(rawValue: cStruct.flags)
         self.handleType = ExternalSemaphoreHandleTypeFlags(rawValue: unsafeBitCast(cStruct.handleType.rawValue, to: UInt32.self))
@@ -9681,7 +9681,7 @@ public struct SemaphoreGetFdInfoKHR: ChainableBase {
         self.handleType = handleType
     }
 
-    init(cStruct: VkSemaphoreGetFdInfoKHR, device: Device) {
+    public init(cStruct: VkSemaphoreGetFdInfoKHR, device: Device) {
         self.semaphore = Semaphore(handle: cStruct.semaphore, device: device)
         self.handleType = ExternalSemaphoreHandleTypeFlags(rawValue: unsafeBitCast(cStruct.handleType.rawValue, to: UInt32.self))
     }
@@ -9718,7 +9718,7 @@ public struct ImportSemaphoreZirconHandleInfoFUCHSIA: ChainableBase {
         self.zirconHandle = zirconHandle
     }
 
-    init(cStruct: VkImportSemaphoreZirconHandleInfoFUCHSIA, device: Device) {
+    public init(cStruct: VkImportSemaphoreZirconHandleInfoFUCHSIA, device: Device) {
         self.semaphore = Semaphore(handle: cStruct.semaphore, device: device)
         self.flags = SemaphoreImportFlags(rawValue: cStruct.flags)
         self.handleType = ExternalSemaphoreHandleTypeFlags(rawValue: unsafeBitCast(cStruct.handleType.rawValue, to: UInt32.self))
@@ -9756,7 +9756,7 @@ public struct SemaphoreGetZirconHandleInfoFUCHSIA: ChainableBase {
         self.handleType = handleType
     }
 
-    init(cStruct: VkSemaphoreGetZirconHandleInfoFUCHSIA, device: Device) {
+    public init(cStruct: VkSemaphoreGetZirconHandleInfoFUCHSIA, device: Device) {
         self.semaphore = Semaphore(handle: cStruct.semaphore, device: device)
         self.handleType = ExternalSemaphoreHandleTypeFlags(rawValue: unsafeBitCast(cStruct.handleType.rawValue, to: UInt32.self))
     }
@@ -9787,7 +9787,7 @@ public struct PhysicalDeviceExternalFenceInfo: ChainableBase {
         self.handleType = handleType
     }
 
-    init(cStruct: VkPhysicalDeviceExternalFenceInfo) {
+    public init(cStruct: VkPhysicalDeviceExternalFenceInfo) {
         self.handleType = ExternalFenceHandleTypeFlags(rawValue: unsafeBitCast(cStruct.handleType.rawValue, to: UInt32.self))
     }
 
@@ -9813,7 +9813,7 @@ public struct ExternalFenceProperties: ChainableBase {
     public let compatibleHandleTypes: ExternalFenceHandleTypeFlags
     public let externalFenceFeatures: ExternalFenceFeatureFlags
 
-    init(cStruct: VkExternalFenceProperties) {
+    public init(cStruct: VkExternalFenceProperties) {
         self.exportFromImportedHandleTypes = ExternalFenceHandleTypeFlags(rawValue: cStruct.exportFromImportedHandleTypes)
         self.compatibleHandleTypes = ExternalFenceHandleTypeFlags(rawValue: cStruct.compatibleHandleTypes)
         self.externalFenceFeatures = ExternalFenceFeatureFlags(rawValue: cStruct.externalFenceFeatures)
@@ -9845,7 +9845,7 @@ public struct ExportFenceCreateInfo: ChainableBase, FenceCreateInfoExtension {
         self.handleTypes = handleTypes
     }
 
-    init(cStruct: VkExportFenceCreateInfo) {
+    public init(cStruct: VkExportFenceCreateInfo) {
         self.handleTypes = ExternalFenceHandleTypeFlags(rawValue: cStruct.handleTypes)
     }
 
@@ -9882,7 +9882,7 @@ public struct ImportFenceWin32HandleInfoKHR: ChainableBase {
         self.name = name
     }
 
-    init(cStruct: VkImportFenceWin32HandleInfoKHR, device: Device) {
+    public init(cStruct: VkImportFenceWin32HandleInfoKHR, device: Device) {
         self.fence = Fence(handle: cStruct.fence, device: device)
         self.flags = FenceImportFlags(rawValue: cStruct.flags)
         self.handleType = ExternalFenceHandleTypeFlags(rawValue: unsafeBitCast(cStruct.handleType.rawValue, to: UInt32.self))
@@ -9924,7 +9924,7 @@ public struct ExportFenceWin32HandleInfoKHR: ChainableBase, FenceCreateInfoExten
         self.name = name
     }
 
-    init(cStruct: VkExportFenceWin32HandleInfoKHR) {
+    public init(cStruct: VkExportFenceWin32HandleInfoKHR) {
         self.attributes = cStruct.pAttributes
         self.dwAccess = cStruct.dwAccess
         self.name = cStruct.name
@@ -9960,7 +9960,7 @@ public struct FenceGetWin32HandleInfoKHR: ChainableBase {
         self.handleType = handleType
     }
 
-    init(cStruct: VkFenceGetWin32HandleInfoKHR, device: Device) {
+    public init(cStruct: VkFenceGetWin32HandleInfoKHR, device: Device) {
         self.fence = Fence(handle: cStruct.fence, device: device)
         self.handleType = ExternalFenceHandleTypeFlags(rawValue: unsafeBitCast(cStruct.handleType.rawValue, to: UInt32.self))
     }
@@ -9997,7 +9997,7 @@ public struct ImportFenceFdInfoKHR: ChainableBase {
         self.fd = fd
     }
 
-    init(cStruct: VkImportFenceFdInfoKHR, device: Device) {
+    public init(cStruct: VkImportFenceFdInfoKHR, device: Device) {
         self.fence = Fence(handle: cStruct.fence, device: device)
         self.flags = FenceImportFlags(rawValue: cStruct.flags)
         self.handleType = ExternalFenceHandleTypeFlags(rawValue: unsafeBitCast(cStruct.handleType.rawValue, to: UInt32.self))
@@ -10033,7 +10033,7 @@ public struct FenceGetFdInfoKHR: ChainableBase {
         self.handleType = handleType
     }
 
-    init(cStruct: VkFenceGetFdInfoKHR, device: Device) {
+    public init(cStruct: VkFenceGetFdInfoKHR, device: Device) {
         self.fence = Fence(handle: cStruct.fence, device: device)
         self.handleType = ExternalFenceHandleTypeFlags(rawValue: unsafeBitCast(cStruct.handleType.rawValue, to: UInt32.self))
     }
@@ -10067,7 +10067,7 @@ public struct PhysicalDeviceMultiviewFeatures: ChainableBase, PhysicalDeviceFeat
         self.multiviewTessellationShader = multiviewTessellationShader
     }
 
-    init(cStruct: VkPhysicalDeviceMultiviewFeatures) {
+    public init(cStruct: VkPhysicalDeviceMultiviewFeatures) {
         self.multiview = cStruct.multiview == VK_TRUE
         self.multiviewGeometryShader = cStruct.multiviewGeometryShader == VK_TRUE
         self.multiviewTessellationShader = cStruct.multiviewTessellationShader == VK_TRUE
@@ -10096,7 +10096,7 @@ public struct PhysicalDeviceMultiviewProperties: ChainableBase, PhysicalDevicePr
     public let maxMultiviewViewCount: UInt32
     public let maxMultiviewInstanceIndex: UInt32
 
-    init(cStruct: VkPhysicalDeviceMultiviewProperties) {
+    public init(cStruct: VkPhysicalDeviceMultiviewProperties) {
         self.maxMultiviewViewCount = cStruct.maxMultiviewViewCount
         self.maxMultiviewInstanceIndex = cStruct.maxMultiviewInstanceIndex
     }
@@ -10130,7 +10130,7 @@ public struct RenderPassMultiviewCreateInfo: ChainableBase, RenderPassCreateInfo
         self.correlationMasks = correlationMasks
     }
 
-    init(cStruct: VkRenderPassMultiviewCreateInfo) {
+    public init(cStruct: VkRenderPassMultiviewCreateInfo) {
         self.viewMasks = Array(UnsafeBufferPointer(start: cStruct.pViewMasks, count: Int(cStruct.subpassCount)))
         self.viewOffsets = Array(UnsafeBufferPointer(start: cStruct.pViewOffsets, count: Int(cStruct.dependencyCount)))
         self.correlationMasks = Array(UnsafeBufferPointer(start: cStruct.pCorrelationMasks, count: Int(cStruct.correlationMaskCount)))
@@ -10177,7 +10177,7 @@ public struct SurfaceCapabilities2EXT: ChainableBase {
     public let supportedUsageFlags: ImageUsageFlags
     public let supportedSurfaceCounters: SurfaceCounterFlagsEXT
 
-    init(cStruct: VkSurfaceCapabilities2EXT) {
+    public init(cStruct: VkSurfaceCapabilities2EXT) {
         self.minImageCount = cStruct.minImageCount
         self.maxImageCount = cStruct.maxImageCount
         self.currentExtent = Extent2D(cStruct: cStruct.currentExtent)
@@ -10231,7 +10231,7 @@ public struct DisplayPowerInfoEXT: ChainableBase {
         self.powerState = powerState
     }
 
-    init(cStruct: VkDisplayPowerInfoEXT) {
+    public init(cStruct: VkDisplayPowerInfoEXT) {
         self.powerState = DisplayPowerStateEXT(rawValue: unsafeBitCast(cStruct.powerState, to: UInt32.self))!
     }
 
@@ -10259,7 +10259,7 @@ public struct DeviceEventInfoEXT: ChainableBase {
         self.deviceEvent = deviceEvent
     }
 
-    init(cStruct: VkDeviceEventInfoEXT) {
+    public init(cStruct: VkDeviceEventInfoEXT) {
         self.deviceEvent = DeviceEventTypeEXT(rawValue: unsafeBitCast(cStruct.deviceEvent, to: UInt32.self))!
     }
 
@@ -10287,7 +10287,7 @@ public struct DisplayEventInfoEXT: ChainableBase {
         self.displayEvent = displayEvent
     }
 
-    init(cStruct: VkDisplayEventInfoEXT) {
+    public init(cStruct: VkDisplayEventInfoEXT) {
         self.displayEvent = DisplayEventTypeEXT(rawValue: unsafeBitCast(cStruct.displayEvent, to: UInt32.self))!
     }
 
@@ -10315,7 +10315,7 @@ public struct SwapchainCounterCreateInfoEXT: ChainableBase, SwapchainCreateInfoK
         self.surfaceCounters = surfaceCounters
     }
 
-    init(cStruct: VkSwapchainCounterCreateInfoEXT) {
+    public init(cStruct: VkSwapchainCounterCreateInfoEXT) {
         self.surfaceCounters = SurfaceCounterFlagsEXT(rawValue: cStruct.surfaceCounters)
     }
 
@@ -10341,7 +10341,7 @@ public struct PhysicalDeviceGroupProperties: ChainableBase {
     public let physicalDevices: Array<PhysicalDevice>
     public let subsetAllocation: Bool
 
-    init(cStruct: VkPhysicalDeviceGroupProperties, instance: Instance) {
+    public init(cStruct: VkPhysicalDeviceGroupProperties, instance: Instance) {
         self.physicalDeviceCount = cStruct.physicalDeviceCount
         self.physicalDevices = withUnsafeBytes(of: cStruct.physicalDevices) { $0.bindMemory(to: VkPhysicalDevice?.self).prefix(Int(cStruct.physicalDeviceCount)).map{ PhysicalDevice(handle: $0, instance: instance) } }
         self.subsetAllocation = cStruct.subsetAllocation == VK_TRUE
@@ -10377,7 +10377,7 @@ public struct MemoryAllocateFlagsInfo: ChainableBase, MemoryAllocateInfoExtensio
         self.deviceMask = deviceMask
     }
 
-    init(cStruct: VkMemoryAllocateFlagsInfo) {
+    public init(cStruct: VkMemoryAllocateFlagsInfo) {
         self.flags = MemoryAllocateFlags(rawValue: cStruct.flags)
         self.deviceMask = cStruct.deviceMask
     }
@@ -10411,7 +10411,7 @@ public struct BindBufferMemoryInfo: ChainableBase {
         self.memoryOffset = memoryOffset
     }
 
-    init(cStruct: VkBindBufferMemoryInfo, device: Device) {
+    public init(cStruct: VkBindBufferMemoryInfo, device: Device) {
         self.buffer = Buffer(handle: cStruct.buffer, device: device)
         self.memory = DeviceMemory(handle: cStruct.memory, device: device)
         self.memoryOffset = cStruct.memoryOffset
@@ -10443,7 +10443,7 @@ public struct BindBufferMemoryDeviceGroupInfo: ChainableBase, BindBufferMemoryIn
         self.deviceIndices = deviceIndices
     }
 
-    init(cStruct: VkBindBufferMemoryDeviceGroupInfo) {
+    public init(cStruct: VkBindBufferMemoryDeviceGroupInfo) {
         self.deviceIndices = Array(UnsafeBufferPointer(start: cStruct.pDeviceIndices, count: Int(cStruct.deviceIndexCount)))
     }
 
@@ -10478,7 +10478,7 @@ public struct BindImageMemoryInfo: ChainableBase {
         self.memoryOffset = memoryOffset
     }
 
-    init(cStruct: VkBindImageMemoryInfo, device: Device) {
+    public init(cStruct: VkBindImageMemoryInfo, device: Device) {
         self.image = Image(handle: cStruct.image, device: device)
         self.memory = DeviceMemory(handle: cStruct.memory, device: device)
         self.memoryOffset = cStruct.memoryOffset
@@ -10512,7 +10512,7 @@ public struct BindImageMemoryDeviceGroupInfo: ChainableBase, BindImageMemoryInfo
         self.splitInstanceBindRegions = splitInstanceBindRegions
     }
 
-    init(cStruct: VkBindImageMemoryDeviceGroupInfo) {
+    public init(cStruct: VkBindImageMemoryDeviceGroupInfo) {
         self.deviceIndices = Array(UnsafeBufferPointer(start: cStruct.pDeviceIndices, count: Int(cStruct.deviceIndexCount)))
         self.splitInstanceBindRegions = UnsafeBufferPointer(start: cStruct.pSplitInstanceBindRegions, count: Int(cStruct.splitInstanceBindRegionCount)).map{ Rect2D(cStruct: $0) }
     }
@@ -10550,7 +10550,7 @@ public struct DeviceGroupRenderPassBeginInfo: ChainableBase, RenderPassBeginInfo
         self.deviceRenderAreas = deviceRenderAreas
     }
 
-    init(cStruct: VkDeviceGroupRenderPassBeginInfo) {
+    public init(cStruct: VkDeviceGroupRenderPassBeginInfo) {
         self.deviceMask = cStruct.deviceMask
         self.deviceRenderAreas = UnsafeBufferPointer(start: cStruct.pDeviceRenderAreas, count: Int(cStruct.deviceRenderAreaCount)).map{ Rect2D(cStruct: $0) }
     }
@@ -10583,7 +10583,7 @@ public struct DeviceGroupCommandBufferBeginInfo: ChainableBase, CommandBufferBeg
         self.deviceMask = deviceMask
     }
 
-    init(cStruct: VkDeviceGroupCommandBufferBeginInfo) {
+    public init(cStruct: VkDeviceGroupCommandBufferBeginInfo) {
         self.deviceMask = cStruct.deviceMask
     }
 
@@ -10615,7 +10615,7 @@ public struct DeviceGroupSubmitInfo: ChainableBase, SubmitInfoExtension {
         self.signalSemaphoreDeviceIndices = signalSemaphoreDeviceIndices
     }
 
-    init(cStruct: VkDeviceGroupSubmitInfo) {
+    public init(cStruct: VkDeviceGroupSubmitInfo) {
         self.waitSemaphoreDeviceIndices = Array(UnsafeBufferPointer(start: cStruct.pWaitSemaphoreDeviceIndices, count: Int(cStruct.waitSemaphoreCount)))
         self.commandBufferDeviceMasks = Array(UnsafeBufferPointer(start: cStruct.pCommandBufferDeviceMasks, count: Int(cStruct.commandBufferCount)))
         self.signalSemaphoreDeviceIndices = Array(UnsafeBufferPointer(start: cStruct.pSignalSemaphoreDeviceIndices, count: Int(cStruct.signalSemaphoreCount)))
@@ -10658,7 +10658,7 @@ public struct DeviceGroupBindSparseInfo: ChainableBase, BindSparseInfoExtension 
         self.memoryDeviceIndex = memoryDeviceIndex
     }
 
-    init(cStruct: VkDeviceGroupBindSparseInfo) {
+    public init(cStruct: VkDeviceGroupBindSparseInfo) {
         self.resourceDeviceIndex = cStruct.resourceDeviceIndex
         self.memoryDeviceIndex = cStruct.memoryDeviceIndex
     }
@@ -10685,7 +10685,7 @@ public struct DeviceGroupPresentCapabilitiesKHR: ChainableBase {
     public let presentMask: (UInt32, UInt32, UInt32, UInt32, UInt32, UInt32, UInt32, UInt32, UInt32, UInt32, UInt32, UInt32, UInt32, UInt32, UInt32, UInt32, UInt32, UInt32, UInt32, UInt32, UInt32, UInt32, UInt32, UInt32, UInt32, UInt32, UInt32, UInt32, UInt32, UInt32, UInt32, UInt32)
     public let modes: DeviceGroupPresentModeFlagsKHR
 
-    init(cStruct: VkDeviceGroupPresentCapabilitiesKHR) {
+    public init(cStruct: VkDeviceGroupPresentCapabilitiesKHR) {
         self.presentMask = cStruct.presentMask
         self.modes = DeviceGroupPresentModeFlagsKHR(rawValue: cStruct.modes)
     }
@@ -10715,7 +10715,7 @@ public struct ImageSwapchainCreateInfoKHR: ChainableBase, ImageCreateInfoExtensi
         self.swapchain = swapchain
     }
 
-    init(cStruct: VkImageSwapchainCreateInfoKHR, device: Device) {
+    public init(cStruct: VkImageSwapchainCreateInfoKHR, device: Device) {
         self.swapchain = (cStruct.swapchain != nil) ? SwapchainKHR(handle: cStruct.swapchain, device: device) : nil
     }
 
@@ -10745,7 +10745,7 @@ public struct BindImageMemorySwapchainInfoKHR: ChainableBase, BindImageMemoryInf
         self.imageIndex = imageIndex
     }
 
-    init(cStruct: VkBindImageMemorySwapchainInfoKHR, device: Device) {
+    public init(cStruct: VkBindImageMemorySwapchainInfoKHR, device: Device) {
         self.swapchain = SwapchainKHR(handle: cStruct.swapchain, device: device)
         self.imageIndex = cStruct.imageIndex
     }
@@ -10783,7 +10783,7 @@ public struct AcquireNextImageInfoKHR: ChainableBase {
         self.deviceMask = deviceMask
     }
 
-    init(cStruct: VkAcquireNextImageInfoKHR, device: Device) {
+    public init(cStruct: VkAcquireNextImageInfoKHR, device: Device) {
         self.swapchain = SwapchainKHR(handle: cStruct.swapchain, device: device)
         self.timeout = cStruct.timeout
         self.semaphore = (cStruct.semaphore != nil) ? Semaphore(handle: cStruct.semaphore, device: device) : nil
@@ -10821,7 +10821,7 @@ public struct DeviceGroupPresentInfoKHR: ChainableBase, PresentInfoKHRExtension 
         self.mode = mode
     }
 
-    init(cStruct: VkDeviceGroupPresentInfoKHR) {
+    public init(cStruct: VkDeviceGroupPresentInfoKHR) {
         self.deviceMasks = Array(UnsafeBufferPointer(start: cStruct.pDeviceMasks, count: Int(cStruct.swapchainCount)))
         self.mode = DeviceGroupPresentModeFlagsKHR(rawValue: unsafeBitCast(cStruct.mode.rawValue, to: UInt32.self))
     }
@@ -10854,7 +10854,7 @@ public struct DeviceGroupDeviceCreateInfo: ChainableBase, DeviceCreateInfoExtens
         self.physicalDevices = physicalDevices
     }
 
-    init(cStruct: VkDeviceGroupDeviceCreateInfo, instance: Instance) {
+    public init(cStruct: VkDeviceGroupDeviceCreateInfo, instance: Instance) {
         self.physicalDevices = UnsafeBufferPointer(start: cStruct.pPhysicalDevices, count: Int(cStruct.physicalDeviceCount)).map{ PhysicalDevice(handle: $0, instance: instance) }
     }
 
@@ -10885,7 +10885,7 @@ public struct DeviceGroupSwapchainCreateInfoKHR: ChainableBase, SwapchainCreateI
         self.modes = modes
     }
 
-    init(cStruct: VkDeviceGroupSwapchainCreateInfoKHR) {
+    public init(cStruct: VkDeviceGroupSwapchainCreateInfoKHR) {
         self.modes = DeviceGroupPresentModeFlagsKHR(rawValue: cStruct.modes)
     }
 
@@ -10923,7 +10923,7 @@ public struct DescriptorUpdateTemplateEntry: CStructConvertible {
         self.stride = stride
     }
 
-    init(cStruct: VkDescriptorUpdateTemplateEntry) {
+    public init(cStruct: VkDescriptorUpdateTemplateEntry) {
         self.dstBinding = cStruct.dstBinding
         self.dstArrayElement = cStruct.dstArrayElement
         self.descriptorCount = cStruct.descriptorCount
@@ -10965,7 +10965,7 @@ public struct DescriptorUpdateTemplateCreateInfo: ChainableBase {
         self.set = set
     }
 
-    init(cStruct: VkDescriptorUpdateTemplateCreateInfo, device: Device) {
+    public init(cStruct: VkDescriptorUpdateTemplateCreateInfo, device: Device) {
         self.flags = DescriptorUpdateTemplateCreateFlags(rawValue: cStruct.flags)
         self.descriptorUpdateEntries = UnsafeBufferPointer(start: cStruct.pDescriptorUpdateEntries, count: Int(cStruct.descriptorUpdateEntryCount)).map{ DescriptorUpdateTemplateEntry(cStruct: $0) }
         self.templateType = DescriptorUpdateTemplateType(rawValue: unsafeBitCast(cStruct.templateType, to: UInt32.self))!
@@ -11010,7 +11010,7 @@ public struct XYColorEXT: CStructConvertible {
         self.y = y
     }
 
-    init(cStruct: VkXYColorEXT) {
+    public init(cStruct: VkXYColorEXT) {
         self.x = cStruct.x
         self.y = cStruct.y
     }
@@ -11032,7 +11032,7 @@ public struct PhysicalDevicePresentIdFeaturesKHR: ChainableBase, PhysicalDeviceF
         self.presentId = presentId
     }
 
-    init(cStruct: VkPhysicalDevicePresentIdFeaturesKHR) {
+    public init(cStruct: VkPhysicalDevicePresentIdFeaturesKHR) {
         self.presentId = cStruct.presentId == VK_TRUE
     }
 
@@ -11060,7 +11060,7 @@ public struct PresentIdKHR: ChainableBase, PresentInfoKHRExtension {
         self.presentIds = presentIds
     }
 
-    init(cStruct: VkPresentIdKHR) {
+    public init(cStruct: VkPresentIdKHR) {
         self.presentIds = (cStruct.pPresentIds != nil) ? Array(UnsafeBufferPointer(start: cStruct.pPresentIds, count: Int(cStruct.swapchainCount))) : nil
     }
 
@@ -11091,7 +11091,7 @@ public struct PhysicalDevicePresentId2FeaturesKHR: ChainableBase, PhysicalDevice
         self.presentId2 = presentId2
     }
 
-    init(cStruct: VkPhysicalDevicePresentId2FeaturesKHR) {
+    public init(cStruct: VkPhysicalDevicePresentId2FeaturesKHR) {
         self.presentId2 = cStruct.presentId2 == VK_TRUE
     }
 
@@ -11119,7 +11119,7 @@ public struct PresentId2KHR: ChainableBase, PresentInfoKHRExtension {
         self.presentIds = presentIds
     }
 
-    init(cStruct: VkPresentId2KHR) {
+    public init(cStruct: VkPresentId2KHR) {
         self.presentIds = (cStruct.pPresentIds != nil) ? Array(UnsafeBufferPointer(start: cStruct.pPresentIds, count: Int(cStruct.swapchainCount))) : nil
     }
 
@@ -11152,7 +11152,7 @@ public struct PresentWait2InfoKHR: ChainableBase {
         self.timeout = timeout
     }
 
-    init(cStruct: VkPresentWait2InfoKHR) {
+    public init(cStruct: VkPresentWait2InfoKHR) {
         self.presentId = cStruct.presentId
         self.timeout = cStruct.timeout
     }
@@ -11182,7 +11182,7 @@ public struct PhysicalDevicePresentWaitFeaturesKHR: ChainableBase, PhysicalDevic
         self.presentWait = presentWait
     }
 
-    init(cStruct: VkPhysicalDevicePresentWaitFeaturesKHR) {
+    public init(cStruct: VkPhysicalDevicePresentWaitFeaturesKHR) {
         self.presentWait = cStruct.presentWait == VK_TRUE
     }
 
@@ -11210,7 +11210,7 @@ public struct PhysicalDevicePresentWait2FeaturesKHR: ChainableBase, PhysicalDevi
         self.presentWait2 = presentWait2
     }
 
-    init(cStruct: VkPhysicalDevicePresentWait2FeaturesKHR) {
+    public init(cStruct: VkPhysicalDevicePresentWait2FeaturesKHR) {
         self.presentWait2 = cStruct.presentWait2 == VK_TRUE
     }
 
@@ -11242,7 +11242,7 @@ public struct PhysicalDevicePresentTimingFeaturesEXT: ChainableBase, PhysicalDev
         self.presentAtRelativeTime = presentAtRelativeTime
     }
 
-    init(cStruct: VkPhysicalDevicePresentTimingFeaturesEXT) {
+    public init(cStruct: VkPhysicalDevicePresentTimingFeaturesEXT) {
         self.presentTiming = cStruct.presentTiming == VK_TRUE
         self.presentAtAbsoluteTime = cStruct.presentAtAbsoluteTime == VK_TRUE
         self.presentAtRelativeTime = cStruct.presentAtRelativeTime == VK_TRUE
@@ -11273,7 +11273,7 @@ public struct PresentTimingSurfaceCapabilitiesEXT: ChainableBase, SurfaceCapabil
     public let presentAtRelativeTimeSupported: Bool
     public let presentStageQueries: PresentStageFlagsEXT
 
-    init(cStruct: VkPresentTimingSurfaceCapabilitiesEXT) {
+    public init(cStruct: VkPresentTimingSurfaceCapabilitiesEXT) {
         self.presentTimingSupported = cStruct.presentTimingSupported == VK_TRUE
         self.presentAtAbsoluteTimeSupported = cStruct.presentAtAbsoluteTimeSupported == VK_TRUE
         self.presentAtRelativeTimeSupported = cStruct.presentAtRelativeTimeSupported == VK_TRUE
@@ -11304,7 +11304,7 @@ public struct SwapchainTimingPropertiesEXT: ChainableBase {
     public let refreshDuration: UInt64
     public let refreshInterval: UInt64
 
-    init(cStruct: VkSwapchainTimingPropertiesEXT) {
+    public init(cStruct: VkSwapchainTimingPropertiesEXT) {
         self.refreshDuration = cStruct.refreshDuration
         self.refreshInterval = cStruct.refreshInterval
     }
@@ -11332,7 +11332,7 @@ public struct SwapchainTimeDomainPropertiesEXT: ChainableBase {
     public let timeDomains: UnsafeMutablePointer<VkTimeDomainKHR>?
     public let timeDomainIds: UnsafeMutablePointer<UInt64>?
 
-    init(cStruct: VkSwapchainTimeDomainPropertiesEXT) {
+    public init(cStruct: VkSwapchainTimeDomainPropertiesEXT) {
         self.timeDomainCount = cStruct.timeDomainCount
         self.timeDomains = cStruct.pTimeDomains
         self.timeDomainIds = cStruct.pTimeDomainIds
@@ -11361,7 +11361,7 @@ public struct PresentStageTimeEXT: CStructConvertible {
     public let stage: PresentStageFlagsEXT
     public let time: UInt64
 
-    init(cStruct: VkPresentStageTimeEXT) {
+    public init(cStruct: VkPresentStageTimeEXT) {
         self.stage = PresentStageFlagsEXT(rawValue: cStruct.stage)
         self.time = cStruct.time
     }
@@ -11385,7 +11385,7 @@ public struct PastPresentationTimingInfoEXT: ChainableBase {
         self.swapchain = swapchain
     }
 
-    init(cStruct: VkPastPresentationTimingInfoEXT, device: Device) {
+    public init(cStruct: VkPastPresentationTimingInfoEXT, device: Device) {
         self.flags = PastPresentationTimingFlagsEXT(rawValue: cStruct.flags)
         self.swapchain = SwapchainKHR(handle: cStruct.swapchain, device: device)
     }
@@ -11417,7 +11417,7 @@ public struct PastPresentationTimingEXT: ChainableBase {
     public let timeDomainId: UInt64
     public let reportComplete: Bool
 
-    init(cStruct: VkPastPresentationTimingEXT) {
+    public init(cStruct: VkPastPresentationTimingEXT) {
         self.presentId = cStruct.presentId
         self.targetTime = cStruct.targetTime
         self.presentStageCount = cStruct.presentStageCount
@@ -11456,7 +11456,7 @@ public struct PastPresentationTimingPropertiesEXT: ChainableBase {
     public let presentationTimingCount: UInt32
     public let presentationTimings: UnsafeMutablePointer<VkPastPresentationTimingEXT>
 
-    init(cStruct: VkPastPresentationTimingPropertiesEXT) {
+    public init(cStruct: VkPastPresentationTimingPropertiesEXT) {
         self.timingPropertiesCounter = cStruct.timingPropertiesCounter
         self.timeDomainsCounter = cStruct.timeDomainsCounter
         self.presentationTimingCount = cStruct.presentationTimingCount
@@ -11498,7 +11498,7 @@ public struct PresentTimingInfoEXT: ChainableBase {
         self.targetTimeDomainPresentStage = targetTimeDomainPresentStage
     }
 
-    init(cStruct: VkPresentTimingInfoEXT) {
+    public init(cStruct: VkPresentTimingInfoEXT) {
         self.flags = PresentTimingInfoFlagsEXT(rawValue: cStruct.flags)
         self.targetTime = cStruct.targetTime
         self.timeDomainId = cStruct.timeDomainId
@@ -11534,7 +11534,7 @@ public struct PresentTimingsInfoEXT: ChainableBase, PresentInfoKHRExtension {
         self.timingInfos = timingInfos
     }
 
-    init(cStruct: VkPresentTimingsInfoEXT) {
+    public init(cStruct: VkPresentTimingsInfoEXT) {
         self.timingInfos = (cStruct.pTimingInfos != nil) ? UnsafeBufferPointer(start: cStruct.pTimingInfos, count: Int(cStruct.swapchainCount)).map{ PresentTimingInfoEXT(cStruct: $0) } : nil
     }
 
@@ -11569,7 +11569,7 @@ public struct SwapchainCalibratedTimestampInfoEXT: ChainableBase, CalibratedTime
         self.timeDomainId = timeDomainId
     }
 
-    init(cStruct: VkSwapchainCalibratedTimestampInfoEXT, device: Device) {
+    public init(cStruct: VkSwapchainCalibratedTimestampInfoEXT, device: Device) {
         self.swapchain = SwapchainKHR(handle: cStruct.swapchain, device: device)
         self.presentStage = PresentStageFlagsEXT(rawValue: cStruct.presentStage)
         self.timeDomainId = cStruct.timeDomainId
@@ -11615,7 +11615,7 @@ public struct HdrMetadataEXT: ChainableBase {
         self.maxFrameAverageLightLevel = maxFrameAverageLightLevel
     }
 
-    init(cStruct: VkHdrMetadataEXT) {
+    public init(cStruct: VkHdrMetadataEXT) {
         self.displayPrimaryRed = XYColorEXT(cStruct: cStruct.displayPrimaryRed)
         self.displayPrimaryGreen = XYColorEXT(cStruct: cStruct.displayPrimaryGreen)
         self.displayPrimaryBlue = XYColorEXT(cStruct: cStruct.displayPrimaryBlue)
@@ -11667,7 +11667,7 @@ public struct HdrVividDynamicMetadataHUAWEI: ChainableBase, HdrMetadataEXTExtens
         self.dynamicMetadata = dynamicMetadata
     }
 
-    init(cStruct: VkHdrVividDynamicMetadataHUAWEI) {
+    public init(cStruct: VkHdrVividDynamicMetadataHUAWEI) {
         self.dynamicMetadataSize = cStruct.dynamicMetadataSize
         self.dynamicMetadata = cStruct.pDynamicMetadata
     }
@@ -11693,7 +11693,7 @@ public struct DisplayNativeHdrSurfaceCapabilitiesAMD: ChainableBase, SurfaceCapa
 
     public let localDimmingSupport: Bool
 
-    init(cStruct: VkDisplayNativeHdrSurfaceCapabilitiesAMD) {
+    public init(cStruct: VkDisplayNativeHdrSurfaceCapabilitiesAMD) {
         self.localDimmingSupport = cStruct.localDimmingSupport == VK_TRUE
     }
 
@@ -11721,7 +11721,7 @@ public struct SwapchainDisplayNativeHdrCreateInfoAMD: ChainableBase, SwapchainCr
         self.localDimmingEnable = localDimmingEnable
     }
 
-    init(cStruct: VkSwapchainDisplayNativeHdrCreateInfoAMD) {
+    public init(cStruct: VkSwapchainDisplayNativeHdrCreateInfoAMD) {
         self.localDimmingEnable = cStruct.localDimmingEnable == VK_TRUE
     }
 
@@ -11745,7 +11745,7 @@ public struct RefreshCycleDurationGOOGLE: CStructConvertible {
 
     public let refreshDuration: UInt64
 
-    init(cStruct: VkRefreshCycleDurationGOOGLE) {
+    public init(cStruct: VkRefreshCycleDurationGOOGLE) {
         self.refreshDuration = cStruct.refreshDuration
     }
 
@@ -11765,7 +11765,7 @@ public struct PastPresentationTimingGOOGLE: CStructConvertible {
     public let earliestPresentTime: UInt64
     public let presentMargin: UInt64
 
-    init(cStruct: VkPastPresentationTimingGOOGLE) {
+    public init(cStruct: VkPastPresentationTimingGOOGLE) {
         self.presentID = cStruct.presentID
         self.desiredPresentTime = cStruct.desiredPresentTime
         self.actualPresentTime = cStruct.actualPresentTime
@@ -11795,7 +11795,7 @@ public struct PresentTimeGOOGLE: CStructConvertible {
         self.desiredPresentTime = desiredPresentTime
     }
 
-    init(cStruct: VkPresentTimeGOOGLE) {
+    public init(cStruct: VkPresentTimeGOOGLE) {
         self.presentID = cStruct.presentID
         self.desiredPresentTime = cStruct.desiredPresentTime
     }
@@ -11817,7 +11817,7 @@ public struct PresentTimesInfoGOOGLE: ChainableBase, PresentInfoKHRExtension {
         self.times = times
     }
 
-    init(cStruct: VkPresentTimesInfoGOOGLE) {
+    public init(cStruct: VkPresentTimesInfoGOOGLE) {
         self.times = (cStruct.pTimes != nil) ? UnsafeBufferPointer(start: cStruct.pTimes, count: Int(cStruct.swapchainCount)).map{ PresentTimeGOOGLE(cStruct: $0) } : nil
     }
 
@@ -11851,7 +11851,7 @@ public struct IOSSurfaceCreateInfoMVK: ChainableBase {
         self.view = view
     }
 
-    init(cStruct: VkIOSSurfaceCreateInfoMVK) {
+    public init(cStruct: VkIOSSurfaceCreateInfoMVK) {
         self.flags = IOSSurfaceCreateFlagsMVK(rawValue: cStruct.flags)
         self.view = cStruct.pView
     }
@@ -11885,7 +11885,7 @@ public struct MacOSSurfaceCreateInfoMVK: ChainableBase {
         self.view = view
     }
 
-    init(cStruct: VkMacOSSurfaceCreateInfoMVK) {
+    public init(cStruct: VkMacOSSurfaceCreateInfoMVK) {
         self.flags = MacOSSurfaceCreateFlagsMVK(rawValue: cStruct.flags)
         self.view = cStruct.pView
     }
@@ -11919,7 +11919,7 @@ public struct MetalSurfaceCreateInfoEXT: ChainableBase {
         self.layer = layer
     }
 
-    init(cStruct: VkMetalSurfaceCreateInfoEXT) {
+    public init(cStruct: VkMetalSurfaceCreateInfoEXT) {
         self.flags = MetalSurfaceCreateFlagsEXT(rawValue: cStruct.flags)
         self.layer = cStruct.pLayer
     }
@@ -11952,7 +11952,7 @@ public struct ViewportWScalingNV: CStructConvertible {
         self.ycoeff = ycoeff
     }
 
-    init(cStruct: VkViewportWScalingNV) {
+    public init(cStruct: VkViewportWScalingNV) {
         self.xcoeff = cStruct.xcoeff
         self.ycoeff = cStruct.ycoeff
     }
@@ -11976,7 +11976,7 @@ public struct PipelineViewportWScalingStateCreateInfoNV: ChainableBase, Pipeline
         self.viewportWScalings = viewportWScalings
     }
 
-    init(cStruct: VkPipelineViewportWScalingStateCreateInfoNV) {
+    public init(cStruct: VkPipelineViewportWScalingStateCreateInfoNV) {
         self.viewportWScalingEnable = cStruct.viewportWScalingEnable == VK_TRUE
         self.viewportWScalings = (cStruct.pViewportWScalings != nil) ? UnsafeBufferPointer(start: cStruct.pViewportWScalings, count: Int(cStruct.viewportCount)).map{ ViewportWScalingNV(cStruct: $0) } : nil
     }
@@ -12015,7 +12015,7 @@ public struct ViewportSwizzleNV: CStructConvertible {
         self.w = w
     }
 
-    init(cStruct: VkViewportSwizzleNV) {
+    public init(cStruct: VkViewportSwizzleNV) {
         self.x = ViewportCoordinateSwizzleNV(rawValue: unsafeBitCast(cStruct.x, to: UInt32.self))!
         self.y = ViewportCoordinateSwizzleNV(rawValue: unsafeBitCast(cStruct.y, to: UInt32.self))!
         self.z = ViewportCoordinateSwizzleNV(rawValue: unsafeBitCast(cStruct.z, to: UInt32.self))!
@@ -12043,7 +12043,7 @@ public struct PipelineViewportSwizzleStateCreateInfoNV: ChainableBase, PipelineV
         self.viewportSwizzles = viewportSwizzles
     }
 
-    init(cStruct: VkPipelineViewportSwizzleStateCreateInfoNV) {
+    public init(cStruct: VkPipelineViewportSwizzleStateCreateInfoNV) {
         self.flags = PipelineViewportSwizzleStateCreateFlagsNV(rawValue: cStruct.flags)
         self.viewportSwizzles = UnsafeBufferPointer(start: cStruct.pViewportSwizzles, count: Int(cStruct.viewportCount)).map{ ViewportSwizzleNV(cStruct: $0) }
     }
@@ -12072,7 +12072,7 @@ public struct PhysicalDeviceDiscardRectanglePropertiesEXT: ChainableBase, Physic
 
     public let maxDiscardRectangles: UInt32
 
-    init(cStruct: VkPhysicalDeviceDiscardRectanglePropertiesEXT) {
+    public init(cStruct: VkPhysicalDeviceDiscardRectanglePropertiesEXT) {
         self.maxDiscardRectangles = cStruct.maxDiscardRectangles
     }
 
@@ -12104,7 +12104,7 @@ public struct PipelineDiscardRectangleStateCreateInfoEXT: ChainableBase, Graphic
         self.discardRectangles = discardRectangles
     }
 
-    init(cStruct: VkPipelineDiscardRectangleStateCreateInfoEXT) {
+    public init(cStruct: VkPipelineDiscardRectangleStateCreateInfoEXT) {
         self.flags = PipelineDiscardRectangleStateCreateFlagsEXT(rawValue: cStruct.flags)
         self.discardRectangleMode = DiscardRectangleModeEXT(rawValue: unsafeBitCast(cStruct.discardRectangleMode, to: UInt32.self))!
         self.discardRectangles = UnsafeBufferPointer(start: cStruct.pDiscardRectangles, count: Int(cStruct.discardRectangleCount)).map{ Rect2D(cStruct: $0) }
@@ -12135,7 +12135,7 @@ public struct PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX: ChainableBa
 
     public let perViewPositionAllComponents: Bool
 
-    init(cStruct: VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX) {
+    public init(cStruct: VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX) {
         self.perViewPositionAllComponents = cStruct.perViewPositionAllComponents == VK_TRUE
     }
 
@@ -12167,7 +12167,7 @@ public struct InputAttachmentAspectReference: CStructConvertible {
         self.aspectMask = aspectMask
     }
 
-    init(cStruct: VkInputAttachmentAspectReference) {
+    public init(cStruct: VkInputAttachmentAspectReference) {
         self.subpass = cStruct.subpass
         self.inputAttachmentIndex = cStruct.inputAttachmentIndex
         self.aspectMask = ImageAspectFlags(rawValue: cStruct.aspectMask)
@@ -12191,7 +12191,7 @@ public struct RenderPassInputAttachmentAspectCreateInfo: ChainableBase, RenderPa
         self.aspectReferences = aspectReferences
     }
 
-    init(cStruct: VkRenderPassInputAttachmentAspectCreateInfo) {
+    public init(cStruct: VkRenderPassInputAttachmentAspectCreateInfo) {
         self.aspectReferences = UnsafeBufferPointer(start: cStruct.pAspectReferences, count: Int(cStruct.aspectReferenceCount)).map{ InputAttachmentAspectReference(cStruct: $0) }
     }
 
@@ -12222,7 +12222,7 @@ public struct PhysicalDeviceSurfaceInfo2KHR: ChainableBase {
         self.surface = surface
     }
 
-    init(cStruct: VkPhysicalDeviceSurfaceInfo2KHR, instance: Instance) {
+    public init(cStruct: VkPhysicalDeviceSurfaceInfo2KHR, instance: Instance) {
         self.surface = (cStruct.surface != nil) ? SurfaceKHR(handle: cStruct.surface, instance: instance) : nil
     }
 
@@ -12246,7 +12246,7 @@ public struct SurfaceCapabilities2KHR: ChainableBase {
 
     public let surfaceCapabilities: SurfaceCapabilitiesKHR
 
-    init(cStruct: VkSurfaceCapabilities2KHR) {
+    public init(cStruct: VkSurfaceCapabilities2KHR) {
         self.surfaceCapabilities = SurfaceCapabilitiesKHR(cStruct: cStruct.surfaceCapabilities)
     }
 
@@ -12272,7 +12272,7 @@ public struct SurfaceFormat2KHR: ChainableBase {
 
     public let surfaceFormat: SurfaceFormatKHR
 
-    init(cStruct: VkSurfaceFormat2KHR) {
+    public init(cStruct: VkSurfaceFormat2KHR) {
         self.surfaceFormat = SurfaceFormatKHR(cStruct: cStruct.surfaceFormat)
     }
 
@@ -12298,7 +12298,7 @@ public struct DisplayProperties2KHR: ChainableBase {
 
     public let displayProperties: DisplayPropertiesKHR
 
-    init(cStruct: VkDisplayProperties2KHR, physicalDevice: PhysicalDevice) {
+    public init(cStruct: VkDisplayProperties2KHR, physicalDevice: PhysicalDevice) {
         self.displayProperties = DisplayPropertiesKHR(cStruct: cStruct.displayProperties, physicalDevice: physicalDevice)
     }
 
@@ -12324,7 +12324,7 @@ public struct DisplayPlaneProperties2KHR: ChainableBase {
 
     public let displayPlaneProperties: DisplayPlanePropertiesKHR
 
-    init(cStruct: VkDisplayPlaneProperties2KHR, physicalDevice: PhysicalDevice) {
+    public init(cStruct: VkDisplayPlaneProperties2KHR, physicalDevice: PhysicalDevice) {
         self.displayPlaneProperties = DisplayPlanePropertiesKHR(cStruct: cStruct.displayPlaneProperties, physicalDevice: physicalDevice)
     }
 
@@ -12350,7 +12350,7 @@ public struct DisplayModeProperties2KHR: ChainableBase {
 
     public let displayModeProperties: DisplayModePropertiesKHR
 
-    init(cStruct: VkDisplayModeProperties2KHR, display: DisplayKHR) {
+    public init(cStruct: VkDisplayModeProperties2KHR, display: DisplayKHR) {
         self.displayModeProperties = DisplayModePropertiesKHR(cStruct: cStruct.displayModeProperties, display: display)
     }
 
@@ -12376,7 +12376,7 @@ public struct DisplayModeStereoPropertiesNV: ChainableBase, DisplayModePropertie
 
     public let hdmi3DSupported: Bool
 
-    init(cStruct: VkDisplayModeStereoPropertiesNV) {
+    public init(cStruct: VkDisplayModeStereoPropertiesNV) {
         self.hdmi3DSupported = cStruct.hdmi3DSupported == VK_TRUE
     }
 
@@ -12406,7 +12406,7 @@ public struct DisplayPlaneInfo2KHR: ChainableBase {
         self.planeIndex = planeIndex
     }
 
-    init(cStruct: VkDisplayPlaneInfo2KHR, display: DisplayKHR) {
+    public init(cStruct: VkDisplayPlaneInfo2KHR, display: DisplayKHR) {
         self.mode = DisplayModeKHR(handle: cStruct.mode, display: display)
         self.planeIndex = cStruct.planeIndex
     }
@@ -12432,7 +12432,7 @@ public struct DisplayPlaneCapabilities2KHR: ChainableBase {
 
     public let capabilities: DisplayPlaneCapabilitiesKHR
 
-    init(cStruct: VkDisplayPlaneCapabilities2KHR) {
+    public init(cStruct: VkDisplayPlaneCapabilities2KHR) {
         self.capabilities = DisplayPlaneCapabilitiesKHR(cStruct: cStruct.capabilities)
     }
 
@@ -12458,7 +12458,7 @@ public struct SharedPresentSurfaceCapabilitiesKHR: ChainableBase, SurfaceCapabil
 
     public let sharedPresentSupportedUsageFlags: ImageUsageFlags
 
-    init(cStruct: VkSharedPresentSurfaceCapabilitiesKHR) {
+    public init(cStruct: VkSharedPresentSurfaceCapabilitiesKHR) {
         self.sharedPresentSupportedUsageFlags = ImageUsageFlags(rawValue: cStruct.sharedPresentSupportedUsageFlags)
     }
 
@@ -12492,7 +12492,7 @@ public struct PhysicalDevice16BitStorageFeatures: ChainableBase, PhysicalDeviceF
         self.storageInputOutput16 = storageInputOutput16
     }
 
-    init(cStruct: VkPhysicalDevice16BitStorageFeatures) {
+    public init(cStruct: VkPhysicalDevice16BitStorageFeatures) {
         self.storageBuffer16BitAccess = cStruct.storageBuffer16BitAccess == VK_TRUE
         self.uniformAndStorageBuffer16BitAccess = cStruct.uniformAndStorageBuffer16BitAccess == VK_TRUE
         self.storagePushConstant16 = cStruct.storagePushConstant16 == VK_TRUE
@@ -12525,7 +12525,7 @@ public struct PhysicalDeviceSubgroupProperties: ChainableBase, PhysicalDevicePro
     public let supportedOperations: SubgroupFeatureFlags
     public let quadOperationsInAllStages: Bool
 
-    init(cStruct: VkPhysicalDeviceSubgroupProperties) {
+    public init(cStruct: VkPhysicalDeviceSubgroupProperties) {
         self.subgroupSize = cStruct.subgroupSize
         self.supportedStages = ShaderStageFlags(rawValue: cStruct.supportedStages)
         self.supportedOperations = SubgroupFeatureFlags(rawValue: cStruct.supportedOperations)
@@ -12559,7 +12559,7 @@ public struct PhysicalDeviceShaderSubgroupExtendedTypesFeatures: ChainableBase, 
         self.shaderSubgroupExtendedTypes = shaderSubgroupExtendedTypes
     }
 
-    init(cStruct: VkPhysicalDeviceShaderSubgroupExtendedTypesFeatures) {
+    public init(cStruct: VkPhysicalDeviceShaderSubgroupExtendedTypesFeatures) {
         self.shaderSubgroupExtendedTypes = cStruct.shaderSubgroupExtendedTypes == VK_TRUE
     }
 
@@ -12587,7 +12587,7 @@ public struct BufferMemoryRequirementsInfo2: ChainableBase {
         self.buffer = buffer
     }
 
-    init(cStruct: VkBufferMemoryRequirementsInfo2, device: Device) {
+    public init(cStruct: VkBufferMemoryRequirementsInfo2, device: Device) {
         self.buffer = Buffer(handle: cStruct.buffer, device: device)
     }
 
@@ -12615,7 +12615,7 @@ public struct DeviceBufferMemoryRequirements: ChainableBase {
         self.createInfo = createInfo
     }
 
-    init(cStruct: VkDeviceBufferMemoryRequirements) {
+    public init(cStruct: VkDeviceBufferMemoryRequirements) {
         self.createInfo = BufferCreateInfo(cStruct: cStruct.pCreateInfo.pointee)
     }
 
@@ -12645,7 +12645,7 @@ public struct ImageMemoryRequirementsInfo2: ChainableBase {
         self.image = image
     }
 
-    init(cStruct: VkImageMemoryRequirementsInfo2, device: Device) {
+    public init(cStruct: VkImageMemoryRequirementsInfo2, device: Device) {
         self.image = Image(handle: cStruct.image, device: device)
     }
 
@@ -12673,7 +12673,7 @@ public struct ImageSparseMemoryRequirementsInfo2: ChainableBase {
         self.image = image
     }
 
-    init(cStruct: VkImageSparseMemoryRequirementsInfo2, device: Device) {
+    public init(cStruct: VkImageSparseMemoryRequirementsInfo2, device: Device) {
         self.image = Image(handle: cStruct.image, device: device)
     }
 
@@ -12703,7 +12703,7 @@ public struct DeviceImageMemoryRequirements: ChainableBase {
         self.planeAspect = planeAspect
     }
 
-    init(cStruct: VkDeviceImageMemoryRequirements) {
+    public init(cStruct: VkDeviceImageMemoryRequirements) {
         self.createInfo = ImageCreateInfo(cStruct: cStruct.pCreateInfo.pointee)
         self.planeAspect = ImageAspectFlags(rawValue: unsafeBitCast(cStruct.planeAspect.rawValue, to: UInt32.self))
     }
@@ -12731,7 +12731,7 @@ public struct MemoryRequirements2: ChainableBase {
 
     public let memoryRequirements: MemoryRequirements
 
-    init(cStruct: VkMemoryRequirements2) {
+    public init(cStruct: VkMemoryRequirements2) {
         self.memoryRequirements = MemoryRequirements(cStruct: cStruct.memoryRequirements)
     }
 
@@ -12757,7 +12757,7 @@ public struct SparseImageMemoryRequirements2: ChainableBase {
 
     public let memoryRequirements: SparseImageMemoryRequirements
 
-    init(cStruct: VkSparseImageMemoryRequirements2) {
+    public init(cStruct: VkSparseImageMemoryRequirements2) {
         self.memoryRequirements = SparseImageMemoryRequirements(cStruct: cStruct.memoryRequirements)
     }
 
@@ -12783,7 +12783,7 @@ public struct PhysicalDevicePointClippingProperties: ChainableBase, PhysicalDevi
 
     public let pointClippingBehavior: PointClippingBehavior
 
-    init(cStruct: VkPhysicalDevicePointClippingProperties) {
+    public init(cStruct: VkPhysicalDevicePointClippingProperties) {
         self.pointClippingBehavior = PointClippingBehavior(rawValue: unsafeBitCast(cStruct.pointClippingBehavior, to: UInt32.self))!
     }
 
@@ -12808,7 +12808,7 @@ public struct MemoryDedicatedRequirements: ChainableBase, MemoryRequirements2Ext
     public let prefersDedicatedAllocation: Bool
     public let requiresDedicatedAllocation: Bool
 
-    init(cStruct: VkMemoryDedicatedRequirements) {
+    public init(cStruct: VkMemoryDedicatedRequirements) {
         self.prefersDedicatedAllocation = cStruct.prefersDedicatedAllocation == VK_TRUE
         self.requiresDedicatedAllocation = cStruct.requiresDedicatedAllocation == VK_TRUE
     }
@@ -12840,7 +12840,7 @@ public struct MemoryDedicatedAllocateInfo: ChainableBase, MemoryAllocateInfoExte
         self.buffer = buffer
     }
 
-    init(cStruct: VkMemoryDedicatedAllocateInfo, device: Device) {
+    public init(cStruct: VkMemoryDedicatedAllocateInfo, device: Device) {
         self.image = (cStruct.image != nil) ? Image(handle: cStruct.image, device: device) : nil
         self.buffer = (cStruct.buffer != nil) ? Buffer(handle: cStruct.buffer, device: device) : nil
     }
@@ -12870,7 +12870,7 @@ public struct ImageViewUsageCreateInfo: ChainableBase, ImageViewCreateInfoExtens
         self.usage = usage
     }
 
-    init(cStruct: VkImageViewUsageCreateInfo) {
+    public init(cStruct: VkImageViewUsageCreateInfo) {
         self.usage = ImageUsageFlags(rawValue: cStruct.usage)
     }
 
@@ -12900,7 +12900,7 @@ public struct ImageViewSlicedCreateInfoEXT: ChainableBase, ImageViewCreateInfoEx
         self.sliceCount = sliceCount
     }
 
-    init(cStruct: VkImageViewSlicedCreateInfoEXT) {
+    public init(cStruct: VkImageViewSlicedCreateInfoEXT) {
         self.sliceOffset = cStruct.sliceOffset
         self.sliceCount = cStruct.sliceCount
     }
@@ -12930,7 +12930,7 @@ public struct PipelineTessellationDomainOriginStateCreateInfo: ChainableBase, Pi
         self.domainOrigin = domainOrigin
     }
 
-    init(cStruct: VkPipelineTessellationDomainOriginStateCreateInfo) {
+    public init(cStruct: VkPipelineTessellationDomainOriginStateCreateInfo) {
         self.domainOrigin = TessellationDomainOrigin(rawValue: unsafeBitCast(cStruct.domainOrigin, to: UInt32.self))!
     }
 
@@ -12958,7 +12958,7 @@ public struct SamplerYcbcrConversionInfo: ChainableBase, SamplerCreateInfoExtens
         self.conversion = conversion
     }
 
-    init(cStruct: VkSamplerYcbcrConversionInfo, device: Device) {
+    public init(cStruct: VkSamplerYcbcrConversionInfo, device: Device) {
         self.conversion = SamplerYcbcrConversion(handle: cStruct.conversion, device: device)
     }
 
@@ -13000,7 +13000,7 @@ public struct SamplerYcbcrConversionCreateInfo: ChainableBase {
         self.forceExplicitReconstruction = forceExplicitReconstruction
     }
 
-    init(cStruct: VkSamplerYcbcrConversionCreateInfo) {
+    public init(cStruct: VkSamplerYcbcrConversionCreateInfo) {
         self.format = Format(rawValue: unsafeBitCast(cStruct.format, to: UInt32.self))!
         self.ycbcrModel = SamplerYcbcrModelConversion(rawValue: unsafeBitCast(cStruct.ycbcrModel, to: UInt32.self))!
         self.ycbcrRange = SamplerYcbcrRange(rawValue: unsafeBitCast(cStruct.ycbcrRange, to: UInt32.self))!
@@ -13044,7 +13044,7 @@ public struct BindImagePlaneMemoryInfo: ChainableBase, BindImageMemoryInfoExtens
         self.planeAspect = planeAspect
     }
 
-    init(cStruct: VkBindImagePlaneMemoryInfo) {
+    public init(cStruct: VkBindImagePlaneMemoryInfo) {
         self.planeAspect = ImageAspectFlags(rawValue: unsafeBitCast(cStruct.planeAspect.rawValue, to: UInt32.self))
     }
 
@@ -13072,7 +13072,7 @@ public struct ImagePlaneMemoryRequirementsInfo: ChainableBase, ImageMemoryRequir
         self.planeAspect = planeAspect
     }
 
-    init(cStruct: VkImagePlaneMemoryRequirementsInfo) {
+    public init(cStruct: VkImagePlaneMemoryRequirementsInfo) {
         self.planeAspect = ImageAspectFlags(rawValue: unsafeBitCast(cStruct.planeAspect.rawValue, to: UInt32.self))
     }
 
@@ -13100,7 +13100,7 @@ public struct PhysicalDeviceSamplerYcbcrConversionFeatures: ChainableBase, Physi
         self.samplerYcbcrConversion = samplerYcbcrConversion
     }
 
-    init(cStruct: VkPhysicalDeviceSamplerYcbcrConversionFeatures) {
+    public init(cStruct: VkPhysicalDeviceSamplerYcbcrConversionFeatures) {
         self.samplerYcbcrConversion = cStruct.samplerYcbcrConversion == VK_TRUE
     }
 
@@ -13124,7 +13124,7 @@ public struct SamplerYcbcrConversionImageFormatProperties: ChainableBase, ImageF
 
     public let combinedImageSamplerDescriptorCount: UInt32
 
-    init(cStruct: VkSamplerYcbcrConversionImageFormatProperties) {
+    public init(cStruct: VkSamplerYcbcrConversionImageFormatProperties) {
         self.combinedImageSamplerDescriptorCount = cStruct.combinedImageSamplerDescriptorCount
     }
 
@@ -13148,7 +13148,7 @@ public struct TextureLODGatherFormatPropertiesAMD: ChainableBase, ImageFormatPro
 
     public let supportsTextureGatherLODBiasAMD: Bool
 
-    init(cStruct: VkTextureLODGatherFormatPropertiesAMD) {
+    public init(cStruct: VkTextureLODGatherFormatPropertiesAMD) {
         self.supportsTextureGatherLODBiasAMD = cStruct.supportsTextureGatherLODBiasAMD == VK_TRUE
     }
 
@@ -13180,7 +13180,7 @@ public struct ConditionalRenderingBeginInfoEXT: ChainableBase {
         self.flags = flags
     }
 
-    init(cStruct: VkConditionalRenderingBeginInfoEXT, device: Device) {
+    public init(cStruct: VkConditionalRenderingBeginInfoEXT, device: Device) {
         self.buffer = Buffer(handle: cStruct.buffer, device: device)
         self.offset = cStruct.offset
         self.flags = ConditionalRenderingFlagsEXT(rawValue: cStruct.flags)
@@ -13212,7 +13212,7 @@ public struct ProtectedSubmitInfo: ChainableBase, SubmitInfoExtension {
         self.protectedSubmit = protectedSubmit
     }
 
-    init(cStruct: VkProtectedSubmitInfo) {
+    public init(cStruct: VkProtectedSubmitInfo) {
         self.protectedSubmit = cStruct.protectedSubmit == VK_TRUE
     }
 
@@ -13240,7 +13240,7 @@ public struct PhysicalDeviceProtectedMemoryFeatures: ChainableBase, PhysicalDevi
         self.protectedMemory = protectedMemory
     }
 
-    init(cStruct: VkPhysicalDeviceProtectedMemoryFeatures) {
+    public init(cStruct: VkPhysicalDeviceProtectedMemoryFeatures) {
         self.protectedMemory = cStruct.protectedMemory == VK_TRUE
     }
 
@@ -13264,7 +13264,7 @@ public struct PhysicalDeviceProtectedMemoryProperties: ChainableBase, PhysicalDe
 
     public let protectedNoFault: Bool
 
-    init(cStruct: VkPhysicalDeviceProtectedMemoryProperties) {
+    public init(cStruct: VkPhysicalDeviceProtectedMemoryProperties) {
         self.protectedNoFault = cStruct.protectedNoFault == VK_TRUE
     }
 
@@ -13296,7 +13296,7 @@ public struct DeviceQueueInfo2: ChainableBase {
         self.queueIndex = queueIndex
     }
 
-    init(cStruct: VkDeviceQueueInfo2) {
+    public init(cStruct: VkDeviceQueueInfo2) {
         self.flags = DeviceQueueCreateFlags(rawValue: cStruct.flags)
         self.queueFamilyIndex = cStruct.queueFamilyIndex
         self.queueIndex = cStruct.queueIndex
@@ -13332,7 +13332,7 @@ public struct PipelineCoverageToColorStateCreateInfoNV: ChainableBase, PipelineM
         self.coverageToColorLocation = coverageToColorLocation
     }
 
-    init(cStruct: VkPipelineCoverageToColorStateCreateInfoNV) {
+    public init(cStruct: VkPipelineCoverageToColorStateCreateInfoNV) {
         self.flags = PipelineCoverageToColorStateCreateFlagsNV(rawValue: cStruct.flags)
         self.coverageToColorEnable = cStruct.coverageToColorEnable == VK_TRUE
         self.coverageToColorLocation = cStruct.coverageToColorLocation
@@ -13361,7 +13361,7 @@ public struct PhysicalDeviceSamplerFilterMinmaxProperties: ChainableBase, Physic
     public let filterMinmaxSingleComponentFormats: Bool
     public let filterMinmaxImageComponentMapping: Bool
 
-    init(cStruct: VkPhysicalDeviceSamplerFilterMinmaxProperties) {
+    public init(cStruct: VkPhysicalDeviceSamplerFilterMinmaxProperties) {
         self.filterMinmaxSingleComponentFormats = cStruct.filterMinmaxSingleComponentFormats == VK_TRUE
         self.filterMinmaxImageComponentMapping = cStruct.filterMinmaxImageComponentMapping == VK_TRUE
     }
@@ -13393,7 +13393,7 @@ public struct SampleLocationEXT: CStructConvertible {
         self.y = y
     }
 
-    init(cStruct: VkSampleLocationEXT) {
+    public init(cStruct: VkSampleLocationEXT) {
         self.x = cStruct.x
         self.y = cStruct.y
     }
@@ -13419,7 +13419,7 @@ public struct SampleLocationsInfoEXT: ChainableBase, ImageMemoryBarrierExtension
         self.sampleLocations = sampleLocations
     }
 
-    init(cStruct: VkSampleLocationsInfoEXT) {
+    public init(cStruct: VkSampleLocationsInfoEXT) {
         self.sampleLocationsPerPixel = SampleCountFlags(rawValue: unsafeBitCast(cStruct.sampleLocationsPerPixel.rawValue, to: UInt32.self))
         self.sampleLocationGridSize = Extent2D(cStruct: cStruct.sampleLocationGridSize)
         self.sampleLocations = UnsafeBufferPointer(start: cStruct.pSampleLocations, count: Int(cStruct.sampleLocationsCount)).map{ SampleLocationEXT(cStruct: $0) }
@@ -13458,7 +13458,7 @@ public struct AttachmentSampleLocationsEXT: CStructConvertible {
         self.sampleLocationsInfo = sampleLocationsInfo
     }
 
-    init(cStruct: VkAttachmentSampleLocationsEXT) {
+    public init(cStruct: VkAttachmentSampleLocationsEXT) {
         self.attachmentIndex = cStruct.attachmentIndex
         self.sampleLocationsInfo = SampleLocationsInfoEXT(cStruct: cStruct.sampleLocationsInfo)
     }
@@ -13484,7 +13484,7 @@ public struct SubpassSampleLocationsEXT: CStructConvertible {
         self.sampleLocationsInfo = sampleLocationsInfo
     }
 
-    init(cStruct: VkSubpassSampleLocationsEXT) {
+    public init(cStruct: VkSubpassSampleLocationsEXT) {
         self.subpassIndex = cStruct.subpassIndex
         self.sampleLocationsInfo = SampleLocationsInfoEXT(cStruct: cStruct.sampleLocationsInfo)
     }
@@ -13510,7 +13510,7 @@ public struct RenderPassSampleLocationsBeginInfoEXT: ChainableBase, RenderPassBe
         self.postSubpassSampleLocations = postSubpassSampleLocations
     }
 
-    init(cStruct: VkRenderPassSampleLocationsBeginInfoEXT) {
+    public init(cStruct: VkRenderPassSampleLocationsBeginInfoEXT) {
         self.attachmentInitialSampleLocations = UnsafeBufferPointer(start: cStruct.pAttachmentInitialSampleLocations, count: Int(cStruct.attachmentInitialSampleLocationsCount)).map{ AttachmentSampleLocationsEXT(cStruct: $0) }
         self.postSubpassSampleLocations = UnsafeBufferPointer(start: cStruct.pPostSubpassSampleLocations, count: Int(cStruct.postSubpassSampleLocationsCount)).map{ SubpassSampleLocationsEXT(cStruct: $0) }
     }
@@ -13548,7 +13548,7 @@ public struct PipelineSampleLocationsStateCreateInfoEXT: ChainableBase, Pipeline
         self.sampleLocationsInfo = sampleLocationsInfo
     }
 
-    init(cStruct: VkPipelineSampleLocationsStateCreateInfoEXT) {
+    public init(cStruct: VkPipelineSampleLocationsStateCreateInfoEXT) {
         self.sampleLocationsEnable = cStruct.sampleLocationsEnable == VK_TRUE
         self.sampleLocationsInfo = SampleLocationsInfoEXT(cStruct: cStruct.sampleLocationsInfo)
     }
@@ -13580,7 +13580,7 @@ public struct PhysicalDeviceSampleLocationsPropertiesEXT: ChainableBase, Physica
     public let sampleLocationSubPixelBits: UInt32
     public let variableSampleLocations: Bool
 
-    init(cStruct: VkPhysicalDeviceSampleLocationsPropertiesEXT) {
+    public init(cStruct: VkPhysicalDeviceSampleLocationsPropertiesEXT) {
         self.sampleLocationSampleCounts = SampleCountFlags(rawValue: cStruct.sampleLocationSampleCounts)
         self.maxSampleLocationGridSize = Extent2D(cStruct: cStruct.maxSampleLocationGridSize)
         self.sampleLocationCoordinateRange = cStruct.sampleLocationCoordinateRange
@@ -13614,7 +13614,7 @@ public struct MultisamplePropertiesEXT: ChainableBase {
 
     public let maxSampleLocationGridSize: Extent2D
 
-    init(cStruct: VkMultisamplePropertiesEXT) {
+    public init(cStruct: VkMultisamplePropertiesEXT) {
         self.maxSampleLocationGridSize = Extent2D(cStruct: cStruct.maxSampleLocationGridSize)
     }
 
@@ -13644,7 +13644,7 @@ public struct SamplerReductionModeCreateInfo: ChainableBase, SamplerCreateInfoEx
         self.reductionMode = reductionMode
     }
 
-    init(cStruct: VkSamplerReductionModeCreateInfo) {
+    public init(cStruct: VkSamplerReductionModeCreateInfo) {
         self.reductionMode = SamplerReductionMode(rawValue: unsafeBitCast(cStruct.reductionMode, to: UInt32.self))!
     }
 
@@ -13672,7 +13672,7 @@ public struct PhysicalDeviceBlendOperationAdvancedFeaturesEXT: ChainableBase, Ph
         self.advancedBlendCoherentOperations = advancedBlendCoherentOperations
     }
 
-    init(cStruct: VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT) {
         self.advancedBlendCoherentOperations = cStruct.advancedBlendCoherentOperations == VK_TRUE
     }
 
@@ -13700,7 +13700,7 @@ public struct PhysicalDeviceMultiDrawFeaturesEXT: ChainableBase, PhysicalDeviceF
         self.multiDraw = multiDraw
     }
 
-    init(cStruct: VkPhysicalDeviceMultiDrawFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceMultiDrawFeaturesEXT) {
         self.multiDraw = cStruct.multiDraw == VK_TRUE
     }
 
@@ -13729,7 +13729,7 @@ public struct PhysicalDeviceBlendOperationAdvancedPropertiesEXT: ChainableBase, 
     public let advancedBlendCorrelatedOverlap: Bool
     public let advancedBlendAllOperations: Bool
 
-    init(cStruct: VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT) {
+    public init(cStruct: VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT) {
         self.advancedBlendMaxColorAttachments = cStruct.advancedBlendMaxColorAttachments
         self.advancedBlendIndependentBlend = cStruct.advancedBlendIndependentBlend == VK_TRUE
         self.advancedBlendNonPremultipliedSrcColor = cStruct.advancedBlendNonPremultipliedSrcColor == VK_TRUE
@@ -13771,7 +13771,7 @@ public struct PipelineColorBlendAdvancedStateCreateInfoEXT: ChainableBase, Pipel
         self.blendOverlap = blendOverlap
     }
 
-    init(cStruct: VkPipelineColorBlendAdvancedStateCreateInfoEXT) {
+    public init(cStruct: VkPipelineColorBlendAdvancedStateCreateInfoEXT) {
         self.srcPremultiplied = cStruct.srcPremultiplied == VK_TRUE
         self.dstPremultiplied = cStruct.dstPremultiplied == VK_TRUE
         self.blendOverlap = BlendOverlapEXT(rawValue: unsafeBitCast(cStruct.blendOverlap, to: UInt32.self))!
@@ -13805,7 +13805,7 @@ public struct PhysicalDeviceInlineUniformBlockFeatures: ChainableBase, PhysicalD
         self.descriptorBindingInlineUniformBlockUpdateAfterBind = descriptorBindingInlineUniformBlockUpdateAfterBind
     }
 
-    init(cStruct: VkPhysicalDeviceInlineUniformBlockFeatures) {
+    public init(cStruct: VkPhysicalDeviceInlineUniformBlockFeatures) {
         self.inlineUniformBlock = cStruct.inlineUniformBlock == VK_TRUE
         self.descriptorBindingInlineUniformBlockUpdateAfterBind = cStruct.descriptorBindingInlineUniformBlockUpdateAfterBind == VK_TRUE
     }
@@ -13835,7 +13835,7 @@ public struct PhysicalDeviceInlineUniformBlockProperties: ChainableBase, Physica
     public let maxDescriptorSetInlineUniformBlocks: UInt32
     public let maxDescriptorSetUpdateAfterBindInlineUniformBlocks: UInt32
 
-    init(cStruct: VkPhysicalDeviceInlineUniformBlockProperties) {
+    public init(cStruct: VkPhysicalDeviceInlineUniformBlockProperties) {
         self.maxInlineUniformBlockSize = cStruct.maxInlineUniformBlockSize
         self.maxPerStageDescriptorInlineUniformBlocks = cStruct.maxPerStageDescriptorInlineUniformBlocks
         self.maxPerStageDescriptorUpdateAfterBindInlineUniformBlocks = cStruct.maxPerStageDescriptorUpdateAfterBindInlineUniformBlocks
@@ -13873,7 +13873,7 @@ public struct WriteDescriptorSetInlineUniformBlock: ChainableBase, WriteDescript
         self.data = data
     }
 
-    init(cStruct: VkWriteDescriptorSetInlineUniformBlock) {
+    public init(cStruct: VkWriteDescriptorSetInlineUniformBlock) {
         self.dataSize = cStruct.dataSize
         self.data = cStruct.pData
     }
@@ -13903,7 +13903,7 @@ public struct DescriptorPoolInlineUniformBlockCreateInfo: ChainableBase, Descrip
         self.maxInlineUniformBlockBindings = maxInlineUniformBlockBindings
     }
 
-    init(cStruct: VkDescriptorPoolInlineUniformBlockCreateInfo) {
+    public init(cStruct: VkDescriptorPoolInlineUniformBlockCreateInfo) {
         self.maxInlineUniformBlockBindings = cStruct.maxInlineUniformBlockBindings
     }
 
@@ -13937,7 +13937,7 @@ public struct PipelineCoverageModulationStateCreateInfoNV: ChainableBase, Pipeli
         self.coverageModulationTable = coverageModulationTable
     }
 
-    init(cStruct: VkPipelineCoverageModulationStateCreateInfoNV) {
+    public init(cStruct: VkPipelineCoverageModulationStateCreateInfoNV) {
         self.flags = PipelineCoverageModulationStateCreateFlagsNV(rawValue: cStruct.flags)
         self.coverageModulationMode = CoverageModulationModeNV(rawValue: unsafeBitCast(cStruct.coverageModulationMode, to: UInt32.self))!
         self.coverageModulationTableEnable = cStruct.coverageModulationTableEnable == VK_TRUE
@@ -13974,7 +13974,7 @@ public struct ImageFormatListCreateInfo: ChainableBase, ImageCreateInfoExtension
         self.viewFormats = viewFormats
     }
 
-    init(cStruct: VkImageFormatListCreateInfo) {
+    public init(cStruct: VkImageFormatListCreateInfo) {
         self.viewFormats = UnsafeBufferPointer(start: cStruct.pViewFormats, count: Int(cStruct.viewFormatCount)).map{ Format(rawValue: unsafeBitCast($0, to: UInt32.self))! }
     }
 
@@ -14009,7 +14009,7 @@ public struct ValidationCacheCreateInfoEXT: ChainableBase {
         self.initialData = initialData
     }
 
-    init(cStruct: VkValidationCacheCreateInfoEXT) {
+    public init(cStruct: VkValidationCacheCreateInfoEXT) {
         self.flags = ValidationCacheCreateFlagsEXT(rawValue: cStruct.flags)
         self.initialDataSize = cStruct.initialDataSize
         self.initialData = cStruct.pInitialData
@@ -14041,7 +14041,7 @@ public struct ShaderModuleValidationCacheCreateInfoEXT: ChainableBase, ShaderMod
         self.validationCache = validationCache
     }
 
-    init(cStruct: VkShaderModuleValidationCacheCreateInfoEXT, device: Device) {
+    public init(cStruct: VkShaderModuleValidationCacheCreateInfoEXT, device: Device) {
         self.validationCache = ValidationCacheEXT(handle: cStruct.validationCache, device: device)
     }
 
@@ -14066,7 +14066,7 @@ public struct PhysicalDeviceMaintenance3Properties: ChainableBase, PhysicalDevic
     public let maxPerSetDescriptors: UInt32
     public let maxMemoryAllocationSize: VkDeviceSize
 
-    init(cStruct: VkPhysicalDeviceMaintenance3Properties) {
+    public init(cStruct: VkPhysicalDeviceMaintenance3Properties) {
         self.maxPerSetDescriptors = cStruct.maxPerSetDescriptors
         self.maxMemoryAllocationSize = cStruct.maxMemoryAllocationSize
     }
@@ -14096,7 +14096,7 @@ public struct PhysicalDeviceMaintenance4Features: ChainableBase, PhysicalDeviceF
         self.maintenance4 = maintenance4
     }
 
-    init(cStruct: VkPhysicalDeviceMaintenance4Features) {
+    public init(cStruct: VkPhysicalDeviceMaintenance4Features) {
         self.maintenance4 = cStruct.maintenance4 == VK_TRUE
     }
 
@@ -14120,7 +14120,7 @@ public struct PhysicalDeviceMaintenance4Properties: ChainableBase, PhysicalDevic
 
     public let maxBufferSize: VkDeviceSize
 
-    init(cStruct: VkPhysicalDeviceMaintenance4Properties) {
+    public init(cStruct: VkPhysicalDeviceMaintenance4Properties) {
         self.maxBufferSize = cStruct.maxBufferSize
     }
 
@@ -14148,7 +14148,7 @@ public struct PhysicalDeviceMaintenance5Features: ChainableBase, PhysicalDeviceF
         self.maintenance5 = maintenance5
     }
 
-    init(cStruct: VkPhysicalDeviceMaintenance5Features) {
+    public init(cStruct: VkPhysicalDeviceMaintenance5Features) {
         self.maintenance5 = cStruct.maintenance5 == VK_TRUE
     }
 
@@ -14177,7 +14177,7 @@ public struct PhysicalDeviceMaintenance5Properties: ChainableBase, PhysicalDevic
     public let nonStrictSinglePixelWideLinesUseParallelogram: Bool
     public let nonStrictWideLinesUseParallelogram: Bool
 
-    init(cStruct: VkPhysicalDeviceMaintenance5Properties) {
+    public init(cStruct: VkPhysicalDeviceMaintenance5Properties) {
         self.earlyFragmentMultisampleCoverageAfterSampleCounting = cStruct.earlyFragmentMultisampleCoverageAfterSampleCounting == VK_TRUE
         self.earlyFragmentSampleMaskTestBeforeSampleCounting = cStruct.earlyFragmentSampleMaskTestBeforeSampleCounting == VK_TRUE
         self.depthStencilSwizzleOneSupport = cStruct.depthStencilSwizzleOneSupport == VK_TRUE
@@ -14215,7 +14215,7 @@ public struct PhysicalDeviceMaintenance6Features: ChainableBase, PhysicalDeviceF
         self.maintenance6 = maintenance6
     }
 
-    init(cStruct: VkPhysicalDeviceMaintenance6Features) {
+    public init(cStruct: VkPhysicalDeviceMaintenance6Features) {
         self.maintenance6 = cStruct.maintenance6 == VK_TRUE
     }
 
@@ -14241,7 +14241,7 @@ public struct PhysicalDeviceMaintenance6Properties: ChainableBase, PhysicalDevic
     public let maxCombinedImageSamplerDescriptorCount: UInt32
     public let fragmentShadingRateClampCombinerInputs: Bool
 
-    init(cStruct: VkPhysicalDeviceMaintenance6Properties) {
+    public init(cStruct: VkPhysicalDeviceMaintenance6Properties) {
         self.blockTexelViewCompatibleMultipleLayers = cStruct.blockTexelViewCompatibleMultipleLayers == VK_TRUE
         self.maxCombinedImageSamplerDescriptorCount = cStruct.maxCombinedImageSamplerDescriptorCount
         self.fragmentShadingRateClampCombinerInputs = cStruct.fragmentShadingRateClampCombinerInputs == VK_TRUE
@@ -14273,7 +14273,7 @@ public struct PhysicalDeviceMaintenance7FeaturesKHR: ChainableBase, PhysicalDevi
         self.maintenance7 = maintenance7
     }
 
-    init(cStruct: VkPhysicalDeviceMaintenance7FeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceMaintenance7FeaturesKHR) {
         self.maintenance7 = cStruct.maintenance7 == VK_TRUE
     }
 
@@ -14304,7 +14304,7 @@ public struct PhysicalDeviceMaintenance7PropertiesKHR: ChainableBase, PhysicalDe
     public let maxDescriptorSetUpdateAfterBindTotalStorageBuffersDynamic: UInt32
     public let maxDescriptorSetUpdateAfterBindTotalBuffersDynamic: UInt32
 
-    init(cStruct: VkPhysicalDeviceMaintenance7PropertiesKHR) {
+    public init(cStruct: VkPhysicalDeviceMaintenance7PropertiesKHR) {
         self.robustFragmentShadingRateAttachmentAccess = cStruct.robustFragmentShadingRateAttachmentAccess == VK_TRUE
         self.separateDepthStencilAttachmentAccess = cStruct.separateDepthStencilAttachmentAccess == VK_TRUE
         self.maxDescriptorSetTotalUniformBuffersDynamic = cStruct.maxDescriptorSetTotalUniformBuffersDynamic
@@ -14345,7 +14345,7 @@ public struct PhysicalDeviceLayeredApiPropertiesKHR: ChainableBase {
     public let layeredAPI: PhysicalDeviceLayeredApiKHR
     public let deviceName: String
 
-    init(cStruct: VkPhysicalDeviceLayeredApiPropertiesKHR) {
+    public init(cStruct: VkPhysicalDeviceLayeredApiPropertiesKHR) {
         self.vendorID = cStruct.vendorID
         self.deviceID = cStruct.deviceID
         self.layeredAPI = PhysicalDeviceLayeredApiKHR(rawValue: unsafeBitCast(cStruct.layeredAPI, to: UInt32.self))!
@@ -14381,7 +14381,7 @@ public struct PhysicalDeviceLayeredApiPropertiesListKHR: ChainableBase, Physical
         self.layeredApis = layeredApis
     }
 
-    init(cStruct: VkPhysicalDeviceLayeredApiPropertiesListKHR) {
+    public init(cStruct: VkPhysicalDeviceLayeredApiPropertiesListKHR) {
         self.layeredApiCount = cStruct.layeredApiCount
         self.layeredApis = cStruct.pLayeredApis
     }
@@ -14407,7 +14407,7 @@ public struct PhysicalDeviceLayeredApiVulkanPropertiesKHR: ChainableBase, Physic
 
     public let properties: PhysicalDeviceProperties2
 
-    init(cStruct: VkPhysicalDeviceLayeredApiVulkanPropertiesKHR) {
+    public init(cStruct: VkPhysicalDeviceLayeredApiVulkanPropertiesKHR) {
         self.properties = PhysicalDeviceProperties2(cStruct: cStruct.properties)
     }
 
@@ -14437,7 +14437,7 @@ public struct PhysicalDeviceMaintenance8FeaturesKHR: ChainableBase, PhysicalDevi
         self.maintenance8 = maintenance8
     }
 
-    init(cStruct: VkPhysicalDeviceMaintenance8FeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceMaintenance8FeaturesKHR) {
         self.maintenance8 = cStruct.maintenance8 == VK_TRUE
     }
 
@@ -14465,7 +14465,7 @@ public struct PhysicalDeviceMaintenance9FeaturesKHR: ChainableBase, PhysicalDevi
         self.maintenance9 = maintenance9
     }
 
-    init(cStruct: VkPhysicalDeviceMaintenance9FeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceMaintenance9FeaturesKHR) {
         self.maintenance9 = cStruct.maintenance9 == VK_TRUE
     }
 
@@ -14490,7 +14490,7 @@ public struct PhysicalDeviceMaintenance9PropertiesKHR: ChainableBase, PhysicalDe
     public let image2DViewOf3DSparse: Bool
     public let defaultVertexAttributeValue: DefaultVertexAttributeValueKHR
 
-    init(cStruct: VkPhysicalDeviceMaintenance9PropertiesKHR) {
+    public init(cStruct: VkPhysicalDeviceMaintenance9PropertiesKHR) {
         self.image2DViewOf3DSparse = cStruct.image2DViewOf3DSparse == VK_TRUE
         self.defaultVertexAttributeValue = DefaultVertexAttributeValueKHR(rawValue: unsafeBitCast(cStruct.defaultVertexAttributeValue, to: UInt32.self))!
     }
@@ -14520,7 +14520,7 @@ public struct PhysicalDeviceMaintenance11FeaturesKHR: ChainableBase, PhysicalDev
         self.maintenance11 = maintenance11
     }
 
-    init(cStruct: VkPhysicalDeviceMaintenance11FeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceMaintenance11FeaturesKHR) {
         self.maintenance11 = cStruct.maintenance11 == VK_TRUE
     }
 
@@ -14546,7 +14546,7 @@ public struct PhysicalDeviceMaintenance10PropertiesKHR: ChainableBase, PhysicalD
     public let resolveSrgbFormatAppliesTransferFunction: Bool
     public let resolveSrgbFormatSupportsTransferFunctionControl: Bool
 
-    init(cStruct: VkPhysicalDeviceMaintenance10PropertiesKHR) {
+    public init(cStruct: VkPhysicalDeviceMaintenance10PropertiesKHR) {
         self.rgba4OpaqueBlackSwizzled = cStruct.rgba4OpaqueBlackSwizzled == VK_TRUE
         self.resolveSrgbFormatAppliesTransferFunction = cStruct.resolveSrgbFormatAppliesTransferFunction == VK_TRUE
         self.resolveSrgbFormatSupportsTransferFunctionControl = cStruct.resolveSrgbFormatSupportsTransferFunctionControl == VK_TRUE
@@ -14578,7 +14578,7 @@ public struct PhysicalDeviceMaintenance10FeaturesKHR: ChainableBase, PhysicalDev
         self.maintenance10 = maintenance10
     }
 
-    init(cStruct: VkPhysicalDeviceMaintenance10FeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceMaintenance10FeaturesKHR) {
         self.maintenance10 = cStruct.maintenance10 == VK_TRUE
     }
 
@@ -14602,7 +14602,7 @@ public struct QueueFamilyOwnershipTransferPropertiesKHR: ChainableBase, QueueFam
 
     public let optimalImageTransferToQueueFamilies: UInt32
 
-    init(cStruct: VkQueueFamilyOwnershipTransferPropertiesKHR) {
+    public init(cStruct: VkQueueFamilyOwnershipTransferPropertiesKHR) {
         self.optimalImageTransferToQueueFamilies = cStruct.optimalImageTransferToQueueFamilies
     }
 
@@ -14626,7 +14626,7 @@ public struct QueueFamilyOptimalImageTransferGranularityPropertiesKHR: Chainable
 
     public let optimalImageTransferGranularity: Extent3D
 
-    init(cStruct: VkQueueFamilyOptimalImageTransferGranularityPropertiesKHR) {
+    public init(cStruct: VkQueueFamilyOptimalImageTransferGranularityPropertiesKHR) {
         self.optimalImageTransferGranularity = Extent3D(cStruct: cStruct.optimalImageTransferGranularity)
     }
 
@@ -14662,7 +14662,7 @@ public struct RenderingAreaInfo: ChainableBase {
         self.stencilAttachmentFormat = stencilAttachmentFormat
     }
 
-    init(cStruct: VkRenderingAreaInfo) {
+    public init(cStruct: VkRenderingAreaInfo) {
         self.viewMask = cStruct.viewMask
         self.colorAttachmentFormats = UnsafeBufferPointer(start: cStruct.pColorAttachmentFormats, count: Int(cStruct.colorAttachmentCount)).map{ Format(rawValue: unsafeBitCast($0, to: UInt32.self))! }
         self.depthAttachmentFormat = Format(rawValue: unsafeBitCast(cStruct.depthAttachmentFormat, to: UInt32.self))!
@@ -14695,7 +14695,7 @@ public struct DescriptorSetLayoutSupport: ChainableBase {
 
     public let supported: Bool
 
-    init(cStruct: VkDescriptorSetLayoutSupport) {
+    public init(cStruct: VkDescriptorSetLayoutSupport) {
         self.supported = cStruct.supported == VK_TRUE
     }
 
@@ -14723,7 +14723,7 @@ public struct PhysicalDeviceShaderDrawParametersFeatures: ChainableBase, Physica
         self.shaderDrawParameters = shaderDrawParameters
     }
 
-    init(cStruct: VkPhysicalDeviceShaderDrawParametersFeatures) {
+    public init(cStruct: VkPhysicalDeviceShaderDrawParametersFeatures) {
         self.shaderDrawParameters = cStruct.shaderDrawParameters == VK_TRUE
     }
 
@@ -14753,7 +14753,7 @@ public struct PhysicalDeviceShaderFloat16Int8Features: ChainableBase, PhysicalDe
         self.shaderInt8 = shaderInt8
     }
 
-    init(cStruct: VkPhysicalDeviceShaderFloat16Int8Features) {
+    public init(cStruct: VkPhysicalDeviceShaderFloat16Int8Features) {
         self.shaderFloat16 = cStruct.shaderFloat16 == VK_TRUE
         self.shaderInt8 = cStruct.shaderInt8 == VK_TRUE
     }
@@ -14795,7 +14795,7 @@ public struct PhysicalDeviceFloatControlsProperties: ChainableBase, PhysicalDevi
     public let shaderRoundingModeRTZFloat32: Bool
     public let shaderRoundingModeRTZFloat64: Bool
 
-    init(cStruct: VkPhysicalDeviceFloatControlsProperties) {
+    public init(cStruct: VkPhysicalDeviceFloatControlsProperties) {
         self.denormBehaviorIndependence = ShaderFloatControlsIndependence(rawValue: unsafeBitCast(cStruct.denormBehaviorIndependence, to: UInt32.self))!
         self.roundingModeIndependence = ShaderFloatControlsIndependence(rawValue: unsafeBitCast(cStruct.roundingModeIndependence, to: UInt32.self))!
         self.shaderSignedZeroInfNanPreserveFloat16 = cStruct.shaderSignedZeroInfNanPreserveFloat16 == VK_TRUE
@@ -14855,7 +14855,7 @@ public struct PhysicalDeviceHostQueryResetFeatures: ChainableBase, PhysicalDevic
         self.hostQueryReset = hostQueryReset
     }
 
-    init(cStruct: VkPhysicalDeviceHostQueryResetFeatures) {
+    public init(cStruct: VkPhysicalDeviceHostQueryResetFeatures) {
         self.hostQueryReset = cStruct.hostQueryReset == VK_TRUE
     }
 
@@ -14883,7 +14883,7 @@ public struct ShaderResourceUsageAMD: CStructConvertible {
     public let ldsUsageSizeInBytes: Int
     public let scratchMemUsageInBytes: Int
 
-    init(cStruct: VkShaderResourceUsageAMD) {
+    public init(cStruct: VkShaderResourceUsageAMD) {
         self.numUsedVgprs = cStruct.numUsedVgprs
         self.numUsedSgprs = cStruct.numUsedSgprs
         self.ldsSizePerLocalWorkGroup = cStruct.ldsSizePerLocalWorkGroup
@@ -14913,7 +14913,7 @@ public struct ShaderStatisticsInfoAMD: CStructConvertible {
     public let numAvailableSgprs: UInt32
     public let computeWorkGroupSize: (UInt32, UInt32, UInt32)
 
-    init(cStruct: VkShaderStatisticsInfoAMD) {
+    public init(cStruct: VkShaderStatisticsInfoAMD) {
         self.shaderStageMask = ShaderStageFlags(rawValue: cStruct.shaderStageMask)
         self.resourceUsage = ShaderResourceUsageAMD(cStruct: cStruct.resourceUsage)
         self.numPhysicalVgprs = cStruct.numPhysicalVgprs
@@ -14947,7 +14947,7 @@ public struct PhysicalDeviceElapsedTimerQueryFeaturesQCOM: ChainableBase, Physic
         self.elapsedTimerQuery = elapsedTimerQuery
     }
 
-    init(cStruct: VkPhysicalDeviceElapsedTimerQueryFeaturesQCOM) {
+    public init(cStruct: VkPhysicalDeviceElapsedTimerQueryFeaturesQCOM) {
         self.elapsedTimerQuery = cStruct.elapsedTimerQuery == VK_TRUE
     }
 
@@ -14975,7 +14975,7 @@ public struct DeviceQueueGlobalPriorityCreateInfo: ChainableBase, DeviceQueueCre
         self.globalPriority = globalPriority
     }
 
-    init(cStruct: VkDeviceQueueGlobalPriorityCreateInfo) {
+    public init(cStruct: VkDeviceQueueGlobalPriorityCreateInfo) {
         self.globalPriority = QueueGlobalPriority(rawValue: unsafeBitCast(cStruct.globalPriority, to: UInt32.self))!
     }
 
@@ -15003,7 +15003,7 @@ public struct PhysicalDeviceGlobalPriorityQueryFeatures: ChainableBase, Physical
         self.globalPriorityQuery = globalPriorityQuery
     }
 
-    init(cStruct: VkPhysicalDeviceGlobalPriorityQueryFeatures) {
+    public init(cStruct: VkPhysicalDeviceGlobalPriorityQueryFeatures) {
         self.globalPriorityQuery = cStruct.globalPriorityQuery == VK_TRUE
     }
 
@@ -15028,7 +15028,7 @@ public struct QueueFamilyGlobalPriorityProperties: ChainableBase, QueueFamilyPro
     public let priorityCount: UInt32
     public let priorities: (VkQueueGlobalPriority, VkQueueGlobalPriority, VkQueueGlobalPriority, VkQueueGlobalPriority, VkQueueGlobalPriority, VkQueueGlobalPriority, VkQueueGlobalPriority, VkQueueGlobalPriority, VkQueueGlobalPriority, VkQueueGlobalPriority, VkQueueGlobalPriority, VkQueueGlobalPriority, VkQueueGlobalPriority, VkQueueGlobalPriority, VkQueueGlobalPriority, VkQueueGlobalPriority)
 
-    init(cStruct: VkQueueFamilyGlobalPriorityProperties) {
+    public init(cStruct: VkQueueFamilyGlobalPriorityProperties) {
         self.priorityCount = cStruct.priorityCount
         self.priorities = cStruct.priorities
     }
@@ -15062,7 +15062,7 @@ public struct DebugUtilsObjectNameInfoEXT: ChainableBase, PipelineShaderStageCre
         self.objectName = objectName
     }
 
-    init(cStruct: VkDebugUtilsObjectNameInfoEXT) {
+    public init(cStruct: VkDebugUtilsObjectNameInfoEXT) {
         self.objectType = ObjectType(rawValue: unsafeBitCast(cStruct.objectType, to: UInt32.self))!
         self.objectHandle = cStruct.objectHandle
         self.objectName = (cStruct.pObjectName != nil) ? String(cString: cStruct.pObjectName) : nil
@@ -15104,7 +15104,7 @@ public struct DebugUtilsObjectTagInfoEXT: ChainableBase {
         self.tag = tag
     }
 
-    init(cStruct: VkDebugUtilsObjectTagInfoEXT) {
+    public init(cStruct: VkDebugUtilsObjectTagInfoEXT) {
         self.objectType = ObjectType(rawValue: unsafeBitCast(cStruct.objectType, to: UInt32.self))!
         self.objectHandle = cStruct.objectHandle
         self.tagName = cStruct.tagName
@@ -15142,7 +15142,7 @@ public struct DebugUtilsLabelEXT: ChainableBase {
         self.color = color
     }
 
-    init(cStruct: VkDebugUtilsLabelEXT) {
+    public init(cStruct: VkDebugUtilsLabelEXT) {
         self.labelName = String(cString: cStruct.pLabelName)
         self.color = cStruct.color
     }
@@ -15182,7 +15182,7 @@ public struct DebugUtilsMessengerCreateInfoEXT: ChainableBase, InstanceCreateInf
         self.userData = userData
     }
 
-    init(cStruct: VkDebugUtilsMessengerCreateInfoEXT) {
+    public init(cStruct: VkDebugUtilsMessengerCreateInfoEXT) {
         self.flags = DebugUtilsMessengerCreateFlagsEXT(rawValue: cStruct.flags)
         self.messageSeverity = DebugUtilsMessageSeverityFlagsEXT(rawValue: cStruct.messageSeverity)
         self.messageType = DebugUtilsMessageTypeFlagsEXT(rawValue: cStruct.messageType)
@@ -15230,7 +15230,7 @@ public struct DebugUtilsMessengerCallbackDataEXT: ChainableBase {
         self.objects = objects
     }
 
-    init(cStruct: VkDebugUtilsMessengerCallbackDataEXT) {
+    public init(cStruct: VkDebugUtilsMessengerCallbackDataEXT) {
         self.flags = DebugUtilsMessengerCallbackDataFlagsEXT(rawValue: cStruct.flags)
         self.messageIdName = (cStruct.pMessageIdName != nil) ? String(cString: cStruct.pMessageIdName) : nil
         self.messageIdNumber = cStruct.messageIdNumber
@@ -15283,7 +15283,7 @@ public struct PhysicalDeviceDeviceMemoryReportFeaturesEXT: ChainableBase, Physic
         self.deviceMemoryReport = deviceMemoryReport
     }
 
-    init(cStruct: VkPhysicalDeviceDeviceMemoryReportFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceDeviceMemoryReportFeaturesEXT) {
         self.deviceMemoryReport = cStruct.deviceMemoryReport == VK_TRUE
     }
 
@@ -15315,7 +15315,7 @@ public struct DeviceDeviceMemoryReportCreateInfoEXT: ChainableBase, DeviceCreate
         self.userData = userData
     }
 
-    init(cStruct: VkDeviceDeviceMemoryReportCreateInfoEXT) {
+    public init(cStruct: VkDeviceDeviceMemoryReportCreateInfoEXT) {
         self.flags = DeviceMemoryReportFlagsEXT(rawValue: cStruct.flags)
         self.pfnUserCallback = cStruct.pfnUserCallback
         self.userData = cStruct.pUserData
@@ -15349,7 +15349,7 @@ public struct DeviceMemoryReportCallbackDataEXT: ChainableBase {
     public let objectHandle: UInt64
     public let heapIndex: UInt32
 
-    init(cStruct: VkDeviceMemoryReportCallbackDataEXT) {
+    public init(cStruct: VkDeviceMemoryReportCallbackDataEXT) {
         self.flags = DeviceMemoryReportFlagsEXT(rawValue: cStruct.flags)
         self.type = DeviceMemoryReportEventTypeEXT(rawValue: unsafeBitCast(cStruct.type, to: UInt32.self))!
         self.memoryObjectId = cStruct.memoryObjectId
@@ -15391,7 +15391,7 @@ public struct ImportMemoryHostPointerInfoEXT: ChainableBase, MemoryAllocateInfoE
         self.hostPointer = hostPointer
     }
 
-    init(cStruct: VkImportMemoryHostPointerInfoEXT) {
+    public init(cStruct: VkImportMemoryHostPointerInfoEXT) {
         self.handleType = ExternalMemoryHandleTypeFlags(rawValue: unsafeBitCast(cStruct.handleType.rawValue, to: UInt32.self))
         self.hostPointer = cStruct.pHostPointer
     }
@@ -15417,7 +15417,7 @@ public struct MemoryHostPointerPropertiesEXT: ChainableBase {
 
     public let memoryTypeBits: UInt32
 
-    init(cStruct: VkMemoryHostPointerPropertiesEXT) {
+    public init(cStruct: VkMemoryHostPointerPropertiesEXT) {
         self.memoryTypeBits = cStruct.memoryTypeBits
     }
 
@@ -15441,7 +15441,7 @@ public struct PhysicalDeviceExternalMemoryHostPropertiesEXT: ChainableBase, Phys
 
     public let minImportedHostPointerAlignment: VkDeviceSize
 
-    init(cStruct: VkPhysicalDeviceExternalMemoryHostPropertiesEXT) {
+    public init(cStruct: VkPhysicalDeviceExternalMemoryHostPropertiesEXT) {
         self.minImportedHostPointerAlignment = cStruct.minImportedHostPointerAlignment
     }
 
@@ -15473,7 +15473,7 @@ public struct PhysicalDeviceConservativeRasterizationPropertiesEXT: ChainableBas
     public let fullyCoveredFragmentShaderInputVariable: Bool
     public let conservativeRasterizationPostDepthCoverage: Bool
 
-    init(cStruct: VkPhysicalDeviceConservativeRasterizationPropertiesEXT) {
+    public init(cStruct: VkPhysicalDeviceConservativeRasterizationPropertiesEXT) {
         self.primitiveOverestimationSize = cStruct.primitiveOverestimationSize
         self.maxExtraPrimitiveOverestimationSize = cStruct.maxExtraPrimitiveOverestimationSize
         self.extraPrimitiveOverestimationSizeGranularity = cStruct.extraPrimitiveOverestimationSizeGranularity
@@ -15517,7 +15517,7 @@ public struct CalibratedTimestampInfoKHR: ChainableBase {
         self.timeDomain = timeDomain
     }
 
-    init(cStruct: VkCalibratedTimestampInfoKHR) {
+    public init(cStruct: VkCalibratedTimestampInfoKHR) {
         self.timeDomain = TimeDomainKHR(rawValue: unsafeBitCast(cStruct.timeDomain, to: UInt32.self))!
     }
 
@@ -15554,7 +15554,7 @@ public struct PhysicalDeviceShaderCorePropertiesAMD: ChainableBase, PhysicalDevi
     public let maxVgprAllocation: UInt32
     public let vgprAllocationGranularity: UInt32
 
-    init(cStruct: VkPhysicalDeviceShaderCorePropertiesAMD) {
+    public init(cStruct: VkPhysicalDeviceShaderCorePropertiesAMD) {
         self.shaderEngineCount = cStruct.shaderEngineCount
         self.shaderArraysPerEngineCount = cStruct.shaderArraysPerEngineCount
         self.computeUnitsPerShaderArray = cStruct.computeUnitsPerShaderArray
@@ -15605,7 +15605,7 @@ public struct PhysicalDeviceShaderCoreProperties2AMD: ChainableBase, PhysicalDev
     public let shaderCoreFeatures: ShaderCorePropertiesFlagsAMD
     public let activeComputeUnitCount: UInt32
 
-    init(cStruct: VkPhysicalDeviceShaderCoreProperties2AMD) {
+    public init(cStruct: VkPhysicalDeviceShaderCoreProperties2AMD) {
         self.shaderCoreFeatures = ShaderCorePropertiesFlagsAMD(rawValue: cStruct.shaderCoreFeatures)
         self.activeComputeUnitCount = cStruct.activeComputeUnitCount
     }
@@ -15639,7 +15639,7 @@ public struct PipelineRasterizationConservativeStateCreateInfoEXT: ChainableBase
         self.extraPrimitiveOverestimationSize = extraPrimitiveOverestimationSize
     }
 
-    init(cStruct: VkPipelineRasterizationConservativeStateCreateInfoEXT) {
+    public init(cStruct: VkPipelineRasterizationConservativeStateCreateInfoEXT) {
         self.flags = PipelineRasterizationConservativeStateCreateFlagsEXT(rawValue: cStruct.flags)
         self.conservativeRasterizationMode = ConservativeRasterizationModeEXT(rawValue: unsafeBitCast(cStruct.conservativeRasterizationMode, to: UInt32.self))!
         self.extraPrimitiveOverestimationSize = cStruct.extraPrimitiveOverestimationSize
@@ -15709,7 +15709,7 @@ public struct PhysicalDeviceDescriptorIndexingFeatures: ChainableBase, PhysicalD
         self.runtimeDescriptorArray = runtimeDescriptorArray
     }
 
-    init(cStruct: VkPhysicalDeviceDescriptorIndexingFeatures) {
+    public init(cStruct: VkPhysicalDeviceDescriptorIndexingFeatures) {
         self.shaderInputAttachmentArrayDynamicIndexing = cStruct.shaderInputAttachmentArrayDynamicIndexing == VK_TRUE
         self.shaderUniformTexelBufferArrayDynamicIndexing = cStruct.shaderUniformTexelBufferArrayDynamicIndexing == VK_TRUE
         self.shaderStorageTexelBufferArrayDynamicIndexing = cStruct.shaderStorageTexelBufferArrayDynamicIndexing == VK_TRUE
@@ -15793,7 +15793,7 @@ public struct PhysicalDeviceDescriptorIndexingProperties: ChainableBase, Physica
     public let maxDescriptorSetUpdateAfterBindStorageImages: UInt32
     public let maxDescriptorSetUpdateAfterBindInputAttachments: UInt32
 
-    init(cStruct: VkPhysicalDeviceDescriptorIndexingProperties) {
+    public init(cStruct: VkPhysicalDeviceDescriptorIndexingProperties) {
         self.maxUpdateAfterBindDescriptorsInAllPools = cStruct.maxUpdateAfterBindDescriptorsInAllPools
         self.shaderUniformBufferArrayNonUniformIndexingNative = cStruct.shaderUniformBufferArrayNonUniformIndexingNative == VK_TRUE
         self.shaderSampledImageArrayNonUniformIndexingNative = cStruct.shaderSampledImageArrayNonUniformIndexingNative == VK_TRUE
@@ -15865,7 +15865,7 @@ public struct DescriptorSetLayoutBindingFlagsCreateInfo: ChainableBase, Descript
         self.bindingFlags = bindingFlags
     }
 
-    init(cStruct: VkDescriptorSetLayoutBindingFlagsCreateInfo) {
+    public init(cStruct: VkDescriptorSetLayoutBindingFlagsCreateInfo) {
         self.bindingFlags = UnsafeBufferPointer(start: cStruct.pBindingFlags, count: Int(cStruct.bindingCount)).map{ DescriptorBindingFlags(rawValue: $0) }
     }
 
@@ -15896,7 +15896,7 @@ public struct DescriptorSetVariableDescriptorCountAllocateInfo: ChainableBase, D
         self.descriptorCounts = descriptorCounts
     }
 
-    init(cStruct: VkDescriptorSetVariableDescriptorCountAllocateInfo) {
+    public init(cStruct: VkDescriptorSetVariableDescriptorCountAllocateInfo) {
         self.descriptorCounts = Array(UnsafeBufferPointer(start: cStruct.pDescriptorCounts, count: Int(cStruct.descriptorSetCount)))
     }
 
@@ -15923,7 +15923,7 @@ public struct DescriptorSetVariableDescriptorCountLayoutSupport: ChainableBase, 
 
     public let maxVariableDescriptorCount: UInt32
 
-    init(cStruct: VkDescriptorSetVariableDescriptorCountLayoutSupport) {
+    public init(cStruct: VkDescriptorSetVariableDescriptorCountLayoutSupport) {
         self.maxVariableDescriptorCount = cStruct.maxVariableDescriptorCount
     }
 
@@ -15967,7 +15967,7 @@ public struct AttachmentDescription2: ChainableBase {
         self.finalLayout = finalLayout
     }
 
-    init(cStruct: VkAttachmentDescription2) {
+    public init(cStruct: VkAttachmentDescription2) {
         self.flags = AttachmentDescriptionFlags(rawValue: cStruct.flags)
         self.format = Format(rawValue: unsafeBitCast(cStruct.format, to: UInt32.self))!
         self.samples = SampleCountFlags(rawValue: unsafeBitCast(cStruct.samples.rawValue, to: UInt32.self))
@@ -16015,7 +16015,7 @@ public struct AttachmentReference2: ChainableBase {
         self.aspectMask = aspectMask
     }
 
-    init(cStruct: VkAttachmentReference2) {
+    public init(cStruct: VkAttachmentReference2) {
         self.attachment = cStruct.attachment
         self.layout = ImageLayout(rawValue: unsafeBitCast(cStruct.layout, to: UInt32.self))!
         self.aspectMask = ImageAspectFlags(rawValue: cStruct.aspectMask)
@@ -16061,7 +16061,7 @@ public struct SubpassDescription2: ChainableBase {
         self.preserveAttachments = preserveAttachments
     }
 
-    init(cStruct: VkSubpassDescription2) {
+    public init(cStruct: VkSubpassDescription2) {
         self.flags = SubpassDescriptionFlags(rawValue: cStruct.flags)
         self.pipelineBindPoint = PipelineBindPoint(rawValue: unsafeBitCast(cStruct.pipelineBindPoint, to: UInt32.self))!
         self.viewMask = cStruct.viewMask
@@ -16130,7 +16130,7 @@ public struct SubpassDependency2: ChainableBase {
         self.viewOffset = viewOffset
     }
 
-    init(cStruct: VkSubpassDependency2) {
+    public init(cStruct: VkSubpassDependency2) {
         self.srcSubpass = cStruct.srcSubpass
         self.dstSubpass = cStruct.dstSubpass
         self.srcStageMask = PipelineStageFlags(rawValue: cStruct.srcStageMask)
@@ -16180,7 +16180,7 @@ public struct RenderPassCreateInfo2: ChainableBase {
         self.correlatedViewMasks = correlatedViewMasks
     }
 
-    init(cStruct: VkRenderPassCreateInfo2) {
+    public init(cStruct: VkRenderPassCreateInfo2) {
         self.flags = RenderPassCreateFlags(rawValue: cStruct.flags)
         self.attachments = UnsafeBufferPointer(start: cStruct.pAttachments, count: Int(cStruct.attachmentCount)).map{ AttachmentDescription2(cStruct: $0) }
         self.subpasses = UnsafeBufferPointer(start: cStruct.pSubpasses, count: Int(cStruct.subpassCount)).map{ SubpassDescription2(cStruct: $0) }
@@ -16228,7 +16228,7 @@ public struct SubpassBeginInfo: ChainableBase {
         self.contents = contents
     }
 
-    init(cStruct: VkSubpassBeginInfo) {
+    public init(cStruct: VkSubpassBeginInfo) {
         self.contents = SubpassContents(rawValue: unsafeBitCast(cStruct.contents, to: UInt32.self))!
     }
 
@@ -16254,7 +16254,7 @@ public struct SubpassEndInfo: ChainableBase {
     public init() {
     }
 
-    init(cStruct: VkSubpassEndInfo) {
+    public init(cStruct: VkSubpassEndInfo) {
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkSubpassEndInfo>) throws(E) -> R) throws(E) -> R {
@@ -16280,7 +16280,7 @@ public struct PhysicalDeviceTimelineSemaphoreFeatures: ChainableBase, PhysicalDe
         self.timelineSemaphore = timelineSemaphore
     }
 
-    init(cStruct: VkPhysicalDeviceTimelineSemaphoreFeatures) {
+    public init(cStruct: VkPhysicalDeviceTimelineSemaphoreFeatures) {
         self.timelineSemaphore = cStruct.timelineSemaphore == VK_TRUE
     }
 
@@ -16304,7 +16304,7 @@ public struct PhysicalDeviceTimelineSemaphoreProperties: ChainableBase, Physical
 
     public let maxTimelineSemaphoreValueDifference: UInt64
 
-    init(cStruct: VkPhysicalDeviceTimelineSemaphoreProperties) {
+    public init(cStruct: VkPhysicalDeviceTimelineSemaphoreProperties) {
         self.maxTimelineSemaphoreValueDifference = cStruct.maxTimelineSemaphoreValueDifference
     }
 
@@ -16334,7 +16334,7 @@ public struct SemaphoreTypeCreateInfo: ChainableBase, SemaphoreCreateInfoExtensi
         self.initialValue = initialValue
     }
 
-    init(cStruct: VkSemaphoreTypeCreateInfo) {
+    public init(cStruct: VkSemaphoreTypeCreateInfo) {
         self.semaphoreType = SemaphoreType(rawValue: unsafeBitCast(cStruct.semaphoreType, to: UInt32.self))!
         self.initialValue = cStruct.initialValue
     }
@@ -16366,7 +16366,7 @@ public struct TimelineSemaphoreSubmitInfo: ChainableBase, SubmitInfoExtension, B
         self.signalSemaphoreValues = signalSemaphoreValues
     }
 
-    init(cStruct: VkTimelineSemaphoreSubmitInfo) {
+    public init(cStruct: VkTimelineSemaphoreSubmitInfo) {
         self.waitSemaphoreValues = (cStruct.pWaitSemaphoreValues != nil) ? Array(UnsafeBufferPointer(start: cStruct.pWaitSemaphoreValues, count: Int(cStruct.waitSemaphoreValueCount))) : nil
         self.signalSemaphoreValues = (cStruct.pSignalSemaphoreValues != nil) ? Array(UnsafeBufferPointer(start: cStruct.pSignalSemaphoreValues, count: Int(cStruct.signalSemaphoreValueCount))) : nil
     }
@@ -16406,7 +16406,7 @@ public struct SemaphoreWaitInfo: ChainableBase {
         self.values = values
     }
 
-    init(cStruct: VkSemaphoreWaitInfo, device: Device) {
+    public init(cStruct: VkSemaphoreWaitInfo, device: Device) {
         self.flags = SemaphoreWaitFlags(rawValue: cStruct.flags)
         self.semaphores = UnsafeBufferPointer(start: cStruct.pSemaphores, count: Int(cStruct.semaphoreCount)).map{ Semaphore(handle: $0, device: device) }
         self.values = Array(UnsafeBufferPointer(start: cStruct.pValues, count: Int(cStruct.semaphoreCount)))
@@ -16445,7 +16445,7 @@ public struct SemaphoreSignalInfo: ChainableBase {
         self.value = value
     }
 
-    init(cStruct: VkSemaphoreSignalInfo, device: Device) {
+    public init(cStruct: VkSemaphoreSignalInfo, device: Device) {
         self.semaphore = Semaphore(handle: cStruct.semaphore, device: device)
         self.value = cStruct.value
     }
@@ -16477,7 +16477,7 @@ public struct VertexInputBindingDivisorDescription: CStructConvertible {
         self.divisor = divisor
     }
 
-    init(cStruct: VkVertexInputBindingDivisorDescription) {
+    public init(cStruct: VkVertexInputBindingDivisorDescription) {
         self.binding = cStruct.binding
         self.divisor = cStruct.divisor
     }
@@ -16499,7 +16499,7 @@ public struct PipelineVertexInputDivisorStateCreateInfo: ChainableBase, Pipeline
         self.vertexBindingDivisors = vertexBindingDivisors
     }
 
-    init(cStruct: VkPipelineVertexInputDivisorStateCreateInfo) {
+    public init(cStruct: VkPipelineVertexInputDivisorStateCreateInfo) {
         self.vertexBindingDivisors = UnsafeBufferPointer(start: cStruct.pVertexBindingDivisors, count: Int(cStruct.vertexBindingDivisorCount)).map{ VertexInputBindingDivisorDescription(cStruct: $0) }
     }
 
@@ -16526,7 +16526,7 @@ public struct PhysicalDeviceVertexAttributeDivisorPropertiesEXT: ChainableBase, 
 
     public let maxVertexAttribDivisor: UInt32
 
-    init(cStruct: VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT) {
+    public init(cStruct: VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT) {
         self.maxVertexAttribDivisor = cStruct.maxVertexAttribDivisor
     }
 
@@ -16551,7 +16551,7 @@ public struct PhysicalDeviceVertexAttributeDivisorProperties: ChainableBase, Phy
     public let maxVertexAttribDivisor: UInt32
     public let supportsNonZeroFirstInstance: Bool
 
-    init(cStruct: VkPhysicalDeviceVertexAttributeDivisorProperties) {
+    public init(cStruct: VkPhysicalDeviceVertexAttributeDivisorProperties) {
         self.maxVertexAttribDivisor = cStruct.maxVertexAttribDivisor
         self.supportsNonZeroFirstInstance = cStruct.supportsNonZeroFirstInstance == VK_TRUE
     }
@@ -16580,7 +16580,7 @@ public struct PhysicalDevicePCIBusInfoPropertiesEXT: ChainableBase, PhysicalDevi
     public let pciDevice: UInt32
     public let pciFunction: UInt32
 
-    init(cStruct: VkPhysicalDevicePCIBusInfoPropertiesEXT) {
+    public init(cStruct: VkPhysicalDevicePCIBusInfoPropertiesEXT) {
         self.pciDomain = cStruct.pciDomain
         self.pciBus = cStruct.pciBus
         self.pciDevice = cStruct.pciDevice
@@ -16615,7 +16615,7 @@ public struct ImportAndroidHardwareBufferInfoANDROID: ChainableBase, MemoryAlloc
         self.buffer = buffer
     }
 
-    init(cStruct: VkImportAndroidHardwareBufferInfoANDROID) {
+    public init(cStruct: VkImportAndroidHardwareBufferInfoANDROID) {
         self.buffer = cStruct.buffer
     }
 
@@ -16641,7 +16641,7 @@ public struct AndroidHardwareBufferUsageANDROID: ChainableBase, ImageFormatPrope
 
     public let androidHardwareBufferUsage: UInt64
 
-    init(cStruct: VkAndroidHardwareBufferUsageANDROID) {
+    public init(cStruct: VkAndroidHardwareBufferUsageANDROID) {
         self.androidHardwareBufferUsage = cStruct.androidHardwareBufferUsage
     }
 
@@ -16668,7 +16668,7 @@ public struct AndroidHardwareBufferPropertiesANDROID: ChainableBase {
     public let allocationSize: VkDeviceSize
     public let memoryTypeBits: UInt32
 
-    init(cStruct: VkAndroidHardwareBufferPropertiesANDROID) {
+    public init(cStruct: VkAndroidHardwareBufferPropertiesANDROID) {
         self.allocationSize = cStruct.allocationSize
         self.memoryTypeBits = cStruct.memoryTypeBits
     }
@@ -16700,7 +16700,7 @@ public struct MemoryGetAndroidHardwareBufferInfoANDROID: ChainableBase {
         self.memory = memory
     }
 
-    init(cStruct: VkMemoryGetAndroidHardwareBufferInfoANDROID, device: Device) {
+    public init(cStruct: VkMemoryGetAndroidHardwareBufferInfoANDROID, device: Device) {
         self.memory = DeviceMemory(handle: cStruct.memory, device: device)
     }
 
@@ -16733,7 +16733,7 @@ public struct AndroidHardwareBufferFormatPropertiesANDROID: ChainableBase, Andro
     public let suggestedXChromaOffset: ChromaLocation
     public let suggestedYChromaOffset: ChromaLocation
 
-    init(cStruct: VkAndroidHardwareBufferFormatPropertiesANDROID) {
+    public init(cStruct: VkAndroidHardwareBufferFormatPropertiesANDROID) {
         self.format = Format(rawValue: unsafeBitCast(cStruct.format, to: UInt32.self))!
         self.externalFormat = cStruct.externalFormat
         self.formatFeatures = FormatFeatureFlags(rawValue: cStruct.formatFeatures)
@@ -16778,7 +16778,7 @@ public struct CommandBufferInheritanceConditionalRenderingInfoEXT: ChainableBase
         self.conditionalRenderingEnable = conditionalRenderingEnable
     }
 
-    init(cStruct: VkCommandBufferInheritanceConditionalRenderingInfoEXT) {
+    public init(cStruct: VkCommandBufferInheritanceConditionalRenderingInfoEXT) {
         self.conditionalRenderingEnable = cStruct.conditionalRenderingEnable == VK_TRUE
     }
 
@@ -16807,7 +16807,7 @@ public struct ExternalFormatANDROID: ChainableBase, ImageCreateInfoExtension, Sa
         self.externalFormat = externalFormat
     }
 
-    init(cStruct: VkExternalFormatANDROID) {
+    public init(cStruct: VkExternalFormatANDROID) {
         self.externalFormat = cStruct.externalFormat
     }
 
@@ -16840,7 +16840,7 @@ public struct PhysicalDevice8BitStorageFeatures: ChainableBase, PhysicalDeviceFe
         self.storagePushConstant8 = storagePushConstant8
     }
 
-    init(cStruct: VkPhysicalDevice8BitStorageFeatures) {
+    public init(cStruct: VkPhysicalDevice8BitStorageFeatures) {
         self.storageBuffer8BitAccess = cStruct.storageBuffer8BitAccess == VK_TRUE
         self.uniformAndStorageBuffer8BitAccess = cStruct.uniformAndStorageBuffer8BitAccess == VK_TRUE
         self.storagePushConstant8 = cStruct.storagePushConstant8 == VK_TRUE
@@ -16874,7 +16874,7 @@ public struct PhysicalDeviceConditionalRenderingFeaturesEXT: ChainableBase, Phys
         self.inheritedConditionalRendering = inheritedConditionalRendering
     }
 
-    init(cStruct: VkPhysicalDeviceConditionalRenderingFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceConditionalRenderingFeaturesEXT) {
         self.conditionalRendering = cStruct.conditionalRendering == VK_TRUE
         self.inheritedConditionalRendering = cStruct.inheritedConditionalRendering == VK_TRUE
     }
@@ -16908,7 +16908,7 @@ public struct PhysicalDeviceVulkanMemoryModelFeatures: ChainableBase, PhysicalDe
         self.vulkanMemoryModelAvailabilityVisibilityChains = vulkanMemoryModelAvailabilityVisibilityChains
     }
 
-    init(cStruct: VkPhysicalDeviceVulkanMemoryModelFeatures) {
+    public init(cStruct: VkPhysicalDeviceVulkanMemoryModelFeatures) {
         self.vulkanMemoryModel = cStruct.vulkanMemoryModel == VK_TRUE
         self.vulkanMemoryModelDeviceScope = cStruct.vulkanMemoryModelDeviceScope == VK_TRUE
         self.vulkanMemoryModelAvailabilityVisibilityChains = cStruct.vulkanMemoryModelAvailabilityVisibilityChains == VK_TRUE
@@ -16942,7 +16942,7 @@ public struct PhysicalDeviceShaderAtomicInt64Features: ChainableBase, PhysicalDe
         self.shaderSharedInt64Atomics = shaderSharedInt64Atomics
     }
 
-    init(cStruct: VkPhysicalDeviceShaderAtomicInt64Features) {
+    public init(cStruct: VkPhysicalDeviceShaderAtomicInt64Features) {
         self.shaderBufferInt64Atomics = cStruct.shaderBufferInt64Atomics == VK_TRUE
         self.shaderSharedInt64Atomics = cStruct.shaderSharedInt64Atomics == VK_TRUE
     }
@@ -16994,7 +16994,7 @@ public struct PhysicalDeviceShaderAtomicFloatFeaturesEXT: ChainableBase, Physica
         self.sparseImageFloat32AtomicAdd = sparseImageFloat32AtomicAdd
     }
 
-    init(cStruct: VkPhysicalDeviceShaderAtomicFloatFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceShaderAtomicFloatFeaturesEXT) {
         self.shaderBufferFloat32Atomics = cStruct.shaderBufferFloat32Atomics == VK_TRUE
         self.shaderBufferFloat32AtomicAdd = cStruct.shaderBufferFloat32AtomicAdd == VK_TRUE
         self.shaderBufferFloat64Atomics = cStruct.shaderBufferFloat64Atomics == VK_TRUE
@@ -17066,7 +17066,7 @@ public struct PhysicalDeviceShaderAtomicFloat2FeaturesEXT: ChainableBase, Physic
         self.sparseImageFloat32AtomicMinMax = sparseImageFloat32AtomicMinMax
     }
 
-    init(cStruct: VkPhysicalDeviceShaderAtomicFloat2FeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceShaderAtomicFloat2FeaturesEXT) {
         self.shaderBufferFloat16Atomics = cStruct.shaderBufferFloat16Atomics == VK_TRUE
         self.shaderBufferFloat16AtomicAdd = cStruct.shaderBufferFloat16AtomicAdd == VK_TRUE
         self.shaderBufferFloat16AtomicMinMax = cStruct.shaderBufferFloat16AtomicMinMax == VK_TRUE
@@ -17118,7 +17118,7 @@ public struct PhysicalDeviceVertexAttributeDivisorFeatures: ChainableBase, Physi
         self.vertexAttributeInstanceRateZeroDivisor = vertexAttributeInstanceRateZeroDivisor
     }
 
-    init(cStruct: VkPhysicalDeviceVertexAttributeDivisorFeatures) {
+    public init(cStruct: VkPhysicalDeviceVertexAttributeDivisorFeatures) {
         self.vertexAttributeInstanceRateDivisor = cStruct.vertexAttributeInstanceRateDivisor == VK_TRUE
         self.vertexAttributeInstanceRateZeroDivisor = cStruct.vertexAttributeInstanceRateZeroDivisor == VK_TRUE
     }
@@ -17144,7 +17144,7 @@ public struct QueueFamilyCheckpointPropertiesNV: ChainableBase, QueueFamilyPrope
 
     public let checkpointExecutionStageMask: PipelineStageFlags
 
-    init(cStruct: VkQueueFamilyCheckpointPropertiesNV) {
+    public init(cStruct: VkQueueFamilyCheckpointPropertiesNV) {
         self.checkpointExecutionStageMask = PipelineStageFlags(rawValue: cStruct.checkpointExecutionStageMask)
     }
 
@@ -17169,7 +17169,7 @@ public struct CheckpointDataNV: ChainableBase {
     public let stage: PipelineStageFlags
     public let checkpointMarker: UnsafeMutableRawPointer
 
-    init(cStruct: VkCheckpointDataNV) {
+    public init(cStruct: VkCheckpointDataNV) {
         self.stage = PipelineStageFlags(rawValue: unsafeBitCast(cStruct.stage.rawValue, to: UInt32.self))
         self.checkpointMarker = cStruct.pCheckpointMarker
     }
@@ -17198,7 +17198,7 @@ public struct PhysicalDeviceDepthStencilResolveProperties: ChainableBase, Physic
     public let independentResolveNone: Bool
     public let independentResolve: Bool
 
-    init(cStruct: VkPhysicalDeviceDepthStencilResolveProperties) {
+    public init(cStruct: VkPhysicalDeviceDepthStencilResolveProperties) {
         self.supportedDepthResolveModes = ResolveModeFlags(rawValue: cStruct.supportedDepthResolveModes)
         self.supportedStencilResolveModes = ResolveModeFlags(rawValue: cStruct.supportedStencilResolveModes)
         self.independentResolveNone = cStruct.independentResolveNone == VK_TRUE
@@ -17236,7 +17236,7 @@ public struct SubpassDescriptionDepthStencilResolve: ChainableBase, SubpassDescr
         self.depthStencilResolveAttachment = depthStencilResolveAttachment
     }
 
-    init(cStruct: VkSubpassDescriptionDepthStencilResolve) {
+    public init(cStruct: VkSubpassDescriptionDepthStencilResolve) {
         self.depthResolveMode = ResolveModeFlags(rawValue: unsafeBitCast(cStruct.depthResolveMode.rawValue, to: UInt32.self))
         self.stencilResolveMode = ResolveModeFlags(rawValue: unsafeBitCast(cStruct.stencilResolveMode.rawValue, to: UInt32.self))
         self.depthStencilResolveAttachment = (cStruct.pDepthStencilResolveAttachment != nil) ? AttachmentReference2(cStruct: cStruct.pDepthStencilResolveAttachment.pointee) : nil
@@ -17270,7 +17270,7 @@ public struct ImageViewASTCDecodeModeEXT: ChainableBase, ImageViewCreateInfoExte
         self.decodeMode = decodeMode
     }
 
-    init(cStruct: VkImageViewASTCDecodeModeEXT) {
+    public init(cStruct: VkImageViewASTCDecodeModeEXT) {
         self.decodeMode = Format(rawValue: unsafeBitCast(cStruct.decodeMode, to: UInt32.self))!
     }
 
@@ -17298,7 +17298,7 @@ public struct PhysicalDeviceASTCDecodeFeaturesEXT: ChainableBase, PhysicalDevice
         self.decodeModeSharedExponent = decodeModeSharedExponent
     }
 
-    init(cStruct: VkPhysicalDeviceASTCDecodeFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceASTCDecodeFeaturesEXT) {
         self.decodeModeSharedExponent = cStruct.decodeModeSharedExponent == VK_TRUE
     }
 
@@ -17328,7 +17328,7 @@ public struct PhysicalDeviceTransformFeedbackFeaturesEXT: ChainableBase, Physica
         self.geometryStreams = geometryStreams
     }
 
-    init(cStruct: VkPhysicalDeviceTransformFeedbackFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceTransformFeedbackFeaturesEXT) {
         self.transformFeedback = cStruct.transformFeedback == VK_TRUE
         self.geometryStreams = cStruct.geometryStreams == VK_TRUE
     }
@@ -17363,7 +17363,7 @@ public struct PhysicalDeviceTransformFeedbackPropertiesEXT: ChainableBase, Physi
     public let transformFeedbackRasterizationStreamSelect: Bool
     public let transformFeedbackDraw: Bool
 
-    init(cStruct: VkPhysicalDeviceTransformFeedbackPropertiesEXT) {
+    public init(cStruct: VkPhysicalDeviceTransformFeedbackPropertiesEXT) {
         self.maxTransformFeedbackStreams = cStruct.maxTransformFeedbackStreams
         self.maxTransformFeedbackBuffers = cStruct.maxTransformFeedbackBuffers
         self.maxTransformFeedbackBufferSize = cStruct.maxTransformFeedbackBufferSize
@@ -17411,7 +17411,7 @@ public struct PipelineRasterizationStateStreamCreateInfoEXT: ChainableBase, Pipe
         self.rasterizationStream = rasterizationStream
     }
 
-    init(cStruct: VkPipelineRasterizationStateStreamCreateInfoEXT) {
+    public init(cStruct: VkPipelineRasterizationStateStreamCreateInfoEXT) {
         self.flags = PipelineRasterizationStateStreamCreateFlagsEXT(rawValue: cStruct.flags)
         self.rasterizationStream = cStruct.rasterizationStream
     }
@@ -17441,7 +17441,7 @@ public struct PhysicalDeviceRepresentativeFragmentTestFeaturesNV: ChainableBase,
         self.representativeFragmentTest = representativeFragmentTest
     }
 
-    init(cStruct: VkPhysicalDeviceRepresentativeFragmentTestFeaturesNV) {
+    public init(cStruct: VkPhysicalDeviceRepresentativeFragmentTestFeaturesNV) {
         self.representativeFragmentTest = cStruct.representativeFragmentTest == VK_TRUE
     }
 
@@ -17469,7 +17469,7 @@ public struct PipelineRepresentativeFragmentTestStateCreateInfoNV: ChainableBase
         self.representativeFragmentTestEnable = representativeFragmentTestEnable
     }
 
-    init(cStruct: VkPipelineRepresentativeFragmentTestStateCreateInfoNV) {
+    public init(cStruct: VkPipelineRepresentativeFragmentTestStateCreateInfoNV) {
         self.representativeFragmentTestEnable = cStruct.representativeFragmentTestEnable == VK_TRUE
     }
 
@@ -17497,7 +17497,7 @@ public struct PhysicalDeviceExclusiveScissorFeaturesNV: ChainableBase, PhysicalD
         self.exclusiveScissor = exclusiveScissor
     }
 
-    init(cStruct: VkPhysicalDeviceExclusiveScissorFeaturesNV) {
+    public init(cStruct: VkPhysicalDeviceExclusiveScissorFeaturesNV) {
         self.exclusiveScissor = cStruct.exclusiveScissor == VK_TRUE
     }
 
@@ -17525,7 +17525,7 @@ public struct PipelineViewportExclusiveScissorStateCreateInfoNV: ChainableBase, 
         self.exclusiveScissors = exclusiveScissors
     }
 
-    init(cStruct: VkPipelineViewportExclusiveScissorStateCreateInfoNV) {
+    public init(cStruct: VkPipelineViewportExclusiveScissorStateCreateInfoNV) {
         self.exclusiveScissors = UnsafeBufferPointer(start: cStruct.pExclusiveScissors, count: Int(cStruct.exclusiveScissorCount)).map{ Rect2D(cStruct: $0) }
     }
 
@@ -17556,7 +17556,7 @@ public struct PhysicalDeviceCornerSampledImageFeaturesNV: ChainableBase, Physica
         self.cornerSampledImage = cornerSampledImage
     }
 
-    init(cStruct: VkPhysicalDeviceCornerSampledImageFeaturesNV) {
+    public init(cStruct: VkPhysicalDeviceCornerSampledImageFeaturesNV) {
         self.cornerSampledImage = cStruct.cornerSampledImage == VK_TRUE
     }
 
@@ -17586,7 +17586,7 @@ public struct PhysicalDeviceComputeShaderDerivativesFeaturesKHR: ChainableBase, 
         self.computeDerivativeGroupLinear = computeDerivativeGroupLinear
     }
 
-    init(cStruct: VkPhysicalDeviceComputeShaderDerivativesFeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceComputeShaderDerivativesFeaturesKHR) {
         self.computeDerivativeGroupQuads = cStruct.computeDerivativeGroupQuads == VK_TRUE
         self.computeDerivativeGroupLinear = cStruct.computeDerivativeGroupLinear == VK_TRUE
     }
@@ -17612,7 +17612,7 @@ public struct PhysicalDeviceComputeShaderDerivativesPropertiesKHR: ChainableBase
 
     public let meshAndTaskShaderDerivatives: Bool
 
-    init(cStruct: VkPhysicalDeviceComputeShaderDerivativesPropertiesKHR) {
+    public init(cStruct: VkPhysicalDeviceComputeShaderDerivativesPropertiesKHR) {
         self.meshAndTaskShaderDerivatives = cStruct.meshAndTaskShaderDerivatives == VK_TRUE
     }
 
@@ -17640,7 +17640,7 @@ public struct PhysicalDeviceShaderImageFootprintFeaturesNV: ChainableBase, Physi
         self.imageFootprint = imageFootprint
     }
 
-    init(cStruct: VkPhysicalDeviceShaderImageFootprintFeaturesNV) {
+    public init(cStruct: VkPhysicalDeviceShaderImageFootprintFeaturesNV) {
         self.imageFootprint = cStruct.imageFootprint == VK_TRUE
     }
 
@@ -17668,7 +17668,7 @@ public struct PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV: Chainabl
         self.dedicatedAllocationImageAliasing = dedicatedAllocationImageAliasing
     }
 
-    init(cStruct: VkPhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV) {
+    public init(cStruct: VkPhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV) {
         self.dedicatedAllocationImageAliasing = cStruct.dedicatedAllocationImageAliasing == VK_TRUE
     }
 
@@ -17698,7 +17698,7 @@ public struct PhysicalDeviceCopyMemoryIndirectFeaturesKHR: ChainableBase, Physic
         self.indirectMemoryToImageCopy = indirectMemoryToImageCopy
     }
 
-    init(cStruct: VkPhysicalDeviceCopyMemoryIndirectFeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceCopyMemoryIndirectFeaturesKHR) {
         self.indirectMemoryCopy = cStruct.indirectMemoryCopy == VK_TRUE
         self.indirectMemoryToImageCopy = cStruct.indirectMemoryToImageCopy == VK_TRUE
     }
@@ -17728,7 +17728,7 @@ public struct PhysicalDeviceCopyMemoryIndirectFeaturesNV: ChainableBase, Physica
         self.indirectCopy = indirectCopy
     }
 
-    init(cStruct: VkPhysicalDeviceCopyMemoryIndirectFeaturesNV) {
+    public init(cStruct: VkPhysicalDeviceCopyMemoryIndirectFeaturesNV) {
         self.indirectCopy = cStruct.indirectCopy == VK_TRUE
     }
 
@@ -17752,7 +17752,7 @@ public struct PhysicalDeviceCopyMemoryIndirectPropertiesKHR: ChainableBase, Phys
 
     public let supportedQueues: QueueFlags
 
-    init(cStruct: VkPhysicalDeviceCopyMemoryIndirectPropertiesKHR) {
+    public init(cStruct: VkPhysicalDeviceCopyMemoryIndirectPropertiesKHR) {
         self.supportedQueues = QueueFlags(rawValue: cStruct.supportedQueues)
     }
 
@@ -17780,7 +17780,7 @@ public struct PhysicalDeviceMemoryDecompressionFeaturesEXT: ChainableBase, Physi
         self.memoryDecompression = memoryDecompression
     }
 
-    init(cStruct: VkPhysicalDeviceMemoryDecompressionFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceMemoryDecompressionFeaturesEXT) {
         self.memoryDecompression = cStruct.memoryDecompression == VK_TRUE
     }
 
@@ -17805,7 +17805,7 @@ public struct PhysicalDeviceMemoryDecompressionPropertiesEXT: ChainableBase, Phy
     public let decompressionMethods: MemoryDecompressionMethodFlagsEXT
     public let maxDecompressionIndirectCount: UInt64
 
-    init(cStruct: VkPhysicalDeviceMemoryDecompressionPropertiesEXT) {
+    public init(cStruct: VkPhysicalDeviceMemoryDecompressionPropertiesEXT) {
         self.decompressionMethods = MemoryDecompressionMethodFlagsEXT(rawValue: cStruct.decompressionMethods)
         self.maxDecompressionIndirectCount = cStruct.maxDecompressionIndirectCount
     }
@@ -17835,7 +17835,7 @@ public struct ShadingRatePaletteNV: CStructConvertible {
         self.shadingRatePaletteEntries = shadingRatePaletteEntries
     }
 
-    init(cStruct: VkShadingRatePaletteNV) {
+    public init(cStruct: VkShadingRatePaletteNV) {
         self.shadingRatePaletteEntries = UnsafeBufferPointer(start: cStruct.pShadingRatePaletteEntries, count: Int(cStruct.shadingRatePaletteEntryCount)).map{ ShadingRatePaletteEntryNV(rawValue: unsafeBitCast($0, to: UInt32.self))! }
     }
 
@@ -17860,7 +17860,7 @@ public struct PipelineViewportShadingRateImageStateCreateInfoNV: ChainableBase, 
         self.shadingRatePalettes = shadingRatePalettes
     }
 
-    init(cStruct: VkPipelineViewportShadingRateImageStateCreateInfoNV) {
+    public init(cStruct: VkPipelineViewportShadingRateImageStateCreateInfoNV) {
         self.shadingRateImageEnable = cStruct.shadingRateImageEnable == VK_TRUE
         self.shadingRatePalettes = UnsafeBufferPointer(start: cStruct.pShadingRatePalettes, count: Int(cStruct.viewportCount)).map{ ShadingRatePaletteNV(cStruct: $0) }
     }
@@ -17895,7 +17895,7 @@ public struct PhysicalDeviceShadingRateImageFeaturesNV: ChainableBase, PhysicalD
         self.shadingRateCoarseSampleOrder = shadingRateCoarseSampleOrder
     }
 
-    init(cStruct: VkPhysicalDeviceShadingRateImageFeaturesNV) {
+    public init(cStruct: VkPhysicalDeviceShadingRateImageFeaturesNV) {
         self.shadingRateImage = cStruct.shadingRateImage == VK_TRUE
         self.shadingRateCoarseSampleOrder = cStruct.shadingRateCoarseSampleOrder == VK_TRUE
     }
@@ -17923,7 +17923,7 @@ public struct PhysicalDeviceShadingRateImagePropertiesNV: ChainableBase, Physica
     public let shadingRatePaletteSize: UInt32
     public let shadingRateMaxCoarseSamples: UInt32
 
-    init(cStruct: VkPhysicalDeviceShadingRateImagePropertiesNV) {
+    public init(cStruct: VkPhysicalDeviceShadingRateImagePropertiesNV) {
         self.shadingRateTexelSize = Extent2D(cStruct: cStruct.shadingRateTexelSize)
         self.shadingRatePaletteSize = cStruct.shadingRatePaletteSize
         self.shadingRateMaxCoarseSamples = cStruct.shadingRateMaxCoarseSamples
@@ -17957,7 +17957,7 @@ public struct PhysicalDeviceInvocationMaskFeaturesHUAWEI: ChainableBase, Physica
         self.invocationMask = invocationMask
     }
 
-    init(cStruct: VkPhysicalDeviceInvocationMaskFeaturesHUAWEI) {
+    public init(cStruct: VkPhysicalDeviceInvocationMaskFeaturesHUAWEI) {
         self.invocationMask = cStruct.invocationMask == VK_TRUE
     }
 
@@ -17989,7 +17989,7 @@ public struct CoarseSampleLocationNV: CStructConvertible {
         self.sample = sample
     }
 
-    init(cStruct: VkCoarseSampleLocationNV) {
+    public init(cStruct: VkCoarseSampleLocationNV) {
         self.pixelX = cStruct.pixelX
         self.pixelY = cStruct.pixelY
         self.sample = cStruct.sample
@@ -18017,7 +18017,7 @@ public struct CoarseSampleOrderCustomNV: CStructConvertible {
         self.sampleLocations = sampleLocations
     }
 
-    init(cStruct: VkCoarseSampleOrderCustomNV) {
+    public init(cStruct: VkCoarseSampleOrderCustomNV) {
         self.shadingRate = ShadingRatePaletteEntryNV(rawValue: unsafeBitCast(cStruct.shadingRate, to: UInt32.self))!
         self.sampleCount = cStruct.sampleCount
         self.sampleLocations = UnsafeBufferPointer(start: cStruct.pSampleLocations, count: Int(cStruct.sampleLocationCount)).map{ CoarseSampleLocationNV(cStruct: $0) }
@@ -18046,7 +18046,7 @@ public struct PipelineViewportCoarseSampleOrderStateCreateInfoNV: ChainableBase,
         self.customSampleOrders = customSampleOrders
     }
 
-    init(cStruct: VkPipelineViewportCoarseSampleOrderStateCreateInfoNV) {
+    public init(cStruct: VkPipelineViewportCoarseSampleOrderStateCreateInfoNV) {
         self.sampleOrderType = CoarseSampleOrderTypeNV(rawValue: unsafeBitCast(cStruct.sampleOrderType, to: UInt32.self))!
         self.customSampleOrders = UnsafeBufferPointer(start: cStruct.pCustomSampleOrders, count: Int(cStruct.customSampleOrderCount)).map{ CoarseSampleOrderCustomNV(cStruct: $0) }
     }
@@ -18081,7 +18081,7 @@ public struct PhysicalDeviceMeshShaderFeaturesNV: ChainableBase, PhysicalDeviceF
         self.meshShader = meshShader
     }
 
-    init(cStruct: VkPhysicalDeviceMeshShaderFeaturesNV) {
+    public init(cStruct: VkPhysicalDeviceMeshShaderFeaturesNV) {
         self.taskShader = cStruct.taskShader == VK_TRUE
         self.meshShader = cStruct.meshShader == VK_TRUE
     }
@@ -18119,7 +18119,7 @@ public struct PhysicalDeviceMeshShaderPropertiesNV: ChainableBase, PhysicalDevic
     public let meshOutputPerVertexGranularity: UInt32
     public let meshOutputPerPrimitiveGranularity: UInt32
 
-    init(cStruct: VkPhysicalDeviceMeshShaderPropertiesNV) {
+    public init(cStruct: VkPhysicalDeviceMeshShaderPropertiesNV) {
         self.maxDrawMeshTasksCount = cStruct.maxDrawMeshTasksCount
         self.maxTaskWorkGroupInvocations = cStruct.maxTaskWorkGroupInvocations
         self.maxTaskWorkGroupSize = cStruct.maxTaskWorkGroupSize
@@ -18173,7 +18173,7 @@ public struct DrawMeshTasksIndirectCommandNV: CStructConvertible {
         self.firstTask = firstTask
     }
 
-    init(cStruct: VkDrawMeshTasksIndirectCommandNV) {
+    public init(cStruct: VkDrawMeshTasksIndirectCommandNV) {
         self.taskCount = cStruct.taskCount
         self.firstTask = cStruct.firstTask
     }
@@ -18203,7 +18203,7 @@ public struct PhysicalDeviceMeshShaderFeaturesEXT: ChainableBase, PhysicalDevice
         self.meshShaderQueries = meshShaderQueries
     }
 
-    init(cStruct: VkPhysicalDeviceMeshShaderFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceMeshShaderFeaturesEXT) {
         self.taskShader = cStruct.taskShader == VK_TRUE
         self.meshShader = cStruct.meshShader == VK_TRUE
         self.multiviewMeshShader = cStruct.multiviewMeshShader == VK_TRUE
@@ -18262,7 +18262,7 @@ public struct PhysicalDeviceMeshShaderPropertiesEXT: ChainableBase, PhysicalDevi
     public let prefersCompactVertexOutput: Bool
     public let prefersCompactPrimitiveOutput: Bool
 
-    init(cStruct: VkPhysicalDeviceMeshShaderPropertiesEXT) {
+    public init(cStruct: VkPhysicalDeviceMeshShaderPropertiesEXT) {
         self.maxTaskWorkGroupTotalCount = cStruct.maxTaskWorkGroupTotalCount
         self.maxTaskWorkGroupCount = cStruct.maxTaskWorkGroupCount
         self.maxTaskWorkGroupInvocations = cStruct.maxTaskWorkGroupInvocations
@@ -18348,7 +18348,7 @@ public struct DrawMeshTasksIndirectCommandEXT: CStructConvertible {
         self.groupCountZ = groupCountZ
     }
 
-    init(cStruct: VkDrawMeshTasksIndirectCommandEXT) {
+    public init(cStruct: VkDrawMeshTasksIndirectCommandEXT) {
         self.groupCountX = cStruct.groupCountX
         self.groupCountY = cStruct.groupCountY
         self.groupCountZ = cStruct.groupCountZ
@@ -18380,7 +18380,7 @@ public struct RayTracingShaderGroupCreateInfoNV: ChainableBase {
         self.intersectionShader = intersectionShader
     }
 
-    init(cStruct: VkRayTracingShaderGroupCreateInfoNV) {
+    public init(cStruct: VkRayTracingShaderGroupCreateInfoNV) {
         self.type = RayTracingShaderGroupTypeKHR(rawValue: unsafeBitCast(cStruct.type, to: UInt32.self))!
         self.generalShader = cStruct.generalShader
         self.closestHitShader = cStruct.closestHitShader
@@ -18426,7 +18426,7 @@ public struct RayTracingShaderGroupCreateInfoKHR: ChainableBase {
         self.shaderGroupCaptureReplayHandle = shaderGroupCaptureReplayHandle
     }
 
-    init(cStruct: VkRayTracingShaderGroupCreateInfoKHR) {
+    public init(cStruct: VkRayTracingShaderGroupCreateInfoKHR) {
         self.type = RayTracingShaderGroupTypeKHR(rawValue: unsafeBitCast(cStruct.type, to: UInt32.self))!
         self.generalShader = cStruct.generalShader
         self.closestHitShader = cStruct.closestHitShader
@@ -18476,7 +18476,7 @@ public struct RayTracingPipelineCreateInfoNV: ChainableBase {
         self.basePipelineIndex = basePipelineIndex
     }
 
-    init(cStruct: VkRayTracingPipelineCreateInfoNV, device: Device) {
+    public init(cStruct: VkRayTracingPipelineCreateInfoNV, device: Device) {
         self.flags = PipelineCreateFlags(rawValue: cStruct.flags)
         self.stages = UnsafeBufferPointer(start: cStruct.pStages, count: Int(cStruct.stageCount)).map{ PipelineShaderStageCreateInfo(cStruct: $0, device: device) }
         self.groups = UnsafeBufferPointer(start: cStruct.pGroups, count: Int(cStruct.groupCount)).map{ RayTracingShaderGroupCreateInfoNV(cStruct: $0) }
@@ -18522,7 +18522,7 @@ public struct PipelineLibraryCreateInfoKHR: ChainableBase, GraphicsPipelineCreat
         self.libraries = libraries
     }
 
-    init(cStruct: VkPipelineLibraryCreateInfoKHR, device: Device) {
+    public init(cStruct: VkPipelineLibraryCreateInfoKHR, device: Device) {
         self.libraries = UnsafeBufferPointer(start: cStruct.pLibraries, count: Int(cStruct.libraryCount)).map{ Pipeline(handle: $0, device: device) }
     }
 
@@ -18555,7 +18555,7 @@ public struct RayTracingPipelineInterfaceCreateInfoKHR: ChainableBase {
         self.maxPipelineRayHitAttributeSize = maxPipelineRayHitAttributeSize
     }
 
-    init(cStruct: VkRayTracingPipelineInterfaceCreateInfoKHR) {
+    public init(cStruct: VkRayTracingPipelineInterfaceCreateInfoKHR) {
         self.maxPipelineRayPayloadSize = cStruct.maxPipelineRayPayloadSize
         self.maxPipelineRayHitAttributeSize = cStruct.maxPipelineRayHitAttributeSize
     }
@@ -18603,7 +18603,7 @@ public struct RayTracingPipelineCreateInfoKHR: ChainableBase {
         self.basePipelineIndex = basePipelineIndex
     }
 
-    init(cStruct: VkRayTracingPipelineCreateInfoKHR, device: Device) {
+    public init(cStruct: VkRayTracingPipelineCreateInfoKHR, device: Device) {
         self.flags = PipelineCreateFlags(rawValue: cStruct.flags)
         self.stages = UnsafeBufferPointer(start: cStruct.pStages, count: Int(cStruct.stageCount)).map{ PipelineShaderStageCreateInfo(cStruct: $0, device: device) }
         self.groups = UnsafeBufferPointer(start: cStruct.pGroups, count: Int(cStruct.groupCount)).map{ RayTracingShaderGroupCreateInfoKHR(cStruct: $0) }
@@ -18681,7 +18681,7 @@ public struct GeometryTrianglesNV: ChainableBase {
         self.transformOffset = transformOffset
     }
 
-    init(cStruct: VkGeometryTrianglesNV, device: Device) {
+    public init(cStruct: VkGeometryTrianglesNV, device: Device) {
         self.vertexData = (cStruct.vertexData != nil) ? Buffer(handle: cStruct.vertexData, device: device) : nil
         self.vertexOffset = cStruct.vertexOffset
         self.vertexCount = cStruct.vertexCount
@@ -18735,7 +18735,7 @@ public struct GeometryAABBNV: ChainableBase {
         self.offset = offset
     }
 
-    init(cStruct: VkGeometryAABBNV, device: Device) {
+    public init(cStruct: VkGeometryAABBNV, device: Device) {
         self.aabbData = (cStruct.aabbData != nil) ? Buffer(handle: cStruct.aabbData, device: device) : nil
         self.numAABBs = cStruct.numAABBs
         self.stride = cStruct.stride
@@ -18771,7 +18771,7 @@ public struct GeometryDataNV: CStructConvertible {
         self.aabbs = aabbs
     }
 
-    init(cStruct: VkGeometryDataNV, device: Device) {
+    public init(cStruct: VkGeometryDataNV, device: Device) {
         self.triangles = GeometryTrianglesNV(cStruct: cStruct.triangles, device: device)
         self.aabbs = GeometryAABBNV(cStruct: cStruct.aabbs, device: device)
     }
@@ -18801,7 +18801,7 @@ public struct GeometryNV: ChainableBase {
         self.flags = flags
     }
 
-    init(cStruct: VkGeometryNV, device: Device) {
+    public init(cStruct: VkGeometryNV, device: Device) {
         self.geometryType = GeometryTypeKHR(rawValue: unsafeBitCast(cStruct.geometryType, to: UInt32.self))!
         self.geometry = GeometryDataNV(cStruct: cStruct.geometry, device: device)
         self.flags = GeometryFlagsKHR(rawValue: cStruct.flags)
@@ -18841,7 +18841,7 @@ public struct AccelerationStructureInfoNV: ChainableBase {
         self.geometries = geometries
     }
 
-    init(cStruct: VkAccelerationStructureInfoNV, device: Device) {
+    public init(cStruct: VkAccelerationStructureInfoNV, device: Device) {
         self.type = cStruct.type
         self.flags = BuildAccelerationStructureFlagsKHR(rawValue: cStruct.flags)
         self.instanceCount = cStruct.instanceCount
@@ -18880,7 +18880,7 @@ public struct AccelerationStructureCreateInfoNV: ChainableBase {
         self.info = info
     }
 
-    init(cStruct: VkAccelerationStructureCreateInfoNV, device: Device) {
+    public init(cStruct: VkAccelerationStructureCreateInfoNV, device: Device) {
         self.compactedSize = cStruct.compactedSize
         self.info = AccelerationStructureInfoNV(cStruct: cStruct.info, device: device)
     }
@@ -18918,7 +18918,7 @@ public struct BindAccelerationStructureMemoryInfoNV: ChainableBase {
         self.deviceIndices = deviceIndices
     }
 
-    init(cStruct: VkBindAccelerationStructureMemoryInfoNV, device: Device) {
+    public init(cStruct: VkBindAccelerationStructureMemoryInfoNV, device: Device) {
         self.accelerationStructure = AccelerationStructureNV(handle: cStruct.accelerationStructure, device: device)
         self.memory = DeviceMemory(handle: cStruct.memory, device: device)
         self.memoryOffset = cStruct.memoryOffset
@@ -18955,7 +18955,7 @@ public struct WriteDescriptorSetAccelerationStructureKHR: ChainableBase, WriteDe
         self.accelerationStructures = accelerationStructures
     }
 
-    init(cStruct: VkWriteDescriptorSetAccelerationStructureKHR, device: Device) {
+    public init(cStruct: VkWriteDescriptorSetAccelerationStructureKHR, device: Device) {
         self.accelerationStructures = UnsafeBufferPointer(start: cStruct.pAccelerationStructures, count: Int(cStruct.accelerationStructureCount)).map{ ($0 != nil) ? AccelerationStructureKHR(handle: $0, device: device) : nil }
     }
 
@@ -18986,7 +18986,7 @@ public struct WriteDescriptorSetAccelerationStructureNV: ChainableBase, WriteDes
         self.accelerationStructures = accelerationStructures
     }
 
-    init(cStruct: VkWriteDescriptorSetAccelerationStructureNV, device: Device) {
+    public init(cStruct: VkWriteDescriptorSetAccelerationStructureNV, device: Device) {
         self.accelerationStructures = UnsafeBufferPointer(start: cStruct.pAccelerationStructures, count: Int(cStruct.accelerationStructureCount)).map{ ($0 != nil) ? AccelerationStructureNV(handle: $0, device: device) : nil }
     }
 
@@ -19019,7 +19019,7 @@ public struct AccelerationStructureMemoryRequirementsInfoNV: ChainableBase {
         self.accelerationStructure = accelerationStructure
     }
 
-    init(cStruct: VkAccelerationStructureMemoryRequirementsInfoNV, device: Device) {
+    public init(cStruct: VkAccelerationStructureMemoryRequirementsInfoNV, device: Device) {
         self.type = AccelerationStructureMemoryRequirementsTypeNV(rawValue: unsafeBitCast(cStruct.type, to: UInt32.self))!
         self.accelerationStructure = AccelerationStructureNV(handle: cStruct.accelerationStructure, device: device)
     }
@@ -19057,7 +19057,7 @@ public struct PhysicalDeviceAccelerationStructureFeaturesKHR: ChainableBase, Phy
         self.descriptorBindingAccelerationStructureUpdateAfterBind = descriptorBindingAccelerationStructureUpdateAfterBind
     }
 
-    init(cStruct: VkPhysicalDeviceAccelerationStructureFeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceAccelerationStructureFeaturesKHR) {
         self.accelerationStructure = cStruct.accelerationStructure == VK_TRUE
         self.accelerationStructureCaptureReplay = cStruct.accelerationStructureCaptureReplay == VK_TRUE
         self.accelerationStructureIndirectBuild = cStruct.accelerationStructureIndirectBuild == VK_TRUE
@@ -19101,7 +19101,7 @@ public struct PhysicalDeviceRayTracingPipelineFeaturesKHR: ChainableBase, Physic
         self.rayTraversalPrimitiveCulling = rayTraversalPrimitiveCulling
     }
 
-    init(cStruct: VkPhysicalDeviceRayTracingPipelineFeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceRayTracingPipelineFeaturesKHR) {
         self.rayTracingPipeline = cStruct.rayTracingPipeline == VK_TRUE
         self.rayTracingPipelineShaderGroupHandleCaptureReplay = cStruct.rayTracingPipelineShaderGroupHandleCaptureReplay == VK_TRUE
         self.rayTracingPipelineShaderGroupHandleCaptureReplayMixed = cStruct.rayTracingPipelineShaderGroupHandleCaptureReplayMixed == VK_TRUE
@@ -19137,7 +19137,7 @@ public struct PhysicalDeviceRayQueryFeaturesKHR: ChainableBase, PhysicalDeviceFe
         self.rayQuery = rayQuery
     }
 
-    init(cStruct: VkPhysicalDeviceRayQueryFeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceRayQueryFeaturesKHR) {
         self.rayQuery = cStruct.rayQuery == VK_TRUE
     }
 
@@ -19168,7 +19168,7 @@ public struct PhysicalDeviceAccelerationStructurePropertiesKHR: ChainableBase, P
     public let maxDescriptorSetUpdateAfterBindAccelerationStructures: UInt32
     public let minAccelerationStructureScratchOffsetAlignment: UInt32
 
-    init(cStruct: VkPhysicalDeviceAccelerationStructurePropertiesKHR) {
+    public init(cStruct: VkPhysicalDeviceAccelerationStructurePropertiesKHR) {
         self.maxGeometryCount = cStruct.maxGeometryCount
         self.maxInstanceCount = cStruct.maxInstanceCount
         self.maxPrimitiveCount = cStruct.maxPrimitiveCount
@@ -19213,7 +19213,7 @@ public struct PhysicalDeviceRayTracingPipelinePropertiesKHR: ChainableBase, Phys
     public let shaderGroupHandleAlignment: UInt32
     public let maxRayHitAttributeSize: UInt32
 
-    init(cStruct: VkPhysicalDeviceRayTracingPipelinePropertiesKHR) {
+    public init(cStruct: VkPhysicalDeviceRayTracingPipelinePropertiesKHR) {
         self.shaderGroupHandleSize = cStruct.shaderGroupHandleSize
         self.maxRayRecursionDepth = cStruct.maxRayRecursionDepth
         self.maxShaderGroupStride = cStruct.maxShaderGroupStride
@@ -19258,7 +19258,7 @@ public struct PhysicalDeviceRayTracingPropertiesNV: ChainableBase, PhysicalDevic
     public let maxTriangleCount: UInt64
     public let maxDescriptorSetAccelerationStructures: UInt32
 
-    init(cStruct: VkPhysicalDeviceRayTracingPropertiesNV) {
+    public init(cStruct: VkPhysicalDeviceRayTracingPropertiesNV) {
         self.shaderGroupHandleSize = cStruct.shaderGroupHandleSize
         self.maxRecursionDepth = cStruct.maxRecursionDepth
         self.maxShaderGroupStride = cStruct.maxShaderGroupStride
@@ -19304,7 +19304,7 @@ public struct TraceRaysIndirectCommandKHR: CStructConvertible {
         self.depth = depth
     }
 
-    init(cStruct: VkTraceRaysIndirectCommandKHR) {
+    public init(cStruct: VkTraceRaysIndirectCommandKHR) {
         self.width = cStruct.width
         self.height = cStruct.height
         self.depth = cStruct.depth
@@ -19354,7 +19354,7 @@ public struct TraceRaysIndirectCommand2KHR: CStructConvertible {
         self.depth = depth
     }
 
-    init(cStruct: VkTraceRaysIndirectCommand2KHR) {
+    public init(cStruct: VkTraceRaysIndirectCommand2KHR) {
         self.raygenShaderRecordAddress = cStruct.raygenShaderRecordAddress
         self.raygenShaderRecordSize = cStruct.raygenShaderRecordSize
         self.missShaderBindingTableAddress = cStruct.missShaderBindingTableAddress
@@ -19402,7 +19402,7 @@ public struct PhysicalDeviceRayTracingMaintenance1FeaturesKHR: ChainableBase, Ph
         self.rayTracingPipelineTraceRaysIndirect2 = rayTracingPipelineTraceRaysIndirect2
     }
 
-    init(cStruct: VkPhysicalDeviceRayTracingMaintenance1FeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceRayTracingMaintenance1FeaturesKHR) {
         self.rayTracingMaintenance1 = cStruct.rayTracingMaintenance1 == VK_TRUE
         self.rayTracingPipelineTraceRaysIndirect2 = cStruct.rayTracingPipelineTraceRaysIndirect2 == VK_TRUE
     }
@@ -19430,7 +19430,7 @@ public struct DrmFormatModifierPropertiesEXT: CStructConvertible {
     public let drmFormatModifierPlaneCount: UInt32
     public let drmFormatModifierTilingFeatures: FormatFeatureFlags
 
-    init(cStruct: VkDrmFormatModifierPropertiesEXT) {
+    public init(cStruct: VkDrmFormatModifierPropertiesEXT) {
         self.drmFormatModifier = cStruct.drmFormatModifier
         self.drmFormatModifierPlaneCount = cStruct.drmFormatModifierPlaneCount
         self.drmFormatModifierTilingFeatures = FormatFeatureFlags(rawValue: cStruct.drmFormatModifierTilingFeatures)
@@ -19451,7 +19451,7 @@ public struct DrmFormatModifierPropertiesListEXT: ChainableBase, FormatPropertie
     public let drmFormatModifierCount: UInt32
     public let drmFormatModifierProperties: UnsafeMutablePointer<VkDrmFormatModifierPropertiesEXT>?
 
-    init(cStruct: VkDrmFormatModifierPropertiesListEXT) {
+    public init(cStruct: VkDrmFormatModifierPropertiesListEXT) {
         self.drmFormatModifierCount = cStruct.drmFormatModifierCount
         self.drmFormatModifierProperties = cStruct.pDrmFormatModifierProperties
     }
@@ -19485,7 +19485,7 @@ public struct PhysicalDeviceImageDrmFormatModifierInfoEXT: ChainableBase, Physic
         self.queueFamilyIndices = queueFamilyIndices
     }
 
-    init(cStruct: VkPhysicalDeviceImageDrmFormatModifierInfoEXT) {
+    public init(cStruct: VkPhysicalDeviceImageDrmFormatModifierInfoEXT) {
         self.drmFormatModifier = cStruct.drmFormatModifier
         self.sharingMode = SharingMode(rawValue: unsafeBitCast(cStruct.sharingMode, to: UInt32.self))!
         self.queueFamilyIndices = Array(UnsafeBufferPointer(start: cStruct.pQueueFamilyIndices, count: Int(cStruct.queueFamilyIndexCount)))
@@ -19520,7 +19520,7 @@ public struct ImageDrmFormatModifierListCreateInfoEXT: ChainableBase, ImageCreat
         self.drmFormatModifiers = drmFormatModifiers
     }
 
-    init(cStruct: VkImageDrmFormatModifierListCreateInfoEXT) {
+    public init(cStruct: VkImageDrmFormatModifierListCreateInfoEXT) {
         self.drmFormatModifiers = Array(UnsafeBufferPointer(start: cStruct.pDrmFormatModifiers, count: Int(cStruct.drmFormatModifierCount)))
     }
 
@@ -19553,7 +19553,7 @@ public struct ImageDrmFormatModifierExplicitCreateInfoEXT: ChainableBase, ImageC
         self.planeLayouts = planeLayouts
     }
 
-    init(cStruct: VkImageDrmFormatModifierExplicitCreateInfoEXT) {
+    public init(cStruct: VkImageDrmFormatModifierExplicitCreateInfoEXT) {
         self.drmFormatModifier = cStruct.drmFormatModifier
         self.planeLayouts = UnsafeBufferPointer(start: cStruct.pPlaneLayouts, count: Int(cStruct.drmFormatModifierPlaneCount)).map{ SubresourceLayout(cStruct: $0) }
     }
@@ -19582,7 +19582,7 @@ public struct ImageDrmFormatModifierPropertiesEXT: ChainableBase {
 
     public let drmFormatModifier: UInt64
 
-    init(cStruct: VkImageDrmFormatModifierPropertiesEXT) {
+    public init(cStruct: VkImageDrmFormatModifierPropertiesEXT) {
         self.drmFormatModifier = cStruct.drmFormatModifier
     }
 
@@ -19610,7 +19610,7 @@ public struct ImageStencilUsageCreateInfo: ChainableBase, ImageCreateInfoExtensi
         self.stencilUsage = stencilUsage
     }
 
-    init(cStruct: VkImageStencilUsageCreateInfo) {
+    public init(cStruct: VkImageStencilUsageCreateInfo) {
         self.stencilUsage = ImageUsageFlags(rawValue: cStruct.stencilUsage)
     }
 
@@ -19638,7 +19638,7 @@ public struct DeviceMemoryOverallocationCreateInfoAMD: ChainableBase, DeviceCrea
         self.overallocationBehavior = overallocationBehavior
     }
 
-    init(cStruct: VkDeviceMemoryOverallocationCreateInfoAMD) {
+    public init(cStruct: VkDeviceMemoryOverallocationCreateInfoAMD) {
         self.overallocationBehavior = MemoryOverallocationBehaviorAMD(rawValue: unsafeBitCast(cStruct.overallocationBehavior, to: UInt32.self))!
     }
 
@@ -19670,7 +19670,7 @@ public struct PhysicalDeviceFragmentDensityMapFeaturesEXT: ChainableBase, Physic
         self.fragmentDensityMapNonSubsampledImages = fragmentDensityMapNonSubsampledImages
     }
 
-    init(cStruct: VkPhysicalDeviceFragmentDensityMapFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceFragmentDensityMapFeaturesEXT) {
         self.fragmentDensityMap = cStruct.fragmentDensityMap == VK_TRUE
         self.fragmentDensityMapDynamic = cStruct.fragmentDensityMapDynamic == VK_TRUE
         self.fragmentDensityMapNonSubsampledImages = cStruct.fragmentDensityMapNonSubsampledImages == VK_TRUE
@@ -19702,7 +19702,7 @@ public struct PhysicalDeviceFragmentDensityMap2FeaturesEXT: ChainableBase, Physi
         self.fragmentDensityMapDeferred = fragmentDensityMapDeferred
     }
 
-    init(cStruct: VkPhysicalDeviceFragmentDensityMap2FeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceFragmentDensityMap2FeaturesEXT) {
         self.fragmentDensityMapDeferred = cStruct.fragmentDensityMapDeferred == VK_TRUE
     }
 
@@ -19730,7 +19730,7 @@ public struct PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT: ChainableBase, 
         self.fragmentDensityMapOffset = fragmentDensityMapOffset
     }
 
-    init(cStruct: VkPhysicalDeviceFragmentDensityMapOffsetFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceFragmentDensityMapOffsetFeaturesEXT) {
         self.fragmentDensityMapOffset = cStruct.fragmentDensityMapOffset == VK_TRUE
     }
 
@@ -19756,7 +19756,7 @@ public struct PhysicalDeviceFragmentDensityMapPropertiesEXT: ChainableBase, Phys
     public let maxFragmentDensityTexelSize: Extent2D
     public let fragmentDensityInvocations: Bool
 
-    init(cStruct: VkPhysicalDeviceFragmentDensityMapPropertiesEXT) {
+    public init(cStruct: VkPhysicalDeviceFragmentDensityMapPropertiesEXT) {
         self.minFragmentDensityTexelSize = Extent2D(cStruct: cStruct.minFragmentDensityTexelSize)
         self.maxFragmentDensityTexelSize = Extent2D(cStruct: cStruct.maxFragmentDensityTexelSize)
         self.fragmentDensityInvocations = cStruct.fragmentDensityInvocations == VK_TRUE
@@ -19791,7 +19791,7 @@ public struct PhysicalDeviceFragmentDensityMap2PropertiesEXT: ChainableBase, Phy
     public let maxSubsampledArrayLayers: UInt32
     public let maxDescriptorSetSubsampledSamplers: UInt32
 
-    init(cStruct: VkPhysicalDeviceFragmentDensityMap2PropertiesEXT) {
+    public init(cStruct: VkPhysicalDeviceFragmentDensityMap2PropertiesEXT) {
         self.subsampledLoads = cStruct.subsampledLoads == VK_TRUE
         self.subsampledCoarseReconstructionEarlyAccess = cStruct.subsampledCoarseReconstructionEarlyAccess == VK_TRUE
         self.maxSubsampledArrayLayers = cStruct.maxSubsampledArrayLayers
@@ -19821,7 +19821,7 @@ public struct PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT: ChainableBase
 
     public let fragmentDensityOffsetGranularity: Extent2D
 
-    init(cStruct: VkPhysicalDeviceFragmentDensityMapOffsetPropertiesEXT) {
+    public init(cStruct: VkPhysicalDeviceFragmentDensityMapOffsetPropertiesEXT) {
         self.fragmentDensityOffsetGranularity = Extent2D(cStruct: cStruct.fragmentDensityOffsetGranularity)
     }
 
@@ -19851,7 +19851,7 @@ public struct RenderPassFragmentDensityMapCreateInfoEXT: ChainableBase, RenderPa
         self.fragmentDensityMapAttachment = fragmentDensityMapAttachment
     }
 
-    init(cStruct: VkRenderPassFragmentDensityMapCreateInfoEXT) {
+    public init(cStruct: VkRenderPassFragmentDensityMapCreateInfoEXT) {
         self.fragmentDensityMapAttachment = AttachmentReference(cStruct: cStruct.fragmentDensityMapAttachment)
     }
 
@@ -19881,7 +19881,7 @@ public struct RenderPassFragmentDensityMapOffsetEndInfoEXT: ChainableBase, Subpa
         self.fragmentDensityOffsets = fragmentDensityOffsets
     }
 
-    init(cStruct: VkRenderPassFragmentDensityMapOffsetEndInfoEXT) {
+    public init(cStruct: VkRenderPassFragmentDensityMapOffsetEndInfoEXT) {
         self.fragmentDensityOffsets = UnsafeBufferPointer(start: cStruct.pFragmentDensityOffsets, count: Int(cStruct.fragmentDensityOffsetCount)).map{ Offset2D(cStruct: $0) }
     }
 
@@ -19912,7 +19912,7 @@ public struct PhysicalDeviceScalarBlockLayoutFeatures: ChainableBase, PhysicalDe
         self.scalarBlockLayout = scalarBlockLayout
     }
 
-    init(cStruct: VkPhysicalDeviceScalarBlockLayoutFeatures) {
+    public init(cStruct: VkPhysicalDeviceScalarBlockLayoutFeatures) {
         self.scalarBlockLayout = cStruct.scalarBlockLayout == VK_TRUE
     }
 
@@ -19936,7 +19936,7 @@ public struct SurfaceProtectedCapabilitiesKHR: ChainableBase, SurfaceCapabilitie
 
     public let supportsProtected: Bool
 
-    init(cStruct: VkSurfaceProtectedCapabilitiesKHR) {
+    public init(cStruct: VkSurfaceProtectedCapabilitiesKHR) {
         self.supportsProtected = cStruct.supportsProtected == VK_TRUE
     }
 
@@ -19964,7 +19964,7 @@ public struct PhysicalDeviceUniformBufferStandardLayoutFeatures: ChainableBase, 
         self.uniformBufferStandardLayout = uniformBufferStandardLayout
     }
 
-    init(cStruct: VkPhysicalDeviceUniformBufferStandardLayoutFeatures) {
+    public init(cStruct: VkPhysicalDeviceUniformBufferStandardLayoutFeatures) {
         self.uniformBufferStandardLayout = cStruct.uniformBufferStandardLayout == VK_TRUE
     }
 
@@ -19992,7 +19992,7 @@ public struct PhysicalDeviceDepthClipEnableFeaturesEXT: ChainableBase, PhysicalD
         self.depthClipEnable = depthClipEnable
     }
 
-    init(cStruct: VkPhysicalDeviceDepthClipEnableFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceDepthClipEnableFeaturesEXT) {
         self.depthClipEnable = cStruct.depthClipEnable == VK_TRUE
     }
 
@@ -20022,7 +20022,7 @@ public struct PipelineRasterizationDepthClipStateCreateInfoEXT: ChainableBase, P
         self.depthClipEnable = depthClipEnable
     }
 
-    init(cStruct: VkPipelineRasterizationDepthClipStateCreateInfoEXT) {
+    public init(cStruct: VkPipelineRasterizationDepthClipStateCreateInfoEXT) {
         self.flags = PipelineRasterizationDepthClipStateCreateFlagsEXT(rawValue: cStruct.flags)
         self.depthClipEnable = cStruct.depthClipEnable == VK_TRUE
     }
@@ -20049,7 +20049,7 @@ public struct PhysicalDeviceMemoryBudgetPropertiesEXT: ChainableBase, PhysicalDe
     public let heapBudget: (VkDeviceSize, VkDeviceSize, VkDeviceSize, VkDeviceSize, VkDeviceSize, VkDeviceSize, VkDeviceSize, VkDeviceSize, VkDeviceSize, VkDeviceSize, VkDeviceSize, VkDeviceSize, VkDeviceSize, VkDeviceSize, VkDeviceSize, VkDeviceSize)
     public let heapUsage: (VkDeviceSize, VkDeviceSize, VkDeviceSize, VkDeviceSize, VkDeviceSize, VkDeviceSize, VkDeviceSize, VkDeviceSize, VkDeviceSize, VkDeviceSize, VkDeviceSize, VkDeviceSize, VkDeviceSize, VkDeviceSize, VkDeviceSize, VkDeviceSize)
 
-    init(cStruct: VkPhysicalDeviceMemoryBudgetPropertiesEXT) {
+    public init(cStruct: VkPhysicalDeviceMemoryBudgetPropertiesEXT) {
         self.heapBudget = cStruct.heapBudget
         self.heapUsage = cStruct.heapUsage
     }
@@ -20079,7 +20079,7 @@ public struct PhysicalDeviceMemoryPriorityFeaturesEXT: ChainableBase, PhysicalDe
         self.memoryPriority = memoryPriority
     }
 
-    init(cStruct: VkPhysicalDeviceMemoryPriorityFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceMemoryPriorityFeaturesEXT) {
         self.memoryPriority = cStruct.memoryPriority == VK_TRUE
     }
 
@@ -20107,7 +20107,7 @@ public struct MemoryPriorityAllocateInfoEXT: ChainableBase, MemoryAllocateInfoEx
         self.priority = priority
     }
 
-    init(cStruct: VkMemoryPriorityAllocateInfoEXT) {
+    public init(cStruct: VkMemoryPriorityAllocateInfoEXT) {
         self.priority = cStruct.priority
     }
 
@@ -20135,7 +20135,7 @@ public struct PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT: ChainableBase,
         self.pageableDeviceLocalMemory = pageableDeviceLocalMemory
     }
 
-    init(cStruct: VkPhysicalDevicePageableDeviceLocalMemoryFeaturesEXT) {
+    public init(cStruct: VkPhysicalDevicePageableDeviceLocalMemoryFeaturesEXT) {
         self.pageableDeviceLocalMemory = cStruct.pageableDeviceLocalMemory == VK_TRUE
     }
 
@@ -20167,7 +20167,7 @@ public struct PhysicalDeviceBufferDeviceAddressFeatures: ChainableBase, Physical
         self.bufferDeviceAddressMultiDevice = bufferDeviceAddressMultiDevice
     }
 
-    init(cStruct: VkPhysicalDeviceBufferDeviceAddressFeatures) {
+    public init(cStruct: VkPhysicalDeviceBufferDeviceAddressFeatures) {
         self.bufferDeviceAddress = cStruct.bufferDeviceAddress == VK_TRUE
         self.bufferDeviceAddressCaptureReplay = cStruct.bufferDeviceAddressCaptureReplay == VK_TRUE
         self.bufferDeviceAddressMultiDevice = cStruct.bufferDeviceAddressMultiDevice == VK_TRUE
@@ -20203,7 +20203,7 @@ public struct PhysicalDeviceBufferDeviceAddressFeaturesEXT: ChainableBase, Physi
         self.bufferDeviceAddressMultiDevice = bufferDeviceAddressMultiDevice
     }
 
-    init(cStruct: VkPhysicalDeviceBufferDeviceAddressFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceBufferDeviceAddressFeaturesEXT) {
         self.bufferDeviceAddress = cStruct.bufferDeviceAddress == VK_TRUE
         self.bufferDeviceAddressCaptureReplay = cStruct.bufferDeviceAddressCaptureReplay == VK_TRUE
         self.bufferDeviceAddressMultiDevice = cStruct.bufferDeviceAddressMultiDevice == VK_TRUE
@@ -20235,7 +20235,7 @@ public struct BufferDeviceAddressInfo: ChainableBase {
         self.buffer = buffer
     }
 
-    init(cStruct: VkBufferDeviceAddressInfo, device: Device) {
+    public init(cStruct: VkBufferDeviceAddressInfo, device: Device) {
         self.buffer = Buffer(handle: cStruct.buffer, device: device)
     }
 
@@ -20263,7 +20263,7 @@ public struct BufferOpaqueCaptureAddressCreateInfo: ChainableBase, BufferCreateI
         self.opaqueCaptureAddress = opaqueCaptureAddress
     }
 
-    init(cStruct: VkBufferOpaqueCaptureAddressCreateInfo) {
+    public init(cStruct: VkBufferOpaqueCaptureAddressCreateInfo) {
         self.opaqueCaptureAddress = cStruct.opaqueCaptureAddress
     }
 
@@ -20291,7 +20291,7 @@ public struct BufferDeviceAddressCreateInfoEXT: ChainableBase, BufferCreateInfoE
         self.deviceAddress = deviceAddress
     }
 
-    init(cStruct: VkBufferDeviceAddressCreateInfoEXT) {
+    public init(cStruct: VkBufferDeviceAddressCreateInfoEXT) {
         self.deviceAddress = cStruct.deviceAddress
     }
 
@@ -20319,7 +20319,7 @@ public struct PhysicalDeviceImageViewImageFormatInfoEXT: ChainableBase, Physical
         self.imageViewType = imageViewType
     }
 
-    init(cStruct: VkPhysicalDeviceImageViewImageFormatInfoEXT) {
+    public init(cStruct: VkPhysicalDeviceImageViewImageFormatInfoEXT) {
         self.imageViewType = ImageViewType(rawValue: unsafeBitCast(cStruct.imageViewType, to: UInt32.self))!
     }
 
@@ -20344,7 +20344,7 @@ public struct FilterCubicImageViewImageFormatPropertiesEXT: ChainableBase, Image
     public let filterCubic: Bool
     public let filterCubicMinmax: Bool
 
-    init(cStruct: VkFilterCubicImageViewImageFormatPropertiesEXT) {
+    public init(cStruct: VkFilterCubicImageViewImageFormatPropertiesEXT) {
         self.filterCubic = cStruct.filterCubic == VK_TRUE
         self.filterCubicMinmax = cStruct.filterCubicMinmax == VK_TRUE
     }
@@ -20374,7 +20374,7 @@ public struct PhysicalDeviceImagelessFramebufferFeatures: ChainableBase, Physica
         self.imagelessFramebuffer = imagelessFramebuffer
     }
 
-    init(cStruct: VkPhysicalDeviceImagelessFramebufferFeatures) {
+    public init(cStruct: VkPhysicalDeviceImagelessFramebufferFeatures) {
         self.imagelessFramebuffer = cStruct.imagelessFramebuffer == VK_TRUE
     }
 
@@ -20412,7 +20412,7 @@ public struct FramebufferAttachmentImageInfo: ChainableBase {
         self.viewFormats = viewFormats
     }
 
-    init(cStruct: VkFramebufferAttachmentImageInfo) {
+    public init(cStruct: VkFramebufferAttachmentImageInfo) {
         self.flags = ImageCreateFlags(rawValue: cStruct.flags)
         self.usage = ImageUsageFlags(rawValue: cStruct.usage)
         self.width = cStruct.width
@@ -20453,7 +20453,7 @@ public struct FramebufferAttachmentsCreateInfo: ChainableBase, FramebufferCreate
         self.attachmentImageInfos = attachmentImageInfos
     }
 
-    init(cStruct: VkFramebufferAttachmentsCreateInfo) {
+    public init(cStruct: VkFramebufferAttachmentsCreateInfo) {
         self.attachmentImageInfos = UnsafeBufferPointer(start: cStruct.pAttachmentImageInfos, count: Int(cStruct.attachmentImageInfoCount)).map{ FramebufferAttachmentImageInfo(cStruct: $0) }
     }
 
@@ -20484,7 +20484,7 @@ public struct RenderPassAttachmentBeginInfo: ChainableBase, RenderPassBeginInfoE
         self.attachments = attachments
     }
 
-    init(cStruct: VkRenderPassAttachmentBeginInfo, device: Device) {
+    public init(cStruct: VkRenderPassAttachmentBeginInfo, device: Device) {
         self.attachments = UnsafeBufferPointer(start: cStruct.pAttachments, count: Int(cStruct.attachmentCount)).map{ ImageView(handle: $0, device: device) }
     }
 
@@ -20515,7 +20515,7 @@ public struct PhysicalDeviceTextureCompressionASTCHDRFeatures: ChainableBase, Ph
         self.textureCompressionASTC_HDR = textureCompressionASTC_HDR
     }
 
-    init(cStruct: VkPhysicalDeviceTextureCompressionASTCHDRFeatures) {
+    public init(cStruct: VkPhysicalDeviceTextureCompressionASTCHDRFeatures) {
         self.textureCompressionASTC_HDR = cStruct.textureCompressionASTC_HDR == VK_TRUE
     }
 
@@ -20545,7 +20545,7 @@ public struct PhysicalDeviceCooperativeMatrixFeaturesNV: ChainableBase, Physical
         self.cooperativeMatrixRobustBufferAccess = cooperativeMatrixRobustBufferAccess
     }
 
-    init(cStruct: VkPhysicalDeviceCooperativeMatrixFeaturesNV) {
+    public init(cStruct: VkPhysicalDeviceCooperativeMatrixFeaturesNV) {
         self.cooperativeMatrix = cStruct.cooperativeMatrix == VK_TRUE
         self.cooperativeMatrixRobustBufferAccess = cStruct.cooperativeMatrixRobustBufferAccess == VK_TRUE
     }
@@ -20571,7 +20571,7 @@ public struct PhysicalDeviceCooperativeMatrixPropertiesNV: ChainableBase, Physic
 
     public let cooperativeMatrixSupportedStages: ShaderStageFlags
 
-    init(cStruct: VkPhysicalDeviceCooperativeMatrixPropertiesNV) {
+    public init(cStruct: VkPhysicalDeviceCooperativeMatrixPropertiesNV) {
         self.cooperativeMatrixSupportedStages = ShaderStageFlags(rawValue: cStruct.cooperativeMatrixSupportedStages)
     }
 
@@ -20602,7 +20602,7 @@ public struct CooperativeMatrixPropertiesNV: ChainableBase {
     public let DType: VkComponentTypeNV
     public let scope: VkScopeNV
 
-    init(cStruct: VkCooperativeMatrixPropertiesNV) {
+    public init(cStruct: VkCooperativeMatrixPropertiesNV) {
         self.MSize = cStruct.MSize
         self.NSize = cStruct.NSize
         self.KSize = cStruct.KSize
@@ -20644,7 +20644,7 @@ public struct PhysicalDeviceYcbcrImageArraysFeaturesEXT: ChainableBase, Physical
         self.ycbcrImageArrays = ycbcrImageArrays
     }
 
-    init(cStruct: VkPhysicalDeviceYcbcrImageArraysFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceYcbcrImageArraysFeaturesEXT) {
         self.ycbcrImageArrays = cStruct.ycbcrImageArrays == VK_TRUE
     }
 
@@ -20676,7 +20676,7 @@ public struct ImageViewHandleInfoNVX: ChainableBase {
         self.sampler = sampler
     }
 
-    init(cStruct: VkImageViewHandleInfoNVX, device: Device) {
+    public init(cStruct: VkImageViewHandleInfoNVX, device: Device) {
         self.imageView = ImageView(handle: cStruct.imageView, device: device)
         self.descriptorType = DescriptorType(rawValue: unsafeBitCast(cStruct.descriptorType, to: UInt32.self))!
         self.sampler = (cStruct.sampler != nil) ? Sampler(handle: cStruct.sampler, device: device) : nil
@@ -20705,7 +20705,7 @@ public struct ImageViewAddressPropertiesNVX: ChainableBase {
     public let deviceAddress: VkDeviceAddress
     public let size: VkDeviceSize
 
-    init(cStruct: VkImageViewAddressPropertiesNVX) {
+    public init(cStruct: VkImageViewAddressPropertiesNVX) {
         self.deviceAddress = cStruct.deviceAddress
         self.size = cStruct.size
     }
@@ -20736,7 +20736,7 @@ public struct PresentFrameTokenGGP: ChainableBase, PresentInfoKHRExtension {
         self.frameToken = frameToken
     }
 
-    init(cStruct: VkPresentFrameTokenGGP) {
+    public init(cStruct: VkPresentFrameTokenGGP) {
         self.frameToken = cStruct.frameToken
     }
 
@@ -20762,7 +20762,7 @@ public struct PipelineCreationFeedback: CStructConvertible {
     public let flags: PipelineCreationFeedbackFlags
     public let duration: UInt64
 
-    init(cStruct: VkPipelineCreationFeedback) {
+    public init(cStruct: VkPipelineCreationFeedback) {
         self.flags = PipelineCreationFeedbackFlags(rawValue: cStruct.flags)
         self.duration = cStruct.duration
     }
@@ -20788,7 +20788,7 @@ public struct PipelineCreationFeedbackCreateInfo: ChainableBase, GraphicsPipelin
         self.pipelineStageCreationFeedbacks = pipelineStageCreationFeedbacks
     }
 
-    init(cStruct: VkPipelineCreationFeedbackCreateInfo) {
+    public init(cStruct: VkPipelineCreationFeedbackCreateInfo) {
         self.pipelineCreationFeedback = cStruct.pPipelineCreationFeedback
         self.pipelineStageCreationFeedbackCount = cStruct.pipelineStageCreationFeedbackCount
         self.pipelineStageCreationFeedbacks = cStruct.pPipelineStageCreationFeedbacks
@@ -20821,7 +20821,7 @@ public struct SurfaceFullScreenExclusiveInfoEXT: ChainableBase, PhysicalDeviceSu
         self.fullScreenExclusive = fullScreenExclusive
     }
 
-    init(cStruct: VkSurfaceFullScreenExclusiveInfoEXT) {
+    public init(cStruct: VkSurfaceFullScreenExclusiveInfoEXT) {
         self.fullScreenExclusive = FullScreenExclusiveEXT(rawValue: unsafeBitCast(cStruct.fullScreenExclusive, to: UInt32.self))!
     }
 
@@ -20851,7 +20851,7 @@ public struct SurfaceFullScreenExclusiveWin32InfoEXT: ChainableBase, PhysicalDev
         self.hmonitor = hmonitor
     }
 
-    init(cStruct: VkSurfaceFullScreenExclusiveWin32InfoEXT) {
+    public init(cStruct: VkSurfaceFullScreenExclusiveWin32InfoEXT) {
         self.hmonitor = cStruct.hmonitor
     }
 
@@ -20877,7 +20877,7 @@ public struct SurfaceCapabilitiesFullScreenExclusiveEXT: ChainableBase, SurfaceC
 
     public let fullScreenExclusiveSupported: Bool
 
-    init(cStruct: VkSurfaceCapabilitiesFullScreenExclusiveEXT) {
+    public init(cStruct: VkSurfaceCapabilitiesFullScreenExclusiveEXT) {
         self.fullScreenExclusiveSupported = cStruct.fullScreenExclusiveSupported == VK_TRUE
     }
 
@@ -20906,7 +20906,7 @@ public struct PhysicalDevicePresentBarrierFeaturesNV: ChainableBase, PhysicalDev
         self.presentBarrier = presentBarrier
     }
 
-    init(cStruct: VkPhysicalDevicePresentBarrierFeaturesNV) {
+    public init(cStruct: VkPhysicalDevicePresentBarrierFeaturesNV) {
         self.presentBarrier = cStruct.presentBarrier == VK_TRUE
     }
 
@@ -20930,7 +20930,7 @@ public struct SurfaceCapabilitiesPresentBarrierNV: ChainableBase, SurfaceCapabil
 
     public let presentBarrierSupported: Bool
 
-    init(cStruct: VkSurfaceCapabilitiesPresentBarrierNV) {
+    public init(cStruct: VkSurfaceCapabilitiesPresentBarrierNV) {
         self.presentBarrierSupported = cStruct.presentBarrierSupported == VK_TRUE
     }
 
@@ -20958,7 +20958,7 @@ public struct SwapchainPresentBarrierCreateInfoNV: ChainableBase, SwapchainCreat
         self.presentBarrierEnable = presentBarrierEnable
     }
 
-    init(cStruct: VkSwapchainPresentBarrierCreateInfoNV) {
+    public init(cStruct: VkSwapchainPresentBarrierCreateInfoNV) {
         self.presentBarrierEnable = cStruct.presentBarrierEnable == VK_TRUE
     }
 
@@ -20988,7 +20988,7 @@ public struct PhysicalDevicePerformanceQueryFeaturesKHR: ChainableBase, Physical
         self.performanceCounterMultipleQueryPools = performanceCounterMultipleQueryPools
     }
 
-    init(cStruct: VkPhysicalDevicePerformanceQueryFeaturesKHR) {
+    public init(cStruct: VkPhysicalDevicePerformanceQueryFeaturesKHR) {
         self.performanceCounterQueryPools = cStruct.performanceCounterQueryPools == VK_TRUE
         self.performanceCounterMultipleQueryPools = cStruct.performanceCounterMultipleQueryPools == VK_TRUE
     }
@@ -21014,7 +21014,7 @@ public struct PhysicalDevicePerformanceQueryPropertiesKHR: ChainableBase, Physic
 
     public let allowCommandBufferQueryCopies: Bool
 
-    init(cStruct: VkPhysicalDevicePerformanceQueryPropertiesKHR) {
+    public init(cStruct: VkPhysicalDevicePerformanceQueryPropertiesKHR) {
         self.allowCommandBufferQueryCopies = cStruct.allowCommandBufferQueryCopies == VK_TRUE
     }
 
@@ -21041,7 +21041,7 @@ public struct PerformanceCounterKHR: ChainableBase {
     public let storage: PerformanceCounterStorageKHR
     public let uuid: (UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8)
 
-    init(cStruct: VkPerformanceCounterKHR) {
+    public init(cStruct: VkPerformanceCounterKHR) {
         self.unit = PerformanceCounterUnitKHR(rawValue: unsafeBitCast(cStruct.unit, to: UInt32.self))!
         self.scope = PerformanceCounterScopeKHR(rawValue: unsafeBitCast(cStruct.scope, to: UInt32.self))!
         self.storage = PerformanceCounterStorageKHR(rawValue: unsafeBitCast(cStruct.storage, to: UInt32.self))!
@@ -21074,7 +21074,7 @@ public struct PerformanceCounterDescriptionKHR: ChainableBase {
     public let category: String
     public let description: String
 
-    init(cStruct: VkPerformanceCounterDescriptionKHR) {
+    public init(cStruct: VkPerformanceCounterDescriptionKHR) {
         self.flags = PerformanceCounterDescriptionFlagsKHR(rawValue: cStruct.flags)
         self.name = String(unsafeBytesOf: cStruct.name)
         self.category = String(unsafeBytesOf: cStruct.category)
@@ -21110,7 +21110,7 @@ public struct QueryPoolPerformanceCreateInfoKHR: ChainableBase, QueryPoolCreateI
         self.counterIndices = counterIndices
     }
 
-    init(cStruct: VkQueryPoolPerformanceCreateInfoKHR) {
+    public init(cStruct: VkQueryPoolPerformanceCreateInfoKHR) {
         self.queueFamilyIndex = cStruct.queueFamilyIndex
         self.counterIndices = Array(UnsafeBufferPointer(start: cStruct.pCounterIndices, count: Int(cStruct.counterIndexCount)))
     }
@@ -21145,7 +21145,7 @@ public struct AcquireProfilingLockInfoKHR: ChainableBase {
         self.timeout = timeout
     }
 
-    init(cStruct: VkAcquireProfilingLockInfoKHR) {
+    public init(cStruct: VkAcquireProfilingLockInfoKHR) {
         self.flags = AcquireProfilingLockFlagsKHR(rawValue: cStruct.flags)
         self.timeout = cStruct.timeout
     }
@@ -21175,7 +21175,7 @@ public struct PerformanceQuerySubmitInfoKHR: ChainableBase, SubmitInfoExtension,
         self.counterPassIndex = counterPassIndex
     }
 
-    init(cStruct: VkPerformanceQuerySubmitInfoKHR) {
+    public init(cStruct: VkPerformanceQuerySubmitInfoKHR) {
         self.counterPassIndex = cStruct.counterPassIndex
     }
 
@@ -21203,7 +21203,7 @@ public struct HeadlessSurfaceCreateInfoEXT: ChainableBase {
         self.flags = flags
     }
 
-    init(cStruct: VkHeadlessSurfaceCreateInfoEXT) {
+    public init(cStruct: VkHeadlessSurfaceCreateInfoEXT) {
         self.flags = HeadlessSurfaceCreateFlagsEXT(rawValue: cStruct.flags)
     }
 
@@ -21231,7 +21231,7 @@ public struct PhysicalDeviceCoverageReductionModeFeaturesNV: ChainableBase, Phys
         self.coverageReductionMode = coverageReductionMode
     }
 
-    init(cStruct: VkPhysicalDeviceCoverageReductionModeFeaturesNV) {
+    public init(cStruct: VkPhysicalDeviceCoverageReductionModeFeaturesNV) {
         self.coverageReductionMode = cStruct.coverageReductionMode == VK_TRUE
     }
 
@@ -21261,7 +21261,7 @@ public struct PipelineCoverageReductionStateCreateInfoNV: ChainableBase, Pipelin
         self.coverageReductionMode = coverageReductionMode
     }
 
-    init(cStruct: VkPipelineCoverageReductionStateCreateInfoNV) {
+    public init(cStruct: VkPipelineCoverageReductionStateCreateInfoNV) {
         self.flags = PipelineCoverageReductionStateCreateFlagsNV(rawValue: cStruct.flags)
         self.coverageReductionMode = CoverageReductionModeNV(rawValue: unsafeBitCast(cStruct.coverageReductionMode, to: UInt32.self))!
     }
@@ -21290,7 +21290,7 @@ public struct FramebufferMixedSamplesCombinationNV: ChainableBase {
     public let depthStencilSamples: SampleCountFlags
     public let colorSamples: SampleCountFlags
 
-    init(cStruct: VkFramebufferMixedSamplesCombinationNV) {
+    public init(cStruct: VkFramebufferMixedSamplesCombinationNV) {
         self.coverageReductionMode = CoverageReductionModeNV(rawValue: unsafeBitCast(cStruct.coverageReductionMode, to: UInt32.self))!
         self.rasterizationSamples = SampleCountFlags(rawValue: unsafeBitCast(cStruct.rasterizationSamples.rawValue, to: UInt32.self))
         self.depthStencilSamples = SampleCountFlags(rawValue: cStruct.depthStencilSamples)
@@ -21324,7 +21324,7 @@ public struct PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL: ChainableBase,
         self.shaderIntegerFunctions2 = shaderIntegerFunctions2
     }
 
-    init(cStruct: VkPhysicalDeviceShaderIntegerFunctions2FeaturesINTEL) {
+    public init(cStruct: VkPhysicalDeviceShaderIntegerFunctions2FeaturesINTEL) {
         self.shaderIntegerFunctions2 = cStruct.shaderIntegerFunctions2 == VK_TRUE
     }
 
@@ -21349,7 +21349,7 @@ public struct PerformanceValueINTEL: CStructConvertible {
     public let type: PerformanceValueTypeINTEL
     public let data: VkPerformanceValueDataINTEL
 
-    init(cStruct: VkPerformanceValueINTEL) {
+    public init(cStruct: VkPerformanceValueINTEL) {
         self.type = PerformanceValueTypeINTEL(rawValue: unsafeBitCast(cStruct.type, to: UInt32.self))!
         self.data = cStruct.data
     }
@@ -21371,7 +21371,7 @@ public struct InitializePerformanceApiInfoINTEL: ChainableBase {
         self.userData = userData
     }
 
-    init(cStruct: VkInitializePerformanceApiInfoINTEL) {
+    public init(cStruct: VkInitializePerformanceApiInfoINTEL) {
         self.userData = cStruct.pUserData
     }
 
@@ -21399,7 +21399,7 @@ public struct QueryPoolPerformanceQueryCreateInfoINTEL: ChainableBase, QueryPool
         self.performanceCountersSampling = performanceCountersSampling
     }
 
-    init(cStruct: VkQueryPoolPerformanceQueryCreateInfoINTEL) {
+    public init(cStruct: VkQueryPoolPerformanceQueryCreateInfoINTEL) {
         self.performanceCountersSampling = QueryPoolSamplingModeINTEL(rawValue: unsafeBitCast(cStruct.performanceCountersSampling, to: UInt32.self))!
     }
 
@@ -21427,7 +21427,7 @@ public struct PerformanceMarkerInfoINTEL: ChainableBase {
         self.marker = marker
     }
 
-    init(cStruct: VkPerformanceMarkerInfoINTEL) {
+    public init(cStruct: VkPerformanceMarkerInfoINTEL) {
         self.marker = cStruct.marker
     }
 
@@ -21455,7 +21455,7 @@ public struct PerformanceStreamMarkerInfoINTEL: ChainableBase {
         self.marker = marker
     }
 
-    init(cStruct: VkPerformanceStreamMarkerInfoINTEL) {
+    public init(cStruct: VkPerformanceStreamMarkerInfoINTEL) {
         self.marker = cStruct.marker
     }
 
@@ -21487,7 +21487,7 @@ public struct PerformanceOverrideInfoINTEL: ChainableBase {
         self.parameter = parameter
     }
 
-    init(cStruct: VkPerformanceOverrideInfoINTEL) {
+    public init(cStruct: VkPerformanceOverrideInfoINTEL) {
         self.type = PerformanceOverrideTypeINTEL(rawValue: unsafeBitCast(cStruct.type, to: UInt32.self))!
         self.enable = cStruct.enable == VK_TRUE
         self.parameter = cStruct.parameter
@@ -21519,7 +21519,7 @@ public struct PerformanceConfigurationAcquireInfoINTEL: ChainableBase {
         self.type = type
     }
 
-    init(cStruct: VkPerformanceConfigurationAcquireInfoINTEL) {
+    public init(cStruct: VkPerformanceConfigurationAcquireInfoINTEL) {
         self.type = PerformanceConfigurationTypeINTEL(rawValue: unsafeBitCast(cStruct.type, to: UInt32.self))!
     }
 
@@ -21549,7 +21549,7 @@ public struct PhysicalDeviceShaderClockFeaturesKHR: ChainableBase, PhysicalDevic
         self.shaderDeviceClock = shaderDeviceClock
     }
 
-    init(cStruct: VkPhysicalDeviceShaderClockFeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceShaderClockFeaturesKHR) {
         self.shaderSubgroupClock = cStruct.shaderSubgroupClock == VK_TRUE
         self.shaderDeviceClock = cStruct.shaderDeviceClock == VK_TRUE
     }
@@ -21579,7 +21579,7 @@ public struct PhysicalDeviceIndexTypeUint8Features: ChainableBase, PhysicalDevic
         self.indexTypeUint8 = indexTypeUint8
     }
 
-    init(cStruct: VkPhysicalDeviceIndexTypeUint8Features) {
+    public init(cStruct: VkPhysicalDeviceIndexTypeUint8Features) {
         self.indexTypeUint8 = cStruct.indexTypeUint8 == VK_TRUE
     }
 
@@ -21604,7 +21604,7 @@ public struct PhysicalDeviceShaderSMBuiltinsPropertiesNV: ChainableBase, Physica
     public let shaderSMCount: UInt32
     public let shaderWarpsPerSM: UInt32
 
-    init(cStruct: VkPhysicalDeviceShaderSMBuiltinsPropertiesNV) {
+    public init(cStruct: VkPhysicalDeviceShaderSMBuiltinsPropertiesNV) {
         self.shaderSMCount = cStruct.shaderSMCount
         self.shaderWarpsPerSM = cStruct.shaderWarpsPerSM
     }
@@ -21634,7 +21634,7 @@ public struct PhysicalDeviceShaderSMBuiltinsFeaturesNV: ChainableBase, PhysicalD
         self.shaderSMBuiltins = shaderSMBuiltins
     }
 
-    init(cStruct: VkPhysicalDeviceShaderSMBuiltinsFeaturesNV) {
+    public init(cStruct: VkPhysicalDeviceShaderSMBuiltinsFeaturesNV) {
         self.shaderSMBuiltins = cStruct.shaderSMBuiltins == VK_TRUE
     }
 
@@ -21666,7 +21666,7 @@ public struct PhysicalDeviceFragmentShaderInterlockFeaturesEXT: ChainableBase, P
         self.fragmentShaderShadingRateInterlock = fragmentShaderShadingRateInterlock
     }
 
-    init(cStruct: VkPhysicalDeviceFragmentShaderInterlockFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceFragmentShaderInterlockFeaturesEXT) {
         self.fragmentShaderSampleInterlock = cStruct.fragmentShaderSampleInterlock == VK_TRUE
         self.fragmentShaderPixelInterlock = cStruct.fragmentShaderPixelInterlock == VK_TRUE
         self.fragmentShaderShadingRateInterlock = cStruct.fragmentShaderShadingRateInterlock == VK_TRUE
@@ -21698,7 +21698,7 @@ public struct PhysicalDeviceSeparateDepthStencilLayoutsFeatures: ChainableBase, 
         self.separateDepthStencilLayouts = separateDepthStencilLayouts
     }
 
-    init(cStruct: VkPhysicalDeviceSeparateDepthStencilLayoutsFeatures) {
+    public init(cStruct: VkPhysicalDeviceSeparateDepthStencilLayoutsFeatures) {
         self.separateDepthStencilLayouts = cStruct.separateDepthStencilLayouts == VK_TRUE
     }
 
@@ -21726,7 +21726,7 @@ public struct AttachmentReferenceStencilLayout: ChainableBase, AttachmentReferen
         self.stencilLayout = stencilLayout
     }
 
-    init(cStruct: VkAttachmentReferenceStencilLayout) {
+    public init(cStruct: VkAttachmentReferenceStencilLayout) {
         self.stencilLayout = ImageLayout(rawValue: unsafeBitCast(cStruct.stencilLayout, to: UInt32.self))!
     }
 
@@ -21756,7 +21756,7 @@ public struct PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT: ChainableBa
         self.primitiveTopologyPatchListRestart = primitiveTopologyPatchListRestart
     }
 
-    init(cStruct: VkPhysicalDevicePrimitiveTopologyListRestartFeaturesEXT) {
+    public init(cStruct: VkPhysicalDevicePrimitiveTopologyListRestartFeaturesEXT) {
         self.primitiveTopologyListRestart = cStruct.primitiveTopologyListRestart == VK_TRUE
         self.primitiveTopologyPatchListRestart = cStruct.primitiveTopologyPatchListRestart == VK_TRUE
     }
@@ -21788,7 +21788,7 @@ public struct AttachmentDescriptionStencilLayout: ChainableBase, AttachmentDescr
         self.stencilFinalLayout = stencilFinalLayout
     }
 
-    init(cStruct: VkAttachmentDescriptionStencilLayout) {
+    public init(cStruct: VkAttachmentDescriptionStencilLayout) {
         self.stencilInitialLayout = ImageLayout(rawValue: unsafeBitCast(cStruct.stencilInitialLayout, to: UInt32.self))!
         self.stencilFinalLayout = ImageLayout(rawValue: unsafeBitCast(cStruct.stencilFinalLayout, to: UInt32.self))!
     }
@@ -21818,7 +21818,7 @@ public struct PhysicalDevicePipelineExecutablePropertiesFeaturesKHR: ChainableBa
         self.pipelineExecutableInfo = pipelineExecutableInfo
     }
 
-    init(cStruct: VkPhysicalDevicePipelineExecutablePropertiesFeaturesKHR) {
+    public init(cStruct: VkPhysicalDevicePipelineExecutablePropertiesFeaturesKHR) {
         self.pipelineExecutableInfo = cStruct.pipelineExecutableInfo == VK_TRUE
     }
 
@@ -21846,7 +21846,7 @@ public struct PipelineInfoKHR: ChainableBase {
         self.pipeline = pipeline
     }
 
-    init(cStruct: VkPipelineInfoKHR, device: Device) {
+    public init(cStruct: VkPipelineInfoKHR, device: Device) {
         self.pipeline = Pipeline(handle: cStruct.pipeline, device: device)
     }
 
@@ -21873,7 +21873,7 @@ public struct PipelineExecutablePropertiesKHR: ChainableBase {
     public let description: String
     public let subgroupSize: UInt32
 
-    init(cStruct: VkPipelineExecutablePropertiesKHR) {
+    public init(cStruct: VkPipelineExecutablePropertiesKHR) {
         self.stages = ShaderStageFlags(rawValue: cStruct.stages)
         self.name = String(unsafeBytesOf: cStruct.name)
         self.description = String(unsafeBytesOf: cStruct.description)
@@ -21909,7 +21909,7 @@ public struct PipelineExecutableInfoKHR: ChainableBase {
         self.executableIndex = executableIndex
     }
 
-    init(cStruct: VkPipelineExecutableInfoKHR, device: Device) {
+    public init(cStruct: VkPipelineExecutableInfoKHR, device: Device) {
         self.pipeline = Pipeline(handle: cStruct.pipeline, device: device)
         self.executableIndex = cStruct.executableIndex
     }
@@ -21938,7 +21938,7 @@ public struct PipelineExecutableStatisticKHR: ChainableBase {
     public let format: PipelineExecutableStatisticFormatKHR
     public let value: VkPipelineExecutableStatisticValueKHR
 
-    init(cStruct: VkPipelineExecutableStatisticKHR) {
+    public init(cStruct: VkPipelineExecutableStatisticKHR) {
         self.name = String(unsafeBytesOf: cStruct.name)
         self.description = String(unsafeBytesOf: cStruct.description)
         self.format = PipelineExecutableStatisticFormatKHR(rawValue: unsafeBitCast(cStruct.format, to: UInt32.self))!
@@ -21972,7 +21972,7 @@ public struct PipelineExecutableInternalRepresentationKHR: ChainableBase {
     public let dataSize: Int
     public let data: UnsafeMutableRawPointer?
 
-    init(cStruct: VkPipelineExecutableInternalRepresentationKHR) {
+    public init(cStruct: VkPipelineExecutableInternalRepresentationKHR) {
         self.name = String(unsafeBytesOf: cStruct.name)
         self.description = String(unsafeBytesOf: cStruct.description)
         self.isText = cStruct.isText == VK_TRUE
@@ -22008,7 +22008,7 @@ public struct PhysicalDeviceShaderDemoteToHelperInvocationFeatures: ChainableBas
         self.shaderDemoteToHelperInvocation = shaderDemoteToHelperInvocation
     }
 
-    init(cStruct: VkPhysicalDeviceShaderDemoteToHelperInvocationFeatures) {
+    public init(cStruct: VkPhysicalDeviceShaderDemoteToHelperInvocationFeatures) {
         self.shaderDemoteToHelperInvocation = cStruct.shaderDemoteToHelperInvocation == VK_TRUE
     }
 
@@ -22036,7 +22036,7 @@ public struct PhysicalDeviceTexelBufferAlignmentFeaturesEXT: ChainableBase, Phys
         self.texelBufferAlignment = texelBufferAlignment
     }
 
-    init(cStruct: VkPhysicalDeviceTexelBufferAlignmentFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceTexelBufferAlignmentFeaturesEXT) {
         self.texelBufferAlignment = cStruct.texelBufferAlignment == VK_TRUE
     }
 
@@ -22063,7 +22063,7 @@ public struct PhysicalDeviceTexelBufferAlignmentProperties: ChainableBase, Physi
     public let uniformTexelBufferOffsetAlignmentBytes: VkDeviceSize
     public let uniformTexelBufferOffsetSingleTexelAlignment: Bool
 
-    init(cStruct: VkPhysicalDeviceTexelBufferAlignmentProperties) {
+    public init(cStruct: VkPhysicalDeviceTexelBufferAlignmentProperties) {
         self.storageTexelBufferOffsetAlignmentBytes = cStruct.storageTexelBufferOffsetAlignmentBytes
         self.storageTexelBufferOffsetSingleTexelAlignment = cStruct.storageTexelBufferOffsetSingleTexelAlignment == VK_TRUE
         self.uniformTexelBufferOffsetAlignmentBytes = cStruct.uniformTexelBufferOffsetAlignmentBytes
@@ -22099,7 +22099,7 @@ public struct PhysicalDeviceSubgroupSizeControlFeatures: ChainableBase, Physical
         self.computeFullSubgroups = computeFullSubgroups
     }
 
-    init(cStruct: VkPhysicalDeviceSubgroupSizeControlFeatures) {
+    public init(cStruct: VkPhysicalDeviceSubgroupSizeControlFeatures) {
         self.subgroupSizeControl = cStruct.subgroupSizeControl == VK_TRUE
         self.computeFullSubgroups = cStruct.computeFullSubgroups == VK_TRUE
     }
@@ -22128,7 +22128,7 @@ public struct PhysicalDeviceSubgroupSizeControlProperties: ChainableBase, Physic
     public let maxComputeWorkgroupSubgroups: UInt32
     public let requiredSubgroupSizeStages: ShaderStageFlags
 
-    init(cStruct: VkPhysicalDeviceSubgroupSizeControlProperties) {
+    public init(cStruct: VkPhysicalDeviceSubgroupSizeControlProperties) {
         self.minSubgroupSize = cStruct.minSubgroupSize
         self.maxSubgroupSize = cStruct.maxSubgroupSize
         self.maxComputeWorkgroupSubgroups = cStruct.maxComputeWorkgroupSubgroups
@@ -22162,7 +22162,7 @@ public struct PipelineShaderStageRequiredSubgroupSizeCreateInfo: ChainableBase, 
         self.requiredSubgroupSize = requiredSubgroupSize
     }
 
-    init(cStruct: VkPipelineShaderStageRequiredSubgroupSizeCreateInfo) {
+    public init(cStruct: VkPipelineShaderStageRequiredSubgroupSizeCreateInfo) {
         self.requiredSubgroupSize = cStruct.requiredSubgroupSize
     }
 
@@ -22192,7 +22192,7 @@ public struct SubpassShadingPipelineCreateInfoHUAWEI: ChainableBase, ComputePipe
         self.subpass = subpass
     }
 
-    init(cStruct: VkSubpassShadingPipelineCreateInfoHUAWEI, device: Device) {
+    public init(cStruct: VkSubpassShadingPipelineCreateInfoHUAWEI, device: Device) {
         self.renderPass = RenderPass(handle: cStruct.renderPass, device: device)
         self.subpass = cStruct.subpass
     }
@@ -22218,7 +22218,7 @@ public struct PhysicalDeviceSubpassShadingPropertiesHUAWEI: ChainableBase, Physi
 
     public let maxSubpassShadingWorkgroupSizeAspectRatio: UInt32
 
-    init(cStruct: VkPhysicalDeviceSubpassShadingPropertiesHUAWEI) {
+    public init(cStruct: VkPhysicalDeviceSubpassShadingPropertiesHUAWEI) {
         self.maxSubpassShadingWorkgroupSizeAspectRatio = cStruct.maxSubpassShadingWorkgroupSizeAspectRatio
     }
 
@@ -22245,7 +22245,7 @@ public struct PhysicalDeviceClusterCullingShaderPropertiesHUAWEI: ChainableBase,
     public let maxOutputClusterCount: UInt32
     public let indirectBufferOffsetAlignment: VkDeviceSize
 
-    init(cStruct: VkPhysicalDeviceClusterCullingShaderPropertiesHUAWEI) {
+    public init(cStruct: VkPhysicalDeviceClusterCullingShaderPropertiesHUAWEI) {
         self.maxWorkGroupCount = cStruct.maxWorkGroupCount
         self.maxWorkGroupSize = cStruct.maxWorkGroupSize
         self.maxOutputClusterCount = cStruct.maxOutputClusterCount
@@ -22279,7 +22279,7 @@ public struct MemoryOpaqueCaptureAddressAllocateInfo: ChainableBase, MemoryAlloc
         self.opaqueCaptureAddress = opaqueCaptureAddress
     }
 
-    init(cStruct: VkMemoryOpaqueCaptureAddressAllocateInfo) {
+    public init(cStruct: VkMemoryOpaqueCaptureAddressAllocateInfo) {
         self.opaqueCaptureAddress = cStruct.opaqueCaptureAddress
     }
 
@@ -22307,7 +22307,7 @@ public struct DeviceMemoryOpaqueCaptureAddressInfo: ChainableBase {
         self.memory = memory
     }
 
-    init(cStruct: VkDeviceMemoryOpaqueCaptureAddressInfo, device: Device) {
+    public init(cStruct: VkDeviceMemoryOpaqueCaptureAddressInfo, device: Device) {
         self.memory = DeviceMemory(handle: cStruct.memory, device: device)
     }
 
@@ -22345,7 +22345,7 @@ public struct PhysicalDeviceLineRasterizationFeatures: ChainableBase, PhysicalDe
         self.stippledSmoothLines = stippledSmoothLines
     }
 
-    init(cStruct: VkPhysicalDeviceLineRasterizationFeatures) {
+    public init(cStruct: VkPhysicalDeviceLineRasterizationFeatures) {
         self.rectangularLines = cStruct.rectangularLines == VK_TRUE
         self.bresenhamLines = cStruct.bresenhamLines == VK_TRUE
         self.smoothLines = cStruct.smoothLines == VK_TRUE
@@ -22379,7 +22379,7 @@ public struct PhysicalDeviceLineRasterizationProperties: ChainableBase, Physical
 
     public let lineSubPixelPrecisionBits: UInt32
 
-    init(cStruct: VkPhysicalDeviceLineRasterizationProperties) {
+    public init(cStruct: VkPhysicalDeviceLineRasterizationProperties) {
         self.lineSubPixelPrecisionBits = cStruct.lineSubPixelPrecisionBits
     }
 
@@ -22413,7 +22413,7 @@ public struct PipelineRasterizationLineStateCreateInfo: ChainableBase, PipelineR
         self.lineStipplePattern = lineStipplePattern
     }
 
-    init(cStruct: VkPipelineRasterizationLineStateCreateInfo) {
+    public init(cStruct: VkPipelineRasterizationLineStateCreateInfo) {
         self.lineRasterizationMode = LineRasterizationMode(rawValue: unsafeBitCast(cStruct.lineRasterizationMode, to: UInt32.self))!
         self.stippledLineEnable = cStruct.stippledLineEnable == VK_TRUE
         self.lineStippleFactor = cStruct.lineStippleFactor
@@ -22447,7 +22447,7 @@ public struct PhysicalDevicePipelineCreationCacheControlFeatures: ChainableBase,
         self.pipelineCreationCacheControl = pipelineCreationCacheControl
     }
 
-    init(cStruct: VkPhysicalDevicePipelineCreationCacheControlFeatures) {
+    public init(cStruct: VkPhysicalDevicePipelineCreationCacheControlFeatures) {
         self.pipelineCreationCacheControl = cStruct.pipelineCreationCacheControl == VK_TRUE
     }
 
@@ -22497,7 +22497,7 @@ public struct PhysicalDeviceVulkan11Features: ChainableBase, PhysicalDeviceFeatu
         self.shaderDrawParameters = shaderDrawParameters
     }
 
-    init(cStruct: VkPhysicalDeviceVulkan11Features) {
+    public init(cStruct: VkPhysicalDeviceVulkan11Features) {
         self.storageBuffer16BitAccess = cStruct.storageBuffer16BitAccess == VK_TRUE
         self.uniformAndStorageBuffer16BitAccess = cStruct.uniformAndStorageBuffer16BitAccess == VK_TRUE
         self.storagePushConstant16 = cStruct.storagePushConstant16 == VK_TRUE
@@ -22557,7 +22557,7 @@ public struct PhysicalDeviceVulkan11Properties: ChainableBase, PhysicalDevicePro
     public let maxPerSetDescriptors: UInt32
     public let maxMemoryAllocationSize: VkDeviceSize
 
-    init(cStruct: VkPhysicalDeviceVulkan11Properties) {
+    public init(cStruct: VkPhysicalDeviceVulkan11Properties) {
         self.deviceUUID = cStruct.deviceUUID
         self.driverUUID = cStruct.driverUUID
         self.deviceLUID = cStruct.deviceLUID
@@ -22705,7 +22705,7 @@ public struct PhysicalDeviceVulkan12Features: ChainableBase, PhysicalDeviceFeatu
         self.subgroupBroadcastDynamicId = subgroupBroadcastDynamicId
     }
 
-    init(cStruct: VkPhysicalDeviceVulkan12Features) {
+    public init(cStruct: VkPhysicalDeviceVulkan12Features) {
         self.samplerMirrorClampToEdge = cStruct.samplerMirrorClampToEdge == VK_TRUE
         self.drawIndirectCount = cStruct.drawIndirectCount == VK_TRUE
         self.storageBuffer8BitAccess = cStruct.storageBuffer8BitAccess == VK_TRUE
@@ -22872,7 +22872,7 @@ public struct PhysicalDeviceVulkan12Properties: ChainableBase, PhysicalDevicePro
     public let maxTimelineSemaphoreValueDifference: UInt64
     public let framebufferIntegerColorSampleCounts: SampleCountFlags
 
-    init(cStruct: VkPhysicalDeviceVulkan12Properties) {
+    public init(cStruct: VkPhysicalDeviceVulkan12Properties) {
         self.driverID = DriverId(rawValue: unsafeBitCast(cStruct.driverID, to: UInt32.self))!
         self.driverName = String(unsafeBytesOf: cStruct.driverName)
         self.driverInfo = String(unsafeBytesOf: cStruct.driverInfo)
@@ -23032,7 +23032,7 @@ public struct PhysicalDeviceVulkan13Features: ChainableBase, PhysicalDeviceFeatu
         self.maintenance4 = maintenance4
     }
 
-    init(cStruct: VkPhysicalDeviceVulkan13Features) {
+    public init(cStruct: VkPhysicalDeviceVulkan13Features) {
         self.robustImageAccess = cStruct.robustImageAccess == VK_TRUE
         self.inlineUniformBlock = cStruct.inlineUniformBlock == VK_TRUE
         self.descriptorBindingInlineUniformBlockUpdateAfterBind = cStruct.descriptorBindingInlineUniformBlockUpdateAfterBind == VK_TRUE
@@ -23128,7 +23128,7 @@ public struct PhysicalDeviceVulkan13Properties: ChainableBase, PhysicalDevicePro
     public let uniformTexelBufferOffsetSingleTexelAlignment: Bool
     public let maxBufferSize: VkDeviceSize
 
-    init(cStruct: VkPhysicalDeviceVulkan13Properties) {
+    public init(cStruct: VkPhysicalDeviceVulkan13Properties) {
         self.minSubgroupSize = cStruct.minSubgroupSize
         self.maxSubgroupSize = cStruct.maxSubgroupSize
         self.maxComputeWorkgroupSubgroups = cStruct.maxComputeWorkgroupSubgroups
@@ -23284,7 +23284,7 @@ public struct PhysicalDeviceVulkan14Features: ChainableBase, PhysicalDeviceFeatu
         self.pushDescriptor = pushDescriptor
     }
 
-    init(cStruct: VkPhysicalDeviceVulkan14Features) {
+    public init(cStruct: VkPhysicalDeviceVulkan14Features) {
         self.globalPriorityQuery = cStruct.globalPriorityQuery == VK_TRUE
         self.shaderSubgroupRotate = cStruct.shaderSubgroupRotate == VK_TRUE
         self.shaderSubgroupRotateClustered = cStruct.shaderSubgroupRotateClustered == VK_TRUE
@@ -23372,7 +23372,7 @@ public struct PhysicalDeviceVulkan14Properties: ChainableBase, PhysicalDevicePro
     public let optimalTilingLayoutUUID: (UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8)
     public let identicalMemoryTypeRequirements: Bool
 
-    init(cStruct: VkPhysicalDeviceVulkan14Properties) {
+    public init(cStruct: VkPhysicalDeviceVulkan14Properties) {
         self.lineSubPixelPrecisionBits = cStruct.lineSubPixelPrecisionBits
         self.maxVertexAttribDivisor = cStruct.maxVertexAttribDivisor
         self.supportsNonZeroFirstInstance = cStruct.supportsNonZeroFirstInstance == VK_TRUE
@@ -23448,7 +23448,7 @@ public struct PipelineCompilerControlCreateInfoAMD: ChainableBase, GraphicsPipel
         self.compilerControlFlags = compilerControlFlags
     }
 
-    init(cStruct: VkPipelineCompilerControlCreateInfoAMD) {
+    public init(cStruct: VkPipelineCompilerControlCreateInfoAMD) {
         self.compilerControlFlags = PipelineCompilerControlFlagsAMD(rawValue: cStruct.compilerControlFlags)
     }
 
@@ -23476,7 +23476,7 @@ public struct PhysicalDeviceCoherentMemoryFeaturesAMD: ChainableBase, PhysicalDe
         self.deviceCoherentMemory = deviceCoherentMemory
     }
 
-    init(cStruct: VkPhysicalDeviceCoherentMemoryFeaturesAMD) {
+    public init(cStruct: VkPhysicalDeviceCoherentMemoryFeaturesAMD) {
         self.deviceCoherentMemory = cStruct.deviceCoherentMemory == VK_TRUE
     }
 
@@ -23516,7 +23516,7 @@ public struct GpaPerfBlockPropertiesAMD: CStructConvertible {
         self.maxStreamingCounters = maxStreamingCounters
     }
 
-    init(cStruct: VkGpaPerfBlockPropertiesAMD) {
+    public init(cStruct: VkGpaPerfBlockPropertiesAMD) {
         self.blockType = GpaPerfBlockAMD(rawValue: unsafeBitCast(cStruct.blockType, to: UInt32.self))!
         self.flags = GpaPerfBlockPropertiesFlagsAMD(rawValue: cStruct.flags)
         self.instanceCount = cStruct.instanceCount
@@ -23554,7 +23554,7 @@ public struct PhysicalDeviceGpaFeaturesAMD: ChainableBase, PhysicalDeviceFeature
         self.clockModes = clockModes
     }
 
-    init(cStruct: VkPhysicalDeviceGpaFeaturesAMD) {
+    public init(cStruct: VkPhysicalDeviceGpaFeaturesAMD) {
         self.perfCounters = cStruct.perfCounters == VK_TRUE
         self.streamingPerfCounters = cStruct.streamingPerfCounters == VK_TRUE
         self.sqThreadTracing = cStruct.sqThreadTracing == VK_TRUE
@@ -23588,7 +23588,7 @@ public struct PhysicalDeviceGpaPropertiesAMD: ChainableBase, PhysicalDevicePrope
     public let perfBlockCount: UInt32
     public let perfBlocks: UnsafeMutablePointer<VkGpaPerfBlockPropertiesAMD>
 
-    init(cStruct: VkPhysicalDeviceGpaPropertiesAMD) {
+    public init(cStruct: VkPhysicalDeviceGpaPropertiesAMD) {
         self.flags = PhysicalDeviceGpaPropertiesFlagsAMD(rawValue: cStruct.flags)
         self.maxSqttSeBufferSize = cStruct.maxSqttSeBufferSize
         self.shaderEngineCount = cStruct.shaderEngineCount
@@ -23620,7 +23620,7 @@ public struct PhysicalDeviceGpaProperties2AMD: ChainableBase, PhysicalDeviceProp
 
     public let revisionId: UInt32
 
-    init(cStruct: VkPhysicalDeviceGpaProperties2AMD) {
+    public init(cStruct: VkPhysicalDeviceGpaProperties2AMD) {
         self.revisionId = cStruct.revisionId
     }
 
@@ -23652,7 +23652,7 @@ public struct GpaPerfCounterAMD: CStructConvertible {
         self.eventID = eventID
     }
 
-    init(cStruct: VkGpaPerfCounterAMD) {
+    public init(cStruct: VkGpaPerfCounterAMD) {
         self.blockType = GpaPerfBlockAMD(rawValue: unsafeBitCast(cStruct.blockType, to: UInt32.self))!
         self.blockInstance = cStruct.blockInstance
         self.eventID = cStruct.eventID
@@ -23700,7 +23700,7 @@ public struct GpaSampleBeginInfoAMD: ChainableBase {
         self.timingPostSample = timingPostSample
     }
 
-    init(cStruct: VkGpaSampleBeginInfoAMD) {
+    public init(cStruct: VkGpaSampleBeginInfoAMD) {
         self.sampleType = GpaSampleTypeAMD(rawValue: unsafeBitCast(cStruct.sampleType, to: UInt32.self))!
         self.sampleInternalOperations = cStruct.sampleInternalOperations == VK_TRUE
         self.cacheFlushOnCounterCollection = cStruct.cacheFlushOnCounterCollection == VK_TRUE
@@ -23759,7 +23759,7 @@ public struct GpaDeviceClockModeInfoAMD: ChainableBase {
         self.engineClockRatioToPeak = engineClockRatioToPeak
     }
 
-    init(cStruct: VkGpaDeviceClockModeInfoAMD) {
+    public init(cStruct: VkGpaDeviceClockModeInfoAMD) {
         self.clockMode = GpaDeviceClockModeAMD(rawValue: unsafeBitCast(cStruct.clockMode, to: UInt32.self))!
         self.memoryClockRatioToPeak = cStruct.memoryClockRatioToPeak
         self.engineClockRatioToPeak = cStruct.engineClockRatioToPeak
@@ -23797,7 +23797,7 @@ public struct GpaDeviceGetClockInfoAMD: ChainableBase {
         self.engineClockFrequency = engineClockFrequency
     }
 
-    init(cStruct: VkGpaDeviceGetClockInfoAMD) {
+    public init(cStruct: VkGpaDeviceGetClockInfoAMD) {
         self.memoryClockRatioToPeak = cStruct.memoryClockRatioToPeak
         self.engineClockRatioToPeak = cStruct.engineClockRatioToPeak
         self.memoryClockFrequency = cStruct.memoryClockFrequency
@@ -23831,7 +23831,7 @@ public struct GpaSessionCreateInfoAMD: ChainableBase {
         self.secondaryCopySource = secondaryCopySource
     }
 
-    init(cStruct: VkGpaSessionCreateInfoAMD, device: Device) {
+    public init(cStruct: VkGpaSessionCreateInfoAMD, device: Device) {
         self.secondaryCopySource = (cStruct.secondaryCopySource != nil) ? GpaSessionAMD(handle: cStruct.secondaryCopySource, device: device) : nil
     }
 
@@ -23859,7 +23859,7 @@ public struct PhysicalDeviceToolProperties: ChainableBase {
     public let description: String
     public let layer: String
 
-    init(cStruct: VkPhysicalDeviceToolProperties) {
+    public init(cStruct: VkPhysicalDeviceToolProperties) {
         self.name = String(unsafeBytesOf: cStruct.name)
         self.version = String(unsafeBytesOf: cStruct.version)
         self.purposes = ToolPurposeFlags(rawValue: cStruct.purposes)
@@ -23897,7 +23897,7 @@ public struct SamplerCustomBorderColorCreateInfoEXT: ChainableBase, SamplerCreat
         self.format = format
     }
 
-    init(cStruct: VkSamplerCustomBorderColorCreateInfoEXT) {
+    public init(cStruct: VkSamplerCustomBorderColorCreateInfoEXT) {
         self.customBorderColor = cStruct.customBorderColor
         self.format = Format(rawValue: unsafeBitCast(cStruct.format, to: UInt32.self))!
     }
@@ -23923,7 +23923,7 @@ public struct PhysicalDeviceCustomBorderColorPropertiesEXT: ChainableBase, Physi
 
     public let maxCustomBorderColorSamplers: UInt32
 
-    init(cStruct: VkPhysicalDeviceCustomBorderColorPropertiesEXT) {
+    public init(cStruct: VkPhysicalDeviceCustomBorderColorPropertiesEXT) {
         self.maxCustomBorderColorSamplers = cStruct.maxCustomBorderColorSamplers
     }
 
@@ -23953,7 +23953,7 @@ public struct PhysicalDeviceCustomBorderColorFeaturesEXT: ChainableBase, Physica
         self.customBorderColorWithoutFormat = customBorderColorWithoutFormat
     }
 
-    init(cStruct: VkPhysicalDeviceCustomBorderColorFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceCustomBorderColorFeaturesEXT) {
         self.customBorderColors = cStruct.customBorderColors == VK_TRUE
         self.customBorderColorWithoutFormat = cStruct.customBorderColorWithoutFormat == VK_TRUE
     }
@@ -23985,7 +23985,7 @@ public struct SamplerBorderColorComponentMappingCreateInfoEXT: ChainableBase, Sa
         self.srgb = srgb
     }
 
-    init(cStruct: VkSamplerBorderColorComponentMappingCreateInfoEXT) {
+    public init(cStruct: VkSamplerBorderColorComponentMappingCreateInfoEXT) {
         self.components = ComponentMapping(cStruct: cStruct.components)
         self.srgb = cStruct.srgb == VK_TRUE
     }
@@ -24019,7 +24019,7 @@ public struct PhysicalDeviceBorderColorSwizzleFeaturesEXT: ChainableBase, Physic
         self.borderColorSwizzleFromImage = borderColorSwizzleFromImage
     }
 
-    init(cStruct: VkPhysicalDeviceBorderColorSwizzleFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceBorderColorSwizzleFeaturesEXT) {
         self.borderColorSwizzle = cStruct.borderColorSwizzle == VK_TRUE
         self.borderColorSwizzleFromImage = cStruct.borderColorSwizzleFromImage == VK_TRUE
     }
@@ -24061,7 +24061,7 @@ public struct AccelerationStructureGeometryTrianglesDataKHR: ChainableBase {
         self.transformData = transformData
     }
 
-    init(cStruct: VkAccelerationStructureGeometryTrianglesDataKHR) {
+    public init(cStruct: VkAccelerationStructureGeometryTrianglesDataKHR) {
         self.vertexFormat = Format(rawValue: unsafeBitCast(cStruct.vertexFormat, to: UInt32.self))!
         self.vertexData = cStruct.vertexData
         self.vertexStride = cStruct.vertexStride
@@ -24103,7 +24103,7 @@ public struct AccelerationStructureGeometryAabbsDataKHR: ChainableBase {
         self.stride = stride
     }
 
-    init(cStruct: VkAccelerationStructureGeometryAabbsDataKHR) {
+    public init(cStruct: VkAccelerationStructureGeometryAabbsDataKHR) {
         self.data = cStruct.data
         self.stride = cStruct.stride
     }
@@ -24135,7 +24135,7 @@ public struct AccelerationStructureGeometryInstancesDataKHR: ChainableBase {
         self.data = data
     }
 
-    init(cStruct: VkAccelerationStructureGeometryInstancesDataKHR) {
+    public init(cStruct: VkAccelerationStructureGeometryInstancesDataKHR) {
         self.arrayOfPointers = cStruct.arrayOfPointers == VK_TRUE
         self.data = cStruct.data
     }
@@ -24185,7 +24185,7 @@ public struct AccelerationStructureGeometryLinearSweptSpheresDataNV: ChainableBa
         self.endCapsMode = endCapsMode
     }
 
-    init(cStruct: VkAccelerationStructureGeometryLinearSweptSpheresDataNV) {
+    public init(cStruct: VkAccelerationStructureGeometryLinearSweptSpheresDataNV) {
         self.vertexFormat = Format(rawValue: unsafeBitCast(cStruct.vertexFormat, to: UInt32.self))!
         self.vertexData = cStruct.vertexData
         self.vertexStride = cStruct.vertexStride
@@ -24249,7 +24249,7 @@ public struct AccelerationStructureGeometrySpheresDataNV: ChainableBase, Acceler
         self.indexStride = indexStride
     }
 
-    init(cStruct: VkAccelerationStructureGeometrySpheresDataNV) {
+    public init(cStruct: VkAccelerationStructureGeometrySpheresDataNV) {
         self.vertexFormat = Format(rawValue: unsafeBitCast(cStruct.vertexFormat, to: UInt32.self))!
         self.vertexData = cStruct.vertexData
         self.vertexStride = cStruct.vertexStride
@@ -24297,7 +24297,7 @@ public struct AccelerationStructureGeometryKHR: ChainableBase {
         self.flags = flags
     }
 
-    init(cStruct: VkAccelerationStructureGeometryKHR) {
+    public init(cStruct: VkAccelerationStructureGeometryKHR) {
         self.geometryType = GeometryTypeKHR(rawValue: unsafeBitCast(cStruct.geometryType, to: UInt32.self))!
         self.geometry = cStruct.geometry
         self.flags = GeometryFlagsKHR(rawValue: cStruct.flags)
@@ -24343,7 +24343,7 @@ public struct AccelerationStructureBuildGeometryInfoKHR: ChainableBase {
         self.scratchData = scratchData
     }
 
-    init(cStruct: VkAccelerationStructureBuildGeometryInfoKHR, device: Device) {
+    public init(cStruct: VkAccelerationStructureBuildGeometryInfoKHR, device: Device) {
         self.type = AccelerationStructureTypeKHR(rawValue: unsafeBitCast(cStruct.type, to: UInt32.self))!
         self.flags = BuildAccelerationStructureFlagsKHR(rawValue: cStruct.flags)
         self.mode = BuildAccelerationStructureModeKHR(rawValue: unsafeBitCast(cStruct.mode, to: UInt32.self))!
@@ -24396,7 +24396,7 @@ public struct AccelerationStructureBuildRangeInfoKHR: CStructConvertible {
         self.transformOffset = transformOffset
     }
 
-    init(cStruct: VkAccelerationStructureBuildRangeInfoKHR) {
+    public init(cStruct: VkAccelerationStructureBuildRangeInfoKHR) {
         self.primitiveCount = cStruct.primitiveCount
         self.primitiveOffset = cStruct.primitiveOffset
         self.firstVertex = cStruct.firstVertex
@@ -24432,7 +24432,7 @@ public struct AccelerationStructureCreateInfoKHR: ChainableBase {
         self.deviceAddress = deviceAddress
     }
 
-    init(cStruct: VkAccelerationStructureCreateInfoKHR, device: Device) {
+    public init(cStruct: VkAccelerationStructureCreateInfoKHR, device: Device) {
         self.createFlags = AccelerationStructureCreateFlagsKHR(rawValue: cStruct.createFlags)
         self.buffer = Buffer(handle: cStruct.buffer, device: device)
         self.offset = cStruct.offset
@@ -24480,7 +24480,7 @@ public struct AabbPositionsKHR: CStructConvertible {
         self.maxZ = maxZ
     }
 
-    init(cStruct: VkAabbPositionsKHR) {
+    public init(cStruct: VkAabbPositionsKHR) {
         self.minX = cStruct.minX
         self.minY = cStruct.minY
         self.minZ = cStruct.minZ
@@ -24510,7 +24510,7 @@ public struct TransformMatrixKHR: CStructConvertible {
         self.matrix = matrix
     }
 
-    init(cStruct: VkTransformMatrixKHR) {
+    public init(cStruct: VkTransformMatrixKHR) {
         self.matrix = cStruct.matrix
     }
 
@@ -24540,7 +24540,7 @@ public struct AccelerationStructureInstanceKHR: CStructConvertible {
         self.accelerationStructureReference = accelerationStructureReference
     }
 
-    init(cStruct: VkAccelerationStructureInstanceKHR) {
+    public init(cStruct: VkAccelerationStructureInstanceKHR) {
         self.transform = TransformMatrixKHR(cStruct: cStruct.transform)
         self.instanceCustomIndex = cStruct.instanceCustomIndex
         self.mask = cStruct.mask
@@ -24572,7 +24572,7 @@ public struct AccelerationStructureDeviceAddressInfoKHR: ChainableBase {
         self.accelerationStructure = accelerationStructure
     }
 
-    init(cStruct: VkAccelerationStructureDeviceAddressInfoKHR, device: Device) {
+    public init(cStruct: VkAccelerationStructureDeviceAddressInfoKHR, device: Device) {
         self.accelerationStructure = AccelerationStructureKHR(handle: cStruct.accelerationStructure, device: device)
     }
 
@@ -24600,7 +24600,7 @@ public struct AccelerationStructureVersionInfoKHR: ChainableBase {
         self.versionData = versionData
     }
 
-    init(cStruct: VkAccelerationStructureVersionInfoKHR) {
+    public init(cStruct: VkAccelerationStructureVersionInfoKHR) {
         self.versionData = cStruct.pVersionData
     }
 
@@ -24632,7 +24632,7 @@ public struct CopyAccelerationStructureInfoKHR: ChainableBase {
         self.mode = mode
     }
 
-    init(cStruct: VkCopyAccelerationStructureInfoKHR, device: Device) {
+    public init(cStruct: VkCopyAccelerationStructureInfoKHR, device: Device) {
         self.src = AccelerationStructureKHR(handle: cStruct.src, device: device)
         self.dst = AccelerationStructureKHR(handle: cStruct.dst, device: device)
         self.mode = CopyAccelerationStructureModeKHR(rawValue: unsafeBitCast(cStruct.mode, to: UInt32.self))!
@@ -24668,7 +24668,7 @@ public struct CopyAccelerationStructureToMemoryInfoKHR: ChainableBase {
         self.mode = mode
     }
 
-    init(cStruct: VkCopyAccelerationStructureToMemoryInfoKHR, device: Device) {
+    public init(cStruct: VkCopyAccelerationStructureToMemoryInfoKHR, device: Device) {
         self.src = AccelerationStructureKHR(handle: cStruct.src, device: device)
         self.dst = cStruct.dst
         self.mode = CopyAccelerationStructureModeKHR(rawValue: unsafeBitCast(cStruct.mode, to: UInt32.self))!
@@ -24704,7 +24704,7 @@ public struct CopyMemoryToAccelerationStructureInfoKHR: ChainableBase {
         self.mode = mode
     }
 
-    init(cStruct: VkCopyMemoryToAccelerationStructureInfoKHR, device: Device) {
+    public init(cStruct: VkCopyMemoryToAccelerationStructureInfoKHR, device: Device) {
         self.src = cStruct.src
         self.dst = AccelerationStructureKHR(handle: cStruct.dst, device: device)
         self.mode = CopyAccelerationStructureModeKHR(rawValue: unsafeBitCast(cStruct.mode, to: UInt32.self))!
@@ -24736,7 +24736,7 @@ public struct PhysicalDeviceExtendedDynamicStateFeaturesEXT: ChainableBase, Phys
         self.extendedDynamicState = extendedDynamicState
     }
 
-    init(cStruct: VkPhysicalDeviceExtendedDynamicStateFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceExtendedDynamicStateFeaturesEXT) {
         self.extendedDynamicState = cStruct.extendedDynamicState == VK_TRUE
     }
 
@@ -24768,7 +24768,7 @@ public struct PhysicalDeviceExtendedDynamicState2FeaturesEXT: ChainableBase, Phy
         self.extendedDynamicState2PatchControlPoints = extendedDynamicState2PatchControlPoints
     }
 
-    init(cStruct: VkPhysicalDeviceExtendedDynamicState2FeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceExtendedDynamicState2FeaturesEXT) {
         self.extendedDynamicState2 = cStruct.extendedDynamicState2 == VK_TRUE
         self.extendedDynamicState2LogicOp = cStruct.extendedDynamicState2LogicOp == VK_TRUE
         self.extendedDynamicState2PatchControlPoints = cStruct.extendedDynamicState2PatchControlPoints == VK_TRUE
@@ -24860,7 +24860,7 @@ public struct PhysicalDeviceExtendedDynamicState3FeaturesEXT: ChainableBase, Phy
         self.extendedDynamicState3ShadingRateImageEnable = extendedDynamicState3ShadingRateImageEnable
     }
 
-    init(cStruct: VkPhysicalDeviceExtendedDynamicState3FeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceExtendedDynamicState3FeaturesEXT) {
         self.extendedDynamicState3TessellationDomainOrigin = cStruct.extendedDynamicState3TessellationDomainOrigin == VK_TRUE
         self.extendedDynamicState3DepthClampEnable = cStruct.extendedDynamicState3DepthClampEnable == VK_TRUE
         self.extendedDynamicState3PolygonMode = cStruct.extendedDynamicState3PolygonMode == VK_TRUE
@@ -24944,7 +24944,7 @@ public struct PhysicalDeviceExtendedDynamicState3PropertiesEXT: ChainableBase, P
 
     public let dynamicPrimitiveTopologyUnrestricted: Bool
 
-    init(cStruct: VkPhysicalDeviceExtendedDynamicState3PropertiesEXT) {
+    public init(cStruct: VkPhysicalDeviceExtendedDynamicState3PropertiesEXT) {
         self.dynamicPrimitiveTopologyUnrestricted = cStruct.dynamicPrimitiveTopologyUnrestricted == VK_TRUE
     }
 
@@ -24982,7 +24982,7 @@ public struct ColorBlendEquationEXT: CStructConvertible {
         self.alphaBlendOp = alphaBlendOp
     }
 
-    init(cStruct: VkColorBlendEquationEXT) {
+    public init(cStruct: VkColorBlendEquationEXT) {
         self.srcColorBlendFactor = BlendFactor(rawValue: unsafeBitCast(cStruct.srcColorBlendFactor, to: UInt32.self))!
         self.dstColorBlendFactor = BlendFactor(rawValue: unsafeBitCast(cStruct.dstColorBlendFactor, to: UInt32.self))!
         self.colorBlendOp = BlendOp(rawValue: unsafeBitCast(cStruct.colorBlendOp, to: UInt32.self))!
@@ -25020,7 +25020,7 @@ public struct ColorBlendAdvancedEXT: CStructConvertible {
         self.clampResults = clampResults
     }
 
-    init(cStruct: VkColorBlendAdvancedEXT) {
+    public init(cStruct: VkColorBlendAdvancedEXT) {
         self.advancedBlendOp = BlendOp(rawValue: unsafeBitCast(cStruct.advancedBlendOp, to: UInt32.self))!
         self.srcPremultiplied = cStruct.srcPremultiplied == VK_TRUE
         self.dstPremultiplied = cStruct.dstPremultiplied == VK_TRUE
@@ -25048,7 +25048,7 @@ public struct RenderPassTransformBeginInfoQCOM: ChainableBase, RenderPassBeginIn
         self.transform = transform
     }
 
-    init(cStruct: VkRenderPassTransformBeginInfoQCOM) {
+    public init(cStruct: VkRenderPassTransformBeginInfoQCOM) {
         self.transform = SurfaceTransformFlagsKHR(rawValue: unsafeBitCast(cStruct.transform.rawValue, to: UInt32.self))
     }
 
@@ -25076,7 +25076,7 @@ public struct CopyCommandTransformInfoQCOM: ChainableBase, BufferImageCopy2Exten
         self.transform = transform
     }
 
-    init(cStruct: VkCopyCommandTransformInfoQCOM) {
+    public init(cStruct: VkCopyCommandTransformInfoQCOM) {
         self.transform = SurfaceTransformFlagsKHR(rawValue: unsafeBitCast(cStruct.transform.rawValue, to: UInt32.self))
     }
 
@@ -25106,7 +25106,7 @@ public struct CommandBufferInheritanceRenderPassTransformInfoQCOM: ChainableBase
         self.renderArea = renderArea
     }
 
-    init(cStruct: VkCommandBufferInheritanceRenderPassTransformInfoQCOM) {
+    public init(cStruct: VkCommandBufferInheritanceRenderPassTransformInfoQCOM) {
         self.transform = SurfaceTransformFlagsKHR(rawValue: unsafeBitCast(cStruct.transform.rawValue, to: UInt32.self))
         self.renderArea = Rect2D(cStruct: cStruct.renderArea)
     }
@@ -25138,7 +25138,7 @@ public struct PhysicalDevicePartitionedAccelerationStructureFeaturesNV: Chainabl
         self.partitionedAccelerationStructure = partitionedAccelerationStructure
     }
 
-    init(cStruct: VkPhysicalDevicePartitionedAccelerationStructureFeaturesNV) {
+    public init(cStruct: VkPhysicalDevicePartitionedAccelerationStructureFeaturesNV) {
         self.partitionedAccelerationStructure = cStruct.partitionedAccelerationStructure == VK_TRUE
     }
 
@@ -25162,7 +25162,7 @@ public struct PhysicalDevicePartitionedAccelerationStructurePropertiesNV: Chaina
 
     public let maxPartitionCount: UInt32
 
-    init(cStruct: VkPhysicalDevicePartitionedAccelerationStructurePropertiesNV) {
+    public init(cStruct: VkPhysicalDevicePartitionedAccelerationStructurePropertiesNV) {
         self.maxPartitionCount = cStruct.maxPartitionCount
     }
 
@@ -25194,7 +25194,7 @@ public struct BuildPartitionedAccelerationStructureIndirectCommandNV: CStructCon
         self.argData = argData
     }
 
-    init(cStruct: VkBuildPartitionedAccelerationStructureIndirectCommandNV) {
+    public init(cStruct: VkBuildPartitionedAccelerationStructureIndirectCommandNV) {
         self.opType = PartitionedAccelerationStructureOpTypeNV(rawValue: unsafeBitCast(cStruct.opType, to: UInt32.self))!
         self.argCount = cStruct.argCount
         self.argData = StridedDeviceAddressNV(cStruct: cStruct.argData)
@@ -25220,7 +25220,7 @@ public struct PartitionedAccelerationStructureFlagsNV: ChainableBase, Partitione
         self.enablePartitionTranslation = enablePartitionTranslation
     }
 
-    init(cStruct: VkPartitionedAccelerationStructureFlagsNV) {
+    public init(cStruct: VkPartitionedAccelerationStructureFlagsNV) {
         self.enablePartitionTranslation = cStruct.enablePartitionTranslation == VK_TRUE
     }
 
@@ -25264,7 +25264,7 @@ public struct PartitionedAccelerationStructureWriteInstanceDataNV: CStructConver
         self.accelerationStructure = accelerationStructure
     }
 
-    init(cStruct: VkPartitionedAccelerationStructureWriteInstanceDataNV) {
+    public init(cStruct: VkPartitionedAccelerationStructureWriteInstanceDataNV) {
         self.transform = TransformMatrixKHR(cStruct: cStruct.transform)
         self.explicitAABB = cStruct.explicitAABB
         self.instanceID = cStruct.instanceID
@@ -25306,7 +25306,7 @@ public struct PartitionedAccelerationStructureUpdateInstanceDataNV: CStructConve
         self.accelerationStructure = accelerationStructure
     }
 
-    init(cStruct: VkPartitionedAccelerationStructureUpdateInstanceDataNV) {
+    public init(cStruct: VkPartitionedAccelerationStructureUpdateInstanceDataNV) {
         self.instanceIndex = cStruct.instanceIndex
         self.instanceContributionToHitGroupIndex = cStruct.instanceContributionToHitGroupIndex
         self.accelerationStructure = cStruct.accelerationStructure
@@ -25332,7 +25332,7 @@ public struct PartitionedAccelerationStructureWritePartitionTranslationDataNV: C
         self.partitionTranslation = partitionTranslation
     }
 
-    init(cStruct: VkPartitionedAccelerationStructureWritePartitionTranslationDataNV) {
+    public init(cStruct: VkPartitionedAccelerationStructureWritePartitionTranslationDataNV) {
         self.partitionIndex = cStruct.partitionIndex
         self.partitionTranslation = cStruct.partitionTranslation
     }
@@ -25354,7 +25354,7 @@ public struct WriteDescriptorSetPartitionedAccelerationStructureNV: ChainableBas
         self.accelerationStructures = accelerationStructures
     }
 
-    init(cStruct: VkWriteDescriptorSetPartitionedAccelerationStructureNV) {
+    public init(cStruct: VkWriteDescriptorSetPartitionedAccelerationStructureNV) {
         self.accelerationStructures = Array(UnsafeBufferPointer(start: cStruct.pAccelerationStructures, count: Int(cStruct.accelerationStructureCount)))
     }
 
@@ -25393,7 +25393,7 @@ public struct PartitionedAccelerationStructureInstancesInputNV: ChainableBase {
         self.maxInstanceInGlobalPartitionCount = maxInstanceInGlobalPartitionCount
     }
 
-    init(cStruct: VkPartitionedAccelerationStructureInstancesInputNV) {
+    public init(cStruct: VkPartitionedAccelerationStructureInstancesInputNV) {
         self.flags = BuildAccelerationStructureFlagsKHR(rawValue: cStruct.flags)
         self.instanceCount = cStruct.instanceCount
         self.maxInstancePerPartitionCount = cStruct.maxInstancePerPartitionCount
@@ -25439,7 +25439,7 @@ public struct BuildPartitionedAccelerationStructureInfoNV: ChainableBase {
         self.srcInfosCount = srcInfosCount
     }
 
-    init(cStruct: VkBuildPartitionedAccelerationStructureInfoNV) {
+    public init(cStruct: VkBuildPartitionedAccelerationStructureInfoNV) {
         self.input = PartitionedAccelerationStructureInstancesInputNV(cStruct: cStruct.input)
         self.srcAccelerationStructureData = cStruct.srcAccelerationStructureData
         self.dstAccelerationStructureData = cStruct.dstAccelerationStructureData
@@ -25479,7 +25479,7 @@ public struct PhysicalDeviceDiagnosticsConfigFeaturesNV: ChainableBase, Physical
         self.diagnosticsConfig = diagnosticsConfig
     }
 
-    init(cStruct: VkPhysicalDeviceDiagnosticsConfigFeaturesNV) {
+    public init(cStruct: VkPhysicalDeviceDiagnosticsConfigFeaturesNV) {
         self.diagnosticsConfig = cStruct.diagnosticsConfig == VK_TRUE
     }
 
@@ -25507,7 +25507,7 @@ public struct DeviceDiagnosticsConfigCreateInfoNV: ChainableBase, DeviceCreateIn
         self.flags = flags
     }
 
-    init(cStruct: VkDeviceDiagnosticsConfigCreateInfoNV) {
+    public init(cStruct: VkDeviceDiagnosticsConfigCreateInfoNV) {
         self.flags = DeviceDiagnosticsConfigFlagsNV(rawValue: cStruct.flags)
     }
 
@@ -25535,7 +25535,7 @@ public struct PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures: ChainableBase
         self.shaderZeroInitializeWorkgroupMemory = shaderZeroInitializeWorkgroupMemory
     }
 
-    init(cStruct: VkPhysicalDeviceZeroInitializeWorkgroupMemoryFeatures) {
+    public init(cStruct: VkPhysicalDeviceZeroInitializeWorkgroupMemoryFeatures) {
         self.shaderZeroInitializeWorkgroupMemory = cStruct.shaderZeroInitializeWorkgroupMemory == VK_TRUE
     }
 
@@ -25563,7 +25563,7 @@ public struct PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR: Chainab
         self.shaderSubgroupUniformControlFlow = shaderSubgroupUniformControlFlow
     }
 
-    init(cStruct: VkPhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR) {
         self.shaderSubgroupUniformControlFlow = cStruct.shaderSubgroupUniformControlFlow == VK_TRUE
     }
 
@@ -25595,7 +25595,7 @@ public struct PhysicalDeviceRobustness2FeaturesKHR: ChainableBase, PhysicalDevic
         self.nullDescriptor = nullDescriptor
     }
 
-    init(cStruct: VkPhysicalDeviceRobustness2FeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceRobustness2FeaturesKHR) {
         self.robustBufferAccess2 = cStruct.robustBufferAccess2 == VK_TRUE
         self.robustImageAccess2 = cStruct.robustImageAccess2 == VK_TRUE
         self.nullDescriptor = cStruct.nullDescriptor == VK_TRUE
@@ -25624,7 +25624,7 @@ public struct PhysicalDeviceRobustness2PropertiesKHR: ChainableBase, PhysicalDev
     public let robustStorageBufferAccessSizeAlignment: VkDeviceSize
     public let robustUniformBufferAccessSizeAlignment: VkDeviceSize
 
-    init(cStruct: VkPhysicalDeviceRobustness2PropertiesKHR) {
+    public init(cStruct: VkPhysicalDeviceRobustness2PropertiesKHR) {
         self.robustStorageBufferAccessSizeAlignment = cStruct.robustStorageBufferAccessSizeAlignment
         self.robustUniformBufferAccessSizeAlignment = cStruct.robustUniformBufferAccessSizeAlignment
     }
@@ -25654,7 +25654,7 @@ public struct PhysicalDeviceImageRobustnessFeatures: ChainableBase, PhysicalDevi
         self.robustImageAccess = robustImageAccess
     }
 
-    init(cStruct: VkPhysicalDeviceImageRobustnessFeatures) {
+    public init(cStruct: VkPhysicalDeviceImageRobustnessFeatures) {
         self.robustImageAccess = cStruct.robustImageAccess == VK_TRUE
     }
 
@@ -25688,7 +25688,7 @@ public struct PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR: ChainableB
         self.workgroupMemoryExplicitLayout16BitAccess = workgroupMemoryExplicitLayout16BitAccess
     }
 
-    init(cStruct: VkPhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR) {
         self.workgroupMemoryExplicitLayout = cStruct.workgroupMemoryExplicitLayout == VK_TRUE
         self.workgroupMemoryExplicitLayoutScalarBlockLayout = cStruct.workgroupMemoryExplicitLayoutScalarBlockLayout == VK_TRUE
         self.workgroupMemoryExplicitLayout8BitAccess = cStruct.workgroupMemoryExplicitLayout8BitAccess == VK_TRUE
@@ -25751,7 +25751,7 @@ public struct PhysicalDevicePortabilitySubsetFeaturesKHR: ChainableBase, Physica
         self.vertexAttributeAccessBeyondStride = vertexAttributeAccessBeyondStride
     }
 
-    init(cStruct: VkPhysicalDevicePortabilitySubsetFeaturesKHR) {
+    public init(cStruct: VkPhysicalDevicePortabilitySubsetFeaturesKHR) {
         self.constantAlphaColorBlendFactors = cStruct.constantAlphaColorBlendFactors == VK_TRUE
         self.events = cStruct.events == VK_TRUE
         self.imageViewFormatReinterpretation = cStruct.imageViewFormatReinterpretation == VK_TRUE
@@ -25805,7 +25805,7 @@ public struct PhysicalDevicePortabilitySubsetPropertiesKHR: ChainableBase, Physi
 
     public let minVertexInputBindingStrideAlignment: UInt32
 
-    init(cStruct: VkPhysicalDevicePortabilitySubsetPropertiesKHR) {
+    public init(cStruct: VkPhysicalDevicePortabilitySubsetPropertiesKHR) {
         self.minVertexInputBindingStrideAlignment = cStruct.minVertexInputBindingStrideAlignment
     }
 
@@ -25836,7 +25836,7 @@ public struct PhysicalDevice4444FormatsFeaturesEXT: ChainableBase, PhysicalDevic
         self.formatA4B4G4R4 = formatA4B4G4R4
     }
 
-    init(cStruct: VkPhysicalDevice4444FormatsFeaturesEXT) {
+    public init(cStruct: VkPhysicalDevice4444FormatsFeaturesEXT) {
         self.formatA4R4G4B4 = cStruct.formatA4R4G4B4 == VK_TRUE
         self.formatA4B4G4R4 = cStruct.formatA4B4G4R4 == VK_TRUE
     }
@@ -25866,7 +25866,7 @@ public struct PhysicalDeviceSubpassShadingFeaturesHUAWEI: ChainableBase, Physica
         self.subpassShading = subpassShading
     }
 
-    init(cStruct: VkPhysicalDeviceSubpassShadingFeaturesHUAWEI) {
+    public init(cStruct: VkPhysicalDeviceSubpassShadingFeaturesHUAWEI) {
         self.subpassShading = cStruct.subpassShading == VK_TRUE
     }
 
@@ -25896,7 +25896,7 @@ public struct PhysicalDeviceClusterCullingShaderFeaturesHUAWEI: ChainableBase, P
         self.multiviewClusterCullingShader = multiviewClusterCullingShader
     }
 
-    init(cStruct: VkPhysicalDeviceClusterCullingShaderFeaturesHUAWEI) {
+    public init(cStruct: VkPhysicalDeviceClusterCullingShaderFeaturesHUAWEI) {
         self.clustercullingShader = cStruct.clustercullingShader == VK_TRUE
         self.multiviewClusterCullingShader = cStruct.multiviewClusterCullingShader == VK_TRUE
     }
@@ -25926,7 +25926,7 @@ public struct PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI: ChainableBase
         self.clusterShadingRate = clusterShadingRate
     }
 
-    init(cStruct: VkPhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI) {
+    public init(cStruct: VkPhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI) {
         self.clusterShadingRate = cStruct.clusterShadingRate == VK_TRUE
     }
 
@@ -25958,7 +25958,7 @@ public struct BufferCopy2: ChainableBase {
         self.size = size
     }
 
-    init(cStruct: VkBufferCopy2) {
+    public init(cStruct: VkBufferCopy2) {
         self.srcOffset = cStruct.srcOffset
         self.dstOffset = cStruct.dstOffset
         self.size = cStruct.size
@@ -25998,7 +25998,7 @@ public struct ImageCopy2: ChainableBase {
         self.extent = extent
     }
 
-    init(cStruct: VkImageCopy2) {
+    public init(cStruct: VkImageCopy2) {
         self.srcSubresource = ImageSubresourceLayers(cStruct: cStruct.srcSubresource)
         self.srcOffset = Offset3D(cStruct: cStruct.srcOffset)
         self.dstSubresource = ImageSubresourceLayers(cStruct: cStruct.dstSubresource)
@@ -26050,7 +26050,7 @@ public struct ImageBlit2: ChainableBase {
         self.dstOffsets = dstOffsets
     }
 
-    init(cStruct: VkImageBlit2) {
+    public init(cStruct: VkImageBlit2) {
         self.srcSubresource = ImageSubresourceLayers(cStruct: cStruct.srcSubresource)
         self.srcOffsets = cStruct.srcOffsets
         self.dstSubresource = ImageSubresourceLayers(cStruct: cStruct.dstSubresource)
@@ -26098,7 +26098,7 @@ public struct BufferImageCopy2: ChainableBase {
         self.imageExtent = imageExtent
     }
 
-    init(cStruct: VkBufferImageCopy2) {
+    public init(cStruct: VkBufferImageCopy2) {
         self.bufferOffset = cStruct.bufferOffset
         self.bufferRowLength = cStruct.bufferRowLength
         self.bufferImageHeight = cStruct.bufferImageHeight
@@ -26150,7 +26150,7 @@ public struct ImageResolve2: ChainableBase {
         self.extent = extent
     }
 
-    init(cStruct: VkImageResolve2) {
+    public init(cStruct: VkImageResolve2) {
         self.srcSubresource = ImageSubresourceLayers(cStruct: cStruct.srcSubresource)
         self.srcOffset = Offset3D(cStruct: cStruct.srcOffset)
         self.dstSubresource = ImageSubresourceLayers(cStruct: cStruct.dstSubresource)
@@ -26200,7 +26200,7 @@ public struct CopyBufferInfo2: ChainableBase {
         self.regions = regions
     }
 
-    init(cStruct: VkCopyBufferInfo2, device: Device) {
+    public init(cStruct: VkCopyBufferInfo2, device: Device) {
         self.srcBuffer = Buffer(handle: cStruct.srcBuffer, device: device)
         self.dstBuffer = Buffer(handle: cStruct.dstBuffer, device: device)
         self.regions = UnsafeBufferPointer(start: cStruct.pRegions, count: Int(cStruct.regionCount)).map{ BufferCopy2(cStruct: $0) }
@@ -26243,7 +26243,7 @@ public struct CopyImageInfo2: ChainableBase {
         self.regions = regions
     }
 
-    init(cStruct: VkCopyImageInfo2, device: Device) {
+    public init(cStruct: VkCopyImageInfo2, device: Device) {
         self.srcImage = Image(handle: cStruct.srcImage, device: device)
         self.srcImageLayout = ImageLayout(rawValue: unsafeBitCast(cStruct.srcImageLayout, to: UInt32.self))!
         self.dstImage = Image(handle: cStruct.dstImage, device: device)
@@ -26292,7 +26292,7 @@ public struct BlitImageInfo2: ChainableBase {
         self.filter = filter
     }
 
-    init(cStruct: VkBlitImageInfo2, device: Device) {
+    public init(cStruct: VkBlitImageInfo2, device: Device) {
         self.srcImage = Image(handle: cStruct.srcImage, device: device)
         self.srcImageLayout = ImageLayout(rawValue: unsafeBitCast(cStruct.srcImageLayout, to: UInt32.self))!
         self.dstImage = Image(handle: cStruct.dstImage, device: device)
@@ -26339,7 +26339,7 @@ public struct CopyBufferToImageInfo2: ChainableBase {
         self.regions = regions
     }
 
-    init(cStruct: VkCopyBufferToImageInfo2, device: Device) {
+    public init(cStruct: VkCopyBufferToImageInfo2, device: Device) {
         self.srcBuffer = Buffer(handle: cStruct.srcBuffer, device: device)
         self.dstImage = Image(handle: cStruct.dstImage, device: device)
         self.dstImageLayout = ImageLayout(rawValue: unsafeBitCast(cStruct.dstImageLayout, to: UInt32.self))!
@@ -26382,7 +26382,7 @@ public struct CopyImageToBufferInfo2: ChainableBase {
         self.regions = regions
     }
 
-    init(cStruct: VkCopyImageToBufferInfo2, device: Device) {
+    public init(cStruct: VkCopyImageToBufferInfo2, device: Device) {
         self.srcImage = Image(handle: cStruct.srcImage, device: device)
         self.srcImageLayout = ImageLayout(rawValue: unsafeBitCast(cStruct.srcImageLayout, to: UInt32.self))!
         self.dstBuffer = Buffer(handle: cStruct.dstBuffer, device: device)
@@ -26427,7 +26427,7 @@ public struct ResolveImageInfo2: ChainableBase {
         self.regions = regions
     }
 
-    init(cStruct: VkResolveImageInfo2, device: Device) {
+    public init(cStruct: VkResolveImageInfo2, device: Device) {
         self.srcImage = Image(handle: cStruct.srcImage, device: device)
         self.srcImageLayout = ImageLayout(rawValue: unsafeBitCast(cStruct.srcImageLayout, to: UInt32.self))!
         self.dstImage = Image(handle: cStruct.dstImage, device: device)
@@ -26468,7 +26468,7 @@ public struct PhysicalDeviceShaderImageAtomicInt64FeaturesEXT: ChainableBase, Ph
         self.sparseImageInt64Atomics = sparseImageInt64Atomics
     }
 
-    init(cStruct: VkPhysicalDeviceShaderImageAtomicInt64FeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceShaderImageAtomicInt64FeaturesEXT) {
         self.shaderImageInt64Atomics = cStruct.shaderImageInt64Atomics == VK_TRUE
         self.sparseImageInt64Atomics = cStruct.sparseImageInt64Atomics == VK_TRUE
     }
@@ -26500,7 +26500,7 @@ public struct FragmentShadingRateAttachmentInfoKHR: ChainableBase, SubpassDescri
         self.shadingRateAttachmentTexelSize = shadingRateAttachmentTexelSize
     }
 
-    init(cStruct: VkFragmentShadingRateAttachmentInfoKHR) {
+    public init(cStruct: VkFragmentShadingRateAttachmentInfoKHR) {
         self.fragmentShadingRateAttachment = (cStruct.pFragmentShadingRateAttachment != nil) ? AttachmentReference2(cStruct: cStruct.pFragmentShadingRateAttachment.pointee) : nil
         self.shadingRateAttachmentTexelSize = Extent2D(cStruct: cStruct.shadingRateAttachmentTexelSize)
     }
@@ -26536,7 +26536,7 @@ public struct PipelineFragmentShadingRateStateCreateInfoKHR: ChainableBase, Grap
         self.combinerOps = combinerOps
     }
 
-    init(cStruct: VkPipelineFragmentShadingRateStateCreateInfoKHR) {
+    public init(cStruct: VkPipelineFragmentShadingRateStateCreateInfoKHR) {
         self.fragmentSize = Extent2D(cStruct: cStruct.fragmentSize)
         self.combinerOps = cStruct.combinerOps
     }
@@ -26572,7 +26572,7 @@ public struct PhysicalDeviceFragmentShadingRateFeaturesKHR: ChainableBase, Physi
         self.attachmentFragmentShadingRate = attachmentFragmentShadingRate
     }
 
-    init(cStruct: VkPhysicalDeviceFragmentShadingRateFeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceFragmentShadingRateFeaturesKHR) {
         self.pipelineFragmentShadingRate = cStruct.pipelineFragmentShadingRate == VK_TRUE
         self.primitiveFragmentShadingRate = cStruct.primitiveFragmentShadingRate == VK_TRUE
         self.attachmentFragmentShadingRate = cStruct.attachmentFragmentShadingRate == VK_TRUE
@@ -26616,7 +26616,7 @@ public struct PhysicalDeviceFragmentShadingRatePropertiesKHR: ChainableBase, Phy
     public let fragmentShadingRateWithCustomSampleLocations: Bool
     public let fragmentShadingRateStrictMultiplyCombiner: Bool
 
-    init(cStruct: VkPhysicalDeviceFragmentShadingRatePropertiesKHR) {
+    public init(cStruct: VkPhysicalDeviceFragmentShadingRatePropertiesKHR) {
         self.minFragmentShadingRateAttachmentTexelSize = Extent2D(cStruct: cStruct.minFragmentShadingRateAttachmentTexelSize)
         self.maxFragmentShadingRateAttachmentTexelSize = Extent2D(cStruct: cStruct.maxFragmentShadingRateAttachmentTexelSize)
         self.maxFragmentShadingRateAttachmentTexelSizeAspectRatio = cStruct.maxFragmentShadingRateAttachmentTexelSizeAspectRatio
@@ -26679,7 +26679,7 @@ public struct PhysicalDeviceFragmentShadingRateKHR: ChainableBase {
     public let sampleCounts: SampleCountFlags
     public let fragmentSize: Extent2D
 
-    init(cStruct: VkPhysicalDeviceFragmentShadingRateKHR) {
+    public init(cStruct: VkPhysicalDeviceFragmentShadingRateKHR) {
         self.sampleCounts = SampleCountFlags(rawValue: cStruct.sampleCounts)
         self.fragmentSize = Extent2D(cStruct: cStruct.fragmentSize)
     }
@@ -26711,7 +26711,7 @@ public struct PhysicalDeviceShaderTerminateInvocationFeatures: ChainableBase, Ph
         self.shaderTerminateInvocation = shaderTerminateInvocation
     }
 
-    init(cStruct: VkPhysicalDeviceShaderTerminateInvocationFeatures) {
+    public init(cStruct: VkPhysicalDeviceShaderTerminateInvocationFeatures) {
         self.shaderTerminateInvocation = cStruct.shaderTerminateInvocation == VK_TRUE
     }
 
@@ -26743,7 +26743,7 @@ public struct PhysicalDeviceFragmentShadingRateEnumsFeaturesNV: ChainableBase, P
         self.noInvocationFragmentShadingRates = noInvocationFragmentShadingRates
     }
 
-    init(cStruct: VkPhysicalDeviceFragmentShadingRateEnumsFeaturesNV) {
+    public init(cStruct: VkPhysicalDeviceFragmentShadingRateEnumsFeaturesNV) {
         self.fragmentShadingRateEnums = cStruct.fragmentShadingRateEnums == VK_TRUE
         self.supersampleFragmentShadingRates = cStruct.supersampleFragmentShadingRates == VK_TRUE
         self.noInvocationFragmentShadingRates = cStruct.noInvocationFragmentShadingRates == VK_TRUE
@@ -26771,7 +26771,7 @@ public struct PhysicalDeviceFragmentShadingRateEnumsPropertiesNV: ChainableBase,
 
     public let maxFragmentShadingRateInvocationCount: SampleCountFlags
 
-    init(cStruct: VkPhysicalDeviceFragmentShadingRateEnumsPropertiesNV) {
+    public init(cStruct: VkPhysicalDeviceFragmentShadingRateEnumsPropertiesNV) {
         self.maxFragmentShadingRateInvocationCount = SampleCountFlags(rawValue: unsafeBitCast(cStruct.maxFragmentShadingRateInvocationCount.rawValue, to: UInt32.self))
     }
 
@@ -26803,7 +26803,7 @@ public struct PipelineFragmentShadingRateEnumStateCreateInfoNV: ChainableBase, G
         self.combinerOps = combinerOps
     }
 
-    init(cStruct: VkPipelineFragmentShadingRateEnumStateCreateInfoNV) {
+    public init(cStruct: VkPipelineFragmentShadingRateEnumStateCreateInfoNV) {
         self.shadingRateType = FragmentShadingRateTypeNV(rawValue: unsafeBitCast(cStruct.shadingRateType, to: UInt32.self))!
         self.shadingRate = FragmentShadingRateNV(rawValue: unsafeBitCast(cStruct.shadingRate, to: UInt32.self))!
         self.combinerOps = cStruct.combinerOps
@@ -26833,7 +26833,7 @@ public struct AccelerationStructureBuildSizesInfoKHR: ChainableBase {
     public let updateScratchSize: VkDeviceSize
     public let buildScratchSize: VkDeviceSize
 
-    init(cStruct: VkAccelerationStructureBuildSizesInfoKHR) {
+    public init(cStruct: VkAccelerationStructureBuildSizesInfoKHR) {
         self.accelerationStructureSize = cStruct.accelerationStructureSize
         self.updateScratchSize = cStruct.updateScratchSize
         self.buildScratchSize = cStruct.buildScratchSize
@@ -26867,7 +26867,7 @@ public struct PhysicalDeviceImage2DViewOf3DFeaturesEXT: ChainableBase, PhysicalD
         self.sampler2DViewOf3D = sampler2DViewOf3D
     }
 
-    init(cStruct: VkPhysicalDeviceImage2DViewOf3DFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceImage2DViewOf3DFeaturesEXT) {
         self.image2DViewOf3D = cStruct.image2DViewOf3D == VK_TRUE
         self.sampler2DViewOf3D = cStruct.sampler2DViewOf3D == VK_TRUE
     }
@@ -26897,7 +26897,7 @@ public struct PhysicalDeviceImageSlicedViewOf3DFeaturesEXT: ChainableBase, Physi
         self.imageSlicedViewOf3D = imageSlicedViewOf3D
     }
 
-    init(cStruct: VkPhysicalDeviceImageSlicedViewOf3DFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceImageSlicedViewOf3DFeaturesEXT) {
         self.imageSlicedViewOf3D = cStruct.imageSlicedViewOf3D == VK_TRUE
     }
 
@@ -26925,7 +26925,7 @@ public struct PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT: Chain
         self.attachmentFeedbackLoopDynamicState = attachmentFeedbackLoopDynamicState
     }
 
-    init(cStruct: VkPhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT) {
         self.attachmentFeedbackLoopDynamicState = cStruct.attachmentFeedbackLoopDynamicState == VK_TRUE
     }
 
@@ -26953,7 +26953,7 @@ public struct PhysicalDeviceLegacyVertexAttributesFeaturesEXT: ChainableBase, Ph
         self.legacyVertexAttributes = legacyVertexAttributes
     }
 
-    init(cStruct: VkPhysicalDeviceLegacyVertexAttributesFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceLegacyVertexAttributesFeaturesEXT) {
         self.legacyVertexAttributes = cStruct.legacyVertexAttributes == VK_TRUE
     }
 
@@ -26977,7 +26977,7 @@ public struct PhysicalDeviceLegacyVertexAttributesPropertiesEXT: ChainableBase, 
 
     public let nativeUnalignedPerformance: Bool
 
-    init(cStruct: VkPhysicalDeviceLegacyVertexAttributesPropertiesEXT) {
+    public init(cStruct: VkPhysicalDeviceLegacyVertexAttributesPropertiesEXT) {
         self.nativeUnalignedPerformance = cStruct.nativeUnalignedPerformance == VK_TRUE
     }
 
@@ -27005,7 +27005,7 @@ public struct PhysicalDeviceMutableDescriptorTypeFeaturesEXT: ChainableBase, Phy
         self.mutableDescriptorType = mutableDescriptorType
     }
 
-    init(cStruct: VkPhysicalDeviceMutableDescriptorTypeFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceMutableDescriptorTypeFeaturesEXT) {
         self.mutableDescriptorType = cStruct.mutableDescriptorType == VK_TRUE
     }
 
@@ -27033,7 +27033,7 @@ public struct MutableDescriptorTypeListEXT: CStructConvertible {
         self.descriptorTypes = descriptorTypes
     }
 
-    init(cStruct: VkMutableDescriptorTypeListEXT) {
+    public init(cStruct: VkMutableDescriptorTypeListEXT) {
         self.descriptorTypes = UnsafeBufferPointer(start: cStruct.pDescriptorTypes, count: Int(cStruct.descriptorTypeCount)).map{ DescriptorType(rawValue: unsafeBitCast($0, to: UInt32.self))! }
     }
 
@@ -27056,7 +27056,7 @@ public struct MutableDescriptorTypeCreateInfoEXT: ChainableBase, DescriptorSetLa
         self.mutableDescriptorTypeLists = mutableDescriptorTypeLists
     }
 
-    init(cStruct: VkMutableDescriptorTypeCreateInfoEXT) {
+    public init(cStruct: VkMutableDescriptorTypeCreateInfoEXT) {
         self.mutableDescriptorTypeLists = UnsafeBufferPointer(start: cStruct.pMutableDescriptorTypeLists, count: Int(cStruct.mutableDescriptorTypeListCount)).map{ MutableDescriptorTypeListEXT(cStruct: $0) }
     }
 
@@ -27087,7 +27087,7 @@ public struct PhysicalDeviceDepthClipControlFeaturesEXT: ChainableBase, Physical
         self.depthClipControl = depthClipControl
     }
 
-    init(cStruct: VkPhysicalDeviceDepthClipControlFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceDepthClipControlFeaturesEXT) {
         self.depthClipControl = cStruct.depthClipControl == VK_TRUE
     }
 
@@ -27115,7 +27115,7 @@ public struct PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT: ChainableBase
         self.zeroInitializeDeviceMemory = zeroInitializeDeviceMemory
     }
 
-    init(cStruct: VkPhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT) {
         self.zeroInitializeDeviceMemory = cStruct.zeroInitializeDeviceMemory == VK_TRUE
     }
 
@@ -27141,7 +27141,7 @@ public struct BeginCustomResolveInfoEXT: ChainableBase {
     public init() {
     }
 
-    init(cStruct: VkBeginCustomResolveInfoEXT) {
+    public init(cStruct: VkBeginCustomResolveInfoEXT) {
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkBeginCustomResolveInfoEXT>) throws(E) -> R) throws(E) -> R {
@@ -27167,7 +27167,7 @@ public struct PhysicalDeviceCustomResolveFeaturesEXT: ChainableBase, PhysicalDev
         self.customResolve = customResolve
     }
 
-    init(cStruct: VkPhysicalDeviceCustomResolveFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceCustomResolveFeaturesEXT) {
         self.customResolve = cStruct.customResolve == VK_TRUE
     }
 
@@ -27201,7 +27201,7 @@ public struct CustomResolveCreateInfoEXT: ChainableBase, GraphicsPipelineCreateI
         self.stencilAttachmentFormat = stencilAttachmentFormat
     }
 
-    init(cStruct: VkCustomResolveCreateInfoEXT) {
+    public init(cStruct: VkCustomResolveCreateInfoEXT) {
         self.customResolve = cStruct.customResolve == VK_TRUE
         self.colorAttachmentFormats = UnsafeBufferPointer(start: cStruct.pColorAttachmentFormats, count: Int(cStruct.colorAttachmentCount)).map{ Format(rawValue: unsafeBitCast($0, to: UInt32.self))! }
         self.depthAttachmentFormat = Format(rawValue: unsafeBitCast(cStruct.depthAttachmentFormat, to: UInt32.self))!
@@ -27240,7 +27240,7 @@ public struct PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT: ChainableBase, P
         self.dynamicGeneratedPipelineLayout = dynamicGeneratedPipelineLayout
     }
 
-    init(cStruct: VkPhysicalDeviceDeviceGeneratedCommandsFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceDeviceGeneratedCommandsFeaturesEXT) {
         self.deviceGeneratedCommands = cStruct.deviceGeneratedCommands == VK_TRUE
         self.dynamicGeneratedPipelineLayout = cStruct.dynamicGeneratedPipelineLayout == VK_TRUE
     }
@@ -27277,7 +27277,7 @@ public struct PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT: ChainableBase,
     public let deviceGeneratedCommandsTransformFeedback: Bool
     public let deviceGeneratedCommandsMultiDrawIndirectCount: Bool
 
-    init(cStruct: VkPhysicalDeviceDeviceGeneratedCommandsPropertiesEXT) {
+    public init(cStruct: VkPhysicalDeviceDeviceGeneratedCommandsPropertiesEXT) {
         self.maxIndirectPipelineCount = cStruct.maxIndirectPipelineCount
         self.maxIndirectShaderObjectCount = cStruct.maxIndirectShaderObjectCount
         self.maxIndirectSequenceCount = cStruct.maxIndirectSequenceCount
@@ -27327,7 +27327,7 @@ public struct GeneratedCommandsPipelineInfoEXT: ChainableBase, GeneratedCommands
         self.pipeline = pipeline
     }
 
-    init(cStruct: VkGeneratedCommandsPipelineInfoEXT, device: Device) {
+    public init(cStruct: VkGeneratedCommandsPipelineInfoEXT, device: Device) {
         self.pipeline = Pipeline(handle: cStruct.pipeline, device: device)
     }
 
@@ -27355,7 +27355,7 @@ public struct GeneratedCommandsShaderInfoEXT: ChainableBase, GeneratedCommandsIn
         self.shaders = shaders
     }
 
-    init(cStruct: VkGeneratedCommandsShaderInfoEXT, device: Device) {
+    public init(cStruct: VkGeneratedCommandsShaderInfoEXT, device: Device) {
         self.shaders = UnsafeBufferPointer(start: cStruct.pShaders, count: Int(cStruct.shaderCount)).map{ ShaderEXT(handle: $0, device: device) }
     }
 
@@ -27392,7 +27392,7 @@ public struct GeneratedCommandsMemoryRequirementsInfoEXT: ChainableBase {
         self.maxDrawCount = maxDrawCount
     }
 
-    init(cStruct: VkGeneratedCommandsMemoryRequirementsInfoEXT, device: Device) {
+    public init(cStruct: VkGeneratedCommandsMemoryRequirementsInfoEXT, device: Device) {
         self.indirectExecutionSet = (cStruct.indirectExecutionSet != nil) ? IndirectExecutionSetEXT(handle: cStruct.indirectExecutionSet, device: device) : nil
         self.indirectCommandsLayout = IndirectCommandsLayoutEXT(handle: cStruct.indirectCommandsLayout, device: device)
         self.maxSequenceCount = cStruct.maxSequenceCount
@@ -27428,7 +27428,7 @@ public struct IndirectExecutionSetPipelineInfoEXT: ChainableBase {
         self.maxPipelineCount = maxPipelineCount
     }
 
-    init(cStruct: VkIndirectExecutionSetPipelineInfoEXT, device: Device) {
+    public init(cStruct: VkIndirectExecutionSetPipelineInfoEXT, device: Device) {
         self.initialPipeline = Pipeline(handle: cStruct.initialPipeline, device: device)
         self.maxPipelineCount = cStruct.maxPipelineCount
     }
@@ -27458,7 +27458,7 @@ public struct IndirectExecutionSetShaderLayoutInfoEXT: ChainableBase {
         self.setLayouts = setLayouts
     }
 
-    init(cStruct: VkIndirectExecutionSetShaderLayoutInfoEXT, device: Device) {
+    public init(cStruct: VkIndirectExecutionSetShaderLayoutInfoEXT, device: Device) {
         self.setLayouts = UnsafeBufferPointer(start: cStruct.pSetLayouts, count: Int(cStruct.setLayoutCount)).map{ ($0 != nil) ? DescriptorSetLayout(handle: $0, device: device) : nil }
     }
 
@@ -27495,7 +27495,7 @@ public struct IndirectExecutionSetShaderInfoEXT: ChainableBase {
         self.pushConstantRanges = pushConstantRanges
     }
 
-    init(cStruct: VkIndirectExecutionSetShaderInfoEXT, device: Device) {
+    public init(cStruct: VkIndirectExecutionSetShaderInfoEXT, device: Device) {
         self.initialShaders = UnsafeBufferPointer(start: cStruct.pInitialShaders, count: Int(cStruct.shaderCount)).map{ ShaderEXT(handle: $0, device: device) }
         self.setLayoutInfos = (cStruct.pSetLayoutInfos != nil) ? UnsafeBufferPointer(start: cStruct.pSetLayoutInfos, count: Int(cStruct.shaderCount)).map{ IndirectExecutionSetShaderLayoutInfoEXT(cStruct: $0, device: device) } : nil
         self.maxShaderCount = cStruct.maxShaderCount
@@ -27539,7 +27539,7 @@ public struct IndirectExecutionSetCreateInfoEXT: ChainableBase {
         self.info = info
     }
 
-    init(cStruct: VkIndirectExecutionSetCreateInfoEXT) {
+    public init(cStruct: VkIndirectExecutionSetCreateInfoEXT) {
         self.type = IndirectExecutionSetInfoTypeEXT(rawValue: unsafeBitCast(cStruct.type, to: UInt32.self))!
         self.info = cStruct.info
     }
@@ -27587,7 +27587,7 @@ public struct GeneratedCommandsInfoEXT: ChainableBase {
         self.maxDrawCount = maxDrawCount
     }
 
-    init(cStruct: VkGeneratedCommandsInfoEXT, device: Device) {
+    public init(cStruct: VkGeneratedCommandsInfoEXT, device: Device) {
         self.shaderStages = ShaderStageFlags(rawValue: cStruct.shaderStages)
         self.indirectExecutionSet = (cStruct.indirectExecutionSet != nil) ? IndirectExecutionSetEXT(handle: cStruct.indirectExecutionSet, device: device) : nil
         self.indirectCommandsLayout = IndirectCommandsLayoutEXT(handle: cStruct.indirectCommandsLayout, device: device)
@@ -27635,7 +27635,7 @@ public struct WriteIndirectExecutionSetPipelineEXT: ChainableBase {
         self.pipeline = pipeline
     }
 
-    init(cStruct: VkWriteIndirectExecutionSetPipelineEXT, device: Device) {
+    public init(cStruct: VkWriteIndirectExecutionSetPipelineEXT, device: Device) {
         self.index = cStruct.index
         self.pipeline = Pipeline(handle: cStruct.pipeline, device: device)
     }
@@ -27667,7 +27667,7 @@ public struct WriteIndirectExecutionSetShaderEXT: ChainableBase {
         self.shader = shader
     }
 
-    init(cStruct: VkWriteIndirectExecutionSetShaderEXT, device: Device) {
+    public init(cStruct: VkWriteIndirectExecutionSetShaderEXT, device: Device) {
         self.index = cStruct.index
         self.shader = ShaderEXT(handle: cStruct.shader, device: device)
     }
@@ -27701,7 +27701,7 @@ public struct IndirectCommandsLayoutTokenEXT: ChainableBase {
         self.offset = offset
     }
 
-    init(cStruct: VkIndirectCommandsLayoutTokenEXT) {
+    public init(cStruct: VkIndirectCommandsLayoutTokenEXT) {
         self.type = IndirectCommandsTokenTypeEXT(rawValue: unsafeBitCast(cStruct.type, to: UInt32.self))!
         self.data = cStruct.data
         self.offset = cStruct.offset
@@ -27741,7 +27741,7 @@ public struct IndirectCommandsLayoutCreateInfoEXT: ChainableBase {
         self.tokens = tokens
     }
 
-    init(cStruct: VkIndirectCommandsLayoutCreateInfoEXT, device: Device) {
+    public init(cStruct: VkIndirectCommandsLayoutCreateInfoEXT, device: Device) {
         self.flags = IndirectCommandsLayoutUsageFlagsEXT(rawValue: cStruct.flags)
         self.shaderStages = ShaderStageFlags(rawValue: cStruct.shaderStages)
         self.indirectStride = cStruct.indirectStride
@@ -27784,7 +27784,7 @@ public struct DrawIndirectCountIndirectCommandEXT: CStructConvertible {
         self.commandCount = commandCount
     }
 
-    init(cStruct: VkDrawIndirectCountIndirectCommandEXT) {
+    public init(cStruct: VkDrawIndirectCountIndirectCommandEXT) {
         self.bufferAddress = cStruct.bufferAddress
         self.stride = cStruct.stride
         self.commandCount = cStruct.commandCount
@@ -27808,7 +27808,7 @@ public struct IndirectCommandsVertexBufferTokenEXT: CStructConvertible {
         self.vertexBindingUnit = vertexBindingUnit
     }
 
-    init(cStruct: VkIndirectCommandsVertexBufferTokenEXT) {
+    public init(cStruct: VkIndirectCommandsVertexBufferTokenEXT) {
         self.vertexBindingUnit = cStruct.vertexBindingUnit
     }
 
@@ -27832,7 +27832,7 @@ public struct BindVertexBufferIndirectCommandEXT: CStructConvertible {
         self.stride = stride
     }
 
-    init(cStruct: VkBindVertexBufferIndirectCommandEXT) {
+    public init(cStruct: VkBindVertexBufferIndirectCommandEXT) {
         self.bufferAddress = cStruct.bufferAddress
         self.size = cStruct.size
         self.stride = cStruct.stride
@@ -27856,7 +27856,7 @@ public struct IndirectCommandsIndexBufferTokenEXT: CStructConvertible {
         self.mode = mode
     }
 
-    init(cStruct: VkIndirectCommandsIndexBufferTokenEXT) {
+    public init(cStruct: VkIndirectCommandsIndexBufferTokenEXT) {
         self.mode = IndirectCommandsInputModeFlagsEXT(rawValue: unsafeBitCast(cStruct.mode.rawValue, to: UInt32.self))
     }
 
@@ -27880,7 +27880,7 @@ public struct BindIndexBufferIndirectCommandEXT: CStructConvertible {
         self.indexType = indexType
     }
 
-    init(cStruct: VkBindIndexBufferIndirectCommandEXT) {
+    public init(cStruct: VkBindIndexBufferIndirectCommandEXT) {
         self.bufferAddress = cStruct.bufferAddress
         self.size = cStruct.size
         self.indexType = IndexType(rawValue: unsafeBitCast(cStruct.indexType, to: UInt32.self))!
@@ -27904,7 +27904,7 @@ public struct IndirectCommandsPushConstantTokenEXT: CStructConvertible {
         self.updateRange = updateRange
     }
 
-    init(cStruct: VkIndirectCommandsPushConstantTokenEXT) {
+    public init(cStruct: VkIndirectCommandsPushConstantTokenEXT) {
         self.updateRange = PushConstantRange(cStruct: cStruct.updateRange)
     }
 
@@ -27928,7 +27928,7 @@ public struct IndirectCommandsExecutionSetTokenEXT: CStructConvertible {
         self.shaderStages = shaderStages
     }
 
-    init(cStruct: VkIndirectCommandsExecutionSetTokenEXT) {
+    public init(cStruct: VkIndirectCommandsExecutionSetTokenEXT) {
         self.type = IndirectExecutionSetInfoTypeEXT(rawValue: unsafeBitCast(cStruct.type, to: UInt32.self))!
         self.shaderStages = ShaderStageFlags(rawValue: cStruct.shaderStages)
     }
@@ -27950,7 +27950,7 @@ public struct PipelineViewportDepthClipControlCreateInfoEXT: ChainableBase, Pipe
         self.negativeOneToOne = negativeOneToOne
     }
 
-    init(cStruct: VkPipelineViewportDepthClipControlCreateInfoEXT) {
+    public init(cStruct: VkPipelineViewportDepthClipControlCreateInfoEXT) {
         self.negativeOneToOne = cStruct.negativeOneToOne == VK_TRUE
     }
 
@@ -27978,7 +27978,7 @@ public struct PhysicalDeviceDepthClampControlFeaturesEXT: ChainableBase, Physica
         self.depthClampControl = depthClampControl
     }
 
-    init(cStruct: VkPhysicalDeviceDepthClampControlFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceDepthClampControlFeaturesEXT) {
         self.depthClampControl = cStruct.depthClampControl == VK_TRUE
     }
 
@@ -28008,7 +28008,7 @@ public struct DepthClampRangeEXT: CStructConvertible {
         self.maxDepthClamp = maxDepthClamp
     }
 
-    init(cStruct: VkDepthClampRangeEXT) {
+    public init(cStruct: VkDepthClampRangeEXT) {
         self.minDepthClamp = cStruct.minDepthClamp
         self.maxDepthClamp = cStruct.maxDepthClamp
     }
@@ -28032,7 +28032,7 @@ public struct PipelineViewportDepthClampControlCreateInfoEXT: ChainableBase, Pip
         self.depthClampRange = depthClampRange
     }
 
-    init(cStruct: VkPipelineViewportDepthClampControlCreateInfoEXT) {
+    public init(cStruct: VkPipelineViewportDepthClampControlCreateInfoEXT) {
         self.depthClampMode = DepthClampModeEXT(rawValue: unsafeBitCast(cStruct.depthClampMode, to: UInt32.self))!
         self.depthClampRange = (cStruct.pDepthClampRange != nil) ? DepthClampRangeEXT(cStruct: cStruct.pDepthClampRange.pointee) : nil
     }
@@ -28064,7 +28064,7 @@ public struct PhysicalDeviceVertexInputDynamicStateFeaturesEXT: ChainableBase, P
         self.vertexInputDynamicState = vertexInputDynamicState
     }
 
-    init(cStruct: VkPhysicalDeviceVertexInputDynamicStateFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceVertexInputDynamicStateFeaturesEXT) {
         self.vertexInputDynamicState = cStruct.vertexInputDynamicState == VK_TRUE
     }
 
@@ -28092,7 +28092,7 @@ public struct PhysicalDeviceExternalMemoryRDMAFeaturesNV: ChainableBase, Physica
         self.externalMemoryRDMA = externalMemoryRDMA
     }
 
-    init(cStruct: VkPhysicalDeviceExternalMemoryRDMAFeaturesNV) {
+    public init(cStruct: VkPhysicalDeviceExternalMemoryRDMAFeaturesNV) {
         self.externalMemoryRDMA = cStruct.externalMemoryRDMA == VK_TRUE
     }
 
@@ -28120,7 +28120,7 @@ public struct PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR: Chainab
         self.shaderRelaxedExtendedInstruction = shaderRelaxedExtendedInstruction
     }
 
-    init(cStruct: VkPhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR) {
         self.shaderRelaxedExtendedInstruction = cStruct.shaderRelaxedExtendedInstruction == VK_TRUE
     }
 
@@ -28154,7 +28154,7 @@ public struct VertexInputBindingDescription2EXT: ChainableBase {
         self.divisor = divisor
     }
 
-    init(cStruct: VkVertexInputBindingDescription2EXT) {
+    public init(cStruct: VkVertexInputBindingDescription2EXT) {
         self.binding = cStruct.binding
         self.stride = cStruct.stride
         self.inputRate = VertexInputRate(rawValue: unsafeBitCast(cStruct.inputRate, to: UInt32.self))!
@@ -28194,7 +28194,7 @@ public struct VertexInputAttributeDescription2EXT: ChainableBase {
         self.offset = offset
     }
 
-    init(cStruct: VkVertexInputAttributeDescription2EXT) {
+    public init(cStruct: VkVertexInputAttributeDescription2EXT) {
         self.location = cStruct.location
         self.binding = cStruct.binding
         self.format = Format(rawValue: unsafeBitCast(cStruct.format, to: UInt32.self))!
@@ -28228,7 +28228,7 @@ public struct PhysicalDeviceColorWriteEnableFeaturesEXT: ChainableBase, Physical
         self.colorWriteEnable = colorWriteEnable
     }
 
-    init(cStruct: VkPhysicalDeviceColorWriteEnableFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceColorWriteEnableFeaturesEXT) {
         self.colorWriteEnable = cStruct.colorWriteEnable == VK_TRUE
     }
 
@@ -28256,7 +28256,7 @@ public struct PipelineColorWriteCreateInfoEXT: ChainableBase, PipelineColorBlend
         self.colorWriteEnables = colorWriteEnables
     }
 
-    init(cStruct: VkPipelineColorWriteCreateInfoEXT) {
+    public init(cStruct: VkPipelineColorWriteCreateInfoEXT) {
         self.colorWriteEnables = UnsafeBufferPointer(start: cStruct.pColorWriteEnables, count: Int(cStruct.attachmentCount)).map{ $0 == VK_TRUE }
     }
 
@@ -28293,7 +28293,7 @@ public struct MemoryBarrier2: ChainableBase, SubpassDependency2Extension {
         self.dstAccessMask = dstAccessMask
     }
 
-    init(cStruct: VkMemoryBarrier2) {
+    public init(cStruct: VkMemoryBarrier2) {
         self.srcStageMask = PipelineStageFlags2(rawValue: cStruct.srcStageMask)
         self.srcAccessMask = AccessFlags2(rawValue: cStruct.srcAccessMask)
         self.dstStageMask = PipelineStageFlags2(rawValue: cStruct.dstStageMask)
@@ -28345,7 +28345,7 @@ public struct ImageMemoryBarrier2: ChainableBase {
         self.subresourceRange = subresourceRange
     }
 
-    init(cStruct: VkImageMemoryBarrier2, device: Device) {
+    public init(cStruct: VkImageMemoryBarrier2, device: Device) {
         self.srcStageMask = PipelineStageFlags2(rawValue: cStruct.srcStageMask)
         self.srcAccessMask = AccessFlags2(rawValue: cStruct.srcAccessMask)
         self.dstStageMask = PipelineStageFlags2(rawValue: cStruct.dstStageMask)
@@ -28409,7 +28409,7 @@ public struct BufferMemoryBarrier2: ChainableBase {
         self.size = size
     }
 
-    init(cStruct: VkBufferMemoryBarrier2, device: Device) {
+    public init(cStruct: VkBufferMemoryBarrier2, device: Device) {
         self.srcStageMask = PipelineStageFlags2(rawValue: cStruct.srcStageMask)
         self.srcAccessMask = AccessFlags2(rawValue: cStruct.srcAccessMask)
         self.dstStageMask = PipelineStageFlags2(rawValue: cStruct.dstStageMask)
@@ -28455,7 +28455,7 @@ public struct MemoryBarrierAccessFlags3KHR: ChainableBase, SubpassDependency2Ext
         self.dstAccessMask3 = dstAccessMask3
     }
 
-    init(cStruct: VkMemoryBarrierAccessFlags3KHR) {
+    public init(cStruct: VkMemoryBarrierAccessFlags3KHR) {
         self.srcAccessMask3 = AccessFlags3KHR(rawValue: cStruct.srcAccessMask3)
         self.dstAccessMask3 = AccessFlags3KHR(rawValue: cStruct.dstAccessMask3)
     }
@@ -28491,7 +28491,7 @@ public struct DependencyInfo: ChainableBase {
         self.imageMemoryBarriers = imageMemoryBarriers
     }
 
-    init(cStruct: VkDependencyInfo, device: Device) {
+    public init(cStruct: VkDependencyInfo, device: Device) {
         self.dependencyFlags = DependencyFlags(rawValue: cStruct.dependencyFlags)
         self.memoryBarriers = UnsafeBufferPointer(start: cStruct.pMemoryBarriers, count: Int(cStruct.memoryBarrierCount)).map{ MemoryBarrier2(cStruct: $0) }
         self.bufferMemoryBarriers = UnsafeBufferPointer(start: cStruct.pBufferMemoryBarriers, count: Int(cStruct.bufferMemoryBarrierCount)).map{ BufferMemoryBarrier2(cStruct: $0, device: device) }
@@ -28540,7 +28540,7 @@ public struct SemaphoreSubmitInfo: ChainableBase {
         self.deviceIndex = deviceIndex
     }
 
-    init(cStruct: VkSemaphoreSubmitInfo, device: Device) {
+    public init(cStruct: VkSemaphoreSubmitInfo, device: Device) {
         self.semaphore = Semaphore(handle: cStruct.semaphore, device: device)
         self.value = cStruct.value
         self.stageMask = PipelineStageFlags2(rawValue: cStruct.stageMask)
@@ -28576,7 +28576,7 @@ public struct CommandBufferSubmitInfo: ChainableBase {
         self.deviceMask = deviceMask
     }
 
-    init(cStruct: VkCommandBufferSubmitInfo, commandPool: CommandPool) {
+    public init(cStruct: VkCommandBufferSubmitInfo, commandPool: CommandPool) {
         self.commandBuffer = CommandBuffer(handle: cStruct.commandBuffer, commandPool: commandPool)
         self.deviceMask = cStruct.deviceMask
     }
@@ -28612,7 +28612,7 @@ public struct SubmitInfo2: ChainableBase {
         self.signalSemaphoreInfos = signalSemaphoreInfos
     }
 
-    init(cStruct: VkSubmitInfo2, device: Device, commandPool: CommandPool) {
+    public init(cStruct: VkSubmitInfo2, device: Device, commandPool: CommandPool) {
         self.flags = SubmitFlags(rawValue: cStruct.flags)
         self.waitSemaphoreInfos = UnsafeBufferPointer(start: cStruct.pWaitSemaphoreInfos, count: Int(cStruct.waitSemaphoreInfoCount)).map{ SemaphoreSubmitInfo(cStruct: $0, device: device) }
         self.commandBufferInfos = UnsafeBufferPointer(start: cStruct.pCommandBufferInfos, count: Int(cStruct.commandBufferInfoCount)).map{ CommandBufferSubmitInfo(cStruct: $0, commandPool: commandPool) }
@@ -28651,7 +28651,7 @@ public struct QueueFamilyCheckpointProperties2NV: ChainableBase, QueueFamilyProp
 
     public let checkpointExecutionStageMask: PipelineStageFlags2
 
-    init(cStruct: VkQueueFamilyCheckpointProperties2NV) {
+    public init(cStruct: VkQueueFamilyCheckpointProperties2NV) {
         self.checkpointExecutionStageMask = PipelineStageFlags2(rawValue: cStruct.checkpointExecutionStageMask)
     }
 
@@ -28676,7 +28676,7 @@ public struct CheckpointData2NV: ChainableBase {
     public let stage: PipelineStageFlags2
     public let checkpointMarker: UnsafeMutableRawPointer
 
-    init(cStruct: VkCheckpointData2NV) {
+    public init(cStruct: VkCheckpointData2NV) {
         self.stage = PipelineStageFlags2(rawValue: cStruct.stage)
         self.checkpointMarker = cStruct.pCheckpointMarker
     }
@@ -28706,7 +28706,7 @@ public struct PhysicalDeviceSynchronization2Features: ChainableBase, PhysicalDev
         self.synchronization2 = synchronization2
     }
 
-    init(cStruct: VkPhysicalDeviceSynchronization2Features) {
+    public init(cStruct: VkPhysicalDeviceSynchronization2Features) {
         self.synchronization2 = cStruct.synchronization2 == VK_TRUE
     }
 
@@ -28736,7 +28736,7 @@ public struct PhysicalDeviceUnifiedImageLayoutsFeaturesKHR: ChainableBase, Physi
         self.unifiedImageLayoutsVideo = unifiedImageLayoutsVideo
     }
 
-    init(cStruct: VkPhysicalDeviceUnifiedImageLayoutsFeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceUnifiedImageLayoutsFeaturesKHR) {
         self.unifiedImageLayouts = cStruct.unifiedImageLayouts == VK_TRUE
         self.unifiedImageLayoutsVideo = cStruct.unifiedImageLayoutsVideo == VK_TRUE
     }
@@ -28766,7 +28766,7 @@ public struct PhysicalDeviceHostImageCopyFeatures: ChainableBase, PhysicalDevice
         self.hostImageCopy = hostImageCopy
     }
 
-    init(cStruct: VkPhysicalDeviceHostImageCopyFeatures) {
+    public init(cStruct: VkPhysicalDeviceHostImageCopyFeatures) {
         self.hostImageCopy = cStruct.hostImageCopy == VK_TRUE
     }
 
@@ -28804,7 +28804,7 @@ public struct PhysicalDeviceHostImageCopyProperties: ChainableBase, PhysicalDevi
         self.identicalMemoryTypeRequirements = identicalMemoryTypeRequirements
     }
 
-    init(cStruct: VkPhysicalDeviceHostImageCopyProperties) {
+    public init(cStruct: VkPhysicalDeviceHostImageCopyProperties) {
         self.copySrcLayoutCount = cStruct.copySrcLayoutCount
         self.copySrcLayouts = cStruct.pCopySrcLayouts
         self.copyDstLayoutCount = cStruct.copyDstLayoutCount
@@ -28852,7 +28852,7 @@ public struct MemoryToImageCopy: ChainableBase {
         self.imageExtent = imageExtent
     }
 
-    init(cStruct: VkMemoryToImageCopy) {
+    public init(cStruct: VkMemoryToImageCopy) {
         self.hostPointer = cStruct.pHostPointer
         self.memoryRowLength = cStruct.memoryRowLength
         self.memoryImageHeight = cStruct.memoryImageHeight
@@ -28906,7 +28906,7 @@ public struct ImageToMemoryCopy: ChainableBase {
         self.imageExtent = imageExtent
     }
 
-    init(cStruct: VkImageToMemoryCopy) {
+    public init(cStruct: VkImageToMemoryCopy) {
         self.hostPointer = cStruct.pHostPointer
         self.memoryRowLength = cStruct.memoryRowLength
         self.memoryImageHeight = cStruct.memoryImageHeight
@@ -28956,7 +28956,7 @@ public struct CopyMemoryToImageInfo: ChainableBase {
         self.regions = regions
     }
 
-    init(cStruct: VkCopyMemoryToImageInfo, device: Device) {
+    public init(cStruct: VkCopyMemoryToImageInfo, device: Device) {
         self.flags = HostImageCopyFlags(rawValue: cStruct.flags)
         self.dstImage = Image(handle: cStruct.dstImage, device: device)
         self.dstImageLayout = ImageLayout(rawValue: unsafeBitCast(cStruct.dstImageLayout, to: UInt32.self))!
@@ -28999,7 +28999,7 @@ public struct CopyImageToMemoryInfo: ChainableBase {
         self.regions = regions
     }
 
-    init(cStruct: VkCopyImageToMemoryInfo, device: Device) {
+    public init(cStruct: VkCopyImageToMemoryInfo, device: Device) {
         self.flags = HostImageCopyFlags(rawValue: cStruct.flags)
         self.srcImage = Image(handle: cStruct.srcImage, device: device)
         self.srcImageLayout = ImageLayout(rawValue: unsafeBitCast(cStruct.srcImageLayout, to: UInt32.self))!
@@ -29046,7 +29046,7 @@ public struct CopyImageToImageInfo: ChainableBase {
         self.regions = regions
     }
 
-    init(cStruct: VkCopyImageToImageInfo, device: Device) {
+    public init(cStruct: VkCopyImageToImageInfo, device: Device) {
         self.flags = HostImageCopyFlags(rawValue: cStruct.flags)
         self.srcImage = Image(handle: cStruct.srcImage, device: device)
         self.srcImageLayout = ImageLayout(rawValue: unsafeBitCast(cStruct.srcImageLayout, to: UInt32.self))!
@@ -29093,7 +29093,7 @@ public struct HostImageLayoutTransitionInfo: ChainableBase {
         self.subresourceRange = subresourceRange
     }
 
-    init(cStruct: VkHostImageLayoutTransitionInfo, device: Device) {
+    public init(cStruct: VkHostImageLayoutTransitionInfo, device: Device) {
         self.image = Image(handle: cStruct.image, device: device)
         self.oldLayout = ImageLayout(rawValue: unsafeBitCast(cStruct.oldLayout, to: UInt32.self))!
         self.newLayout = ImageLayout(rawValue: unsafeBitCast(cStruct.newLayout, to: UInt32.self))!
@@ -29125,7 +29125,7 @@ public struct SubresourceHostMemcpySize: ChainableBase, SubresourceLayout2Extens
 
     public let size: VkDeviceSize
 
-    init(cStruct: VkSubresourceHostMemcpySize) {
+    public init(cStruct: VkSubresourceHostMemcpySize) {
         self.size = cStruct.size
     }
 
@@ -29150,7 +29150,7 @@ public struct HostImageCopyDevicePerformanceQuery: ChainableBase, ImageFormatPro
     public let optimalDeviceAccess: Bool
     public let identicalMemoryLayout: Bool
 
-    init(cStruct: VkHostImageCopyDevicePerformanceQuery) {
+    public init(cStruct: VkHostImageCopyDevicePerformanceQuery) {
         self.optimalDeviceAccess = cStruct.optimalDeviceAccess == VK_TRUE
         self.identicalMemoryLayout = cStruct.identicalMemoryLayout == VK_TRUE
     }
@@ -29184,7 +29184,7 @@ public struct PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT: ChainableBase, 
         self.primitivesGeneratedQueryWithNonZeroStreams = primitivesGeneratedQueryWithNonZeroStreams
     }
 
-    init(cStruct: VkPhysicalDevicePrimitivesGeneratedQueryFeaturesEXT) {
+    public init(cStruct: VkPhysicalDevicePrimitivesGeneratedQueryFeaturesEXT) {
         self.primitivesGeneratedQuery = cStruct.primitivesGeneratedQuery == VK_TRUE
         self.primitivesGeneratedQueryWithRasterizerDiscard = cStruct.primitivesGeneratedQueryWithRasterizerDiscard == VK_TRUE
         self.primitivesGeneratedQueryWithNonZeroStreams = cStruct.primitivesGeneratedQueryWithNonZeroStreams == VK_TRUE
@@ -29216,7 +29216,7 @@ public struct PhysicalDeviceLegacyDitheringFeaturesEXT: ChainableBase, PhysicalD
         self.legacyDithering = legacyDithering
     }
 
-    init(cStruct: VkPhysicalDeviceLegacyDitheringFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceLegacyDitheringFeaturesEXT) {
         self.legacyDithering = cStruct.legacyDithering == VK_TRUE
     }
 
@@ -29244,7 +29244,7 @@ public struct PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT: Chaina
         self.multisampledRenderToSingleSampled = multisampledRenderToSingleSampled
     }
 
-    init(cStruct: VkPhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT) {
         self.multisampledRenderToSingleSampled = cStruct.multisampledRenderToSingleSampled == VK_TRUE
     }
 
@@ -29272,7 +29272,7 @@ public struct SurfaceCapabilitiesPresentId2KHR: ChainableBase, SurfaceCapabiliti
         self.presentId2Supported = presentId2Supported
     }
 
-    init(cStruct: VkSurfaceCapabilitiesPresentId2KHR) {
+    public init(cStruct: VkSurfaceCapabilitiesPresentId2KHR) {
         self.presentId2Supported = cStruct.presentId2Supported == VK_TRUE
     }
 
@@ -29300,7 +29300,7 @@ public struct SurfaceCapabilitiesPresentWait2KHR: ChainableBase, SurfaceCapabili
         self.presentWait2Supported = presentWait2Supported
     }
 
-    init(cStruct: VkSurfaceCapabilitiesPresentWait2KHR) {
+    public init(cStruct: VkSurfaceCapabilitiesPresentWait2KHR) {
         self.presentWait2Supported = cStruct.presentWait2Supported == VK_TRUE
     }
 
@@ -29324,7 +29324,7 @@ public struct SubpassResolvePerformanceQueryEXT: ChainableBase, FormatProperties
 
     public let optimal: Bool
 
-    init(cStruct: VkSubpassResolvePerformanceQueryEXT) {
+    public init(cStruct: VkSubpassResolvePerformanceQueryEXT) {
         self.optimal = cStruct.optimal == VK_TRUE
     }
 
@@ -29354,7 +29354,7 @@ public struct MultisampledRenderToSingleSampledInfoEXT: ChainableBase, SubpassDe
         self.rasterizationSamples = rasterizationSamples
     }
 
-    init(cStruct: VkMultisampledRenderToSingleSampledInfoEXT) {
+    public init(cStruct: VkMultisampledRenderToSingleSampledInfoEXT) {
         self.multisampledRenderToSingleSampledEnable = cStruct.multisampledRenderToSingleSampledEnable == VK_TRUE
         self.rasterizationSamples = SampleCountFlags(rawValue: unsafeBitCast(cStruct.rasterizationSamples.rawValue, to: UInt32.self))
     }
@@ -29384,7 +29384,7 @@ public struct PhysicalDevicePipelineProtectedAccessFeatures: ChainableBase, Phys
         self.pipelineProtectedAccess = pipelineProtectedAccess
     }
 
-    init(cStruct: VkPhysicalDevicePipelineProtectedAccessFeatures) {
+    public init(cStruct: VkPhysicalDevicePipelineProtectedAccessFeatures) {
         self.pipelineProtectedAccess = cStruct.pipelineProtectedAccess == VK_TRUE
     }
 
@@ -29408,7 +29408,7 @@ public struct QueueFamilyVideoPropertiesKHR: ChainableBase, QueueFamilyPropertie
 
     public let videoCodecOperations: VideoCodecOperationFlagsKHR
 
-    init(cStruct: VkQueueFamilyVideoPropertiesKHR) {
+    public init(cStruct: VkQueueFamilyVideoPropertiesKHR) {
         self.videoCodecOperations = VideoCodecOperationFlagsKHR(rawValue: cStruct.videoCodecOperations)
     }
 
@@ -29432,7 +29432,7 @@ public struct QueueFamilyQueryResultStatusPropertiesKHR: ChainableBase, QueueFam
 
     public let queryResultStatusSupport: Bool
 
-    init(cStruct: VkQueueFamilyQueryResultStatusPropertiesKHR) {
+    public init(cStruct: VkQueueFamilyQueryResultStatusPropertiesKHR) {
         self.queryResultStatusSupport = cStruct.queryResultStatusSupport == VK_TRUE
     }
 
@@ -29466,7 +29466,7 @@ public struct VideoProfileInfoKHR: ChainableBase, QueryPoolCreateInfoExtension {
         self.chromaBitDepth = chromaBitDepth
     }
 
-    init(cStruct: VkVideoProfileInfoKHR) {
+    public init(cStruct: VkVideoProfileInfoKHR) {
         self.videoCodecOperation = VideoCodecOperationFlagsKHR(rawValue: unsafeBitCast(cStruct.videoCodecOperation.rawValue, to: UInt32.self))
         self.chromaSubsampling = VideoChromaSubsamplingFlagsKHR(rawValue: cStruct.chromaSubsampling)
         self.lumaBitDepth = VideoComponentBitDepthFlagsKHR(rawValue: cStruct.lumaBitDepth)
@@ -29500,7 +29500,7 @@ public struct VideoProfileListInfoKHR: ChainableBase, PhysicalDeviceImageFormatI
         self.profiles = profiles
     }
 
-    init(cStruct: VkVideoProfileListInfoKHR) {
+    public init(cStruct: VkVideoProfileListInfoKHR) {
         self.profiles = UnsafeBufferPointer(start: cStruct.pProfiles, count: Int(cStruct.profileCount)).map{ VideoProfileInfoKHR(cStruct: $0) }
     }
 
@@ -29531,7 +29531,7 @@ public struct PhysicalDeviceVideoFormatInfoKHR: ChainableBase {
         self.imageUsage = imageUsage
     }
 
-    init(cStruct: VkPhysicalDeviceVideoFormatInfoKHR) {
+    public init(cStruct: VkPhysicalDeviceVideoFormatInfoKHR) {
         self.imageUsage = ImageUsageFlags(rawValue: cStruct.imageUsage)
     }
 
@@ -29560,7 +29560,7 @@ public struct VideoFormatPropertiesKHR: ChainableBase {
     public let imageTiling: ImageTiling
     public let imageUsageFlags: ImageUsageFlags
 
-    init(cStruct: VkVideoFormatPropertiesKHR) {
+    public init(cStruct: VkVideoFormatPropertiesKHR) {
         self.format = Format(rawValue: unsafeBitCast(cStruct.format, to: UInt32.self))!
         self.componentMapping = ComponentMapping(cStruct: cStruct.componentMapping)
         self.imageCreateFlags = ImageCreateFlags(rawValue: cStruct.imageCreateFlags)
@@ -29596,7 +29596,7 @@ public struct VideoEncodeQuantizationMapCapabilitiesKHR: ChainableBase, VideoCap
 
     public let maxQuantizationMapExtent: Extent2D
 
-    init(cStruct: VkVideoEncodeQuantizationMapCapabilitiesKHR) {
+    public init(cStruct: VkVideoEncodeQuantizationMapCapabilitiesKHR) {
         self.maxQuantizationMapExtent = Extent2D(cStruct: cStruct.maxQuantizationMapExtent)
     }
 
@@ -29623,7 +29623,7 @@ public struct VideoEncodeH264QuantizationMapCapabilitiesKHR: ChainableBase, Vide
     public let minQpDelta: Int32
     public let maxQpDelta: Int32
 
-    init(cStruct: VkVideoEncodeH264QuantizationMapCapabilitiesKHR) {
+    public init(cStruct: VkVideoEncodeH264QuantizationMapCapabilitiesKHR) {
         self.minQpDelta = cStruct.minQpDelta
         self.maxQpDelta = cStruct.maxQpDelta
     }
@@ -29650,7 +29650,7 @@ public struct VideoEncodeH265QuantizationMapCapabilitiesKHR: ChainableBase, Vide
     public let minQpDelta: Int32
     public let maxQpDelta: Int32
 
-    init(cStruct: VkVideoEncodeH265QuantizationMapCapabilitiesKHR) {
+    public init(cStruct: VkVideoEncodeH265QuantizationMapCapabilitiesKHR) {
         self.minQpDelta = cStruct.minQpDelta
         self.maxQpDelta = cStruct.maxQpDelta
     }
@@ -29677,7 +29677,7 @@ public struct VideoEncodeAV1QuantizationMapCapabilitiesKHR: ChainableBase, Video
     public let minQIndexDelta: Int32
     public let maxQIndexDelta: Int32
 
-    init(cStruct: VkVideoEncodeAV1QuantizationMapCapabilitiesKHR) {
+    public init(cStruct: VkVideoEncodeAV1QuantizationMapCapabilitiesKHR) {
         self.minQIndexDelta = cStruct.minQIndexDelta
         self.maxQIndexDelta = cStruct.maxQIndexDelta
     }
@@ -29703,7 +29703,7 @@ public struct VideoFormatQuantizationMapPropertiesKHR: ChainableBase, VideoForma
 
     public let quantizationMapTexelSize: Extent2D
 
-    init(cStruct: VkVideoFormatQuantizationMapPropertiesKHR) {
+    public init(cStruct: VkVideoFormatQuantizationMapPropertiesKHR) {
         self.quantizationMapTexelSize = Extent2D(cStruct: cStruct.quantizationMapTexelSize)
     }
 
@@ -29729,7 +29729,7 @@ public struct VideoFormatH265QuantizationMapPropertiesKHR: ChainableBase, VideoF
 
     public let compatibleCtbSizes: VideoEncodeH265CtbSizeFlagsKHR
 
-    init(cStruct: VkVideoFormatH265QuantizationMapPropertiesKHR) {
+    public init(cStruct: VkVideoFormatH265QuantizationMapPropertiesKHR) {
         self.compatibleCtbSizes = VideoEncodeH265CtbSizeFlagsKHR(rawValue: cStruct.compatibleCtbSizes)
     }
 
@@ -29753,7 +29753,7 @@ public struct VideoFormatAV1QuantizationMapPropertiesKHR: ChainableBase, VideoFo
 
     public let compatibleSuperblockSizes: VideoEncodeAV1SuperblockSizeFlagsKHR
 
-    init(cStruct: VkVideoFormatAV1QuantizationMapPropertiesKHR) {
+    public init(cStruct: VkVideoFormatAV1QuantizationMapPropertiesKHR) {
         self.compatibleSuperblockSizes = VideoEncodeAV1SuperblockSizeFlagsKHR(rawValue: cStruct.compatibleSuperblockSizes)
     }
 
@@ -29785,7 +29785,7 @@ public struct VideoCapabilitiesKHR: ChainableBase {
     public let maxActiveReferencePictures: UInt32
     public let stdHeaderVersion: ExtensionProperties
 
-    init(cStruct: VkVideoCapabilitiesKHR) {
+    public init(cStruct: VkVideoCapabilitiesKHR) {
         self.flags = VideoCapabilityFlagsKHR(rawValue: cStruct.flags)
         self.minBitstreamBufferOffsetAlignment = cStruct.minBitstreamBufferOffsetAlignment
         self.minBitstreamBufferSizeAlignment = cStruct.minBitstreamBufferSizeAlignment
@@ -29834,7 +29834,7 @@ public struct VideoSessionMemoryRequirementsKHR: ChainableBase {
     public let memoryBindIndex: UInt32
     public let memoryRequirements: MemoryRequirements
 
-    init(cStruct: VkVideoSessionMemoryRequirementsKHR) {
+    public init(cStruct: VkVideoSessionMemoryRequirementsKHR) {
         self.memoryBindIndex = cStruct.memoryBindIndex
         self.memoryRequirements = MemoryRequirements(cStruct: cStruct.memoryRequirements)
     }
@@ -29872,7 +29872,7 @@ public struct BindVideoSessionMemoryInfoKHR: ChainableBase {
         self.memorySize = memorySize
     }
 
-    init(cStruct: VkBindVideoSessionMemoryInfoKHR, device: Device) {
+    public init(cStruct: VkBindVideoSessionMemoryInfoKHR, device: Device) {
         self.memoryBindIndex = cStruct.memoryBindIndex
         self.memory = DeviceMemory(handle: cStruct.memory, device: device)
         self.memoryOffset = cStruct.memoryOffset
@@ -29912,7 +29912,7 @@ public struct VideoPictureResourceInfoKHR: ChainableBase {
         self.imageViewBinding = imageViewBinding
     }
 
-    init(cStruct: VkVideoPictureResourceInfoKHR, device: Device) {
+    public init(cStruct: VkVideoPictureResourceInfoKHR, device: Device) {
         self.codedOffset = Offset2D(cStruct: cStruct.codedOffset)
         self.codedExtent = Extent2D(cStruct: cStruct.codedExtent)
         self.baseArrayLayer = cStruct.baseArrayLayer
@@ -29952,7 +29952,7 @@ public struct VideoReferenceSlotInfoKHR: ChainableBase {
         self.pictureResource = pictureResource
     }
 
-    init(cStruct: VkVideoReferenceSlotInfoKHR, device: Device) {
+    public init(cStruct: VkVideoReferenceSlotInfoKHR, device: Device) {
         self.slotIndex = cStruct.slotIndex
         self.pictureResource = (cStruct.pPictureResource != nil) ? VideoPictureResourceInfoKHR(cStruct: cStruct.pPictureResource.pointee, device: device) : nil
     }
@@ -29980,7 +29980,7 @@ public struct VideoDecodeCapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExt
 
     public let flags: VideoDecodeCapabilityFlagsKHR
 
-    init(cStruct: VkVideoDecodeCapabilitiesKHR) {
+    public init(cStruct: VkVideoDecodeCapabilitiesKHR) {
         self.flags = VideoDecodeCapabilityFlagsKHR(rawValue: cStruct.flags)
     }
 
@@ -30008,7 +30008,7 @@ public struct VideoDecodeUsageInfoKHR: ChainableBase, VideoProfileInfoKHRExtensi
         self.videoUsageHints = videoUsageHints
     }
 
-    init(cStruct: VkVideoDecodeUsageInfoKHR) {
+    public init(cStruct: VkVideoDecodeUsageInfoKHR) {
         self.videoUsageHints = VideoDecodeUsageFlagsKHR(rawValue: cStruct.videoUsageHints)
     }
 
@@ -30048,7 +30048,7 @@ public struct VideoDecodeInfoKHR: ChainableBase {
         self.referenceSlots = referenceSlots
     }
 
-    init(cStruct: VkVideoDecodeInfoKHR, device: Device) {
+    public init(cStruct: VkVideoDecodeInfoKHR, device: Device) {
         self.flags = VideoDecodeFlagsKHR(rawValue: cStruct.flags)
         self.srcBuffer = Buffer(handle: cStruct.srcBuffer, device: device)
         self.srcBufferOffset = cStruct.srcBufferOffset
@@ -30095,7 +30095,7 @@ public struct PhysicalDeviceVideoMaintenance1FeaturesKHR: ChainableBase, Physica
         self.videoMaintenance1 = videoMaintenance1
     }
 
-    init(cStruct: VkPhysicalDeviceVideoMaintenance1FeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceVideoMaintenance1FeaturesKHR) {
         self.videoMaintenance1 = cStruct.videoMaintenance1 == VK_TRUE
     }
 
@@ -30123,7 +30123,7 @@ public struct PhysicalDeviceVideoMaintenance2FeaturesKHR: ChainableBase, Physica
         self.videoMaintenance2 = videoMaintenance2
     }
 
-    init(cStruct: VkPhysicalDeviceVideoMaintenance2FeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceVideoMaintenance2FeaturesKHR) {
         self.videoMaintenance2 = cStruct.videoMaintenance2 == VK_TRUE
     }
 
@@ -30155,7 +30155,7 @@ public struct VideoInlineQueryInfoKHR: ChainableBase, VideoDecodeInfoKHRExtensio
         self.queryCount = queryCount
     }
 
-    init(cStruct: VkVideoInlineQueryInfoKHR, device: Device) {
+    public init(cStruct: VkVideoInlineQueryInfoKHR, device: Device) {
         self.queryPool = (cStruct.queryPool != nil) ? QueryPool(handle: cStruct.queryPool, device: device) : nil
         self.firstQuery = cStruct.firstQuery
         self.queryCount = cStruct.queryCount
@@ -30189,7 +30189,7 @@ public struct VideoDecodeH264ProfileInfoKHR: ChainableBase, VideoProfileInfoKHRE
         self.pictureLayout = pictureLayout
     }
 
-    init(cStruct: VkVideoDecodeH264ProfileInfoKHR) {
+    public init(cStruct: VkVideoDecodeH264ProfileInfoKHR) {
         self.stdProfileIdc = cStruct.stdProfileIdc
         self.pictureLayout = VideoDecodeH264PictureLayoutFlagsKHR(rawValue: unsafeBitCast(cStruct.pictureLayout.rawValue, to: UInt32.self))
     }
@@ -30216,7 +30216,7 @@ public struct VideoDecodeH264CapabilitiesKHR: ChainableBase, VideoCapabilitiesKH
     public let maxLevelIdc: StdVideoH264LevelIdc
     public let fieldOffsetGranularity: Offset2D
 
-    init(cStruct: VkVideoDecodeH264CapabilitiesKHR) {
+    public init(cStruct: VkVideoDecodeH264CapabilitiesKHR) {
         self.maxLevelIdc = cStruct.maxLevelIdc
         self.fieldOffsetGranularity = Offset2D(cStruct: cStruct.fieldOffsetGranularity)
     }
@@ -30250,7 +30250,7 @@ public struct VideoDecodeH264SessionParametersAddInfoKHR: ChainableBase, VideoSe
         self.stdPPSs = stdPPSs
     }
 
-    init(cStruct: VkVideoDecodeH264SessionParametersAddInfoKHR) {
+    public init(cStruct: VkVideoDecodeH264SessionParametersAddInfoKHR) {
         self.stdSPSs = Array(UnsafeBufferPointer(start: cStruct.pStdSPSs, count: Int(cStruct.stdSPSCount)))
         self.stdPPSs = Array(UnsafeBufferPointer(start: cStruct.pStdPPSs, count: Int(cStruct.stdPPSCount)))
     }
@@ -30290,7 +30290,7 @@ public struct VideoDecodeH264SessionParametersCreateInfoKHR: ChainableBase, Vide
         self.parametersAddInfo = parametersAddInfo
     }
 
-    init(cStruct: VkVideoDecodeH264SessionParametersCreateInfoKHR) {
+    public init(cStruct: VkVideoDecodeH264SessionParametersCreateInfoKHR) {
         self.maxStdSPSCount = cStruct.maxStdSPSCount
         self.maxStdPPSCount = cStruct.maxStdPPSCount
         self.parametersAddInfo = (cStruct.pParametersAddInfo != nil) ? VideoDecodeH264SessionParametersAddInfoKHR(cStruct: cStruct.pParametersAddInfo.pointee) : nil
@@ -30326,7 +30326,7 @@ public struct VideoDecodeH264InlineSessionParametersInfoKHR: ChainableBase, Vide
         self.stdPPS = stdPPS
     }
 
-    init(cStruct: VkVideoDecodeH264InlineSessionParametersInfoKHR) {
+    public init(cStruct: VkVideoDecodeH264InlineSessionParametersInfoKHR) {
         self.stdSPS = cStruct.pStdSPS
         self.stdPPS = cStruct.pStdPPS
     }
@@ -30358,7 +30358,7 @@ public struct VideoDecodeH264PictureInfoKHR: ChainableBase, VideoDecodeInfoKHREx
         self.sliceOffsets = sliceOffsets
     }
 
-    init(cStruct: VkVideoDecodeH264PictureInfoKHR) {
+    public init(cStruct: VkVideoDecodeH264PictureInfoKHR) {
         self.stdPictureInfo = cStruct.pStdPictureInfo
         self.sliceOffsets = Array(UnsafeBufferPointer(start: cStruct.pSliceOffsets, count: Int(cStruct.sliceCount)))
     }
@@ -30391,7 +30391,7 @@ public struct VideoDecodeH264DpbSlotInfoKHR: ChainableBase, VideoReferenceSlotIn
         self.stdReferenceInfo = stdReferenceInfo
     }
 
-    init(cStruct: VkVideoDecodeH264DpbSlotInfoKHR) {
+    public init(cStruct: VkVideoDecodeH264DpbSlotInfoKHR) {
         self.stdReferenceInfo = cStruct.pStdReferenceInfo
     }
 
@@ -30419,7 +30419,7 @@ public struct VideoDecodeH265ProfileInfoKHR: ChainableBase, VideoProfileInfoKHRE
         self.stdProfileIdc = stdProfileIdc
     }
 
-    init(cStruct: VkVideoDecodeH265ProfileInfoKHR) {
+    public init(cStruct: VkVideoDecodeH265ProfileInfoKHR) {
         self.stdProfileIdc = cStruct.stdProfileIdc
     }
 
@@ -30443,7 +30443,7 @@ public struct VideoDecodeH265CapabilitiesKHR: ChainableBase, VideoCapabilitiesKH
 
     public let maxLevelIdc: StdVideoH265LevelIdc
 
-    init(cStruct: VkVideoDecodeH265CapabilitiesKHR) {
+    public init(cStruct: VkVideoDecodeH265CapabilitiesKHR) {
         self.maxLevelIdc = cStruct.maxLevelIdc
     }
 
@@ -30475,7 +30475,7 @@ public struct VideoDecodeH265SessionParametersAddInfoKHR: ChainableBase, VideoSe
         self.stdPPSs = stdPPSs
     }
 
-    init(cStruct: VkVideoDecodeH265SessionParametersAddInfoKHR) {
+    public init(cStruct: VkVideoDecodeH265SessionParametersAddInfoKHR) {
         self.stdVPSs = Array(UnsafeBufferPointer(start: cStruct.pStdVPSs, count: Int(cStruct.stdVPSCount)))
         self.stdSPSs = Array(UnsafeBufferPointer(start: cStruct.pStdSPSs, count: Int(cStruct.stdSPSCount)))
         self.stdPPSs = Array(UnsafeBufferPointer(start: cStruct.pStdPPSs, count: Int(cStruct.stdPPSCount)))
@@ -30522,7 +30522,7 @@ public struct VideoDecodeH265SessionParametersCreateInfoKHR: ChainableBase, Vide
         self.parametersAddInfo = parametersAddInfo
     }
 
-    init(cStruct: VkVideoDecodeH265SessionParametersCreateInfoKHR) {
+    public init(cStruct: VkVideoDecodeH265SessionParametersCreateInfoKHR) {
         self.maxStdVPSCount = cStruct.maxStdVPSCount
         self.maxStdSPSCount = cStruct.maxStdSPSCount
         self.maxStdPPSCount = cStruct.maxStdPPSCount
@@ -30562,7 +30562,7 @@ public struct VideoDecodeH265InlineSessionParametersInfoKHR: ChainableBase, Vide
         self.stdPPS = stdPPS
     }
 
-    init(cStruct: VkVideoDecodeH265InlineSessionParametersInfoKHR) {
+    public init(cStruct: VkVideoDecodeH265InlineSessionParametersInfoKHR) {
         self.stdVPS = cStruct.pStdVPS
         self.stdSPS = cStruct.pStdSPS
         self.stdPPS = cStruct.pStdPPS
@@ -30596,7 +30596,7 @@ public struct VideoDecodeH265PictureInfoKHR: ChainableBase, VideoDecodeInfoKHREx
         self.sliceSegmentOffsets = sliceSegmentOffsets
     }
 
-    init(cStruct: VkVideoDecodeH265PictureInfoKHR) {
+    public init(cStruct: VkVideoDecodeH265PictureInfoKHR) {
         self.stdPictureInfo = cStruct.pStdPictureInfo
         self.sliceSegmentOffsets = Array(UnsafeBufferPointer(start: cStruct.pSliceSegmentOffsets, count: Int(cStruct.sliceSegmentCount)))
     }
@@ -30629,7 +30629,7 @@ public struct VideoDecodeH265DpbSlotInfoKHR: ChainableBase, VideoReferenceSlotIn
         self.stdReferenceInfo = stdReferenceInfo
     }
 
-    init(cStruct: VkVideoDecodeH265DpbSlotInfoKHR) {
+    public init(cStruct: VkVideoDecodeH265DpbSlotInfoKHR) {
         self.stdReferenceInfo = cStruct.pStdReferenceInfo
     }
 
@@ -30657,7 +30657,7 @@ public struct PhysicalDeviceVideoDecodeVP9FeaturesKHR: ChainableBase, PhysicalDe
         self.videoDecodeVP9 = videoDecodeVP9
     }
 
-    init(cStruct: VkPhysicalDeviceVideoDecodeVP9FeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceVideoDecodeVP9FeaturesKHR) {
         self.videoDecodeVP9 = cStruct.videoDecodeVP9 == VK_TRUE
     }
 
@@ -30685,7 +30685,7 @@ public struct VideoDecodeVP9ProfileInfoKHR: ChainableBase, VideoProfileInfoKHREx
         self.stdProfile = stdProfile
     }
 
-    init(cStruct: VkVideoDecodeVP9ProfileInfoKHR) {
+    public init(cStruct: VkVideoDecodeVP9ProfileInfoKHR) {
         self.stdProfile = cStruct.stdProfile
     }
 
@@ -30709,7 +30709,7 @@ public struct VideoDecodeVP9CapabilitiesKHR: ChainableBase, VideoCapabilitiesKHR
 
     public let maxLevel: StdVideoVP9Level
 
-    init(cStruct: VkVideoDecodeVP9CapabilitiesKHR) {
+    public init(cStruct: VkVideoDecodeVP9CapabilitiesKHR) {
         self.maxLevel = cStruct.maxLevel
     }
 
@@ -30745,7 +30745,7 @@ public struct VideoDecodeVP9PictureInfoKHR: ChainableBase, VideoDecodeInfoKHRExt
         self.tilesOffset = tilesOffset
     }
 
-    init(cStruct: VkVideoDecodeVP9PictureInfoKHR) {
+    public init(cStruct: VkVideoDecodeVP9PictureInfoKHR) {
         self.stdPictureInfo = cStruct.pStdPictureInfo
         self.referenceNameSlotIndices = cStruct.referenceNameSlotIndices
         self.uncompressedHeaderOffset = cStruct.uncompressedHeaderOffset
@@ -30783,7 +30783,7 @@ public struct VideoDecodeAV1ProfileInfoKHR: ChainableBase, VideoProfileInfoKHREx
         self.filmGrainSupport = filmGrainSupport
     }
 
-    init(cStruct: VkVideoDecodeAV1ProfileInfoKHR) {
+    public init(cStruct: VkVideoDecodeAV1ProfileInfoKHR) {
         self.stdProfile = cStruct.stdProfile
         self.filmGrainSupport = cStruct.filmGrainSupport == VK_TRUE
     }
@@ -30809,7 +30809,7 @@ public struct VideoDecodeAV1CapabilitiesKHR: ChainableBase, VideoCapabilitiesKHR
 
     public let maxLevel: StdVideoAV1Level
 
-    init(cStruct: VkVideoDecodeAV1CapabilitiesKHR) {
+    public init(cStruct: VkVideoDecodeAV1CapabilitiesKHR) {
         self.maxLevel = cStruct.maxLevel
     }
 
@@ -30837,7 +30837,7 @@ public struct VideoDecodeAV1SessionParametersCreateInfoKHR: ChainableBase, Video
         self.stdSequenceHeader = stdSequenceHeader
     }
 
-    init(cStruct: VkVideoDecodeAV1SessionParametersCreateInfoKHR) {
+    public init(cStruct: VkVideoDecodeAV1SessionParametersCreateInfoKHR) {
         self.stdSequenceHeader = cStruct.pStdSequenceHeader
     }
 
@@ -30865,7 +30865,7 @@ public struct VideoDecodeAV1InlineSessionParametersInfoKHR: ChainableBase, Video
         self.stdSequenceHeader = stdSequenceHeader
     }
 
-    init(cStruct: VkVideoDecodeAV1InlineSessionParametersInfoKHR) {
+    public init(cStruct: VkVideoDecodeAV1InlineSessionParametersInfoKHR) {
         self.stdSequenceHeader = cStruct.pStdSequenceHeader
     }
 
@@ -30901,7 +30901,7 @@ public struct VideoDecodeAV1PictureInfoKHR: ChainableBase, VideoDecodeInfoKHRExt
         self.tileSizes = tileSizes
     }
 
-    init(cStruct: VkVideoDecodeAV1PictureInfoKHR) {
+    public init(cStruct: VkVideoDecodeAV1PictureInfoKHR) {
         self.stdPictureInfo = cStruct.pStdPictureInfo
         self.referenceNameSlotIndices = cStruct.referenceNameSlotIndices
         self.frameHeaderOffset = cStruct.frameHeaderOffset
@@ -30942,7 +30942,7 @@ public struct VideoDecodeAV1DpbSlotInfoKHR: ChainableBase, VideoReferenceSlotInf
         self.stdReferenceInfo = stdReferenceInfo
     }
 
-    init(cStruct: VkVideoDecodeAV1DpbSlotInfoKHR) {
+    public init(cStruct: VkVideoDecodeAV1DpbSlotInfoKHR) {
         self.stdReferenceInfo = cStruct.pStdReferenceInfo
     }
 
@@ -30986,7 +30986,7 @@ public struct VideoSessionCreateInfoKHR: ChainableBase {
         self.stdHeaderVersion = stdHeaderVersion
     }
 
-    init(cStruct: VkVideoSessionCreateInfoKHR) {
+    public init(cStruct: VkVideoSessionCreateInfoKHR) {
         self.queueFamilyIndex = cStruct.queueFamilyIndex
         self.flags = VideoSessionCreateFlagsKHR(rawValue: cStruct.flags)
         self.videoProfile = VideoProfileInfoKHR(cStruct: cStruct.pVideoProfile.pointee)
@@ -31040,7 +31040,7 @@ public struct VideoSessionParametersCreateInfoKHR: ChainableBase {
         self.videoSession = videoSession
     }
 
-    init(cStruct: VkVideoSessionParametersCreateInfoKHR, device: Device) {
+    public init(cStruct: VkVideoSessionParametersCreateInfoKHR, device: Device) {
         self.flags = VideoSessionParametersCreateFlagsKHR(rawValue: cStruct.flags)
         self.videoSessionParametersTemplate = (cStruct.videoSessionParametersTemplate != nil) ? VideoSessionParametersKHR(handle: cStruct.videoSessionParametersTemplate, device: device) : nil
         self.videoSession = VideoSessionKHR(handle: cStruct.videoSession, device: device)
@@ -31072,7 +31072,7 @@ public struct VideoSessionParametersUpdateInfoKHR: ChainableBase {
         self.updateSequenceCount = updateSequenceCount
     }
 
-    init(cStruct: VkVideoSessionParametersUpdateInfoKHR) {
+    public init(cStruct: VkVideoSessionParametersUpdateInfoKHR) {
         self.updateSequenceCount = cStruct.updateSequenceCount
     }
 
@@ -31100,7 +31100,7 @@ public struct VideoEncodeSessionParametersGetInfoKHR: ChainableBase {
         self.videoSessionParameters = videoSessionParameters
     }
 
-    init(cStruct: VkVideoEncodeSessionParametersGetInfoKHR, device: Device) {
+    public init(cStruct: VkVideoEncodeSessionParametersGetInfoKHR, device: Device) {
         self.videoSessionParameters = VideoSessionParametersKHR(handle: cStruct.videoSessionParameters, device: device)
     }
 
@@ -31124,7 +31124,7 @@ public struct VideoEncodeSessionParametersFeedbackInfoKHR: ChainableBase {
 
     public let hasOverrides: Bool
 
-    init(cStruct: VkVideoEncodeSessionParametersFeedbackInfoKHR) {
+    public init(cStruct: VkVideoEncodeSessionParametersFeedbackInfoKHR) {
         self.hasOverrides = cStruct.hasOverrides == VK_TRUE
     }
 
@@ -31158,7 +31158,7 @@ public struct VideoBeginCodingInfoKHR: ChainableBase {
         self.referenceSlots = referenceSlots
     }
 
-    init(cStruct: VkVideoBeginCodingInfoKHR, device: Device) {
+    public init(cStruct: VkVideoBeginCodingInfoKHR, device: Device) {
         self.flags = VideoBeginCodingFlagsKHR(rawValue: cStruct.flags)
         self.videoSession = VideoSessionKHR(handle: cStruct.videoSession, device: device)
         self.videoSessionParameters = (cStruct.videoSessionParameters != nil) ? VideoSessionParametersKHR(handle: cStruct.videoSessionParameters, device: device) : nil
@@ -31195,7 +31195,7 @@ public struct VideoEndCodingInfoKHR: ChainableBase {
         self.flags = flags
     }
 
-    init(cStruct: VkVideoEndCodingInfoKHR) {
+    public init(cStruct: VkVideoEndCodingInfoKHR) {
         self.flags = VideoEndCodingFlagsKHR(rawValue: cStruct.flags)
     }
 
@@ -31223,7 +31223,7 @@ public struct VideoCodingControlInfoKHR: ChainableBase {
         self.flags = flags
     }
 
-    init(cStruct: VkVideoCodingControlInfoKHR) {
+    public init(cStruct: VkVideoCodingControlInfoKHR) {
         self.flags = VideoCodingControlFlagsKHR(rawValue: cStruct.flags)
     }
 
@@ -31255,7 +31255,7 @@ public struct VideoEncodeUsageInfoKHR: ChainableBase, VideoProfileInfoKHRExtensi
         self.tuningMode = tuningMode
     }
 
-    init(cStruct: VkVideoEncodeUsageInfoKHR) {
+    public init(cStruct: VkVideoEncodeUsageInfoKHR) {
         self.videoUsageHints = VideoEncodeUsageFlagsKHR(rawValue: cStruct.videoUsageHints)
         self.videoContentHints = VideoEncodeContentFlagsKHR(rawValue: cStruct.videoContentHints)
         self.tuningMode = VideoEncodeTuningModeKHR(rawValue: unsafeBitCast(cStruct.tuningMode, to: UInt32.self))!
@@ -31301,7 +31301,7 @@ public struct VideoEncodeInfoKHR: ChainableBase {
         self.precedingExternallyEncodedBytes = precedingExternallyEncodedBytes
     }
 
-    init(cStruct: VkVideoEncodeInfoKHR, device: Device) {
+    public init(cStruct: VkVideoEncodeInfoKHR, device: Device) {
         self.flags = VideoEncodeFlagsKHR(rawValue: cStruct.flags)
         self.dstBuffer = Buffer(handle: cStruct.dstBuffer, device: device)
         self.dstBufferOffset = cStruct.dstBufferOffset
@@ -31352,7 +31352,7 @@ public struct VideoEncodeQuantizationMapInfoKHR: ChainableBase, VideoEncodeInfoK
         self.quantizationMapExtent = quantizationMapExtent
     }
 
-    init(cStruct: VkVideoEncodeQuantizationMapInfoKHR, device: Device) {
+    public init(cStruct: VkVideoEncodeQuantizationMapInfoKHR, device: Device) {
         self.quantizationMap = (cStruct.quantizationMap != nil) ? ImageView(handle: cStruct.quantizationMap, device: device) : nil
         self.quantizationMapExtent = Extent2D(cStruct: cStruct.quantizationMapExtent)
     }
@@ -31384,7 +31384,7 @@ public struct VideoEncodeQuantizationMapSessionParametersCreateInfoKHR: Chainabl
         self.quantizationMapTexelSize = quantizationMapTexelSize
     }
 
-    init(cStruct: VkVideoEncodeQuantizationMapSessionParametersCreateInfoKHR) {
+    public init(cStruct: VkVideoEncodeQuantizationMapSessionParametersCreateInfoKHR) {
         self.quantizationMapTexelSize = Extent2D(cStruct: cStruct.quantizationMapTexelSize)
     }
 
@@ -31414,7 +31414,7 @@ public struct PhysicalDeviceVideoEncodeQuantizationMapFeaturesKHR: ChainableBase
         self.videoEncodeQuantizationMap = videoEncodeQuantizationMap
     }
 
-    init(cStruct: VkPhysicalDeviceVideoEncodeQuantizationMapFeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceVideoEncodeQuantizationMapFeaturesKHR) {
         self.videoEncodeQuantizationMap = cStruct.videoEncodeQuantizationMap == VK_TRUE
     }
 
@@ -31442,7 +31442,7 @@ public struct QueryPoolVideoEncodeFeedbackCreateInfoKHR: ChainableBase, QueryPoo
         self.encodeFeedbackFlags = encodeFeedbackFlags
     }
 
-    init(cStruct: VkQueryPoolVideoEncodeFeedbackCreateInfoKHR) {
+    public init(cStruct: VkQueryPoolVideoEncodeFeedbackCreateInfoKHR) {
         self.encodeFeedbackFlags = VideoEncodeFeedbackFlagsKHR(rawValue: cStruct.encodeFeedbackFlags)
     }
 
@@ -31470,7 +31470,7 @@ public struct VideoEncodeQualityLevelInfoKHR: ChainableBase, VideoCodingControlI
         self.qualityLevel = qualityLevel
     }
 
-    init(cStruct: VkVideoEncodeQualityLevelInfoKHR) {
+    public init(cStruct: VkVideoEncodeQualityLevelInfoKHR) {
         self.qualityLevel = cStruct.qualityLevel
     }
 
@@ -31500,7 +31500,7 @@ public struct PhysicalDeviceVideoEncodeQualityLevelInfoKHR: ChainableBase {
         self.qualityLevel = qualityLevel
     }
 
-    init(cStruct: VkPhysicalDeviceVideoEncodeQualityLevelInfoKHR) {
+    public init(cStruct: VkPhysicalDeviceVideoEncodeQualityLevelInfoKHR) {
         self.videoProfile = VideoProfileInfoKHR(cStruct: cStruct.pVideoProfile.pointee)
         self.qualityLevel = cStruct.qualityLevel
     }
@@ -31529,7 +31529,7 @@ public struct VideoEncodeQualityLevelPropertiesKHR: ChainableBase {
     public let preferredRateControlMode: VideoEncodeRateControlModeFlagsKHR
     public let preferredRateControlLayerCount: UInt32
 
-    init(cStruct: VkVideoEncodeQualityLevelPropertiesKHR) {
+    public init(cStruct: VkVideoEncodeQualityLevelPropertiesKHR) {
         self.preferredRateControlMode = VideoEncodeRateControlModeFlagsKHR(rawValue: unsafeBitCast(cStruct.preferredRateControlMode.rawValue, to: UInt32.self))
         self.preferredRateControlLayerCount = cStruct.preferredRateControlLayerCount
     }
@@ -31565,7 +31565,7 @@ public struct VideoEncodeRateControlLayerInfoKHR: ChainableBase {
         self.frameRateDenominator = frameRateDenominator
     }
 
-    init(cStruct: VkVideoEncodeRateControlLayerInfoKHR) {
+    public init(cStruct: VkVideoEncodeRateControlLayerInfoKHR) {
         self.averageBitrate = cStruct.averageBitrate
         self.maxBitrate = cStruct.maxBitrate
         self.frameRateNumerator = cStruct.frameRateNumerator
@@ -31607,7 +31607,7 @@ public struct VideoEncodeRateControlInfoKHR: ChainableBase, VideoCodingControlIn
         self.initialVirtualBufferSizeInMs = initialVirtualBufferSizeInMs
     }
 
-    init(cStruct: VkVideoEncodeRateControlInfoKHR) {
+    public init(cStruct: VkVideoEncodeRateControlInfoKHR) {
         self.flags = VideoEncodeRateControlFlagsKHR(rawValue: cStruct.flags)
         self.rateControlMode = VideoEncodeRateControlModeFlagsKHR(rawValue: unsafeBitCast(cStruct.rateControlMode.rawValue, to: UInt32.self))
         self.layers = UnsafeBufferPointer(start: cStruct.pLayers, count: Int(cStruct.layerCount)).map{ VideoEncodeRateControlLayerInfoKHR(cStruct: $0) }
@@ -31648,7 +31648,7 @@ public struct VideoEncodeCapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExt
     public let encodeInputPictureGranularity: Extent2D
     public let supportedEncodeFeedbackFlags: VideoEncodeFeedbackFlagsKHR
 
-    init(cStruct: VkVideoEncodeCapabilitiesKHR) {
+    public init(cStruct: VkVideoEncodeCapabilitiesKHR) {
         self.flags = VideoEncodeCapabilityFlagsKHR(rawValue: cStruct.flags)
         self.rateControlModes = VideoEncodeRateControlModeFlagsKHR(rawValue: cStruct.rateControlModes)
         self.maxRateControlLayers = cStruct.maxRateControlLayers
@@ -31698,7 +31698,7 @@ public struct VideoEncodeH264CapabilitiesKHR: ChainableBase, VideoCapabilitiesKH
     public let requiresGopRemainingFrames: Bool
     public let stdSyntaxFlags: VideoEncodeH264StdFlagsKHR
 
-    init(cStruct: VkVideoEncodeH264CapabilitiesKHR) {
+    public init(cStruct: VkVideoEncodeH264CapabilitiesKHR) {
         self.flags = VideoEncodeH264CapabilityFlagsKHR(rawValue: cStruct.flags)
         self.maxLevelIdc = cStruct.maxLevelIdc
         self.maxSliceCount = cStruct.maxSliceCount
@@ -31754,7 +31754,7 @@ public struct VideoEncodeH264QpKHR: CStructConvertible {
         self.qpB = qpB
     }
 
-    init(cStruct: VkVideoEncodeH264QpKHR) {
+    public init(cStruct: VkVideoEncodeH264QpKHR) {
         self.qpI = cStruct.qpI
         self.qpP = cStruct.qpP
         self.qpB = cStruct.qpB
@@ -31782,7 +31782,7 @@ public struct VideoEncodeH264QualityLevelPropertiesKHR: ChainableBase, VideoEnco
     public let preferredMaxL1ReferenceCount: UInt32
     public let preferredStdEntropyCodingModeFlag: Bool
 
-    init(cStruct: VkVideoEncodeH264QualityLevelPropertiesKHR) {
+    public init(cStruct: VkVideoEncodeH264QualityLevelPropertiesKHR) {
         self.preferredRateControlFlags = VideoEncodeH264RateControlFlagsKHR(rawValue: cStruct.preferredRateControlFlags)
         self.preferredGopFrameCount = cStruct.preferredGopFrameCount
         self.preferredIdrPeriod = cStruct.preferredIdrPeriod
@@ -31830,7 +31830,7 @@ public struct VideoEncodeH264SessionCreateInfoKHR: ChainableBase, VideoSessionCr
         self.maxLevelIdc = maxLevelIdc
     }
 
-    init(cStruct: VkVideoEncodeH264SessionCreateInfoKHR) {
+    public init(cStruct: VkVideoEncodeH264SessionCreateInfoKHR) {
         self.useMaxLevelIdc = cStruct.useMaxLevelIdc == VK_TRUE
         self.maxLevelIdc = cStruct.maxLevelIdc
     }
@@ -31862,7 +31862,7 @@ public struct VideoEncodeH264SessionParametersAddInfoKHR: ChainableBase, VideoSe
         self.stdPPSs = stdPPSs
     }
 
-    init(cStruct: VkVideoEncodeH264SessionParametersAddInfoKHR) {
+    public init(cStruct: VkVideoEncodeH264SessionParametersAddInfoKHR) {
         self.stdSPSs = (cStruct.pStdSPSs != nil) ? Array(UnsafeBufferPointer(start: cStruct.pStdSPSs, count: Int(cStruct.stdSPSCount))) : nil
         self.stdPPSs = (cStruct.pStdPPSs != nil) ? Array(UnsafeBufferPointer(start: cStruct.pStdPPSs, count: Int(cStruct.stdPPSCount))) : nil
     }
@@ -31902,7 +31902,7 @@ public struct VideoEncodeH264SessionParametersCreateInfoKHR: ChainableBase, Vide
         self.parametersAddInfo = parametersAddInfo
     }
 
-    init(cStruct: VkVideoEncodeH264SessionParametersCreateInfoKHR) {
+    public init(cStruct: VkVideoEncodeH264SessionParametersCreateInfoKHR) {
         self.maxStdSPSCount = cStruct.maxStdSPSCount
         self.maxStdPPSCount = cStruct.maxStdPPSCount
         self.parametersAddInfo = (cStruct.pParametersAddInfo != nil) ? VideoEncodeH264SessionParametersAddInfoKHR(cStruct: cStruct.pParametersAddInfo.pointee) : nil
@@ -31942,7 +31942,7 @@ public struct VideoEncodeH264SessionParametersGetInfoKHR: ChainableBase, VideoEn
         self.stdPPSId = stdPPSId
     }
 
-    init(cStruct: VkVideoEncodeH264SessionParametersGetInfoKHR) {
+    public init(cStruct: VkVideoEncodeH264SessionParametersGetInfoKHR) {
         self.writeStdSPS = cStruct.writeStdSPS == VK_TRUE
         self.writeStdPPS = cStruct.writeStdPPS == VK_TRUE
         self.stdSPSId = cStruct.stdSPSId
@@ -31973,7 +31973,7 @@ public struct VideoEncodeH264SessionParametersFeedbackInfoKHR: ChainableBase, Vi
     public let hasStdSPSOverrides: Bool
     public let hasStdPPSOverrides: Bool
 
-    init(cStruct: VkVideoEncodeH264SessionParametersFeedbackInfoKHR) {
+    public init(cStruct: VkVideoEncodeH264SessionParametersFeedbackInfoKHR) {
         self.hasStdSPSOverrides = cStruct.hasStdSPSOverrides == VK_TRUE
         self.hasStdPPSOverrides = cStruct.hasStdPPSOverrides == VK_TRUE
     }
@@ -32003,7 +32003,7 @@ public struct VideoEncodeH264DpbSlotInfoKHR: ChainableBase, VideoReferenceSlotIn
         self.stdReferenceInfo = stdReferenceInfo
     }
 
-    init(cStruct: VkVideoEncodeH264DpbSlotInfoKHR) {
+    public init(cStruct: VkVideoEncodeH264DpbSlotInfoKHR) {
         self.stdReferenceInfo = cStruct.pStdReferenceInfo
     }
 
@@ -32033,7 +32033,7 @@ public struct VideoEncodeH264NaluSliceInfoKHR: ChainableBase {
         self.stdSliceHeader = stdSliceHeader
     }
 
-    init(cStruct: VkVideoEncodeH264NaluSliceInfoKHR) {
+    public init(cStruct: VkVideoEncodeH264NaluSliceInfoKHR) {
         self.constantQp = cStruct.constantQp
         self.stdSliceHeader = cStruct.pStdSliceHeader
     }
@@ -32067,7 +32067,7 @@ public struct VideoEncodeH264PictureInfoKHR: ChainableBase, VideoEncodeInfoKHREx
         self.generatePrefixNalu = generatePrefixNalu
     }
 
-    init(cStruct: VkVideoEncodeH264PictureInfoKHR) {
+    public init(cStruct: VkVideoEncodeH264PictureInfoKHR) {
         self.naluSliceEntries = UnsafeBufferPointer(start: cStruct.pNaluSliceEntries, count: Int(cStruct.naluSliceEntryCount)).map{ VideoEncodeH264NaluSliceInfoKHR(cStruct: $0) }
         self.stdPictureInfo = cStruct.pStdPictureInfo
         self.generatePrefixNalu = cStruct.generatePrefixNalu == VK_TRUE
@@ -32102,7 +32102,7 @@ public struct VideoEncodeH264ProfileInfoKHR: ChainableBase, VideoProfileInfoKHRE
         self.stdProfileIdc = stdProfileIdc
     }
 
-    init(cStruct: VkVideoEncodeH264ProfileInfoKHR) {
+    public init(cStruct: VkVideoEncodeH264ProfileInfoKHR) {
         self.stdProfileIdc = cStruct.stdProfileIdc
     }
 
@@ -32138,7 +32138,7 @@ public struct VideoEncodeH264RateControlInfoKHR: ChainableBase, VideoCodingContr
         self.temporalLayerCount = temporalLayerCount
     }
 
-    init(cStruct: VkVideoEncodeH264RateControlInfoKHR) {
+    public init(cStruct: VkVideoEncodeH264RateControlInfoKHR) {
         self.flags = VideoEncodeH264RateControlFlagsKHR(rawValue: cStruct.flags)
         self.gopFrameCount = cStruct.gopFrameCount
         self.idrPeriod = cStruct.idrPeriod
@@ -32178,7 +32178,7 @@ public struct VideoEncodeH264FrameSizeKHR: CStructConvertible {
         self.frameBSize = frameBSize
     }
 
-    init(cStruct: VkVideoEncodeH264FrameSizeKHR) {
+    public init(cStruct: VkVideoEncodeH264FrameSizeKHR) {
         self.frameISize = cStruct.frameISize
         self.framePSize = cStruct.framePSize
         self.frameBSize = cStruct.frameBSize
@@ -32208,7 +32208,7 @@ public struct VideoEncodeH264GopRemainingFrameInfoKHR: ChainableBase, VideoBegin
         self.gopRemainingB = gopRemainingB
     }
 
-    init(cStruct: VkVideoEncodeH264GopRemainingFrameInfoKHR) {
+    public init(cStruct: VkVideoEncodeH264GopRemainingFrameInfoKHR) {
         self.useGopRemainingFrames = cStruct.useGopRemainingFrames == VK_TRUE
         self.gopRemainingI = cStruct.gopRemainingI
         self.gopRemainingP = cStruct.gopRemainingP
@@ -32252,7 +32252,7 @@ public struct VideoEncodeH264RateControlLayerInfoKHR: ChainableBase, VideoEncode
         self.maxFrameSize = maxFrameSize
     }
 
-    init(cStruct: VkVideoEncodeH264RateControlLayerInfoKHR) {
+    public init(cStruct: VkVideoEncodeH264RateControlLayerInfoKHR) {
         self.useMinQp = cStruct.useMinQp == VK_TRUE
         self.minQp = VideoEncodeH264QpKHR(cStruct: cStruct.minQp)
         self.useMaxQp = cStruct.useMaxQp == VK_TRUE
@@ -32307,7 +32307,7 @@ public struct VideoEncodeH265CapabilitiesKHR: ChainableBase, VideoCapabilitiesKH
     public let requiresGopRemainingFrames: Bool
     public let stdSyntaxFlags: VideoEncodeH265StdFlagsKHR
 
-    init(cStruct: VkVideoEncodeH265CapabilitiesKHR) {
+    public init(cStruct: VkVideoEncodeH265CapabilitiesKHR) {
         self.flags = VideoEncodeH265CapabilityFlagsKHR(rawValue: cStruct.flags)
         self.maxLevelIdc = cStruct.maxLevelIdc
         self.maxSliceSegmentCount = cStruct.maxSliceSegmentCount
@@ -32371,7 +32371,7 @@ public struct VideoEncodeH265QpKHR: CStructConvertible {
         self.qpB = qpB
     }
 
-    init(cStruct: VkVideoEncodeH265QpKHR) {
+    public init(cStruct: VkVideoEncodeH265QpKHR) {
         self.qpI = cStruct.qpI
         self.qpP = cStruct.qpP
         self.qpB = cStruct.qpB
@@ -32398,7 +32398,7 @@ public struct VideoEncodeH265QualityLevelPropertiesKHR: ChainableBase, VideoEnco
     public let preferredMaxL0ReferenceCount: UInt32
     public let preferredMaxL1ReferenceCount: UInt32
 
-    init(cStruct: VkVideoEncodeH265QualityLevelPropertiesKHR) {
+    public init(cStruct: VkVideoEncodeH265QualityLevelPropertiesKHR) {
         self.preferredRateControlFlags = VideoEncodeH265RateControlFlagsKHR(rawValue: cStruct.preferredRateControlFlags)
         self.preferredGopFrameCount = cStruct.preferredGopFrameCount
         self.preferredIdrPeriod = cStruct.preferredIdrPeriod
@@ -32444,7 +32444,7 @@ public struct VideoEncodeH265SessionCreateInfoKHR: ChainableBase, VideoSessionCr
         self.maxLevelIdc = maxLevelIdc
     }
 
-    init(cStruct: VkVideoEncodeH265SessionCreateInfoKHR) {
+    public init(cStruct: VkVideoEncodeH265SessionCreateInfoKHR) {
         self.useMaxLevelIdc = cStruct.useMaxLevelIdc == VK_TRUE
         self.maxLevelIdc = cStruct.maxLevelIdc
     }
@@ -32478,7 +32478,7 @@ public struct VideoEncodeH265SessionParametersAddInfoKHR: ChainableBase, VideoSe
         self.stdPPSs = stdPPSs
     }
 
-    init(cStruct: VkVideoEncodeH265SessionParametersAddInfoKHR) {
+    public init(cStruct: VkVideoEncodeH265SessionParametersAddInfoKHR) {
         self.stdVPSs = (cStruct.pStdVPSs != nil) ? Array(UnsafeBufferPointer(start: cStruct.pStdVPSs, count: Int(cStruct.stdVPSCount))) : nil
         self.stdSPSs = (cStruct.pStdSPSs != nil) ? Array(UnsafeBufferPointer(start: cStruct.pStdSPSs, count: Int(cStruct.stdSPSCount))) : nil
         self.stdPPSs = (cStruct.pStdPPSs != nil) ? Array(UnsafeBufferPointer(start: cStruct.pStdPPSs, count: Int(cStruct.stdPPSCount))) : nil
@@ -32525,7 +32525,7 @@ public struct VideoEncodeH265SessionParametersCreateInfoKHR: ChainableBase, Vide
         self.parametersAddInfo = parametersAddInfo
     }
 
-    init(cStruct: VkVideoEncodeH265SessionParametersCreateInfoKHR) {
+    public init(cStruct: VkVideoEncodeH265SessionParametersCreateInfoKHR) {
         self.maxStdVPSCount = cStruct.maxStdVPSCount
         self.maxStdSPSCount = cStruct.maxStdSPSCount
         self.maxStdPPSCount = cStruct.maxStdPPSCount
@@ -32571,7 +32571,7 @@ public struct VideoEncodeH265SessionParametersGetInfoKHR: ChainableBase, VideoEn
         self.stdPPSId = stdPPSId
     }
 
-    init(cStruct: VkVideoEncodeH265SessionParametersGetInfoKHR) {
+    public init(cStruct: VkVideoEncodeH265SessionParametersGetInfoKHR) {
         self.writeStdVPS = cStruct.writeStdVPS == VK_TRUE
         self.writeStdSPS = cStruct.writeStdSPS == VK_TRUE
         self.writeStdPPS = cStruct.writeStdPPS == VK_TRUE
@@ -32607,7 +32607,7 @@ public struct VideoEncodeH265SessionParametersFeedbackInfoKHR: ChainableBase, Vi
     public let hasStdSPSOverrides: Bool
     public let hasStdPPSOverrides: Bool
 
-    init(cStruct: VkVideoEncodeH265SessionParametersFeedbackInfoKHR) {
+    public init(cStruct: VkVideoEncodeH265SessionParametersFeedbackInfoKHR) {
         self.hasStdVPSOverrides = cStruct.hasStdVPSOverrides == VK_TRUE
         self.hasStdSPSOverrides = cStruct.hasStdSPSOverrides == VK_TRUE
         self.hasStdPPSOverrides = cStruct.hasStdPPSOverrides == VK_TRUE
@@ -32641,7 +32641,7 @@ public struct VideoEncodeH265NaluSliceSegmentInfoKHR: ChainableBase {
         self.stdSliceSegmentHeader = stdSliceSegmentHeader
     }
 
-    init(cStruct: VkVideoEncodeH265NaluSliceSegmentInfoKHR) {
+    public init(cStruct: VkVideoEncodeH265NaluSliceSegmentInfoKHR) {
         self.constantQp = cStruct.constantQp
         self.stdSliceSegmentHeader = cStruct.pStdSliceSegmentHeader
     }
@@ -32673,7 +32673,7 @@ public struct VideoEncodeH265PictureInfoKHR: ChainableBase, VideoEncodeInfoKHREx
         self.stdPictureInfo = stdPictureInfo
     }
 
-    init(cStruct: VkVideoEncodeH265PictureInfoKHR) {
+    public init(cStruct: VkVideoEncodeH265PictureInfoKHR) {
         self.naluSliceSegmentEntries = UnsafeBufferPointer(start: cStruct.pNaluSliceSegmentEntries, count: Int(cStruct.naluSliceSegmentEntryCount)).map{ VideoEncodeH265NaluSliceSegmentInfoKHR(cStruct: $0) }
         self.stdPictureInfo = cStruct.pStdPictureInfo
     }
@@ -32714,7 +32714,7 @@ public struct VideoEncodeH265RateControlInfoKHR: ChainableBase, VideoCodingContr
         self.subLayerCount = subLayerCount
     }
 
-    init(cStruct: VkVideoEncodeH265RateControlInfoKHR) {
+    public init(cStruct: VkVideoEncodeH265RateControlInfoKHR) {
         self.flags = VideoEncodeH265RateControlFlagsKHR(rawValue: cStruct.flags)
         self.gopFrameCount = cStruct.gopFrameCount
         self.idrPeriod = cStruct.idrPeriod
@@ -32754,7 +32754,7 @@ public struct VideoEncodeH265FrameSizeKHR: CStructConvertible {
         self.frameBSize = frameBSize
     }
 
-    init(cStruct: VkVideoEncodeH265FrameSizeKHR) {
+    public init(cStruct: VkVideoEncodeH265FrameSizeKHR) {
         self.frameISize = cStruct.frameISize
         self.framePSize = cStruct.framePSize
         self.frameBSize = cStruct.frameBSize
@@ -32784,7 +32784,7 @@ public struct VideoEncodeH265GopRemainingFrameInfoKHR: ChainableBase, VideoBegin
         self.gopRemainingB = gopRemainingB
     }
 
-    init(cStruct: VkVideoEncodeH265GopRemainingFrameInfoKHR) {
+    public init(cStruct: VkVideoEncodeH265GopRemainingFrameInfoKHR) {
         self.useGopRemainingFrames = cStruct.useGopRemainingFrames == VK_TRUE
         self.gopRemainingI = cStruct.gopRemainingI
         self.gopRemainingP = cStruct.gopRemainingP
@@ -32828,7 +32828,7 @@ public struct VideoEncodeH265RateControlLayerInfoKHR: ChainableBase, VideoEncode
         self.maxFrameSize = maxFrameSize
     }
 
-    init(cStruct: VkVideoEncodeH265RateControlLayerInfoKHR) {
+    public init(cStruct: VkVideoEncodeH265RateControlLayerInfoKHR) {
         self.useMinQp = cStruct.useMinQp == VK_TRUE
         self.minQp = VideoEncodeH265QpKHR(cStruct: cStruct.minQp)
         self.useMaxQp = cStruct.useMaxQp == VK_TRUE
@@ -32872,7 +32872,7 @@ public struct VideoEncodeH265ProfileInfoKHR: ChainableBase, VideoProfileInfoKHRE
         self.stdProfileIdc = stdProfileIdc
     }
 
-    init(cStruct: VkVideoEncodeH265ProfileInfoKHR) {
+    public init(cStruct: VkVideoEncodeH265ProfileInfoKHR) {
         self.stdProfileIdc = cStruct.stdProfileIdc
     }
 
@@ -32900,7 +32900,7 @@ public struct VideoEncodeH265DpbSlotInfoKHR: ChainableBase, VideoReferenceSlotIn
         self.stdReferenceInfo = stdReferenceInfo
     }
 
-    init(cStruct: VkVideoEncodeH265DpbSlotInfoKHR) {
+    public init(cStruct: VkVideoEncodeH265DpbSlotInfoKHR) {
         self.stdReferenceInfo = cStruct.pStdReferenceInfo
     }
 
@@ -32947,7 +32947,7 @@ public struct VideoEncodeAV1CapabilitiesKHR: ChainableBase, VideoCapabilitiesKHR
     public let requiresGopRemainingFrames: Bool
     public let stdSyntaxFlags: VideoEncodeAV1StdFlagsKHR
 
-    init(cStruct: VkVideoEncodeAV1CapabilitiesKHR) {
+    public init(cStruct: VkVideoEncodeAV1CapabilitiesKHR) {
         self.flags = VideoEncodeAV1CapabilityFlagsKHR(rawValue: cStruct.flags)
         self.maxLevel = cStruct.maxLevel
         self.codedPictureAlignment = Extent2D(cStruct: cStruct.codedPictureAlignment)
@@ -33033,7 +33033,7 @@ public struct VideoEncodeAV1QIndexKHR: CStructConvertible {
         self.bipredictiveQIndex = bipredictiveQIndex
     }
 
-    init(cStruct: VkVideoEncodeAV1QIndexKHR) {
+    public init(cStruct: VkVideoEncodeAV1QIndexKHR) {
         self.intraQIndex = cStruct.intraQIndex
         self.predictiveQIndex = cStruct.predictiveQIndex
         self.bipredictiveQIndex = cStruct.bipredictiveQIndex
@@ -33067,7 +33067,7 @@ public struct VideoEncodeAV1QualityLevelPropertiesKHR: ChainableBase, VideoEncod
     public let preferredMaxBidirectionalCompoundGroup2ReferenceCount: UInt32
     public let preferredBidirectionalCompoundReferenceNameMask: UInt32
 
-    init(cStruct: VkVideoEncodeAV1QualityLevelPropertiesKHR) {
+    public init(cStruct: VkVideoEncodeAV1QualityLevelPropertiesKHR) {
         self.preferredRateControlFlags = VideoEncodeAV1RateControlFlagsKHR(rawValue: cStruct.preferredRateControlFlags)
         self.preferredGopFrameCount = cStruct.preferredGopFrameCount
         self.preferredKeyFramePeriod = cStruct.preferredKeyFramePeriod
@@ -33125,7 +33125,7 @@ public struct PhysicalDeviceVideoEncodeAV1FeaturesKHR: ChainableBase, PhysicalDe
         self.videoEncodeAV1 = videoEncodeAV1
     }
 
-    init(cStruct: VkPhysicalDeviceVideoEncodeAV1FeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceVideoEncodeAV1FeaturesKHR) {
         self.videoEncodeAV1 = cStruct.videoEncodeAV1 == VK_TRUE
     }
 
@@ -33155,7 +33155,7 @@ public struct VideoEncodeAV1SessionCreateInfoKHR: ChainableBase, VideoSessionCre
         self.maxLevel = maxLevel
     }
 
-    init(cStruct: VkVideoEncodeAV1SessionCreateInfoKHR) {
+    public init(cStruct: VkVideoEncodeAV1SessionCreateInfoKHR) {
         self.useMaxLevel = cStruct.useMaxLevel == VK_TRUE
         self.maxLevel = cStruct.maxLevel
     }
@@ -33189,7 +33189,7 @@ public struct VideoEncodeAV1SessionParametersCreateInfoKHR: ChainableBase, Video
         self.stdOperatingPoints = stdOperatingPoints
     }
 
-    init(cStruct: VkVideoEncodeAV1SessionParametersCreateInfoKHR) {
+    public init(cStruct: VkVideoEncodeAV1SessionParametersCreateInfoKHR) {
         self.stdSequenceHeader = cStruct.pStdSequenceHeader
         self.stdDecoderModelInfo = cStruct.pStdDecoderModelInfo
         self.stdOperatingPoints = (cStruct.pStdOperatingPoints != nil) ? Array(UnsafeBufferPointer(start: cStruct.pStdOperatingPoints, count: Int(cStruct.stdOperatingPointCount))) : nil
@@ -33224,7 +33224,7 @@ public struct VideoEncodeAV1DpbSlotInfoKHR: ChainableBase, VideoReferenceSlotInf
         self.stdReferenceInfo = stdReferenceInfo
     }
 
-    init(cStruct: VkVideoEncodeAV1DpbSlotInfoKHR) {
+    public init(cStruct: VkVideoEncodeAV1DpbSlotInfoKHR) {
         self.stdReferenceInfo = cStruct.pStdReferenceInfo
     }
 
@@ -33264,7 +33264,7 @@ public struct VideoEncodeAV1PictureInfoKHR: ChainableBase, VideoEncodeInfoKHRExt
         self.generateObuExtensionHeader = generateObuExtensionHeader
     }
 
-    init(cStruct: VkVideoEncodeAV1PictureInfoKHR) {
+    public init(cStruct: VkVideoEncodeAV1PictureInfoKHR) {
         self.predictionMode = VideoEncodeAV1PredictionModeKHR(rawValue: unsafeBitCast(cStruct.predictionMode, to: UInt32.self))!
         self.rateControlGroup = VideoEncodeAV1RateControlGroupKHR(rawValue: unsafeBitCast(cStruct.rateControlGroup, to: UInt32.self))!
         self.constantQIndex = cStruct.constantQIndex
@@ -33304,7 +33304,7 @@ public struct VideoEncodeAV1ProfileInfoKHR: ChainableBase, VideoProfileInfoKHREx
         self.stdProfile = stdProfile
     }
 
-    init(cStruct: VkVideoEncodeAV1ProfileInfoKHR) {
+    public init(cStruct: VkVideoEncodeAV1ProfileInfoKHR) {
         self.stdProfile = cStruct.stdProfile
     }
 
@@ -33340,7 +33340,7 @@ public struct VideoEncodeAV1RateControlInfoKHR: ChainableBase, VideoCodingContro
         self.temporalLayerCount = temporalLayerCount
     }
 
-    init(cStruct: VkVideoEncodeAV1RateControlInfoKHR) {
+    public init(cStruct: VkVideoEncodeAV1RateControlInfoKHR) {
         self.flags = VideoEncodeAV1RateControlFlagsKHR(rawValue: cStruct.flags)
         self.gopFrameCount = cStruct.gopFrameCount
         self.keyFramePeriod = cStruct.keyFramePeriod
@@ -33380,7 +33380,7 @@ public struct VideoEncodeAV1FrameSizeKHR: CStructConvertible {
         self.bipredictiveFrameSize = bipredictiveFrameSize
     }
 
-    init(cStruct: VkVideoEncodeAV1FrameSizeKHR) {
+    public init(cStruct: VkVideoEncodeAV1FrameSizeKHR) {
         self.intraFrameSize = cStruct.intraFrameSize
         self.predictiveFrameSize = cStruct.predictiveFrameSize
         self.bipredictiveFrameSize = cStruct.bipredictiveFrameSize
@@ -33410,7 +33410,7 @@ public struct VideoEncodeAV1GopRemainingFrameInfoKHR: ChainableBase, VideoBeginC
         self.gopRemainingBipredictive = gopRemainingBipredictive
     }
 
-    init(cStruct: VkVideoEncodeAV1GopRemainingFrameInfoKHR) {
+    public init(cStruct: VkVideoEncodeAV1GopRemainingFrameInfoKHR) {
         self.useGopRemainingFrames = cStruct.useGopRemainingFrames == VK_TRUE
         self.gopRemainingIntra = cStruct.gopRemainingIntra
         self.gopRemainingPredictive = cStruct.gopRemainingPredictive
@@ -33454,7 +33454,7 @@ public struct VideoEncodeAV1RateControlLayerInfoKHR: ChainableBase, VideoEncodeR
         self.maxFrameSize = maxFrameSize
     }
 
-    init(cStruct: VkVideoEncodeAV1RateControlLayerInfoKHR) {
+    public init(cStruct: VkVideoEncodeAV1RateControlLayerInfoKHR) {
         self.useMinQIndex = cStruct.useMinQIndex == VK_TRUE
         self.minQIndex = VideoEncodeAV1QIndexKHR(cStruct: cStruct.minQIndex)
         self.useMaxQIndex = cStruct.useMaxQIndex == VK_TRUE
@@ -33498,7 +33498,7 @@ public struct PhysicalDeviceInheritedViewportScissorFeaturesNV: ChainableBase, P
         self.inheritedViewportScissor2D = inheritedViewportScissor2D
     }
 
-    init(cStruct: VkPhysicalDeviceInheritedViewportScissorFeaturesNV) {
+    public init(cStruct: VkPhysicalDeviceInheritedViewportScissorFeaturesNV) {
         self.inheritedViewportScissor2D = cStruct.inheritedViewportScissor2D == VK_TRUE
     }
 
@@ -33530,7 +33530,7 @@ public struct CommandBufferInheritanceViewportScissorInfoNV: ChainableBase, Comm
         self.viewportDepths = viewportDepths
     }
 
-    init(cStruct: VkCommandBufferInheritanceViewportScissorInfoNV) {
+    public init(cStruct: VkCommandBufferInheritanceViewportScissorInfoNV) {
         self.viewportScissor2D = cStruct.viewportScissor2D == VK_TRUE
         self.viewportDepthCount = cStruct.viewportDepthCount
         self.viewportDepths = Viewport(cStruct: cStruct.pViewportDepths.pointee)
@@ -33564,7 +33564,7 @@ public struct PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT: ChainableBase, Phy
         self.ycbcr2plane444Formats = ycbcr2plane444Formats
     }
 
-    init(cStruct: VkPhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT) {
         self.ycbcr2plane444Formats = cStruct.ycbcr2plane444Formats == VK_TRUE
     }
 
@@ -33594,7 +33594,7 @@ public struct PhysicalDeviceProvokingVertexFeaturesEXT: ChainableBase, PhysicalD
         self.transformFeedbackPreservesProvokingVertex = transformFeedbackPreservesProvokingVertex
     }
 
-    init(cStruct: VkPhysicalDeviceProvokingVertexFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceProvokingVertexFeaturesEXT) {
         self.provokingVertexLast = cStruct.provokingVertexLast == VK_TRUE
         self.transformFeedbackPreservesProvokingVertex = cStruct.transformFeedbackPreservesProvokingVertex == VK_TRUE
     }
@@ -33621,7 +33621,7 @@ public struct PhysicalDeviceProvokingVertexPropertiesEXT: ChainableBase, Physica
     public let provokingVertexModePerPipeline: Bool
     public let transformFeedbackPreservesTriangleFanProvokingVertex: Bool
 
-    init(cStruct: VkPhysicalDeviceProvokingVertexPropertiesEXT) {
+    public init(cStruct: VkPhysicalDeviceProvokingVertexPropertiesEXT) {
         self.provokingVertexModePerPipeline = cStruct.provokingVertexModePerPipeline == VK_TRUE
         self.transformFeedbackPreservesTriangleFanProvokingVertex = cStruct.transformFeedbackPreservesTriangleFanProvokingVertex == VK_TRUE
     }
@@ -33651,7 +33651,7 @@ public struct PipelineRasterizationProvokingVertexStateCreateInfoEXT: ChainableB
         self.provokingVertexMode = provokingVertexMode
     }
 
-    init(cStruct: VkPipelineRasterizationProvokingVertexStateCreateInfoEXT) {
+    public init(cStruct: VkPipelineRasterizationProvokingVertexStateCreateInfoEXT) {
         self.provokingVertexMode = ProvokingVertexModeEXT(rawValue: unsafeBitCast(cStruct.provokingVertexMode, to: UInt32.self))!
     }
 
@@ -33679,7 +33679,7 @@ public struct VideoEncodeIntraRefreshCapabilitiesKHR: ChainableBase, VideoCapabi
     public let partitionIndependentIntraRefreshRegions: Bool
     public let nonRectangularIntraRefreshRegions: Bool
 
-    init(cStruct: VkVideoEncodeIntraRefreshCapabilitiesKHR) {
+    public init(cStruct: VkVideoEncodeIntraRefreshCapabilitiesKHR) {
         self.intraRefreshModes = VideoEncodeIntraRefreshModeFlagsKHR(rawValue: cStruct.intraRefreshModes)
         self.maxIntraRefreshCycleDuration = cStruct.maxIntraRefreshCycleDuration
         self.maxIntraRefreshActiveReferencePictures = cStruct.maxIntraRefreshActiveReferencePictures
@@ -33715,7 +33715,7 @@ public struct VideoEncodeSessionIntraRefreshCreateInfoKHR: ChainableBase, VideoS
         self.intraRefreshMode = intraRefreshMode
     }
 
-    init(cStruct: VkVideoEncodeSessionIntraRefreshCreateInfoKHR) {
+    public init(cStruct: VkVideoEncodeSessionIntraRefreshCreateInfoKHR) {
         self.intraRefreshMode = VideoEncodeIntraRefreshModeFlagsKHR(rawValue: unsafeBitCast(cStruct.intraRefreshMode.rawValue, to: UInt32.self))
     }
 
@@ -33745,7 +33745,7 @@ public struct VideoEncodeIntraRefreshInfoKHR: ChainableBase, VideoEncodeInfoKHRE
         self.intraRefreshIndex = intraRefreshIndex
     }
 
-    init(cStruct: VkVideoEncodeIntraRefreshInfoKHR) {
+    public init(cStruct: VkVideoEncodeIntraRefreshInfoKHR) {
         self.intraRefreshCycleDuration = cStruct.intraRefreshCycleDuration
         self.intraRefreshIndex = cStruct.intraRefreshIndex
     }
@@ -33775,7 +33775,7 @@ public struct VideoReferenceIntraRefreshInfoKHR: ChainableBase, VideoReferenceSl
         self.dirtyIntraRefreshRegions = dirtyIntraRefreshRegions
     }
 
-    init(cStruct: VkVideoReferenceIntraRefreshInfoKHR) {
+    public init(cStruct: VkVideoReferenceIntraRefreshInfoKHR) {
         self.dirtyIntraRefreshRegions = cStruct.dirtyIntraRefreshRegions
     }
 
@@ -33803,7 +33803,7 @@ public struct PhysicalDeviceVideoEncodeIntraRefreshFeaturesKHR: ChainableBase, P
         self.videoEncodeIntraRefresh = videoEncodeIntraRefresh
     }
 
-    init(cStruct: VkPhysicalDeviceVideoEncodeIntraRefreshFeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceVideoEncodeIntraRefreshFeaturesKHR) {
         self.videoEncodeIntraRefresh = cStruct.videoEncodeIntraRefresh == VK_TRUE
     }
 
@@ -33833,7 +33833,7 @@ public struct CuModuleCreateInfoNVX: ChainableBase {
         self.data = data
     }
 
-    init(cStruct: VkCuModuleCreateInfoNVX) {
+    public init(cStruct: VkCuModuleCreateInfoNVX) {
         self.dataSize = cStruct.dataSize
         self.data = cStruct.pData
     }
@@ -33863,7 +33863,7 @@ public struct CuModuleTexturingModeCreateInfoNVX: ChainableBase, CuModuleCreateI
         self.use64bitTexturing = use64bitTexturing
     }
 
-    init(cStruct: VkCuModuleTexturingModeCreateInfoNVX) {
+    public init(cStruct: VkCuModuleTexturingModeCreateInfoNVX) {
         self.use64bitTexturing = cStruct.use64bitTexturing == VK_TRUE
     }
 
@@ -33893,7 +33893,7 @@ public struct CuFunctionCreateInfoNVX: ChainableBase {
         self.name = name
     }
 
-    init(cStruct: VkCuFunctionCreateInfoNVX, device: Device) {
+    public init(cStruct: VkCuFunctionCreateInfoNVX, device: Device) {
         self.module = CuModuleNVX(handle: cStruct.module, device: device)
         self.name = String(cString: cStruct.pName)
     }
@@ -33947,7 +33947,7 @@ public struct CuLaunchInfoNVX: ChainableBase {
         self.extras = extras
     }
 
-    init(cStruct: VkCuLaunchInfoNVX, device: Device) {
+    public init(cStruct: VkCuLaunchInfoNVX, device: Device) {
         self.function = CuFunctionNVX(handle: cStruct.function, device: device)
         self.gridDimX = cStruct.gridDimX
         self.gridDimY = cStruct.gridDimY
@@ -34003,7 +34003,7 @@ public struct PhysicalDeviceDescriptorBufferFeaturesEXT: ChainableBase, Physical
         self.descriptorBufferPushDescriptors = descriptorBufferPushDescriptors
     }
 
-    init(cStruct: VkPhysicalDeviceDescriptorBufferFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceDescriptorBufferFeaturesEXT) {
         self.descriptorBuffer = cStruct.descriptorBuffer == VK_TRUE
         self.descriptorBufferCaptureReplay = cStruct.descriptorBufferCaptureReplay == VK_TRUE
         self.descriptorBufferImageLayoutIgnored = cStruct.descriptorBufferImageLayoutIgnored == VK_TRUE
@@ -34065,7 +34065,7 @@ public struct PhysicalDeviceDescriptorBufferPropertiesEXT: ChainableBase, Physic
     public let resourceDescriptorBufferAddressSpaceSize: VkDeviceSize
     public let descriptorBufferAddressSpaceSize: VkDeviceSize
 
-    init(cStruct: VkPhysicalDeviceDescriptorBufferPropertiesEXT) {
+    public init(cStruct: VkPhysicalDeviceDescriptorBufferPropertiesEXT) {
         self.combinedImageSamplerDescriptorSingleArray = cStruct.combinedImageSamplerDescriptorSingleArray == VK_TRUE
         self.bufferlessPushDescriptors = cStruct.bufferlessPushDescriptors == VK_TRUE
         self.allowSamplerImageViewPostSubmitCreation = cStruct.allowSamplerImageViewPostSubmitCreation == VK_TRUE
@@ -34153,7 +34153,7 @@ public struct PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT: ChainableBa
 
     public let combinedImageSamplerDensityMapDescriptorSize: Int
 
-    init(cStruct: VkPhysicalDeviceDescriptorBufferDensityMapPropertiesEXT) {
+    public init(cStruct: VkPhysicalDeviceDescriptorBufferDensityMapPropertiesEXT) {
         self.combinedImageSamplerDensityMapDescriptorSize = cStruct.combinedImageSamplerDensityMapDescriptorSize
     }
 
@@ -34185,7 +34185,7 @@ public struct DescriptorAddressInfoEXT: ChainableBase {
         self.format = format
     }
 
-    init(cStruct: VkDescriptorAddressInfoEXT) {
+    public init(cStruct: VkDescriptorAddressInfoEXT) {
         self.address = cStruct.address
         self.range = cStruct.range
         self.format = Format(rawValue: unsafeBitCast(cStruct.format, to: UInt32.self))!
@@ -34219,7 +34219,7 @@ public struct DescriptorBufferBindingInfoEXT: ChainableBase {
         self.usage = usage
     }
 
-    init(cStruct: VkDescriptorBufferBindingInfoEXT) {
+    public init(cStruct: VkDescriptorBufferBindingInfoEXT) {
         self.address = cStruct.address
         self.usage = BufferUsageFlags(rawValue: cStruct.usage)
     }
@@ -34249,7 +34249,7 @@ public struct DescriptorBufferBindingPushDescriptorBufferHandleEXT: ChainableBas
         self.buffer = buffer
     }
 
-    init(cStruct: VkDescriptorBufferBindingPushDescriptorBufferHandleEXT, device: Device) {
+    public init(cStruct: VkDescriptorBufferBindingPushDescriptorBufferHandleEXT, device: Device) {
         self.buffer = Buffer(handle: cStruct.buffer, device: device)
     }
 
@@ -34279,7 +34279,7 @@ public struct DescriptorGetInfoEXT: ChainableBase {
         self.data = data
     }
 
-    init(cStruct: VkDescriptorGetInfoEXT) {
+    public init(cStruct: VkDescriptorGetInfoEXT) {
         self.type = DescriptorType(rawValue: unsafeBitCast(cStruct.type, to: UInt32.self))!
         self.data = cStruct.data
     }
@@ -34309,7 +34309,7 @@ public struct BufferCaptureDescriptorDataInfoEXT: ChainableBase {
         self.buffer = buffer
     }
 
-    init(cStruct: VkBufferCaptureDescriptorDataInfoEXT, device: Device) {
+    public init(cStruct: VkBufferCaptureDescriptorDataInfoEXT, device: Device) {
         self.buffer = Buffer(handle: cStruct.buffer, device: device)
     }
 
@@ -34337,7 +34337,7 @@ public struct ImageCaptureDescriptorDataInfoEXT: ChainableBase {
         self.image = image
     }
 
-    init(cStruct: VkImageCaptureDescriptorDataInfoEXT, device: Device) {
+    public init(cStruct: VkImageCaptureDescriptorDataInfoEXT, device: Device) {
         self.image = Image(handle: cStruct.image, device: device)
     }
 
@@ -34365,7 +34365,7 @@ public struct ImageViewCaptureDescriptorDataInfoEXT: ChainableBase {
         self.imageView = imageView
     }
 
-    init(cStruct: VkImageViewCaptureDescriptorDataInfoEXT, device: Device) {
+    public init(cStruct: VkImageViewCaptureDescriptorDataInfoEXT, device: Device) {
         self.imageView = ImageView(handle: cStruct.imageView, device: device)
     }
 
@@ -34393,7 +34393,7 @@ public struct SamplerCaptureDescriptorDataInfoEXT: ChainableBase {
         self.sampler = sampler
     }
 
-    init(cStruct: VkSamplerCaptureDescriptorDataInfoEXT, device: Device) {
+    public init(cStruct: VkSamplerCaptureDescriptorDataInfoEXT, device: Device) {
         self.sampler = Sampler(handle: cStruct.sampler, device: device)
     }
 
@@ -34423,7 +34423,7 @@ public struct AccelerationStructureCaptureDescriptorDataInfoEXT: ChainableBase {
         self.accelerationStructureNV = accelerationStructureNV
     }
 
-    init(cStruct: VkAccelerationStructureCaptureDescriptorDataInfoEXT, device: Device) {
+    public init(cStruct: VkAccelerationStructureCaptureDescriptorDataInfoEXT, device: Device) {
         self.accelerationStructure = (cStruct.accelerationStructure != nil) ? AccelerationStructureKHR(handle: cStruct.accelerationStructure, device: device) : nil
         self.accelerationStructureNV = (cStruct.accelerationStructureNV != nil) ? AccelerationStructureNV(handle: cStruct.accelerationStructureNV, device: device) : nil
     }
@@ -34453,7 +34453,7 @@ public struct OpaqueCaptureDescriptorDataCreateInfoEXT: ChainableBase, BufferCre
         self.opaqueCaptureDescriptorData = opaqueCaptureDescriptorData
     }
 
-    init(cStruct: VkOpaqueCaptureDescriptorDataCreateInfoEXT) {
+    public init(cStruct: VkOpaqueCaptureDescriptorDataCreateInfoEXT) {
         self.opaqueCaptureDescriptorData = cStruct.opaqueCaptureDescriptorData
     }
 
@@ -34481,7 +34481,7 @@ public struct PhysicalDeviceShaderIntegerDotProductFeatures: ChainableBase, Phys
         self.shaderIntegerDotProduct = shaderIntegerDotProduct
     }
 
-    init(cStruct: VkPhysicalDeviceShaderIntegerDotProductFeatures) {
+    public init(cStruct: VkPhysicalDeviceShaderIntegerDotProductFeatures) {
         self.shaderIntegerDotProduct = cStruct.shaderIntegerDotProduct == VK_TRUE
     }
 
@@ -34534,7 +34534,7 @@ public struct PhysicalDeviceShaderIntegerDotProductProperties: ChainableBase, Ph
     public let integerDotProductAccumulatingSaturating64BitSignedAccelerated: Bool
     public let integerDotProductAccumulatingSaturating64BitMixedSignednessAccelerated: Bool
 
-    init(cStruct: VkPhysicalDeviceShaderIntegerDotProductProperties) {
+    public init(cStruct: VkPhysicalDeviceShaderIntegerDotProductProperties) {
         self.integerDotProduct8BitUnsignedAccelerated = cStruct.integerDotProduct8BitUnsignedAccelerated == VK_TRUE
         self.integerDotProduct8BitSignedAccelerated = cStruct.integerDotProduct8BitSignedAccelerated == VK_TRUE
         self.integerDotProduct8BitMixedSignednessAccelerated = cStruct.integerDotProduct8BitMixedSignednessAccelerated == VK_TRUE
@@ -34621,7 +34621,7 @@ public struct PhysicalDeviceDrmPropertiesEXT: ChainableBase, PhysicalDevicePrope
     public let renderMajor: Int64
     public let renderMinor: Int64
 
-    init(cStruct: VkPhysicalDeviceDrmPropertiesEXT) {
+    public init(cStruct: VkPhysicalDeviceDrmPropertiesEXT) {
         self.hasPrimary = cStruct.hasPrimary == VK_TRUE
         self.hasRender = cStruct.hasRender == VK_TRUE
         self.primaryMajor = cStruct.primaryMajor
@@ -34659,7 +34659,7 @@ public struct PhysicalDeviceFragmentShaderBarycentricFeaturesKHR: ChainableBase,
         self.fragmentShaderBarycentric = fragmentShaderBarycentric
     }
 
-    init(cStruct: VkPhysicalDeviceFragmentShaderBarycentricFeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceFragmentShaderBarycentricFeaturesKHR) {
         self.fragmentShaderBarycentric = cStruct.fragmentShaderBarycentric == VK_TRUE
     }
 
@@ -34683,7 +34683,7 @@ public struct PhysicalDeviceFragmentShaderBarycentricPropertiesKHR: ChainableBas
 
     public let triStripVertexOrderIndependentOfProvokingVertex: Bool
 
-    init(cStruct: VkPhysicalDeviceFragmentShaderBarycentricPropertiesKHR) {
+    public init(cStruct: VkPhysicalDeviceFragmentShaderBarycentricPropertiesKHR) {
         self.triStripVertexOrderIndependentOfProvokingVertex = cStruct.triStripVertexOrderIndependentOfProvokingVertex == VK_TRUE
     }
 
@@ -34715,7 +34715,7 @@ public struct PhysicalDeviceShaderFmaFeaturesKHR: ChainableBase, PhysicalDeviceF
         self.shaderFmaFloat64 = shaderFmaFloat64
     }
 
-    init(cStruct: VkPhysicalDeviceShaderFmaFeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceShaderFmaFeaturesKHR) {
         self.shaderFmaFloat16 = cStruct.shaderFmaFloat16 == VK_TRUE
         self.shaderFmaFloat32 = cStruct.shaderFmaFloat32 == VK_TRUE
         self.shaderFmaFloat64 = cStruct.shaderFmaFloat64 == VK_TRUE
@@ -34749,7 +34749,7 @@ public struct PhysicalDeviceRayTracingMotionBlurFeaturesNV: ChainableBase, Physi
         self.rayTracingMotionBlurPipelineTraceRaysIndirect = rayTracingMotionBlurPipelineTraceRaysIndirect
     }
 
-    init(cStruct: VkPhysicalDeviceRayTracingMotionBlurFeaturesNV) {
+    public init(cStruct: VkPhysicalDeviceRayTracingMotionBlurFeaturesNV) {
         self.rayTracingMotionBlur = cStruct.rayTracingMotionBlur == VK_TRUE
         self.rayTracingMotionBlurPipelineTraceRaysIndirect = cStruct.rayTracingMotionBlurPipelineTraceRaysIndirect == VK_TRUE
     }
@@ -34779,7 +34779,7 @@ public struct PhysicalDeviceRayTracingValidationFeaturesNV: ChainableBase, Physi
         self.rayTracingValidation = rayTracingValidation
     }
 
-    init(cStruct: VkPhysicalDeviceRayTracingValidationFeaturesNV) {
+    public init(cStruct: VkPhysicalDeviceRayTracingValidationFeaturesNV) {
         self.rayTracingValidation = cStruct.rayTracingValidation == VK_TRUE
     }
 
@@ -34809,7 +34809,7 @@ public struct PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV: ChainableBas
         self.linearSweptSpheres = linearSweptSpheres
     }
 
-    init(cStruct: VkPhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV) {
+    public init(cStruct: VkPhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV) {
         self.spheres = cStruct.spheres == VK_TRUE
         self.linearSweptSpheres = cStruct.linearSweptSpheres == VK_TRUE
     }
@@ -34839,7 +34839,7 @@ public struct AccelerationStructureGeometryMotionTrianglesDataNV: ChainableBase,
         self.vertexData = vertexData
     }
 
-    init(cStruct: VkAccelerationStructureGeometryMotionTrianglesDataNV) {
+    public init(cStruct: VkAccelerationStructureGeometryMotionTrianglesDataNV) {
         self.vertexData = cStruct.vertexData
     }
 
@@ -34869,7 +34869,7 @@ public struct AccelerationStructureMotionInfoNV: ChainableBase, AccelerationStru
         self.flags = flags
     }
 
-    init(cStruct: VkAccelerationStructureMotionInfoNV) {
+    public init(cStruct: VkAccelerationStructureMotionInfoNV) {
         self.maxInstances = cStruct.maxInstances
         self.flags = AccelerationStructureMotionInfoFlagsNV(rawValue: cStruct.flags)
     }
@@ -34929,7 +34929,7 @@ public struct SRTDataNV: CStructConvertible {
         self.tz = tz
     }
 
-    init(cStruct: VkSRTDataNV) {
+    public init(cStruct: VkSRTDataNV) {
         self.sx = cStruct.sx
         self.a = cStruct.a
         self.b = cStruct.b
@@ -34991,7 +34991,7 @@ public struct AccelerationStructureSRTMotionInstanceNV: CStructConvertible {
         self.accelerationStructureReference = accelerationStructureReference
     }
 
-    init(cStruct: VkAccelerationStructureSRTMotionInstanceNV) {
+    public init(cStruct: VkAccelerationStructureSRTMotionInstanceNV) {
         self.transformT0 = SRTDataNV(cStruct: cStruct.transformT0)
         self.transformT1 = SRTDataNV(cStruct: cStruct.transformT1)
         self.instanceCustomIndex = cStruct.instanceCustomIndex
@@ -35039,7 +35039,7 @@ public struct AccelerationStructureMatrixMotionInstanceNV: CStructConvertible {
         self.accelerationStructureReference = accelerationStructureReference
     }
 
-    init(cStruct: VkAccelerationStructureMatrixMotionInstanceNV) {
+    public init(cStruct: VkAccelerationStructureMatrixMotionInstanceNV) {
         self.transformT0 = TransformMatrixKHR(cStruct: cStruct.transformT0)
         self.transformT1 = TransformMatrixKHR(cStruct: cStruct.transformT1)
         self.instanceCustomIndex = cStruct.instanceCustomIndex
@@ -35079,7 +35079,7 @@ public struct AccelerationStructureMotionInstanceNV: CStructConvertible {
         self.data = data
     }
 
-    init(cStruct: VkAccelerationStructureMotionInstanceNV) {
+    public init(cStruct: VkAccelerationStructureMotionInstanceNV) {
         self.type = AccelerationStructureMotionInstanceTypeNV(rawValue: unsafeBitCast(cStruct.type, to: UInt32.self))!
         self.flags = AccelerationStructureMotionInstanceFlagsNV(rawValue: cStruct.flags)
         self.data = cStruct.data
@@ -35105,7 +35105,7 @@ public struct MemoryGetRemoteAddressInfoNV: ChainableBase {
         self.handleType = handleType
     }
 
-    init(cStruct: VkMemoryGetRemoteAddressInfoNV, device: Device) {
+    public init(cStruct: VkMemoryGetRemoteAddressInfoNV, device: Device) {
         self.memory = DeviceMemory(handle: cStruct.memory, device: device)
         self.handleType = ExternalMemoryHandleTypeFlags(rawValue: unsafeBitCast(cStruct.handleType.rawValue, to: UInt32.self))
     }
@@ -35138,7 +35138,7 @@ public struct ImportMemoryBufferCollectionFUCHSIA: ChainableBase, MemoryAllocate
         self.index = index
     }
 
-    init(cStruct: VkImportMemoryBufferCollectionFUCHSIA, device: Device) {
+    public init(cStruct: VkImportMemoryBufferCollectionFUCHSIA, device: Device) {
         self.collection = BufferCollectionFUCHSIA(handle: cStruct.collection, device: device)
         self.index = cStruct.index
     }
@@ -35172,7 +35172,7 @@ public struct BufferCollectionImageCreateInfoFUCHSIA: ChainableBase, ImageCreate
         self.index = index
     }
 
-    init(cStruct: VkBufferCollectionImageCreateInfoFUCHSIA, device: Device) {
+    public init(cStruct: VkBufferCollectionImageCreateInfoFUCHSIA, device: Device) {
         self.collection = BufferCollectionFUCHSIA(handle: cStruct.collection, device: device)
         self.index = cStruct.index
     }
@@ -35206,7 +35206,7 @@ public struct BufferCollectionBufferCreateInfoFUCHSIA: ChainableBase, BufferCrea
         self.index = index
     }
 
-    init(cStruct: VkBufferCollectionBufferCreateInfoFUCHSIA, device: Device) {
+    public init(cStruct: VkBufferCollectionBufferCreateInfoFUCHSIA, device: Device) {
         self.collection = BufferCollectionFUCHSIA(handle: cStruct.collection, device: device)
         self.index = cStruct.index
     }
@@ -35238,7 +35238,7 @@ public struct BufferCollectionCreateInfoFUCHSIA: ChainableBase {
         self.collectionToken = collectionToken
     }
 
-    init(cStruct: VkBufferCollectionCreateInfoFUCHSIA) {
+    public init(cStruct: VkBufferCollectionCreateInfoFUCHSIA) {
         self.collectionToken = cStruct.collectionToken
     }
 
@@ -35268,7 +35268,7 @@ public struct SysmemColorSpaceFUCHSIA: ChainableBase {
         self.colorSpace = colorSpace
     }
 
-    init(cStruct: VkSysmemColorSpaceFUCHSIA) {
+    public init(cStruct: VkSysmemColorSpaceFUCHSIA) {
         self.colorSpace = cStruct.colorSpace
     }
 
@@ -35304,7 +35304,7 @@ public struct BufferCollectionPropertiesFUCHSIA: ChainableBase {
     public let suggestedXChromaOffset: ChromaLocation
     public let suggestedYChromaOffset: ChromaLocation
 
-    init(cStruct: VkBufferCollectionPropertiesFUCHSIA) {
+    public init(cStruct: VkBufferCollectionPropertiesFUCHSIA) {
         self.memoryTypeBits = cStruct.memoryTypeBits
         self.bufferCount = cStruct.bufferCount
         self.createInfoIndex = cStruct.createInfoIndex
@@ -35366,7 +35366,7 @@ public struct BufferCollectionConstraintsInfoFUCHSIA: ChainableBase {
         self.minBufferCountForSharedSlack = minBufferCountForSharedSlack
     }
 
-    init(cStruct: VkBufferCollectionConstraintsInfoFUCHSIA) {
+    public init(cStruct: VkBufferCollectionConstraintsInfoFUCHSIA) {
         self.minBufferCount = cStruct.minBufferCount
         self.maxBufferCount = cStruct.maxBufferCount
         self.minBufferCountForCamping = cStruct.minBufferCountForCamping
@@ -35408,7 +35408,7 @@ public struct BufferConstraintsInfoFUCHSIA: ChainableBase {
         self.bufferCollectionConstraints = bufferCollectionConstraints
     }
 
-    init(cStruct: VkBufferConstraintsInfoFUCHSIA) {
+    public init(cStruct: VkBufferConstraintsInfoFUCHSIA) {
         self.createInfo = BufferCreateInfo(cStruct: cStruct.createInfo)
         self.requiredFormatFeatures = FormatFeatureFlags(rawValue: cStruct.requiredFormatFeatures)
         self.bufferCollectionConstraints = BufferCollectionConstraintsInfoFUCHSIA(cStruct: cStruct.bufferCollectionConstraints)
@@ -35454,7 +35454,7 @@ public struct ImageFormatConstraintsInfoFUCHSIA: ChainableBase {
         self.colorSpaces = colorSpaces
     }
 
-    init(cStruct: VkImageFormatConstraintsInfoFUCHSIA) {
+    public init(cStruct: VkImageFormatConstraintsInfoFUCHSIA) {
         self.imageCreateInfo = ImageCreateInfo(cStruct: cStruct.imageCreateInfo)
         self.requiredFormatFeatures = FormatFeatureFlags(rawValue: cStruct.requiredFormatFeatures)
         self.flags = ImageFormatConstraintsFlagsFUCHSIA(rawValue: cStruct.flags)
@@ -35501,7 +35501,7 @@ public struct ImageConstraintsInfoFUCHSIA: ChainableBase {
         self.flags = flags
     }
 
-    init(cStruct: VkImageConstraintsInfoFUCHSIA) {
+    public init(cStruct: VkImageConstraintsInfoFUCHSIA) {
         self.formatConstraints = UnsafeBufferPointer(start: cStruct.pFormatConstraints, count: Int(cStruct.formatConstraintsCount)).map{ ImageFormatConstraintsInfoFUCHSIA(cStruct: $0) }
         self.bufferCollectionConstraints = BufferCollectionConstraintsInfoFUCHSIA(cStruct: cStruct.bufferCollectionConstraints)
         self.flags = ImageConstraintsInfoFlagsFUCHSIA(rawValue: cStruct.flags)
@@ -35542,7 +35542,7 @@ public struct CudaModuleCreateInfoNV: ChainableBase {
         self.data = data
     }
 
-    init(cStruct: VkCudaModuleCreateInfoNV) {
+    public init(cStruct: VkCudaModuleCreateInfoNV) {
         self.dataSize = cStruct.dataSize
         self.data = cStruct.pData
     }
@@ -35576,7 +35576,7 @@ public struct CudaFunctionCreateInfoNV: ChainableBase {
         self.name = name
     }
 
-    init(cStruct: VkCudaFunctionCreateInfoNV, device: Device) {
+    public init(cStruct: VkCudaFunctionCreateInfoNV, device: Device) {
         self.module = CudaModuleNV(handle: cStruct.module, device: device)
         self.name = String(cString: cStruct.pName)
     }
@@ -35632,7 +35632,7 @@ public struct CudaLaunchInfoNV: ChainableBase {
         self.extras = extras
     }
 
-    init(cStruct: VkCudaLaunchInfoNV, device: Device) {
+    public init(cStruct: VkCudaLaunchInfoNV, device: Device) {
         self.function = CudaFunctionNV(handle: cStruct.function, device: device)
         self.gridDimX = cStruct.gridDimX
         self.gridDimY = cStruct.gridDimY
@@ -35683,7 +35683,7 @@ public struct PhysicalDeviceRGBA10X6FormatsFeaturesEXT: ChainableBase, PhysicalD
         self.formatRgba10x6WithoutYCbCrSampler = formatRgba10x6WithoutYCbCrSampler
     }
 
-    init(cStruct: VkPhysicalDeviceRGBA10X6FormatsFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceRGBA10X6FormatsFeaturesEXT) {
         self.formatRgba10x6WithoutYCbCrSampler = cStruct.formatRgba10x6WithoutYCbCrSampler == VK_TRUE
     }
 
@@ -35709,7 +35709,7 @@ public struct FormatProperties3: ChainableBase, FormatProperties2Extension {
     public let optimalTilingFeatures: FormatFeatureFlags2
     public let bufferFeatures: FormatFeatureFlags2
 
-    init(cStruct: VkFormatProperties3) {
+    public init(cStruct: VkFormatProperties3) {
         self.linearTilingFeatures = FormatFeatureFlags2(rawValue: cStruct.linearTilingFeatures)
         self.optimalTilingFeatures = FormatFeatureFlags2(rawValue: cStruct.optimalTilingFeatures)
         self.bufferFeatures = FormatFeatureFlags2(rawValue: cStruct.bufferFeatures)
@@ -35739,7 +35739,7 @@ public struct DrmFormatModifierProperties2EXT: CStructConvertible {
     public let drmFormatModifierPlaneCount: UInt32
     public let drmFormatModifierTilingFeatures: FormatFeatureFlags2
 
-    init(cStruct: VkDrmFormatModifierProperties2EXT) {
+    public init(cStruct: VkDrmFormatModifierProperties2EXT) {
         self.drmFormatModifier = cStruct.drmFormatModifier
         self.drmFormatModifierPlaneCount = cStruct.drmFormatModifierPlaneCount
         self.drmFormatModifierTilingFeatures = FormatFeatureFlags2(rawValue: cStruct.drmFormatModifierTilingFeatures)
@@ -35760,7 +35760,7 @@ public struct DrmFormatModifierPropertiesList2EXT: ChainableBase, FormatProperti
     public let drmFormatModifierCount: UInt32
     public let drmFormatModifierProperties: UnsafeMutablePointer<VkDrmFormatModifierProperties2EXT>?
 
-    init(cStruct: VkDrmFormatModifierPropertiesList2EXT) {
+    public init(cStruct: VkDrmFormatModifierPropertiesList2EXT) {
         self.drmFormatModifierCount = cStruct.drmFormatModifierCount
         self.drmFormatModifierProperties = cStruct.pDrmFormatModifierProperties
     }
@@ -35794,7 +35794,7 @@ public struct AndroidHardwareBufferFormatProperties2ANDROID: ChainableBase, Andr
     public let suggestedXChromaOffset: ChromaLocation
     public let suggestedYChromaOffset: ChromaLocation
 
-    init(cStruct: VkAndroidHardwareBufferFormatProperties2ANDROID) {
+    public init(cStruct: VkAndroidHardwareBufferFormatProperties2ANDROID) {
         self.format = Format(rawValue: unsafeBitCast(cStruct.format, to: UInt32.self))!
         self.externalFormat = cStruct.externalFormat
         self.formatFeatures = FormatFeatureFlags2(rawValue: cStruct.formatFeatures)
@@ -35845,7 +35845,7 @@ public struct PipelineRenderingCreateInfo: ChainableBase, GraphicsPipelineCreate
         self.stencilAttachmentFormat = stencilAttachmentFormat
     }
 
-    init(cStruct: VkPipelineRenderingCreateInfo) {
+    public init(cStruct: VkPipelineRenderingCreateInfo) {
         self.viewMask = cStruct.viewMask
         self.colorAttachmentFormats = UnsafeBufferPointer(start: cStruct.pColorAttachmentFormats, count: Int(cStruct.colorAttachmentCount)).map{ Format(rawValue: unsafeBitCast($0, to: UInt32.self))! }
         self.depthAttachmentFormat = Format(rawValue: unsafeBitCast(cStruct.depthAttachmentFormat, to: UInt32.self))!
@@ -35896,7 +35896,7 @@ public struct RenderingAttachmentInfo: ChainableBase {
         self.clearValue = clearValue
     }
 
-    init(cStruct: VkRenderingAttachmentInfo, device: Device) {
+    public init(cStruct: VkRenderingAttachmentInfo, device: Device) {
         self.imageView = (cStruct.imageView != nil) ? ImageView(handle: cStruct.imageView, device: device) : nil
         self.imageLayout = ImageLayout(rawValue: unsafeBitCast(cStruct.imageLayout, to: UInt32.self))!
         self.resolveMode = ResolveModeFlags(rawValue: unsafeBitCast(cStruct.resolveMode.rawValue, to: UInt32.self))
@@ -35950,7 +35950,7 @@ public struct RenderingInfo: ChainableBase {
         self.stencilAttachment = stencilAttachment
     }
 
-    init(cStruct: VkRenderingInfo, device: Device) {
+    public init(cStruct: VkRenderingInfo, device: Device) {
         self.flags = RenderingFlags(rawValue: cStruct.flags)
         self.renderArea = Rect2D(cStruct: cStruct.renderArea)
         self.layerCount = cStruct.layerCount
@@ -35997,7 +35997,7 @@ public struct RenderingEndInfoKHR: ChainableBase {
     public init() {
     }
 
-    init(cStruct: VkRenderingEndInfoKHR) {
+    public init(cStruct: VkRenderingEndInfoKHR) {
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkRenderingEndInfoKHR>) throws(E) -> R) throws(E) -> R {
@@ -36027,7 +36027,7 @@ public struct RenderingFragmentShadingRateAttachmentInfoKHR: ChainableBase, Rend
         self.shadingRateAttachmentTexelSize = shadingRateAttachmentTexelSize
     }
 
-    init(cStruct: VkRenderingFragmentShadingRateAttachmentInfoKHR, device: Device) {
+    public init(cStruct: VkRenderingFragmentShadingRateAttachmentInfoKHR, device: Device) {
         self.imageView = (cStruct.imageView != nil) ? ImageView(handle: cStruct.imageView, device: device) : nil
         self.imageLayout = ImageLayout(rawValue: unsafeBitCast(cStruct.imageLayout, to: UInt32.self))!
         self.shadingRateAttachmentTexelSize = Extent2D(cStruct: cStruct.shadingRateAttachmentTexelSize)
@@ -36063,7 +36063,7 @@ public struct RenderingFragmentDensityMapAttachmentInfoEXT: ChainableBase, Rende
         self.imageLayout = imageLayout
     }
 
-    init(cStruct: VkRenderingFragmentDensityMapAttachmentInfoEXT, device: Device) {
+    public init(cStruct: VkRenderingFragmentDensityMapAttachmentInfoEXT, device: Device) {
         self.imageView = ImageView(handle: cStruct.imageView, device: device)
         self.imageLayout = ImageLayout(rawValue: unsafeBitCast(cStruct.imageLayout, to: UInt32.self))!
     }
@@ -36093,7 +36093,7 @@ public struct PhysicalDeviceDynamicRenderingFeatures: ChainableBase, PhysicalDev
         self.dynamicRendering = dynamicRendering
     }
 
-    init(cStruct: VkPhysicalDeviceDynamicRenderingFeatures) {
+    public init(cStruct: VkPhysicalDeviceDynamicRenderingFeatures) {
         self.dynamicRendering = cStruct.dynamicRendering == VK_TRUE
     }
 
@@ -36131,7 +36131,7 @@ public struct CommandBufferInheritanceRenderingInfo: ChainableBase, CommandBuffe
         self.rasterizationSamples = rasterizationSamples
     }
 
-    init(cStruct: VkCommandBufferInheritanceRenderingInfo) {
+    public init(cStruct: VkCommandBufferInheritanceRenderingInfo) {
         self.flags = RenderingFlags(rawValue: cStruct.flags)
         self.viewMask = cStruct.viewMask
         self.colorAttachmentFormats = UnsafeBufferPointer(start: cStruct.pColorAttachmentFormats, count: Int(cStruct.colorAttachmentCount)).map{ Format(rawValue: unsafeBitCast($0, to: UInt32.self))! }
@@ -36174,7 +36174,7 @@ public struct AttachmentSampleCountInfoAMD: ChainableBase, CommandBufferInherita
         self.depthStencilAttachmentSamples = depthStencilAttachmentSamples
     }
 
-    init(cStruct: VkAttachmentSampleCountInfoAMD) {
+    public init(cStruct: VkAttachmentSampleCountInfoAMD) {
         self.colorAttachmentSamples = UnsafeBufferPointer(start: cStruct.pColorAttachmentSamples, count: Int(cStruct.colorAttachmentCount)).map{ SampleCountFlags(rawValue: unsafeBitCast($0.rawValue, to: UInt32.self)) }
         self.depthStencilAttachmentSamples = SampleCountFlags(rawValue: unsafeBitCast(cStruct.depthStencilAttachmentSamples.rawValue, to: UInt32.self))
     }
@@ -36209,7 +36209,7 @@ public struct MultiviewPerViewAttributesInfoNVX: ChainableBase, CommandBufferInh
         self.perViewAttributesPositionXOnly = perViewAttributesPositionXOnly
     }
 
-    init(cStruct: VkMultiviewPerViewAttributesInfoNVX) {
+    public init(cStruct: VkMultiviewPerViewAttributesInfoNVX) {
         self.perViewAttributes = cStruct.perViewAttributes == VK_TRUE
         self.perViewAttributesPositionXOnly = cStruct.perViewAttributesPositionXOnly == VK_TRUE
     }
@@ -36239,7 +36239,7 @@ public struct PhysicalDeviceImageViewMinLodFeaturesEXT: ChainableBase, PhysicalD
         self.minLod = minLod
     }
 
-    init(cStruct: VkPhysicalDeviceImageViewMinLodFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceImageViewMinLodFeaturesEXT) {
         self.minLod = cStruct.minLod == VK_TRUE
     }
 
@@ -36267,7 +36267,7 @@ public struct ImageViewMinLodCreateInfoEXT: ChainableBase, ImageViewCreateInfoEx
         self.minLod = minLod
     }
 
-    init(cStruct: VkImageViewMinLodCreateInfoEXT) {
+    public init(cStruct: VkImageViewMinLodCreateInfoEXT) {
         self.minLod = cStruct.minLod
     }
 
@@ -36299,7 +36299,7 @@ public struct PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT: Chain
         self.rasterizationOrderStencilAttachmentAccess = rasterizationOrderStencilAttachmentAccess
     }
 
-    init(cStruct: VkPhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT) {
         self.rasterizationOrderColorAttachmentAccess = cStruct.rasterizationOrderColorAttachmentAccess == VK_TRUE
         self.rasterizationOrderDepthAttachmentAccess = cStruct.rasterizationOrderDepthAttachmentAccess == VK_TRUE
         self.rasterizationOrderStencilAttachmentAccess = cStruct.rasterizationOrderStencilAttachmentAccess == VK_TRUE
@@ -36331,7 +36331,7 @@ public struct PhysicalDeviceLinearColorAttachmentFeaturesNV: ChainableBase, Phys
         self.linearColorAttachment = linearColorAttachment
     }
 
-    init(cStruct: VkPhysicalDeviceLinearColorAttachmentFeaturesNV) {
+    public init(cStruct: VkPhysicalDeviceLinearColorAttachmentFeaturesNV) {
         self.linearColorAttachment = cStruct.linearColorAttachment == VK_TRUE
     }
 
@@ -36359,7 +36359,7 @@ public struct PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT: ChainableBase, P
         self.graphicsPipelineLibrary = graphicsPipelineLibrary
     }
 
-    init(cStruct: VkPhysicalDeviceGraphicsPipelineLibraryFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceGraphicsPipelineLibraryFeaturesEXT) {
         self.graphicsPipelineLibrary = cStruct.graphicsPipelineLibrary == VK_TRUE
     }
 
@@ -36387,7 +36387,7 @@ public struct PhysicalDevicePipelineBinaryFeaturesKHR: ChainableBase, PhysicalDe
         self.pipelineBinaries = pipelineBinaries
     }
 
-    init(cStruct: VkPhysicalDevicePipelineBinaryFeaturesKHR) {
+    public init(cStruct: VkPhysicalDevicePipelineBinaryFeaturesKHR) {
         self.pipelineBinaries = cStruct.pipelineBinaries == VK_TRUE
     }
 
@@ -36415,7 +36415,7 @@ public struct DevicePipelineBinaryInternalCacheControlKHR: ChainableBase, Device
         self.disableInternalCache = disableInternalCache
     }
 
-    init(cStruct: VkDevicePipelineBinaryInternalCacheControlKHR) {
+    public init(cStruct: VkDevicePipelineBinaryInternalCacheControlKHR) {
         self.disableInternalCache = cStruct.disableInternalCache == VK_TRUE
     }
 
@@ -36443,7 +36443,7 @@ public struct PhysicalDevicePipelineBinaryPropertiesKHR: ChainableBase, Physical
     public let pipelineBinaryPrecompiledInternalCache: Bool
     public let pipelineBinaryCompressedData: Bool
 
-    init(cStruct: VkPhysicalDevicePipelineBinaryPropertiesKHR) {
+    public init(cStruct: VkPhysicalDevicePipelineBinaryPropertiesKHR) {
         self.pipelineBinaryInternalCache = cStruct.pipelineBinaryInternalCache == VK_TRUE
         self.pipelineBinaryInternalCacheControl = cStruct.pipelineBinaryInternalCacheControl == VK_TRUE
         self.pipelineBinaryPrefersInternalCache = cStruct.pipelineBinaryPrefersInternalCache == VK_TRUE
@@ -36476,7 +36476,7 @@ public struct PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT: ChainableBase,
     public let graphicsPipelineLibraryFastLinking: Bool
     public let graphicsPipelineLibraryIndependentInterpolationDecoration: Bool
 
-    init(cStruct: VkPhysicalDeviceGraphicsPipelineLibraryPropertiesEXT) {
+    public init(cStruct: VkPhysicalDeviceGraphicsPipelineLibraryPropertiesEXT) {
         self.graphicsPipelineLibraryFastLinking = cStruct.graphicsPipelineLibraryFastLinking == VK_TRUE
         self.graphicsPipelineLibraryIndependentInterpolationDecoration = cStruct.graphicsPipelineLibraryIndependentInterpolationDecoration == VK_TRUE
     }
@@ -36506,7 +36506,7 @@ public struct GraphicsPipelineLibraryCreateInfoEXT: ChainableBase, GraphicsPipel
         self.flags = flags
     }
 
-    init(cStruct: VkGraphicsPipelineLibraryCreateInfoEXT) {
+    public init(cStruct: VkGraphicsPipelineLibraryCreateInfoEXT) {
         self.flags = GraphicsPipelineLibraryFlagsEXT(rawValue: cStruct.flags)
     }
 
@@ -36534,7 +36534,7 @@ public struct PhysicalDeviceDataGraphNeuralAcceleratorStatisticsFeaturesARM: Cha
         self.dataGraphNeuralAcceleratorStatistics = dataGraphNeuralAcceleratorStatistics
     }
 
-    init(cStruct: VkPhysicalDeviceDataGraphNeuralAcceleratorStatisticsFeaturesARM) {
+    public init(cStruct: VkPhysicalDeviceDataGraphNeuralAcceleratorStatisticsFeaturesARM) {
         self.dataGraphNeuralAcceleratorStatistics = cStruct.dataGraphNeuralAcceleratorStatistics == VK_TRUE
     }
 
@@ -36562,7 +36562,7 @@ public struct DataGraphPipelineNeuralStatisticsCreateInfoARM: ChainableBase, Dat
         self.allowNeuralStatistics = allowNeuralStatistics
     }
 
-    init(cStruct: VkDataGraphPipelineNeuralStatisticsCreateInfoARM) {
+    public init(cStruct: VkDataGraphPipelineNeuralStatisticsCreateInfoARM) {
         self.allowNeuralStatistics = cStruct.allowNeuralStatistics == VK_TRUE
     }
 
@@ -36590,7 +36590,7 @@ public struct DataGraphPipelineSessionNeuralStatisticsCreateInfoARM: ChainableBa
         self.mode = mode
     }
 
-    init(cStruct: VkDataGraphPipelineSessionNeuralStatisticsCreateInfoARM) {
+    public init(cStruct: VkDataGraphPipelineSessionNeuralStatisticsCreateInfoARM) {
         self.mode = NeuralAcceleratorStatisticsModeARM(rawValue: unsafeBitCast(cStruct.mode, to: UInt32.self))!
     }
 
@@ -36618,7 +36618,7 @@ public struct PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE: ChainableBase
         self.descriptorSetHostMapping = descriptorSetHostMapping
     }
 
-    init(cStruct: VkPhysicalDeviceDescriptorSetHostMappingFeaturesVALVE) {
+    public init(cStruct: VkPhysicalDeviceDescriptorSetHostMappingFeaturesVALVE) {
         self.descriptorSetHostMapping = cStruct.descriptorSetHostMapping == VK_TRUE
     }
 
@@ -36648,7 +36648,7 @@ public struct DescriptorSetBindingReferenceVALVE: ChainableBase {
         self.binding = binding
     }
 
-    init(cStruct: VkDescriptorSetBindingReferenceVALVE, device: Device) {
+    public init(cStruct: VkDescriptorSetBindingReferenceVALVE, device: Device) {
         self.descriptorSetLayout = DescriptorSetLayout(handle: cStruct.descriptorSetLayout, device: device)
         self.binding = cStruct.binding
     }
@@ -36680,7 +36680,7 @@ public struct DescriptorSetLayoutHostMappingInfoVALVE: ChainableBase {
         self.descriptorSize = descriptorSize
     }
 
-    init(cStruct: VkDescriptorSetLayoutHostMappingInfoVALVE) {
+    public init(cStruct: VkDescriptorSetLayoutHostMappingInfoVALVE) {
         self.descriptorOffset = cStruct.descriptorOffset
         self.descriptorSize = cStruct.descriptorSize
     }
@@ -36714,7 +36714,7 @@ public struct PhysicalDeviceNestedCommandBufferFeaturesEXT: ChainableBase, Physi
         self.nestedCommandBufferSimultaneousUse = nestedCommandBufferSimultaneousUse
     }
 
-    init(cStruct: VkPhysicalDeviceNestedCommandBufferFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceNestedCommandBufferFeaturesEXT) {
         self.nestedCommandBuffer = cStruct.nestedCommandBuffer == VK_TRUE
         self.nestedCommandBufferRendering = cStruct.nestedCommandBufferRendering == VK_TRUE
         self.nestedCommandBufferSimultaneousUse = cStruct.nestedCommandBufferSimultaneousUse == VK_TRUE
@@ -36742,7 +36742,7 @@ public struct PhysicalDeviceNestedCommandBufferPropertiesEXT: ChainableBase, Phy
 
     public let maxCommandBufferNestingLevel: UInt32
 
-    init(cStruct: VkPhysicalDeviceNestedCommandBufferPropertiesEXT) {
+    public init(cStruct: VkPhysicalDeviceNestedCommandBufferPropertiesEXT) {
         self.maxCommandBufferNestingLevel = cStruct.maxCommandBufferNestingLevel
     }
 
@@ -36770,7 +36770,7 @@ public struct PhysicalDeviceShaderModuleIdentifierFeaturesEXT: ChainableBase, Ph
         self.shaderModuleIdentifier = shaderModuleIdentifier
     }
 
-    init(cStruct: VkPhysicalDeviceShaderModuleIdentifierFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceShaderModuleIdentifierFeaturesEXT) {
         self.shaderModuleIdentifier = cStruct.shaderModuleIdentifier == VK_TRUE
     }
 
@@ -36794,7 +36794,7 @@ public struct PhysicalDeviceShaderModuleIdentifierPropertiesEXT: ChainableBase, 
 
     public let shaderModuleIdentifierAlgorithmUUID: (UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8)
 
-    init(cStruct: VkPhysicalDeviceShaderModuleIdentifierPropertiesEXT) {
+    public init(cStruct: VkPhysicalDeviceShaderModuleIdentifierPropertiesEXT) {
         self.shaderModuleIdentifierAlgorithmUUID = cStruct.shaderModuleIdentifierAlgorithmUUID
     }
 
@@ -36822,7 +36822,7 @@ public struct PipelineShaderStageModuleIdentifierCreateInfoEXT: ChainableBase, P
         self.identifier = identifier
     }
 
-    init(cStruct: VkPipelineShaderStageModuleIdentifierCreateInfoEXT) {
+    public init(cStruct: VkPipelineShaderStageModuleIdentifierCreateInfoEXT) {
         self.identifier = Array(UnsafeBufferPointer(start: cStruct.pIdentifier, count: Int(cStruct.identifierSize)))
     }
 
@@ -36850,7 +36850,7 @@ public struct ShaderModuleIdentifierEXT: ChainableBase {
     public let identifierSize: UInt32
     public let identifier: (UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8)
 
-    init(cStruct: VkShaderModuleIdentifierEXT) {
+    public init(cStruct: VkShaderModuleIdentifierEXT) {
         self.identifierSize = cStruct.identifierSize
         self.identifier = cStruct.identifier
     }
@@ -36884,7 +36884,7 @@ public struct ImageCompressionControlEXT: ChainableBase, ImageCreateInfoExtensio
         self.fixedRateFlags = fixedRateFlags
     }
 
-    init(cStruct: VkImageCompressionControlEXT) {
+    public init(cStruct: VkImageCompressionControlEXT) {
         self.flags = ImageCompressionFlagsEXT(rawValue: cStruct.flags)
         self.compressionControlPlaneCount = cStruct.compressionControlPlaneCount
         self.fixedRateFlags = cStruct.pFixedRateFlags
@@ -36916,7 +36916,7 @@ public struct PhysicalDeviceImageCompressionControlFeaturesEXT: ChainableBase, P
         self.imageCompressionControl = imageCompressionControl
     }
 
-    init(cStruct: VkPhysicalDeviceImageCompressionControlFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceImageCompressionControlFeaturesEXT) {
         self.imageCompressionControl = cStruct.imageCompressionControl == VK_TRUE
     }
 
@@ -36941,7 +36941,7 @@ public struct ImageCompressionPropertiesEXT: ChainableBase, ImageFormatPropertie
     public let imageCompressionFlags: ImageCompressionFlagsEXT
     public let imageCompressionFixedRateFlags: ImageCompressionFixedRateFlagsEXT
 
-    init(cStruct: VkImageCompressionPropertiesEXT) {
+    public init(cStruct: VkImageCompressionPropertiesEXT) {
         self.imageCompressionFlags = ImageCompressionFlagsEXT(rawValue: cStruct.imageCompressionFlags)
         self.imageCompressionFixedRateFlags = ImageCompressionFixedRateFlagsEXT(rawValue: cStruct.imageCompressionFixedRateFlags)
     }
@@ -36971,7 +36971,7 @@ public struct PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT: Chainab
         self.imageCompressionControlSwapchain = imageCompressionControlSwapchain
     }
 
-    init(cStruct: VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT) {
         self.imageCompressionControlSwapchain = cStruct.imageCompressionControlSwapchain == VK_TRUE
     }
 
@@ -36999,7 +36999,7 @@ public struct ImageSubresource2: ChainableBase {
         self.imageSubresource = imageSubresource
     }
 
-    init(cStruct: VkImageSubresource2) {
+    public init(cStruct: VkImageSubresource2) {
         self.imageSubresource = ImageSubresource(cStruct: cStruct.imageSubresource)
     }
 
@@ -37025,7 +37025,7 @@ public struct SubresourceLayout2: ChainableBase {
 
     public let subresourceLayout: SubresourceLayout
 
-    init(cStruct: VkSubresourceLayout2) {
+    public init(cStruct: VkSubresourceLayout2) {
         self.subresourceLayout = SubresourceLayout(cStruct: cStruct.subresourceLayout)
     }
 
@@ -37055,7 +37055,7 @@ public struct RenderPassCreationControlEXT: ChainableBase, RenderPassCreateInfo2
         self.disallowMerging = disallowMerging
     }
 
-    init(cStruct: VkRenderPassCreationControlEXT) {
+    public init(cStruct: VkRenderPassCreationControlEXT) {
         self.disallowMerging = cStruct.disallowMerging == VK_TRUE
     }
 
@@ -37079,7 +37079,7 @@ public struct RenderPassCreationFeedbackInfoEXT: CStructConvertible {
 
     public let postMergeSubpassCount: UInt32
 
-    init(cStruct: VkRenderPassCreationFeedbackInfoEXT) {
+    public init(cStruct: VkRenderPassCreationFeedbackInfoEXT) {
         self.postMergeSubpassCount = cStruct.postMergeSubpassCount
     }
 
@@ -37099,7 +37099,7 @@ public struct RenderPassCreationFeedbackCreateInfoEXT: ChainableBase, RenderPass
         self.renderPassFeedback = renderPassFeedback
     }
 
-    init(cStruct: VkRenderPassCreationFeedbackCreateInfoEXT) {
+    public init(cStruct: VkRenderPassCreationFeedbackCreateInfoEXT) {
         self.renderPassFeedback = cStruct.pRenderPassFeedback
     }
 
@@ -37125,7 +37125,7 @@ public struct RenderPassSubpassFeedbackInfoEXT: CStructConvertible {
     public let description: String
     public let postMergeIndex: UInt32
 
-    init(cStruct: VkRenderPassSubpassFeedbackInfoEXT) {
+    public init(cStruct: VkRenderPassSubpassFeedbackInfoEXT) {
         self.subpassMergeStatus = SubpassMergeStatusEXT(rawValue: unsafeBitCast(cStruct.subpassMergeStatus, to: UInt32.self))!
         self.description = String(unsafeBytesOf: cStruct.description)
         self.postMergeIndex = cStruct.postMergeIndex
@@ -37149,7 +37149,7 @@ public struct RenderPassSubpassFeedbackCreateInfoEXT: ChainableBase, SubpassDesc
         self.subpassFeedback = subpassFeedback
     }
 
-    init(cStruct: VkRenderPassSubpassFeedbackCreateInfoEXT) {
+    public init(cStruct: VkRenderPassSubpassFeedbackCreateInfoEXT) {
         self.subpassFeedback = cStruct.pSubpassFeedback
     }
 
@@ -37177,7 +37177,7 @@ public struct PhysicalDeviceSubpassMergeFeedbackFeaturesEXT: ChainableBase, Phys
         self.subpassMergeFeedback = subpassMergeFeedback
     }
 
-    init(cStruct: VkPhysicalDeviceSubpassMergeFeedbackFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceSubpassMergeFeedbackFeaturesEXT) {
         self.subpassMergeFeedback = cStruct.subpassMergeFeedback == VK_TRUE
     }
 
@@ -37209,7 +37209,7 @@ public struct MicromapUsageEXT: CStructConvertible {
         self.format = format
     }
 
-    init(cStruct: VkMicromapUsageEXT) {
+    public init(cStruct: VkMicromapUsageEXT) {
         self.count = cStruct.count
         self.subdivisionLevel = cStruct.subdivisionLevel
         self.format = cStruct.format
@@ -37251,7 +37251,7 @@ public struct MicromapBuildInfoEXT: ChainableBase {
         self.triangleArrayStride = triangleArrayStride
     }
 
-    init(cStruct: VkMicromapBuildInfoEXT, device: Device) {
+    public init(cStruct: VkMicromapBuildInfoEXT, device: Device) {
         self.type = MicromapTypeEXT(rawValue: unsafeBitCast(cStruct.type, to: UInt32.self))!
         self.flags = BuildMicromapFlagsEXT(rawValue: cStruct.flags)
         self.mode = BuildMicromapModeEXT(rawValue: unsafeBitCast(cStruct.mode, to: UInt32.self))!
@@ -37306,7 +37306,7 @@ public struct MicromapUsageKHR: CStructConvertible {
         self.format = format
     }
 
-    init(cStruct: VkMicromapUsageKHR) {
+    public init(cStruct: VkMicromapUsageKHR) {
         self.count = cStruct.count
         self.subdivisionLevel = cStruct.subdivisionLevel
         self.format = OpacityMicromapFormatKHR(rawValue: unsafeBitCast(cStruct.format, to: UInt32.self))!
@@ -37338,7 +37338,7 @@ public struct AccelerationStructureGeometryMicromapDataKHR: ChainableBase, Accel
         self.triangleArrayStride = triangleArrayStride
     }
 
-    init(cStruct: VkAccelerationStructureGeometryMicromapDataKHR) {
+    public init(cStruct: VkAccelerationStructureGeometryMicromapDataKHR) {
         self.usageCounts = (cStruct.pUsageCounts != nil) ? UnsafeBufferPointer(start: cStruct.pUsageCounts, count: Int(cStruct.usageCountsCount)).map{ MicromapUsageKHR(cStruct: $0) } : nil
         self.usageCounts2 = (cStruct.ppUsageCounts != nil) ? Array(UnsafeBufferPointer(start: cStruct.ppUsageCounts, count: Int(cStruct.usageCountsCount))) : nil
         self.data = cStruct.data
@@ -37389,7 +37389,7 @@ public struct MicromapCreateInfoEXT: ChainableBase {
         self.deviceAddress = deviceAddress
     }
 
-    init(cStruct: VkMicromapCreateInfoEXT, device: Device) {
+    public init(cStruct: VkMicromapCreateInfoEXT, device: Device) {
         self.createFlags = MicromapCreateFlagsEXT(rawValue: cStruct.createFlags)
         self.buffer = Buffer(handle: cStruct.buffer, device: device)
         self.offset = cStruct.offset
@@ -37427,7 +37427,7 @@ public struct MicromapVersionInfoEXT: ChainableBase {
         self.versionData = versionData
     }
 
-    init(cStruct: VkMicromapVersionInfoEXT) {
+    public init(cStruct: VkMicromapVersionInfoEXT) {
         self.versionData = cStruct.pVersionData
     }
 
@@ -37459,7 +37459,7 @@ public struct CopyMicromapInfoEXT: ChainableBase {
         self.mode = mode
     }
 
-    init(cStruct: VkCopyMicromapInfoEXT, device: Device) {
+    public init(cStruct: VkCopyMicromapInfoEXT, device: Device) {
         self.src = MicromapEXT(handle: cStruct.src, device: device)
         self.dst = MicromapEXT(handle: cStruct.dst, device: device)
         self.mode = CopyMicromapModeEXT(rawValue: unsafeBitCast(cStruct.mode, to: UInt32.self))!
@@ -37495,7 +37495,7 @@ public struct CopyMicromapToMemoryInfoEXT: ChainableBase {
         self.mode = mode
     }
 
-    init(cStruct: VkCopyMicromapToMemoryInfoEXT, device: Device) {
+    public init(cStruct: VkCopyMicromapToMemoryInfoEXT, device: Device) {
         self.src = MicromapEXT(handle: cStruct.src, device: device)
         self.dst = cStruct.dst
         self.mode = CopyMicromapModeEXT(rawValue: unsafeBitCast(cStruct.mode, to: UInt32.self))!
@@ -37531,7 +37531,7 @@ public struct CopyMemoryToMicromapInfoEXT: ChainableBase {
         self.mode = mode
     }
 
-    init(cStruct: VkCopyMemoryToMicromapInfoEXT, device: Device) {
+    public init(cStruct: VkCopyMemoryToMicromapInfoEXT, device: Device) {
         self.src = cStruct.src
         self.dst = MicromapEXT(handle: cStruct.dst, device: device)
         self.mode = CopyMicromapModeEXT(rawValue: unsafeBitCast(cStruct.mode, to: UInt32.self))!
@@ -37567,7 +37567,7 @@ public struct MicromapBuildSizesInfoEXT: ChainableBase {
         self.discardable = discardable
     }
 
-    init(cStruct: VkMicromapBuildSizesInfoEXT) {
+    public init(cStruct: VkMicromapBuildSizesInfoEXT) {
         self.micromapSize = cStruct.micromapSize
         self.buildScratchSize = cStruct.buildScratchSize
         self.discardable = cStruct.discardable == VK_TRUE
@@ -37603,7 +37603,7 @@ public struct MicromapTriangleKHR: CStructConvertible {
         self.format = format
     }
 
-    init(cStruct: VkMicromapTriangleKHR) {
+    public init(cStruct: VkMicromapTriangleKHR) {
         self.dataOffset = cStruct.dataOffset
         self.subdivisionLevel = cStruct.subdivisionLevel
         self.format = cStruct.format
@@ -37627,7 +37627,7 @@ public struct PhysicalDeviceOpacityMicromapFeaturesKHR: ChainableBase, PhysicalD
         self.micromap = micromap
     }
 
-    init(cStruct: VkPhysicalDeviceOpacityMicromapFeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceOpacityMicromapFeaturesKHR) {
         self.micromap = cStruct.micromap == VK_TRUE
     }
 
@@ -37659,7 +37659,7 @@ public struct PhysicalDeviceOpacityMicromapFeaturesEXT: ChainableBase, PhysicalD
         self.micromapHostCommands = micromapHostCommands
     }
 
-    init(cStruct: VkPhysicalDeviceOpacityMicromapFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceOpacityMicromapFeaturesEXT) {
         self.micromap = cStruct.micromap == VK_TRUE
         self.micromapCaptureReplay = cStruct.micromapCaptureReplay == VK_TRUE
         self.micromapHostCommands = cStruct.micromapHostCommands == VK_TRUE
@@ -37690,7 +37690,7 @@ public struct PhysicalDeviceOpacityMicromapPropertiesKHR: ChainableBase, Physica
     public let maxOpacityLossy4StateSubdivisionLevel: UInt32
     public let maxMicromapTriangles: UInt64
 
-    init(cStruct: VkPhysicalDeviceOpacityMicromapPropertiesKHR) {
+    public init(cStruct: VkPhysicalDeviceOpacityMicromapPropertiesKHR) {
         self.maxOpacity2StateSubdivisionLevel = cStruct.maxOpacity2StateSubdivisionLevel
         self.maxOpacity4StateSubdivisionLevel = cStruct.maxOpacity4StateSubdivisionLevel
         self.maxOpacityLossy4StateSubdivisionLevel = cStruct.maxOpacityLossy4StateSubdivisionLevel
@@ -37721,7 +37721,7 @@ public struct PhysicalDeviceOpacityMicromapPropertiesEXT: ChainableBase, Physica
     public let maxOpacity2StateSubdivisionLevel: UInt32
     public let maxOpacity4StateSubdivisionLevel: UInt32
 
-    init(cStruct: VkPhysicalDeviceOpacityMicromapPropertiesEXT) {
+    public init(cStruct: VkPhysicalDeviceOpacityMicromapPropertiesEXT) {
         self.maxOpacity2StateSubdivisionLevel = cStruct.maxOpacity2StateSubdivisionLevel
         self.maxOpacity4StateSubdivisionLevel = cStruct.maxOpacity4StateSubdivisionLevel
     }
@@ -37759,7 +37759,7 @@ public struct AccelerationStructureTrianglesOpacityMicromapKHR: ChainableBase, A
         self.micromap = micromap
     }
 
-    init(cStruct: VkAccelerationStructureTrianglesOpacityMicromapKHR, device: Device) {
+    public init(cStruct: VkAccelerationStructureTrianglesOpacityMicromapKHR, device: Device) {
         self.indexType = IndexType(rawValue: unsafeBitCast(cStruct.indexType, to: UInt32.self))!
         self.indexBuffer = cStruct.indexBuffer
         self.indexStride = cStruct.indexStride
@@ -37807,7 +37807,7 @@ public struct AccelerationStructureTrianglesOpacityMicromapEXT: ChainableBase, A
         self.micromap = micromap
     }
 
-    init(cStruct: VkAccelerationStructureTrianglesOpacityMicromapEXT, device: Device) {
+    public init(cStruct: VkAccelerationStructureTrianglesOpacityMicromapEXT, device: Device) {
         self.indexType = IndexType(rawValue: unsafeBitCast(cStruct.indexType, to: UInt32.self))!
         self.indexBuffer = cStruct.indexBuffer
         self.indexStride = cStruct.indexStride
@@ -37853,7 +37853,7 @@ public struct PhysicalDeviceDisplacementMicromapFeaturesNV: ChainableBase, Physi
         self.displacementMicromap = displacementMicromap
     }
 
-    init(cStruct: VkPhysicalDeviceDisplacementMicromapFeaturesNV) {
+    public init(cStruct: VkPhysicalDeviceDisplacementMicromapFeaturesNV) {
         self.displacementMicromap = cStruct.displacementMicromap == VK_TRUE
     }
 
@@ -37879,7 +37879,7 @@ public struct PhysicalDeviceDisplacementMicromapPropertiesNV: ChainableBase, Phy
 
     public let maxDisplacementMicromapSubdivisionLevel: UInt32
 
-    init(cStruct: VkPhysicalDeviceDisplacementMicromapPropertiesNV) {
+    public init(cStruct: VkPhysicalDeviceDisplacementMicromapPropertiesNV) {
         self.maxDisplacementMicromapSubdivisionLevel = cStruct.maxDisplacementMicromapSubdivisionLevel
     }
 
@@ -37937,7 +37937,7 @@ public struct AccelerationStructureTrianglesDisplacementMicromapNV: ChainableBas
         self.micromap = micromap
     }
 
-    init(cStruct: VkAccelerationStructureTrianglesDisplacementMicromapNV, device: Device) {
+    public init(cStruct: VkAccelerationStructureTrianglesDisplacementMicromapNV, device: Device) {
         self.displacementBiasAndScaleFormat = Format(rawValue: unsafeBitCast(cStruct.displacementBiasAndScaleFormat, to: UInt32.self))!
         self.displacementVectorFormat = Format(rawValue: unsafeBitCast(cStruct.displacementVectorFormat, to: UInt32.self))!
         self.displacementBiasAndScaleBuffer = cStruct.displacementBiasAndScaleBuffer
@@ -37995,7 +37995,7 @@ public struct PipelinePropertiesIdentifierEXT: ChainableBase {
 
     public let pipelineIdentifier: (UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8)
 
-    init(cStruct: VkPipelinePropertiesIdentifierEXT) {
+    public init(cStruct: VkPipelinePropertiesIdentifierEXT) {
         self.pipelineIdentifier = cStruct.pipelineIdentifier
     }
 
@@ -38023,7 +38023,7 @@ public struct PhysicalDevicePipelinePropertiesFeaturesEXT: ChainableBase, Physic
         self.pipelinePropertiesIdentifier = pipelinePropertiesIdentifier
     }
 
-    init(cStruct: VkPhysicalDevicePipelinePropertiesFeaturesEXT) {
+    public init(cStruct: VkPhysicalDevicePipelinePropertiesFeaturesEXT) {
         self.pipelinePropertiesIdentifier = cStruct.pipelinePropertiesIdentifier == VK_TRUE
     }
 
@@ -38051,7 +38051,7 @@ public struct PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD: Chainabl
         self.shaderEarlyAndLateFragmentTests = shaderEarlyAndLateFragmentTests
     }
 
-    init(cStruct: VkPhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD) {
+    public init(cStruct: VkPhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD) {
         self.shaderEarlyAndLateFragmentTests = cStruct.shaderEarlyAndLateFragmentTests == VK_TRUE
     }
 
@@ -38079,7 +38079,7 @@ public struct ExternalMemoryAcquireUnmodifiedEXT: ChainableBase, BufferMemoryBar
         self.acquireUnmodifiedMemory = acquireUnmodifiedMemory
     }
 
-    init(cStruct: VkExternalMemoryAcquireUnmodifiedEXT) {
+    public init(cStruct: VkExternalMemoryAcquireUnmodifiedEXT) {
         self.acquireUnmodifiedMemory = cStruct.acquireUnmodifiedMemory == VK_TRUE
     }
 
@@ -38108,7 +38108,7 @@ public struct ExportMetalObjectCreateInfoEXT: ChainableBase, InstanceCreateInfoE
         self.exportObjectType = exportObjectType
     }
 
-    init(cStruct: VkExportMetalObjectCreateInfoEXT) {
+    public init(cStruct: VkExportMetalObjectCreateInfoEXT) {
         self.exportObjectType = ExportMetalObjectTypeFlagsEXT(rawValue: unsafeBitCast(cStruct.exportObjectType.rawValue, to: UInt32.self))
     }
 
@@ -38136,7 +38136,7 @@ public struct ExportMetalObjectsInfoEXT: ChainableBase {
     public init() {
     }
 
-    init(cStruct: VkExportMetalObjectsInfoEXT) {
+    public init(cStruct: VkExportMetalObjectsInfoEXT) {
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkExportMetalObjectsInfoEXT>) throws(E) -> R) throws(E) -> R {
@@ -38164,7 +38164,7 @@ public struct ExportMetalDeviceInfoEXT: ChainableBase, ExportMetalObjectsInfoEXT
         self.mtlDevice = mtlDevice
     }
 
-    init(cStruct: VkExportMetalDeviceInfoEXT) {
+    public init(cStruct: VkExportMetalDeviceInfoEXT) {
         self.mtlDevice = cStruct.mtlDevice
     }
 
@@ -38196,7 +38196,7 @@ public struct ExportMetalCommandQueueInfoEXT: ChainableBase, ExportMetalObjectsI
         self.mtlCommandQueue = mtlCommandQueue
     }
 
-    init(cStruct: VkExportMetalCommandQueueInfoEXT, device: Device) {
+    public init(cStruct: VkExportMetalCommandQueueInfoEXT, device: Device) {
         self.queue = Queue(handle: cStruct.queue, device: device)
         self.mtlCommandQueue = cStruct.mtlCommandQueue
     }
@@ -38230,7 +38230,7 @@ public struct ExportMetalBufferInfoEXT: ChainableBase, ExportMetalObjectsInfoEXT
         self.mtlBuffer = mtlBuffer
     }
 
-    init(cStruct: VkExportMetalBufferInfoEXT, device: Device) {
+    public init(cStruct: VkExportMetalBufferInfoEXT, device: Device) {
         self.memory = DeviceMemory(handle: cStruct.memory, device: device)
         self.mtlBuffer = cStruct.mtlBuffer
     }
@@ -38262,7 +38262,7 @@ public struct ImportMetalBufferInfoEXT: ChainableBase, MemoryAllocateInfoExtensi
         self.mtlBuffer = mtlBuffer
     }
 
-    init(cStruct: VkImportMetalBufferInfoEXT) {
+    public init(cStruct: VkImportMetalBufferInfoEXT) {
         self.mtlBuffer = cStruct.mtlBuffer
     }
 
@@ -38300,7 +38300,7 @@ public struct ExportMetalTextureInfoEXT: ChainableBase, ExportMetalObjectsInfoEX
         self.mtlTexture = mtlTexture
     }
 
-    init(cStruct: VkExportMetalTextureInfoEXT, device: Device) {
+    public init(cStruct: VkExportMetalTextureInfoEXT, device: Device) {
         self.image = (cStruct.image != nil) ? Image(handle: cStruct.image, device: device) : nil
         self.imageView = (cStruct.imageView != nil) ? ImageView(handle: cStruct.imageView, device: device) : nil
         self.bufferView = (cStruct.bufferView != nil) ? BufferView(handle: cStruct.bufferView, device: device) : nil
@@ -38340,7 +38340,7 @@ public struct ImportMetalTextureInfoEXT: ChainableBase, ImageCreateInfoExtension
         self.mtlTexture = mtlTexture
     }
 
-    init(cStruct: VkImportMetalTextureInfoEXT) {
+    public init(cStruct: VkImportMetalTextureInfoEXT) {
         self.plane = ImageAspectFlags(rawValue: unsafeBitCast(cStruct.plane.rawValue, to: UInt32.self))
         self.mtlTexture = cStruct.mtlTexture
     }
@@ -38374,7 +38374,7 @@ public struct ExportMetalIOSurfaceInfoEXT: ChainableBase, ExportMetalObjectsInfo
         self.ioSurface = ioSurface
     }
 
-    init(cStruct: VkExportMetalIOSurfaceInfoEXT, device: Device) {
+    public init(cStruct: VkExportMetalIOSurfaceInfoEXT, device: Device) {
         self.image = Image(handle: cStruct.image, device: device)
         self.ioSurface = cStruct.ioSurface
     }
@@ -38406,7 +38406,7 @@ public struct ImportMetalIOSurfaceInfoEXT: ChainableBase, ImageCreateInfoExtensi
         self.ioSurface = ioSurface
     }
 
-    init(cStruct: VkImportMetalIOSurfaceInfoEXT) {
+    public init(cStruct: VkImportMetalIOSurfaceInfoEXT) {
         self.ioSurface = cStruct.ioSurface
     }
 
@@ -38440,7 +38440,7 @@ public struct ExportMetalSharedEventInfoEXT: ChainableBase, ExportMetalObjectsIn
         self.mtlSharedEvent = mtlSharedEvent
     }
 
-    init(cStruct: VkExportMetalSharedEventInfoEXT, device: Device) {
+    public init(cStruct: VkExportMetalSharedEventInfoEXT, device: Device) {
         self.semaphore = (cStruct.semaphore != nil) ? Semaphore(handle: cStruct.semaphore, device: device) : nil
         self.event = (cStruct.event != nil) ? Event(handle: cStruct.event, device: device) : nil
         self.mtlSharedEvent = cStruct.mtlSharedEvent
@@ -38474,7 +38474,7 @@ public struct ImportMetalSharedEventInfoEXT: ChainableBase, SemaphoreCreateInfoE
         self.mtlSharedEvent = mtlSharedEvent
     }
 
-    init(cStruct: VkImportMetalSharedEventInfoEXT) {
+    public init(cStruct: VkImportMetalSharedEventInfoEXT) {
         self.mtlSharedEvent = cStruct.mtlSharedEvent
     }
 
@@ -38503,7 +38503,7 @@ public struct PhysicalDeviceNonSeamlessCubeMapFeaturesEXT: ChainableBase, Physic
         self.nonSeamlessCubeMap = nonSeamlessCubeMap
     }
 
-    init(cStruct: VkPhysicalDeviceNonSeamlessCubeMapFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceNonSeamlessCubeMapFeaturesEXT) {
         self.nonSeamlessCubeMap = cStruct.nonSeamlessCubeMap == VK_TRUE
     }
 
@@ -38531,7 +38531,7 @@ public struct PhysicalDevicePipelineRobustnessFeatures: ChainableBase, PhysicalD
         self.pipelineRobustness = pipelineRobustness
     }
 
-    init(cStruct: VkPhysicalDevicePipelineRobustnessFeatures) {
+    public init(cStruct: VkPhysicalDevicePipelineRobustnessFeatures) {
         self.pipelineRobustness = cStruct.pipelineRobustness == VK_TRUE
     }
 
@@ -38565,7 +38565,7 @@ public struct PipelineRobustnessCreateInfo: ChainableBase, GraphicsPipelineCreat
         self.images = images
     }
 
-    init(cStruct: VkPipelineRobustnessCreateInfo) {
+    public init(cStruct: VkPipelineRobustnessCreateInfo) {
         self.storageBuffers = PipelineRobustnessBufferBehavior(rawValue: unsafeBitCast(cStruct.storageBuffers, to: UInt32.self))!
         self.uniformBuffers = PipelineRobustnessBufferBehavior(rawValue: unsafeBitCast(cStruct.uniformBuffers, to: UInt32.self))!
         self.vertexInputs = PipelineRobustnessBufferBehavior(rawValue: unsafeBitCast(cStruct.vertexInputs, to: UInt32.self))!
@@ -38598,7 +38598,7 @@ public struct PhysicalDevicePipelineRobustnessProperties: ChainableBase, Physica
     public let defaultRobustnessVertexInputs: PipelineRobustnessBufferBehavior
     public let defaultRobustnessImages: PipelineRobustnessImageBehavior
 
-    init(cStruct: VkPhysicalDevicePipelineRobustnessProperties) {
+    public init(cStruct: VkPhysicalDevicePipelineRobustnessProperties) {
         self.defaultRobustnessStorageBuffers = PipelineRobustnessBufferBehavior(rawValue: unsafeBitCast(cStruct.defaultRobustnessStorageBuffers, to: UInt32.self))!
         self.defaultRobustnessUniformBuffers = PipelineRobustnessBufferBehavior(rawValue: unsafeBitCast(cStruct.defaultRobustnessUniformBuffers, to: UInt32.self))!
         self.defaultRobustnessVertexInputs = PipelineRobustnessBufferBehavior(rawValue: unsafeBitCast(cStruct.defaultRobustnessVertexInputs, to: UInt32.self))!
@@ -38636,7 +38636,7 @@ public struct ImageViewSampleWeightCreateInfoQCOM: ChainableBase, ImageViewCreat
         self.numPhases = numPhases
     }
 
-    init(cStruct: VkImageViewSampleWeightCreateInfoQCOM) {
+    public init(cStruct: VkImageViewSampleWeightCreateInfoQCOM) {
         self.filterCenter = Offset2D(cStruct: cStruct.filterCenter)
         self.filterSize = Extent2D(cStruct: cStruct.filterSize)
         self.numPhases = cStruct.numPhases
@@ -38672,7 +38672,7 @@ public struct PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM: ChainableBase,
         self.shaderMultipleWaitQueues = shaderMultipleWaitQueues
     }
 
-    init(cStruct: VkPhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM) {
+    public init(cStruct: VkPhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM) {
         self.shaderMultipleWaitQueues = cStruct.shaderMultipleWaitQueues == VK_TRUE
     }
 
@@ -38696,7 +38696,7 @@ public struct PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM: ChainableBas
 
     public let maxShaderWaitQueues: UInt32
 
-    init(cStruct: VkPhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM) {
+    public init(cStruct: VkPhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM) {
         self.maxShaderWaitQueues = cStruct.maxShaderWaitQueues
     }
 
@@ -38728,7 +38728,7 @@ public struct PhysicalDeviceImageProcessingFeaturesQCOM: ChainableBase, Physical
         self.textureBlockMatch = textureBlockMatch
     }
 
-    init(cStruct: VkPhysicalDeviceImageProcessingFeaturesQCOM) {
+    public init(cStruct: VkPhysicalDeviceImageProcessingFeaturesQCOM) {
         self.textureSampleWeighted = cStruct.textureSampleWeighted == VK_TRUE
         self.textureBoxFilter = cStruct.textureBoxFilter == VK_TRUE
         self.textureBlockMatch = cStruct.textureBlockMatch == VK_TRUE
@@ -38759,7 +38759,7 @@ public struct PhysicalDeviceImageProcessingPropertiesQCOM: ChainableBase, Physic
     public let maxBlockMatchRegion: Extent2D
     public let maxBoxFilterBlockSize: Extent2D
 
-    init(cStruct: VkPhysicalDeviceImageProcessingPropertiesQCOM) {
+    public init(cStruct: VkPhysicalDeviceImageProcessingPropertiesQCOM) {
         self.maxWeightFilterPhases = cStruct.maxWeightFilterPhases
         self.maxWeightFilterDimension = Extent2D(cStruct: cStruct.maxWeightFilterDimension)
         self.maxBlockMatchRegion = Extent2D(cStruct: cStruct.maxBlockMatchRegion)
@@ -38799,7 +38799,7 @@ public struct PhysicalDeviceTilePropertiesFeaturesQCOM: ChainableBase, PhysicalD
         self.tileProperties = tileProperties
     }
 
-    init(cStruct: VkPhysicalDeviceTilePropertiesFeaturesQCOM) {
+    public init(cStruct: VkPhysicalDeviceTilePropertiesFeaturesQCOM) {
         self.tileProperties = cStruct.tileProperties == VK_TRUE
     }
 
@@ -38831,7 +38831,7 @@ public struct TilePropertiesQCOM: ChainableBase {
         self.origin = origin
     }
 
-    init(cStruct: VkTilePropertiesQCOM) {
+    public init(cStruct: VkTilePropertiesQCOM) {
         self.tileSize = Extent3D(cStruct: cStruct.tileSize)
         self.apronSize = Extent2D(cStruct: cStruct.apronSize)
         self.origin = Offset2D(cStruct: cStruct.origin)
@@ -38869,7 +38869,7 @@ public struct TileMemoryBindInfoQCOM: ChainableBase, CommandBufferInheritanceInf
         self.memory = memory
     }
 
-    init(cStruct: VkTileMemoryBindInfoQCOM, device: Device) {
+    public init(cStruct: VkTileMemoryBindInfoQCOM, device: Device) {
         self.memory = DeviceMemory(handle: cStruct.memory, device: device)
     }
 
@@ -38897,7 +38897,7 @@ public struct PhysicalDeviceAmigoProfilingFeaturesSEC: ChainableBase, PhysicalDe
         self.amigoProfiling = amigoProfiling
     }
 
-    init(cStruct: VkPhysicalDeviceAmigoProfilingFeaturesSEC) {
+    public init(cStruct: VkPhysicalDeviceAmigoProfilingFeaturesSEC) {
         self.amigoProfiling = cStruct.amigoProfiling == VK_TRUE
     }
 
@@ -38927,7 +38927,7 @@ public struct AmigoProfilingSubmitInfoSEC: ChainableBase, SubmitInfoExtension {
         self.swapBufferTimestamp = swapBufferTimestamp
     }
 
-    init(cStruct: VkAmigoProfilingSubmitInfoSEC) {
+    public init(cStruct: VkAmigoProfilingSubmitInfoSEC) {
         self.firstDrawTimestamp = cStruct.firstDrawTimestamp
         self.swapBufferTimestamp = cStruct.swapBufferTimestamp
     }
@@ -38957,7 +38957,7 @@ public struct PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT: ChainableBa
         self.attachmentFeedbackLoopLayout = attachmentFeedbackLoopLayout
     }
 
-    init(cStruct: VkPhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT) {
         self.attachmentFeedbackLoopLayout = cStruct.attachmentFeedbackLoopLayout == VK_TRUE
     }
 
@@ -38985,7 +38985,7 @@ public struct AttachmentFeedbackLoopInfoEXT: ChainableBase, RenderingAttachmentI
         self.feedbackLoopEnable = feedbackLoopEnable
     }
 
-    init(cStruct: VkAttachmentFeedbackLoopInfoEXT) {
+    public init(cStruct: VkAttachmentFeedbackLoopInfoEXT) {
         self.feedbackLoopEnable = cStruct.feedbackLoopEnable == VK_TRUE
     }
 
@@ -39013,7 +39013,7 @@ public struct PhysicalDeviceAddressBindingReportFeaturesEXT: ChainableBase, Phys
         self.reportAddressBinding = reportAddressBinding
     }
 
-    init(cStruct: VkPhysicalDeviceAddressBindingReportFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceAddressBindingReportFeaturesEXT) {
         self.reportAddressBinding = cStruct.reportAddressBinding == VK_TRUE
     }
 
@@ -39041,7 +39041,7 @@ public struct RenderingAttachmentFlagsInfoKHR: ChainableBase, RenderingAttachmen
         self.flags = flags
     }
 
-    init(cStruct: VkRenderingAttachmentFlagsInfoKHR) {
+    public init(cStruct: VkRenderingAttachmentFlagsInfoKHR) {
         self.flags = RenderingAttachmentFlagsKHR(rawValue: cStruct.flags)
     }
 
@@ -39073,7 +39073,7 @@ public struct ResolveImageModeInfoKHR: ChainableBase, ResolveImageInfo2Extension
         self.stencilResolveMode = stencilResolveMode
     }
 
-    init(cStruct: VkResolveImageModeInfoKHR) {
+    public init(cStruct: VkResolveImageModeInfoKHR) {
         self.flags = ResolveImageFlagsKHR(rawValue: cStruct.flags)
         self.resolveMode = ResolveModeFlags(rawValue: unsafeBitCast(cStruct.resolveMode.rawValue, to: UInt32.self))
         self.stencilResolveMode = ResolveModeFlags(rawValue: unsafeBitCast(cStruct.stencilResolveMode.rawValue, to: UInt32.self))
@@ -39111,7 +39111,7 @@ public struct DeviceAddressBindingCallbackDataEXT: ChainableBase, DebugUtilsMess
         self.bindingType = bindingType
     }
 
-    init(cStruct: VkDeviceAddressBindingCallbackDataEXT) {
+    public init(cStruct: VkDeviceAddressBindingCallbackDataEXT) {
         self.flags = DeviceAddressBindingFlagsEXT(rawValue: cStruct.flags)
         self.baseAddress = cStruct.baseAddress
         self.size = cStruct.size
@@ -39145,7 +39145,7 @@ public struct PhysicalDeviceOpticalFlowFeaturesNV: ChainableBase, PhysicalDevice
         self.opticalFlow = opticalFlow
     }
 
-    init(cStruct: VkPhysicalDeviceOpticalFlowFeaturesNV) {
+    public init(cStruct: VkPhysicalDeviceOpticalFlowFeaturesNV) {
         self.opticalFlow = cStruct.opticalFlow == VK_TRUE
     }
 
@@ -39179,7 +39179,7 @@ public struct PhysicalDeviceOpticalFlowPropertiesNV: ChainableBase, PhysicalDevi
     public let maxHeight: UInt32
     public let maxNumRegionsOfInterest: UInt32
 
-    init(cStruct: VkPhysicalDeviceOpticalFlowPropertiesNV) {
+    public init(cStruct: VkPhysicalDeviceOpticalFlowPropertiesNV) {
         self.supportedOutputGridSizes = OpticalFlowGridSizeFlagsNV(rawValue: cStruct.supportedOutputGridSizes)
         self.supportedHintGridSizes = OpticalFlowGridSizeFlagsNV(rawValue: cStruct.supportedHintGridSizes)
         self.hintSupported = cStruct.hintSupported == VK_TRUE
@@ -39227,7 +39227,7 @@ public struct OpticalFlowImageFormatInfoNV: ChainableBase, PhysicalDeviceImageFo
         self.usage = usage
     }
 
-    init(cStruct: VkOpticalFlowImageFormatInfoNV) {
+    public init(cStruct: VkOpticalFlowImageFormatInfoNV) {
         self.usage = OpticalFlowUsageFlagsNV(rawValue: cStruct.usage)
     }
 
@@ -39251,7 +39251,7 @@ public struct OpticalFlowImageFormatPropertiesNV: ChainableBase {
 
     public let format: Format
 
-    init(cStruct: VkOpticalFlowImageFormatPropertiesNV) {
+    public init(cStruct: VkOpticalFlowImageFormatPropertiesNV) {
         self.format = Format(rawValue: unsafeBitCast(cStruct.format, to: UInt32.self))!
     }
 
@@ -39295,7 +39295,7 @@ public struct OpticalFlowSessionCreateInfoNV: ChainableBase {
         self.flags = flags
     }
 
-    init(cStruct: VkOpticalFlowSessionCreateInfoNV) {
+    public init(cStruct: VkOpticalFlowSessionCreateInfoNV) {
         self.width = cStruct.width
         self.height = cStruct.height
         self.imageFormat = Format(rawValue: unsafeBitCast(cStruct.imageFormat, to: UInt32.self))!
@@ -39343,7 +39343,7 @@ public struct OpticalFlowSessionCreatePrivateDataInfoNV: ChainableBase, OpticalF
         self.privateData = privateData
     }
 
-    init(cStruct: VkOpticalFlowSessionCreatePrivateDataInfoNV) {
+    public init(cStruct: VkOpticalFlowSessionCreatePrivateDataInfoNV) {
         self.id = cStruct.id
         self.size = cStruct.size
         self.privateData = cStruct.pPrivateData
@@ -39377,7 +39377,7 @@ public struct OpticalFlowExecuteInfoNV: ChainableBase {
         self.regions = regions
     }
 
-    init(cStruct: VkOpticalFlowExecuteInfoNV) {
+    public init(cStruct: VkOpticalFlowExecuteInfoNV) {
         self.flags = OpticalFlowExecuteFlagsNV(rawValue: cStruct.flags)
         self.regions = UnsafeBufferPointer(start: cStruct.pRegions, count: Int(cStruct.regionCount)).map{ Rect2D(cStruct: $0) }
     }
@@ -39412,7 +39412,7 @@ public struct PhysicalDeviceFaultFeaturesEXT: ChainableBase, PhysicalDeviceFeatu
         self.deviceFaultVendorBinary = deviceFaultVendorBinary
     }
 
-    init(cStruct: VkPhysicalDeviceFaultFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceFaultFeaturesEXT) {
         self.deviceFault = cStruct.deviceFault == VK_TRUE
         self.deviceFaultVendorBinary = cStruct.deviceFaultVendorBinary == VK_TRUE
     }
@@ -39440,7 +39440,7 @@ public struct DeviceFaultAddressInfoKHR: CStructConvertible {
     public let reportedAddress: VkDeviceAddress
     public let addressPrecision: VkDeviceSize
 
-    init(cStruct: VkDeviceFaultAddressInfoKHR) {
+    public init(cStruct: VkDeviceFaultAddressInfoKHR) {
         self.addressType = DeviceFaultAddressTypeKHR(rawValue: unsafeBitCast(cStruct.addressType, to: UInt32.self))!
         self.reportedAddress = cStruct.reportedAddress
         self.addressPrecision = cStruct.addressPrecision
@@ -39462,7 +39462,7 @@ public struct DeviceFaultVendorInfoKHR: CStructConvertible {
     public let vendorFaultCode: UInt64
     public let vendorFaultData: UInt64
 
-    init(cStruct: VkDeviceFaultVendorInfoKHR) {
+    public init(cStruct: VkDeviceFaultVendorInfoKHR) {
         self.description = String(unsafeBytesOf: cStruct.description)
         self.vendorFaultCode = cStruct.vendorFaultCode
         self.vendorFaultData = cStruct.vendorFaultData
@@ -39487,7 +39487,7 @@ public struct DeviceFaultInfoKHR: ChainableBase {
     public let instructionAddressInfo: DeviceFaultAddressInfoKHR
     public let vendorInfo: DeviceFaultVendorInfoKHR
 
-    init(cStruct: VkDeviceFaultInfoKHR) {
+    public init(cStruct: VkDeviceFaultInfoKHR) {
         self.flags = DeviceFaultFlagsKHR(rawValue: cStruct.flags)
         self.groupId = cStruct.groupId
         self.description = String(unsafeBytesOf: cStruct.description)
@@ -39528,7 +39528,7 @@ public struct DeviceFaultDebugInfoKHR: ChainableBase {
     public let vendorBinarySize: UInt32
     public let vendorBinaryData: UnsafeMutableRawPointer?
 
-    init(cStruct: VkDeviceFaultDebugInfoKHR) {
+    public init(cStruct: VkDeviceFaultDebugInfoKHR) {
         self.vendorBinarySize = cStruct.vendorBinarySize
         self.vendorBinaryData = cStruct.pVendorBinaryData
     }
@@ -39562,7 +39562,7 @@ public struct DeviceFaultCountsEXT: ChainableBase {
         self.vendorBinarySize = vendorBinarySize
     }
 
-    init(cStruct: VkDeviceFaultCountsEXT) {
+    public init(cStruct: VkDeviceFaultCountsEXT) {
         self.addressInfoCount = cStruct.addressInfoCount
         self.vendorInfoCount = cStruct.vendorInfoCount
         self.vendorBinarySize = cStruct.vendorBinarySize
@@ -39593,7 +39593,7 @@ public struct DeviceFaultInfoEXT: ChainableBase {
     public let vendorInfos: UnsafeMutablePointer<VkDeviceFaultVendorInfoKHR>?
     public let vendorBinaryData: UnsafeMutableRawPointer?
 
-    init(cStruct: VkDeviceFaultInfoEXT) {
+    public init(cStruct: VkDeviceFaultInfoEXT) {
         self.description = String(unsafeBytesOf: cStruct.description)
         self.addressInfos = cStruct.pAddressInfos
         self.vendorInfos = cStruct.pVendorInfos
@@ -39647,7 +39647,7 @@ public struct DeviceFaultVendorBinaryHeaderVersionOneKHR: CStructConvertible {
         self.apiVersion = apiVersion
     }
 
-    init(cStruct: VkDeviceFaultVendorBinaryHeaderVersionOneKHR) {
+    public init(cStruct: VkDeviceFaultVendorBinaryHeaderVersionOneKHR) {
         self.headerSize = cStruct.headerSize
         self.headerVersion = DeviceFaultVendorBinaryHeaderVersionKHR(rawValue: unsafeBitCast(cStruct.headerVersion, to: UInt32.self))!
         self.vendorID = cStruct.vendorID
@@ -39693,7 +39693,7 @@ public struct PhysicalDeviceFaultFeaturesKHR: ChainableBase, PhysicalDeviceFeatu
         self.deviceFaultDeviceLostOnMasked = deviceFaultDeviceLostOnMasked
     }
 
-    init(cStruct: VkPhysicalDeviceFaultFeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceFaultFeaturesKHR) {
         self.deviceFault = cStruct.deviceFault == VK_TRUE
         self.deviceFaultVendorBinary = cStruct.deviceFaultVendorBinary == VK_TRUE
         self.deviceFaultReportMasked = cStruct.deviceFaultReportMasked == VK_TRUE
@@ -39723,7 +39723,7 @@ public struct PhysicalDeviceFaultPropertiesKHR: ChainableBase, PhysicalDevicePro
 
     public let maxDeviceFaultCount: UInt32
 
-    init(cStruct: VkPhysicalDeviceFaultPropertiesKHR) {
+    public init(cStruct: VkPhysicalDeviceFaultPropertiesKHR) {
         self.maxDeviceFaultCount = cStruct.maxDeviceFaultCount
     }
 
@@ -39751,7 +39751,7 @@ public struct PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT: ChainableBas
         self.pipelineLibraryGroupHandles = pipelineLibraryGroupHandles
     }
 
-    init(cStruct: VkPhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT) {
+    public init(cStruct: VkPhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT) {
         self.pipelineLibraryGroupHandles = cStruct.pipelineLibraryGroupHandles == VK_TRUE
     }
 
@@ -39783,7 +39783,7 @@ public struct DepthBiasInfoEXT: ChainableBase {
         self.depthBiasSlopeFactor = depthBiasSlopeFactor
     }
 
-    init(cStruct: VkDepthBiasInfoEXT) {
+    public init(cStruct: VkDepthBiasInfoEXT) {
         self.depthBiasConstantFactor = cStruct.depthBiasConstantFactor
         self.depthBiasClamp = cStruct.depthBiasClamp
         self.depthBiasSlopeFactor = cStruct.depthBiasSlopeFactor
@@ -39817,7 +39817,7 @@ public struct DepthBiasRepresentationInfoEXT: ChainableBase, DepthBiasInfoEXTExt
         self.depthBiasExact = depthBiasExact
     }
 
-    init(cStruct: VkDepthBiasRepresentationInfoEXT) {
+    public init(cStruct: VkDepthBiasRepresentationInfoEXT) {
         self.depthBiasRepresentation = DepthBiasRepresentationEXT(rawValue: unsafeBitCast(cStruct.depthBiasRepresentation, to: UInt32.self))!
         self.depthBiasExact = cStruct.depthBiasExact == VK_TRUE
     }
@@ -39855,7 +39855,7 @@ public struct DecompressMemoryRegionNV: CStructConvertible {
         self.decompressionMethod = decompressionMethod
     }
 
-    init(cStruct: VkDecompressMemoryRegionNV) {
+    public init(cStruct: VkDecompressMemoryRegionNV) {
         self.srcAddress = cStruct.srcAddress
         self.dstAddress = cStruct.dstAddress
         self.compressedSize = cStruct.compressedSize
@@ -39889,7 +39889,7 @@ public struct DecompressMemoryRegionEXT: CStructConvertible {
         self.decompressedSize = decompressedSize
     }
 
-    init(cStruct: VkDecompressMemoryRegionEXT) {
+    public init(cStruct: VkDecompressMemoryRegionEXT) {
         self.srcAddress = cStruct.srcAddress
         self.dstAddress = cStruct.dstAddress
         self.compressedSize = cStruct.compressedSize
@@ -39917,7 +39917,7 @@ public struct DecompressMemoryInfoEXT: ChainableBase {
         self.regions = regions
     }
 
-    init(cStruct: VkDecompressMemoryInfoEXT) {
+    public init(cStruct: VkDecompressMemoryInfoEXT) {
         self.decompressionMethod = MemoryDecompressionMethodFlagsEXT(rawValue: cStruct.decompressionMethod)
         self.regions = UnsafeBufferPointer(start: cStruct.pRegions, count: Int(cStruct.regionCount)).map{ DecompressMemoryRegionEXT(cStruct: $0) }
     }
@@ -39948,7 +39948,7 @@ public struct PhysicalDeviceShaderCoreBuiltinsPropertiesARM: ChainableBase, Phys
     public let shaderCoreCount: UInt32
     public let shaderWarpsPerCore: UInt32
 
-    init(cStruct: VkPhysicalDeviceShaderCoreBuiltinsPropertiesARM) {
+    public init(cStruct: VkPhysicalDeviceShaderCoreBuiltinsPropertiesARM) {
         self.shaderCoreMask = cStruct.shaderCoreMask
         self.shaderCoreCount = cStruct.shaderCoreCount
         self.shaderWarpsPerCore = cStruct.shaderWarpsPerCore
@@ -39980,7 +39980,7 @@ public struct PhysicalDeviceShaderCoreBuiltinsFeaturesARM: ChainableBase, Physic
         self.shaderCoreBuiltins = shaderCoreBuiltins
     }
 
-    init(cStruct: VkPhysicalDeviceShaderCoreBuiltinsFeaturesARM) {
+    public init(cStruct: VkPhysicalDeviceShaderCoreBuiltinsFeaturesARM) {
         self.shaderCoreBuiltins = cStruct.shaderCoreBuiltins == VK_TRUE
     }
 
@@ -40020,7 +40020,7 @@ public struct FrameBoundaryEXT: ChainableBase, SubmitInfoExtension, SubmitInfo2E
         self.tag = tag
     }
 
-    init(cStruct: VkFrameBoundaryEXT, device: Device) {
+    public init(cStruct: VkFrameBoundaryEXT, device: Device) {
         self.flags = FrameBoundaryFlagsEXT(rawValue: cStruct.flags)
         self.frameID = cStruct.frameID
         self.images = (cStruct.pImages != nil) ? UnsafeBufferPointer(start: cStruct.pImages, count: Int(cStruct.imageCount)).map{ Image(handle: $0, device: device) } : nil
@@ -40066,7 +40066,7 @@ public struct PhysicalDeviceFrameBoundaryFeaturesEXT: ChainableBase, PhysicalDev
         self.frameBoundary = frameBoundary
     }
 
-    init(cStruct: VkPhysicalDeviceFrameBoundaryFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceFrameBoundaryFeaturesEXT) {
         self.frameBoundary = cStruct.frameBoundary == VK_TRUE
     }
 
@@ -40094,7 +40094,7 @@ public struct PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT: Chaina
         self.dynamicRenderingUnusedAttachments = dynamicRenderingUnusedAttachments
     }
 
-    init(cStruct: VkPhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT) {
         self.dynamicRenderingUnusedAttachments = cStruct.dynamicRenderingUnusedAttachments == VK_TRUE
     }
 
@@ -40122,7 +40122,7 @@ public struct PhysicalDeviceInternallySynchronizedQueuesFeaturesKHR: ChainableBa
         self.internallySynchronizedQueues = internallySynchronizedQueues
     }
 
-    init(cStruct: VkPhysicalDeviceInternallySynchronizedQueuesFeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceInternallySynchronizedQueuesFeaturesKHR) {
         self.internallySynchronizedQueues = cStruct.internallySynchronizedQueues == VK_TRUE
     }
 
@@ -40150,7 +40150,7 @@ public struct SurfacePresentModeKHR: ChainableBase, PhysicalDeviceSurfaceInfo2KH
         self.presentMode = presentMode
     }
 
-    init(cStruct: VkSurfacePresentModeKHR) {
+    public init(cStruct: VkSurfacePresentModeKHR) {
         self.presentMode = PresentModeKHR(rawValue: unsafeBitCast(cStruct.presentMode, to: UInt32.self))!
     }
 
@@ -40186,7 +40186,7 @@ public struct SurfacePresentScalingCapabilitiesKHR: ChainableBase, SurfaceCapabi
         self.maxScaledImageExtent = maxScaledImageExtent
     }
 
-    init(cStruct: VkSurfacePresentScalingCapabilitiesKHR) {
+    public init(cStruct: VkSurfacePresentScalingCapabilitiesKHR) {
         self.supportedPresentScaling = PresentScalingFlagsKHR(rawValue: cStruct.supportedPresentScaling)
         self.supportedPresentGravityX = PresentGravityFlagsKHR(rawValue: cStruct.supportedPresentGravityX)
         self.supportedPresentGravityY = PresentGravityFlagsKHR(rawValue: cStruct.supportedPresentGravityY)
@@ -40228,7 +40228,7 @@ public struct SurfacePresentModeCompatibilityKHR: ChainableBase, SurfaceCapabili
         self.presentModes = presentModes
     }
 
-    init(cStruct: VkSurfacePresentModeCompatibilityKHR) {
+    public init(cStruct: VkSurfacePresentModeCompatibilityKHR) {
         self.presentModeCount = cStruct.presentModeCount
         self.presentModes = cStruct.pPresentModes
     }
@@ -40258,7 +40258,7 @@ public struct PhysicalDeviceSwapchainMaintenance1FeaturesKHR: ChainableBase, Phy
         self.swapchainMaintenance1 = swapchainMaintenance1
     }
 
-    init(cStruct: VkPhysicalDeviceSwapchainMaintenance1FeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceSwapchainMaintenance1FeaturesKHR) {
         self.swapchainMaintenance1 = cStruct.swapchainMaintenance1 == VK_TRUE
     }
 
@@ -40286,7 +40286,7 @@ public struct SwapchainPresentFenceInfoKHR: ChainableBase, PresentInfoKHRExtensi
         self.fences = fences
     }
 
-    init(cStruct: VkSwapchainPresentFenceInfoKHR, device: Device) {
+    public init(cStruct: VkSwapchainPresentFenceInfoKHR, device: Device) {
         self.fences = UnsafeBufferPointer(start: cStruct.pFences, count: Int(cStruct.swapchainCount)).map{ ($0 != nil) ? Fence(handle: $0, device: device) : nil }
     }
 
@@ -40317,7 +40317,7 @@ public struct SwapchainPresentModesCreateInfoKHR: ChainableBase, SwapchainCreate
         self.presentModes = presentModes
     }
 
-    init(cStruct: VkSwapchainPresentModesCreateInfoKHR) {
+    public init(cStruct: VkSwapchainPresentModesCreateInfoKHR) {
         self.presentModes = UnsafeBufferPointer(start: cStruct.pPresentModes, count: Int(cStruct.presentModeCount)).map{ PresentModeKHR(rawValue: unsafeBitCast($0, to: UInt32.self))! }
     }
 
@@ -40348,7 +40348,7 @@ public struct SwapchainPresentModeInfoKHR: ChainableBase, PresentInfoKHRExtensio
         self.presentModes = presentModes
     }
 
-    init(cStruct: VkSwapchainPresentModeInfoKHR) {
+    public init(cStruct: VkSwapchainPresentModeInfoKHR) {
         self.presentModes = UnsafeBufferPointer(start: cStruct.pPresentModes, count: Int(cStruct.swapchainCount)).map{ PresentModeKHR(rawValue: unsafeBitCast($0, to: UInt32.self))! }
     }
 
@@ -40383,7 +40383,7 @@ public struct SwapchainPresentScalingCreateInfoKHR: ChainableBase, SwapchainCrea
         self.presentGravityY = presentGravityY
     }
 
-    init(cStruct: VkSwapchainPresentScalingCreateInfoKHR) {
+    public init(cStruct: VkSwapchainPresentScalingCreateInfoKHR) {
         self.scalingBehavior = PresentScalingFlagsKHR(rawValue: cStruct.scalingBehavior)
         self.presentGravityX = PresentGravityFlagsKHR(rawValue: cStruct.presentGravityX)
         self.presentGravityY = PresentGravityFlagsKHR(rawValue: cStruct.presentGravityY)
@@ -40417,7 +40417,7 @@ public struct ReleaseSwapchainImagesInfoKHR: ChainableBase {
         self.imageIndices = imageIndices
     }
 
-    init(cStruct: VkReleaseSwapchainImagesInfoKHR, device: Device) {
+    public init(cStruct: VkReleaseSwapchainImagesInfoKHR, device: Device) {
         self.swapchain = SwapchainKHR(handle: cStruct.swapchain, device: device)
         self.imageIndices = Array(UnsafeBufferPointer(start: cStruct.pImageIndices, count: Int(cStruct.imageIndexCount)))
     }
@@ -40456,7 +40456,7 @@ public struct PhysicalDeviceDepthBiasControlFeaturesEXT: ChainableBase, Physical
         self.depthBiasExact = depthBiasExact
     }
 
-    init(cStruct: VkPhysicalDeviceDepthBiasControlFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceDepthBiasControlFeaturesEXT) {
         self.depthBiasControl = cStruct.depthBiasControl == VK_TRUE
         self.leastRepresentableValueForceUnormRepresentation = cStruct.leastRepresentableValueForceUnormRepresentation == VK_TRUE
         self.floatRepresentation = cStruct.floatRepresentation == VK_TRUE
@@ -40490,7 +40490,7 @@ public struct PhysicalDeviceRayTracingInvocationReorderFeaturesEXT: ChainableBas
         self.rayTracingInvocationReorder = rayTracingInvocationReorder
     }
 
-    init(cStruct: VkPhysicalDeviceRayTracingInvocationReorderFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceRayTracingInvocationReorderFeaturesEXT) {
         self.rayTracingInvocationReorder = cStruct.rayTracingInvocationReorder == VK_TRUE
     }
 
@@ -40518,7 +40518,7 @@ public struct PhysicalDeviceRayTracingInvocationReorderFeaturesNV: ChainableBase
         self.rayTracingInvocationReorder = rayTracingInvocationReorder
     }
 
-    init(cStruct: VkPhysicalDeviceRayTracingInvocationReorderFeaturesNV) {
+    public init(cStruct: VkPhysicalDeviceRayTracingInvocationReorderFeaturesNV) {
         self.rayTracingInvocationReorder = cStruct.rayTracingInvocationReorder == VK_TRUE
     }
 
@@ -40543,7 +40543,7 @@ public struct PhysicalDeviceRayTracingInvocationReorderPropertiesEXT: ChainableB
     public let rayTracingInvocationReorderReorderingHint: RayTracingInvocationReorderModeEXT
     public let maxShaderBindingTableRecordIndex: UInt32
 
-    init(cStruct: VkPhysicalDeviceRayTracingInvocationReorderPropertiesEXT) {
+    public init(cStruct: VkPhysicalDeviceRayTracingInvocationReorderPropertiesEXT) {
         self.rayTracingInvocationReorderReorderingHint = RayTracingInvocationReorderModeEXT(rawValue: unsafeBitCast(cStruct.rayTracingInvocationReorderReorderingHint, to: UInt32.self))!
         self.maxShaderBindingTableRecordIndex = cStruct.maxShaderBindingTableRecordIndex
     }
@@ -40569,7 +40569,7 @@ public struct PhysicalDeviceRayTracingInvocationReorderPropertiesNV: ChainableBa
 
     public let rayTracingInvocationReorderReorderingHint: RayTracingInvocationReorderModeEXT
 
-    init(cStruct: VkPhysicalDeviceRayTracingInvocationReorderPropertiesNV) {
+    public init(cStruct: VkPhysicalDeviceRayTracingInvocationReorderPropertiesNV) {
         self.rayTracingInvocationReorderReorderingHint = RayTracingInvocationReorderModeEXT(rawValue: unsafeBitCast(cStruct.rayTracingInvocationReorderReorderingHint, to: UInt32.self))!
     }
 
@@ -40597,7 +40597,7 @@ public struct PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV: ChainableBase,
         self.extendedSparseAddressSpace = extendedSparseAddressSpace
     }
 
-    init(cStruct: VkPhysicalDeviceExtendedSparseAddressSpaceFeaturesNV) {
+    public init(cStruct: VkPhysicalDeviceExtendedSparseAddressSpaceFeaturesNV) {
         self.extendedSparseAddressSpace = cStruct.extendedSparseAddressSpace == VK_TRUE
     }
 
@@ -40623,7 +40623,7 @@ public struct PhysicalDeviceExtendedSparseAddressSpacePropertiesNV: ChainableBas
     public let extendedSparseImageUsageFlags: ImageUsageFlags
     public let extendedSparseBufferUsageFlags: BufferUsageFlags
 
-    init(cStruct: VkPhysicalDeviceExtendedSparseAddressSpacePropertiesNV) {
+    public init(cStruct: VkPhysicalDeviceExtendedSparseAddressSpacePropertiesNV) {
         self.extendedSparseAddressSpaceSize = cStruct.extendedSparseAddressSpaceSize
         self.extendedSparseImageUsageFlags = ImageUsageFlags(rawValue: cStruct.extendedSparseImageUsageFlags)
         self.extendedSparseBufferUsageFlags = BufferUsageFlags(rawValue: cStruct.extendedSparseBufferUsageFlags)
@@ -40657,7 +40657,7 @@ public struct DirectDriverLoadingInfoLUNARG: ChainableBase {
         self.pfnGetInstanceProcAddr = pfnGetInstanceProcAddr
     }
 
-    init(cStruct: VkDirectDriverLoadingInfoLUNARG) {
+    public init(cStruct: VkDirectDriverLoadingInfoLUNARG) {
         self.flags = DirectDriverLoadingFlagsLUNARG(rawValue: cStruct.flags)
         self.pfnGetInstanceProcAddr = cStruct.pfnGetInstanceProcAddr
     }
@@ -40689,7 +40689,7 @@ public struct DirectDriverLoadingListLUNARG: ChainableBase, InstanceCreateInfoEx
         self.drivers = drivers
     }
 
-    init(cStruct: VkDirectDriverLoadingListLUNARG) {
+    public init(cStruct: VkDirectDriverLoadingListLUNARG) {
         self.mode = DirectDriverLoadingModeLUNARG(rawValue: unsafeBitCast(cStruct.mode, to: UInt32.self))!
         self.drivers = UnsafeBufferPointer(start: cStruct.pDrivers, count: Int(cStruct.driverCount)).map{ DirectDriverLoadingInfoLUNARG(cStruct: $0) }
     }
@@ -40722,7 +40722,7 @@ public struct PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM: ChainableBase
         self.multiviewPerViewViewports = multiviewPerViewViewports
     }
 
-    init(cStruct: VkPhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM) {
+    public init(cStruct: VkPhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM) {
         self.multiviewPerViewViewports = cStruct.multiviewPerViewViewports == VK_TRUE
     }
 
@@ -40750,7 +40750,7 @@ public struct PhysicalDeviceRayTracingPositionFetchFeaturesKHR: ChainableBase, P
         self.rayTracingPositionFetch = rayTracingPositionFetch
     }
 
-    init(cStruct: VkPhysicalDeviceRayTracingPositionFetchFeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceRayTracingPositionFetchFeaturesKHR) {
         self.rayTracingPositionFetch = cStruct.rayTracingPositionFetch == VK_TRUE
     }
 
@@ -40780,7 +40780,7 @@ public struct DeviceImageSubresourceInfo: ChainableBase {
         self.subresource = subresource
     }
 
-    init(cStruct: VkDeviceImageSubresourceInfo) {
+    public init(cStruct: VkDeviceImageSubresourceInfo) {
         self.createInfo = ImageCreateInfo(cStruct: cStruct.pCreateInfo.pointee)
         self.subresource = ImageSubresource2(cStruct: cStruct.pSubresource.pointee)
     }
@@ -40812,7 +40812,7 @@ public struct PhysicalDeviceShaderCorePropertiesARM: ChainableBase, PhysicalDevi
     public let texelRate: UInt32
     public let fmaRate: UInt32
 
-    init(cStruct: VkPhysicalDeviceShaderCorePropertiesARM) {
+    public init(cStruct: VkPhysicalDeviceShaderCorePropertiesARM) {
         self.pixelRate = cStruct.pixelRate
         self.texelRate = cStruct.texelRate
         self.fmaRate = cStruct.fmaRate
@@ -40844,7 +40844,7 @@ public struct PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM: ChainableBa
         self.multiviewPerViewRenderAreas = multiviewPerViewRenderAreas
     }
 
-    init(cStruct: VkPhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM) {
+    public init(cStruct: VkPhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM) {
         self.multiviewPerViewRenderAreas = cStruct.multiviewPerViewRenderAreas == VK_TRUE
     }
 
@@ -40872,7 +40872,7 @@ public struct MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM: ChainableBase,
         self.perViewRenderAreas = perViewRenderAreas
     }
 
-    init(cStruct: VkMultiviewPerViewRenderAreasRenderPassBeginInfoQCOM) {
+    public init(cStruct: VkMultiviewPerViewRenderAreasRenderPassBeginInfoQCOM) {
         self.perViewRenderAreas = UnsafeBufferPointer(start: cStruct.pPerViewRenderAreas, count: Int(cStruct.perViewRenderAreaCount)).map{ Rect2D(cStruct: $0) }
     }
 
@@ -40903,7 +40903,7 @@ public struct QueryLowLatencySupportNV: ChainableBase, SemaphoreCreateInfoExtens
         self.queriedLowLatencyData = queriedLowLatencyData
     }
 
-    init(cStruct: VkQueryLowLatencySupportNV) {
+    public init(cStruct: VkQueryLowLatencySupportNV) {
         self.queriedLowLatencyData = cStruct.pQueriedLowLatencyData
     }
 
@@ -40937,7 +40937,7 @@ public struct MemoryMapInfo: ChainableBase {
         self.size = size
     }
 
-    init(cStruct: VkMemoryMapInfo, device: Device) {
+    public init(cStruct: VkMemoryMapInfo, device: Device) {
         self.flags = MemoryMapFlags(rawValue: cStruct.flags)
         self.memory = DeviceMemory(handle: cStruct.memory, device: device)
         self.offset = cStruct.offset
@@ -40973,7 +40973,7 @@ public struct MemoryUnmapInfo: ChainableBase {
         self.memory = memory
     }
 
-    init(cStruct: VkMemoryUnmapInfo, device: Device) {
+    public init(cStruct: VkMemoryUnmapInfo, device: Device) {
         self.flags = MemoryUnmapFlags(rawValue: cStruct.flags)
         self.memory = DeviceMemory(handle: cStruct.memory, device: device)
     }
@@ -41003,7 +41003,7 @@ public struct PhysicalDeviceShaderObjectFeaturesEXT: ChainableBase, PhysicalDevi
         self.shaderObject = shaderObject
     }
 
-    init(cStruct: VkPhysicalDeviceShaderObjectFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceShaderObjectFeaturesEXT) {
         self.shaderObject = cStruct.shaderObject == VK_TRUE
     }
 
@@ -41028,7 +41028,7 @@ public struct PhysicalDeviceShaderObjectPropertiesEXT: ChainableBase, PhysicalDe
     public let shaderBinaryUUID: (UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8)
     public let shaderBinaryVersion: UInt32
 
-    init(cStruct: VkPhysicalDeviceShaderObjectPropertiesEXT) {
+    public init(cStruct: VkPhysicalDeviceShaderObjectPropertiesEXT) {
         self.shaderBinaryUUID = cStruct.shaderBinaryUUID
         self.shaderBinaryVersion = cStruct.shaderBinaryVersion
     }
@@ -41076,7 +41076,7 @@ public struct ShaderCreateInfoEXT: ChainableBase {
         self.specializationInfo = specializationInfo
     }
 
-    init(cStruct: VkShaderCreateInfoEXT, device: Device) {
+    public init(cStruct: VkShaderCreateInfoEXT, device: Device) {
         self.flags = ShaderCreateFlagsEXT(rawValue: cStruct.flags)
         self.stage = ShaderStageFlags(rawValue: unsafeBitCast(cStruct.stage.rawValue, to: UInt32.self))
         self.nextStage = ShaderStageFlags(rawValue: cStruct.nextStage)
@@ -41136,7 +41136,7 @@ public struct PhysicalDeviceShaderTileImageFeaturesEXT: ChainableBase, PhysicalD
         self.shaderTileImageStencilReadAccess = shaderTileImageStencilReadAccess
     }
 
-    init(cStruct: VkPhysicalDeviceShaderTileImageFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceShaderTileImageFeaturesEXT) {
         self.shaderTileImageColorReadAccess = cStruct.shaderTileImageColorReadAccess == VK_TRUE
         self.shaderTileImageDepthReadAccess = cStruct.shaderTileImageDepthReadAccess == VK_TRUE
         self.shaderTileImageStencilReadAccess = cStruct.shaderTileImageStencilReadAccess == VK_TRUE
@@ -41166,7 +41166,7 @@ public struct PhysicalDeviceShaderTileImagePropertiesEXT: ChainableBase, Physica
     public let shaderTileImageReadSampleFromPixelRateInvocation: Bool
     public let shaderTileImageReadFromHelperInvocation: Bool
 
-    init(cStruct: VkPhysicalDeviceShaderTileImagePropertiesEXT) {
+    public init(cStruct: VkPhysicalDeviceShaderTileImagePropertiesEXT) {
         self.shaderTileImageCoherentReadAccelerated = cStruct.shaderTileImageCoherentReadAccelerated == VK_TRUE
         self.shaderTileImageReadSampleFromPixelRateInvocation = cStruct.shaderTileImageReadSampleFromPixelRateInvocation == VK_TRUE
         self.shaderTileImageReadFromHelperInvocation = cStruct.shaderTileImageReadFromHelperInvocation == VK_TRUE
@@ -41199,7 +41199,7 @@ public struct ImportScreenBufferInfoQNX: ChainableBase, MemoryAllocateInfoExtens
         self.buffer = buffer
     }
 
-    init(cStruct: VkImportScreenBufferInfoQNX) {
+    public init(cStruct: VkImportScreenBufferInfoQNX) {
         self.buffer = cStruct.buffer
     }
 
@@ -41226,7 +41226,7 @@ public struct ScreenBufferPropertiesQNX: ChainableBase {
     public let allocationSize: VkDeviceSize
     public let memoryTypeBits: UInt32
 
-    init(cStruct: VkScreenBufferPropertiesQNX) {
+    public init(cStruct: VkScreenBufferPropertiesQNX) {
         self.allocationSize = cStruct.allocationSize
         self.memoryTypeBits = cStruct.memoryTypeBits
     }
@@ -41262,7 +41262,7 @@ public struct ScreenBufferFormatPropertiesQNX: ChainableBase, ScreenBufferProper
     public let suggestedXChromaOffset: ChromaLocation
     public let suggestedYChromaOffset: ChromaLocation
 
-    init(cStruct: VkScreenBufferFormatPropertiesQNX) {
+    public init(cStruct: VkScreenBufferFormatPropertiesQNX) {
         self.format = Format(rawValue: unsafeBitCast(cStruct.format, to: UInt32.self))!
         self.externalFormat = cStruct.externalFormat
         self.screenUsage = cStruct.screenUsage
@@ -41310,7 +41310,7 @@ public struct ExternalFormatQNX: ChainableBase, ImageCreateInfoExtension, Sample
         self.externalFormat = externalFormat
     }
 
-    init(cStruct: VkExternalFormatQNX) {
+    public init(cStruct: VkExternalFormatQNX) {
         self.externalFormat = cStruct.externalFormat
     }
 
@@ -41340,7 +41340,7 @@ public struct PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX: ChainableBase
         self.screenBufferImport = screenBufferImport
     }
 
-    init(cStruct: VkPhysicalDeviceExternalMemoryScreenBufferFeaturesQNX) {
+    public init(cStruct: VkPhysicalDeviceExternalMemoryScreenBufferFeaturesQNX) {
         self.screenBufferImport = cStruct.screenBufferImport == VK_TRUE
     }
 
@@ -41371,7 +41371,7 @@ public struct PhysicalDeviceCooperativeMatrixFeaturesKHR: ChainableBase, Physica
         self.cooperativeMatrixRobustBufferAccess = cooperativeMatrixRobustBufferAccess
     }
 
-    init(cStruct: VkPhysicalDeviceCooperativeMatrixFeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceCooperativeMatrixFeaturesKHR) {
         self.cooperativeMatrix = cStruct.cooperativeMatrix == VK_TRUE
         self.cooperativeMatrixRobustBufferAccess = cStruct.cooperativeMatrixRobustBufferAccess == VK_TRUE
     }
@@ -41405,7 +41405,7 @@ public struct CooperativeMatrixPropertiesKHR: ChainableBase {
     public let saturatingAccumulation: Bool
     public let scope: ScopeKHR
 
-    init(cStruct: VkCooperativeMatrixPropertiesKHR) {
+    public init(cStruct: VkCooperativeMatrixPropertiesKHR) {
         self.MSize = cStruct.MSize
         self.NSize = cStruct.NSize
         self.KSize = cStruct.KSize
@@ -41445,7 +41445,7 @@ public struct PhysicalDeviceCooperativeMatrixPropertiesKHR: ChainableBase, Physi
 
     public let cooperativeMatrixSupportedStages: ShaderStageFlags
 
-    init(cStruct: VkPhysicalDeviceCooperativeMatrixPropertiesKHR) {
+    public init(cStruct: VkPhysicalDeviceCooperativeMatrixPropertiesKHR) {
         self.cooperativeMatrixSupportedStages = ShaderStageFlags(rawValue: cStruct.cooperativeMatrixSupportedStages)
     }
 
@@ -41473,7 +41473,7 @@ public struct PhysicalDeviceCooperativeMatrixConversionFeaturesQCOM: ChainableBa
         self.cooperativeMatrixConversion = cooperativeMatrixConversion
     }
 
-    init(cStruct: VkPhysicalDeviceCooperativeMatrixConversionFeaturesQCOM) {
+    public init(cStruct: VkPhysicalDeviceCooperativeMatrixConversionFeaturesQCOM) {
         self.cooperativeMatrixConversion = cStruct.cooperativeMatrixConversion == VK_TRUE
     }
 
@@ -41504,7 +41504,7 @@ public struct PhysicalDeviceShaderEnqueuePropertiesAMDX: ChainableBase, Physical
     public let maxExecutionGraphWorkgroupCount: (UInt32, UInt32, UInt32)
     public let maxExecutionGraphWorkgroups: UInt32
 
-    init(cStruct: VkPhysicalDeviceShaderEnqueuePropertiesAMDX) {
+    public init(cStruct: VkPhysicalDeviceShaderEnqueuePropertiesAMDX) {
         self.maxExecutionGraphDepth = cStruct.maxExecutionGraphDepth
         self.maxExecutionGraphShaderOutputNodes = cStruct.maxExecutionGraphShaderOutputNodes
         self.maxExecutionGraphShaderPayloadSize = cStruct.maxExecutionGraphShaderPayloadSize
@@ -41548,7 +41548,7 @@ public struct PhysicalDeviceShaderEnqueueFeaturesAMDX: ChainableBase, PhysicalDe
         self.shaderMeshEnqueue = shaderMeshEnqueue
     }
 
-    init(cStruct: VkPhysicalDeviceShaderEnqueueFeaturesAMDX) {
+    public init(cStruct: VkPhysicalDeviceShaderEnqueueFeaturesAMDX) {
         self.shaderEnqueue = cStruct.shaderEnqueue == VK_TRUE
         self.shaderMeshEnqueue = cStruct.shaderMeshEnqueue == VK_TRUE
     }
@@ -41590,7 +41590,7 @@ public struct ExecutionGraphPipelineCreateInfoAMDX: ChainableBase {
         self.basePipelineIndex = basePipelineIndex
     }
 
-    init(cStruct: VkExecutionGraphPipelineCreateInfoAMDX, device: Device) {
+    public init(cStruct: VkExecutionGraphPipelineCreateInfoAMDX, device: Device) {
         self.flags = PipelineCreateFlags(rawValue: cStruct.flags)
         self.stages = (cStruct.pStages != nil) ? UnsafeBufferPointer(start: cStruct.pStages, count: Int(cStruct.stageCount)).map{ PipelineShaderStageCreateInfo(cStruct: $0, device: device) } : nil
         self.libraryInfo = (cStruct.pLibraryInfo != nil) ? PipelineLibraryCreateInfoKHR(cStruct: cStruct.pLibraryInfo.pointee, device: device) : nil
@@ -41637,7 +41637,7 @@ public struct PipelineShaderStageNodeCreateInfoAMDX: ChainableBase, PipelineShad
         self.index = index
     }
 
-    init(cStruct: VkPipelineShaderStageNodeCreateInfoAMDX) {
+    public init(cStruct: VkPipelineShaderStageNodeCreateInfoAMDX) {
         self.name = (cStruct.pName != nil) ? String(cString: cStruct.pName) : nil
         self.index = cStruct.index
     }
@@ -41675,7 +41675,7 @@ public struct ExecutionGraphPipelineScratchSizeAMDX: ChainableBase {
         self.sizeGranularity = sizeGranularity
     }
 
-    init(cStruct: VkExecutionGraphPipelineScratchSizeAMDX) {
+    public init(cStruct: VkExecutionGraphPipelineScratchSizeAMDX) {
         self.minSize = cStruct.minSize
         self.maxSize = cStruct.maxSize
         self.sizeGranularity = cStruct.sizeGranularity
@@ -41715,7 +41715,7 @@ public struct DispatchGraphInfoAMDX: CStructConvertible {
         self.payloadStride = payloadStride
     }
 
-    init(cStruct: VkDispatchGraphInfoAMDX) {
+    public init(cStruct: VkDispatchGraphInfoAMDX) {
         self.nodeIndex = cStruct.nodeIndex
         self.payloadCount = cStruct.payloadCount
         self.payloads = cStruct.payloads
@@ -41747,7 +41747,7 @@ public struct DispatchGraphCountInfoAMDX: CStructConvertible {
         self.stride = stride
     }
 
-    init(cStruct: VkDispatchGraphCountInfoAMDX) {
+    public init(cStruct: VkDispatchGraphCountInfoAMDX) {
         self.count = cStruct.count
         self.infos = cStruct.infos
         self.stride = cStruct.stride
@@ -41772,7 +41772,7 @@ public struct PhysicalDeviceAntiLagFeaturesAMD: ChainableBase, PhysicalDeviceFea
         self.antiLag = antiLag
     }
 
-    init(cStruct: VkPhysicalDeviceAntiLagFeaturesAMD) {
+    public init(cStruct: VkPhysicalDeviceAntiLagFeaturesAMD) {
         self.antiLag = cStruct.antiLag == VK_TRUE
     }
 
@@ -41802,7 +41802,7 @@ public struct AntiLagPresentationInfoAMD: ChainableBase {
         self.frameIndex = frameIndex
     }
 
-    init(cStruct: VkAntiLagPresentationInfoAMD) {
+    public init(cStruct: VkAntiLagPresentationInfoAMD) {
         self.stage = AntiLagStageAMD(rawValue: unsafeBitCast(cStruct.stage, to: UInt32.self))!
         self.frameIndex = cStruct.frameIndex
     }
@@ -41836,7 +41836,7 @@ public struct AntiLagDataAMD: ChainableBase {
         self.presentationInfo = presentationInfo
     }
 
-    init(cStruct: VkAntiLagDataAMD) {
+    public init(cStruct: VkAntiLagDataAMD) {
         self.mode = AntiLagModeAMD(rawValue: unsafeBitCast(cStruct.mode, to: UInt32.self))!
         self.maxFPS = cStruct.maxFPS
         self.presentationInfo = (cStruct.pPresentationInfo != nil) ? AntiLagPresentationInfoAMD(cStruct: cStruct.pPresentationInfo.pointee) : nil
@@ -41870,7 +41870,7 @@ public struct BindMemoryStatus: ChainableBase, BindBufferMemoryInfoExtension, Bi
         self.result = result
     }
 
-    init(cStruct: VkBindMemoryStatus) {
+    public init(cStruct: VkBindMemoryStatus) {
         self.result = cStruct.pResult
     }
 
@@ -41898,7 +41898,7 @@ public struct PhysicalDeviceTileMemoryHeapFeaturesQCOM: ChainableBase, PhysicalD
         self.tileMemoryHeap = tileMemoryHeap
     }
 
-    init(cStruct: VkPhysicalDeviceTileMemoryHeapFeaturesQCOM) {
+    public init(cStruct: VkPhysicalDeviceTileMemoryHeapFeaturesQCOM) {
         self.tileMemoryHeap = cStruct.tileMemoryHeap == VK_TRUE
     }
 
@@ -41928,7 +41928,7 @@ public struct PhysicalDeviceTileMemoryHeapPropertiesQCOM: ChainableBase, Physica
         self.tileBufferTransfers = tileBufferTransfers
     }
 
-    init(cStruct: VkPhysicalDeviceTileMemoryHeapPropertiesQCOM) {
+    public init(cStruct: VkPhysicalDeviceTileMemoryHeapPropertiesQCOM) {
         self.queueSubmitBoundary = cStruct.queueSubmitBoundary == VK_TRUE
         self.tileBufferTransfers = cStruct.tileBufferTransfers == VK_TRUE
     }
@@ -41958,7 +41958,7 @@ public struct TileMemorySizeInfoQCOM: ChainableBase, RenderPassCreateInfoExtensi
         self.size = size
     }
 
-    init(cStruct: VkTileMemorySizeInfoQCOM) {
+    public init(cStruct: VkTileMemorySizeInfoQCOM) {
         self.size = cStruct.size
     }
 
@@ -41988,7 +41988,7 @@ public struct TileMemoryRequirementsQCOM: ChainableBase, MemoryRequirements2Exte
         self.alignment = alignment
     }
 
-    init(cStruct: VkTileMemoryRequirementsQCOM) {
+    public init(cStruct: VkTileMemoryRequirementsQCOM) {
         self.size = cStruct.size
         self.alignment = cStruct.alignment
     }
@@ -42026,7 +42026,7 @@ public struct BindDescriptorSetsInfo: ChainableBase {
         self.dynamicOffsets = dynamicOffsets
     }
 
-    init(cStruct: VkBindDescriptorSetsInfo, device: Device, descriptorPool: DescriptorPool) {
+    public init(cStruct: VkBindDescriptorSetsInfo, device: Device, descriptorPool: DescriptorPool) {
         self.stageFlags = ShaderStageFlags(rawValue: cStruct.stageFlags)
         self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout, device: device) : nil
         self.firstSet = cStruct.firstSet
@@ -42076,7 +42076,7 @@ public struct PushConstantsInfo: ChainableBase {
         self.values = values
     }
 
-    init(cStruct: VkPushConstantsInfo, device: Device) {
+    public init(cStruct: VkPushConstantsInfo, device: Device) {
         self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout, device: device) : nil
         self.stageFlags = ShaderStageFlags(rawValue: cStruct.stageFlags)
         self.offset = cStruct.offset
@@ -42118,7 +42118,7 @@ public struct PushDescriptorSetInfo: ChainableBase {
         self.descriptorWrites = descriptorWrites
     }
 
-    init(cStruct: VkPushDescriptorSetInfo, device: Device, descriptorPool: DescriptorPool) {
+    public init(cStruct: VkPushDescriptorSetInfo, device: Device, descriptorPool: DescriptorPool) {
         self.stageFlags = ShaderStageFlags(rawValue: cStruct.stageFlags)
         self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout, device: device) : nil
         self.set = cStruct.set
@@ -42161,7 +42161,7 @@ public struct PushDescriptorSetWithTemplateInfo: ChainableBase {
         self.data = data
     }
 
-    init(cStruct: VkPushDescriptorSetWithTemplateInfo, device: Device) {
+    public init(cStruct: VkPushDescriptorSetWithTemplateInfo, device: Device) {
         self.descriptorUpdateTemplate = DescriptorUpdateTemplate(handle: cStruct.descriptorUpdateTemplate, device: device)
         self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout, device: device) : nil
         self.set = cStruct.set
@@ -42203,7 +42203,7 @@ public struct SetDescriptorBufferOffsetsInfoEXT: ChainableBase {
         self.offsets = offsets
     }
 
-    init(cStruct: VkSetDescriptorBufferOffsetsInfoEXT, device: Device) {
+    public init(cStruct: VkSetDescriptorBufferOffsetsInfoEXT, device: Device) {
         self.stageFlags = ShaderStageFlags(rawValue: cStruct.stageFlags)
         self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout, device: device) : nil
         self.firstSet = cStruct.firstSet
@@ -42248,7 +42248,7 @@ public struct BindDescriptorBufferEmbeddedSamplersInfoEXT: ChainableBase {
         self.set = set
     }
 
-    init(cStruct: VkBindDescriptorBufferEmbeddedSamplersInfoEXT, device: Device) {
+    public init(cStruct: VkBindDescriptorBufferEmbeddedSamplersInfoEXT, device: Device) {
         self.stageFlags = ShaderStageFlags(rawValue: cStruct.stageFlags)
         self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout, device: device) : nil
         self.set = cStruct.set
@@ -42280,7 +42280,7 @@ public struct PhysicalDeviceCubicClampFeaturesQCOM: ChainableBase, PhysicalDevic
         self.cubicRangeClamp = cubicRangeClamp
     }
 
-    init(cStruct: VkPhysicalDeviceCubicClampFeaturesQCOM) {
+    public init(cStruct: VkPhysicalDeviceCubicClampFeaturesQCOM) {
         self.cubicRangeClamp = cStruct.cubicRangeClamp == VK_TRUE
     }
 
@@ -42308,7 +42308,7 @@ public struct PhysicalDeviceYcbcrDegammaFeaturesQCOM: ChainableBase, PhysicalDev
         self.ycbcrDegamma = ycbcrDegamma
     }
 
-    init(cStruct: VkPhysicalDeviceYcbcrDegammaFeaturesQCOM) {
+    public init(cStruct: VkPhysicalDeviceYcbcrDegammaFeaturesQCOM) {
         self.ycbcrDegamma = cStruct.ycbcrDegamma == VK_TRUE
     }
 
@@ -42338,7 +42338,7 @@ public struct SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM: ChainableBase, S
         self.enableCbCrDegamma = enableCbCrDegamma
     }
 
-    init(cStruct: VkSamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM) {
+    public init(cStruct: VkSamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM) {
         self.enableYDegamma = cStruct.enableYDegamma == VK_TRUE
         self.enableCbCrDegamma = cStruct.enableCbCrDegamma == VK_TRUE
     }
@@ -42368,7 +42368,7 @@ public struct PhysicalDeviceCubicWeightsFeaturesQCOM: ChainableBase, PhysicalDev
         self.selectableCubicWeights = selectableCubicWeights
     }
 
-    init(cStruct: VkPhysicalDeviceCubicWeightsFeaturesQCOM) {
+    public init(cStruct: VkPhysicalDeviceCubicWeightsFeaturesQCOM) {
         self.selectableCubicWeights = cStruct.selectableCubicWeights == VK_TRUE
     }
 
@@ -42396,7 +42396,7 @@ public struct SamplerCubicWeightsCreateInfoQCOM: ChainableBase, SamplerCreateInf
         self.cubicWeights = cubicWeights
     }
 
-    init(cStruct: VkSamplerCubicWeightsCreateInfoQCOM) {
+    public init(cStruct: VkSamplerCubicWeightsCreateInfoQCOM) {
         self.cubicWeights = CubicFilterWeightsQCOM(rawValue: unsafeBitCast(cStruct.cubicWeights, to: UInt32.self))!
     }
 
@@ -42424,7 +42424,7 @@ public struct BlitImageCubicWeightsInfoQCOM: ChainableBase, BlitImageInfo2Extens
         self.cubicWeights = cubicWeights
     }
 
-    init(cStruct: VkBlitImageCubicWeightsInfoQCOM) {
+    public init(cStruct: VkBlitImageCubicWeightsInfoQCOM) {
         self.cubicWeights = CubicFilterWeightsQCOM(rawValue: unsafeBitCast(cStruct.cubicWeights, to: UInt32.self))!
     }
 
@@ -42452,7 +42452,7 @@ public struct PhysicalDeviceImageProcessing2FeaturesQCOM: ChainableBase, Physica
         self.textureBlockMatch2 = textureBlockMatch2
     }
 
-    init(cStruct: VkPhysicalDeviceImageProcessing2FeaturesQCOM) {
+    public init(cStruct: VkPhysicalDeviceImageProcessing2FeaturesQCOM) {
         self.textureBlockMatch2 = cStruct.textureBlockMatch2 == VK_TRUE
     }
 
@@ -42476,7 +42476,7 @@ public struct PhysicalDeviceImageProcessing2PropertiesQCOM: ChainableBase, Physi
 
     public let maxBlockMatchWindow: Extent2D
 
-    init(cStruct: VkPhysicalDeviceImageProcessing2PropertiesQCOM) {
+    public init(cStruct: VkPhysicalDeviceImageProcessing2PropertiesQCOM) {
         self.maxBlockMatchWindow = Extent2D(cStruct: cStruct.maxBlockMatchWindow)
     }
 
@@ -42508,7 +42508,7 @@ public struct SamplerBlockMatchWindowCreateInfoQCOM: ChainableBase, SamplerCreat
         self.windowCompareMode = windowCompareMode
     }
 
-    init(cStruct: VkSamplerBlockMatchWindowCreateInfoQCOM) {
+    public init(cStruct: VkSamplerBlockMatchWindowCreateInfoQCOM) {
         self.windowExtent = Extent2D(cStruct: cStruct.windowExtent)
         self.windowCompareMode = BlockMatchWindowCompareModeQCOM(rawValue: unsafeBitCast(cStruct.windowCompareMode, to: UInt32.self))!
     }
@@ -42544,7 +42544,7 @@ public struct PhysicalDeviceImageProcessing3FeaturesQCOM: ChainableBase, Physica
         self.blockMatchExtendedClampToEdge = blockMatchExtendedClampToEdge
     }
 
-    init(cStruct: VkPhysicalDeviceImageProcessing3FeaturesQCOM) {
+    public init(cStruct: VkPhysicalDeviceImageProcessing3FeaturesQCOM) {
         self.imageGatherLinear = cStruct.imageGatherLinear == VK_TRUE
         self.imageGatherExtendedModes = cStruct.imageGatherExtendedModes == VK_TRUE
         self.blockMatchExtendedClampToEdge = cStruct.blockMatchExtendedClampToEdge == VK_TRUE
@@ -42576,7 +42576,7 @@ public struct PhysicalDeviceDescriptorPoolOverallocationFeaturesNV: ChainableBas
         self.descriptorPoolOverallocation = descriptorPoolOverallocation
     }
 
-    init(cStruct: VkPhysicalDeviceDescriptorPoolOverallocationFeaturesNV) {
+    public init(cStruct: VkPhysicalDeviceDescriptorPoolOverallocationFeaturesNV) {
         self.descriptorPoolOverallocation = cStruct.descriptorPoolOverallocation == VK_TRUE
     }
 
@@ -42600,7 +42600,7 @@ public struct PhysicalDeviceLayeredDriverPropertiesMSFT: ChainableBase, Physical
 
     public let underlyingAPI: LayeredDriverUnderlyingApiMSFT
 
-    init(cStruct: VkPhysicalDeviceLayeredDriverPropertiesMSFT) {
+    public init(cStruct: VkPhysicalDeviceLayeredDriverPropertiesMSFT) {
         self.underlyingAPI = LayeredDriverUnderlyingApiMSFT(rawValue: unsafeBitCast(cStruct.underlyingAPI, to: UInt32.self))!
     }
 
@@ -42630,7 +42630,7 @@ public struct PhysicalDevicePerStageDescriptorSetFeaturesNV: ChainableBase, Phys
         self.dynamicPipelineLayout = dynamicPipelineLayout
     }
 
-    init(cStruct: VkPhysicalDevicePerStageDescriptorSetFeaturesNV) {
+    public init(cStruct: VkPhysicalDevicePerStageDescriptorSetFeaturesNV) {
         self.perStageDescriptorSet = cStruct.perStageDescriptorSet == VK_TRUE
         self.dynamicPipelineLayout = cStruct.dynamicPipelineLayout == VK_TRUE
     }
@@ -42661,7 +42661,7 @@ public struct PhysicalDeviceExternalFormatResolveFeaturesANDROID: ChainableBase,
         self.externalFormatResolve = externalFormatResolve
     }
 
-    init(cStruct: VkPhysicalDeviceExternalFormatResolveFeaturesANDROID) {
+    public init(cStruct: VkPhysicalDeviceExternalFormatResolveFeaturesANDROID) {
         self.externalFormatResolve = cStruct.externalFormatResolve == VK_TRUE
     }
 
@@ -42689,7 +42689,7 @@ public struct PhysicalDeviceExternalFormatResolvePropertiesANDROID: ChainableBas
     public let externalFormatResolveChromaOffsetX: ChromaLocation
     public let externalFormatResolveChromaOffsetY: ChromaLocation
 
-    init(cStruct: VkPhysicalDeviceExternalFormatResolvePropertiesANDROID) {
+    public init(cStruct: VkPhysicalDeviceExternalFormatResolvePropertiesANDROID) {
         self.nullColorAttachmentWithExternalFormatResolve = cStruct.nullColorAttachmentWithExternalFormatResolve == VK_TRUE
         self.externalFormatResolveChromaOffsetX = ChromaLocation(rawValue: unsafeBitCast(cStruct.externalFormatResolveChromaOffsetX, to: UInt32.self))!
         self.externalFormatResolveChromaOffsetY = ChromaLocation(rawValue: unsafeBitCast(cStruct.externalFormatResolveChromaOffsetY, to: UInt32.self))!
@@ -42719,7 +42719,7 @@ public struct AndroidHardwareBufferFormatResolvePropertiesANDROID: ChainableBase
 
     public let colorAttachmentFormat: Format
 
-    init(cStruct: VkAndroidHardwareBufferFormatResolvePropertiesANDROID) {
+    public init(cStruct: VkAndroidHardwareBufferFormatResolvePropertiesANDROID) {
         self.colorAttachmentFormat = Format(rawValue: unsafeBitCast(cStruct.colorAttachmentFormat, to: UInt32.self))!
     }
 
@@ -42752,7 +42752,7 @@ public struct LatencySleepModeInfoNV: ChainableBase {
         self.minimumIntervalUs = minimumIntervalUs
     }
 
-    init(cStruct: VkLatencySleepModeInfoNV) {
+    public init(cStruct: VkLatencySleepModeInfoNV) {
         self.lowLatencyMode = cStruct.lowLatencyMode == VK_TRUE
         self.lowLatencyBoost = cStruct.lowLatencyBoost == VK_TRUE
         self.minimumIntervalUs = cStruct.minimumIntervalUs
@@ -42786,7 +42786,7 @@ public struct LatencySleepInfoNV: ChainableBase {
         self.value = value
     }
 
-    init(cStruct: VkLatencySleepInfoNV, device: Device) {
+    public init(cStruct: VkLatencySleepInfoNV, device: Device) {
         self.signalSemaphore = Semaphore(handle: cStruct.signalSemaphore, device: device)
         self.value = cStruct.value
     }
@@ -42818,7 +42818,7 @@ public struct SetLatencyMarkerInfoNV: ChainableBase {
         self.marker = marker
     }
 
-    init(cStruct: VkSetLatencyMarkerInfoNV) {
+    public init(cStruct: VkSetLatencyMarkerInfoNV) {
         self.presentID = cStruct.presentID
         self.marker = LatencyMarkerNV(rawValue: unsafeBitCast(cStruct.marker, to: UInt32.self))!
     }
@@ -42857,7 +42857,7 @@ public struct LatencyTimingsFrameReportNV: ChainableBase {
     public let gpuRenderStartTimeUs: UInt64
     public let gpuRenderEndTimeUs: UInt64
 
-    init(cStruct: VkLatencyTimingsFrameReportNV) {
+    public init(cStruct: VkLatencyTimingsFrameReportNV) {
         self.presentID = cStruct.presentID
         self.inputSampleTimeUs = cStruct.inputSampleTimeUs
         self.simStartTimeUs = cStruct.simStartTimeUs
@@ -42913,7 +42913,7 @@ public struct GetLatencyMarkerInfoNV: ChainableBase {
         self.timings = timings
     }
 
-    init(cStruct: VkGetLatencyMarkerInfoNV) {
+    public init(cStruct: VkGetLatencyMarkerInfoNV) {
         self.timingCount = cStruct.timingCount
         self.timings = cStruct.pTimings
     }
@@ -42943,7 +42943,7 @@ public struct OutOfBandQueueTypeInfoNV: ChainableBase {
         self.queueType = queueType
     }
 
-    init(cStruct: VkOutOfBandQueueTypeInfoNV) {
+    public init(cStruct: VkOutOfBandQueueTypeInfoNV) {
         self.queueType = OutOfBandQueueTypeNV(rawValue: unsafeBitCast(cStruct.queueType, to: UInt32.self))!
     }
 
@@ -42971,7 +42971,7 @@ public struct LatencySubmissionPresentIdNV: ChainableBase, SubmitInfoExtension, 
         self.presentID = presentID
     }
 
-    init(cStruct: VkLatencySubmissionPresentIdNV) {
+    public init(cStruct: VkLatencySubmissionPresentIdNV) {
         self.presentID = cStruct.presentID
     }
 
@@ -42999,7 +42999,7 @@ public struct SwapchainLatencyCreateInfoNV: ChainableBase, SwapchainCreateInfoKH
         self.latencyModeEnable = latencyModeEnable
     }
 
-    init(cStruct: VkSwapchainLatencyCreateInfoNV) {
+    public init(cStruct: VkSwapchainLatencyCreateInfoNV) {
         self.latencyModeEnable = cStruct.latencyModeEnable == VK_TRUE
     }
 
@@ -43029,7 +43029,7 @@ public struct LatencySurfaceCapabilitiesNV: ChainableBase, SurfaceCapabilities2K
         self.presentModes = presentModes
     }
 
-    init(cStruct: VkLatencySurfaceCapabilitiesNV) {
+    public init(cStruct: VkLatencySurfaceCapabilitiesNV) {
         self.presentModeCount = cStruct.presentModeCount
         self.presentModes = cStruct.pPresentModes
     }
@@ -43060,7 +43060,7 @@ public struct PhysicalDeviceCudaKernelLaunchFeaturesNV: ChainableBase, PhysicalD
         self.cudaKernelLaunchFeatures = cudaKernelLaunchFeatures
     }
 
-    init(cStruct: VkPhysicalDeviceCudaKernelLaunchFeaturesNV) {
+    public init(cStruct: VkPhysicalDeviceCudaKernelLaunchFeaturesNV) {
         self.cudaKernelLaunchFeatures = cStruct.cudaKernelLaunchFeatures == VK_TRUE
     }
 
@@ -43087,7 +43087,7 @@ public struct PhysicalDeviceCudaKernelLaunchPropertiesNV: ChainableBase, Physica
     public let computeCapabilityMinor: UInt32
     public let computeCapabilityMajor: UInt32
 
-    init(cStruct: VkPhysicalDeviceCudaKernelLaunchPropertiesNV) {
+    public init(cStruct: VkPhysicalDeviceCudaKernelLaunchPropertiesNV) {
         self.computeCapabilityMinor = cStruct.computeCapabilityMinor
         self.computeCapabilityMajor = cStruct.computeCapabilityMajor
     }
@@ -43118,7 +43118,7 @@ public struct DeviceQueueShaderCoreControlCreateInfoARM: ChainableBase, DeviceQu
         self.shaderCoreCount = shaderCoreCount
     }
 
-    init(cStruct: VkDeviceQueueShaderCoreControlCreateInfoARM) {
+    public init(cStruct: VkDeviceQueueShaderCoreControlCreateInfoARM) {
         self.shaderCoreCount = cStruct.shaderCoreCount
     }
 
@@ -43146,7 +43146,7 @@ public struct PhysicalDeviceSchedulingControlsFeaturesARM: ChainableBase, Physic
         self.schedulingControls = schedulingControls
     }
 
-    init(cStruct: VkPhysicalDeviceSchedulingControlsFeaturesARM) {
+    public init(cStruct: VkPhysicalDeviceSchedulingControlsFeaturesARM) {
         self.schedulingControls = cStruct.schedulingControls == VK_TRUE
     }
 
@@ -43170,7 +43170,7 @@ public struct PhysicalDeviceSchedulingControlsPropertiesARM: ChainableBase, Phys
 
     public let schedulingControlsFlags: PhysicalDeviceSchedulingControlsFlagsARM
 
-    init(cStruct: VkPhysicalDeviceSchedulingControlsPropertiesARM) {
+    public init(cStruct: VkPhysicalDeviceSchedulingControlsPropertiesARM) {
         self.schedulingControlsFlags = PhysicalDeviceSchedulingControlsFlagsARM(rawValue: cStruct.schedulingControlsFlags)
     }
 
@@ -43196,7 +43196,7 @@ public struct PhysicalDeviceSchedulingControlsDispatchParametersPropertiesARM: C
     public let schedulingControlsMaxQueuedBatchesCount: UInt32
     public let schedulingControlsMaxWorkGroupBatchSize: UInt32
 
-    init(cStruct: VkPhysicalDeviceSchedulingControlsDispatchParametersPropertiesARM) {
+    public init(cStruct: VkPhysicalDeviceSchedulingControlsDispatchParametersPropertiesARM) {
         self.schedulingControlsMaxWarpsCount = cStruct.schedulingControlsMaxWarpsCount
         self.schedulingControlsMaxQueuedBatchesCount = cStruct.schedulingControlsMaxQueuedBatchesCount
         self.schedulingControlsMaxWorkGroupBatchSize = cStruct.schedulingControlsMaxWorkGroupBatchSize
@@ -43232,7 +43232,7 @@ public struct DispatchParametersARM: ChainableBase {
         self.maxWarpsPerShaderCore = maxWarpsPerShaderCore
     }
 
-    init(cStruct: VkDispatchParametersARM) {
+    public init(cStruct: VkDispatchParametersARM) {
         self.workGroupBatchSize = cStruct.workGroupBatchSize
         self.maxQueuedWorkGroupBatches = cStruct.maxQueuedWorkGroupBatches
         self.maxWarpsPerShaderCore = cStruct.maxWarpsPerShaderCore
@@ -43264,7 +43264,7 @@ public struct PhysicalDeviceRelaxedLineRasterizationFeaturesIMG: ChainableBase, 
         self.relaxedLineRasterization = relaxedLineRasterization
     }
 
-    init(cStruct: VkPhysicalDeviceRelaxedLineRasterizationFeaturesIMG) {
+    public init(cStruct: VkPhysicalDeviceRelaxedLineRasterizationFeaturesIMG) {
         self.relaxedLineRasterization = cStruct.relaxedLineRasterization == VK_TRUE
     }
 
@@ -43292,7 +43292,7 @@ public struct PhysicalDeviceRenderPassStripedFeaturesARM: ChainableBase, Physica
         self.renderPassStriped = renderPassStriped
     }
 
-    init(cStruct: VkPhysicalDeviceRenderPassStripedFeaturesARM) {
+    public init(cStruct: VkPhysicalDeviceRenderPassStripedFeaturesARM) {
         self.renderPassStriped = cStruct.renderPassStriped == VK_TRUE
     }
 
@@ -43317,7 +43317,7 @@ public struct PhysicalDeviceRenderPassStripedPropertiesARM: ChainableBase, Physi
     public let renderPassStripeGranularity: Extent2D
     public let maxRenderPassStripes: UInt32
 
-    init(cStruct: VkPhysicalDeviceRenderPassStripedPropertiesARM) {
+    public init(cStruct: VkPhysicalDeviceRenderPassStripedPropertiesARM) {
         self.renderPassStripeGranularity = Extent2D(cStruct: cStruct.renderPassStripeGranularity)
         self.maxRenderPassStripes = cStruct.maxRenderPassStripes
     }
@@ -43349,7 +43349,7 @@ public struct RenderPassStripeInfoARM: ChainableBase {
         self.stripeArea = stripeArea
     }
 
-    init(cStruct: VkRenderPassStripeInfoARM) {
+    public init(cStruct: VkRenderPassStripeInfoARM) {
         self.stripeArea = Rect2D(cStruct: cStruct.stripeArea)
     }
 
@@ -43379,7 +43379,7 @@ public struct RenderPassStripeBeginInfoARM: ChainableBase, RenderingInfoExtensio
         self.stripeInfos = stripeInfos
     }
 
-    init(cStruct: VkRenderPassStripeBeginInfoARM) {
+    public init(cStruct: VkRenderPassStripeBeginInfoARM) {
         self.stripeInfos = UnsafeBufferPointer(start: cStruct.pStripeInfos, count: Int(cStruct.stripeInfoCount)).map{ RenderPassStripeInfoARM(cStruct: $0) }
     }
 
@@ -43410,7 +43410,7 @@ public struct RenderPassStripeSubmitInfoARM: ChainableBase, CommandBufferSubmitI
         self.stripeSemaphoreInfos = stripeSemaphoreInfos
     }
 
-    init(cStruct: VkRenderPassStripeSubmitInfoARM, device: Device) {
+    public init(cStruct: VkRenderPassStripeSubmitInfoARM, device: Device) {
         self.stripeSemaphoreInfos = UnsafeBufferPointer(start: cStruct.pStripeSemaphoreInfos, count: Int(cStruct.stripeSemaphoreInfoCount)).map{ SemaphoreSubmitInfo(cStruct: $0, device: device) }
     }
 
@@ -43441,7 +43441,7 @@ public struct PhysicalDevicePipelineOpacityMicromapFeaturesARM: ChainableBase, P
         self.pipelineOpacityMicromap = pipelineOpacityMicromap
     }
 
-    init(cStruct: VkPhysicalDevicePipelineOpacityMicromapFeaturesARM) {
+    public init(cStruct: VkPhysicalDevicePipelineOpacityMicromapFeaturesARM) {
         self.pipelineOpacityMicromap = cStruct.pipelineOpacityMicromap == VK_TRUE
     }
 
@@ -43469,7 +43469,7 @@ public struct PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR: ChainableBase
         self.shaderMaximalReconvergence = shaderMaximalReconvergence
     }
 
-    init(cStruct: VkPhysicalDeviceShaderMaximalReconvergenceFeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceShaderMaximalReconvergenceFeaturesKHR) {
         self.shaderMaximalReconvergence = cStruct.shaderMaximalReconvergence == VK_TRUE
     }
 
@@ -43499,7 +43499,7 @@ public struct PhysicalDeviceShaderSubgroupRotateFeatures: ChainableBase, Physica
         self.shaderSubgroupRotateClustered = shaderSubgroupRotateClustered
     }
 
-    init(cStruct: VkPhysicalDeviceShaderSubgroupRotateFeatures) {
+    public init(cStruct: VkPhysicalDeviceShaderSubgroupRotateFeatures) {
         self.shaderSubgroupRotate = cStruct.shaderSubgroupRotate == VK_TRUE
         self.shaderSubgroupRotateClustered = cStruct.shaderSubgroupRotateClustered == VK_TRUE
     }
@@ -43529,7 +43529,7 @@ public struct PhysicalDeviceShaderExpectAssumeFeatures: ChainableBase, PhysicalD
         self.shaderExpectAssume = shaderExpectAssume
     }
 
-    init(cStruct: VkPhysicalDeviceShaderExpectAssumeFeatures) {
+    public init(cStruct: VkPhysicalDeviceShaderExpectAssumeFeatures) {
         self.shaderExpectAssume = cStruct.shaderExpectAssume == VK_TRUE
     }
 
@@ -43557,7 +43557,7 @@ public struct PhysicalDeviceShaderFloatControls2Features: ChainableBase, Physica
         self.shaderFloatControls2 = shaderFloatControls2
     }
 
-    init(cStruct: VkPhysicalDeviceShaderFloatControls2Features) {
+    public init(cStruct: VkPhysicalDeviceShaderFloatControls2Features) {
         self.shaderFloatControls2 = cStruct.shaderFloatControls2 == VK_TRUE
     }
 
@@ -43585,7 +43585,7 @@ public struct PhysicalDeviceDynamicRenderingLocalReadFeatures: ChainableBase, Ph
         self.dynamicRenderingLocalRead = dynamicRenderingLocalRead
     }
 
-    init(cStruct: VkPhysicalDeviceDynamicRenderingLocalReadFeatures) {
+    public init(cStruct: VkPhysicalDeviceDynamicRenderingLocalReadFeatures) {
         self.dynamicRenderingLocalRead = cStruct.dynamicRenderingLocalRead == VK_TRUE
     }
 
@@ -43613,7 +43613,7 @@ public struct RenderingAttachmentLocationInfo: ChainableBase, GraphicsPipelineCr
         self.colorAttachmentLocations = colorAttachmentLocations
     }
 
-    init(cStruct: VkRenderingAttachmentLocationInfo) {
+    public init(cStruct: VkRenderingAttachmentLocationInfo) {
         self.colorAttachmentLocations = Array(UnsafeBufferPointer(start: cStruct.pColorAttachmentLocations, count: Int(cStruct.colorAttachmentCount)))
     }
 
@@ -43648,7 +43648,7 @@ public struct RenderingInputAttachmentIndexInfo: ChainableBase, GraphicsPipeline
         self.stencilInputAttachmentIndex = stencilInputAttachmentIndex
     }
 
-    init(cStruct: VkRenderingInputAttachmentIndexInfo) {
+    public init(cStruct: VkRenderingInputAttachmentIndexInfo) {
         self.colorAttachmentInputIndices = (cStruct.pColorAttachmentInputIndices != nil) ? Array(UnsafeBufferPointer(start: cStruct.pColorAttachmentInputIndices, count: Int(cStruct.colorAttachmentCount))) : nil
         self.depthInputAttachmentIndex = cStruct.pDepthInputAttachmentIndex
         self.stencilInputAttachmentIndex = cStruct.pStencilInputAttachmentIndex
@@ -43683,7 +43683,7 @@ public struct PhysicalDeviceShaderQuadControlFeaturesKHR: ChainableBase, Physica
         self.shaderQuadControl = shaderQuadControl
     }
 
-    init(cStruct: VkPhysicalDeviceShaderQuadControlFeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceShaderQuadControlFeaturesKHR) {
         self.shaderQuadControl = cStruct.shaderQuadControl == VK_TRUE
     }
 
@@ -43711,7 +43711,7 @@ public struct PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV: ChainableBase, 
         self.shaderFloat16VectorAtomics = shaderFloat16VectorAtomics
     }
 
-    init(cStruct: VkPhysicalDeviceShaderAtomicFloat16VectorFeaturesNV) {
+    public init(cStruct: VkPhysicalDeviceShaderAtomicFloat16VectorFeaturesNV) {
         self.shaderFloat16VectorAtomics = cStruct.shaderFloat16VectorAtomics == VK_TRUE
     }
 
@@ -43743,7 +43743,7 @@ public struct PhysicalDeviceMapMemoryPlacedFeaturesEXT: ChainableBase, PhysicalD
         self.memoryUnmapReserve = memoryUnmapReserve
     }
 
-    init(cStruct: VkPhysicalDeviceMapMemoryPlacedFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceMapMemoryPlacedFeaturesEXT) {
         self.memoryMapPlaced = cStruct.memoryMapPlaced == VK_TRUE
         self.memoryMapRangePlaced = cStruct.memoryMapRangePlaced == VK_TRUE
         self.memoryUnmapReserve = cStruct.memoryUnmapReserve == VK_TRUE
@@ -43771,7 +43771,7 @@ public struct PhysicalDeviceMapMemoryPlacedPropertiesEXT: ChainableBase, Physica
 
     public let minPlacedMemoryMapAlignment: VkDeviceSize
 
-    init(cStruct: VkPhysicalDeviceMapMemoryPlacedPropertiesEXT) {
+    public init(cStruct: VkPhysicalDeviceMapMemoryPlacedPropertiesEXT) {
         self.minPlacedMemoryMapAlignment = cStruct.minPlacedMemoryMapAlignment
     }
 
@@ -43799,7 +43799,7 @@ public struct MemoryMapPlacedInfoEXT: ChainableBase, MemoryMapInfoExtension {
         self.placedAddress = placedAddress
     }
 
-    init(cStruct: VkMemoryMapPlacedInfoEXT) {
+    public init(cStruct: VkMemoryMapPlacedInfoEXT) {
         self.placedAddress = cStruct.pPlacedAddress
     }
 
@@ -43831,7 +43831,7 @@ public struct PhysicalDeviceShaderBfloat16FeaturesKHR: ChainableBase, PhysicalDe
         self.shaderBFloat16CooperativeMatrix = shaderBFloat16CooperativeMatrix
     }
 
-    init(cStruct: VkPhysicalDeviceShaderBfloat16FeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceShaderBfloat16FeaturesKHR) {
         self.shaderBFloat16Type = cStruct.shaderBFloat16Type == VK_TRUE
         self.shaderBFloat16DotProduct = cStruct.shaderBFloat16DotProduct == VK_TRUE
         self.shaderBFloat16CooperativeMatrix = cStruct.shaderBFloat16CooperativeMatrix == VK_TRUE
@@ -43863,7 +43863,7 @@ public struct PhysicalDeviceRawAccessChainsFeaturesNV: ChainableBase, PhysicalDe
         self.shaderRawAccessChains = shaderRawAccessChains
     }
 
-    init(cStruct: VkPhysicalDeviceRawAccessChainsFeaturesNV) {
+    public init(cStruct: VkPhysicalDeviceRawAccessChainsFeaturesNV) {
         self.shaderRawAccessChains = cStruct.shaderRawAccessChains == VK_TRUE
     }
 
@@ -43891,7 +43891,7 @@ public struct PhysicalDeviceCommandBufferInheritanceFeaturesNV: ChainableBase, P
         self.commandBufferInheritance = commandBufferInheritance
     }
 
-    init(cStruct: VkPhysicalDeviceCommandBufferInheritanceFeaturesNV) {
+    public init(cStruct: VkPhysicalDeviceCommandBufferInheritanceFeaturesNV) {
         self.commandBufferInheritance = cStruct.commandBufferInheritance == VK_TRUE
     }
 
@@ -43919,7 +43919,7 @@ public struct PhysicalDeviceImageAlignmentControlFeaturesMESA: ChainableBase, Ph
         self.imageAlignmentControl = imageAlignmentControl
     }
 
-    init(cStruct: VkPhysicalDeviceImageAlignmentControlFeaturesMESA) {
+    public init(cStruct: VkPhysicalDeviceImageAlignmentControlFeaturesMESA) {
         self.imageAlignmentControl = cStruct.imageAlignmentControl == VK_TRUE
     }
 
@@ -43943,7 +43943,7 @@ public struct PhysicalDeviceImageAlignmentControlPropertiesMESA: ChainableBase, 
 
     public let supportedImageAlignmentMask: UInt32
 
-    init(cStruct: VkPhysicalDeviceImageAlignmentControlPropertiesMESA) {
+    public init(cStruct: VkPhysicalDeviceImageAlignmentControlPropertiesMESA) {
         self.supportedImageAlignmentMask = cStruct.supportedImageAlignmentMask
     }
 
@@ -43971,7 +43971,7 @@ public struct ImageAlignmentControlCreateInfoMESA: ChainableBase, ImageCreateInf
         self.maximumRequestedAlignment = maximumRequestedAlignment
     }
 
-    init(cStruct: VkImageAlignmentControlCreateInfoMESA) {
+    public init(cStruct: VkImageAlignmentControlCreateInfoMESA) {
         self.maximumRequestedAlignment = cStruct.maximumRequestedAlignment
     }
 
@@ -43999,7 +43999,7 @@ public struct PhysicalDeviceShaderReplicatedCompositesFeaturesEXT: ChainableBase
         self.shaderReplicatedComposites = shaderReplicatedComposites
     }
 
-    init(cStruct: VkPhysicalDeviceShaderReplicatedCompositesFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceShaderReplicatedCompositesFeaturesEXT) {
         self.shaderReplicatedComposites = cStruct.shaderReplicatedComposites == VK_TRUE
     }
 
@@ -44027,7 +44027,7 @@ public struct PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR: ChainableBase
         self.presentModeFifoLatestReady = presentModeFifoLatestReady
     }
 
-    init(cStruct: VkPhysicalDevicePresentModeFifoLatestReadyFeaturesKHR) {
+    public init(cStruct: VkPhysicalDevicePresentModeFifoLatestReadyFeaturesKHR) {
         self.presentModeFifoLatestReady = cStruct.presentModeFifoLatestReady == VK_TRUE
     }
 
@@ -44067,7 +44067,7 @@ public struct PhysicalDeviceCooperativeMatrix2FeaturesNV: ChainableBase, Physica
         self.cooperativeMatrixBlockLoads = cooperativeMatrixBlockLoads
     }
 
-    init(cStruct: VkPhysicalDeviceCooperativeMatrix2FeaturesNV) {
+    public init(cStruct: VkPhysicalDeviceCooperativeMatrix2FeaturesNV) {
         self.cooperativeMatrixWorkgroupScope = cStruct.cooperativeMatrixWorkgroupScope == VK_TRUE
         self.cooperativeMatrixFlexibleDimensions = cStruct.cooperativeMatrixFlexibleDimensions == VK_TRUE
         self.cooperativeMatrixReductions = cStruct.cooperativeMatrixReductions == VK_TRUE
@@ -44105,7 +44105,7 @@ public struct PhysicalDeviceCooperativeMatrix2PropertiesNV: ChainableBase, Physi
     public let cooperativeMatrixFlexibleDimensionsMaxDimension: UInt32
     public let cooperativeMatrixWorkgroupScopeReservedSharedMemory: UInt32
 
-    init(cStruct: VkPhysicalDeviceCooperativeMatrix2PropertiesNV) {
+    public init(cStruct: VkPhysicalDeviceCooperativeMatrix2PropertiesNV) {
         self.cooperativeMatrixWorkgroupScopeMaxWorkgroupSize = cStruct.cooperativeMatrixWorkgroupScopeMaxWorkgroupSize
         self.cooperativeMatrixFlexibleDimensionsMaxDimension = cStruct.cooperativeMatrixFlexibleDimensionsMaxDimension
         self.cooperativeMatrixWorkgroupScopeReservedSharedMemory = cStruct.cooperativeMatrixWorkgroupScopeReservedSharedMemory
@@ -44142,7 +44142,7 @@ public struct CooperativeMatrixFlexibleDimensionsPropertiesNV: ChainableBase {
     public let scope: ScopeKHR
     public let workgroupInvocations: UInt32
 
-    init(cStruct: VkCooperativeMatrixFlexibleDimensionsPropertiesNV) {
+    public init(cStruct: VkCooperativeMatrixFlexibleDimensionsPropertiesNV) {
         self.MGranularity = cStruct.MGranularity
         self.NGranularity = cStruct.NGranularity
         self.KGranularity = cStruct.KGranularity
@@ -44188,7 +44188,7 @@ public struct PhysicalDeviceHdrVividFeaturesHUAWEI: ChainableBase, PhysicalDevic
         self.hdrVivid = hdrVivid
     }
 
-    init(cStruct: VkPhysicalDeviceHdrVividFeaturesHUAWEI) {
+    public init(cStruct: VkPhysicalDeviceHdrVividFeaturesHUAWEI) {
         self.hdrVivid = cStruct.hdrVivid == VK_TRUE
     }
 
@@ -44216,7 +44216,7 @@ public struct PhysicalDeviceVertexAttributeRobustnessFeaturesEXT: ChainableBase,
         self.vertexAttributeRobustness = vertexAttributeRobustness
     }
 
-    init(cStruct: VkPhysicalDeviceVertexAttributeRobustnessFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceVertexAttributeRobustnessFeaturesEXT) {
         self.vertexAttributeRobustness = cStruct.vertexAttributeRobustness == VK_TRUE
     }
 
@@ -44245,7 +44245,7 @@ public struct PhysicalDeviceDenseGeometryFormatFeaturesAMDX: ChainableBase, Phys
         self.denseGeometryFormat = denseGeometryFormat
     }
 
-    init(cStruct: VkPhysicalDeviceDenseGeometryFormatFeaturesAMDX) {
+    public init(cStruct: VkPhysicalDeviceDenseGeometryFormatFeaturesAMDX) {
         self.denseGeometryFormat = cStruct.denseGeometryFormat == VK_TRUE
     }
 
@@ -44287,7 +44287,7 @@ public struct AccelerationStructureDenseGeometryFormatTrianglesDataAMDX: Chainab
         self.format = format
     }
 
-    init(cStruct: VkAccelerationStructureDenseGeometryFormatTrianglesDataAMDX) {
+    public init(cStruct: VkAccelerationStructureDenseGeometryFormatTrianglesDataAMDX) {
         self.compressedData = cStruct.compressedData
         self.dataSize = cStruct.dataSize
         self.numTriangles = cStruct.numTriangles
@@ -44328,7 +44328,7 @@ public struct PhysicalDeviceDepthClampZeroOneFeaturesKHR: ChainableBase, Physica
         self.depthClampZeroOne = depthClampZeroOne
     }
 
-    init(cStruct: VkPhysicalDeviceDepthClampZeroOneFeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceDepthClampZeroOneFeaturesKHR) {
         self.depthClampZeroOne = cStruct.depthClampZeroOne == VK_TRUE
     }
 
@@ -44358,7 +44358,7 @@ public struct PhysicalDeviceCooperativeVectorFeaturesNV: ChainableBase, Physical
         self.cooperativeVectorTraining = cooperativeVectorTraining
     }
 
-    init(cStruct: VkPhysicalDeviceCooperativeVectorFeaturesNV) {
+    public init(cStruct: VkPhysicalDeviceCooperativeVectorFeaturesNV) {
         self.cooperativeVector = cStruct.cooperativeVector == VK_TRUE
         self.cooperativeVectorTraining = cStruct.cooperativeVectorTraining == VK_TRUE
     }
@@ -44398,7 +44398,7 @@ public struct CooperativeVectorPropertiesNV: ChainableBase {
         self.transpose = transpose
     }
 
-    init(cStruct: VkCooperativeVectorPropertiesNV) {
+    public init(cStruct: VkCooperativeVectorPropertiesNV) {
         self.inputType = ComponentTypeKHR(rawValue: unsafeBitCast(cStruct.inputType, to: UInt32.self))!
         self.inputInterpretation = ComponentTypeKHR(rawValue: unsafeBitCast(cStruct.inputInterpretation, to: UInt32.self))!
         self.matrixInterpretation = ComponentTypeKHR(rawValue: unsafeBitCast(cStruct.matrixInterpretation, to: UInt32.self))!
@@ -44435,7 +44435,7 @@ public struct PhysicalDeviceCooperativeVectorPropertiesNV: ChainableBase, Physic
     public let cooperativeVectorTrainingFloat32Accumulation: Bool
     public let maxCooperativeVectorComponents: UInt32
 
-    init(cStruct: VkPhysicalDeviceCooperativeVectorPropertiesNV) {
+    public init(cStruct: VkPhysicalDeviceCooperativeVectorPropertiesNV) {
         self.cooperativeVectorSupportedStages = ShaderStageFlags(rawValue: cStruct.cooperativeVectorSupportedStages)
         self.cooperativeVectorTrainingFloat16Accumulation = cStruct.cooperativeVectorTrainingFloat16Accumulation == VK_TRUE
         self.cooperativeVectorTrainingFloat32Accumulation = cStruct.cooperativeVectorTrainingFloat32Accumulation == VK_TRUE
@@ -44491,7 +44491,7 @@ public struct ConvertCooperativeVectorMatrixInfoNV: ChainableBase {
         self.dstStride = dstStride
     }
 
-    init(cStruct: VkConvertCooperativeVectorMatrixInfoNV) {
+    public init(cStruct: VkConvertCooperativeVectorMatrixInfoNV) {
         self.srcSize = cStruct.srcSize
         self.srcData = cStruct.srcData
         self.dstSize = cStruct.pDstSize
@@ -44567,7 +44567,7 @@ public struct PhysicalDeviceTileShadingFeaturesQCOM: ChainableBase, PhysicalDevi
         self.tileShadingImageProcessing = tileShadingImageProcessing
     }
 
-    init(cStruct: VkPhysicalDeviceTileShadingFeaturesQCOM) {
+    public init(cStruct: VkPhysicalDeviceTileShadingFeaturesQCOM) {
         self.tileShading = cStruct.tileShading == VK_TRUE
         self.tileShadingFragmentStage = cStruct.tileShadingFragmentStage == VK_TRUE
         self.tileShadingColorAttachments = cStruct.tileShadingColorAttachments == VK_TRUE
@@ -44620,7 +44620,7 @@ public struct PhysicalDeviceTileShadingPropertiesQCOM: ChainableBase, PhysicalDe
     public let tileGranularity: Extent2D
     public let maxTileShadingRate: Extent2D
 
-    init(cStruct: VkPhysicalDeviceTileShadingPropertiesQCOM) {
+    public init(cStruct: VkPhysicalDeviceTileShadingPropertiesQCOM) {
         self.maxApronSize = cStruct.maxApronSize
         self.preferNonCoherent = cStruct.preferNonCoherent == VK_TRUE
         self.tileGranularity = Extent2D(cStruct: cStruct.tileGranularity)
@@ -44660,7 +44660,7 @@ public struct RenderPassTileShadingCreateInfoQCOM: ChainableBase, RenderPassCrea
         self.tileApronSize = tileApronSize
     }
 
-    init(cStruct: VkRenderPassTileShadingCreateInfoQCOM) {
+    public init(cStruct: VkRenderPassTileShadingCreateInfoQCOM) {
         self.flags = TileShadingRenderPassFlagsQCOM(rawValue: cStruct.flags)
         self.tileApronSize = Extent2D(cStruct: cStruct.tileApronSize)
     }
@@ -44690,7 +44690,7 @@ public struct PerTileBeginInfoQCOM: ChainableBase {
     public init() {
     }
 
-    init(cStruct: VkPerTileBeginInfoQCOM) {
+    public init(cStruct: VkPerTileBeginInfoQCOM) {
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPerTileBeginInfoQCOM>) throws(E) -> R) throws(E) -> R {
@@ -44714,7 +44714,7 @@ public struct PerTileEndInfoQCOM: ChainableBase {
     public init() {
     }
 
-    init(cStruct: VkPerTileEndInfoQCOM) {
+    public init(cStruct: VkPerTileEndInfoQCOM) {
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPerTileEndInfoQCOM>) throws(E) -> R) throws(E) -> R {
@@ -44738,7 +44738,7 @@ public struct DispatchTileInfoQCOM: ChainableBase {
     public init() {
     }
 
-    init(cStruct: VkDispatchTileInfoQCOM) {
+    public init(cStruct: VkDispatchTileInfoQCOM) {
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkDispatchTileInfoQCOM>) throws(E) -> R) throws(E) -> R {
@@ -44760,7 +44760,7 @@ public struct PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE: ChainableB
 
     public let maxFragmentDensityMapLayers: UInt32
 
-    init(cStruct: VkPhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE) {
+    public init(cStruct: VkPhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE) {
         self.maxFragmentDensityMapLayers = cStruct.maxFragmentDensityMapLayers
     }
 
@@ -44788,7 +44788,7 @@ public struct PhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE: ChainableBas
         self.fragmentDensityMapLayered = fragmentDensityMapLayered
     }
 
-    init(cStruct: VkPhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE) {
+    public init(cStruct: VkPhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE) {
         self.fragmentDensityMapLayered = cStruct.fragmentDensityMapLayered == VK_TRUE
     }
 
@@ -44816,7 +44816,7 @@ public struct PipelineFragmentDensityMapLayeredCreateInfoVALVE: ChainableBase, G
         self.maxFragmentDensityMapLayers = maxFragmentDensityMapLayers
     }
 
-    init(cStruct: VkPipelineFragmentDensityMapLayeredCreateInfoVALVE) {
+    public init(cStruct: VkPipelineFragmentDensityMapLayeredCreateInfoVALVE) {
         self.maxFragmentDensityMapLayers = cStruct.maxFragmentDensityMapLayers
     }
 
@@ -44846,7 +44846,7 @@ public struct SetPresentConfigNV: ChainableBase, PresentInfoKHRExtension {
         self.presentConfigFeedback = presentConfigFeedback
     }
 
-    init(cStruct: VkSetPresentConfigNV) {
+    public init(cStruct: VkSetPresentConfigNV) {
         self.numFramesPerBatch = cStruct.numFramesPerBatch
         self.presentConfigFeedback = cStruct.presentConfigFeedback
     }
@@ -44876,7 +44876,7 @@ public struct PhysicalDevicePresentMeteringFeaturesNV: ChainableBase, PhysicalDe
         self.presentMetering = presentMetering
     }
 
-    init(cStruct: VkPhysicalDevicePresentMeteringFeaturesNV) {
+    public init(cStruct: VkPhysicalDevicePresentMeteringFeaturesNV) {
         self.presentMetering = cStruct.presentMetering == VK_TRUE
     }
 
@@ -44904,7 +44904,7 @@ public struct ExternalComputeQueueDeviceCreateInfoNV: ChainableBase, DeviceCreat
         self.reservedExternalQueues = reservedExternalQueues
     }
 
-    init(cStruct: VkExternalComputeQueueDeviceCreateInfoNV) {
+    public init(cStruct: VkExternalComputeQueueDeviceCreateInfoNV) {
         self.reservedExternalQueues = cStruct.reservedExternalQueues
     }
 
@@ -44932,7 +44932,7 @@ public struct ExternalComputeQueueCreateInfoNV: ChainableBase {
         self.preferredQueue = preferredQueue
     }
 
-    init(cStruct: VkExternalComputeQueueCreateInfoNV, device: Device) {
+    public init(cStruct: VkExternalComputeQueueCreateInfoNV, device: Device) {
         self.preferredQueue = Queue(handle: cStruct.preferredQueue, device: device)
     }
 
@@ -44960,7 +44960,7 @@ public struct ExternalComputeQueueDataParamsNV: ChainableBase {
         self.deviceIndex = deviceIndex
     }
 
-    init(cStruct: VkExternalComputeQueueDataParamsNV) {
+    public init(cStruct: VkExternalComputeQueueDataParamsNV) {
         self.deviceIndex = cStruct.deviceIndex
     }
 
@@ -44985,7 +44985,7 @@ public struct PhysicalDeviceExternalComputeQueuePropertiesNV: ChainableBase, Phy
     public let externalDataSize: UInt32
     public let maxExternalQueues: UInt32
 
-    init(cStruct: VkPhysicalDeviceExternalComputeQueuePropertiesNV) {
+    public init(cStruct: VkPhysicalDeviceExternalComputeQueuePropertiesNV) {
         self.externalDataSize = cStruct.externalDataSize
         self.maxExternalQueues = cStruct.maxExternalQueues
     }
@@ -45015,7 +45015,7 @@ public struct PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT: Chainabl
         self.shaderUniformBufferUnsizedArray = shaderUniformBufferUnsizedArray
     }
 
-    init(cStruct: VkPhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT) {
         self.shaderUniformBufferUnsizedArray = cStruct.shaderUniformBufferUnsizedArray == VK_TRUE
     }
 
@@ -45049,7 +45049,7 @@ public struct PhysicalDeviceShaderMixedFloatDotProductFeaturesVALVE: ChainableBa
         self.shaderMixedFloatDotProductFloat8AccFloat32 = shaderMixedFloatDotProductFloat8AccFloat32
     }
 
-    init(cStruct: VkPhysicalDeviceShaderMixedFloatDotProductFeaturesVALVE) {
+    public init(cStruct: VkPhysicalDeviceShaderMixedFloatDotProductFeaturesVALVE) {
         self.shaderMixedFloatDotProductFloat16AccFloat32 = cStruct.shaderMixedFloatDotProductFloat16AccFloat32 == VK_TRUE
         self.shaderMixedFloatDotProductFloat16AccFloat16 = cStruct.shaderMixedFloatDotProductFloat16AccFloat16 == VK_TRUE
         self.shaderMixedFloatDotProductBFloat16Acc = cStruct.shaderMixedFloatDotProductBFloat16Acc == VK_TRUE
@@ -45083,7 +45083,7 @@ public struct PhysicalDevicePrimitiveRestartIndexFeaturesEXT: ChainableBase, Phy
         self.primitiveRestartIndex = primitiveRestartIndex
     }
 
-    init(cStruct: VkPhysicalDevicePrimitiveRestartIndexFeaturesEXT) {
+    public init(cStruct: VkPhysicalDevicePrimitiveRestartIndexFeaturesEXT) {
         self.primitiveRestartIndex = cStruct.primitiveRestartIndex == VK_TRUE
     }
 
@@ -45111,7 +45111,7 @@ public struct PhysicalDeviceFormatPackFeaturesARM: ChainableBase, PhysicalDevice
         self.formatPack = formatPack
     }
 
-    init(cStruct: VkPhysicalDeviceFormatPackFeaturesARM) {
+    public init(cStruct: VkPhysicalDeviceFormatPackFeaturesARM) {
         self.formatPack = cStruct.formatPack == VK_TRUE
     }
 
@@ -45139,7 +45139,7 @@ public struct PhysicalDeviceThrottleHintFeaturesSEC: ChainableBase, PhysicalDevi
         self.throttleHint = throttleHint
     }
 
-    init(cStruct: VkPhysicalDeviceThrottleHintFeaturesSEC) {
+    public init(cStruct: VkPhysicalDeviceThrottleHintFeaturesSEC) {
         self.throttleHint = cStruct.throttleHint == VK_TRUE
     }
 
@@ -45167,7 +45167,7 @@ public struct ThrottleHintSubmitInfoSEC: ChainableBase, SubmitInfoExtension {
         self.throttleHint = throttleHint
     }
 
-    init(cStruct: VkThrottleHintSubmitInfoSEC) {
+    public init(cStruct: VkThrottleHintSubmitInfoSEC) {
         self.throttleHint = ThrottleHintTypeSEC(rawValue: unsafeBitCast(cStruct.throttleHint, to: UInt32.self))!
     }
 
@@ -45203,7 +45203,7 @@ public struct TensorDescriptionARM: ChainableBase, DataGraphPipelineResourceInfo
         self.usage = usage
     }
 
-    init(cStruct: VkTensorDescriptionARM) {
+    public init(cStruct: VkTensorDescriptionARM) {
         self.tiling = TensorTilingARM(rawValue: unsafeBitCast(cStruct.tiling, to: UInt32.self))!
         self.format = Format(rawValue: unsafeBitCast(cStruct.format, to: UInt32.self))!
         self.dimensions = Array(UnsafeBufferPointer(start: cStruct.pDimensions, count: Int(cStruct.dimensionCount)))
@@ -45250,7 +45250,7 @@ public struct TensorCreateInfoARM: ChainableBase {
         self.queueFamilyIndices = queueFamilyIndices
     }
 
-    init(cStruct: VkTensorCreateInfoARM) {
+    public init(cStruct: VkTensorCreateInfoARM) {
         self.flags = TensorCreateFlagsARM(rawValue: cStruct.flags)
         self.description = TensorDescriptionARM(cStruct: cStruct.pDescription.pointee)
         self.sharingMode = SharingMode(rawValue: unsafeBitCast(cStruct.sharingMode, to: UInt32.self))!
@@ -45293,7 +45293,7 @@ public struct TensorViewCreateInfoARM: ChainableBase {
         self.format = format
     }
 
-    init(cStruct: VkTensorViewCreateInfoARM, device: Device) {
+    public init(cStruct: VkTensorViewCreateInfoARM, device: Device) {
         self.flags = TensorViewCreateFlagsARM(rawValue: cStruct.flags)
         self.tensor = TensorARM(handle: cStruct.tensor, device: device)
         self.format = Format(rawValue: unsafeBitCast(cStruct.format, to: UInt32.self))!
@@ -45325,7 +45325,7 @@ public struct TensorMemoryRequirementsInfoARM: ChainableBase {
         self.tensor = tensor
     }
 
-    init(cStruct: VkTensorMemoryRequirementsInfoARM, device: Device) {
+    public init(cStruct: VkTensorMemoryRequirementsInfoARM, device: Device) {
         self.tensor = TensorARM(handle: cStruct.tensor, device: device)
     }
 
@@ -45357,7 +45357,7 @@ public struct BindTensorMemoryInfoARM: ChainableBase {
         self.memoryOffset = memoryOffset
     }
 
-    init(cStruct: VkBindTensorMemoryInfoARM, device: Device) {
+    public init(cStruct: VkBindTensorMemoryInfoARM, device: Device) {
         self.tensor = TensorARM(handle: cStruct.tensor, device: device)
         self.memory = DeviceMemory(handle: cStruct.memory, device: device)
         self.memoryOffset = cStruct.memoryOffset
@@ -45389,7 +45389,7 @@ public struct WriteDescriptorSetTensorARM: ChainableBase, WriteDescriptorSetExte
         self.tensorViews = tensorViews
     }
 
-    init(cStruct: VkWriteDescriptorSetTensorARM, device: Device) {
+    public init(cStruct: VkWriteDescriptorSetTensorARM, device: Device) {
         self.tensorViews = UnsafeBufferPointer(start: cStruct.pTensorViews, count: Int(cStruct.tensorViewCount)).map{ ($0 != nil) ? TensorViewARM(handle: $0, device: device) : nil }
     }
 
@@ -45417,7 +45417,7 @@ public struct TensorFormatPropertiesARM: ChainableBase, FormatProperties2Extensi
     public let optimalTilingTensorFeatures: FormatFeatureFlags2
     public let linearTilingTensorFeatures: FormatFeatureFlags2
 
-    init(cStruct: VkTensorFormatPropertiesARM) {
+    public init(cStruct: VkTensorFormatPropertiesARM) {
         self.optimalTilingTensorFeatures = FormatFeatureFlags2(rawValue: cStruct.optimalTilingTensorFeatures)
         self.linearTilingTensorFeatures = FormatFeatureFlags2(rawValue: cStruct.linearTilingTensorFeatures)
     }
@@ -45455,7 +45455,7 @@ public struct PhysicalDeviceTensorPropertiesARM: ChainableBase, PhysicalDevicePr
     public let shaderStorageTensorArrayNonUniformIndexingNative: Bool
     public let shaderTensorSupportedStages: ShaderStageFlags
 
-    init(cStruct: VkPhysicalDeviceTensorPropertiesARM) {
+    public init(cStruct: VkPhysicalDeviceTensorPropertiesARM) {
         self.maxTensorDimensionCount = cStruct.maxTensorDimensionCount
         self.maxTensorElements = cStruct.maxTensorElements
         self.maxPerDimensionTensorElements = cStruct.maxPerDimensionTensorElements
@@ -45519,7 +45519,7 @@ public struct TensorMemoryBarrierARM: ChainableBase, DependencyInfoExtension {
         self.tensor = tensor
     }
 
-    init(cStruct: VkTensorMemoryBarrierARM, device: Device) {
+    public init(cStruct: VkTensorMemoryBarrierARM, device: Device) {
         self.srcStageMask = PipelineStageFlags2(rawValue: cStruct.srcStageMask)
         self.srcAccessMask = AccessFlags2(rawValue: cStruct.srcAccessMask)
         self.dstStageMask = PipelineStageFlags2(rawValue: cStruct.dstStageMask)
@@ -45559,7 +45559,7 @@ public struct TensorDependencyInfoARM: ChainableBase, DependencyInfoExtension {
         self.tensorMemoryBarriers = tensorMemoryBarriers
     }
 
-    init(cStruct: VkTensorDependencyInfoARM, device: Device) {
+    public init(cStruct: VkTensorDependencyInfoARM, device: Device) {
         self.tensorMemoryBarriers = UnsafeBufferPointer(start: cStruct.pTensorMemoryBarriers, count: Int(cStruct.tensorMemoryBarrierCount)).map{ TensorMemoryBarrierARM(cStruct: $0, device: device) }
     }
 
@@ -45600,7 +45600,7 @@ public struct PhysicalDeviceTensorFeaturesARM: ChainableBase, PhysicalDeviceFeat
         self.tensors = tensors
     }
 
-    init(cStruct: VkPhysicalDeviceTensorFeaturesARM) {
+    public init(cStruct: VkPhysicalDeviceTensorFeaturesARM) {
         self.tensorNonPacked = cStruct.tensorNonPacked == VK_TRUE
         self.shaderTensorAccess = cStruct.shaderTensorAccess == VK_TRUE
         self.shaderStorageTensorArrayDynamicIndexing = cStruct.shaderStorageTensorArrayDynamicIndexing == VK_TRUE
@@ -45638,7 +45638,7 @@ public struct DeviceTensorMemoryRequirementsARM: ChainableBase {
         self.createInfo = createInfo
     }
 
-    init(cStruct: VkDeviceTensorMemoryRequirementsARM) {
+    public init(cStruct: VkDeviceTensorMemoryRequirementsARM) {
         self.createInfo = TensorCreateInfoARM(cStruct: cStruct.pCreateInfo.pointee)
     }
 
@@ -45672,7 +45672,7 @@ public struct TensorCopyARM: ChainableBase {
         self.extent = extent
     }
 
-    init(cStruct: VkTensorCopyARM) {
+    public init(cStruct: VkTensorCopyARM) {
         self.srcOffset = (cStruct.pSrcOffset != nil) ? Array(UnsafeBufferPointer(start: cStruct.pSrcOffset, count: Int(cStruct.dimensionCount))) : nil
         self.dstOffset = (cStruct.pDstOffset != nil) ? Array(UnsafeBufferPointer(start: cStruct.pDstOffset, count: Int(cStruct.dimensionCount))) : nil
         self.extent = (cStruct.pExtent != nil) ? Array(UnsafeBufferPointer(start: cStruct.pExtent, count: Int(cStruct.dimensionCount))) : nil
@@ -45715,7 +45715,7 @@ public struct CopyTensorInfoARM: ChainableBase {
         self.regions = regions
     }
 
-    init(cStruct: VkCopyTensorInfoARM, device: Device) {
+    public init(cStruct: VkCopyTensorInfoARM, device: Device) {
         self.srcTensor = TensorARM(handle: cStruct.srcTensor, device: device)
         self.dstTensor = TensorARM(handle: cStruct.dstTensor, device: device)
         self.regions = UnsafeBufferPointer(start: cStruct.pRegions, count: Int(cStruct.regionCount)).map{ TensorCopyARM(cStruct: $0) }
@@ -45750,7 +45750,7 @@ public struct MemoryDedicatedAllocateInfoTensorARM: ChainableBase, MemoryAllocat
         self.tensor = tensor
     }
 
-    init(cStruct: VkMemoryDedicatedAllocateInfoTensorARM, device: Device) {
+    public init(cStruct: VkMemoryDedicatedAllocateInfoTensorARM, device: Device) {
         self.tensor = TensorARM(handle: cStruct.tensor, device: device)
     }
 
@@ -45782,7 +45782,7 @@ public struct PhysicalDeviceDescriptorBufferTensorPropertiesARM: ChainableBase, 
         self.tensorDescriptorSize = tensorDescriptorSize
     }
 
-    init(cStruct: VkPhysicalDeviceDescriptorBufferTensorPropertiesARM) {
+    public init(cStruct: VkPhysicalDeviceDescriptorBufferTensorPropertiesARM) {
         self.tensorCaptureReplayDescriptorDataSize = cStruct.tensorCaptureReplayDescriptorDataSize
         self.tensorViewCaptureReplayDescriptorDataSize = cStruct.tensorViewCaptureReplayDescriptorDataSize
         self.tensorDescriptorSize = cStruct.tensorDescriptorSize
@@ -45814,7 +45814,7 @@ public struct PhysicalDeviceDescriptorBufferTensorFeaturesARM: ChainableBase, Ph
         self.descriptorBufferTensorDescriptors = descriptorBufferTensorDescriptors
     }
 
-    init(cStruct: VkPhysicalDeviceDescriptorBufferTensorFeaturesARM) {
+    public init(cStruct: VkPhysicalDeviceDescriptorBufferTensorFeaturesARM) {
         self.descriptorBufferTensorDescriptors = cStruct.descriptorBufferTensorDescriptors == VK_TRUE
     }
 
@@ -45842,7 +45842,7 @@ public struct TensorCaptureDescriptorDataInfoARM: ChainableBase {
         self.tensor = tensor
     }
 
-    init(cStruct: VkTensorCaptureDescriptorDataInfoARM, device: Device) {
+    public init(cStruct: VkTensorCaptureDescriptorDataInfoARM, device: Device) {
         self.tensor = TensorARM(handle: cStruct.tensor, device: device)
     }
 
@@ -45870,7 +45870,7 @@ public struct TensorViewCaptureDescriptorDataInfoARM: ChainableBase {
         self.tensorView = tensorView
     }
 
-    init(cStruct: VkTensorViewCaptureDescriptorDataInfoARM, device: Device) {
+    public init(cStruct: VkTensorViewCaptureDescriptorDataInfoARM, device: Device) {
         self.tensorView = TensorViewARM(handle: cStruct.tensorView, device: device)
     }
 
@@ -45898,7 +45898,7 @@ public struct DescriptorGetTensorInfoARM: ChainableBase, DescriptorGetInfoEXTExt
         self.tensorView = tensorView
     }
 
-    init(cStruct: VkDescriptorGetTensorInfoARM, device: Device) {
+    public init(cStruct: VkDescriptorGetTensorInfoARM, device: Device) {
         self.tensorView = (cStruct.tensorView != nil) ? TensorViewARM(handle: cStruct.tensorView, device: device) : nil
     }
 
@@ -45926,7 +45926,7 @@ public struct FrameBoundaryTensorsARM: ChainableBase, SubmitInfoExtension, Submi
         self.tensors = tensors
     }
 
-    init(cStruct: VkFrameBoundaryTensorsARM, device: Device) {
+    public init(cStruct: VkFrameBoundaryTensorsARM, device: Device) {
         self.tensors = UnsafeBufferPointer(start: cStruct.pTensors, count: Int(cStruct.tensorCount)).map{ TensorARM(handle: $0, device: device) }
     }
 
@@ -45961,7 +45961,7 @@ public struct PhysicalDeviceExternalTensorInfoARM: ChainableBase {
         self.handleType = handleType
     }
 
-    init(cStruct: VkPhysicalDeviceExternalTensorInfoARM) {
+    public init(cStruct: VkPhysicalDeviceExternalTensorInfoARM) {
         self.flags = TensorCreateFlagsARM(rawValue: cStruct.flags)
         self.description = TensorDescriptionARM(cStruct: cStruct.pDescription.pointee)
         self.handleType = ExternalMemoryHandleTypeFlags(rawValue: unsafeBitCast(cStruct.handleType.rawValue, to: UInt32.self))
@@ -45995,7 +45995,7 @@ public struct ExternalTensorPropertiesARM: ChainableBase {
         self.externalMemoryProperties = externalMemoryProperties
     }
 
-    init(cStruct: VkExternalTensorPropertiesARM) {
+    public init(cStruct: VkExternalTensorPropertiesARM) {
         self.externalMemoryProperties = ExternalMemoryProperties(cStruct: cStruct.externalMemoryProperties)
     }
 
@@ -46025,7 +46025,7 @@ public struct ExternalMemoryTensorCreateInfoARM: ChainableBase, TensorCreateInfo
         self.handleTypes = handleTypes
     }
 
-    init(cStruct: VkExternalMemoryTensorCreateInfoARM) {
+    public init(cStruct: VkExternalMemoryTensorCreateInfoARM) {
         self.handleTypes = ExternalMemoryHandleTypeFlags(rawValue: cStruct.handleTypes)
     }
 
@@ -46055,7 +46055,7 @@ public struct PhysicalDeviceShaderFloat8FeaturesEXT: ChainableBase, PhysicalDevi
         self.shaderFloat8CooperativeMatrix = shaderFloat8CooperativeMatrix
     }
 
-    init(cStruct: VkPhysicalDeviceShaderFloat8FeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceShaderFloat8FeaturesEXT) {
         self.shaderFloat8 = cStruct.shaderFloat8 == VK_TRUE
         self.shaderFloat8CooperativeMatrix = cStruct.shaderFloat8CooperativeMatrix == VK_TRUE
     }
@@ -46088,7 +46088,7 @@ public struct SurfaceCreateInfoOHOS: ChainableBase {
         self.window = window
     }
 
-    init(cStruct: VkSurfaceCreateInfoOHOS) {
+    public init(cStruct: VkSurfaceCreateInfoOHOS) {
         self.flags = SurfaceCreateFlagsOHOS(rawValue: cStruct.flags)
         self.window = cStruct.window
     }
@@ -46127,7 +46127,7 @@ public struct PhysicalDeviceDataGraphFeaturesARM: ChainableBase, PhysicalDeviceF
         self.dataGraphShaderModule = dataGraphShaderModule
     }
 
-    init(cStruct: VkPhysicalDeviceDataGraphFeaturesARM) {
+    public init(cStruct: VkPhysicalDeviceDataGraphFeaturesARM) {
         self.dataGraph = cStruct.dataGraph == VK_TRUE
         self.dataGraphUpdateAfterBind = cStruct.dataGraphUpdateAfterBind == VK_TRUE
         self.dataGraphSpecializationConstants = cStruct.dataGraphSpecializationConstants == VK_TRUE
@@ -46167,7 +46167,7 @@ public struct DataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM: Chai
         self.groupSize = groupSize
     }
 
-    init(cStruct: VkDataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM) {
+    public init(cStruct: VkDataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM) {
         self.dimension = cStruct.dimension
         self.zeroCount = cStruct.zeroCount
         self.groupSize = cStruct.groupSize
@@ -46201,7 +46201,7 @@ public struct DataGraphPipelineConstantARM: ChainableBase {
         self.constantData = constantData
     }
 
-    init(cStruct: VkDataGraphPipelineConstantARM) {
+    public init(cStruct: VkDataGraphPipelineConstantARM) {
         self.id = cStruct.id
         self.constantData = cStruct.pConstantData
     }
@@ -46235,7 +46235,7 @@ public struct DataGraphPipelineResourceInfoARM: ChainableBase {
         self.arrayElement = arrayElement
     }
 
-    init(cStruct: VkDataGraphPipelineResourceInfoARM) {
+    public init(cStruct: VkDataGraphPipelineResourceInfoARM) {
         self.descriptorSet = cStruct.descriptorSet
         self.binding = cStruct.binding
         self.arrayElement = cStruct.arrayElement
@@ -46267,7 +46267,7 @@ public struct DataGraphPipelineResourceInfoImageLayoutARM: ChainableBase, DataGr
         self.layout = layout
     }
 
-    init(cStruct: VkDataGraphPipelineResourceInfoImageLayoutARM) {
+    public init(cStruct: VkDataGraphPipelineResourceInfoImageLayoutARM) {
         self.layout = ImageLayout(rawValue: unsafeBitCast(cStruct.layout, to: UInt32.self))!
     }
 
@@ -46295,7 +46295,7 @@ public struct DataGraphPipelineCompilerControlCreateInfoARM: ChainableBase, Data
         self.vendorOptions = vendorOptions
     }
 
-    init(cStruct: VkDataGraphPipelineCompilerControlCreateInfoARM) {
+    public init(cStruct: VkDataGraphPipelineCompilerControlCreateInfoARM) {
         self.vendorOptions = String(cString: cStruct.pVendorOptions)
     }
 
@@ -46329,7 +46329,7 @@ public struct DataGraphPipelineCreateInfoARM: ChainableBase {
         self.resourceInfos = resourceInfos
     }
 
-    init(cStruct: VkDataGraphPipelineCreateInfoARM, device: Device) {
+    public init(cStruct: VkDataGraphPipelineCreateInfoARM, device: Device) {
         self.flags = PipelineCreateFlags2(rawValue: cStruct.flags)
         self.layout = PipelineLayout(handle: cStruct.layout, device: device)
         self.resourceInfos = UnsafeBufferPointer(start: cStruct.pResourceInfos, count: Int(cStruct.resourceInfoCount)).map{ DataGraphPipelineResourceInfoARM(cStruct: $0) }
@@ -46370,7 +46370,7 @@ public struct DataGraphPipelineShaderModuleCreateInfoARM: ChainableBase, DataGra
         self.constants = constants
     }
 
-    init(cStruct: VkDataGraphPipelineShaderModuleCreateInfoARM, device: Device) {
+    public init(cStruct: VkDataGraphPipelineShaderModuleCreateInfoARM, device: Device) {
         self.module = (cStruct.module != nil) ? ShaderModule(handle: cStruct.module, device: device) : nil
         self.name = String(cString: cStruct.pName)
         self.specializationInfo = (cStruct.pSpecializationInfo != nil) ? SpecializationInfo(cStruct: cStruct.pSpecializationInfo.pointee) : nil
@@ -46413,7 +46413,7 @@ public struct DataGraphPipelineSessionCreateInfoARM: ChainableBase {
         self.dataGraphPipeline = dataGraphPipeline
     }
 
-    init(cStruct: VkDataGraphPipelineSessionCreateInfoARM, device: Device) {
+    public init(cStruct: VkDataGraphPipelineSessionCreateInfoARM, device: Device) {
         self.flags = DataGraphPipelineSessionCreateFlagsARM(rawValue: cStruct.flags)
         self.dataGraphPipeline = Pipeline(handle: cStruct.dataGraphPipeline, device: device)
     }
@@ -46443,7 +46443,7 @@ public struct DataGraphPipelineSessionBindPointRequirementsInfoARM: ChainableBas
         self.session = session
     }
 
-    init(cStruct: VkDataGraphPipelineSessionBindPointRequirementsInfoARM, device: Device) {
+    public init(cStruct: VkDataGraphPipelineSessionBindPointRequirementsInfoARM, device: Device) {
         self.session = DataGraphPipelineSessionARM(handle: cStruct.session, device: device)
     }
 
@@ -46469,7 +46469,7 @@ public struct DataGraphPipelineSessionBindPointRequirementARM: ChainableBase {
     public let bindPointType: DataGraphPipelineSessionBindPointTypeARM
     public let numObjects: UInt32
 
-    init(cStruct: VkDataGraphPipelineSessionBindPointRequirementARM) {
+    public init(cStruct: VkDataGraphPipelineSessionBindPointRequirementARM) {
         self.bindPoint = DataGraphPipelineSessionBindPointARM(rawValue: unsafeBitCast(cStruct.bindPoint, to: UInt32.self))!
         self.bindPointType = DataGraphPipelineSessionBindPointTypeARM(rawValue: unsafeBitCast(cStruct.bindPointType, to: UInt32.self))!
         self.numObjects = cStruct.numObjects
@@ -46505,7 +46505,7 @@ public struct DataGraphPipelineSessionMemoryRequirementsInfoARM: ChainableBase {
         self.objectIndex = objectIndex
     }
 
-    init(cStruct: VkDataGraphPipelineSessionMemoryRequirementsInfoARM, device: Device) {
+    public init(cStruct: VkDataGraphPipelineSessionMemoryRequirementsInfoARM, device: Device) {
         self.session = DataGraphPipelineSessionARM(handle: cStruct.session, device: device)
         self.bindPoint = DataGraphPipelineSessionBindPointARM(rawValue: unsafeBitCast(cStruct.bindPoint, to: UInt32.self))!
         self.objectIndex = cStruct.objectIndex
@@ -46545,7 +46545,7 @@ public struct BindDataGraphPipelineSessionMemoryInfoARM: ChainableBase {
         self.memoryOffset = memoryOffset
     }
 
-    init(cStruct: VkBindDataGraphPipelineSessionMemoryInfoARM, device: Device) {
+    public init(cStruct: VkBindDataGraphPipelineSessionMemoryInfoARM, device: Device) {
         self.session = DataGraphPipelineSessionARM(handle: cStruct.session, device: device)
         self.bindPoint = DataGraphPipelineSessionBindPointARM(rawValue: unsafeBitCast(cStruct.bindPoint, to: UInt32.self))!
         self.objectIndex = cStruct.objectIndex
@@ -46581,7 +46581,7 @@ public struct DataGraphPipelineInfoARM: ChainableBase {
         self.dataGraphPipeline = dataGraphPipeline
     }
 
-    init(cStruct: VkDataGraphPipelineInfoARM, device: Device) {
+    public init(cStruct: VkDataGraphPipelineInfoARM, device: Device) {
         self.dataGraphPipeline = Pipeline(handle: cStruct.dataGraphPipeline, device: device)
     }
 
@@ -46615,7 +46615,7 @@ public struct DataGraphPipelinePropertyQueryResultARM: ChainableBase {
         self.data = data
     }
 
-    init(cStruct: VkDataGraphPipelinePropertyQueryResultARM) {
+    public init(cStruct: VkDataGraphPipelinePropertyQueryResultARM) {
         self.property = DataGraphPipelinePropertyARM(rawValue: unsafeBitCast(cStruct.property, to: UInt32.self))!
         self.isText = cStruct.isText == VK_TRUE
         self.dataSize = cStruct.dataSize
@@ -46649,7 +46649,7 @@ public struct DataGraphPipelineIdentifierCreateInfoARM: ChainableBase, DataGraph
         self.identifier = identifier
     }
 
-    init(cStruct: VkDataGraphPipelineIdentifierCreateInfoARM) {
+    public init(cStruct: VkDataGraphPipelineIdentifierCreateInfoARM) {
         self.identifier = Array(UnsafeBufferPointer(start: cStruct.pIdentifier, count: Int(cStruct.identifierSize)))
     }
 
@@ -46680,7 +46680,7 @@ public struct DataGraphPipelineDispatchInfoARM: ChainableBase {
         self.flags = flags
     }
 
-    init(cStruct: VkDataGraphPipelineDispatchInfoARM) {
+    public init(cStruct: VkDataGraphPipelineDispatchInfoARM) {
         self.flags = DataGraphPipelineDispatchFlagsARM(rawValue: cStruct.flags)
     }
 
@@ -46710,7 +46710,7 @@ public struct PhysicalDeviceDataGraphProcessingEngineARM: CStructConvertible {
         self.isForeign = isForeign
     }
 
-    init(cStruct: VkPhysicalDeviceDataGraphProcessingEngineARM) {
+    public init(cStruct: VkPhysicalDeviceDataGraphProcessingEngineARM) {
         self.type = PhysicalDeviceDataGraphProcessingEngineTypeARM(rawValue: unsafeBitCast(cStruct.type, to: UInt32.self))!
         self.isForeign = cStruct.isForeign == VK_TRUE
     }
@@ -46736,7 +46736,7 @@ public struct PhysicalDeviceDataGraphOperationSupportARM: CStructConvertible {
         self.version = version
     }
 
-    init(cStruct: VkPhysicalDeviceDataGraphOperationSupportARM) {
+    public init(cStruct: VkPhysicalDeviceDataGraphOperationSupportARM) {
         self.operationType = PhysicalDeviceDataGraphOperationTypeARM(rawValue: unsafeBitCast(cStruct.operationType, to: UInt32.self))!
         self.name = String(unsafeBytesOf: cStruct.name)
         self.version = cStruct.version
@@ -46757,7 +46757,7 @@ public struct QueueFamilyDataGraphPropertiesARM: ChainableBase {
     public let engine: PhysicalDeviceDataGraphProcessingEngineARM
     public let operation: PhysicalDeviceDataGraphOperationSupportARM
 
-    init(cStruct: VkQueueFamilyDataGraphPropertiesARM) {
+    public init(cStruct: VkQueueFamilyDataGraphPropertiesARM) {
         self.engine = PhysicalDeviceDataGraphProcessingEngineARM(cStruct: cStruct.engine)
         self.operation = PhysicalDeviceDataGraphOperationSupportARM(cStruct: cStruct.operation)
     }
@@ -46793,7 +46793,7 @@ public struct PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM: Chainab
         self.engineType = engineType
     }
 
-    init(cStruct: VkPhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM) {
+    public init(cStruct: VkPhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM) {
         self.queueFamilyIndex = cStruct.queueFamilyIndex
         self.engineType = PhysicalDeviceDataGraphProcessingEngineTypeARM(rawValue: unsafeBitCast(cStruct.engineType, to: UInt32.self))!
     }
@@ -46820,7 +46820,7 @@ public struct QueueFamilyDataGraphProcessingEnginePropertiesARM: ChainableBase {
     public let foreignSemaphoreHandleTypes: ExternalSemaphoreHandleTypeFlags
     public let foreignMemoryHandleTypes: ExternalMemoryHandleTypeFlags
 
-    init(cStruct: VkQueueFamilyDataGraphProcessingEnginePropertiesARM) {
+    public init(cStruct: VkQueueFamilyDataGraphProcessingEnginePropertiesARM) {
         self.foreignSemaphoreHandleTypes = ExternalSemaphoreHandleTypeFlags(rawValue: cStruct.foreignSemaphoreHandleTypes)
         self.foreignMemoryHandleTypes = ExternalMemoryHandleTypeFlags(rawValue: cStruct.foreignMemoryHandleTypes)
     }
@@ -46852,7 +46852,7 @@ public struct DataGraphProcessingEngineCreateInfoARM: ChainableBase, DataGraphPi
         self.processingEngines = processingEngines
     }
 
-    init(cStruct: VkDataGraphProcessingEngineCreateInfoARM) {
+    public init(cStruct: VkDataGraphProcessingEngineCreateInfoARM) {
         self.processingEngineCount = cStruct.processingEngineCount
         self.processingEngines = cStruct.pProcessingEngines
     }
@@ -46882,7 +46882,7 @@ public struct PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC: ChainableBa
         self.pipelineCacheIncrementalMode = pipelineCacheIncrementalMode
     }
 
-    init(cStruct: VkPhysicalDevicePipelineCacheIncrementalModeFeaturesSEC) {
+    public init(cStruct: VkPhysicalDevicePipelineCacheIncrementalModeFeaturesSEC) {
         self.pipelineCacheIncrementalMode = cStruct.pipelineCacheIncrementalMode == VK_TRUE
     }
 
@@ -46910,7 +46910,7 @@ public struct DataGraphPipelineBuiltinModelCreateInfoQCOM: ChainableBase, DataGr
         self.operation = operation
     }
 
-    init(cStruct: VkDataGraphPipelineBuiltinModelCreateInfoQCOM) {
+    public init(cStruct: VkDataGraphPipelineBuiltinModelCreateInfoQCOM) {
         self.operation = PhysicalDeviceDataGraphOperationSupportARM(cStruct: cStruct.pOperation.pointee)
     }
 
@@ -46940,7 +46940,7 @@ public struct PhysicalDeviceDataGraphModelFeaturesQCOM: ChainableBase, PhysicalD
         self.dataGraphModel = dataGraphModel
     }
 
-    init(cStruct: VkPhysicalDeviceDataGraphModelFeaturesQCOM) {
+    public init(cStruct: VkPhysicalDeviceDataGraphModelFeaturesQCOM) {
         self.dataGraphModel = cStruct.dataGraphModel == VK_TRUE
     }
 
@@ -46968,7 +46968,7 @@ public struct PhysicalDeviceShaderUntypedPointersFeaturesKHR: ChainableBase, Phy
         self.shaderUntypedPointers = shaderUntypedPointers
     }
 
-    init(cStruct: VkPhysicalDeviceShaderUntypedPointersFeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceShaderUntypedPointersFeaturesKHR) {
         self.shaderUntypedPointers = cStruct.shaderUntypedPointers == VK_TRUE
     }
 
@@ -46996,7 +46996,7 @@ public struct PhysicalDeviceVideoEncodeRgbConversionFeaturesVALVE: ChainableBase
         self.videoEncodeRgbConversion = videoEncodeRgbConversion
     }
 
-    init(cStruct: VkPhysicalDeviceVideoEncodeRgbConversionFeaturesVALVE) {
+    public init(cStruct: VkPhysicalDeviceVideoEncodeRgbConversionFeaturesVALVE) {
         self.videoEncodeRgbConversion = cStruct.videoEncodeRgbConversion == VK_TRUE
     }
 
@@ -47023,7 +47023,7 @@ public struct VideoEncodeRgbConversionCapabilitiesVALVE: ChainableBase, VideoCap
     public let xChromaOffsets: VideoEncodeRgbChromaOffsetFlagsVALVE
     public let yChromaOffsets: VideoEncodeRgbChromaOffsetFlagsVALVE
 
-    init(cStruct: VkVideoEncodeRgbConversionCapabilitiesVALVE) {
+    public init(cStruct: VkVideoEncodeRgbConversionCapabilitiesVALVE) {
         self.rgbModels = VideoEncodeRgbModelConversionFlagsVALVE(rawValue: cStruct.rgbModels)
         self.rgbRanges = VideoEncodeRgbRangeCompressionFlagsVALVE(rawValue: cStruct.rgbRanges)
         self.xChromaOffsets = VideoEncodeRgbChromaOffsetFlagsVALVE(rawValue: cStruct.xChromaOffsets)
@@ -47057,7 +47057,7 @@ public struct VideoEncodeProfileRgbConversionInfoVALVE: ChainableBase, VideoProf
         self.performEncodeRgbConversion = performEncodeRgbConversion
     }
 
-    init(cStruct: VkVideoEncodeProfileRgbConversionInfoVALVE) {
+    public init(cStruct: VkVideoEncodeProfileRgbConversionInfoVALVE) {
         self.performEncodeRgbConversion = cStruct.performEncodeRgbConversion == VK_TRUE
     }
 
@@ -47091,7 +47091,7 @@ public struct VideoEncodeSessionRgbConversionCreateInfoVALVE: ChainableBase, Vid
         self.yChromaOffset = yChromaOffset
     }
 
-    init(cStruct: VkVideoEncodeSessionRgbConversionCreateInfoVALVE) {
+    public init(cStruct: VkVideoEncodeSessionRgbConversionCreateInfoVALVE) {
         self.rgbModel = VideoEncodeRgbModelConversionFlagsVALVE(rawValue: unsafeBitCast(cStruct.rgbModel.rawValue, to: UInt32.self))
         self.rgbRange = VideoEncodeRgbRangeCompressionFlagsVALVE(rawValue: unsafeBitCast(cStruct.rgbRange.rawValue, to: UInt32.self))
         self.xChromaOffset = VideoEncodeRgbChromaOffsetFlagsVALVE(rawValue: unsafeBitCast(cStruct.xChromaOffset.rawValue, to: UInt32.self))
@@ -47125,7 +47125,7 @@ public struct PhysicalDeviceShader64BitIndexingFeaturesEXT: ChainableBase, Physi
         self.shader64BitIndexing = shader64BitIndexing
     }
 
-    init(cStruct: VkPhysicalDeviceShader64BitIndexingFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceShader64BitIndexingFeaturesEXT) {
         self.shader64BitIndexing = cStruct.shader64BitIndexing == VK_TRUE
     }
 
@@ -47150,7 +47150,7 @@ public struct NativeBufferUsageOHOS: ChainableBase, ImageFormatProperties2Extens
 
     public let OHOSNativeBufferUsage: UInt64
 
-    init(cStruct: VkNativeBufferUsageOHOS) {
+    public init(cStruct: VkNativeBufferUsageOHOS) {
         self.OHOSNativeBufferUsage = cStruct.OHOSNativeBufferUsage
     }
 
@@ -47177,7 +47177,7 @@ public struct NativeBufferPropertiesOHOS: ChainableBase {
     public let allocationSize: VkDeviceSize
     public let memoryTypeBits: UInt32
 
-    init(cStruct: VkNativeBufferPropertiesOHOS) {
+    public init(cStruct: VkNativeBufferPropertiesOHOS) {
         self.allocationSize = cStruct.allocationSize
         self.memoryTypeBits = cStruct.memoryTypeBits
     }
@@ -47212,7 +47212,7 @@ public struct NativeBufferFormatPropertiesOHOS: ChainableBase, NativeBufferPrope
     public let suggestedXChromaOffset: ChromaLocation
     public let suggestedYChromaOffset: ChromaLocation
 
-    init(cStruct: VkNativeBufferFormatPropertiesOHOS) {
+    public init(cStruct: VkNativeBufferFormatPropertiesOHOS) {
         self.format = Format(rawValue: unsafeBitCast(cStruct.format, to: UInt32.self))!
         self.externalFormat = cStruct.externalFormat
         self.formatFeatures = FormatFeatureFlags(rawValue: cStruct.formatFeatures)
@@ -47258,7 +47258,7 @@ public struct ImportNativeBufferInfoOHOS: ChainableBase, MemoryAllocateInfoExten
         self.buffer = buffer
     }
 
-    init(cStruct: VkImportNativeBufferInfoOHOS) {
+    public init(cStruct: VkImportNativeBufferInfoOHOS) {
         self.buffer = cStruct.buffer
     }
 
@@ -47288,7 +47288,7 @@ public struct MemoryGetNativeBufferInfoOHOS: ChainableBase {
         self.memory = memory
     }
 
-    init(cStruct: VkMemoryGetNativeBufferInfoOHOS, device: Device) {
+    public init(cStruct: VkMemoryGetNativeBufferInfoOHOS, device: Device) {
         self.memory = DeviceMemory(handle: cStruct.memory, device: device)
     }
 
@@ -47318,7 +47318,7 @@ public struct ExternalFormatOHOS: ChainableBase, ImageCreateInfoExtension, Sampl
         self.externalFormat = externalFormat
     }
 
-    init(cStruct: VkExternalFormatOHOS) {
+    public init(cStruct: VkExternalFormatOHOS) {
         self.externalFormat = cStruct.externalFormat
     }
 
@@ -47349,7 +47349,7 @@ public struct PerfHintInfoQCOM: ChainableBase {
         self.scale = scale
     }
 
-    init(cStruct: VkPerfHintInfoQCOM) {
+    public init(cStruct: VkPerfHintInfoQCOM) {
         self.type = PerfHintTypeQCOM(rawValue: unsafeBitCast(cStruct.type, to: UInt32.self))!
         self.scale = cStruct.scale
     }
@@ -47379,7 +47379,7 @@ public struct PhysicalDeviceQueuePerfHintFeaturesQCOM: ChainableBase, PhysicalDe
         self.queuePerfHint = queuePerfHint
     }
 
-    init(cStruct: VkPhysicalDeviceQueuePerfHintFeaturesQCOM) {
+    public init(cStruct: VkPhysicalDeviceQueuePerfHintFeaturesQCOM) {
         self.queuePerfHint = cStruct.queuePerfHint == VK_TRUE
     }
 
@@ -47403,7 +47403,7 @@ public struct PhysicalDeviceQueuePerfHintPropertiesQCOM: ChainableBase, Physical
 
     public let supportedQueues: QueueFlags
 
-    init(cStruct: VkPhysicalDeviceQueuePerfHintPropertiesQCOM) {
+    public init(cStruct: VkPhysicalDeviceQueuePerfHintPropertiesQCOM) {
         self.supportedQueues = QueueFlags(rawValue: cStruct.supportedQueues)
     }
 
@@ -47431,7 +47431,7 @@ public struct PhysicalDevicePerformanceCountersByRegionFeaturesARM: ChainableBas
         self.performanceCountersByRegion = performanceCountersByRegion
     }
 
-    init(cStruct: VkPhysicalDevicePerformanceCountersByRegionFeaturesARM) {
+    public init(cStruct: VkPhysicalDevicePerformanceCountersByRegionFeaturesARM) {
         self.performanceCountersByRegion = cStruct.performanceCountersByRegion == VK_TRUE
     }
 
@@ -47459,7 +47459,7 @@ public struct PhysicalDevicePerformanceCountersByRegionPropertiesARM: ChainableB
     public let regionAlignment: UInt32
     public let identityTransformOrder: Bool
 
-    init(cStruct: VkPhysicalDevicePerformanceCountersByRegionPropertiesARM) {
+    public init(cStruct: VkPhysicalDevicePerformanceCountersByRegionPropertiesARM) {
         self.maxPerRegionPerformanceCounters = cStruct.maxPerRegionPerformanceCounters
         self.performanceCounterRegionSize = Extent2D(cStruct: cStruct.performanceCounterRegionSize)
         self.rowStrideAlignment = cStruct.rowStrideAlignment
@@ -47493,7 +47493,7 @@ public struct PerformanceCounterARM: ChainableBase {
 
     public let counterID: UInt32
 
-    init(cStruct: VkPerformanceCounterARM) {
+    public init(cStruct: VkPerformanceCounterARM) {
         self.counterID = cStruct.counterID
     }
 
@@ -47518,7 +47518,7 @@ public struct PerformanceCounterDescriptionARM: ChainableBase {
     public let flags: PerformanceCounterDescriptionFlagsARM
     public let name: String
 
-    init(cStruct: VkPerformanceCounterDescriptionARM) {
+    public init(cStruct: VkPerformanceCounterDescriptionARM) {
         self.flags = PerformanceCounterDescriptionFlagsARM(rawValue: cStruct.flags)
         self.name = String(unsafeBytesOf: cStruct.name)
     }
@@ -47554,7 +47554,7 @@ public struct RenderPassPerformanceCountersByRegionBeginInfoARM: ChainableBase, 
         self.counterIndices = counterIndices
     }
 
-    init(cStruct: VkRenderPassPerformanceCountersByRegionBeginInfoARM) {
+    public init(cStruct: VkRenderPassPerformanceCountersByRegionBeginInfoARM) {
         self.counterAddresses = Array(UnsafeBufferPointer(start: cStruct.pCounterAddresses, count: Int(cStruct.counterAddressCount)))
         self.serializeRegions = cStruct.serializeRegions == VK_TRUE
         self.counterIndexCount = cStruct.counterIndexCount
@@ -47593,7 +47593,7 @@ public struct ComputeOccupancyPriorityParametersNV: ChainableBase {
         self.occupancyThrottling = occupancyThrottling
     }
 
-    init(cStruct: VkComputeOccupancyPriorityParametersNV) {
+    public init(cStruct: VkComputeOccupancyPriorityParametersNV) {
         self.occupancyPriority = cStruct.occupancyPriority
         self.occupancyThrottling = cStruct.occupancyThrottling
     }
@@ -47623,7 +47623,7 @@ public struct PhysicalDeviceComputeOccupancyPriorityFeaturesNV: ChainableBase, P
         self.computeOccupancyPriority = computeOccupancyPriority
     }
 
-    init(cStruct: VkPhysicalDeviceComputeOccupancyPriorityFeaturesNV) {
+    public init(cStruct: VkPhysicalDeviceComputeOccupancyPriorityFeaturesNV) {
         self.computeOccupancyPriority = cStruct.computeOccupancyPriority == VK_TRUE
     }
 
@@ -47651,7 +47651,7 @@ public struct PhysicalDeviceShaderLongVectorFeaturesEXT: ChainableBase, Physical
         self.longVector = longVector
     }
 
-    init(cStruct: VkPhysicalDeviceShaderLongVectorFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceShaderLongVectorFeaturesEXT) {
         self.longVector = cStruct.longVector == VK_TRUE
     }
 
@@ -47675,7 +47675,7 @@ public struct PhysicalDeviceShaderLongVectorPropertiesEXT: ChainableBase, Physic
 
     public let maxVectorComponents: UInt32
 
-    init(cStruct: VkPhysicalDeviceShaderLongVectorPropertiesEXT) {
+    public init(cStruct: VkPhysicalDeviceShaderLongVectorPropertiesEXT) {
         self.maxVectorComponents = cStruct.maxVectorComponents
     }
 
@@ -47703,7 +47703,7 @@ public struct PhysicalDeviceTextureCompressionASTC3DFeaturesEXT: ChainableBase, 
         self.textureCompressionASTC_3D = textureCompressionASTC_3D
     }
 
-    init(cStruct: VkPhysicalDeviceTextureCompressionASTC3DFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceTextureCompressionASTC3DFeaturesEXT) {
         self.textureCompressionASTC_3D = cStruct.textureCompressionASTC_3D == VK_TRUE
     }
 
@@ -47731,7 +47731,7 @@ public struct PhysicalDeviceShaderSubgroupPartitionedFeaturesEXT: ChainableBase,
         self.shaderSubgroupPartitioned = shaderSubgroupPartitioned
     }
 
-    init(cStruct: VkPhysicalDeviceShaderSubgroupPartitionedFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceShaderSubgroupPartitionedFeaturesEXT) {
         self.shaderSubgroupPartitioned = cStruct.shaderSubgroupPartitioned == VK_TRUE
     }
 
@@ -47761,7 +47761,7 @@ public struct HostAddressRangeEXT: CStructConvertible {
         self.size = size
     }
 
-    init(cStruct: VkHostAddressRangeEXT) {
+    public init(cStruct: VkHostAddressRangeEXT) {
         self.address = cStruct.address
         self.size = cStruct.size
     }
@@ -47785,7 +47785,7 @@ public struct HostAddressRangeConstEXT: CStructConvertible {
         self.size = size
     }
 
-    init(cStruct: VkHostAddressRangeConstEXT) {
+    public init(cStruct: VkHostAddressRangeConstEXT) {
         self.address = cStruct.address
         self.size = cStruct.size
     }
@@ -47809,7 +47809,7 @@ public struct TexelBufferDescriptorInfoEXT: ChainableBase {
         self.addressRange = addressRange
     }
 
-    init(cStruct: VkTexelBufferDescriptorInfoEXT) {
+    public init(cStruct: VkTexelBufferDescriptorInfoEXT) {
         self.format = Format(rawValue: unsafeBitCast(cStruct.format, to: UInt32.self))!
         self.addressRange = cStruct.addressRange
     }
@@ -47841,7 +47841,7 @@ public struct ImageDescriptorInfoEXT: ChainableBase {
         self.layout = layout
     }
 
-    init(cStruct: VkImageDescriptorInfoEXT, device: Device) {
+    public init(cStruct: VkImageDescriptorInfoEXT, device: Device) {
         self.view = ImageViewCreateInfo(cStruct: cStruct.pView.pointee, device: device)
         self.layout = ImageLayout(rawValue: unsafeBitCast(cStruct.layout, to: UInt32.self))!
     }
@@ -47875,7 +47875,7 @@ public struct ResourceDescriptorInfoEXT: ChainableBase {
         self.data = data
     }
 
-    init(cStruct: VkResourceDescriptorInfoEXT) {
+    public init(cStruct: VkResourceDescriptorInfoEXT) {
         self.type = DescriptorType(rawValue: unsafeBitCast(cStruct.type, to: UInt32.self))!
         self.data = cStruct.data
     }
@@ -47909,7 +47909,7 @@ public struct BindHeapInfoEXT: ChainableBase {
         self.reservedRangeSize = reservedRangeSize
     }
 
-    init(cStruct: VkBindHeapInfoEXT) {
+    public init(cStruct: VkBindHeapInfoEXT) {
         self.heapRange = cStruct.heapRange
         self.reservedRangeOffset = cStruct.reservedRangeOffset
         self.reservedRangeSize = cStruct.reservedRangeSize
@@ -47943,7 +47943,7 @@ public struct PushDataInfoEXT: ChainableBase {
         self.data = data
     }
 
-    init(cStruct: VkPushDataInfoEXT) {
+    public init(cStruct: VkPushDataInfoEXT) {
         self.offset = cStruct.offset
         self.data = HostAddressRangeConstEXT(cStruct: cStruct.data)
     }
@@ -47983,7 +47983,7 @@ public struct DescriptorMappingSourceConstantOffsetEXT: CStructConvertible {
         self.samplerHeapArrayStride = samplerHeapArrayStride
     }
 
-    init(cStruct: VkDescriptorMappingSourceConstantOffsetEXT) {
+    public init(cStruct: VkDescriptorMappingSourceConstantOffsetEXT) {
         self.heapOffset = cStruct.heapOffset
         self.heapArrayStride = cStruct.heapArrayStride
         self.embeddedSampler = (cStruct.pEmbeddedSampler != nil) ? SamplerCreateInfo(cStruct: cStruct.pEmbeddedSampler.pointee) : nil
@@ -48031,7 +48031,7 @@ public struct DescriptorMappingSourcePushIndexEXT: CStructConvertible {
         self.samplerHeapArrayStride = samplerHeapArrayStride
     }
 
-    init(cStruct: VkDescriptorMappingSourcePushIndexEXT) {
+    public init(cStruct: VkDescriptorMappingSourcePushIndexEXT) {
         self.heapOffset = cStruct.heapOffset
         self.pushOffset = cStruct.pushOffset
         self.heapIndexStride = cStruct.heapIndexStride
@@ -48093,7 +48093,7 @@ public struct DescriptorMappingSourceIndirectIndexEXT: CStructConvertible {
         self.samplerHeapArrayStride = samplerHeapArrayStride
     }
 
-    init(cStruct: VkDescriptorMappingSourceIndirectIndexEXT) {
+    public init(cStruct: VkDescriptorMappingSourceIndirectIndexEXT) {
         self.heapOffset = cStruct.heapOffset
         self.pushOffset = cStruct.pushOffset
         self.addressOffset = cStruct.addressOffset
@@ -48155,7 +48155,7 @@ public struct DescriptorMappingSourceIndirectIndexArrayEXT: CStructConvertible {
         self.samplerHeapIndexStride = samplerHeapIndexStride
     }
 
-    init(cStruct: VkDescriptorMappingSourceIndirectIndexArrayEXT) {
+    public init(cStruct: VkDescriptorMappingSourceIndirectIndexArrayEXT) {
         self.heapOffset = cStruct.heapOffset
         self.pushOffset = cStruct.pushOffset
         self.addressOffset = cStruct.addressOffset
@@ -48197,7 +48197,7 @@ public struct DescriptorMappingSourceHeapDataEXT: CStructConvertible {
         self.pushOffset = pushOffset
     }
 
-    init(cStruct: VkDescriptorMappingSourceHeapDataEXT) {
+    public init(cStruct: VkDescriptorMappingSourceHeapDataEXT) {
         self.heapOffset = cStruct.heapOffset
         self.pushOffset = cStruct.pushOffset
     }
@@ -48237,7 +48237,7 @@ public struct DescriptorMappingSourceShaderRecordIndexEXT: CStructConvertible {
         self.samplerHeapArrayStride = samplerHeapArrayStride
     }
 
-    init(cStruct: VkDescriptorMappingSourceShaderRecordIndexEXT) {
+    public init(cStruct: VkDescriptorMappingSourceShaderRecordIndexEXT) {
         self.heapOffset = cStruct.heapOffset
         self.shaderRecordOffset = cStruct.shaderRecordOffset
         self.heapIndexStride = cStruct.heapIndexStride
@@ -48279,7 +48279,7 @@ public struct DescriptorMappingSourceIndirectAddressEXT: CStructConvertible {
         self.addressOffset = addressOffset
     }
 
-    init(cStruct: VkDescriptorMappingSourceIndirectAddressEXT) {
+    public init(cStruct: VkDescriptorMappingSourceIndirectAddressEXT) {
         self.pushOffset = cStruct.pushOffset
         self.addressOffset = cStruct.addressOffset
     }
@@ -48311,7 +48311,7 @@ public struct DescriptorSetAndBindingMappingEXT: ChainableBase {
         self.sourceData = sourceData
     }
 
-    init(cStruct: VkDescriptorSetAndBindingMappingEXT) {
+    public init(cStruct: VkDescriptorSetAndBindingMappingEXT) {
         self.descriptorSet = cStruct.descriptorSet
         self.firstBinding = cStruct.firstBinding
         self.bindingCount = cStruct.bindingCount
@@ -48349,7 +48349,7 @@ public struct ShaderDescriptorSetAndBindingMappingInfoEXT: ChainableBase, Pipeli
         self.mappings = mappings
     }
 
-    init(cStruct: VkShaderDescriptorSetAndBindingMappingInfoEXT) {
+    public init(cStruct: VkShaderDescriptorSetAndBindingMappingInfoEXT) {
         self.mappings = UnsafeBufferPointer(start: cStruct.pMappings, count: Int(cStruct.mappingCount)).map{ DescriptorSetAndBindingMappingEXT(cStruct: $0) }
     }
 
@@ -48380,7 +48380,7 @@ public struct SamplerCustomBorderColorIndexCreateInfoEXT: ChainableBase, Sampler
         self.index = index
     }
 
-    init(cStruct: VkSamplerCustomBorderColorIndexCreateInfoEXT) {
+    public init(cStruct: VkSamplerCustomBorderColorIndexCreateInfoEXT) {
         self.index = cStruct.index
     }
 
@@ -48408,7 +48408,7 @@ public struct OpaqueCaptureDataCreateInfoEXT: ChainableBase, ImageCreateInfoExte
         self.data = data
     }
 
-    init(cStruct: VkOpaqueCaptureDataCreateInfoEXT) {
+    public init(cStruct: VkOpaqueCaptureDataCreateInfoEXT) {
         self.data = (cStruct.pData != nil) ? HostAddressRangeConstEXT(cStruct: cStruct.pData.pointee) : nil
     }
 
@@ -48440,7 +48440,7 @@ public struct IndirectCommandsLayoutPushDataTokenNV: ChainableBase, IndirectComm
         self.pushDataSize = pushDataSize
     }
 
-    init(cStruct: VkIndirectCommandsLayoutPushDataTokenNV) {
+    public init(cStruct: VkIndirectCommandsLayoutPushDataTokenNV) {
         self.pushDataOffset = cStruct.pushDataOffset
         self.pushDataSize = cStruct.pushDataSize
     }
@@ -48470,7 +48470,7 @@ public struct SubsampledImageFormatPropertiesEXT: ChainableBase, ImageFormatProp
         self.subsampledImageDescriptorCount = subsampledImageDescriptorCount
     }
 
-    init(cStruct: VkSubsampledImageFormatPropertiesEXT) {
+    public init(cStruct: VkSubsampledImageFormatPropertiesEXT) {
         self.subsampledImageDescriptorCount = cStruct.subsampledImageDescriptorCount
     }
 
@@ -48498,7 +48498,7 @@ public struct PhysicalDeviceShaderSplitBarrierFeaturesEXT: ChainableBase, Physic
         self.shaderSplitBarrier = shaderSplitBarrier
     }
 
-    init(cStruct: VkPhysicalDeviceShaderSplitBarrierFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceShaderSplitBarrierFeaturesEXT) {
         self.shaderSplitBarrier = cStruct.shaderSplitBarrier == VK_TRUE
     }
 
@@ -48522,7 +48522,7 @@ public struct PhysicalDeviceShaderSplitBarrierPropertiesEXT: ChainableBase, Phys
 
     public let splitBarrierReservedSharedMemory: UInt32
 
-    init(cStruct: VkPhysicalDeviceShaderSplitBarrierPropertiesEXT) {
+    public init(cStruct: VkPhysicalDeviceShaderSplitBarrierPropertiesEXT) {
         self.splitBarrierReservedSharedMemory = cStruct.splitBarrierReservedSharedMemory
     }
 
@@ -48552,7 +48552,7 @@ public struct PhysicalDeviceDescriptorHeapFeaturesEXT: ChainableBase, PhysicalDe
         self.descriptorHeapCaptureReplay = descriptorHeapCaptureReplay
     }
 
-    init(cStruct: VkPhysicalDeviceDescriptorHeapFeaturesEXT) {
+    public init(cStruct: VkPhysicalDeviceDescriptorHeapFeaturesEXT) {
         self.descriptorHeap = cStruct.descriptorHeap == VK_TRUE
         self.descriptorHeapCaptureReplay = cStruct.descriptorHeapCaptureReplay == VK_TRUE
     }
@@ -48596,7 +48596,7 @@ public struct PhysicalDeviceDescriptorHeapPropertiesEXT: ChainableBase, Physical
     public let sparseDescriptorHeaps: Bool
     public let protectedDescriptorHeaps: Bool
 
-    init(cStruct: VkPhysicalDeviceDescriptorHeapPropertiesEXT) {
+    public init(cStruct: VkPhysicalDeviceDescriptorHeapPropertiesEXT) {
         self.samplerHeapAlignment = cStruct.samplerHeapAlignment
         self.resourceHeapAlignment = cStruct.resourceHeapAlignment
         self.maxSamplerHeapSize = cStruct.maxSamplerHeapSize
@@ -48662,7 +48662,7 @@ public struct CommandBufferInheritanceDescriptorHeapInfoEXT: ChainableBase, Comm
         self.resourceHeapBindInfo = resourceHeapBindInfo
     }
 
-    init(cStruct: VkCommandBufferInheritanceDescriptorHeapInfoEXT) {
+    public init(cStruct: VkCommandBufferInheritanceDescriptorHeapInfoEXT) {
         self.samplerHeapBindInfo = (cStruct.pSamplerHeapBindInfo != nil) ? BindHeapInfoEXT(cStruct: cStruct.pSamplerHeapBindInfo.pointee) : nil
         self.resourceHeapBindInfo = (cStruct.pResourceHeapBindInfo != nil) ? BindHeapInfoEXT(cStruct: cStruct.pResourceHeapBindInfo.pointee) : nil
     }
@@ -48694,7 +48694,7 @@ public struct PhysicalDeviceDescriptorHeapTensorPropertiesARM: ChainableBase, Ph
     public let tensorDescriptorAlignment: VkDeviceSize
     public let tensorCaptureReplayOpaqueDataSize: Int
 
-    init(cStruct: VkPhysicalDeviceDescriptorHeapTensorPropertiesARM) {
+    public init(cStruct: VkPhysicalDeviceDescriptorHeapTensorPropertiesARM) {
         self.tensorDescriptorSize = cStruct.tensorDescriptorSize
         self.tensorDescriptorAlignment = cStruct.tensorDescriptorAlignment
         self.tensorCaptureReplayOpaqueDataSize = cStruct.tensorCaptureReplayOpaqueDataSize
@@ -48726,7 +48726,7 @@ public struct PhysicalDeviceShaderInstrumentationFeaturesARM: ChainableBase, Phy
         self.shaderInstrumentation = shaderInstrumentation
     }
 
-    init(cStruct: VkPhysicalDeviceShaderInstrumentationFeaturesARM) {
+    public init(cStruct: VkPhysicalDeviceShaderInstrumentationFeaturesARM) {
         self.shaderInstrumentation = cStruct.shaderInstrumentation == VK_TRUE
     }
 
@@ -48751,7 +48751,7 @@ public struct PhysicalDeviceShaderInstrumentationPropertiesARM: ChainableBase, P
     public let numMetrics: UInt32
     public let perBasicBlockGranularity: Bool
 
-    init(cStruct: VkPhysicalDeviceShaderInstrumentationPropertiesARM) {
+    public init(cStruct: VkPhysicalDeviceShaderInstrumentationPropertiesARM) {
         self.numMetrics = cStruct.numMetrics
         self.perBasicBlockGranularity = cStruct.perBasicBlockGranularity == VK_TRUE
     }
@@ -48779,7 +48779,7 @@ public struct ShaderInstrumentationCreateInfoARM: ChainableBase {
     public init() {
     }
 
-    init(cStruct: VkShaderInstrumentationCreateInfoARM) {
+    public init(cStruct: VkShaderInstrumentationCreateInfoARM) {
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkShaderInstrumentationCreateInfoARM>) throws(E) -> R) throws(E) -> R {
@@ -48807,7 +48807,7 @@ public struct ShaderInstrumentationMetricDescriptionARM: ChainableBase {
         self.description = description
     }
 
-    init(cStruct: VkShaderInstrumentationMetricDescriptionARM) {
+    public init(cStruct: VkShaderInstrumentationMetricDescriptionARM) {
         self.name = String(unsafeBytesOf: cStruct.name)
         self.description = String(unsafeBytesOf: cStruct.description)
     }
@@ -48843,7 +48843,7 @@ public struct ShaderInstrumentationMetricDataHeaderARM: CStructConvertible {
         self.basicBlockIndex = basicBlockIndex
     }
 
-    init(cStruct: VkShaderInstrumentationMetricDataHeaderARM) {
+    public init(cStruct: VkShaderInstrumentationMetricDataHeaderARM) {
         self.resultIndex = cStruct.resultIndex
         self.resultSubIndex = cStruct.resultSubIndex
         self.stages = ShaderStageFlags(rawValue: cStruct.stages)
@@ -48871,7 +48871,7 @@ public struct DeviceAddressRangeKHR: CStructConvertible {
         self.size = size
     }
 
-    init(cStruct: VkDeviceAddressRangeKHR) {
+    public init(cStruct: VkDeviceAddressRangeKHR) {
         self.address = cStruct.address
         self.size = cStruct.size
     }
@@ -48899,7 +48899,7 @@ public struct DeviceMemoryCopyKHR: ChainableBase {
         self.dstFlags = dstFlags
     }
 
-    init(cStruct: VkDeviceMemoryCopyKHR) {
+    public init(cStruct: VkDeviceMemoryCopyKHR) {
         self.srcRange = DeviceAddressRangeKHR(cStruct: cStruct.srcRange)
         self.srcFlags = AddressCommandFlagsKHR(rawValue: cStruct.srcFlags)
         self.dstRange = DeviceAddressRangeKHR(cStruct: cStruct.dstRange)
@@ -48937,7 +48937,7 @@ public struct CopyDeviceMemoryInfoKHR: ChainableBase {
         self.regions = regions
     }
 
-    init(cStruct: VkCopyDeviceMemoryInfoKHR) {
+    public init(cStruct: VkCopyDeviceMemoryInfoKHR) {
         self.regions = UnsafeBufferPointer(start: cStruct.pRegions, count: Int(cStruct.regionCount)).map{ DeviceMemoryCopyKHR(cStruct: $0) }
     }
 
@@ -48982,7 +48982,7 @@ public struct DeviceMemoryImageCopyKHR: ChainableBase {
         self.imageExtent = imageExtent
     }
 
-    init(cStruct: VkDeviceMemoryImageCopyKHR) {
+    public init(cStruct: VkDeviceMemoryImageCopyKHR) {
         self.addressRange = DeviceAddressRangeKHR(cStruct: cStruct.addressRange)
         self.addressFlags = AddressCommandFlagsKHR(rawValue: cStruct.addressFlags)
         self.addressRowLength = cStruct.addressRowLength
@@ -49034,7 +49034,7 @@ public struct CopyDeviceMemoryImageInfoKHR: ChainableBase {
         self.regions = regions
     }
 
-    init(cStruct: VkCopyDeviceMemoryImageInfoKHR, device: Device) {
+    public init(cStruct: VkCopyDeviceMemoryImageInfoKHR, device: Device) {
         self.image = Image(handle: cStruct.image, device: device)
         self.regions = UnsafeBufferPointer(start: cStruct.pRegions, count: Int(cStruct.regionCount)).map{ DeviceMemoryImageCopyKHR(cStruct: $0) }
     }
@@ -49081,7 +49081,7 @@ public struct MemoryRangeBarrierKHR: ChainableBase {
         self.addressFlags = addressFlags
     }
 
-    init(cStruct: VkMemoryRangeBarrierKHR) {
+    public init(cStruct: VkMemoryRangeBarrierKHR) {
         self.srcStageMask = PipelineStageFlags2(rawValue: cStruct.srcStageMask)
         self.srcAccessMask = AccessFlags2(rawValue: cStruct.srcAccessMask)
         self.dstStageMask = PipelineStageFlags2(rawValue: cStruct.dstStageMask)
@@ -49125,7 +49125,7 @@ public struct MemoryRangeBarriersInfoKHR: ChainableBase, DependencyInfoExtension
         self.memoryRangeBarriers = memoryRangeBarriers
     }
 
-    init(cStruct: VkMemoryRangeBarriersInfoKHR) {
+    public init(cStruct: VkMemoryRangeBarriersInfoKHR) {
         self.memoryRangeBarriers = UnsafeBufferPointer(start: cStruct.pMemoryRangeBarriers, count: Int(cStruct.memoryRangeBarrierCount)).map{ MemoryRangeBarrierKHR(cStruct: $0) }
     }
 
@@ -49156,7 +49156,7 @@ public struct PhysicalDeviceDeviceAddressCommandsFeaturesKHR: ChainableBase, Phy
         self.deviceAddressCommands = deviceAddressCommands
     }
 
-    init(cStruct: VkPhysicalDeviceDeviceAddressCommandsFeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceDeviceAddressCommandsFeaturesKHR) {
         self.deviceAddressCommands = cStruct.deviceAddressCommands == VK_TRUE
     }
 
@@ -49188,7 +49188,7 @@ public struct ConditionalRenderingBeginInfo2EXT: ChainableBase {
         self.flags = flags
     }
 
-    init(cStruct: VkConditionalRenderingBeginInfo2EXT) {
+    public init(cStruct: VkConditionalRenderingBeginInfo2EXT) {
         self.addressRange = DeviceAddressRangeKHR(cStruct: cStruct.addressRange)
         self.addressFlags = AddressCommandFlagsKHR(rawValue: cStruct.addressFlags)
         self.flags = ConditionalRenderingFlagsEXT(rawValue: cStruct.flags)
@@ -49228,7 +49228,7 @@ public struct AccelerationStructureCreateInfo2KHR: ChainableBase {
         self.type = type
     }
 
-    init(cStruct: VkAccelerationStructureCreateInfo2KHR) {
+    public init(cStruct: VkAccelerationStructureCreateInfo2KHR) {
         self.createFlags = AccelerationStructureCreateFlagsKHR(rawValue: cStruct.createFlags)
         self.addressRange = DeviceAddressRangeKHR(cStruct: cStruct.addressRange)
         self.addressFlags = AddressCommandFlagsKHR(rawValue: cStruct.addressFlags)
@@ -49268,7 +49268,7 @@ public struct BindIndexBuffer3InfoKHR: ChainableBase {
         self.indexType = indexType
     }
 
-    init(cStruct: VkBindIndexBuffer3InfoKHR) {
+    public init(cStruct: VkBindIndexBuffer3InfoKHR) {
         self.addressRange = DeviceAddressRangeKHR(cStruct: cStruct.addressRange)
         self.addressFlags = AddressCommandFlagsKHR(rawValue: cStruct.addressFlags)
         self.indexType = IndexType(rawValue: unsafeBitCast(cStruct.indexType, to: UInt32.self))!
@@ -49306,7 +49306,7 @@ public struct BindVertexBuffer3InfoKHR: ChainableBase {
         self.addressFlags = addressFlags
     }
 
-    init(cStruct: VkBindVertexBuffer3InfoKHR) {
+    public init(cStruct: VkBindVertexBuffer3InfoKHR) {
         self.setStride = cStruct.setStride == VK_TRUE
         self.addressRange = StridedDeviceAddressRangeKHR(cStruct: cStruct.addressRange)
         self.addressFlags = AddressCommandFlagsKHR(rawValue: cStruct.addressFlags)
@@ -49344,7 +49344,7 @@ public struct DrawIndirect2InfoKHR: ChainableBase {
         self.drawCount = drawCount
     }
 
-    init(cStruct: VkDrawIndirect2InfoKHR) {
+    public init(cStruct: VkDrawIndirect2InfoKHR) {
         self.addressRange = StridedDeviceAddressRangeKHR(cStruct: cStruct.addressRange)
         self.addressFlags = AddressCommandFlagsKHR(rawValue: cStruct.addressFlags)
         self.drawCount = cStruct.drawCount
@@ -49386,7 +49386,7 @@ public struct DrawIndirectCount2InfoKHR: ChainableBase {
         self.maxDrawCount = maxDrawCount
     }
 
-    init(cStruct: VkDrawIndirectCount2InfoKHR) {
+    public init(cStruct: VkDrawIndirectCount2InfoKHR) {
         self.addressRange = StridedDeviceAddressRangeKHR(cStruct: cStruct.addressRange)
         self.addressFlags = AddressCommandFlagsKHR(rawValue: cStruct.addressFlags)
         self.countAddressRange = DeviceAddressRangeKHR(cStruct: cStruct.countAddressRange)
@@ -49428,7 +49428,7 @@ public struct DispatchIndirect2InfoKHR: ChainableBase {
         self.addressFlags = addressFlags
     }
 
-    init(cStruct: VkDispatchIndirect2InfoKHR) {
+    public init(cStruct: VkDispatchIndirect2InfoKHR) {
         self.addressRange = DeviceAddressRangeKHR(cStruct: cStruct.addressRange)
         self.addressFlags = AddressCommandFlagsKHR(rawValue: cStruct.addressFlags)
     }
@@ -49462,7 +49462,7 @@ public struct BindTransformFeedbackBuffer2InfoEXT: ChainableBase {
         self.addressFlags = addressFlags
     }
 
-    init(cStruct: VkBindTransformFeedbackBuffer2InfoEXT) {
+    public init(cStruct: VkBindTransformFeedbackBuffer2InfoEXT) {
         self.addressRange = DeviceAddressRangeKHR(cStruct: cStruct.addressRange)
         self.addressFlags = AddressCommandFlagsKHR(rawValue: cStruct.addressFlags)
     }
@@ -49500,7 +49500,7 @@ public struct MemoryMarkerInfoAMD: ChainableBase {
         self.marker = marker
     }
 
-    init(cStruct: VkMemoryMarkerInfoAMD) {
+    public init(cStruct: VkMemoryMarkerInfoAMD) {
         self.stage = cStruct.stage
         self.dstRange = DeviceAddressRangeKHR(cStruct: cStruct.dstRange)
         self.dstFlags = AddressCommandFlagsKHR(rawValue: cStruct.dstFlags)
@@ -49536,7 +49536,7 @@ public struct PhysicalDeviceShaderConstantDataFeaturesKHR: ChainableBase, Physic
         self.shaderConstantData = shaderConstantData
     }
 
-    init(cStruct: VkPhysicalDeviceShaderConstantDataFeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceShaderConstantDataFeaturesKHR) {
         self.shaderConstantData = cStruct.shaderConstantData == VK_TRUE
     }
 
@@ -49564,7 +49564,7 @@ public struct PhysicalDeviceShaderAbortFeaturesKHR: ChainableBase, PhysicalDevic
         self.shaderAbort = shaderAbort
     }
 
-    init(cStruct: VkPhysicalDeviceShaderAbortFeaturesKHR) {
+    public init(cStruct: VkPhysicalDeviceShaderAbortFeaturesKHR) {
         self.shaderAbort = cStruct.shaderAbort == VK_TRUE
     }
 
@@ -49592,7 +49592,7 @@ public struct PhysicalDeviceShaderAbortPropertiesKHR: ChainableBase, PhysicalDev
         self.maxShaderAbortMessageSize = maxShaderAbortMessageSize
     }
 
-    init(cStruct: VkPhysicalDeviceShaderAbortPropertiesKHR) {
+    public init(cStruct: VkPhysicalDeviceShaderAbortPropertiesKHR) {
         self.maxShaderAbortMessageSize = cStruct.maxShaderAbortMessageSize
     }
 
@@ -49617,7 +49617,7 @@ public struct DeviceFaultShaderAbortMessageInfoKHR: ChainableBase, DeviceFaultDe
     public let messageDataSize: UInt64
     public let messageData: UnsafeMutableRawPointer?
 
-    init(cStruct: VkDeviceFaultShaderAbortMessageInfoKHR) {
+    public init(cStruct: VkDeviceFaultShaderAbortMessageInfoKHR) {
         self.messageDataSize = cStruct.messageDataSize
         self.messageData = cStruct.pMessageData
     }
@@ -49644,7 +49644,7 @@ public struct DataGraphTOSANameQualityARM: CStructConvertible {
     public let name: String
     public let qualityFlags: DataGraphTOSAQualityFlagsARM
 
-    init(cStruct: VkDataGraphTOSANameQualityARM) {
+    public init(cStruct: VkDataGraphTOSANameQualityARM) {
         self.name = String(unsafeBytesOf: cStruct.name)
         self.qualityFlags = DataGraphTOSAQualityFlagsARM(rawValue: cStruct.qualityFlags)
     }
@@ -49664,7 +49664,7 @@ public struct QueueFamilyDataGraphTOSAPropertiesARM: ChainableBase {
     public let extensions: Array<DataGraphTOSANameQualityARM>
     public let level: DataGraphTOSALevelARM
 
-    init(cStruct: VkQueueFamilyDataGraphTOSAPropertiesARM) {
+    public init(cStruct: VkQueueFamilyDataGraphTOSAPropertiesARM) {
         self.profiles = UnsafeBufferPointer(start: cStruct.pProfiles, count: Int(cStruct.profileCount)).map{ DataGraphTOSANameQualityARM(cStruct: $0) }
         self.extensions = UnsafeBufferPointer(start: cStruct.pExtensions, count: Int(cStruct.extensionCount)).map{ DataGraphTOSANameQualityARM(cStruct: $0) }
         self.level = DataGraphTOSALevelARM(rawValue: unsafeBitCast(cStruct.level, to: UInt32.self))!
@@ -49706,7 +49706,7 @@ public struct DataGraphPipelineSingleNodeConnectionARM: ChainableBase {
         self.connection = connection
     }
 
-    init(cStruct: VkDataGraphPipelineSingleNodeConnectionARM) {
+    public init(cStruct: VkDataGraphPipelineSingleNodeConnectionARM) {
         self.set = cStruct.set
         self.binding = cStruct.binding
         self.connection = DataGraphPipelineNodeConnectionTypeARM(rawValue: unsafeBitCast(cStruct.connection, to: UInt32.self))!
@@ -49738,7 +49738,7 @@ public struct PhysicalDeviceDataGraphOpticalFlowFeaturesARM: ChainableBase, Phys
         self.dataGraphOpticalFlow = dataGraphOpticalFlow
     }
 
-    init(cStruct: VkPhysicalDeviceDataGraphOpticalFlowFeaturesARM) {
+    public init(cStruct: VkPhysicalDeviceDataGraphOpticalFlowFeaturesARM) {
         self.dataGraphOpticalFlow = cStruct.dataGraphOpticalFlow == VK_TRUE
     }
 
@@ -49769,7 +49769,7 @@ public struct QueueFamilyDataGraphOpticalFlowPropertiesARM: ChainableBase {
     public let maxWidth: UInt32
     public let maxHeight: UInt32
 
-    init(cStruct: VkQueueFamilyDataGraphOpticalFlowPropertiesARM) {
+    public init(cStruct: VkQueueFamilyDataGraphOpticalFlowPropertiesARM) {
         self.supportedOutputGridSizes = DataGraphOpticalFlowGridSizeFlagsARM(rawValue: cStruct.supportedOutputGridSizes)
         self.supportedHintGridSizes = DataGraphOpticalFlowGridSizeFlagsARM(rawValue: cStruct.supportedHintGridSizes)
         self.hintSupported = cStruct.hintSupported == VK_TRUE
@@ -49811,7 +49811,7 @@ public struct DataGraphOpticalFlowImageFormatInfoARM: ChainableBase, PhysicalDev
         self.usage = usage
     }
 
-    init(cStruct: VkDataGraphOpticalFlowImageFormatInfoARM) {
+    public init(cStruct: VkDataGraphOpticalFlowImageFormatInfoARM) {
         self.usage = DataGraphOpticalFlowImageUsageFlagsARM(rawValue: cStruct.usage)
     }
 
@@ -49835,7 +49835,7 @@ public struct DataGraphOpticalFlowImageFormatPropertiesARM: ChainableBase {
 
     public let format: Format
 
-    init(cStruct: VkDataGraphOpticalFlowImageFormatPropertiesARM) {
+    public init(cStruct: VkDataGraphOpticalFlowImageFormatPropertiesARM) {
         self.format = Format(rawValue: unsafeBitCast(cStruct.format, to: UInt32.self))!
     }
 
@@ -49865,7 +49865,7 @@ public struct DataGraphPipelineSingleNodeCreateInfoARM: ChainableBase, DataGraph
         self.connections = connections
     }
 
-    init(cStruct: VkDataGraphPipelineSingleNodeCreateInfoARM) {
+    public init(cStruct: VkDataGraphPipelineSingleNodeCreateInfoARM) {
         self.nodeType = DataGraphPipelineNodeTypeARM(rawValue: unsafeBitCast(cStruct.nodeType, to: UInt32.self))!
         self.connections = UnsafeBufferPointer(start: cStruct.pConnections, count: Int(cStruct.connectionCount)).map{ DataGraphPipelineSingleNodeConnectionARM(cStruct: $0) }
     }
@@ -49914,7 +49914,7 @@ public struct DataGraphPipelineOpticalFlowCreateInfoARM: ChainableBase, DataGrap
         self.flags = flags
     }
 
-    init(cStruct: VkDataGraphPipelineOpticalFlowCreateInfoARM) {
+    public init(cStruct: VkDataGraphPipelineOpticalFlowCreateInfoARM) {
         self.width = cStruct.width
         self.height = cStruct.height
         self.imageFormat = Format(rawValue: unsafeBitCast(cStruct.imageFormat, to: UInt32.self))!
@@ -49960,7 +49960,7 @@ public struct DataGraphPipelineOpticalFlowDispatchInfoARM: ChainableBase, DataGr
         self.meanFlowL1NormHint = meanFlowL1NormHint
     }
 
-    init(cStruct: VkDataGraphPipelineOpticalFlowDispatchInfoARM) {
+    public init(cStruct: VkDataGraphPipelineOpticalFlowDispatchInfoARM) {
         self.flags = DataGraphOpticalFlowExecuteFlagsARM(rawValue: cStruct.flags)
         self.meanFlowL1NormHint = cStruct.meanFlowL1NormHint
     }
