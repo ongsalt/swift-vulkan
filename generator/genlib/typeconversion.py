@@ -152,9 +152,8 @@ bool_conversion = Conversion(
 
 
 def enum_conversion(c_enum: str, swift_enum: str) -> Conversion:
-    ty = "UInt32"
     return Conversion(
-        swift_value_template=f'{swift_enum}(rawValue: unsafeBitCast($value, to: {ty}.self))!',
+        swift_value_template=f'{swift_enum}(rawValue: numericBitCast($value))!',
         c_value_template=f'{c_enum}(rawValue: {c_enum}.RawValue($value.rawValue))'
     )
 
@@ -167,9 +166,9 @@ def option_set_conversion(option_set: str) -> Conversion:
 
 
 def option_set_bit_conversion(c_enum: str, option_set: str, is_u64: bool = False) -> Conversion:
-    ty = "UInt64" if is_u64 else "UInt32"
+    # ty = "UInt64" if is_u64 else "UInt32"
     return Conversion(
-        swift_value_template=f'{option_set}(rawValue: unsafeBitCast($value.rawValue, to: {ty}.self))',
+        swift_value_template=f'{option_set}(rawValue: numericBitCast($value.rawValue))',
         c_value_template=f'{c_enum}(rawValue: {c_enum}.RawValue($value.rawValue))'
     )
 

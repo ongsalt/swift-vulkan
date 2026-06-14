@@ -270,11 +270,10 @@ public protocol OutStruct: VulkanStructure {
 // public protocol InStruct: VulkanStructure {}
 func zeroed<T>(of type: T.Type) -> T {
     withUnsafeTemporaryAllocation(of: type, capacity: 1) { buffer in
-        memset(buffer.baseAddress, 0, MemoryLayout<T>.size)
+        memset(buffer.baseAddress!, 0, MemoryLayout<T>.size)
         return buffer.baseAddress!.pointee
     }
 }
-
 
 extension PhysicalDevice {
     // public func getProperties2<each Ext>(chaining _: repeat (each Ext).Type)
@@ -290,19 +289,16 @@ extension PhysicalDevice {
     //     fatalError()
     // }
 }
-func withOutStructureChain<Base, E, each Ext>(
-    base baseIn: Base.Type,
-    chaining _: (repeat (each Ext).Type),
-    call: (UnsafeMutablePointer<Base.CStruct>) throws(E) -> Void
-) throws(E) -> (Base, repeat each Ext)
-where Base: OutStruct, repeat each Ext: OutStruct 
-{    
-    // claude wrote this
-    // im gonna redo this once we have MutableRef in September
-    // may be generate new `init()` for every struct for default init
-    // or .zero = Self(cStruct: VkShi())
 
-    var base = zeroed(of: baseIn.CStruct.self)
+// claude wrote this
+// im gonna redo this once we have MutableRef in September
+// may be generate new `init()` for every struct for default init
+func withOutStructureChain<Base, E, each Ext>(
+    base baseIn: Base,
+    chaining _: repeat inout (each Ext),
+    call: (UnsafeMutablePointer<Base.CStruct>) throws(E) -> Void,
+) throws(E) -> (Base, repeat each Ext) where Base: OutStruct, repeat each Ext: OutStruct {
+    var base = zeroed(of: Base.CStruct.self)
     var scratch: [UnsafeMutableRawPointer] = []
 
     // 1. Stable storage per extender; force-set sType, pNext patched below.
@@ -345,4 +341,8 @@ where Base: OutStruct, repeat each Ext: OutStruct
     }
 
     return (Base(cStruct: base), repeat readBack((each Ext).self))
+}
+
+func numericBitCast<T, U>(_ x: T) -> U where T: BinaryInteger, U: BinaryInteger {
+    unsafeBitCast(x, to: U.self)
 }

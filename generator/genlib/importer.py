@@ -529,7 +529,7 @@ class Importer:
 
         current_class.commands.append(command)
 
-        if len(chainable_out_parameters) == 1:
+        if len(chainable_out_parameters) == 1 and False:
             params, conversions = self.get_member_conversions(c_input_params, c_command=c_command)
 
             command = SwiftCommand(

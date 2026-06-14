@@ -2,10 +2,10 @@ import CVulkan
 
 public final class Device: _HandleContainer {
     public let handle: VkDevice?
-    public let physicalDevice: PhysicalDevice
+    public let physicalDevice: PhysicalDevice!
     public let dispatchTable: DeviceDispatchTable
 
-    public init(handle: VkDevice!, physicalDevice: PhysicalDevice) {
+    public init(handle: VkDevice?, physicalDevice: PhysicalDevice!) {
         self.handle = handle
         self.physicalDevice = physicalDevice
         self.dispatchTable = DeviceDispatchTable(vkGetDeviceProcAddr: self.physicalDevice.instance.dispatchTable.vkGetDeviceProcAddr, device: handle)
@@ -1795,7 +1795,7 @@ public final class Device: _HandleContainer {
         versionInfo.withCStruct { ptr_versionInfo in
             var out = VkAccelerationStructureCompatibilityKHR(rawValue: 0)
             self.dispatchTable.vkGetDeviceAccelerationStructureCompatibilityKHR(self.handle, ptr_versionInfo, &out)
-            return AccelerationStructureCompatibilityKHR(rawValue: unsafeBitCast(out, to: UInt32.self))!
+            return AccelerationStructureCompatibilityKHR(rawValue: numericBitCast(out))!
         }
     }
 
@@ -1803,7 +1803,7 @@ public final class Device: _HandleContainer {
         versionInfo.withCStruct { ptr_versionInfo in
             var out = VkAccelerationStructureCompatibilityKHR(rawValue: 0)
             self.dispatchTable.vkGetDeviceAccelerationStructureCompatibilityKHR(self.handle, ptr_versionInfo, &out)
-            return AccelerationStructureCompatibilityKHR(rawValue: unsafeBitCast(out, to: UInt32.self))!
+            return AccelerationStructureCompatibilityKHR(rawValue: numericBitCast(out))!
         }
     }
 
@@ -2625,7 +2625,7 @@ public final class Device: _HandleContainer {
         versionInfo.withCStruct { ptr_versionInfo in
             var out = VkAccelerationStructureCompatibilityKHR(rawValue: 0)
             self.dispatchTable.vkGetDeviceMicromapCompatibilityEXT(self.handle, ptr_versionInfo, &out)
-            return AccelerationStructureCompatibilityKHR(rawValue: unsafeBitCast(out, to: UInt32.self))!
+            return AccelerationStructureCompatibilityKHR(rawValue: numericBitCast(out))!
         }
     }
 
@@ -2633,7 +2633,7 @@ public final class Device: _HandleContainer {
         versionInfo.withCStruct { ptr_versionInfo in
             var out = VkAccelerationStructureCompatibilityKHR(rawValue: 0)
             self.dispatchTable.vkGetDeviceMicromapCompatibilityEXT(self.handle, ptr_versionInfo, &out)
-            return AccelerationStructureCompatibilityKHR(rawValue: unsafeBitCast(out, to: UInt32.self))!
+            return AccelerationStructureCompatibilityKHR(rawValue: numericBitCast(out))!
         }
     }
 
@@ -3265,7 +3265,7 @@ public final class Device: _HandleContainer {
         try pipelineInfo.withCStruct { ptr_pipelineInfo throws(Result) in
             try enumerate { pProperties, pPropertiesCount in
                 self.dispatchTable.vkGetDataGraphPipelineAvailablePropertiesARM(self.handle, ptr_pipelineInfo, pPropertiesCount, pProperties)
-            }.map { DataGraphPipelinePropertyARM(rawValue: unsafeBitCast($0, to: UInt32.self))! }
+            }.map { DataGraphPipelinePropertyARM(rawValue: numericBitCast($0))! }
         }
     }
 
@@ -3273,7 +3273,7 @@ public final class Device: _HandleContainer {
         try pipelineInfo.withCStruct { ptr_pipelineInfo throws(Result) in
             try enumerate { pProperties, pPropertiesCount in
                 self.dispatchTable.vkGetDataGraphPipelineAvailablePropertiesARM(self.handle, ptr_pipelineInfo, pPropertiesCount, pProperties)
-            }.map { DataGraphPipelinePropertyARM(rawValue: unsafeBitCast($0, to: UInt32.self))! }
+            }.map { DataGraphPipelinePropertyARM(rawValue: numericBitCast($0))! }
         }
     }
 

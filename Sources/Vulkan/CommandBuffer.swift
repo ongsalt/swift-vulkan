@@ -2,9 +2,9 @@ import CVulkan
 
 public final class CommandBuffer: _HandleContainer {
     public let handle: VkCommandBuffer?
-    public let commandPool: CommandPool
+    public let commandPool: CommandPool!
 
-    public init(handle: VkCommandBuffer!, commandPool: CommandPool) {
+    public init(handle: VkCommandBuffer?, commandPool: CommandPool!) {
         self.handle = handle
         self.commandPool = commandPool
     }
