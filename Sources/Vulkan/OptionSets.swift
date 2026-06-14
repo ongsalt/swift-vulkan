@@ -1,4 +1,4 @@
-public struct FramebufferCreateFlags: OptionSet, StringConvertibleOptionSet {
+public struct FramebufferCreateFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let imageless = FramebufferCreateFlags(rawValue: 1)
@@ -12,7 +12,7 @@ public struct FramebufferCreateFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct QueryPoolCreateFlags: OptionSet, StringConvertibleOptionSet {
+public struct QueryPoolCreateFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let resetKHR = QueryPoolCreateFlags(rawValue: 1)
@@ -26,7 +26,7 @@ public struct QueryPoolCreateFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct RenderPassCreateFlags: OptionSet, StringConvertibleOptionSet {
+public struct RenderPassCreateFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let reserved3IMG = RenderPassCreateFlags(rawValue: 8)
@@ -46,7 +46,7 @@ public struct RenderPassCreateFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct SamplerCreateFlags: OptionSet, StringConvertibleOptionSet {
+public struct SamplerCreateFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let subsampledEXT = SamplerCreateFlags(rawValue: 1)
@@ -68,7 +68,7 @@ public struct SamplerCreateFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct PipelineLayoutCreateFlags: OptionSet, StringConvertibleOptionSet {
+public struct PipelineLayoutCreateFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let independentSetsEXT = PipelineLayoutCreateFlags(rawValue: 2)
@@ -84,7 +84,7 @@ public struct PipelineLayoutCreateFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct PipelineCacheCreateFlags: OptionSet, StringConvertibleOptionSet {
+public struct PipelineCacheCreateFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let internallySynchronizedMergeKHR = PipelineCacheCreateFlags(rawValue: 8)
@@ -104,7 +104,7 @@ public struct PipelineCacheCreateFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct PipelineDepthStencilStateCreateFlags: OptionSet, StringConvertibleOptionSet {
+public struct PipelineDepthStencilStateCreateFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let rasterizationOrderAttachmentDepthAccessEXT = PipelineDepthStencilStateCreateFlags(rawValue: 1)
@@ -120,7 +120,7 @@ public struct PipelineDepthStencilStateCreateFlags: OptionSet, StringConvertible
     ]
 }
 
-public struct PipelineDynamicStateCreateFlags: OptionSet, StringConvertibleOptionSet {
+public struct PipelineDynamicStateCreateFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -131,7 +131,7 @@ public struct PipelineDynamicStateCreateFlags: OptionSet, StringConvertibleOptio
     ]
 }
 
-public struct PipelineColorBlendStateCreateFlags: OptionSet, StringConvertibleOptionSet {
+public struct PipelineColorBlendStateCreateFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let rasterizationOrderAttachmentAccessEXT = PipelineColorBlendStateCreateFlags(rawValue: 1)
@@ -145,7 +145,7 @@ public struct PipelineColorBlendStateCreateFlags: OptionSet, StringConvertibleOp
     ]
 }
 
-public struct PipelineMultisampleStateCreateFlags: OptionSet, StringConvertibleOptionSet {
+public struct PipelineMultisampleStateCreateFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -156,7 +156,7 @@ public struct PipelineMultisampleStateCreateFlags: OptionSet, StringConvertibleO
     ]
 }
 
-public struct PipelineRasterizationStateCreateFlags: OptionSet, StringConvertibleOptionSet {
+public struct PipelineRasterizationStateCreateFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -167,7 +167,7 @@ public struct PipelineRasterizationStateCreateFlags: OptionSet, StringConvertibl
     ]
 }
 
-public struct PipelineViewportStateCreateFlags: OptionSet, StringConvertibleOptionSet {
+public struct PipelineViewportStateCreateFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -178,7 +178,7 @@ public struct PipelineViewportStateCreateFlags: OptionSet, StringConvertibleOpti
     ]
 }
 
-public struct PipelineTessellationStateCreateFlags: OptionSet, StringConvertibleOptionSet {
+public struct PipelineTessellationStateCreateFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -189,7 +189,7 @@ public struct PipelineTessellationStateCreateFlags: OptionSet, StringConvertible
     ]
 }
 
-public struct PipelineInputAssemblyStateCreateFlags: OptionSet, StringConvertibleOptionSet {
+public struct PipelineInputAssemblyStateCreateFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -200,7 +200,7 @@ public struct PipelineInputAssemblyStateCreateFlags: OptionSet, StringConvertibl
     ]
 }
 
-public struct PipelineVertexInputStateCreateFlags: OptionSet, StringConvertibleOptionSet {
+public struct PipelineVertexInputStateCreateFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -211,7 +211,7 @@ public struct PipelineVertexInputStateCreateFlags: OptionSet, StringConvertibleO
     ]
 }
 
-public struct PipelineShaderStageCreateFlags: OptionSet, StringConvertibleOptionSet {
+public struct PipelineShaderStageCreateFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let reserved3KHR = PipelineShaderStageCreateFlags(rawValue: 8)
@@ -229,7 +229,7 @@ public struct PipelineShaderStageCreateFlags: OptionSet, StringConvertibleOption
     ]
 }
 
-public struct DescriptorSetLayoutCreateFlags: OptionSet, StringConvertibleOptionSet {
+public struct DescriptorSetLayoutCreateFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let descriptorBufferEXT = DescriptorSetLayoutCreateFlags(rawValue: 16)
@@ -255,7 +255,7 @@ public struct DescriptorSetLayoutCreateFlags: OptionSet, StringConvertibleOption
     ]
 }
 
-public struct BufferViewCreateFlags: OptionSet, StringConvertibleOptionSet {
+public struct BufferViewCreateFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -266,7 +266,7 @@ public struct BufferViewCreateFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct InstanceCreateFlags: OptionSet, StringConvertibleOptionSet {
+public struct InstanceCreateFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let enumeratePortabilityKHR = InstanceCreateFlags(rawValue: 1)
@@ -282,7 +282,7 @@ public struct InstanceCreateFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct DeviceCreateFlags: OptionSet, StringConvertibleOptionSet {
+public struct DeviceCreateFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -293,7 +293,7 @@ public struct DeviceCreateFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct DeviceQueueCreateFlags: OptionSet, StringConvertibleOptionSet {
+public struct DeviceQueueCreateFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let reserved1QCOM = DeviceQueueCreateFlags(rawValue: 2)
@@ -311,7 +311,7 @@ public struct DeviceQueueCreateFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct QueueFlags: OptionSet, StringConvertibleOptionSet {
+public struct QueueFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let graphics = QueueFlags(rawValue: 1)
@@ -351,7 +351,7 @@ public struct QueueFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct MemoryPropertyFlags: OptionSet, StringConvertibleOptionSet {
+public struct MemoryPropertyFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let deviceLocal = MemoryPropertyFlags(rawValue: 1)
@@ -381,7 +381,7 @@ public struct MemoryPropertyFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct MemoryHeapFlags: OptionSet, StringConvertibleOptionSet {
+public struct MemoryHeapFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let deviceLocal = MemoryHeapFlags(rawValue: 1)
@@ -401,7 +401,7 @@ public struct MemoryHeapFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct AccessFlags: OptionSet, StringConvertibleOptionSet {
+public struct AccessFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let indirectCommandRead = AccessFlags(rawValue: 1)
@@ -471,7 +471,7 @@ public struct AccessFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct BufferUsageFlags: OptionSet, StringConvertibleOptionSet {
+public struct BufferUsageFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let transferSrc = BufferUsageFlags(rawValue: 1)
@@ -539,7 +539,7 @@ public struct BufferUsageFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct BufferCreateFlags: OptionSet, StringConvertibleOptionSet {
+public struct BufferCreateFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let sparseBinding = BufferCreateFlags(rawValue: 1)
@@ -567,7 +567,7 @@ public struct BufferCreateFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct ShaderStageFlags: OptionSet, StringConvertibleOptionSet {
+public struct ShaderStageFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let vertex = ShaderStageFlags(rawValue: 1)
@@ -619,7 +619,7 @@ public struct ShaderStageFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct ImageUsageFlags: OptionSet, StringConvertibleOptionSet {
+public struct ImageUsageFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let transferSrc = ImageUsageFlags(rawValue: 1)
@@ -693,7 +693,7 @@ public struct ImageUsageFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct ImageCreateFlags: OptionSet, StringConvertibleOptionSet {
+public struct ImageCreateFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let typeSparseBinding = ImageCreateFlags(rawValue: 1)
@@ -749,7 +749,7 @@ public struct ImageCreateFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct ImageViewCreateFlags: OptionSet, StringConvertibleOptionSet {
+public struct ImageViewCreateFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let fragmentDensityMapDynamicEXT = ImageViewCreateFlags(rawValue: 1)
@@ -767,7 +767,7 @@ public struct ImageViewCreateFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct PipelineCreateFlags: OptionSet, StringConvertibleOptionSet {
+public struct PipelineCreateFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let disableOptimization = PipelineCreateFlags(rawValue: 1)
@@ -841,7 +841,7 @@ public struct PipelineCreateFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct ColorComponentFlags: OptionSet, StringConvertibleOptionSet {
+public struct ColorComponentFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let r = ColorComponentFlags(rawValue: 1)
@@ -861,7 +861,7 @@ public struct ColorComponentFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct FenceCreateFlags: OptionSet, StringConvertibleOptionSet {
+public struct FenceCreateFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let signaled = FenceCreateFlags(rawValue: 1)
@@ -875,7 +875,7 @@ public struct FenceCreateFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct SemaphoreCreateFlags: OptionSet, StringConvertibleOptionSet {
+public struct SemaphoreCreateFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -886,7 +886,7 @@ public struct SemaphoreCreateFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct FormatFeatureFlags: OptionSet, StringConvertibleOptionSet {
+public struct FormatFeatureFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let sampledImage = FormatFeatureFlags(rawValue: 1)
@@ -960,7 +960,7 @@ public struct FormatFeatureFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct QueryControlFlags: OptionSet, StringConvertibleOptionSet {
+public struct QueryControlFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let precise = QueryControlFlags(rawValue: 1)
@@ -974,7 +974,7 @@ public struct QueryControlFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct QueryResultFlags: OptionSet, StringConvertibleOptionSet {
+public struct QueryResultFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let type64 = QueryResultFlags(rawValue: 1)
@@ -996,7 +996,7 @@ public struct QueryResultFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct ShaderModuleCreateFlags: OptionSet, StringConvertibleOptionSet {
+public struct ShaderModuleCreateFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -1007,7 +1007,7 @@ public struct ShaderModuleCreateFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct EventCreateFlags: OptionSet, StringConvertibleOptionSet {
+public struct EventCreateFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let deviceOnly = EventCreateFlags(rawValue: 1)
@@ -1021,7 +1021,7 @@ public struct EventCreateFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct CommandPoolCreateFlags: OptionSet, StringConvertibleOptionSet {
+public struct CommandPoolCreateFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let transient = CommandPoolCreateFlags(rawValue: 1)
@@ -1039,7 +1039,7 @@ public struct CommandPoolCreateFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct CommandPoolResetFlags: OptionSet, StringConvertibleOptionSet {
+public struct CommandPoolResetFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let releaseResources = CommandPoolResetFlags(rawValue: 1)
@@ -1055,7 +1055,7 @@ public struct CommandPoolResetFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct CommandBufferResetFlags: OptionSet, StringConvertibleOptionSet {
+public struct CommandBufferResetFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let releaseResources = CommandBufferResetFlags(rawValue: 1)
@@ -1069,7 +1069,7 @@ public struct CommandBufferResetFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct CommandBufferUsageFlags: OptionSet, StringConvertibleOptionSet {
+public struct CommandBufferUsageFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let oneTimeSubmit = CommandBufferUsageFlags(rawValue: 1)
@@ -1091,7 +1091,7 @@ public struct CommandBufferUsageFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct QueryPipelineStatisticFlags: OptionSet, StringConvertibleOptionSet {
+public struct QueryPipelineStatisticFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let inputAssemblyVertices = QueryPipelineStatisticFlags(rawValue: 1)
@@ -1131,7 +1131,7 @@ public struct QueryPipelineStatisticFlags: OptionSet, StringConvertibleOptionSet
     ]
 }
 
-public struct MemoryMapFlags: OptionSet, StringConvertibleOptionSet {
+public struct MemoryMapFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let placedEXT = MemoryMapFlags(rawValue: 1)
@@ -1145,7 +1145,7 @@ public struct MemoryMapFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct MemoryUnmapFlags: OptionSet, StringConvertibleOptionSet {
+public struct MemoryUnmapFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let reserveEXT = MemoryUnmapFlags(rawValue: 1)
@@ -1159,7 +1159,7 @@ public struct MemoryUnmapFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct ImageAspectFlags: OptionSet, StringConvertibleOptionSet {
+public struct ImageAspectFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let color = ImageAspectFlags(rawValue: 1)
@@ -1197,7 +1197,7 @@ public struct ImageAspectFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct SparseMemoryBindFlags: OptionSet, StringConvertibleOptionSet {
+public struct SparseMemoryBindFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let metadata = SparseMemoryBindFlags(rawValue: 1)
@@ -1211,7 +1211,7 @@ public struct SparseMemoryBindFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct SparseImageFormatFlags: OptionSet, StringConvertibleOptionSet {
+public struct SparseImageFormatFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let singleMiptail = SparseImageFormatFlags(rawValue: 1)
@@ -1229,7 +1229,7 @@ public struct SparseImageFormatFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct SubpassDescriptionFlags: OptionSet, StringConvertibleOptionSet {
+public struct SubpassDescriptionFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let perViewAttributesNVX = SubpassDescriptionFlags(rawValue: 1)
@@ -1259,7 +1259,7 @@ public struct SubpassDescriptionFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct PipelineStageFlags: OptionSet, StringConvertibleOptionSet {
+public struct PipelineStageFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let topOfPipe = PipelineStageFlags(rawValue: 1)
@@ -1325,7 +1325,7 @@ public struct PipelineStageFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct SampleCountFlags: OptionSet, StringConvertibleOptionSet {
+public struct SampleCountFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let type1 = SampleCountFlags(rawValue: 1)
@@ -1351,7 +1351,7 @@ public struct SampleCountFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct AttachmentDescriptionFlags: OptionSet, StringConvertibleOptionSet {
+public struct AttachmentDescriptionFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let mayAlias = AttachmentDescriptionFlags(rawValue: 1)
@@ -1369,7 +1369,7 @@ public struct AttachmentDescriptionFlags: OptionSet, StringConvertibleOptionSet 
     ]
 }
 
-public struct StencilFaceFlags: OptionSet, StringConvertibleOptionSet {
+public struct StencilFaceFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let front = StencilFaceFlags(rawValue: 1)
@@ -1387,7 +1387,7 @@ public struct StencilFaceFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct CullModeFlags: OptionSet, StringConvertibleOptionSet {
+public struct CullModeFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let none: CullModeFlags  = []
@@ -1407,7 +1407,7 @@ public struct CullModeFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct DescriptorPoolCreateFlags: OptionSet, StringConvertibleOptionSet {
+public struct DescriptorPoolCreateFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let freeDescriptorSet = DescriptorPoolCreateFlags(rawValue: 1)
@@ -1429,7 +1429,7 @@ public struct DescriptorPoolCreateFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct DescriptorPoolResetFlags: OptionSet, StringConvertibleOptionSet {
+public struct DescriptorPoolResetFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -1440,7 +1440,7 @@ public struct DescriptorPoolResetFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct DependencyFlags: OptionSet, StringConvertibleOptionSet {
+public struct DependencyFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let byRegion = DependencyFlags(rawValue: 1)
@@ -1466,7 +1466,7 @@ public struct DependencyFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct SubgroupFeatureFlags: OptionSet, StringConvertibleOptionSet {
+public struct SubgroupFeatureFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let basic = SubgroupFeatureFlags(rawValue: 1)
@@ -1500,7 +1500,7 @@ public struct SubgroupFeatureFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct IndirectCommandsLayoutUsageFlagsNV: OptionSet, StringConvertibleOptionSet {
+public struct IndirectCommandsLayoutUsageFlagsNV: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let explicitPreprocess = IndirectCommandsLayoutUsageFlagsNV(rawValue: 1)
@@ -1518,7 +1518,7 @@ public struct IndirectCommandsLayoutUsageFlagsNV: OptionSet, StringConvertibleOp
     ]
 }
 
-public struct IndirectStateFlagsNV: OptionSet, StringConvertibleOptionSet {
+public struct IndirectStateFlagsNV: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let flagFrontface = IndirectStateFlagsNV(rawValue: 1)
@@ -1532,7 +1532,7 @@ public struct IndirectStateFlagsNV: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct GeometryFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct GeometryFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let opaque = GeometryFlagsKHR(rawValue: 1)
@@ -1548,7 +1548,7 @@ public struct GeometryFlagsKHR: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct GeometryInstanceFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct GeometryInstanceFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let triangleFacingCullDisable = GeometryInstanceFlagsKHR(rawValue: 1)
@@ -1572,7 +1572,7 @@ public struct GeometryInstanceFlagsKHR: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct ClusterAccelerationStructureGeometryFlagsNV: OptionSet, StringConvertibleOptionSet {
+public struct ClusterAccelerationStructureGeometryFlagsNV: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let cullDisable = ClusterAccelerationStructureGeometryFlagsNV(rawValue: 1)
@@ -1590,7 +1590,7 @@ public struct ClusterAccelerationStructureGeometryFlagsNV: OptionSet, StringConv
     ]
 }
 
-public struct ClusterAccelerationStructureClusterFlagsNV: OptionSet, StringConvertibleOptionSet {
+public struct ClusterAccelerationStructureClusterFlagsNV: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let allowDisableOpacityMicromaps = ClusterAccelerationStructureClusterFlagsNV(rawValue: 1)
@@ -1604,7 +1604,7 @@ public struct ClusterAccelerationStructureClusterFlagsNV: OptionSet, StringConve
     ]
 }
 
-public struct ClusterAccelerationStructureAddressResolutionFlagsNV: OptionSet, StringConvertibleOptionSet {
+public struct ClusterAccelerationStructureAddressResolutionFlagsNV: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let none: ClusterAccelerationStructureAddressResolutionFlagsNV  = []
@@ -1630,7 +1630,7 @@ public struct ClusterAccelerationStructureAddressResolutionFlagsNV: OptionSet, S
     ]
 }
 
-public struct BuildAccelerationStructureFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct BuildAccelerationStructureFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let allowUpdate = BuildAccelerationStructureFlagsKHR(rawValue: 1)
@@ -1668,7 +1668,7 @@ public struct BuildAccelerationStructureFlagsKHR: OptionSet, StringConvertibleOp
     ]
 }
 
-public struct PrivateDataSlotCreateFlags: OptionSet, StringConvertibleOptionSet {
+public struct PrivateDataSlotCreateFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -1679,7 +1679,7 @@ public struct PrivateDataSlotCreateFlags: OptionSet, StringConvertibleOptionSet 
     ]
 }
 
-public struct AccelerationStructureCreateFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct AccelerationStructureCreateFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let deviceAddressCaptureReplay = AccelerationStructureCreateFlagsKHR(rawValue: 1)
@@ -1697,7 +1697,7 @@ public struct AccelerationStructureCreateFlagsKHR: OptionSet, StringConvertibleO
     ]
 }
 
-public struct DescriptorUpdateTemplateCreateFlags: OptionSet, StringConvertibleOptionSet {
+public struct DescriptorUpdateTemplateCreateFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -1708,7 +1708,7 @@ public struct DescriptorUpdateTemplateCreateFlags: OptionSet, StringConvertibleO
     ]
 }
 
-public struct PipelineCreationFeedbackFlags: OptionSet, StringConvertibleOptionSet {
+public struct PipelineCreationFeedbackFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let valid = PipelineCreationFeedbackFlags(rawValue: 1)
@@ -1726,7 +1726,7 @@ public struct PipelineCreationFeedbackFlags: OptionSet, StringConvertibleOptionS
     ]
 }
 
-public struct PerformanceCounterDescriptionFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct PerformanceCounterDescriptionFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let performanceImpacting = PerformanceCounterDescriptionFlagsKHR(rawValue: 1)
@@ -1742,7 +1742,7 @@ public struct PerformanceCounterDescriptionFlagsKHR: OptionSet, StringConvertibl
     ]
 }
 
-public struct AcquireProfilingLockFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct AcquireProfilingLockFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -1753,7 +1753,7 @@ public struct AcquireProfilingLockFlagsKHR: OptionSet, StringConvertibleOptionSe
     ]
 }
 
-public struct SemaphoreWaitFlags: OptionSet, StringConvertibleOptionSet {
+public struct SemaphoreWaitFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let any = SemaphoreWaitFlags(rawValue: 1)
@@ -1767,7 +1767,7 @@ public struct SemaphoreWaitFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct PipelineCompilerControlFlagsAMD: OptionSet, StringConvertibleOptionSet {
+public struct PipelineCompilerControlFlagsAMD: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -1778,7 +1778,7 @@ public struct PipelineCompilerControlFlagsAMD: OptionSet, StringConvertibleOptio
     ]
 }
 
-public struct ShaderCorePropertiesFlagsAMD: OptionSet, StringConvertibleOptionSet {
+public struct ShaderCorePropertiesFlagsAMD: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -1789,7 +1789,7 @@ public struct ShaderCorePropertiesFlagsAMD: OptionSet, StringConvertibleOptionSe
     ]
 }
 
-public struct DeviceDiagnosticsConfigFlagsNV: OptionSet, StringConvertibleOptionSet {
+public struct DeviceDiagnosticsConfigFlagsNV: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let enableShaderDebugInfo = DeviceDiagnosticsConfigFlagsNV(rawValue: 1)
@@ -1809,7 +1809,7 @@ public struct DeviceDiagnosticsConfigFlagsNV: OptionSet, StringConvertibleOption
     ]
 }
 
-public struct RefreshObjectFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct RefreshObjectFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -1820,7 +1820,7 @@ public struct RefreshObjectFlagsKHR: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct AccessFlags2: OptionSet, StringConvertibleOptionSet {
+public struct AccessFlags2: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt64
 
     public static let none: AccessFlags2  = []
@@ -1956,7 +1956,7 @@ public struct AccessFlags2: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct PipelineStageFlags2: OptionSet, StringConvertibleOptionSet {
+public struct PipelineStageFlags2: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt64
 
     public static let none: PipelineStageFlags2  = []
@@ -2072,7 +2072,7 @@ public struct PipelineStageFlags2: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct AccelerationStructureMotionInfoFlagsNV: OptionSet, StringConvertibleOptionSet {
+public struct AccelerationStructureMotionInfoFlagsNV: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -2083,7 +2083,7 @@ public struct AccelerationStructureMotionInfoFlagsNV: OptionSet, StringConvertib
     ]
 }
 
-public struct AccelerationStructureMotionInstanceFlagsNV: OptionSet, StringConvertibleOptionSet {
+public struct AccelerationStructureMotionInstanceFlagsNV: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -2094,7 +2094,7 @@ public struct AccelerationStructureMotionInstanceFlagsNV: OptionSet, StringConve
     ]
 }
 
-public struct FormatFeatureFlags2: OptionSet, StringConvertibleOptionSet {
+public struct FormatFeatureFlags2: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt64
 
     public static let sampledImage = FormatFeatureFlags2(rawValue: 1)
@@ -2228,7 +2228,7 @@ public struct FormatFeatureFlags2: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct RenderingFlags: OptionSet, StringConvertibleOptionSet {
+public struct RenderingFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let contentsSecondaryCommandBuffers = RenderingFlags(rawValue: 1)
@@ -2266,7 +2266,7 @@ public struct RenderingFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct MemoryDecompressionMethodFlagsEXT: OptionSet, StringConvertibleOptionSet {
+public struct MemoryDecompressionMethodFlagsEXT: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt64
 
     public static let gdeflate10 = MemoryDecompressionMethodFlagsEXT(rawValue: 1)
@@ -2280,7 +2280,7 @@ public struct MemoryDecompressionMethodFlagsEXT: OptionSet, StringConvertibleOpt
     ]
 }
 
-public struct DeviceFaultFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct DeviceFaultFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let flagDeviceLost = DeviceFaultFlagsKHR(rawValue: 1)
@@ -2304,7 +2304,7 @@ public struct DeviceFaultFlagsKHR: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct BuildMicromapFlagsEXT: OptionSet, StringConvertibleOptionSet {
+public struct BuildMicromapFlagsEXT: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let preferFastTrace = BuildMicromapFlagsEXT(rawValue: 1)
@@ -2322,7 +2322,7 @@ public struct BuildMicromapFlagsEXT: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct MicromapCreateFlagsEXT: OptionSet, StringConvertibleOptionSet {
+public struct MicromapCreateFlagsEXT: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let deviceAddressCaptureReplay = MicromapCreateFlagsEXT(rawValue: 1)
@@ -2336,7 +2336,7 @@ public struct MicromapCreateFlagsEXT: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct IndirectCommandsLayoutUsageFlagsEXT: OptionSet, StringConvertibleOptionSet {
+public struct IndirectCommandsLayoutUsageFlagsEXT: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let explicitPreprocess = IndirectCommandsLayoutUsageFlagsEXT(rawValue: 1)
@@ -2352,7 +2352,7 @@ public struct IndirectCommandsLayoutUsageFlagsEXT: OptionSet, StringConvertibleO
     ]
 }
 
-public struct IndirectCommandsInputModeFlagsEXT: OptionSet, StringConvertibleOptionSet {
+public struct IndirectCommandsInputModeFlagsEXT: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let vulkanIndexBuffer = IndirectCommandsInputModeFlagsEXT(rawValue: 1)
@@ -2368,7 +2368,7 @@ public struct IndirectCommandsInputModeFlagsEXT: OptionSet, StringConvertibleOpt
     ]
 }
 
-public struct DirectDriverLoadingFlagsLUNARG: OptionSet, StringConvertibleOptionSet {
+public struct DirectDriverLoadingFlagsLUNARG: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -2379,7 +2379,7 @@ public struct DirectDriverLoadingFlagsLUNARG: OptionSet, StringConvertibleOption
     ]
 }
 
-public struct PipelineCreateFlags2: OptionSet, StringConvertibleOptionSet {
+public struct PipelineCreateFlags2: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt64
 
     public static let typeDisableOptimization = PipelineCreateFlags2(rawValue: 1)
@@ -2487,7 +2487,7 @@ public struct PipelineCreateFlags2: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct BufferUsageFlags2: OptionSet, StringConvertibleOptionSet {
+public struct BufferUsageFlags2: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt64
 
     public static let transferSrc = BufferUsageFlags2(rawValue: 1)
@@ -2575,7 +2575,7 @@ public struct BufferUsageFlags2: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct AddressCopyFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct AddressCopyFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let deviceLocal = AddressCopyFlagsKHR(rawValue: 1)
@@ -2593,7 +2593,7 @@ public struct AddressCopyFlagsKHR: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct TensorCreateFlagsARM: OptionSet, StringConvertibleOptionSet {
+public struct TensorCreateFlagsARM: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt64
 
     public static let mutableFormat = TensorCreateFlagsARM(rawValue: 1)
@@ -2613,7 +2613,7 @@ public struct TensorCreateFlagsARM: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct TensorUsageFlagsARM: OptionSet, StringConvertibleOptionSet {
+public struct TensorUsageFlagsARM: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt64
 
     public static let shader = TensorUsageFlagsARM(rawValue: 2)
@@ -2635,7 +2635,7 @@ public struct TensorUsageFlagsARM: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct TensorViewCreateFlagsARM: OptionSet, StringConvertibleOptionSet {
+public struct TensorViewCreateFlagsARM: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt64
 
     public static let descriptorBufferCaptureReplay = TensorViewCreateFlagsARM(rawValue: 1)
@@ -2649,7 +2649,7 @@ public struct TensorViewCreateFlagsARM: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct DataGraphPipelineSessionCreateFlagsARM: OptionSet, StringConvertibleOptionSet {
+public struct DataGraphPipelineSessionCreateFlagsARM: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt64
 
     public static let protected = DataGraphPipelineSessionCreateFlagsARM(rawValue: 1)
@@ -2665,7 +2665,7 @@ public struct DataGraphPipelineSessionCreateFlagsARM: OptionSet, StringConvertib
     ]
 }
 
-public struct DataGraphPipelineDispatchFlagsARM: OptionSet, StringConvertibleOptionSet {
+public struct DataGraphPipelineDispatchFlagsARM: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt64
 
     public init(rawValue: UInt64) {
@@ -2676,7 +2676,7 @@ public struct DataGraphPipelineDispatchFlagsARM: OptionSet, StringConvertibleOpt
     ]
 }
 
-public struct VideoEncodeRgbModelConversionFlagsVALVE: OptionSet, StringConvertibleOptionSet {
+public struct VideoEncodeRgbModelConversionFlagsVALVE: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let rgbIdentity = VideoEncodeRgbModelConversionFlagsVALVE(rawValue: 1)
@@ -2698,7 +2698,7 @@ public struct VideoEncodeRgbModelConversionFlagsVALVE: OptionSet, StringConverti
     ]
 }
 
-public struct VideoEncodeRgbRangeCompressionFlagsVALVE: OptionSet, StringConvertibleOptionSet {
+public struct VideoEncodeRgbRangeCompressionFlagsVALVE: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let fullRange = VideoEncodeRgbRangeCompressionFlagsVALVE(rawValue: 1)
@@ -2714,7 +2714,7 @@ public struct VideoEncodeRgbRangeCompressionFlagsVALVE: OptionSet, StringConvert
     ]
 }
 
-public struct VideoEncodeRgbChromaOffsetFlagsVALVE: OptionSet, StringConvertibleOptionSet {
+public struct VideoEncodeRgbChromaOffsetFlagsVALVE: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let cositedEven = VideoEncodeRgbChromaOffsetFlagsVALVE(rawValue: 1)
@@ -2730,7 +2730,7 @@ public struct VideoEncodeRgbChromaOffsetFlagsVALVE: OptionSet, StringConvertible
     ]
 }
 
-public struct SpirvResourceTypeFlagsEXT: OptionSet, StringConvertibleOptionSet {
+public struct SpirvResourceTypeFlagsEXT: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let all = SpirvResourceTypeFlagsEXT(rawValue: 0x7FFFFFFF)
@@ -2764,7 +2764,7 @@ public struct SpirvResourceTypeFlagsEXT: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct GpaSqShaderStageFlagsAMD: OptionSet, StringConvertibleOptionSet {
+public struct GpaSqShaderStageFlagsAMD: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let ps = GpaSqShaderStageFlagsAMD(rawValue: 1)
@@ -2790,7 +2790,7 @@ public struct GpaSqShaderStageFlagsAMD: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct GpaPerfBlockPropertiesFlagsAMD: OptionSet, StringConvertibleOptionSet {
+public struct GpaPerfBlockPropertiesFlagsAMD: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -2801,7 +2801,7 @@ public struct GpaPerfBlockPropertiesFlagsAMD: OptionSet, StringConvertibleOption
     ]
 }
 
-public struct PhysicalDeviceGpaPropertiesFlagsAMD: OptionSet, StringConvertibleOptionSet {
+public struct PhysicalDeviceGpaPropertiesFlagsAMD: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -2812,7 +2812,7 @@ public struct PhysicalDeviceGpaPropertiesFlagsAMD: OptionSet, StringConvertibleO
     ]
 }
 
-public struct AddressCommandFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct AddressCommandFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let protected = AddressCommandFlagsKHR(rawValue: 1)
@@ -2836,7 +2836,7 @@ public struct AddressCommandFlagsKHR: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct CompositeAlphaFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct CompositeAlphaFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let opaque = CompositeAlphaFlagsKHR(rawValue: 1)
@@ -2856,7 +2856,7 @@ public struct CompositeAlphaFlagsKHR: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct DisplayPlaneAlphaFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct DisplayPlaneAlphaFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let opaque = DisplayPlaneAlphaFlagsKHR(rawValue: 1)
@@ -2876,7 +2876,7 @@ public struct DisplayPlaneAlphaFlagsKHR: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct SurfaceTransformFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct SurfaceTransformFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let identity = SurfaceTransformFlagsKHR(rawValue: 1)
@@ -2906,7 +2906,7 @@ public struct SurfaceTransformFlagsKHR: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct SwapchainCreateFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct SwapchainCreateFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let splitInstanceBindRegions = SwapchainCreateFlagsKHR(rawValue: 1)
@@ -2938,7 +2938,7 @@ public struct SwapchainCreateFlagsKHR: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct DisplayModeCreateFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct DisplayModeCreateFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -2949,7 +2949,7 @@ public struct DisplayModeCreateFlagsKHR: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct DisplaySurfaceCreateFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct DisplaySurfaceCreateFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -2961,7 +2961,7 @@ public struct DisplaySurfaceCreateFlagsKHR: OptionSet, StringConvertibleOptionSe
 }
 
 #if VK_USE_PLATFORM_ANDROID_KHR
-public struct AndroidSurfaceCreateFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct AndroidSurfaceCreateFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -2974,7 +2974,7 @@ public struct AndroidSurfaceCreateFlagsKHR: OptionSet, StringConvertibleOptionSe
 #endif
 
 #if VK_USE_PLATFORM_VI_NN
-public struct ViSurfaceCreateFlagsNN: OptionSet, StringConvertibleOptionSet {
+public struct ViSurfaceCreateFlagsNN: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -2987,7 +2987,7 @@ public struct ViSurfaceCreateFlagsNN: OptionSet, StringConvertibleOptionSet {
 #endif
 
 #if VK_USE_PLATFORM_WAYLAND_KHR
-public struct WaylandSurfaceCreateFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct WaylandSurfaceCreateFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -3000,7 +3000,7 @@ public struct WaylandSurfaceCreateFlagsKHR: OptionSet, StringConvertibleOptionSe
 #endif
 
 #if VK_USE_PLATFORM_UBM_SEC
-public struct UbmSurfaceCreateFlagsSEC: OptionSet, StringConvertibleOptionSet {
+public struct UbmSurfaceCreateFlagsSEC: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -3013,7 +3013,7 @@ public struct UbmSurfaceCreateFlagsSEC: OptionSet, StringConvertibleOptionSet {
 #endif
 
 #if VK_USE_PLATFORM_WIN32_KHR
-public struct Win32SurfaceCreateFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct Win32SurfaceCreateFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -3026,7 +3026,7 @@ public struct Win32SurfaceCreateFlagsKHR: OptionSet, StringConvertibleOptionSet 
 #endif
 
 #if VK_USE_PLATFORM_XLIB_KHR
-public struct XlibSurfaceCreateFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct XlibSurfaceCreateFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -3039,7 +3039,7 @@ public struct XlibSurfaceCreateFlagsKHR: OptionSet, StringConvertibleOptionSet {
 #endif
 
 #if VK_USE_PLATFORM_XCB_KHR
-public struct XcbSurfaceCreateFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct XcbSurfaceCreateFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -3052,7 +3052,7 @@ public struct XcbSurfaceCreateFlagsKHR: OptionSet, StringConvertibleOptionSet {
 #endif
 
 #if VK_USE_PLATFORM_DIRECTFB_EXT
-public struct DirectFBSurfaceCreateFlagsEXT: OptionSet, StringConvertibleOptionSet {
+public struct DirectFBSurfaceCreateFlagsEXT: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -3065,7 +3065,7 @@ public struct DirectFBSurfaceCreateFlagsEXT: OptionSet, StringConvertibleOptionS
 #endif
 
 #if VK_USE_PLATFORM_IOS_MVK
-public struct IOSSurfaceCreateFlagsMVK: OptionSet, StringConvertibleOptionSet {
+public struct IOSSurfaceCreateFlagsMVK: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -3078,7 +3078,7 @@ public struct IOSSurfaceCreateFlagsMVK: OptionSet, StringConvertibleOptionSet {
 #endif
 
 #if VK_USE_PLATFORM_MACOS_MVK
-public struct MacOSSurfaceCreateFlagsMVK: OptionSet, StringConvertibleOptionSet {
+public struct MacOSSurfaceCreateFlagsMVK: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -3091,7 +3091,7 @@ public struct MacOSSurfaceCreateFlagsMVK: OptionSet, StringConvertibleOptionSet 
 #endif
 
 #if VK_USE_PLATFORM_METAL_EXT
-public struct MetalSurfaceCreateFlagsEXT: OptionSet, StringConvertibleOptionSet {
+public struct MetalSurfaceCreateFlagsEXT: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -3104,7 +3104,7 @@ public struct MetalSurfaceCreateFlagsEXT: OptionSet, StringConvertibleOptionSet 
 #endif
 
 #if VK_USE_PLATFORM_FUCHSIA
-public struct ImagePipeSurfaceCreateFlagsFUCHSIA: OptionSet, StringConvertibleOptionSet {
+public struct ImagePipeSurfaceCreateFlagsFUCHSIA: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -3117,7 +3117,7 @@ public struct ImagePipeSurfaceCreateFlagsFUCHSIA: OptionSet, StringConvertibleOp
 #endif
 
 #if VK_USE_PLATFORM_GGP
-public struct StreamDescriptorSurfaceCreateFlagsGGP: OptionSet, StringConvertibleOptionSet {
+public struct StreamDescriptorSurfaceCreateFlagsGGP: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -3129,7 +3129,7 @@ public struct StreamDescriptorSurfaceCreateFlagsGGP: OptionSet, StringConvertibl
 }
 #endif
 
-public struct HeadlessSurfaceCreateFlagsEXT: OptionSet, StringConvertibleOptionSet {
+public struct HeadlessSurfaceCreateFlagsEXT: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -3141,7 +3141,7 @@ public struct HeadlessSurfaceCreateFlagsEXT: OptionSet, StringConvertibleOptionS
 }
 
 #if VK_USE_PLATFORM_SCREEN_QNX
-public struct ScreenSurfaceCreateFlagsQNX: OptionSet, StringConvertibleOptionSet {
+public struct ScreenSurfaceCreateFlagsQNX: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -3153,7 +3153,7 @@ public struct ScreenSurfaceCreateFlagsQNX: OptionSet, StringConvertibleOptionSet
 }
 #endif
 
-public struct PeerMemoryFeatureFlags: OptionSet, StringConvertibleOptionSet {
+public struct PeerMemoryFeatureFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let copySrc = PeerMemoryFeatureFlags(rawValue: 1)
@@ -3173,7 +3173,7 @@ public struct PeerMemoryFeatureFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct MemoryAllocateFlags: OptionSet, StringConvertibleOptionSet {
+public struct MemoryAllocateFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let deviceMask = MemoryAllocateFlags(rawValue: 1)
@@ -3193,7 +3193,7 @@ public struct MemoryAllocateFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct DeviceGroupPresentModeFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct DeviceGroupPresentModeFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let local = DeviceGroupPresentModeFlagsKHR(rawValue: 1)
@@ -3213,7 +3213,7 @@ public struct DeviceGroupPresentModeFlagsKHR: OptionSet, StringConvertibleOption
     ]
 }
 
-public struct DebugReportFlagsEXT: OptionSet, StringConvertibleOptionSet {
+public struct DebugReportFlagsEXT: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let information = DebugReportFlagsEXT(rawValue: 1)
@@ -3235,7 +3235,7 @@ public struct DebugReportFlagsEXT: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct CommandPoolTrimFlags: OptionSet, StringConvertibleOptionSet {
+public struct CommandPoolTrimFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -3246,7 +3246,7 @@ public struct CommandPoolTrimFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct ExternalMemoryHandleTypeFlagsNV: OptionSet, StringConvertibleOptionSet {
+public struct ExternalMemoryHandleTypeFlagsNV: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let opaqueWin32 = ExternalMemoryHandleTypeFlagsNV(rawValue: 1)
@@ -3266,7 +3266,7 @@ public struct ExternalMemoryHandleTypeFlagsNV: OptionSet, StringConvertibleOptio
     ]
 }
 
-public struct ClusterAccelerationStructureIndexFormatFlagsNV: OptionSet, StringConvertibleOptionSet {
+public struct ClusterAccelerationStructureIndexFormatFlagsNV: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let type8bit = ClusterAccelerationStructureIndexFormatFlagsNV(rawValue: 1)
@@ -3284,7 +3284,7 @@ public struct ClusterAccelerationStructureIndexFormatFlagsNV: OptionSet, StringC
     ]
 }
 
-public struct ExternalMemoryFeatureFlagsNV: OptionSet, StringConvertibleOptionSet {
+public struct ExternalMemoryFeatureFlagsNV: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let dedicatedOnly = ExternalMemoryFeatureFlagsNV(rawValue: 1)
@@ -3302,7 +3302,7 @@ public struct ExternalMemoryFeatureFlagsNV: OptionSet, StringConvertibleOptionSe
     ]
 }
 
-public struct ExternalMemoryHandleTypeFlags: OptionSet, StringConvertibleOptionSet {
+public struct ExternalMemoryHandleTypeFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let opaqueFd = ExternalMemoryHandleTypeFlags(rawValue: 1)
@@ -3352,7 +3352,7 @@ public struct ExternalMemoryHandleTypeFlags: OptionSet, StringConvertibleOptionS
     ]
 }
 
-public struct ExternalMemoryFeatureFlags: OptionSet, StringConvertibleOptionSet {
+public struct ExternalMemoryFeatureFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let dedicatedOnly = ExternalMemoryFeatureFlags(rawValue: 1)
@@ -3370,7 +3370,7 @@ public struct ExternalMemoryFeatureFlags: OptionSet, StringConvertibleOptionSet 
     ]
 }
 
-public struct ExternalSemaphoreHandleTypeFlags: OptionSet, StringConvertibleOptionSet {
+public struct ExternalSemaphoreHandleTypeFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let opaqueFd = ExternalSemaphoreHandleTypeFlags(rawValue: 1)
@@ -3396,7 +3396,7 @@ public struct ExternalSemaphoreHandleTypeFlags: OptionSet, StringConvertibleOpti
     ]
 }
 
-public struct ExternalSemaphoreFeatureFlags: OptionSet, StringConvertibleOptionSet {
+public struct ExternalSemaphoreFeatureFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let exportable = ExternalSemaphoreFeatureFlags(rawValue: 1)
@@ -3412,7 +3412,7 @@ public struct ExternalSemaphoreFeatureFlags: OptionSet, StringConvertibleOptionS
     ]
 }
 
-public struct SemaphoreImportFlags: OptionSet, StringConvertibleOptionSet {
+public struct SemaphoreImportFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let temporary = SemaphoreImportFlags(rawValue: 1)
@@ -3426,7 +3426,7 @@ public struct SemaphoreImportFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct ExternalFenceHandleTypeFlags: OptionSet, StringConvertibleOptionSet {
+public struct ExternalFenceHandleTypeFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let opaqueFd = ExternalFenceHandleTypeFlags(rawValue: 1)
@@ -3450,7 +3450,7 @@ public struct ExternalFenceHandleTypeFlags: OptionSet, StringConvertibleOptionSe
     ]
 }
 
-public struct ExternalFenceFeatureFlags: OptionSet, StringConvertibleOptionSet {
+public struct ExternalFenceFeatureFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let exportable = ExternalFenceFeatureFlags(rawValue: 1)
@@ -3466,7 +3466,7 @@ public struct ExternalFenceFeatureFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct FenceImportFlags: OptionSet, StringConvertibleOptionSet {
+public struct FenceImportFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let temporary = FenceImportFlags(rawValue: 1)
@@ -3480,7 +3480,7 @@ public struct FenceImportFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct SurfaceCounterFlagsEXT: OptionSet, StringConvertibleOptionSet {
+public struct SurfaceCounterFlagsEXT: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let vblank = SurfaceCounterFlagsEXT(rawValue: 1)
@@ -3494,7 +3494,7 @@ public struct SurfaceCounterFlagsEXT: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct PipelineViewportSwizzleStateCreateFlagsNV: OptionSet, StringConvertibleOptionSet {
+public struct PipelineViewportSwizzleStateCreateFlagsNV: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -3505,7 +3505,7 @@ public struct PipelineViewportSwizzleStateCreateFlagsNV: OptionSet, StringConver
     ]
 }
 
-public struct PipelineDiscardRectangleStateCreateFlagsEXT: OptionSet, StringConvertibleOptionSet {
+public struct PipelineDiscardRectangleStateCreateFlagsEXT: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -3516,7 +3516,7 @@ public struct PipelineDiscardRectangleStateCreateFlagsEXT: OptionSet, StringConv
     ]
 }
 
-public struct PipelineCoverageToColorStateCreateFlagsNV: OptionSet, StringConvertibleOptionSet {
+public struct PipelineCoverageToColorStateCreateFlagsNV: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -3527,7 +3527,7 @@ public struct PipelineCoverageToColorStateCreateFlagsNV: OptionSet, StringConver
     ]
 }
 
-public struct PipelineCoverageModulationStateCreateFlagsNV: OptionSet, StringConvertibleOptionSet {
+public struct PipelineCoverageModulationStateCreateFlagsNV: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -3538,7 +3538,7 @@ public struct PipelineCoverageModulationStateCreateFlagsNV: OptionSet, StringCon
     ]
 }
 
-public struct PipelineCoverageReductionStateCreateFlagsNV: OptionSet, StringConvertibleOptionSet {
+public struct PipelineCoverageReductionStateCreateFlagsNV: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -3549,7 +3549,7 @@ public struct PipelineCoverageReductionStateCreateFlagsNV: OptionSet, StringConv
     ]
 }
 
-public struct ValidationCacheCreateFlagsEXT: OptionSet, StringConvertibleOptionSet {
+public struct ValidationCacheCreateFlagsEXT: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -3560,7 +3560,7 @@ public struct ValidationCacheCreateFlagsEXT: OptionSet, StringConvertibleOptionS
     ]
 }
 
-public struct DebugUtilsMessageSeverityFlagsEXT: OptionSet, StringConvertibleOptionSet {
+public struct DebugUtilsMessageSeverityFlagsEXT: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let verbose = DebugUtilsMessageSeverityFlagsEXT(rawValue: 1)
@@ -3580,7 +3580,7 @@ public struct DebugUtilsMessageSeverityFlagsEXT: OptionSet, StringConvertibleOpt
     ]
 }
 
-public struct DebugUtilsMessageTypeFlagsEXT: OptionSet, StringConvertibleOptionSet {
+public struct DebugUtilsMessageTypeFlagsEXT: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let general = DebugUtilsMessageTypeFlagsEXT(rawValue: 1)
@@ -3600,7 +3600,7 @@ public struct DebugUtilsMessageTypeFlagsEXT: OptionSet, StringConvertibleOptionS
     ]
 }
 
-public struct DebugUtilsMessengerCreateFlagsEXT: OptionSet, StringConvertibleOptionSet {
+public struct DebugUtilsMessengerCreateFlagsEXT: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -3611,7 +3611,7 @@ public struct DebugUtilsMessengerCreateFlagsEXT: OptionSet, StringConvertibleOpt
     ]
 }
 
-public struct DebugUtilsMessengerCallbackDataFlagsEXT: OptionSet, StringConvertibleOptionSet {
+public struct DebugUtilsMessengerCallbackDataFlagsEXT: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -3622,7 +3622,7 @@ public struct DebugUtilsMessengerCallbackDataFlagsEXT: OptionSet, StringConverti
     ]
 }
 
-public struct DeviceMemoryReportFlagsEXT: OptionSet, StringConvertibleOptionSet {
+public struct DeviceMemoryReportFlagsEXT: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -3633,7 +3633,7 @@ public struct DeviceMemoryReportFlagsEXT: OptionSet, StringConvertibleOptionSet 
     ]
 }
 
-public struct PipelineRasterizationConservativeStateCreateFlagsEXT: OptionSet, StringConvertibleOptionSet {
+public struct PipelineRasterizationConservativeStateCreateFlagsEXT: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -3644,7 +3644,7 @@ public struct PipelineRasterizationConservativeStateCreateFlagsEXT: OptionSet, S
     ]
 }
 
-public struct DescriptorBindingFlags: OptionSet, StringConvertibleOptionSet {
+public struct DescriptorBindingFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let updateAfterBind = DescriptorBindingFlags(rawValue: 1)
@@ -3666,7 +3666,7 @@ public struct DescriptorBindingFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct ConditionalRenderingFlagsEXT: OptionSet, StringConvertibleOptionSet {
+public struct ConditionalRenderingFlagsEXT: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let inverted = ConditionalRenderingFlagsEXT(rawValue: 1)
@@ -3680,7 +3680,7 @@ public struct ConditionalRenderingFlagsEXT: OptionSet, StringConvertibleOptionSe
     ]
 }
 
-public struct ResolveModeFlags: OptionSet, StringConvertibleOptionSet {
+public struct ResolveModeFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let none: ResolveModeFlags  = []
@@ -3706,7 +3706,7 @@ public struct ResolveModeFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct PipelineRasterizationStateStreamCreateFlagsEXT: OptionSet, StringConvertibleOptionSet {
+public struct PipelineRasterizationStateStreamCreateFlagsEXT: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -3717,7 +3717,7 @@ public struct PipelineRasterizationStateStreamCreateFlagsEXT: OptionSet, StringC
     ]
 }
 
-public struct PipelineRasterizationDepthClipStateCreateFlagsEXT: OptionSet, StringConvertibleOptionSet {
+public struct PipelineRasterizationDepthClipStateCreateFlagsEXT: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -3729,7 +3729,7 @@ public struct PipelineRasterizationDepthClipStateCreateFlagsEXT: OptionSet, Stri
 }
 
 #if VK_USE_PLATFORM_ANDROID_KHR
-public struct SwapchainImageUsageFlagsANDROID: OptionSet, StringConvertibleOptionSet {
+public struct SwapchainImageUsageFlagsANDROID: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let shared = SwapchainImageUsageFlagsANDROID(rawValue: 1)
@@ -3744,7 +3744,7 @@ public struct SwapchainImageUsageFlagsANDROID: OptionSet, StringConvertibleOptio
 }
 #endif
 
-public struct ToolPurposeFlags: OptionSet, StringConvertibleOptionSet {
+public struct ToolPurposeFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let validation = ToolPurposeFlags(rawValue: 1)
@@ -3770,7 +3770,7 @@ public struct ToolPurposeFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct SubmitFlags: OptionSet, StringConvertibleOptionSet {
+public struct SubmitFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let protected = SubmitFlags(rawValue: 1)
@@ -3785,7 +3785,7 @@ public struct SubmitFlags: OptionSet, StringConvertibleOptionSet {
 }
 
 #if VK_USE_PLATFORM_FUCHSIA
-public struct ImageFormatConstraintsFlagsFUCHSIA: OptionSet, StringConvertibleOptionSet {
+public struct ImageFormatConstraintsFlagsFUCHSIA: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -3797,7 +3797,7 @@ public struct ImageFormatConstraintsFlagsFUCHSIA: OptionSet, StringConvertibleOp
 }
 #endif
 
-public struct HostImageCopyFlags: OptionSet, StringConvertibleOptionSet {
+public struct HostImageCopyFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let memcpy = HostImageCopyFlags(rawValue: 1)
@@ -3811,7 +3811,7 @@ public struct HostImageCopyFlags: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct PartitionedAccelerationStructureInstanceFlagsNV: OptionSet, StringConvertibleOptionSet {
+public struct PartitionedAccelerationStructureInstanceFlagsNV: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let flagTriangleFacingCullDisable = PartitionedAccelerationStructureInstanceFlagsNV(rawValue: 1)
@@ -3834,7 +3834,7 @@ public struct PartitionedAccelerationStructureInstanceFlagsNV: OptionSet, String
 }
 
 #if VK_USE_PLATFORM_FUCHSIA
-public struct ImageConstraintsInfoFlagsFUCHSIA: OptionSet, StringConvertibleOptionSet {
+public struct ImageConstraintsInfoFlagsFUCHSIA: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let cpuReadRarely = ImageConstraintsInfoFlagsFUCHSIA(rawValue: 1)
@@ -3857,7 +3857,7 @@ public struct ImageConstraintsInfoFlagsFUCHSIA: OptionSet, StringConvertibleOpti
 }
 #endif
 
-public struct GraphicsPipelineLibraryFlagsEXT: OptionSet, StringConvertibleOptionSet {
+public struct GraphicsPipelineLibraryFlagsEXT: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let vertexInputInterface = GraphicsPipelineLibraryFlagsEXT(rawValue: 1)
@@ -3877,7 +3877,7 @@ public struct GraphicsPipelineLibraryFlagsEXT: OptionSet, StringConvertibleOptio
     ]
 }
 
-public struct ImageCompressionFlagsEXT: OptionSet, StringConvertibleOptionSet {
+public struct ImageCompressionFlagsEXT: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let `default`: ImageCompressionFlagsEXT  = []
@@ -3897,7 +3897,7 @@ public struct ImageCompressionFlagsEXT: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct ImageCompressionFixedRateFlagsEXT: OptionSet, StringConvertibleOptionSet {
+public struct ImageCompressionFixedRateFlagsEXT: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let typeNone: ImageCompressionFixedRateFlagsEXT  = []
@@ -3960,7 +3960,7 @@ public struct ImageCompressionFixedRateFlagsEXT: OptionSet, StringConvertibleOpt
 }
 
 #if VK_USE_PLATFORM_METAL_EXT
-public struct ExportMetalObjectTypeFlagsEXT: OptionSet, StringConvertibleOptionSet {
+public struct ExportMetalObjectTypeFlagsEXT: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let metalDevice = ExportMetalObjectTypeFlagsEXT(rawValue: 1)
@@ -3985,7 +3985,7 @@ public struct ExportMetalObjectTypeFlagsEXT: OptionSet, StringConvertibleOptionS
 }
 #endif
 
-public struct RenderingAttachmentFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct RenderingAttachmentFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let inputAttachmentFeedback = RenderingAttachmentFlagsKHR(rawValue: 1)
@@ -4003,7 +4003,7 @@ public struct RenderingAttachmentFlagsKHR: OptionSet, StringConvertibleOptionSet
     ]
 }
 
-public struct ResolveImageFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct ResolveImageFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let skipTransferFunction = ResolveImageFlagsKHR(rawValue: 1)
@@ -4019,7 +4019,7 @@ public struct ResolveImageFlagsKHR: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct DeviceAddressBindingFlagsEXT: OptionSet, StringConvertibleOptionSet {
+public struct DeviceAddressBindingFlagsEXT: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let internalObject = DeviceAddressBindingFlagsEXT(rawValue: 1)
@@ -4033,7 +4033,7 @@ public struct DeviceAddressBindingFlagsEXT: OptionSet, StringConvertibleOptionSe
     ]
 }
 
-public struct OpticalFlowGridSizeFlagsNV: OptionSet, StringConvertibleOptionSet {
+public struct OpticalFlowGridSizeFlagsNV: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let typeUnknown: OpticalFlowGridSizeFlagsNV  = []
@@ -4055,7 +4055,7 @@ public struct OpticalFlowGridSizeFlagsNV: OptionSet, StringConvertibleOptionSet 
     ]
 }
 
-public struct OpticalFlowUsageFlagsNV: OptionSet, StringConvertibleOptionSet {
+public struct OpticalFlowUsageFlagsNV: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let unknown: OpticalFlowUsageFlagsNV  = []
@@ -4079,7 +4079,7 @@ public struct OpticalFlowUsageFlagsNV: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct OpticalFlowSessionCreateFlagsNV: OptionSet, StringConvertibleOptionSet {
+public struct OpticalFlowSessionCreateFlagsNV: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let enableHint = OpticalFlowSessionCreateFlagsNV(rawValue: 1)
@@ -4101,7 +4101,7 @@ public struct OpticalFlowSessionCreateFlagsNV: OptionSet, StringConvertibleOptio
     ]
 }
 
-public struct OpticalFlowExecuteFlagsNV: OptionSet, StringConvertibleOptionSet {
+public struct OpticalFlowExecuteFlagsNV: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let disableTemporalHints = OpticalFlowExecuteFlagsNV(rawValue: 1)
@@ -4115,7 +4115,7 @@ public struct OpticalFlowExecuteFlagsNV: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct FrameBoundaryFlagsEXT: OptionSet, StringConvertibleOptionSet {
+public struct FrameBoundaryFlagsEXT: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let frameEnd = FrameBoundaryFlagsEXT(rawValue: 1)
@@ -4129,7 +4129,7 @@ public struct FrameBoundaryFlagsEXT: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct PresentScalingFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct PresentScalingFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let oneToOne = PresentScalingFlagsKHR(rawValue: 1)
@@ -4147,7 +4147,7 @@ public struct PresentScalingFlagsKHR: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct PresentGravityFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct PresentGravityFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let min = PresentGravityFlagsKHR(rawValue: 1)
@@ -4165,7 +4165,7 @@ public struct PresentGravityFlagsKHR: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct ShaderCreateFlagsEXT: OptionSet, StringConvertibleOptionSet {
+public struct ShaderCreateFlagsEXT: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let typeLinkStage = ShaderCreateFlagsEXT(rawValue: 1)
@@ -4211,7 +4211,7 @@ public struct ShaderCreateFlagsEXT: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct TileShadingRenderPassFlagsQCOM: OptionSet, StringConvertibleOptionSet {
+public struct TileShadingRenderPassFlagsQCOM: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let enable = TileShadingRenderPassFlagsQCOM(rawValue: 1)
@@ -4227,7 +4227,7 @@ public struct TileShadingRenderPassFlagsQCOM: OptionSet, StringConvertibleOption
     ]
 }
 
-public struct PhysicalDeviceSchedulingControlsFlagsARM: OptionSet, StringConvertibleOptionSet {
+public struct PhysicalDeviceSchedulingControlsFlagsARM: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt64
 
     public static let shaderCoreCount = PhysicalDeviceSchedulingControlsFlagsARM(rawValue: 1)
@@ -4244,7 +4244,7 @@ public struct PhysicalDeviceSchedulingControlsFlagsARM: OptionSet, StringConvert
 }
 
 #if VK_USE_PLATFORM_OHOS
-public struct SurfaceCreateFlagsOHOS: OptionSet, StringConvertibleOptionSet {
+public struct SurfaceCreateFlagsOHOS: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -4256,7 +4256,7 @@ public struct SurfaceCreateFlagsOHOS: OptionSet, StringConvertibleOptionSet {
 }
 #endif
 
-public struct PresentStageFlagsEXT: OptionSet, StringConvertibleOptionSet {
+public struct PresentStageFlagsEXT: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let queueOperationsEnd = PresentStageFlagsEXT(rawValue: 1)
@@ -4276,7 +4276,7 @@ public struct PresentStageFlagsEXT: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct PastPresentationTimingFlagsEXT: OptionSet, StringConvertibleOptionSet {
+public struct PastPresentationTimingFlagsEXT: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let allowPartialResults = PastPresentationTimingFlagsEXT(rawValue: 1)
@@ -4292,7 +4292,7 @@ public struct PastPresentationTimingFlagsEXT: OptionSet, StringConvertibleOption
     ]
 }
 
-public struct PresentTimingInfoFlagsEXT: OptionSet, StringConvertibleOptionSet {
+public struct PresentTimingInfoFlagsEXT: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let presentAtRelativeTime = PresentTimingInfoFlagsEXT(rawValue: 1)
@@ -4309,7 +4309,7 @@ public struct PresentTimingInfoFlagsEXT: OptionSet, StringConvertibleOptionSet {
 }
 
 #if VK_USE_PLATFORM_OHOS
-public struct SwapchainImageUsageFlagsOHOS: OptionSet, StringConvertibleOptionSet {
+public struct SwapchainImageUsageFlagsOHOS: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let shared = SwapchainImageUsageFlagsOHOS(rawValue: 1)
@@ -4324,7 +4324,7 @@ public struct SwapchainImageUsageFlagsOHOS: OptionSet, StringConvertibleOptionSe
 }
 #endif
 
-public struct PerformanceCounterDescriptionFlagsARM: OptionSet, StringConvertibleOptionSet {
+public struct PerformanceCounterDescriptionFlagsARM: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -4335,7 +4335,7 @@ public struct PerformanceCounterDescriptionFlagsARM: OptionSet, StringConvertibl
     ]
 }
 
-public struct ShaderInstrumentationValuesFlagsARM: OptionSet, StringConvertibleOptionSet {
+public struct ShaderInstrumentationValuesFlagsARM: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -4346,7 +4346,7 @@ public struct ShaderInstrumentationValuesFlagsARM: OptionSet, StringConvertibleO
     ]
 }
 
-public struct DataGraphTOSAQualityFlagsARM: OptionSet, StringConvertibleOptionSet {
+public struct DataGraphTOSAQualityFlagsARM: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let dataGraphTosaQualityAccelerated = DataGraphTOSAQualityFlagsARM(rawValue: 1)
@@ -4366,7 +4366,7 @@ public struct DataGraphTOSAQualityFlagsARM: OptionSet, StringConvertibleOptionSe
     ]
 }
 
-public struct DataGraphOpticalFlowGridSizeFlagsARM: OptionSet, StringConvertibleOptionSet {
+public struct DataGraphOpticalFlowGridSizeFlagsARM: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let typeUnknown: DataGraphOpticalFlowGridSizeFlagsARM  = []
@@ -4388,7 +4388,7 @@ public struct DataGraphOpticalFlowGridSizeFlagsARM: OptionSet, StringConvertible
     ]
 }
 
-public struct DataGraphOpticalFlowImageUsageFlagsARM: OptionSet, StringConvertibleOptionSet {
+public struct DataGraphOpticalFlowImageUsageFlagsARM: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let unknown: DataGraphOpticalFlowImageUsageFlagsARM  = []
@@ -4410,7 +4410,7 @@ public struct DataGraphOpticalFlowImageUsageFlagsARM: OptionSet, StringConvertib
     ]
 }
 
-public struct DataGraphOpticalFlowCreateFlagsARM: OptionSet, StringConvertibleOptionSet {
+public struct DataGraphOpticalFlowCreateFlagsARM: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let enableHint = DataGraphOpticalFlowCreateFlagsARM(rawValue: 1)
@@ -4428,7 +4428,7 @@ public struct DataGraphOpticalFlowCreateFlagsARM: OptionSet, StringConvertibleOp
     ]
 }
 
-public struct DataGraphOpticalFlowExecuteFlagsARM: OptionSet, StringConvertibleOptionSet {
+public struct DataGraphOpticalFlowExecuteFlagsARM: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let disableTemporalHints = DataGraphOpticalFlowExecuteFlagsARM(rawValue: 1)
@@ -4450,7 +4450,7 @@ public struct DataGraphOpticalFlowExecuteFlagsARM: OptionSet, StringConvertibleO
     ]
 }
 
-public struct VideoCodecOperationFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct VideoCodecOperationFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let none: VideoCodecOperationFlagsKHR  = []
@@ -4478,7 +4478,7 @@ public struct VideoCodecOperationFlagsKHR: OptionSet, StringConvertibleOptionSet
     ]
 }
 
-public struct VideoCapabilityFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct VideoCapabilityFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let protectedContent = VideoCapabilityFlagsKHR(rawValue: 1)
@@ -4494,7 +4494,7 @@ public struct VideoCapabilityFlagsKHR: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct VideoSessionCreateFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct VideoSessionCreateFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let protectedContent = VideoSessionCreateFlagsKHR(rawValue: 1)
@@ -4518,7 +4518,7 @@ public struct VideoSessionCreateFlagsKHR: OptionSet, StringConvertibleOptionSet 
     ]
 }
 
-public struct VideoSessionParametersCreateFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct VideoSessionParametersCreateFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let quantizationMapCompatible = VideoSessionParametersCreateFlagsKHR(rawValue: 1)
@@ -4532,7 +4532,7 @@ public struct VideoSessionParametersCreateFlagsKHR: OptionSet, StringConvertible
     ]
 }
 
-public struct VideoBeginCodingFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct VideoBeginCodingFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -4543,7 +4543,7 @@ public struct VideoBeginCodingFlagsKHR: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct VideoEndCodingFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct VideoEndCodingFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -4554,7 +4554,7 @@ public struct VideoEndCodingFlagsKHR: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct VideoCodingControlFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct VideoCodingControlFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let reset = VideoCodingControlFlagsKHR(rawValue: 1)
@@ -4572,7 +4572,7 @@ public struct VideoCodingControlFlagsKHR: OptionSet, StringConvertibleOptionSet 
     ]
 }
 
-public struct VideoDecodeUsageFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct VideoDecodeUsageFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let `default`: VideoDecodeUsageFlagsKHR  = []
@@ -4592,7 +4592,7 @@ public struct VideoDecodeUsageFlagsKHR: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct VideoDecodeCapabilityFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct VideoDecodeCapabilityFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let dpbAndOutputCoincide = VideoDecodeCapabilityFlagsKHR(rawValue: 1)
@@ -4608,7 +4608,7 @@ public struct VideoDecodeCapabilityFlagsKHR: OptionSet, StringConvertibleOptionS
     ]
 }
 
-public struct VideoDecodeFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct VideoDecodeFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -4619,7 +4619,7 @@ public struct VideoDecodeFlagsKHR: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct VideoDecodeH264PictureLayoutFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct VideoDecodeH264PictureLayoutFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let progressive: VideoDecodeH264PictureLayoutFlagsKHR  = []
@@ -4637,7 +4637,7 @@ public struct VideoDecodeH264PictureLayoutFlagsKHR: OptionSet, StringConvertible
     ]
 }
 
-public struct VideoEncodeFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct VideoEncodeFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let intraRefresh = VideoEncodeFlagsKHR(rawValue: 4)
@@ -4655,7 +4655,7 @@ public struct VideoEncodeFlagsKHR: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct VideoEncodeUsageFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct VideoEncodeUsageFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let `default`: VideoEncodeUsageFlagsKHR  = []
@@ -4677,7 +4677,7 @@ public struct VideoEncodeUsageFlagsKHR: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct VideoEncodeContentFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct VideoEncodeContentFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let `default`: VideoEncodeContentFlagsKHR  = []
@@ -4697,7 +4697,7 @@ public struct VideoEncodeContentFlagsKHR: OptionSet, StringConvertibleOptionSet 
     ]
 }
 
-public struct VideoEncodeCapabilityFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct VideoEncodeCapabilityFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let precedingExternallyEncodedBytes = VideoEncodeCapabilityFlagsKHR(rawValue: 1)
@@ -4717,7 +4717,7 @@ public struct VideoEncodeCapabilityFlagsKHR: OptionSet, StringConvertibleOptionS
     ]
 }
 
-public struct VideoEncodeFeedbackFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct VideoEncodeFeedbackFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let bitstreamBufferOffset = VideoEncodeFeedbackFlagsKHR(rawValue: 1)
@@ -4749,7 +4749,7 @@ public struct VideoEncodeFeedbackFlagsKHR: OptionSet, StringConvertibleOptionSet
     ]
 }
 
-public struct VideoEncodeRateControlFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct VideoEncodeRateControlFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public init(rawValue: UInt32) {
@@ -4760,7 +4760,7 @@ public struct VideoEncodeRateControlFlagsKHR: OptionSet, StringConvertibleOption
     ]
 }
 
-public struct VideoEncodeRateControlModeFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct VideoEncodeRateControlModeFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let `default`: VideoEncodeRateControlModeFlagsKHR  = []
@@ -4780,7 +4780,7 @@ public struct VideoEncodeRateControlModeFlagsKHR: OptionSet, StringConvertibleOp
     ]
 }
 
-public struct VideoEncodeIntraRefreshModeFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct VideoEncodeIntraRefreshModeFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let none: VideoEncodeIntraRefreshModeFlagsKHR  = []
@@ -4802,7 +4802,7 @@ public struct VideoEncodeIntraRefreshModeFlagsKHR: OptionSet, StringConvertibleO
     ]
 }
 
-public struct VideoChromaSubsamplingFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct VideoChromaSubsamplingFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let typeInvalid: VideoChromaSubsamplingFlagsKHR  = []
@@ -4824,7 +4824,7 @@ public struct VideoChromaSubsamplingFlagsKHR: OptionSet, StringConvertibleOption
     ]
 }
 
-public struct VideoComponentBitDepthFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct VideoComponentBitDepthFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let typeInvalid: VideoComponentBitDepthFlagsKHR  = []
@@ -4844,7 +4844,7 @@ public struct VideoComponentBitDepthFlagsKHR: OptionSet, StringConvertibleOption
     ]
 }
 
-public struct VideoEncodeH264CapabilityFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct VideoEncodeH264CapabilityFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let hrdCompliance = VideoEncodeH264CapabilityFlagsKHR(rawValue: 1)
@@ -4878,7 +4878,7 @@ public struct VideoEncodeH264CapabilityFlagsKHR: OptionSet, StringConvertibleOpt
     ]
 }
 
-public struct VideoEncodeH264StdFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct VideoEncodeH264StdFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let separateColorPlaneFlagSet = VideoEncodeH264StdFlagsKHR(rawValue: 1)
@@ -4930,7 +4930,7 @@ public struct VideoEncodeH264StdFlagsKHR: OptionSet, StringConvertibleOptionSet 
     ]
 }
 
-public struct VideoEncodeH264RateControlFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct VideoEncodeH264RateControlFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let attemptHrdCompliance = VideoEncodeH264RateControlFlagsKHR(rawValue: 1)
@@ -4952,7 +4952,7 @@ public struct VideoEncodeH264RateControlFlagsKHR: OptionSet, StringConvertibleOp
     ]
 }
 
-public struct VideoEncodeH265CapabilityFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct VideoEncodeH265CapabilityFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let hrdCompliance = VideoEncodeH265CapabilityFlagsKHR(rawValue: 1)
@@ -4988,7 +4988,7 @@ public struct VideoEncodeH265CapabilityFlagsKHR: OptionSet, StringConvertibleOpt
     ]
 }
 
-public struct VideoEncodeH265StdFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct VideoEncodeH265StdFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let separateColorPlaneFlagSet = VideoEncodeH265StdFlagsKHR(rawValue: 1)
@@ -5042,7 +5042,7 @@ public struct VideoEncodeH265StdFlagsKHR: OptionSet, StringConvertibleOptionSet 
     ]
 }
 
-public struct VideoEncodeH265RateControlFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct VideoEncodeH265RateControlFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let attemptHrdCompliance = VideoEncodeH265RateControlFlagsKHR(rawValue: 1)
@@ -5064,7 +5064,7 @@ public struct VideoEncodeH265RateControlFlagsKHR: OptionSet, StringConvertibleOp
     ]
 }
 
-public struct VideoEncodeH265CtbSizeFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct VideoEncodeH265CtbSizeFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let type16 = VideoEncodeH265CtbSizeFlagsKHR(rawValue: 1)
@@ -5082,7 +5082,7 @@ public struct VideoEncodeH265CtbSizeFlagsKHR: OptionSet, StringConvertibleOption
     ]
 }
 
-public struct VideoEncodeH265TransformBlockSizeFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct VideoEncodeH265TransformBlockSizeFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let type4 = VideoEncodeH265TransformBlockSizeFlagsKHR(rawValue: 1)
@@ -5102,7 +5102,7 @@ public struct VideoEncodeH265TransformBlockSizeFlagsKHR: OptionSet, StringConver
     ]
 }
 
-public struct VideoEncodeAV1CapabilityFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct VideoEncodeAV1CapabilityFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let videoEncodeAv1CapabilityPerRateControlGroupMinMaxQIndex = VideoEncodeAV1CapabilityFlagsKHR(rawValue: 1)
@@ -5126,7 +5126,7 @@ public struct VideoEncodeAV1CapabilityFlagsKHR: OptionSet, StringConvertibleOpti
     ]
 }
 
-public struct VideoEncodeAV1StdFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct VideoEncodeAV1StdFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let videoEncodeAv1StdUniformTileSpacingFlagSet = VideoEncodeAV1StdFlagsKHR(rawValue: 1)
@@ -5146,7 +5146,7 @@ public struct VideoEncodeAV1StdFlagsKHR: OptionSet, StringConvertibleOptionSet {
     ]
 }
 
-public struct VideoEncodeAV1RateControlFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct VideoEncodeAV1RateControlFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let videoEncodeAv1RateControlRegularGop = VideoEncodeAV1RateControlFlagsKHR(rawValue: 1)
@@ -5166,7 +5166,7 @@ public struct VideoEncodeAV1RateControlFlagsKHR: OptionSet, StringConvertibleOpt
     ]
 }
 
-public struct VideoEncodeAV1SuperblockSizeFlagsKHR: OptionSet, StringConvertibleOptionSet {
+public struct VideoEncodeAV1SuperblockSizeFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
     public static let videoEncodeAv1SuperblockSize64 = VideoEncodeAV1SuperblockSizeFlagsKHR(rawValue: 1)
@@ -5182,7 +5182,7 @@ public struct VideoEncodeAV1SuperblockSizeFlagsKHR: OptionSet, StringConvertible
     ]
 }
 
-public struct AccessFlags3KHR: OptionSet, StringConvertibleOptionSet {
+public struct AccessFlags3KHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt64
 
     public static let none: AccessFlags3KHR  = []

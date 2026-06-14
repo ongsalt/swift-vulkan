@@ -50,6 +50,7 @@ class Generator(BaseGenerator):
             self.linebreak()
             return
         types = [enum.raw_type] if len(enum.cases) != 0 else []
+        types.append('Sendable')
         if enum.error:
             types.append('Error')
         with self.indent(f'public enum {enum.name}: {", ".join(types)} {{', '}'):
@@ -62,7 +63,7 @@ class Generator(BaseGenerator):
     def generate_option_set(self, option_set: SwiftOptionSet):
         if option_set.protect:
             self << f'#if {option_set.protect}'
-        with self.indent(f'public struct {option_set.name}: OptionSet, StringConvertibleOptionSet {{', '}'):
+        with self.indent(f'public struct {option_set.name}: OptionSet, StringConvertibleOptionSet, Sendable {{', '}'):
             self << f'public let rawValue: {option_set.raw_type}'
             self.linebreak()
             if option_set.cases:

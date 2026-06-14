@@ -243,7 +243,7 @@ extension _HandleContainer {
     }
 }
 
-public struct EmptyEnum<T: BinaryInteger> {}
+public struct EmptyEnum<T: BinaryInteger>: Sendable {}
 
 extension EmptyEnum: RawRepresentable {
     public var rawValue: T { 0 }

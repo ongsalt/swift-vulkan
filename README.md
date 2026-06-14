@@ -57,15 +57,12 @@ Swift-vulkan is a relatively new project, and there are still some important mil
     - `VkAccelerationStructureTrianglesOpacityMicromapEXT` is an out struct, some of its properties are treated as query including a `VkMicromapEXT` handle.
 - latexmath lenght 😭
 - differentiate an in chain and an out chain
-- use `MutableSpan` or `OutputSpan` for out array field in a struct + make it non escapable?
 - handle Chainable out param
     - discrete type: fill sType for out param
     - `Chainable<_>`: make it inout param
-    - or 
-    ```swift
-    let (features, vulkan11Properties, descriptorIndexingProperties) = physicalDevice.getFeatures2(features: #ChainOf(PhysicalDeviceVulkan11Properties, PhysicalDeviceDescriptorIndexingProperties))
-    ```
-    - or `pNext: (any ChainableStruct)?`
+
+## Output chain
+2 flavors. pure out chain and in-out chain (like)
 
 - explicitly type `enumerate()`?
 - assert(array1.count == array2.count)?

@@ -1,4 +1,4 @@
-public enum ImageLayout: UInt32 {
+public enum ImageLayout: UInt32, Sendable {
     case undefined = 0
     case general = 1
     case colorAttachmentOptimal = 2
@@ -33,32 +33,32 @@ public enum ImageLayout: UInt32 {
     case renderingLocalRead = 1000232000
 }
 
-public enum AttachmentLoadOp: UInt32 {
+public enum AttachmentLoadOp: UInt32, Sendable {
     case load = 0
     case clear = 1
     case dontCare = 2
     case none = 1000400000
 }
 
-public enum AttachmentStoreOp: UInt32 {
+public enum AttachmentStoreOp: UInt32, Sendable {
     case store = 0
     case dontCare = 1
     case none = 1000301000
 }
 
-public enum ImageType: UInt32 {
+public enum ImageType: UInt32, Sendable {
     case type1d = 0
     case type2d = 1
     case type3d = 2
 }
 
-public enum ImageTiling: UInt32 {
+public enum ImageTiling: UInt32, Sendable {
     case optimal = 0
     case linear = 1
     case drmFormatModifierEXT = 1000158000
 }
 
-public enum ImageViewType: UInt32 {
+public enum ImageViewType: UInt32, Sendable {
     case type1d = 0
     case type2d = 1
     case type3d = 2
@@ -68,12 +68,12 @@ public enum ImageViewType: UInt32 {
     case typeCubeArray = 6
 }
 
-public enum CommandBufferLevel: UInt32 {
+public enum CommandBufferLevel: UInt32, Sendable {
     case primary = 0
     case secondary = 1
 }
 
-public enum ComponentSwizzle: UInt32 {
+public enum ComponentSwizzle: UInt32, Sendable {
     case identity = 0
     case zero = 1
     case one = 2
@@ -83,7 +83,7 @@ public enum ComponentSwizzle: UInt32 {
     case a = 6
 }
 
-public enum DescriptorType: UInt32 {
+public enum DescriptorType: UInt32, Sendable {
     case sampler = 0
     case combinedImageSampler = 1
     case sampledImage = 2
@@ -105,7 +105,7 @@ public enum DescriptorType: UInt32 {
     case inlineUniformBlock = 1000138000
 }
 
-public enum QueryType: UInt32 {
+public enum QueryType: UInt32, Sendable {
     case occlusion = 0
     case pipelineStatistics = 1
     case timestamp = 2
@@ -126,7 +126,7 @@ public enum QueryType: UInt32 {
     case micromapCompactedSizeEXT = 1000396001
 }
 
-public enum BorderColor: UInt32 {
+public enum BorderColor: UInt32, Sendable {
     case floatTransparentBlack = 0
     case intTransparentBlack = 1
     case floatOpaqueBlack = 2
@@ -137,7 +137,7 @@ public enum BorderColor: UInt32 {
     case intCustomEXT = 1000287004
 }
 
-public enum PipelineBindPoint: UInt32 {
+public enum PipelineBindPoint: UInt32, Sendable {
     case graphics = 0
     case compute = 1
     case executionGraphAMDX = 1000134000
@@ -146,13 +146,13 @@ public enum PipelineBindPoint: UInt32 {
     case dataGraphARM = 1000507000
 }
 
-public enum PipelineCacheHeaderVersion: UInt32 {
+public enum PipelineCacheHeaderVersion: UInt32, Sendable {
     case one = 1
     case dataGraphQCOM = 1000629000
     case safetyCriticalOne = 1000298001
 }
 
-public enum PrimitiveTopology: UInt32 {
+public enum PrimitiveTopology: UInt32, Sendable {
     case pointList = 0
     case lineList = 1
     case lineStrip = 2
@@ -166,30 +166,30 @@ public enum PrimitiveTopology: UInt32 {
     case patchList = 10
 }
 
-public enum SharingMode: UInt32 {
+public enum SharingMode: UInt32, Sendable {
     case exclusive = 0
     case concurrent = 1
 }
 
-public enum IndexType: UInt32 {
+public enum IndexType: UInt32, Sendable {
     case uint16 = 0
     case uint32 = 1
     case noneKHR = 1000165000
     case uint8 = 1000265000
 }
 
-public enum Filter: UInt32 {
+public enum Filter: UInt32, Sendable {
     case nearest = 0
     case linear = 1
     case cubicEXT = 1000015000
 }
 
-public enum SamplerMipmapMode: UInt32 {
+public enum SamplerMipmapMode: UInt32, Sendable {
     case nearest = 0
     case linear = 1
 }
 
-public enum SamplerAddressMode: UInt32 {
+public enum SamplerAddressMode: UInt32, Sendable {
     case `repeat` = 0
     case mirroredRepeat = 1
     case clampToEdge = 2
@@ -197,7 +197,7 @@ public enum SamplerAddressMode: UInt32 {
     case mirrorClampToEdge = 4
 }
 
-public enum CompareOp: UInt32 {
+public enum CompareOp: UInt32, Sendable {
     case never = 0
     case less = 1
     case equal = 2
@@ -208,19 +208,19 @@ public enum CompareOp: UInt32 {
     case always = 7
 }
 
-public enum PolygonMode: UInt32 {
+public enum PolygonMode: UInt32, Sendable {
     case fill = 0
     case line = 1
     case point = 2
     case fillRectangleNV = 1000153000
 }
 
-public enum FrontFace: UInt32 {
+public enum FrontFace: UInt32, Sendable {
     case counterClockwise = 0
     case clockwise = 1
 }
 
-public enum BlendFactor: UInt32 {
+public enum BlendFactor: UInt32, Sendable {
     case zero = 0
     case one = 1
     case srcColor = 2
@@ -242,7 +242,7 @@ public enum BlendFactor: UInt32 {
     case oneMinusSrc1Alpha = 18
 }
 
-public enum BlendOp: UInt32 {
+public enum BlendOp: UInt32, Sendable {
     case add = 0
     case subtract = 1
     case reverseSubtract = 2
@@ -296,7 +296,7 @@ public enum BlendOp: UInt32 {
     case blueEXT = 1000148045
 }
 
-public enum StencilOp: UInt32 {
+public enum StencilOp: UInt32, Sendable {
     case keep = 0
     case zero = 1
     case replace = 2
@@ -307,7 +307,7 @@ public enum StencilOp: UInt32 {
     case decrementAndWrap = 7
 }
 
-public enum LogicOp: UInt32 {
+public enum LogicOp: UInt32, Sendable {
     case clear = 0
     case and = 1
     case andReverse = 2
@@ -326,11 +326,11 @@ public enum LogicOp: UInt32 {
     case set = 15
 }
 
-public enum InternalAllocationType: UInt32 {
+public enum InternalAllocationType: UInt32, Sendable {
     case executable = 0
 }
 
-public enum SystemAllocationScope: UInt32 {
+public enum SystemAllocationScope: UInt32, Sendable {
     case command = 0
     case object = 1
     case cache = 2
@@ -338,7 +338,7 @@ public enum SystemAllocationScope: UInt32 {
     case instance = 4
 }
 
-public enum PhysicalDeviceType: UInt32 {
+public enum PhysicalDeviceType: UInt32, Sendable {
     case other = 0
     case integratedGpu = 1
     case discreteGpu = 2
@@ -346,12 +346,12 @@ public enum PhysicalDeviceType: UInt32 {
     case cpu = 4
 }
 
-public enum VertexInputRate: UInt32 {
+public enum VertexInputRate: UInt32, Sendable {
     case vertex = 0
     case instance = 1
 }
 
-public enum Format: UInt32 {
+public enum Format: UInt32, Sendable {
     case undefined = 0
     case r4g4UnormPack8 = 1
     case r4g4b4a4UnormPack16 = 2
@@ -652,7 +652,7 @@ public enum Format: UInt32 {
     case a8Unorm = 1000470001
 }
 
-public enum StructureType: UInt32 {
+public enum StructureType: UInt32, Sendable {
     case applicationInfo = 0
     case instanceCreateInfo = 1
     case deviceQueueCreateInfo = 2
@@ -1925,13 +1925,13 @@ public enum StructureType: UInt32 {
     case pipelineOfflineCreateInfo = 1000298010
 }
 
-public enum SubpassContents: UInt32 {
+public enum SubpassContents: UInt32, Sendable {
     case inline = 0
     case secondaryCommandBuffers = 1
     case inlineAndSecondaryCommandBuffersKHR = 1000451000
 }
 
-public enum Result: Int32, Error {
+public enum Result: Int32, Sendable, Error {
     case success = 0
     case notReady = 1
     case timeout = 2
@@ -1986,7 +1986,7 @@ public enum Result: Int32, Error {
     case errorNoPipelineMatch = -1000298001
 }
 
-public enum DynamicState: UInt32 {
+public enum DynamicState: UInt32, Sendable {
     case viewport = 0
     case scissor = 1
     case lineWidth = 2
@@ -2062,12 +2062,12 @@ public enum DynamicState: UInt32 {
     case lineStipple = 1000259000
 }
 
-public enum DescriptorUpdateTemplateType: UInt32 {
+public enum DescriptorUpdateTemplateType: UInt32, Sendable {
     case descriptorSet = 0
     case pushDescriptors = 1
 }
 
-public enum ObjectType: UInt32 {
+public enum ObjectType: UInt32, Sendable {
     case unknown = 0
     case instance = 1
     case physicalDevice = 2
@@ -2131,43 +2131,43 @@ public enum ObjectType: UInt32 {
     case privateDataSlot = 1000295000
 }
 
-public enum RayTracingInvocationReorderModeEXT: UInt32 {
+public enum RayTracingInvocationReorderModeEXT: UInt32, Sendable {
     case none = 0
     case reorder = 1
 }
 
-public enum RayTracingLssIndexingModeNV: UInt32 {
+public enum RayTracingLssIndexingModeNV: UInt32, Sendable {
     case list = 0
     case successive = 1
 }
 
-public enum RayTracingLssPrimitiveEndCapsModeNV: UInt32 {
+public enum RayTracingLssPrimitiveEndCapsModeNV: UInt32, Sendable {
     case none = 0
     case chained = 1
 }
 
-public enum DirectDriverLoadingModeLUNARG: UInt32 {
+public enum DirectDriverLoadingModeLUNARG: UInt32, Sendable {
     case exclusive = 0
     case inclusive = 1
 }
 
-public enum AntiLagModeAMD: UInt32 {
+public enum AntiLagModeAMD: UInt32, Sendable {
     case driverControl = 0
     case on = 1
     case off = 2
 }
 
-public enum AntiLagStageAMD: UInt32 {
+public enum AntiLagStageAMD: UInt32, Sendable {
     case input = 0
     case present = 1
 }
 
-public enum SemaphoreType: UInt32 {
+public enum SemaphoreType: UInt32, Sendable {
     case binary = 0
     case timeline = 1
 }
 
-public enum PresentModeKHR: UInt32 {
+public enum PresentModeKHR: UInt32, Sendable {
     case immediate = 0
     case mailbox = 1
     case fifo = 2
@@ -2177,7 +2177,7 @@ public enum PresentModeKHR: UInt32 {
     case fifoLatestReady = 1000361000
 }
 
-public enum ColorSpaceKHR: UInt32 {
+public enum ColorSpaceKHR: UInt32, Sendable {
     case srgbNonlinear = 0
     case displayP3NonlinearEXT = 1000104001
     case extendedSrgbLinearEXT = 1000104002
@@ -2196,14 +2196,14 @@ public enum ColorSpaceKHR: UInt32 {
     case displayNativeAMD = 1000213000
 }
 
-public enum DisplaySurfaceStereoTypeNV: UInt32 {
+public enum DisplaySurfaceStereoTypeNV: UInt32, Sendable {
     case none = 0
     case onboardDin = 1
     case hdmi3d = 2
     case inbandDisplayport = 3
 }
 
-public enum TimeDomainKHR: UInt32 {
+public enum TimeDomainKHR: UInt32, Sendable {
     case device = 0
     case clockMonotonic = 1
     case clockMonotonicRaw = 2
@@ -2212,7 +2212,7 @@ public enum TimeDomainKHR: UInt32 {
     case swapchainLocalEXT = 1000208001
 }
 
-public enum DebugReportObjectTypeEXT: UInt32 {
+public enum DebugReportObjectTypeEXT: UInt32, Sendable {
     case unknown = 0
     case instance = 1
     case physicalDevice = 2
@@ -2256,7 +2256,7 @@ public enum DebugReportObjectTypeEXT: UInt32 {
     case bufferCollectionFuchsia = 1000366000
 }
 
-public enum DeviceMemoryReportEventTypeEXT: UInt32 {
+public enum DeviceMemoryReportEventTypeEXT: UInt32, Sendable {
     case allocate = 0
     case free = 1
     case `import` = 2
@@ -2264,18 +2264,18 @@ public enum DeviceMemoryReportEventTypeEXT: UInt32 {
     case allocationFailed = 4
 }
 
-public enum RasterizationOrderAMD: UInt32 {
+public enum RasterizationOrderAMD: UInt32, Sendable {
     case strict = 0
     case relaxed = 1
 }
 
-public enum ClusterAccelerationStructureTypeNV: UInt32 {
+public enum ClusterAccelerationStructureTypeNV: UInt32, Sendable {
     case clustersBottomLevel = 0
     case triangleCluster = 1
     case triangleClusterTemplate = 2
 }
 
-public enum ClusterAccelerationStructureOpTypeNV: UInt32 {
+public enum ClusterAccelerationStructureOpTypeNV: UInt32, Sendable {
     case moveObjects = 0
     case buildClustersBottomLevel = 1
     case buildTriangleCluster = 2
@@ -2284,18 +2284,18 @@ public enum ClusterAccelerationStructureOpTypeNV: UInt32 {
     case getClusterTemplateIndices = 5
 }
 
-public enum ClusterAccelerationStructureOpModeNV: UInt32 {
+public enum ClusterAccelerationStructureOpModeNV: UInt32, Sendable {
     case implicitDestinations = 0
     case explicitDestinations = 1
     case computeSizes = 2
 }
 
-public enum ValidationCheckEXT: UInt32 {
+public enum ValidationCheckEXT: UInt32, Sendable {
     case all = 0
     case shaders = 1
 }
 
-public enum ValidationFeatureEnableEXT: UInt32 {
+public enum ValidationFeatureEnableEXT: UInt32, Sendable {
     case gpuAssisted = 0
     case gpuAssistedReserveBindingSlot = 1
     case bestPractices = 2
@@ -2303,7 +2303,7 @@ public enum ValidationFeatureEnableEXT: UInt32 {
     case synchronizationValidation = 4
 }
 
-public enum ValidationFeatureDisableEXT: UInt32 {
+public enum ValidationFeatureDisableEXT: UInt32, Sendable {
     case all = 0
     case shaders = 1
     case threadSafety = 2
@@ -2314,7 +2314,7 @@ public enum ValidationFeatureDisableEXT: UInt32 {
     case shaderValidationCache = 7
 }
 
-public enum LayerSettingTypeEXT: UInt32 {
+public enum LayerSettingTypeEXT: UInt32, Sendable {
     case bool32 = 0
     case int32 = 1
     case int64 = 2
@@ -2325,7 +2325,7 @@ public enum LayerSettingTypeEXT: UInt32 {
     case string = 7
 }
 
-public enum IndirectCommandsTokenTypeNV: UInt32 {
+public enum IndirectCommandsTokenTypeNV: UInt32, Sendable {
     case shaderGroup = 0
     case stateFlags = 1
     case indexBuffer = 2
@@ -2340,21 +2340,21 @@ public enum IndirectCommandsTokenTypeNV: UInt32 {
     case dispatch = 1000428004
 }
 
-public enum DisplayPowerStateEXT: UInt32 {
+public enum DisplayPowerStateEXT: UInt32, Sendable {
     case off = 0
     case suspend = 1
     case on = 2
 }
 
-public enum DeviceEventTypeEXT: UInt32 {
+public enum DeviceEventTypeEXT: UInt32, Sendable {
     case displayHotplug = 0
 }
 
-public enum DisplayEventTypeEXT: UInt32 {
+public enum DisplayEventTypeEXT: UInt32, Sendable {
     case firstPixelOut = 0
 }
 
-public enum ViewportCoordinateSwizzleNV: UInt32 {
+public enum ViewportCoordinateSwizzleNV: UInt32, Sendable {
     case positiveX = 0
     case negativeX = 1
     case positiveY = 2
@@ -2365,29 +2365,29 @@ public enum ViewportCoordinateSwizzleNV: UInt32 {
     case negativeW = 7
 }
 
-public enum DiscardRectangleModeEXT: UInt32 {
+public enum DiscardRectangleModeEXT: UInt32, Sendable {
     case inclusive = 0
     case exclusive = 1
 }
 
-public enum PointClippingBehavior: UInt32 {
+public enum PointClippingBehavior: UInt32, Sendable {
     case allClipPlanes = 0
     case userClipPlanesOnly = 1
 }
 
-public enum SamplerReductionMode: UInt32 {
+public enum SamplerReductionMode: UInt32, Sendable {
     case weightedAverage = 0
     case min = 1
     case max = 2
     case weightedAverageRangeclampQCOM = 1000521000
 }
 
-public enum TessellationDomainOrigin: UInt32 {
+public enum TessellationDomainOrigin: UInt32, Sendable {
     case upperLeft = 0
     case lowerLeft = 1
 }
 
-public enum SamplerYcbcrModelConversion: UInt32 {
+public enum SamplerYcbcrModelConversion: UInt32, Sendable {
     case rgbIdentity = 0
     case ycbcrIdentity = 1
     case ycbcr709 = 2
@@ -2395,58 +2395,58 @@ public enum SamplerYcbcrModelConversion: UInt32 {
     case ycbcr2020 = 4
 }
 
-public enum SamplerYcbcrRange: UInt32 {
+public enum SamplerYcbcrRange: UInt32, Sendable {
     case ituFull = 0
     case ituNarrow = 1
 }
 
-public enum ChromaLocation: UInt32 {
+public enum ChromaLocation: UInt32, Sendable {
     case cositedEven = 0
     case midpoint = 1
 }
 
-public enum BlendOverlapEXT: UInt32 {
+public enum BlendOverlapEXT: UInt32, Sendable {
     case uncorrelated = 0
     case disjoint = 1
     case conjoint = 2
 }
 
-public enum CoverageModulationModeNV: UInt32 {
+public enum CoverageModulationModeNV: UInt32, Sendable {
     case none = 0
     case rgb = 1
     case alpha = 2
     case rgba = 3
 }
 
-public enum CoverageReductionModeNV: UInt32 {
+public enum CoverageReductionModeNV: UInt32, Sendable {
     case merge = 0
     case truncate = 1
 }
 
-public enum ValidationCacheHeaderVersionEXT: UInt32 {
+public enum ValidationCacheHeaderVersionEXT: UInt32, Sendable {
     case one = 1
 }
 
-public enum ShaderInfoTypeAMD: UInt32 {
+public enum ShaderInfoTypeAMD: UInt32, Sendable {
     case statistics = 0
     case binary = 1
     case disassembly = 2
 }
 
-public enum QueueGlobalPriority: UInt32 {
+public enum QueueGlobalPriority: UInt32, Sendable {
     case low = 128
     case medium = 256
     case high = 512
     case realtime = 1024
 }
 
-public enum ConservativeRasterizationModeEXT: UInt32 {
+public enum ConservativeRasterizationModeEXT: UInt32, Sendable {
     case disabled = 0
     case overestimate = 1
     case underestimate = 2
 }
 
-public enum VendorId: UInt32 {
+public enum VendorId: UInt32, Sendable {
     case khronos = 0x10000
     case viv = 0x10001
     case vsi = 0x10002
@@ -2457,7 +2457,7 @@ public enum VendorId: UInt32 {
     case mobileye = 0x10007
 }
 
-public enum DriverId: UInt32 {
+public enum DriverId: UInt32, Sendable {
     case amdProprietary = 1
     case amdOpenSource = 2
     case mesaRadv = 3
@@ -2488,7 +2488,7 @@ public enum DriverId: UInt32 {
     case mesaKosmickrisp = 28
 }
 
-public enum ShadingRatePaletteEntryNV: UInt32 {
+public enum ShadingRatePaletteEntryNV: UInt32, Sendable {
     case typeNoInvocations = 0
     case type16InvocationsPerPixel = 1
     case type8InvocationsPerPixel = 2
@@ -2503,33 +2503,33 @@ public enum ShadingRatePaletteEntryNV: UInt32 {
     case type1InvocationPer4x4Pixels = 11
 }
 
-public enum CoarseSampleOrderTypeNV: UInt32 {
+public enum CoarseSampleOrderTypeNV: UInt32, Sendable {
     case `default` = 0
     case custom = 1
     case pixelMajor = 2
     case sampleMajor = 3
 }
 
-public enum CopyAccelerationStructureModeKHR: UInt32 {
+public enum CopyAccelerationStructureModeKHR: UInt32, Sendable {
     case clone = 0
     case compact = 1
     case serialize = 2
     case deserialize = 3
 }
 
-public enum BuildAccelerationStructureModeKHR: UInt32 {
+public enum BuildAccelerationStructureModeKHR: UInt32, Sendable {
     case build = 0
     case update = 1
 }
 
-public enum AccelerationStructureTypeKHR: UInt32 {
+public enum AccelerationStructureTypeKHR: UInt32, Sendable {
     case topLevel = 0
     case bottomLevel = 1
     case generic = 2
     case opacityMicromap = 1000623000
 }
 
-public enum GeometryTypeKHR: UInt32 {
+public enum GeometryTypeKHR: UInt32, Sendable {
     case triangles = 0
     case aabbs = 1
     case instances = 2
@@ -2539,44 +2539,44 @@ public enum GeometryTypeKHR: UInt32 {
     case micromap = 1000623000
 }
 
-public enum AccelerationStructureMemoryRequirementsTypeNV: UInt32 {
+public enum AccelerationStructureMemoryRequirementsTypeNV: UInt32, Sendable {
     case object = 0
     case buildScratch = 1
     case updateScratch = 2
 }
 
-public enum AccelerationStructureBuildTypeKHR: UInt32 {
+public enum AccelerationStructureBuildTypeKHR: UInt32, Sendable {
     case host = 0
     case device = 1
     case hostOrDevice = 2
 }
 
-public enum RayTracingShaderGroupTypeKHR: UInt32 {
+public enum RayTracingShaderGroupTypeKHR: UInt32, Sendable {
     case general = 0
     case trianglesHitGroup = 1
     case proceduralHitGroup = 2
 }
 
-public enum AccelerationStructureCompatibilityKHR: UInt32 {
+public enum AccelerationStructureCompatibilityKHR: UInt32, Sendable {
     case compatible = 0
     case incompatible = 1
 }
 
-public enum ShaderGroupShaderKHR: UInt32 {
+public enum ShaderGroupShaderKHR: UInt32, Sendable {
     case general = 0
     case closestHit = 1
     case anyHit = 2
     case intersection = 3
 }
 
-public enum MemoryOverallocationBehaviorAMD: UInt32 {
+public enum MemoryOverallocationBehaviorAMD: UInt32, Sendable {
     case `default` = 0
     case allowed = 1
     case disallowed = 2
 }
 
 #if VK_USE_PLATFORM_WIN32_KHR
-public enum FullScreenExclusiveEXT: UInt32 {
+public enum FullScreenExclusiveEXT: UInt32, Sendable {
     case `default` = 0
     case allowed = 1
     case disallowed = 2
@@ -2584,13 +2584,13 @@ public enum FullScreenExclusiveEXT: UInt32 {
 }
 #endif
 
-public enum PerformanceCounterScopeKHR: UInt32 {
+public enum PerformanceCounterScopeKHR: UInt32, Sendable {
     case commandBuffer = 0
     case renderPass = 1
     case command = 2
 }
 
-public enum PerformanceCounterUnitKHR: UInt32 {
+public enum PerformanceCounterUnitKHR: UInt32, Sendable {
     case generic = 0
     case percentage = 1
     case nanoseconds = 2
@@ -2604,7 +2604,7 @@ public enum PerformanceCounterUnitKHR: UInt32 {
     case cycles = 10
 }
 
-public enum PerformanceCounterStorageKHR: UInt32 {
+public enum PerformanceCounterStorageKHR: UInt32, Sendable {
     case int32 = 0
     case int64 = 1
     case uint32 = 2
@@ -2613,25 +2613,25 @@ public enum PerformanceCounterStorageKHR: UInt32 {
     case float64 = 5
 }
 
-public enum PerformanceConfigurationTypeINTEL: UInt32 {
+public enum PerformanceConfigurationTypeINTEL: UInt32, Sendable {
     case commandQueueMetricsDiscoveryActivated = 0
 }
 
-public enum QueryPoolSamplingModeINTEL: UInt32 {
+public enum QueryPoolSamplingModeINTEL: UInt32, Sendable {
     case manual = 0
 }
 
-public enum PerformanceOverrideTypeINTEL: UInt32 {
+public enum PerformanceOverrideTypeINTEL: UInt32, Sendable {
     case nullHardware = 0
     case flushGpuCaches = 1
 }
 
-public enum PerformanceParameterTypeINTEL: UInt32 {
+public enum PerformanceParameterTypeINTEL: UInt32, Sendable {
     case hwCountersSupported = 0
     case streamMarkerValidBits = 1
 }
 
-public enum PerformanceValueTypeINTEL: UInt32 {
+public enum PerformanceValueTypeINTEL: UInt32, Sendable {
     case uint32 = 0
     case uint64 = 1
     case float = 2
@@ -2639,27 +2639,27 @@ public enum PerformanceValueTypeINTEL: UInt32 {
     case string = 4
 }
 
-public enum ShaderFloatControlsIndependence: UInt32 {
+public enum ShaderFloatControlsIndependence: UInt32, Sendable {
     case type32BitOnly = 0
     case typeAll = 1
     case typeNone = 2
 }
 
-public enum PipelineExecutableStatisticFormatKHR: UInt32 {
+public enum PipelineExecutableStatisticFormatKHR: UInt32, Sendable {
     case bool32 = 0
     case int64 = 1
     case uint64 = 2
     case float64 = 3
 }
 
-public enum LineRasterizationMode: UInt32 {
+public enum LineRasterizationMode: UInt32, Sendable {
     case `default` = 0
     case rectangular = 1
     case bresenham = 2
     case rectangularSmooth = 3
 }
 
-public enum FragmentShadingRateCombinerOpKHR: UInt32 {
+public enum FragmentShadingRateCombinerOpKHR: UInt32, Sendable {
     case keep = 0
     case replace = 1
     case min = 2
@@ -2667,7 +2667,7 @@ public enum FragmentShadingRateCombinerOpKHR: UInt32 {
     case mul = 4
 }
 
-public enum FragmentShadingRateNV: UInt32 {
+public enum FragmentShadingRateNV: UInt32, Sendable {
     case type1InvocationPerPixel = 0
     case type1InvocationPer1x2Pixels = 1
     case type1InvocationPer2x1Pixels = 4
@@ -2682,12 +2682,12 @@ public enum FragmentShadingRateNV: UInt32 {
     case typeNoInvocations = 15
 }
 
-public enum FragmentShadingRateTypeNV: UInt32 {
+public enum FragmentShadingRateTypeNV: UInt32, Sendable {
     case fragmentSize = 0
     case enums = 1
 }
 
-public enum SubpassMergeStatusEXT: UInt32 {
+public enum SubpassMergeStatusEXT: UInt32, Sendable {
     case merged = 0
     case disallowed = 1
     case notMergedSideEffects = 2
@@ -2704,30 +2704,30 @@ public enum SubpassMergeStatusEXT: UInt32 {
     case notMergedUnspecified = 13
 }
 
-public enum ProvokingVertexModeEXT: UInt32 {
+public enum ProvokingVertexModeEXT: UInt32, Sendable {
     case firstVertex = 0
     case lastVertex = 1
 }
 
-public enum AccelerationStructureMotionInstanceTypeNV: UInt32 {
+public enum AccelerationStructureMotionInstanceTypeNV: UInt32, Sendable {
     case `static` = 0
     case matrixMotion = 1
     case srtMotion = 2
 }
 
-public enum DeviceAddressBindingTypeEXT: UInt32 {
+public enum DeviceAddressBindingTypeEXT: UInt32, Sendable {
     case bind = 0
     case unbind = 1
 }
 
-public enum QueryResultStatusKHR: Int32 {
+public enum QueryResultStatusKHR: Int32, Sendable {
     case error = -1
     case notReady = 0
     case complete = 1
     case insufficientBitstreamBufferRange = -1000299000
 }
 
-public enum VideoEncodeTuningModeKHR: UInt32 {
+public enum VideoEncodeTuningModeKHR: UInt32, Sendable {
     case `default` = 0
     case highQuality = 1
     case lowLatency = 2
@@ -2735,47 +2735,47 @@ public enum VideoEncodeTuningModeKHR: UInt32 {
     case lossless = 4
 }
 
-public enum PartitionedAccelerationStructureOpTypeNV: UInt32 {
+public enum PartitionedAccelerationStructureOpTypeNV: UInt32, Sendable {
     case writeInstance = 0
     case updateInstance = 1
     case writePartitionTranslation = 2
 }
 
-public enum VideoEncodeAV1PredictionModeKHR: UInt32 {
+public enum VideoEncodeAV1PredictionModeKHR: UInt32, Sendable {
     case videoEncodeAv1PredictionModeIntraOnly = 0
     case videoEncodeAv1PredictionModeSingleReference = 1
     case videoEncodeAv1PredictionModeUnidirectionalCompound = 2
     case videoEncodeAv1PredictionModeBidirectionalCompound = 3
 }
 
-public enum VideoEncodeAV1RateControlGroupKHR: UInt32 {
+public enum VideoEncodeAV1RateControlGroupKHR: UInt32, Sendable {
     case videoEncodeAv1RateControlGroupIntra = 0
     case videoEncodeAv1RateControlGroupPredictive = 1
     case videoEncodeAv1RateControlGroupBipredictive = 2
 }
 
-public enum PipelineRobustnessBufferBehavior: UInt32 {
+public enum PipelineRobustnessBufferBehavior: UInt32, Sendable {
     case deviceDefault = 0
     case disabled = 1
     case robustBufferAccess = 2
     case robustBufferAccess2 = 3
 }
 
-public enum PipelineRobustnessImageBehavior: UInt32 {
+public enum PipelineRobustnessImageBehavior: UInt32, Sendable {
     case deviceDefault = 0
     case disabled = 1
     case robustImageAccess = 2
     case robustImageAccess2 = 3
 }
 
-public enum OpticalFlowPerformanceLevelNV: UInt32 {
+public enum OpticalFlowPerformanceLevelNV: UInt32, Sendable {
     case unknown = 0
     case slow = 1
     case medium = 2
     case fast = 3
 }
 
-public enum OpticalFlowSessionBindingPointNV: UInt32 {
+public enum OpticalFlowSessionBindingPointNV: UInt32, Sendable {
     case unknown = 0
     case input = 1
     case reference = 2
@@ -2787,28 +2787,28 @@ public enum OpticalFlowSessionBindingPointNV: UInt32 {
     case globalFlow = 8
 }
 
-public enum MicromapTypeEXT: UInt32 {
+public enum MicromapTypeEXT: UInt32, Sendable {
     case opacityMicromap = 0
     case displacementMicromapNV = 1000397000
 }
 
-public enum CopyMicromapModeEXT: UInt32 {
+public enum CopyMicromapModeEXT: UInt32, Sendable {
     case clone = 0
     case serialize = 1
     case deserialize = 2
     case compact = 3
 }
 
-public enum BuildMicromapModeEXT: UInt32 {
+public enum BuildMicromapModeEXT: UInt32, Sendable {
     case build = 0
 }
 
-public enum OpacityMicromapFormatKHR: UInt32 {
+public enum OpacityMicromapFormatKHR: UInt32, Sendable {
     case type2State = 1
     case type4State = 2
 }
 
-public enum OpacityMicromapSpecialIndexKHR: Int32 {
+public enum OpacityMicromapSpecialIndexKHR: Int32, Sendable {
     case fullyTransparent = -1
     case fullyOpaque = -2
     case fullyUnknownTransparent = -3
@@ -2816,17 +2816,17 @@ public enum OpacityMicromapSpecialIndexKHR: Int32 {
     case clusterGeometryDisableOpacityMicromapNV = -5
 }
 
-public enum AccelerationStructureSerializedBlockTypeKHR: UInt32 {
+public enum AccelerationStructureSerializedBlockTypeKHR: UInt32, Sendable {
     case opacityMicromap = 0
 }
 
-public enum DepthBiasRepresentationEXT: UInt32 {
+public enum DepthBiasRepresentationEXT: UInt32, Sendable {
     case leastRepresentableValueFormat = 0
     case leastRepresentableValueForceUnorm = 1
     case float = 2
 }
 
-public enum DeviceFaultAddressTypeKHR: UInt32 {
+public enum DeviceFaultAddressTypeKHR: UInt32, Sendable {
     case none = 0
     case readInvalid = 1
     case writeInvalid = 2
@@ -2836,16 +2836,16 @@ public enum DeviceFaultAddressTypeKHR: UInt32 {
     case instructionPointerFault = 6
 }
 
-public enum DeviceFaultVendorBinaryHeaderVersionKHR: UInt32 {
+public enum DeviceFaultVendorBinaryHeaderVersionKHR: UInt32, Sendable {
     case one = 1
 }
 
-public enum IndirectExecutionSetInfoTypeEXT: UInt32 {
+public enum IndirectExecutionSetInfoTypeEXT: UInt32, Sendable {
     case pipelines = 0
     case shaderObjects = 1
 }
 
-public enum IndirectCommandsTokenTypeEXT: UInt32 {
+public enum IndirectCommandsTokenTypeEXT: UInt32, Sendable {
     case executionSet = 0
     case pushConstant = 1
     case sequenceIndex = 2
@@ -2866,26 +2866,26 @@ public enum IndirectCommandsTokenTypeEXT: UInt32 {
 }
 
 #if VK_ENABLE_BETA_EXTENSIONS
-public enum DisplacementMicromapFormatNV: UInt32 {
+public enum DisplacementMicromapFormatNV: UInt32, Sendable {
     case type64Triangles64Bytes = 1
     case type256Triangles128Bytes = 2
     case type1024Triangles128Bytes = 3
 }
 #endif
 
-public enum ShaderCodeTypeEXT: UInt32 {
+public enum ShaderCodeTypeEXT: UInt32, Sendable {
     case binary = 0
     case spirv = 1
 }
 
-public enum ScopeKHR: UInt32 {
+public enum ScopeKHR: UInt32, Sendable {
     case device = 1
     case workgroup = 2
     case subgroup = 3
     case queueFamily = 5
 }
 
-public enum ComponentTypeKHR: UInt32 {
+public enum ComponentTypeKHR: UInt32, Sendable {
     case float16 = 0
     case float32 = 1
     case float64 = 2
@@ -2904,19 +2904,19 @@ public enum ComponentTypeKHR: UInt32 {
     case float8E5m2EXT = 1000491003
 }
 
-public enum CubicFilterWeightsQCOM: UInt32 {
+public enum CubicFilterWeightsQCOM: UInt32, Sendable {
     case catmullRom = 0
     case zeroTangentCardinal = 1
     case bSpline = 2
     case mitchellNetravali = 3
 }
 
-public enum BlockMatchWindowCompareModeQCOM: UInt32 {
+public enum BlockMatchWindowCompareModeQCOM: UInt32, Sendable {
     case min = 0
     case max = 1
 }
 
-public enum PhysicalDeviceLayeredApiKHR: UInt32 {
+public enum PhysicalDeviceLayeredApiKHR: UInt32, Sendable {
     case vulkan = 0
     case d3d12 = 1
     case metal = 2
@@ -2924,12 +2924,12 @@ public enum PhysicalDeviceLayeredApiKHR: UInt32 {
     case opengles = 4
 }
 
-public enum LayeredDriverUnderlyingApiMSFT: UInt32 {
+public enum LayeredDriverUnderlyingApiMSFT: UInt32, Sendable {
     case none = 0
     case d3d12 = 1
 }
 
-public enum LatencyMarkerNV: UInt32 {
+public enum LatencyMarkerNV: UInt32, Sendable {
     case simulationStart = 0
     case simulationEnd = 1
     case rendersubmitStart = 2
@@ -2944,87 +2944,87 @@ public enum LatencyMarkerNV: UInt32 {
     case outOfBandPresentEnd = 11
 }
 
-public enum OutOfBandQueueTypeNV: UInt32 {
+public enum OutOfBandQueueTypeNV: UInt32, Sendable {
     case render = 0
     case present = 1
 }
 
 #if VK_ENABLE_BETA_EXTENSIONS
-public enum CompressedTriangleFormatAMDX: UInt32 {
+public enum CompressedTriangleFormatAMDX: UInt32, Sendable {
     case dgf1 = 0
 }
 #endif
 
-public enum DepthClampModeEXT: UInt32 {
+public enum DepthClampModeEXT: UInt32, Sendable {
     case viewportRange = 0
     case userDefinedRange = 1
 }
 
-public enum CooperativeVectorMatrixLayoutNV: UInt32 {
+public enum CooperativeVectorMatrixLayoutNV: UInt32, Sendable {
     case rowMajor = 0
     case columnMajor = 1
     case inferencingOptimal = 2
     case trainingOptimal = 3
 }
 
-public enum TensorTilingARM: UInt32 {
+public enum TensorTilingARM: UInt32, Sendable {
     case optimal = 0
     case linear = 1
 }
 
-public enum DefaultVertexAttributeValueKHR: UInt32 {
+public enum DefaultVertexAttributeValueKHR: UInt32, Sendable {
     case zeroZeroZeroZero = 0
     case zeroZeroZeroOne = 1
 }
 
-public enum DataGraphPipelineSessionBindPointARM: UInt32 {
+public enum DataGraphPipelineSessionBindPointARM: UInt32, Sendable {
     case transient = 0
     case opticalFlowCache = 1000631001
     case neuralAcceleratorStatistics = 1000676000
 }
 
-public enum DataGraphPipelineSessionBindPointTypeARM: UInt32 {
+public enum DataGraphPipelineSessionBindPointTypeARM: UInt32, Sendable {
     case memory = 0
 }
 
-public enum DataGraphPipelinePropertyARM: UInt32 {
+public enum DataGraphPipelinePropertyARM: UInt32, Sendable {
     case creationLog = 0
     case identifier = 1
     case neuralAcceleratorDebugDatabase = 1000676000
     case neuralAcceleratorStatisticsInfo = 1000676001
 }
 
-public enum PhysicalDeviceDataGraphProcessingEngineTypeARM: UInt32 {
+public enum PhysicalDeviceDataGraphProcessingEngineTypeARM: UInt32, Sendable {
     case `default` = 0
     case neuralQCOM = 1000629000
     case computeQCOM = 1000629001
 }
 
-public enum PhysicalDeviceDataGraphOperationTypeARM: UInt32 {
+public enum PhysicalDeviceDataGraphOperationTypeARM: UInt32, Sendable {
     case spirvExtendedInstructionSet = 0
     case neuralModelQCOM = 1000629000
     case builtinModelQCOM = 1000629001
     case opticalFlow = 1000631000
 }
 
-public enum DataGraphModelCacheTypeQCOM: UInt32 {
+public enum DataGraphModelCacheTypeQCOM: UInt32, Sendable {
     case genericBinary = 0
 }
 
-public enum PerfHintTypeQCOM: UInt32 {
+public enum PerfHintTypeQCOM: UInt32, Sendable {
     case `default` = 0
     case frequencyMin = 1
     case frequencyMax = 2
     case frequencyScaled = 3
 }
 
-public enum ThrottleHintTypeSEC: UInt32 {
+public enum ThrottleHintTypeSEC: UInt32, Sendable {
     case `default` = 0
     case low = 1
     case high = 2
 }
 
-public enum DescriptorMappingSourceEXT: UInt32 {
+public enum DescriptorMappingSourceEXT: UInt32, Sendable {
     case heapWithConstantOffset = 0
     case heapWithPushIndex = 1
     case heapWithIndirectIndex = 2
@@ -3038,7 +3038,7 @@ public enum DescriptorMappingSourceEXT: UInt32 {
     case shaderRecordAddress = 10
 }
 
-public enum GpaPerfBlockAMD: UInt32 {
+public enum GpaPerfBlockAMD: UInt32, Sendable {
     case cpf = 0
     case ia = 1
     case vgt = 2
@@ -3098,13 +3098,13 @@ public enum GpaPerfBlockAMD: UInt32 {
     case rlcuser = 56
 }
 
-public enum GpaSampleTypeAMD: UInt32 {
+public enum GpaSampleTypeAMD: UInt32, Sendable {
     case cumulative = 0
     case trace = 1
     case timing = 2
 }
 
-public enum GpaDeviceClockModeAMD: UInt32 {
+public enum GpaDeviceClockModeAMD: UInt32, Sendable {
     case `default` = 0
     case query = 1
     case profiling = 2
@@ -3113,19 +3113,19 @@ public enum GpaDeviceClockModeAMD: UInt32 {
     case peak = 5
 }
 
-public enum DataGraphTOSALevelARM: UInt32 {
+public enum DataGraphTOSALevelARM: UInt32, Sendable {
     case dataGraphTosaLevelNone = 0
     case dataGraphTosaLevel8k = 1
 }
 
-public enum DataGraphOpticalFlowPerformanceLevelARM: UInt32 {
+public enum DataGraphOpticalFlowPerformanceLevelARM: UInt32, Sendable {
     case unknown = 0
     case slow = 1
     case medium = 2
     case fast = 3
 }
 
-public enum DataGraphPipelineNodeConnectionTypeARM: UInt32 {
+public enum DataGraphPipelineNodeConnectionTypeARM: UInt32, Sendable {
     case opticalFlowInput = 1000631000
     case opticalFlowReference = 1000631001
     case opticalFlowHint = 1000631002
@@ -3133,11 +3133,11 @@ public enum DataGraphPipelineNodeConnectionTypeARM: UInt32 {
     case opticalFlowCost = 1000631004
 }
 
-public enum DataGraphPipelineNodeTypeARM: UInt32 {
+public enum DataGraphPipelineNodeTypeARM: UInt32, Sendable {
     case opticalFlow = 1000631000
 }
 
-public enum NeuralAcceleratorStatisticsModeARM: UInt32 {
+public enum NeuralAcceleratorStatisticsModeARM: UInt32, Sendable {
     case disabled = 0
     case statistics0 = 1
     case statistics1 = 2
