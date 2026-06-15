@@ -2,7 +2,6 @@ import Builtin
 
 // stolen from 6.4 std
 
-
 //===----------------------------------------------------------------------===//
 //
 // This source file is part of the Swift.org open source project
@@ -30,6 +29,7 @@ public struct Ref<Value: ~Copyable>: Copyable, ~Escapable {
   @_lifetime(borrow value)
   @_transparent
   public init(_ value: borrowing Value) {
+    // they actually use `Builtin.borrow` which do not exist in 6.3
     pointer = UnsafePointer(Builtin.unprotectedAddressOfBorrow(value))
   }
 }
@@ -48,9 +48,9 @@ extension Ref where Value: ~Copyable {
   @_alwaysEmitIntoClient
   @_transparent
   public var value: Value {
-    @_unsafeSelfDependentResult
-    borrow {
-      pointer.pointee
+    // @_unsafeSelfDependentResult
+    unsafeAddress {
+      pointer
     }
   }
 }

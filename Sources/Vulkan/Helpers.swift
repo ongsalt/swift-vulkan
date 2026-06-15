@@ -258,14 +258,6 @@ func maybeMutable(_ ptr: UnsafeRawPointer?) -> UnsafeMutableRawPointer? {
     UnsafeMutableRawPointer(mutating: ptr)
 }
 
-public protocol VulkanStructure: CStructConvertible {
-    static var structureType: StructureType { get }
-    // var default: Self { get }
-}
-
-public protocol OutStruct: VulkanStructure {
-    init(cStruct: CStruct)
-}
 
 // public protocol InStruct: VulkanStructure {}
 func zeroed<T>(of type: T.Type) -> T {
