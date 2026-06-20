@@ -602,16 +602,21 @@ class Importer:
                                c_struct: CStruct | None = None, 
                                c_command: CCommand | None = None,
                                transform_chainable: bool = False,
-                            #    chainable_out_parameters: list[str] | None = None
                                ) -> tuple[list[SwiftMember], tc.MemberConversions]:
         members: list[SwiftMember] = []
         conversions = tc.MemberConversions()
         lengths: list[str] = []
         optional_lengths: set[str] = set()
 
-        for c_member in c_members:
-            if is_array_convertible(c_member.type):
-                lengths.append(c_member.type.length)
+
+        use_implcit_len = True
+        if c_struct and c_struct.name in ('VkWriteDescriptorSet', 'VkDescriptorSetLayoutBinding'):
+            use_implcit_len = False
+
+        if use_implcit_len:
+            for c_member in c_members:
+                if is_array_convertible(c_member.type):
+                    lengths.append(c_member.type.length)
 
         for c_member in c_members:
             if c_member.name in lengths:
@@ -652,6 +657,10 @@ class Importer:
                 or (c_struct.name == 'VkLayerProperties' and c_member.name == 'specVersion')
             )):
                 swift_type, conversion = 'Version', tc.version_conversion
+
+            elif c_struct and c_struct.name == 'VkDescriptorImageInfo':
+                # make it optional
+                swift_type, conversion = self.get_type_conversion(c_member.type, force_optional=True)
 
             # These are large tuples
             # TODO: automatically do this after certain threshold
