@@ -115,6 +115,25 @@ class SwiftContext:
     dispatch_tables: list[DispatchTable] = field(default_factory=list)
 
 
+# Types that are pointers by value, but are not declared as such in vk.xml:
+# VkRemoteAddressNV is a `basetype` (typedef void*), the rest are external
+# platform types whose definitions live in native headers.
+POINTER_LIKE_TYPES = {
+    'VkRemoteAddressNV',
+    # windows.h
+    'HANDLE',
+    'HINSTANCE',
+    'HWND',
+    'HMONITOR',
+    'LPCWSTR',
+    # nvscisync.h / nvscibuf.h
+    'NvSciSyncAttrList',
+    'NvSciSyncObj',
+    'NvSciBufAttrList',
+    'NvSciBufObj',
+}
+
+
 class Importer:
     def __init__(self, c_context: CContext):
         self.c_context = c_context
@@ -904,8 +923,7 @@ class Importer:
             return f'Array<{element_type}>?', tc.optional_array_conversion(c_type.length)
 
     def is_pointer_type(self, c_type: CType) -> bool:
-        # VkRemoteAddressNV is a base type
-        if c_type.name in ('VkRemoteAddressNV', 'HANDLE'):
+        if c_type.name in POINTER_LIKE_TYPES:
             return True
         return (c_type.pointer_to is not None
                 or (c_type.name and (c_type.name in self.pointer_types or c_type.name.startswith('PFN_'))))

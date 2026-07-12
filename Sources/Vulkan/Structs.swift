@@ -9161,9 +9161,9 @@ public struct ImportMemoryWin32HandleInfoKHR: ChainableBase, MemoryAllocateInfoE
     public static let structureType: StructureType = .importMemoryWin32HandleInfoKHR
     public let handleType: ExternalMemoryHandleTypeFlags
     public let handle: HANDLE?
-    public let name: LPCWSTR
+    public let name: LPCWSTR?
 
-    public init(handleType: ExternalMemoryHandleTypeFlags, handle: HANDLE? = nil, name: LPCWSTR) {
+    public init(handleType: ExternalMemoryHandleTypeFlags, handle: HANDLE? = nil, name: LPCWSTR? = nil) {
         self.handleType = handleType
         self.handle = handle
         self.name = name
@@ -9736,9 +9736,9 @@ public struct ImportSemaphoreWin32HandleInfoKHR: ChainableBase {
     public let flags: SemaphoreImportFlags
     public let handleType: ExternalSemaphoreHandleTypeFlags
     public let handle: HANDLE?
-    public let name: LPCWSTR
+    public let name: LPCWSTR?
 
-    public init(semaphore: Semaphore, flags: SemaphoreImportFlags = [], handleType: ExternalSemaphoreHandleTypeFlags, handle: HANDLE? = nil, name: LPCWSTR) {
+    public init(semaphore: Semaphore, flags: SemaphoreImportFlags = [], handleType: ExternalSemaphoreHandleTypeFlags, handle: HANDLE? = nil, name: LPCWSTR? = nil) {
         self.semaphore = semaphore
         self.flags = flags
         self.handleType = handleType
@@ -10139,9 +10139,9 @@ public struct ImportFenceWin32HandleInfoKHR: ChainableBase {
     public let flags: FenceImportFlags
     public let handleType: ExternalFenceHandleTypeFlags
     public let handle: HANDLE?
-    public let name: LPCWSTR
+    public let name: LPCWSTR?
 
-    public init(fence: Fence, flags: FenceImportFlags = [], handleType: ExternalFenceHandleTypeFlags, handle: HANDLE? = nil, name: LPCWSTR) {
+    public init(fence: Fence, flags: FenceImportFlags = [], handleType: ExternalFenceHandleTypeFlags, handle: HANDLE? = nil, name: LPCWSTR? = nil) {
         self.fence = fence
         self.flags = flags
         self.handleType = handleType
