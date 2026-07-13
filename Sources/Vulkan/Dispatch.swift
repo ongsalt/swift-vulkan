@@ -1,12 +1,17 @@
-import CVulkan
+@preconcurrency import CVulkan
 
-public struct EntryDispatchTable {
+public struct EntryDispatchTable: @unchecked Sendable {
+    public let loader: any Loader
+    public let vkGetInstanceProcAddr: PFN_vkGetInstanceProcAddr
     public let vkCreateInstance: PFN_vkCreateInstance!
     public let vkEnumerateInstanceVersion: PFN_vkEnumerateInstanceVersion!
     public let vkEnumerateInstanceLayerProperties: PFN_vkEnumerateInstanceLayerProperties!
     public let vkEnumerateInstanceExtensionProperties: PFN_vkEnumerateInstanceExtensionProperties!
 
-    init(vkGetInstanceProcAddr: PFN_vkGetInstanceProcAddr) {
+    init(loader: any Loader) {
+        let vkGetInstanceProcAddr = loader.vkGetInstanceProcAddr
+        self.loader = loader
+        self.vkGetInstanceProcAddr = vkGetInstanceProcAddr
         self.vkCreateInstance = unsafeBitCast(vkGetInstanceProcAddr(nil, "vkCreateInstance"), to: PFN_vkCreateInstance?.self)
         self.vkEnumerateInstanceVersion = unsafeBitCast(vkGetInstanceProcAddr(nil, "vkEnumerateInstanceVersion"), to: PFN_vkEnumerateInstanceVersion?.self)
         self.vkEnumerateInstanceLayerProperties = unsafeBitCast(vkGetInstanceProcAddr(nil, "vkEnumerateInstanceLayerProperties"), to: PFN_vkEnumerateInstanceLayerProperties?.self)
@@ -14,7 +19,8 @@ public struct EntryDispatchTable {
     }
 }
 
-public struct InstanceDispatchTable {
+public struct InstanceDispatchTable: @unchecked Sendable {
+    public let vkGetInstanceProcAddr: PFN_vkGetInstanceProcAddr
     public let vkDestroyInstance: PFN_vkDestroyInstance!
     public let vkEnumeratePhysicalDevices: PFN_vkEnumeratePhysicalDevices!
     public let vkGetDeviceProcAddr: PFN_vkGetDeviceProcAddr!
@@ -176,6 +182,7 @@ public struct InstanceDispatchTable {
     public let vkGetPhysicalDeviceQueueFamilyDataGraphOpticalFlowImageFormatsARM: PFN_vkGetPhysicalDeviceQueueFamilyDataGraphOpticalFlowImageFormatsARM!
 
     init(vkGetInstanceProcAddr: PFN_vkGetInstanceProcAddr, instance: VkInstance) {
+        self.vkGetInstanceProcAddr = vkGetInstanceProcAddr
         self.vkDestroyInstance = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkDestroyInstance"), to: PFN_vkDestroyInstance?.self)
         self.vkEnumeratePhysicalDevices = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkEnumeratePhysicalDevices"), to: PFN_vkEnumeratePhysicalDevices?.self)
         self.vkGetDeviceProcAddr = unsafeBitCast(vkGetInstanceProcAddr(instance, "vkGetDeviceProcAddr"), to: PFN_vkGetDeviceProcAddr?.self)
@@ -338,7 +345,8 @@ public struct InstanceDispatchTable {
     }
 }
 
-public struct DeviceDispatchTable {
+public struct DeviceDispatchTable: @unchecked Sendable {
+    public let vkGetDeviceProcAddr: PFN_vkGetDeviceProcAddr
     public let vkDestroyDevice: PFN_vkDestroyDevice!
     public let vkGetDeviceQueue: PFN_vkGetDeviceQueue!
     public let vkQueueSubmit: PFN_vkQueueSubmit!
@@ -1040,6 +1048,7 @@ public struct DeviceDispatchTable {
     public let vkCmdSetDispatchParametersARM: PFN_vkCmdSetDispatchParametersARM!
 
     init(vkGetDeviceProcAddr: PFN_vkGetDeviceProcAddr, device: VkDevice) {
+        self.vkGetDeviceProcAddr = vkGetDeviceProcAddr
         self.vkDestroyDevice = unsafeBitCast(vkGetDeviceProcAddr(device, "vkDestroyDevice"), to: PFN_vkDestroyDevice?.self)
         self.vkGetDeviceQueue = unsafeBitCast(vkGetDeviceProcAddr(device, "vkGetDeviceQueue"), to: PFN_vkGetDeviceQueue?.self)
         self.vkQueueSubmit = unsafeBitCast(vkGetDeviceProcAddr(device, "vkQueueSubmit"), to: PFN_vkQueueSubmit?.self)

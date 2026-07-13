@@ -71,6 +71,11 @@ class CHandle:
     name: str
     parent: CHandle | None = None
     protect: str | None = None
+    # VK_DEFINE_HANDLE vs VK_DEFINE_NON_DISPATCHABLE_HANDLE.
+    # Only dispatchable handles carry a dispatch table.
+    dispatchable: bool = False
+    # VK_OBJECT_TYPE_* case, for VK_EXT_private_data / debug naming
+    obj_type_enum: str | None = None
 
 
 @dataclass(eq=False)
@@ -271,8 +276,12 @@ class CContext:
             if self.should_ignore(e_handle, name=handle_name):
                 continue
 
+            e_type = e_handle.find('./type')
             handle = CHandle(
-                handle_name, protect=self.find_protect(type_=handle_name))
+                handle_name,
+                protect=self.find_protect(type_=handle_name),
+                dispatchable=e_type is not None and e_type.text == 'VK_DEFINE_HANDLE',
+                obj_type_enum=e_handle.get('objtypeenum'))
             self.handles.append(handle)
             handles[handle_name] = handle
             parents[handle_name] = e_handle.get('parent')

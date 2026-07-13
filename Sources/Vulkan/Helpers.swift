@@ -1,4 +1,4 @@
-@_exported import CVulkan
+@preconcurrency @_exported import CVulkan
 
 #if canImport(Darwin)
     import Darwin
@@ -225,21 +225,40 @@ extension StringConvertibleOptionSet {
     }
 }
 
-public protocol HandleContainer {
-    func withHandle<R, E: Error>(_ body: (OpaquePointer?) throws(E) -> R) throws(E) -> R
+/// A Vulkan object. Non-dispatchable handles store nothing but the raw handle,
+/// dispatchable ones (Instance, PhysicalDevice, Device, Queue, CommandBuffer)
+/// also carry a pointer to the dispatch table their commands are loaded from.
+/// Handles do not own the object they name: destruction stays explicit.
+///
+/// Conforming types are `@unchecked Sendable`: a handle is an address, and Vulkan
+/// objects are safe to reference from any thread. Whether the *commands* taking
+/// them may run concurrently is governed by the spec's external synchronisation
+/// rules, which this binding does not model.
+public protocol Handle: Hashable {
+    associatedtype CHandle
+    static var objectType: ObjectType { get }
+    var handle: CHandle { get }
 }
 
-protocol _HandleContainer: HandleContainer, Equatable {
-    var handle: OpaquePointer? { get }
-}
-
-extension _HandleContainer {
-    public static func == (lhs: Self, rhs: Self) -> Bool {
-        return lhs.handle == rhs.handle
-    }
+extension Handle where CHandle == OpaquePointer {
+    /// The type-erased handle taken by vkSetPrivateData, vkSetDebugUtilsObjectNameEXT etc.
+    public var rawHandle: UInt64 { UInt64(UInt(bitPattern: handle)) }
 
     public func withHandle<R, E: Error>(_ body: (OpaquePointer?) throws(E) -> R) throws(E) -> R {
         return try body(handle)
+    }
+}
+
+extension Handle where CHandle == UInt64 {
+    public var rawHandle: UInt64 { handle }
+}
+
+extension UnsafePointer {
+    /// Reinterpret the pointee. Used to hand an array of handles to C, which takes
+    /// them as `UnsafePointer<VkX?>`: a handle and its `Optional` have the same
+    /// layout, so no copy is needed.
+    func cast<T>() -> UnsafePointer<T> {
+        UnsafeRawPointer(self).assumingMemoryBound(to: T.self)
     }
 }
 
@@ -265,21 +284,6 @@ func zeroed<T>(of type: T.Type) -> T {
         memset(buffer.baseAddress!, 0, MemoryLayout<T>.size)
         return buffer.baseAddress!.pointee
     }
-}
-
-extension PhysicalDevice {
-    // public func getProperties2<each Ext>(chaining _: repeat (each Ext).Type)
-    //     -> (PhysicalDeviceProperties2, repeat each Ext)
-    // where repeat each Ext: OutStruct {
-    //     let out = withOutStructureChain(base: PhysicalDeviceProperties2.self, chaining: (repeat (each Ext).self)) {
-    //         ptr  in
-    //         self.instance.dispatchTable.vkGetPhysicalDeviceProperties2(self.handle, ptr)
-    //     }
-
-    //     self.getProperties2(chaining: ())
-    //     // return out
-    //     fatalError()
-    // }
 }
 
 func numericBitCast<T, U>(_ x: T) -> U where T: BinaryInteger, U: BinaryInteger {

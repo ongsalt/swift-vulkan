@@ -35,7 +35,8 @@ class BaseGenerator:
 
 class Generator(BaseGenerator):
     def generate_imports(self):
-        self << 'import CVulkan'
+        # the C handles/function pointers are not Sendable-audited
+        self << '@preconcurrency import CVulkan'
         self.linebreak()
 
     def generate_enum(self, enum: SwiftEnum):
@@ -141,15 +142,13 @@ class Generator(BaseGenerator):
 
     def generate_struct_c_to_swift_method(self, struct: SwiftStruct):
         params = [f'cStruct: {struct.c_struct.name}']
-        parent_classes = struct.parent_classes
-
-        for p in parent_classes:
-            params.append(f'{p.reference_name}: {p.name}')
+        if struct.table_type:
+            params.append(f'table: UnsafePointer<{struct.table_type}>')
 
         c_values = {
             member.name: f'cStruct.{member.name}' for member in struct.c_struct.members}
-        
-        classes = {p.reference_name: p.reference_name for p in parent_classes}
+
+        classes = {'table': 'table'} if struct.table_type else {}
         swift_values = struct.member_conversions.get_swift_values(
             c_values, classes)
         swift_values['throws'] = ''
@@ -184,17 +183,25 @@ class Generator(BaseGenerator):
     def generate_class(self, cls: SwiftClass):
         if cls.protect:
             self << f'#if {cls.protect}'
-        protocol_string = ': _HandleContainer' if cls.c_handle else ''
-        with self.indent(f'public final class {cls.name}{protocol_string} {{', '}'):
+        # OpaquePointer and UnsafePointer are not Sendable; a handle is just an address
+        protocols = ['Handle'] if cls.c_handle else []
+        protocols.append('@unchecked Sendable')
+        with self.indent(f'public struct {cls.name}: {", ".join(protocols)} {{', '}'):
+            if cls.obj_type:
+                self << f'public static let objectType: ObjectType = .{cls.obj_type}'
             if cls.c_handle:
-                self << f'public let handle: {cls.c_handle.name}?'
-            if cls.parent:
-                self << f'public let {cls.parent.reference_name}: {cls.parent.name}!'
-            if cls.dispatch_table:
-                self << f'public let dispatchTable: {cls.dispatch_table.name}'
+                self << f'public let handle: {cls.c_handle.name}'
+            if cls.table:
+                self << f'public let table: UnsafePointer<{cls.table.name}>'
 
             self.linebreak()
             self.generate_class_init(cls)
+
+            # Entry has no vkDestroyEntry to hang the deallocation off
+            if cls.owns_table and not cls.c_handle:
+                self.linebreak()
+                with self.indent('public func destroy() {', '}'):
+                    self << 'UnsafeMutablePointer(mutating: self.table).deallocate()'
 
             for command in cls.commands:
                 self.linebreak()
@@ -205,45 +212,47 @@ class Generator(BaseGenerator):
         self.linebreak()
 
     def generate_class_init(self, cls: SwiftClass):
+        table = cls.table
+
+        # Entry builds its own table straight from the loader; every other table is
+        # built by the command that creates the handle (vkCreateInstance/vkCreateDevice)
+        if table and table.owner:
+            owner_name, owner_type = table.owner
+            with self.indent(f'public init({owner_name}: {owner_type}) {{', '}'):
+                self << f'let table = UnsafeMutablePointer<{table.name}>.allocate(capacity: 1)'
+                self << f'table.initialize(to: {table.name}({owner_name}: {owner_name}))'
+                self << 'self.table = UnsafePointer(table)'
+            return
+
         params = []
         if cls.c_handle:
             params.append(f'handle: {cls.c_handle.name}!')
-        if cls.parent:
-            params.append(f'{cls.parent.reference_name}: {cls.parent.name}!')
+        if table:
+            params.append(f'table: UnsafePointer<{table.name}>')
 
         with self.indent(f'public init({", ".join(params)}) {{', '}'):
             if cls.c_handle:
                 self << 'self.handle = handle'
-            if cls.parent:
-                self << f'self.{cls.parent.reference_name} = {cls.parent.reference_name}'
-            if cls.dispatch_table:
-                loader_name, _ = cls.dispatch_table.loader
-                params = [
-                    f'{loader_name}: {get_dispatch_table_path(cls, cls.dispatcher)}.{loader_name}']
-                if cls.dispatch_table.param:
-                    param_name, _ = cls.dispatch_table.param
-                    params.append(f'{param_name}: handle')
-                self << f'self.dispatchTable = {cls.dispatch_table.name}({", ".join(params)})'
+            if table:
+                self << 'self.table = table'
 
     def generate_command(self, command: SwiftCommand, cls: SwiftClass):
         if command.protect:
             self << f'#if {command.protect}'
         swift_values = {param.name: param.name for param in command.params}
-        swift_values.update(
-            {param: get_class_chain(cls, target_class)
-             for param, target_class in command.class_params.items()}
-        )
+        # the receiver is the only handle parameter that is not a Swift parameter
+        swift_values.update({param: 'self' for param in command.class_params})
 
         throws_string = ' throws(Result)' if command.throws else ''
 
         closures = command.param_conversions.get_c_closures(swift_values, throws=throws_string)
         c_values = command.param_conversions.get_c_values(swift_values)
 
-        classes = get_all_class_chains(cls)
-        if command.name == 'allocateCommandBuffers':
-            classes['commandPool'] = 'allocateInfo.base.commandPool'
-        elif command.name == 'allocateDescriptorSets':
-            classes['descriptorPool'] = 'allocateInfo.base.descriptorPool'
+        # a command can only produce handles dispatched by the table it was dispatched
+        # through, so the receiver's table is always the right one to hand out
+        classes = {'table': 'self.table'}
+        if command.creates_table:
+            classes['table'] = 'UnsafePointer(table)'
 
         params: list[tuple[str, str]] = []
         # make x{Info} first params
@@ -268,9 +277,25 @@ class Generator(BaseGenerator):
         params.sort(key=lambda x: 0 if 'info' in x[0].lower() else 1)
         param_string = ', '.join(f'{p[0]}: {p[1]}' for p in params)
 
+        c_name = command.c_command.name
+        # every entry is loaded as an IUO, except the loader itself, which the table
+        # stores non-optionally
+        unwrap = '' if cls.table and c_name == cls.table.loader[0] else '!'
         with self.indent(f'public func {command.name}{generic_string}({param_string})'
                          f'{throws_string} -> {return_type}{where_string} {{', '}'):
-            with self.closures(closures, throws=command.throws):
+            # hoisted out of the closure nest below: one load, and it keeps the
+            # type checker from choking on deeply nested generic closures
+            self << f'let {c_name} = self.table.pointee.{c_name}{unwrap}'
+
+            # the hoist makes the body multi-statement, so the outermost expression
+            # no longer gets an implicit return
+            pending_return = ['return ']
+
+            def lead() -> str:
+                return pending_return.pop() if pending_return else ''
+
+            with self.closures(closures, throws=command.throws,
+                               prefix=lead() if closures else ''):
                 params = []
                 for param in command.c_command.params:
                     if param.name == command.output_param:
@@ -287,9 +312,7 @@ class Generator(BaseGenerator):
                     else:
                         params.append(c_values[param.name])
                 param_string = ', '.join(params)
-                dispatch_path = get_dispatch_table_path(
-                    cls, command.dispatcher)
-                call_string = f'{dispatch_path}.{command.c_command.name}({param_string})'
+                call_string = f'{c_name}({param_string})'
 
                 if command.output_param:
                     if isinstance(command.return_conversion, tc.ArrayConversion):
@@ -311,7 +334,7 @@ class Generator(BaseGenerator):
                                 f'(unsafeUninitializedCapacity: Int({count_value})) {{ '
                                 f'out, initializedCount{throws_string} in',
                                 f'}}{map_string}'
-                        )], throws=command.throws):
+                        )], throws=command.throws, prefix=lead()):
                             if command.throws:
                                 with self.indent('try checkResult(', ')'):
                                     self << call_string
@@ -319,13 +342,13 @@ class Generator(BaseGenerator):
                                 self << call_string
                             self << 'initializedCount = out.count'
                     elif command.chainable_out_parameters:
-                        prefix = f'withOutStructureChain(base: {command.return_type}.self, chaining: (repeat (each Ext).self)) {{ out{throws_string} in'
+                        chain_string = f'withOutStructureChain(base: {command.return_type}.self, chaining: (repeat (each Ext).self)) {{ out{throws_string} in'
                         if command.throws:
-                            with self.indent(f'try {prefix}', '}'):
+                            with self.indent(f'{lead()}try {chain_string}', '}'):
                                 with self.indent(f'try checkResult(', ')'):
                                     self << call_string
-                        else: 
-                            with self.indent(prefix, '}'):
+                        else:
+                            with self.indent(lead() + chain_string, '}'):
                                 self << call_string
                     else:
                         if command.unwrap_output_param:
@@ -341,6 +364,8 @@ class Generator(BaseGenerator):
                                 self << call_string
                         else:
                             self << call_string
+                        if command.creates_table:
+                            self.generate_table_allocation(command.creates_table)
                         self << f'return {command.return_conversion.get_swift_value("out", classes=classes)}'
 
                 elif command.enumeration_pointer_param:
@@ -355,19 +380,33 @@ class Generator(BaseGenerator):
                         map_string = ''
                     try_string = 'try ' if command.throws else ''
                     enumerateFn = 'enumerateBytes' if command.enumeration_is_bytes_array else 'enumerate'
-                    with self.indent(f'{try_string}{enumerateFn} {{ {command.enumeration_pointer_param}, '
+                    with self.indent(f'{lead()}{try_string}{enumerateFn} {{ {command.enumeration_pointer_param}, '
                                      f'{command.enumeration_count_param} in', f'}}{map_string}'):
                         self << call_string
                 else:
                     result_string = command.return_conversion.get_swift_value(
                         call_string)
+                    # a Void body needs no return, and returning would strand the
+                    # table deallocation below
+                    ret = '' if command.return_type == 'Void' else lead()
                     if command.throws:
-                        with self.indent('try checkResult(', ')'):
+                        with self.indent(f'{ret}try checkResult(', ')'):
                             self << result_string
                     else:
-                        self << result_string
+                        self << ret + result_string
+                    if command.destroys_table:
+                        self << 'UnsafeMutablePointer(mutating: self.table).deallocate()'
         if command.protect:
             self << '#endif'
+
+    def generate_table_allocation(self, table: DispatchTable):
+        loader_name, _ = table.loader
+        params = [f'{loader_name}: self.table.pointee.{loader_name}']
+        if table.param:
+            param_name, _ = table.param
+            params.append(f'{param_name}: out')
+        self << f'let table = UnsafeMutablePointer<{table.name}>.allocate(capacity: 1)'
+        self << f'table.initialize(to: {table.name}({", ".join(params)}))'
 
     def generate_alias(self, alias: SwiftAlias):
         if alias.protect:
@@ -377,7 +416,16 @@ class Generator(BaseGenerator):
             self << '#endif'
 
     def generate_dispatch_table(self, dispatch_table: DispatchTable):
-        with self.indent(f'public struct {dispatch_table.name} {{', '}'):
+        loader_name, loader_type = dispatch_table.loader
+        owner = dispatch_table.owner
+
+        with self.indent(f'public struct {dispatch_table.name}: @unchecked Sendable {{', '}'):
+            if owner:
+                # keeps the dynamic library alive for as long as the function
+                # pointers loaded out of it
+                self << f'public let {owner[0]}: {owner[1]}'
+            # stored so a child table can be loaded from it
+            self << f'public let {loader_name}: {loader_type}'
             for command in dispatch_table.commands:
                 if command.protect:
                     self << f'#if {command.protect}'
@@ -386,8 +434,10 @@ class Generator(BaseGenerator):
                     self << '#endif'
             self.linebreak()
 
-            loader_name, loader_type = dispatch_table.loader
-            args = [f'{loader_name}: {loader_type}']
+            if owner:
+                args = [f'{owner[0]}: {owner[1]}']
+            else:
+                args = [f'{loader_name}: {loader_type}']
             if dispatch_table.param:
                 param_name, param_type = dispatch_table.param
                 args.append(f'{param_name}: {param_type}')
@@ -395,6 +445,10 @@ class Generator(BaseGenerator):
                 param_name = 'nil'
 
             with self.indent(f'init({", ".join(args)}) {{', '}'):
+                if owner:
+                    self << f'let {loader_name} = {owner[0]}.{loader_name}'
+                    self << f'self.{owner[0]} = {owner[0]}'
+                self << f'self.{loader_name} = {loader_name}'
                 for command in dispatch_table.commands:
                     if command.protect:
                         self << f'#if {command.protect}'
@@ -415,12 +469,13 @@ class Generator(BaseGenerator):
         self.linebreak()
 
     @contextmanager
-    def closures(self, closures: list[tuple[str, str]], throws: bool = False):
-        for closure in closures:
+    def closures(self, closures: list[tuple[str, str]], throws: bool = False, prefix: str = ''):
+        for i, closure in enumerate(closures):
+            lead = prefix if i == 0 else ''
             if throws:
-                self << 'try ' + closure[0]
+                self << lead + 'try ' + closure[0]
             else:
-                self << closure[0]
+                self << lead + closure[0]
             self.indent_size += 1
         yield
         for closure in reversed(closures):
@@ -434,25 +489,3 @@ def safe_name(name: str) -> str:
     return name
 
 
-def get_class_chain(current_class: SwiftClass, target_class: SwiftClass) -> str:
-    chain = 'self'
-    while current_class != target_class:
-        current_class = current_class.parent
-        chain += f'.{current_class.reference_name}'
-    return chain
-
-
-def get_all_class_chains(cls: SwiftClass) -> dict[str, str]:
-    chain = 'self'
-    chains: dict[str, str] = {cls.reference_name: chain}
-    for ancestor in cls.ancestors:
-        chain += f'.{ancestor.reference_name}'
-        chains[ancestor.reference_name] = chain
-    return chains
-
-
-def get_dispatch_table_path(cls: SwiftClass, dispatcher: SwiftClass):
-    path = get_class_chain(cls, dispatcher)
-    if dispatcher.dispatch_table:
-        path += '.dispatchTable'
-    return path

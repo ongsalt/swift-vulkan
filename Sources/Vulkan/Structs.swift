@@ -1,4 +1,4 @@
-import CVulkan
+@preconcurrency import CVulkan
 
 public struct Offset2D: CStructConvertible {
     public typealias CStruct = VkOffset2D
@@ -1368,8 +1368,8 @@ public struct MappedMemoryRange: ChainableBase {
         self.size = size
     }
 
-    public init(cStruct: VkMappedMemoryRange, device: Device) {
-        self.memory = DeviceMemory(handle: cStruct.memory, device: device)
+    public init(cStruct: VkMappedMemoryRange) {
+        self.memory = DeviceMemory(handle: cStruct.memory)
         self.offset = cStruct.offset
         self.size = cStruct.size
     }
@@ -1456,8 +1456,8 @@ public struct DescriptorBufferInfo: CStructConvertible {
         self.range = range
     }
 
-    public init(cStruct: VkDescriptorBufferInfo, device: Device) {
-        self.buffer = (cStruct.buffer != nil) ? Buffer(handle: cStruct.buffer, device: device) : nil
+    public init(cStruct: VkDescriptorBufferInfo) {
+        self.buffer = (cStruct.buffer != nil) ? Buffer(handle: cStruct.buffer) : nil
         self.offset = cStruct.offset
         self.range = cStruct.range
     }
@@ -1484,9 +1484,9 @@ public struct DescriptorImageInfo: CStructConvertible {
         self.imageLayout = imageLayout
     }
 
-    public init(cStruct: VkDescriptorImageInfo, device: Device) {
-        self.sampler = (cStruct.sampler != nil) ? Sampler(handle: cStruct.sampler, device: device) : nil
-        self.imageView = (cStruct.imageView != nil) ? ImageView(handle: cStruct.imageView, device: device) : nil
+    public init(cStruct: VkDescriptorImageInfo) {
+        self.sampler = (cStruct.sampler != nil) ? Sampler(handle: cStruct.sampler) : nil
+        self.imageView = (cStruct.imageView != nil) ? ImageView(handle: cStruct.imageView) : nil
         self.imageLayout = ImageLayout(rawValue: numericBitCast(cStruct.imageLayout.rawValue))!
     }
 
@@ -1523,15 +1523,15 @@ public struct WriteDescriptorSet: ChainableBase {
         self.texelBufferView = texelBufferView
     }
 
-    public init(cStruct: VkWriteDescriptorSet, descriptorPool: DescriptorPool, device: Device) {
-        self.dstSet = DescriptorSet(handle: cStruct.dstSet, descriptorPool: descriptorPool)
+    public init(cStruct: VkWriteDescriptorSet) {
+        self.dstSet = DescriptorSet(handle: cStruct.dstSet)
         self.dstBinding = cStruct.dstBinding
         self.dstArrayElement = cStruct.dstArrayElement
         self.descriptorCount = cStruct.descriptorCount
         self.descriptorType = DescriptorType(rawValue: numericBitCast(cStruct.descriptorType.rawValue))!
-        self.imageInfo = UnsafeBufferPointer(start: cStruct.pImageInfo, count: Int(cStruct.descriptorCount)).map{ DescriptorImageInfo(cStruct: $0, device: device) }
-        self.bufferInfo = UnsafeBufferPointer(start: cStruct.pBufferInfo, count: Int(cStruct.descriptorCount)).map{ DescriptorBufferInfo(cStruct: $0, device: device) }
-        self.texelBufferView = UnsafeBufferPointer(start: cStruct.pTexelBufferView, count: Int(cStruct.descriptorCount)).map{ BufferView(handle: $0, device: device) }
+        self.imageInfo = UnsafeBufferPointer(start: cStruct.pImageInfo, count: Int(cStruct.descriptorCount)).map{ DescriptorImageInfo(cStruct: $0) }
+        self.bufferInfo = UnsafeBufferPointer(start: cStruct.pBufferInfo, count: Int(cStruct.descriptorCount)).map{ DescriptorBufferInfo(cStruct: $0) }
+        self.texelBufferView = UnsafeBufferPointer(start: cStruct.pTexelBufferView, count: Int(cStruct.descriptorCount)).map{ BufferView(handle: $0) }
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkWriteDescriptorSet>) throws(E) -> R) throws(E) -> R {
@@ -1548,7 +1548,7 @@ public struct WriteDescriptorSet: ChainableBase {
                     cStruct.descriptorType = VkDescriptorType(rawValue: VkDescriptorType.RawValue(self.descriptorType.rawValue))
                     cStruct.pImageInfo = ptr_imageInfo.baseAddress
                     cStruct.pBufferInfo = ptr_bufferInfo.baseAddress
-                    cStruct.pTexelBufferView = ptr_texelBufferView.baseAddress
+                    cStruct.pTexelBufferView = ptr_texelBufferView.baseAddress?.cast()
                     return try body(&cStruct)
                 }
             }
@@ -1584,11 +1584,11 @@ public struct CopyDescriptorSet: ChainableBase {
         self.descriptorCount = descriptorCount
     }
 
-    public init(cStruct: VkCopyDescriptorSet, descriptorPool: DescriptorPool) {
-        self.srcSet = DescriptorSet(handle: cStruct.srcSet, descriptorPool: descriptorPool)
+    public init(cStruct: VkCopyDescriptorSet) {
+        self.srcSet = DescriptorSet(handle: cStruct.srcSet)
         self.srcBinding = cStruct.srcBinding
         self.srcArrayElement = cStruct.srcArrayElement
-        self.dstSet = DescriptorSet(handle: cStruct.dstSet, descriptorPool: descriptorPool)
+        self.dstSet = DescriptorSet(handle: cStruct.dstSet)
         self.dstBinding = cStruct.dstBinding
         self.dstArrayElement = cStruct.dstArrayElement
         self.descriptorCount = cStruct.descriptorCount
@@ -1710,9 +1710,9 @@ public struct BufferViewCreateInfo: ChainableBase {
         self.range = range
     }
 
-    public init(cStruct: VkBufferViewCreateInfo, device: Device) {
+    public init(cStruct: VkBufferViewCreateInfo) {
         self.flags = BufferViewCreateFlags(rawValue: cStruct.flags)
-        self.buffer = Buffer(handle: cStruct.buffer, device: device)
+        self.buffer = Buffer(handle: cStruct.buffer)
         self.format = Format(rawValue: numericBitCast(cStruct.format.rawValue))!
         self.offset = cStruct.offset
         self.range = cStruct.range
@@ -1888,12 +1888,12 @@ public struct BufferMemoryBarrier: ChainableBase {
         self.size = size
     }
 
-    public init(cStruct: VkBufferMemoryBarrier, device: Device) {
+    public init(cStruct: VkBufferMemoryBarrier) {
         self.srcAccessMask = AccessFlags(rawValue: cStruct.srcAccessMask)
         self.dstAccessMask = AccessFlags(rawValue: cStruct.dstAccessMask)
         self.srcQueueFamilyIndex = cStruct.srcQueueFamilyIndex
         self.dstQueueFamilyIndex = cStruct.dstQueueFamilyIndex
-        self.buffer = Buffer(handle: cStruct.buffer, device: device)
+        self.buffer = Buffer(handle: cStruct.buffer)
         self.offset = cStruct.offset
         self.size = cStruct.size
     }
@@ -1943,14 +1943,14 @@ public struct ImageMemoryBarrier: ChainableBase {
         self.subresourceRange = subresourceRange
     }
 
-    public init(cStruct: VkImageMemoryBarrier, device: Device) {
+    public init(cStruct: VkImageMemoryBarrier) {
         self.srcAccessMask = AccessFlags(rawValue: cStruct.srcAccessMask)
         self.dstAccessMask = AccessFlags(rawValue: cStruct.dstAccessMask)
         self.oldLayout = ImageLayout(rawValue: numericBitCast(cStruct.oldLayout.rawValue))!
         self.newLayout = ImageLayout(rawValue: numericBitCast(cStruct.newLayout.rawValue))!
         self.srcQueueFamilyIndex = cStruct.srcQueueFamilyIndex
         self.dstQueueFamilyIndex = cStruct.dstQueueFamilyIndex
-        self.image = Image(handle: cStruct.image, device: device)
+        self.image = Image(handle: cStruct.image)
         self.subresourceRange = ImageSubresourceRange(cStruct: cStruct.subresourceRange)
     }
 
@@ -2112,9 +2112,9 @@ public struct ImageViewCreateInfo: ChainableBase {
         self.subresourceRange = subresourceRange
     }
 
-    public init(cStruct: VkImageViewCreateInfo, device: Device) {
+    public init(cStruct: VkImageViewCreateInfo) {
         self.flags = ImageViewCreateFlags(rawValue: cStruct.flags)
-        self.image = Image(handle: cStruct.image, device: device)
+        self.image = Image(handle: cStruct.image)
         self.viewType = ImageViewType(rawValue: numericBitCast(cStruct.viewType.rawValue))!
         self.format = Format(rawValue: numericBitCast(cStruct.format.rawValue))!
         self.components = ComponentMapping(cStruct: cStruct.components)
@@ -2190,10 +2190,10 @@ public struct SparseMemoryBind: CStructConvertible {
         self.flags = flags
     }
 
-    public init(cStruct: VkSparseMemoryBind, device: Device) {
+    public init(cStruct: VkSparseMemoryBind) {
         self.resourceOffset = cStruct.resourceOffset
         self.size = cStruct.size
-        self.memory = (cStruct.memory != nil) ? DeviceMemory(handle: cStruct.memory, device: device) : nil
+        self.memory = (cStruct.memory != nil) ? DeviceMemory(handle: cStruct.memory) : nil
         self.memoryOffset = cStruct.memoryOffset
         self.flags = SparseMemoryBindFlags(rawValue: cStruct.flags)
     }
@@ -2228,11 +2228,11 @@ public struct SparseImageMemoryBind: CStructConvertible {
         self.flags = flags
     }
 
-    public init(cStruct: VkSparseImageMemoryBind, device: Device) {
+    public init(cStruct: VkSparseImageMemoryBind) {
         self.subresource = ImageSubresource(cStruct: cStruct.subresource)
         self.offset = Offset3D(cStruct: cStruct.offset)
         self.extent = Extent3D(cStruct: cStruct.extent)
-        self.memory = (cStruct.memory != nil) ? DeviceMemory(handle: cStruct.memory, device: device) : nil
+        self.memory = (cStruct.memory != nil) ? DeviceMemory(handle: cStruct.memory) : nil
         self.memoryOffset = cStruct.memoryOffset
         self.flags = SparseMemoryBindFlags(rawValue: cStruct.flags)
     }
@@ -2266,9 +2266,9 @@ public struct SparseBufferMemoryBindInfo: CStructConvertible {
         self.binds = binds
     }
 
-    public init(cStruct: VkSparseBufferMemoryBindInfo, device: Device) {
-        self.buffer = Buffer(handle: cStruct.buffer, device: device)
-        self.binds = UnsafeBufferPointer(start: cStruct.pBinds, count: Int(cStruct.bindCount)).map{ SparseMemoryBind(cStruct: $0, device: device) }
+    public init(cStruct: VkSparseBufferMemoryBindInfo) {
+        self.buffer = Buffer(handle: cStruct.buffer)
+        self.binds = UnsafeBufferPointer(start: cStruct.pBinds, count: Int(cStruct.bindCount)).map{ SparseMemoryBind(cStruct: $0) }
     }
 
     public func withCStruct<R, E: Error>(_ body: (UnsafePointer<VkSparseBufferMemoryBindInfo>) throws(E) -> R) throws(E) -> R {
@@ -2293,9 +2293,9 @@ public struct SparseImageOpaqueMemoryBindInfo: CStructConvertible {
         self.binds = binds
     }
 
-    public init(cStruct: VkSparseImageOpaqueMemoryBindInfo, device: Device) {
-        self.image = Image(handle: cStruct.image, device: device)
-        self.binds = UnsafeBufferPointer(start: cStruct.pBinds, count: Int(cStruct.bindCount)).map{ SparseMemoryBind(cStruct: $0, device: device) }
+    public init(cStruct: VkSparseImageOpaqueMemoryBindInfo) {
+        self.image = Image(handle: cStruct.image)
+        self.binds = UnsafeBufferPointer(start: cStruct.pBinds, count: Int(cStruct.bindCount)).map{ SparseMemoryBind(cStruct: $0) }
     }
 
     public func withCStruct<R, E: Error>(_ body: (UnsafePointer<VkSparseImageOpaqueMemoryBindInfo>) throws(E) -> R) throws(E) -> R {
@@ -2320,9 +2320,9 @@ public struct SparseImageMemoryBindInfo: CStructConvertible {
         self.binds = binds
     }
 
-    public init(cStruct: VkSparseImageMemoryBindInfo, device: Device) {
-        self.image = Image(handle: cStruct.image, device: device)
-        self.binds = UnsafeBufferPointer(start: cStruct.pBinds, count: Int(cStruct.bindCount)).map{ SparseImageMemoryBind(cStruct: $0, device: device) }
+    public init(cStruct: VkSparseImageMemoryBindInfo) {
+        self.image = Image(handle: cStruct.image)
+        self.binds = UnsafeBufferPointer(start: cStruct.pBinds, count: Int(cStruct.bindCount)).map{ SparseImageMemoryBind(cStruct: $0) }
     }
 
     public func withCStruct<R, E: Error>(_ body: (UnsafePointer<VkSparseImageMemoryBindInfo>) throws(E) -> R) throws(E) -> R {
@@ -2354,12 +2354,12 @@ public struct BindSparseInfo: ChainableBase {
         self.signalSemaphores = signalSemaphores
     }
 
-    public init(cStruct: VkBindSparseInfo, device: Device) {
-        self.waitSemaphores = UnsafeBufferPointer(start: cStruct.pWaitSemaphores, count: Int(cStruct.waitSemaphoreCount)).map{ Semaphore(handle: $0, device: device) }
-        self.bufferBinds = UnsafeBufferPointer(start: cStruct.pBufferBinds, count: Int(cStruct.bufferBindCount)).map{ SparseBufferMemoryBindInfo(cStruct: $0, device: device) }
-        self.imageOpaqueBinds = UnsafeBufferPointer(start: cStruct.pImageOpaqueBinds, count: Int(cStruct.imageOpaqueBindCount)).map{ SparseImageOpaqueMemoryBindInfo(cStruct: $0, device: device) }
-        self.imageBinds = UnsafeBufferPointer(start: cStruct.pImageBinds, count: Int(cStruct.imageBindCount)).map{ SparseImageMemoryBindInfo(cStruct: $0, device: device) }
-        self.signalSemaphores = UnsafeBufferPointer(start: cStruct.pSignalSemaphores, count: Int(cStruct.signalSemaphoreCount)).map{ Semaphore(handle: $0, device: device) }
+    public init(cStruct: VkBindSparseInfo) {
+        self.waitSemaphores = UnsafeBufferPointer(start: cStruct.pWaitSemaphores, count: Int(cStruct.waitSemaphoreCount)).map{ Semaphore(handle: $0) }
+        self.bufferBinds = UnsafeBufferPointer(start: cStruct.pBufferBinds, count: Int(cStruct.bufferBindCount)).map{ SparseBufferMemoryBindInfo(cStruct: $0) }
+        self.imageOpaqueBinds = UnsafeBufferPointer(start: cStruct.pImageOpaqueBinds, count: Int(cStruct.imageOpaqueBindCount)).map{ SparseImageOpaqueMemoryBindInfo(cStruct: $0) }
+        self.imageBinds = UnsafeBufferPointer(start: cStruct.pImageBinds, count: Int(cStruct.imageBindCount)).map{ SparseImageMemoryBindInfo(cStruct: $0) }
+        self.signalSemaphores = UnsafeBufferPointer(start: cStruct.pSignalSemaphores, count: Int(cStruct.signalSemaphoreCount)).map{ Semaphore(handle: $0) }
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkBindSparseInfo>) throws(E) -> R) throws(E) -> R {
@@ -2372,7 +2372,7 @@ public struct BindSparseInfo: ChainableBase {
                             cStruct.sType = VkStructureType(rawValue: VkStructureType.RawValue(Self.structureType.rawValue))
                             cStruct.pNext = maybeMutable(pNext)
                             cStruct.waitSemaphoreCount = UInt32(ptr_waitSemaphores.count)
-                            cStruct.pWaitSemaphores = ptr_waitSemaphores.baseAddress
+                            cStruct.pWaitSemaphores = ptr_waitSemaphores.baseAddress?.cast()
                             cStruct.bufferBindCount = UInt32(ptr_bufferBinds.count)
                             cStruct.pBufferBinds = ptr_bufferBinds.baseAddress
                             cStruct.imageOpaqueBindCount = UInt32(ptr_imageOpaqueBinds.count)
@@ -2380,7 +2380,7 @@ public struct BindSparseInfo: ChainableBase {
                             cStruct.imageBindCount = UInt32(ptr_imageBinds.count)
                             cStruct.pImageBinds = ptr_imageBinds.baseAddress
                             cStruct.signalSemaphoreCount = UInt32(ptr_signalSemaphores.count)
-                            cStruct.pSignalSemaphores = ptr_signalSemaphores.baseAddress
+                            cStruct.pSignalSemaphores = ptr_signalSemaphores.baseAddress?.cast()
                             return try body(&cStruct)
                         }
                     }
@@ -2687,10 +2687,10 @@ public struct CopyMemoryToImageIndirectInfoKHR: ChainableBase {
         self.imageSubresources = imageSubresources
     }
 
-    public init(cStruct: VkCopyMemoryToImageIndirectInfoKHR, device: Device) {
+    public init(cStruct: VkCopyMemoryToImageIndirectInfoKHR) {
         self.srcCopyFlags = AddressCopyFlagsKHR(rawValue: cStruct.srcCopyFlags)
         self.copyAddressRange = StridedDeviceAddressRangeKHR(cStruct: cStruct.copyAddressRange)
-        self.dstImage = Image(handle: cStruct.dstImage, device: device)
+        self.dstImage = Image(handle: cStruct.dstImage)
         self.dstImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.dstImageLayout.rawValue))!
         self.imageSubresources = UnsafeBufferPointer(start: cStruct.pImageSubresources, count: Int(cStruct.copyCount)).map{ ImageSubresourceLayers(cStruct: $0) }
     }
@@ -2819,12 +2819,12 @@ public struct DescriptorSetLayoutBinding: CStructConvertible {
         self.immutableSamplers = immutableSamplers
     }
 
-    public init(cStruct: VkDescriptorSetLayoutBinding, device: Device) {
+    public init(cStruct: VkDescriptorSetLayoutBinding) {
         self.binding = cStruct.binding
         self.descriptorType = DescriptorType(rawValue: numericBitCast(cStruct.descriptorType.rawValue))!
         self.descriptorCount = cStruct.descriptorCount
         self.stageFlags = ShaderStageFlags(rawValue: cStruct.stageFlags)
-        self.immutableSamplers = (cStruct.pImmutableSamplers != nil) ? UnsafeBufferPointer(start: cStruct.pImmutableSamplers, count: Int(cStruct.descriptorCount)).map{ Sampler(handle: $0, device: device) } : nil
+        self.immutableSamplers = (cStruct.pImmutableSamplers != nil) ? UnsafeBufferPointer(start: cStruct.pImmutableSamplers, count: Int(cStruct.descriptorCount)).map{ Sampler(handle: $0) } : nil
     }
 
     public func withCStruct<R, E: Error>(_ body: (UnsafePointer<VkDescriptorSetLayoutBinding>) throws(E) -> R) throws(E) -> R {
@@ -2834,7 +2834,7 @@ public struct DescriptorSetLayoutBinding: CStructConvertible {
             cStruct.descriptorType = VkDescriptorType(rawValue: VkDescriptorType.RawValue(self.descriptorType.rawValue))
             cStruct.descriptorCount = self.descriptorCount
             cStruct.stageFlags = self.stageFlags.rawValue
-            cStruct.pImmutableSamplers = ptr_immutableSamplers.baseAddress
+            cStruct.pImmutableSamplers = ptr_immutableSamplers.baseAddress?.cast()
             return try body(&cStruct)
         }
     }
@@ -2852,9 +2852,9 @@ public struct DescriptorSetLayoutCreateInfo: ChainableBase {
         self.bindings = bindings
     }
 
-    public init(cStruct: VkDescriptorSetLayoutCreateInfo, device: Device) {
+    public init(cStruct: VkDescriptorSetLayoutCreateInfo) {
         self.flags = DescriptorSetLayoutCreateFlags(rawValue: cStruct.flags)
-        self.bindings = UnsafeBufferPointer(start: cStruct.pBindings, count: Int(cStruct.bindingCount)).map{ DescriptorSetLayoutBinding(cStruct: $0, device: device) }
+        self.bindings = UnsafeBufferPointer(start: cStruct.pBindings, count: Int(cStruct.bindingCount)).map{ DescriptorSetLayoutBinding(cStruct: $0) }
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkDescriptorSetLayoutCreateInfo>) throws(E) -> R) throws(E) -> R {
@@ -2952,9 +2952,9 @@ public struct DescriptorSetAllocateInfo: ChainableBase {
         self.setLayouts = setLayouts
     }
 
-    public init(cStruct: VkDescriptorSetAllocateInfo, device: Device) {
-        self.descriptorPool = DescriptorPool(handle: cStruct.descriptorPool, device: device)
-        self.setLayouts = UnsafeBufferPointer(start: cStruct.pSetLayouts, count: Int(cStruct.descriptorSetCount)).map{ DescriptorSetLayout(handle: $0, device: device) }
+    public init(cStruct: VkDescriptorSetAllocateInfo) {
+        self.descriptorPool = DescriptorPool(handle: cStruct.descriptorPool)
+        self.setLayouts = UnsafeBufferPointer(start: cStruct.pSetLayouts, count: Int(cStruct.descriptorSetCount)).map{ DescriptorSetLayout(handle: $0) }
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkDescriptorSetAllocateInfo>) throws(E) -> R) throws(E) -> R {
@@ -2964,7 +2964,7 @@ public struct DescriptorSetAllocateInfo: ChainableBase {
             cStruct.pNext = maybeMutable(pNext)
             cStruct.descriptorPool = self.descriptorPool.handle
             cStruct.descriptorSetCount = UInt32(ptr_setLayouts.count)
-            cStruct.pSetLayouts = ptr_setLayouts.baseAddress
+            cStruct.pSetLayouts = ptr_setLayouts.baseAddress?.cast()
             return try body(&cStruct)
         }
     }
@@ -3053,10 +3053,10 @@ public struct PipelineShaderStageCreateInfo: ChainableBase {
         self.specializationInfo = specializationInfo
     }
 
-    public init(cStruct: VkPipelineShaderStageCreateInfo, device: Device) {
+    public init(cStruct: VkPipelineShaderStageCreateInfo) {
         self.flags = PipelineShaderStageCreateFlags(rawValue: cStruct.flags)
         self.stage = ShaderStageFlags(rawValue: numericBitCast(cStruct.stage.rawValue))
-        self.module = (cStruct.module != nil) ? ShaderModule(handle: cStruct.module, device: device) : nil
+        self.module = (cStruct.module != nil) ? ShaderModule(handle: cStruct.module) : nil
         self.name = String(cString: cStruct.pName)
         self.specializationInfo = (cStruct.pSpecializationInfo != nil) ? SpecializationInfo(cStruct: cStruct.pSpecializationInfo.pointee) : nil
     }
@@ -3102,11 +3102,11 @@ public struct ComputePipelineCreateInfo: ChainableBase {
         self.basePipelineIndex = basePipelineIndex
     }
 
-    public init(cStruct: VkComputePipelineCreateInfo, device: Device) {
+    public init(cStruct: VkComputePipelineCreateInfo) {
         self.flags = PipelineCreateFlags(rawValue: cStruct.flags)
-        self.stage = PipelineShaderStageCreateInfo(cStruct: cStruct.stage, device: device)
-        self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout, device: device) : nil
-        self.basePipelineHandle = (cStruct.basePipelineHandle != nil) ? Pipeline(handle: cStruct.basePipelineHandle, device: device) : nil
+        self.stage = PipelineShaderStageCreateInfo(cStruct: cStruct.stage)
+        self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout) : nil
+        self.basePipelineHandle = (cStruct.basePipelineHandle != nil) ? Pipeline(handle: cStruct.basePipelineHandle) : nil
         self.basePipelineIndex = cStruct.basePipelineIndex
     }
 
@@ -3820,9 +3820,9 @@ public struct GraphicsPipelineCreateInfo: ChainableBase {
         self.basePipelineIndex = basePipelineIndex
     }
 
-    public init(cStruct: VkGraphicsPipelineCreateInfo, device: Device) {
+    public init(cStruct: VkGraphicsPipelineCreateInfo) {
         self.flags = PipelineCreateFlags(rawValue: cStruct.flags)
-        self.stages = (cStruct.pStages != nil) ? UnsafeBufferPointer(start: cStruct.pStages, count: Int(cStruct.stageCount)).map{ PipelineShaderStageCreateInfo(cStruct: $0, device: device) } : nil
+        self.stages = (cStruct.pStages != nil) ? UnsafeBufferPointer(start: cStruct.pStages, count: Int(cStruct.stageCount)).map{ PipelineShaderStageCreateInfo(cStruct: $0) } : nil
         self.vertexInputState = (cStruct.pVertexInputState != nil) ? PipelineVertexInputStateCreateInfo(cStruct: cStruct.pVertexInputState.pointee) : nil
         self.inputAssemblyState = (cStruct.pInputAssemblyState != nil) ? PipelineInputAssemblyStateCreateInfo(cStruct: cStruct.pInputAssemblyState.pointee) : nil
         self.tessellationState = (cStruct.pTessellationState != nil) ? PipelineTessellationStateCreateInfo(cStruct: cStruct.pTessellationState.pointee) : nil
@@ -3832,10 +3832,10 @@ public struct GraphicsPipelineCreateInfo: ChainableBase {
         self.depthStencilState = (cStruct.pDepthStencilState != nil) ? PipelineDepthStencilStateCreateInfo(cStruct: cStruct.pDepthStencilState.pointee) : nil
         self.colorBlendState = (cStruct.pColorBlendState != nil) ? PipelineColorBlendStateCreateInfo(cStruct: cStruct.pColorBlendState.pointee) : nil
         self.dynamicState = (cStruct.pDynamicState != nil) ? PipelineDynamicStateCreateInfo(cStruct: cStruct.pDynamicState.pointee) : nil
-        self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout, device: device) : nil
-        self.renderPass = (cStruct.renderPass != nil) ? RenderPass(handle: cStruct.renderPass, device: device) : nil
+        self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout) : nil
+        self.renderPass = (cStruct.renderPass != nil) ? RenderPass(handle: cStruct.renderPass) : nil
         self.subpass = cStruct.subpass
-        self.basePipelineHandle = (cStruct.basePipelineHandle != nil) ? Pipeline(handle: cStruct.basePipelineHandle, device: device) : nil
+        self.basePipelineHandle = (cStruct.basePipelineHandle != nil) ? Pipeline(handle: cStruct.basePipelineHandle) : nil
         self.basePipelineIndex = cStruct.basePipelineIndex
     }
 
@@ -4152,9 +4152,9 @@ public struct PipelineBinaryCreateInfoKHR: ChainableBase {
         self.pipelineCreateInfo = pipelineCreateInfo
     }
 
-    public init(cStruct: VkPipelineBinaryCreateInfoKHR, device: Device) {
+    public init(cStruct: VkPipelineBinaryCreateInfoKHR) {
         self.keysAndDataInfo = (cStruct.pKeysAndDataInfo != nil) ? PipelineBinaryKeysAndDataKHR(cStruct: cStruct.pKeysAndDataInfo.pointee) : nil
-        self.pipeline = (cStruct.pipeline != nil) ? Pipeline(handle: cStruct.pipeline, device: device) : nil
+        self.pipeline = (cStruct.pipeline != nil) ? Pipeline(handle: cStruct.pipeline) : nil
         self.pipelineCreateInfo = (cStruct.pPipelineCreateInfo != nil) ? PipelineCreateInfoKHR(cStruct: cStruct.pPipelineCreateInfo.pointee) : nil
     }
 
@@ -4191,7 +4191,7 @@ public struct PipelineBinaryHandlesInfoKHR: ChainableBase {
         self.pipelineBinaries = pipelineBinaries
     }
 
-    public init(cStruct: VkPipelineBinaryHandlesInfoKHR, device: Device) {
+    public init(cStruct: VkPipelineBinaryHandlesInfoKHR) {
         self.pipelineBinaryCount = cStruct.pipelineBinaryCount
         self.pipelineBinaries = cStruct.pPipelineBinaries
     }
@@ -4222,8 +4222,8 @@ public struct PipelineBinaryInfoKHR: ChainableBase, GraphicsPipelineCreateInfoEx
         self.pipelineBinaries = pipelineBinaries
     }
 
-    public init(cStruct: VkPipelineBinaryInfoKHR, device: Device) {
-        self.pipelineBinaries = UnsafeBufferPointer(start: cStruct.pPipelineBinaries, count: Int(cStruct.binaryCount)).map{ PipelineBinaryKHR(handle: $0, device: device) }
+    public init(cStruct: VkPipelineBinaryInfoKHR) {
+        self.pipelineBinaries = UnsafeBufferPointer(start: cStruct.pPipelineBinaries, count: Int(cStruct.binaryCount)).map{ PipelineBinaryKHR(handle: $0) }
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPipelineBinaryInfoKHR>) throws(E) -> R) throws(E) -> R {
@@ -4232,7 +4232,7 @@ public struct PipelineBinaryInfoKHR: ChainableBase, GraphicsPipelineCreateInfoEx
             cStruct.sType = VkStructureType(rawValue: VkStructureType.RawValue(Self.structureType.rawValue))
             cStruct.pNext = maybeMutable(pNext)
             cStruct.binaryCount = UInt32(ptr_pipelineBinaries.count)
-            cStruct.pPipelineBinaries = ptr_pipelineBinaries.baseAddress
+            cStruct.pPipelineBinaries = ptr_pipelineBinaries.baseAddress?.cast()
             return try body(&cStruct)
         }
     }
@@ -4254,8 +4254,8 @@ public struct ReleaseCapturedPipelineDataInfoKHR: ChainableBase {
         self.pipeline = pipeline
     }
 
-    public init(cStruct: VkReleaseCapturedPipelineDataInfoKHR, device: Device) {
-        self.pipeline = Pipeline(handle: cStruct.pipeline, device: device)
+    public init(cStruct: VkReleaseCapturedPipelineDataInfoKHR) {
+        self.pipeline = Pipeline(handle: cStruct.pipeline)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkReleaseCapturedPipelineDataInfoKHR>) throws(E) -> R) throws(E) -> R {
@@ -4283,8 +4283,8 @@ public struct PipelineBinaryDataInfoKHR: ChainableBase {
         self.pipelineBinary = pipelineBinary
     }
 
-    public init(cStruct: VkPipelineBinaryDataInfoKHR, device: Device) {
-        self.pipelineBinary = PipelineBinaryKHR(handle: cStruct.pipelineBinary, device: device)
+    public init(cStruct: VkPipelineBinaryDataInfoKHR) {
+        self.pipelineBinary = PipelineBinaryKHR(handle: cStruct.pipelineBinary)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPipelineBinaryDataInfoKHR>) throws(E) -> R) throws(E) -> R {
@@ -4307,30 +4307,30 @@ public struct PipelineLayoutCreateInfo: ChainableBase, BindDescriptorSetsInfoExt
 
     public static let structureType: StructureType = .pipelineLayoutCreateInfo
     public let flags: PipelineLayoutCreateFlags
-    public let setLayouts: Array<DescriptorSetLayout?>
+    public let setLayouts: Array<DescriptorSetLayout>
     public let pushConstantRanges: Array<PushConstantRange>
 
-    public init(flags: PipelineLayoutCreateFlags = [], setLayouts: Array<DescriptorSetLayout?> = [], pushConstantRanges: Array<PushConstantRange> = []) {
+    public init(flags: PipelineLayoutCreateFlags = [], setLayouts: Array<DescriptorSetLayout> = [], pushConstantRanges: Array<PushConstantRange> = []) {
         self.flags = flags
         self.setLayouts = setLayouts
         self.pushConstantRanges = pushConstantRanges
     }
 
-    public init(cStruct: VkPipelineLayoutCreateInfo, device: Device) {
+    public init(cStruct: VkPipelineLayoutCreateInfo) {
         self.flags = PipelineLayoutCreateFlags(rawValue: cStruct.flags)
-        self.setLayouts = UnsafeBufferPointer(start: cStruct.pSetLayouts, count: Int(cStruct.setLayoutCount)).map{ ($0 != nil) ? DescriptorSetLayout(handle: $0, device: device) : nil }
+        self.setLayouts = UnsafeBufferPointer(start: cStruct.pSetLayouts, count: Int(cStruct.setLayoutCount)).map{ DescriptorSetLayout(handle: $0) }
         self.pushConstantRanges = UnsafeBufferPointer(start: cStruct.pPushConstantRanges, count: Int(cStruct.pushConstantRangeCount)).map{ PushConstantRange(cStruct: $0) }
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPipelineLayoutCreateInfo>) throws(E) -> R) throws(E) -> R {
-        try self.setLayouts.map{ $0?.handle }.withUnsafeBufferPointer { ptr_setLayouts throws(E) in
+        try self.setLayouts.map{ $0.handle }.withUnsafeBufferPointer { ptr_setLayouts throws(E) in
             try self.pushConstantRanges.withCStructBufferPointer { ptr_pushConstantRanges throws(E) in
                 var cStruct = VkPipelineLayoutCreateInfo()
                 cStruct.sType = VkStructureType(rawValue: VkStructureType.RawValue(Self.structureType.rawValue))
                 cStruct.pNext = maybeMutable(pNext)
                 cStruct.flags = self.flags.rawValue
                 cStruct.setLayoutCount = UInt32(ptr_setLayouts.count)
-                cStruct.pSetLayouts = ptr_setLayouts.baseAddress
+                cStruct.pSetLayouts = ptr_setLayouts.baseAddress?.cast()
                 cStruct.pushConstantRangeCount = UInt32(ptr_pushConstantRanges.count)
                 cStruct.pPushConstantRanges = ptr_pushConstantRanges.baseAddress
                 return try body(&cStruct)
@@ -4481,8 +4481,8 @@ public struct CommandBufferAllocateInfo: ChainableBase {
         self.commandBufferCount = commandBufferCount
     }
 
-    public init(cStruct: VkCommandBufferAllocateInfo, device: Device) {
-        self.commandPool = CommandPool(handle: cStruct.commandPool, device: device)
+    public init(cStruct: VkCommandBufferAllocateInfo) {
+        self.commandPool = CommandPool(handle: cStruct.commandPool)
         self.level = CommandBufferLevel(rawValue: numericBitCast(cStruct.level.rawValue))!
         self.commandBufferCount = cStruct.commandBufferCount
     }
@@ -4524,10 +4524,10 @@ public struct CommandBufferInheritanceInfo: ChainableBase {
         self.pipelineStatistics = pipelineStatistics
     }
 
-    public init(cStruct: VkCommandBufferInheritanceInfo, device: Device) {
-        self.renderPass = (cStruct.renderPass != nil) ? RenderPass(handle: cStruct.renderPass, device: device) : nil
+    public init(cStruct: VkCommandBufferInheritanceInfo) {
+        self.renderPass = (cStruct.renderPass != nil) ? RenderPass(handle: cStruct.renderPass) : nil
         self.subpass = cStruct.subpass
-        self.framebuffer = (cStruct.framebuffer != nil) ? Framebuffer(handle: cStruct.framebuffer, device: device) : nil
+        self.framebuffer = (cStruct.framebuffer != nil) ? Framebuffer(handle: cStruct.framebuffer) : nil
         self.occlusionQueryEnable = cStruct.occlusionQueryEnable == VK_TRUE
         self.queryFlags = QueryControlFlags(rawValue: cStruct.queryFlags)
         self.pipelineStatistics = QueryPipelineStatisticFlags(rawValue: cStruct.pipelineStatistics)
@@ -4565,9 +4565,9 @@ public struct CommandBufferBeginInfo: ChainableBase {
         self.inheritanceInfo = inheritanceInfo
     }
 
-    public init(cStruct: VkCommandBufferBeginInfo, device: Device) {
+    public init(cStruct: VkCommandBufferBeginInfo) {
         self.flags = CommandBufferUsageFlags(rawValue: cStruct.flags)
-        self.inheritanceInfo = (cStruct.pInheritanceInfo != nil) ? CommandBufferInheritanceInfo(cStruct: cStruct.pInheritanceInfo.pointee, device: device) : nil
+        self.inheritanceInfo = (cStruct.pInheritanceInfo != nil) ? CommandBufferInheritanceInfo(cStruct: cStruct.pInheritanceInfo.pointee) : nil
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkCommandBufferBeginInfo>) throws(E) -> R) throws(E) -> R {
@@ -4604,9 +4604,9 @@ public struct RenderPassBeginInfo: ChainableBase {
         self.clearValues = clearValues
     }
 
-    public init(cStruct: VkRenderPassBeginInfo, device: Device) {
-        self.renderPass = RenderPass(handle: cStruct.renderPass, device: device)
-        self.framebuffer = Framebuffer(handle: cStruct.framebuffer, device: device)
+    public init(cStruct: VkRenderPassBeginInfo) {
+        self.renderPass = RenderPass(handle: cStruct.renderPass)
+        self.framebuffer = Framebuffer(handle: cStruct.framebuffer)
         self.renderArea = Rect2D(cStruct: cStruct.renderArea)
         self.clearValues = Array(UnsafeBufferPointer(start: cStruct.pClearValues, count: Int(cStruct.clearValueCount)))
     }
@@ -5061,10 +5061,10 @@ public struct FramebufferCreateInfo: ChainableBase {
         self.layers = layers
     }
 
-    public init(cStruct: VkFramebufferCreateInfo, device: Device) {
+    public init(cStruct: VkFramebufferCreateInfo) {
         self.flags = FramebufferCreateFlags(rawValue: cStruct.flags)
-        self.renderPass = RenderPass(handle: cStruct.renderPass, device: device)
-        self.attachments = UnsafeBufferPointer(start: cStruct.pAttachments, count: Int(cStruct.attachmentCount)).map{ ImageView(handle: $0, device: device) }
+        self.renderPass = RenderPass(handle: cStruct.renderPass)
+        self.attachments = UnsafeBufferPointer(start: cStruct.pAttachments, count: Int(cStruct.attachmentCount)).map{ ImageView(handle: $0) }
         self.width = cStruct.width
         self.height = cStruct.height
         self.layers = cStruct.layers
@@ -5078,7 +5078,7 @@ public struct FramebufferCreateInfo: ChainableBase {
             cStruct.flags = self.flags.rawValue
             cStruct.renderPass = self.renderPass.handle
             cStruct.attachmentCount = UInt32(ptr_attachments.count)
-            cStruct.pAttachments = ptr_attachments.baseAddress
+            cStruct.pAttachments = ptr_attachments.baseAddress?.cast()
             cStruct.width = self.width
             cStruct.height = self.height
             cStruct.layers = self.layers
@@ -5257,11 +5257,11 @@ public struct SubmitInfo: ChainableBase {
         self.signalSemaphores = signalSemaphores
     }
 
-    public init(cStruct: VkSubmitInfo, device: Device, commandPool: CommandPool) {
-        self.waitSemaphores = UnsafeBufferPointer(start: cStruct.pWaitSemaphores, count: Int(cStruct.waitSemaphoreCount)).map{ Semaphore(handle: $0, device: device) }
+    public init(cStruct: VkSubmitInfo, table: UnsafePointer<DeviceDispatchTable>) {
+        self.waitSemaphores = UnsafeBufferPointer(start: cStruct.pWaitSemaphores, count: Int(cStruct.waitSemaphoreCount)).map{ Semaphore(handle: $0) }
         self.waitDstStageMask = UnsafeBufferPointer(start: cStruct.pWaitDstStageMask, count: Int(cStruct.waitSemaphoreCount)).map{ PipelineStageFlags(rawValue: $0) }
-        self.commandBuffers = UnsafeBufferPointer(start: cStruct.pCommandBuffers, count: Int(cStruct.commandBufferCount)).map{ CommandBuffer(handle: $0, commandPool: commandPool) }
-        self.signalSemaphores = UnsafeBufferPointer(start: cStruct.pSignalSemaphores, count: Int(cStruct.signalSemaphoreCount)).map{ Semaphore(handle: $0, device: device) }
+        self.commandBuffers = UnsafeBufferPointer(start: cStruct.pCommandBuffers, count: Int(cStruct.commandBufferCount)).map{ CommandBuffer(handle: $0, table: table) }
+        self.signalSemaphores = UnsafeBufferPointer(start: cStruct.pSignalSemaphores, count: Int(cStruct.signalSemaphoreCount)).map{ Semaphore(handle: $0) }
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkSubmitInfo>) throws(E) -> R) throws(E) -> R {
@@ -5273,12 +5273,12 @@ public struct SubmitInfo: ChainableBase {
                         cStruct.sType = VkStructureType(rawValue: VkStructureType.RawValue(Self.structureType.rawValue))
                         cStruct.pNext = maybeMutable(pNext)
                         cStruct.waitSemaphoreCount = UInt32(ptr_waitSemaphores.count)
-                        cStruct.pWaitSemaphores = ptr_waitSemaphores.baseAddress
+                        cStruct.pWaitSemaphores = ptr_waitSemaphores.baseAddress?.cast()
                         cStruct.pWaitDstStageMask = ptr_waitDstStageMask.baseAddress
                         cStruct.commandBufferCount = UInt32(ptr_commandBuffers.count)
-                        cStruct.pCommandBuffers = ptr_commandBuffers.baseAddress
+                        cStruct.pCommandBuffers = ptr_commandBuffers.baseAddress?.cast()
                         cStruct.signalSemaphoreCount = UInt32(ptr_signalSemaphores.count)
-                        cStruct.pSignalSemaphores = ptr_signalSemaphores.baseAddress
+                        cStruct.pSignalSemaphores = ptr_signalSemaphores.baseAddress?.cast()
                         return try body(&cStruct)
                     }
                 }
@@ -5304,8 +5304,8 @@ public struct DisplayPropertiesKHR: CStructConvertible {
     public let planeReorderPossible: Bool
     public let persistentContent: Bool
 
-    public init(cStruct: VkDisplayPropertiesKHR, physicalDevice: PhysicalDevice) {
-        self.display = DisplayKHR(handle: cStruct.display, physicalDevice: physicalDevice)
+    public init(cStruct: VkDisplayPropertiesKHR) {
+        self.display = DisplayKHR(handle: cStruct.display)
         self.displayName = String(cString: cStruct.displayName)
         self.physicalDimensions = Extent2D(cStruct: cStruct.physicalDimensions)
         self.physicalResolution = Extent2D(cStruct: cStruct.physicalResolution)
@@ -5339,8 +5339,8 @@ public struct DisplayPlanePropertiesKHR: CStructConvertible {
     public let currentDisplay: DisplayKHR
     public let currentStackIndex: UInt32
 
-    public init(cStruct: VkDisplayPlanePropertiesKHR, physicalDevice: PhysicalDevice) {
-        self.currentDisplay = DisplayKHR(handle: cStruct.currentDisplay, physicalDevice: physicalDevice)
+    public init(cStruct: VkDisplayPlanePropertiesKHR) {
+        self.currentDisplay = DisplayKHR(handle: cStruct.currentDisplay)
         self.currentStackIndex = cStruct.currentStackIndex
     }
 
@@ -5384,8 +5384,8 @@ public struct DisplayModePropertiesKHR: CStructConvertible {
     public let displayMode: DisplayModeKHR
     public let parameters: DisplayModeParametersKHR
 
-    public init(cStruct: VkDisplayModePropertiesKHR, display: DisplayKHR) {
-        self.displayMode = DisplayModeKHR(handle: cStruct.displayMode, display: display)
+    public init(cStruct: VkDisplayModePropertiesKHR) {
+        self.displayMode = DisplayModeKHR(handle: cStruct.displayMode)
         self.parameters = DisplayModeParametersKHR(cStruct: cStruct.parameters)
     }
 
@@ -5514,9 +5514,9 @@ public struct DisplaySurfaceCreateInfoKHR: ChainableBase {
         self.imageExtent = imageExtent
     }
 
-    public init(cStruct: VkDisplaySurfaceCreateInfoKHR, display: DisplayKHR) {
+    public init(cStruct: VkDisplaySurfaceCreateInfoKHR) {
         self.flags = DisplaySurfaceCreateFlagsKHR(rawValue: cStruct.flags)
-        self.displayMode = DisplayModeKHR(handle: cStruct.displayMode, display: display)
+        self.displayMode = DisplayModeKHR(handle: cStruct.displayMode)
         self.planeIndex = cStruct.planeIndex
         self.planeStackIndex = cStruct.planeStackIndex
         self.transform = SurfaceTransformFlagsKHR(rawValue: numericBitCast(cStruct.transform.rawValue))
@@ -6138,9 +6138,9 @@ public struct SwapchainCreateInfoKHR: ChainableBase {
         self.oldSwapchain = oldSwapchain
     }
 
-    public init(cStruct: VkSwapchainCreateInfoKHR, instance: Instance, device: Device) {
+    public init(cStruct: VkSwapchainCreateInfoKHR) {
         self.flags = SwapchainCreateFlagsKHR(rawValue: cStruct.flags)
-        self.surface = SurfaceKHR(handle: cStruct.surface, instance: instance)
+        self.surface = SurfaceKHR(handle: cStruct.surface)
         self.minImageCount = cStruct.minImageCount
         self.imageFormat = Format(rawValue: numericBitCast(cStruct.imageFormat.rawValue))!
         self.imageColorSpace = ColorSpaceKHR(rawValue: numericBitCast(cStruct.imageColorSpace.rawValue))!
@@ -6153,7 +6153,7 @@ public struct SwapchainCreateInfoKHR: ChainableBase {
         self.compositeAlpha = CompositeAlphaFlagsKHR(rawValue: numericBitCast(cStruct.compositeAlpha.rawValue))
         self.presentMode = PresentModeKHR(rawValue: numericBitCast(cStruct.presentMode.rawValue))!
         self.clipped = cStruct.clipped == VK_TRUE
-        self.oldSwapchain = (cStruct.oldSwapchain != nil) ? SwapchainKHR(handle: cStruct.oldSwapchain, device: device) : nil
+        self.oldSwapchain = (cStruct.oldSwapchain != nil) ? SwapchainKHR(handle: cStruct.oldSwapchain) : nil
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkSwapchainCreateInfoKHR>) throws(E) -> R) throws(E) -> R {
@@ -6206,9 +6206,9 @@ public struct PresentInfoKHR: ChainableBase {
         self.results = results
     }
 
-    public init(cStruct: VkPresentInfoKHR, device: Device) {
-        self.waitSemaphores = UnsafeBufferPointer(start: cStruct.pWaitSemaphores, count: Int(cStruct.waitSemaphoreCount)).map{ Semaphore(handle: $0, device: device) }
-        self.swapchains = UnsafeBufferPointer(start: cStruct.pSwapchains, count: Int(cStruct.swapchainCount)).map{ SwapchainKHR(handle: $0, device: device) }
+    public init(cStruct: VkPresentInfoKHR) {
+        self.waitSemaphores = UnsafeBufferPointer(start: cStruct.pWaitSemaphores, count: Int(cStruct.waitSemaphoreCount)).map{ Semaphore(handle: $0) }
+        self.swapchains = UnsafeBufferPointer(start: cStruct.pSwapchains, count: Int(cStruct.swapchainCount)).map{ SwapchainKHR(handle: $0) }
         self.imageIndices = Array(UnsafeBufferPointer(start: cStruct.pImageIndices, count: Int(cStruct.swapchainCount)))
         self.results = cStruct.pResults
     }
@@ -6221,9 +6221,9 @@ public struct PresentInfoKHR: ChainableBase {
                     cStruct.sType = VkStructureType(rawValue: VkStructureType.RawValue(Self.structureType.rawValue))
                     cStruct.pNext = maybeMutable(pNext)
                     cStruct.waitSemaphoreCount = UInt32(ptr_waitSemaphores.count)
-                    cStruct.pWaitSemaphores = ptr_waitSemaphores.baseAddress
+                    cStruct.pWaitSemaphores = ptr_waitSemaphores.baseAddress?.cast()
                     cStruct.swapchainCount = UInt32(ptr_swapchains.count)
-                    cStruct.pSwapchains = ptr_swapchains.baseAddress
+                    cStruct.pSwapchains = ptr_swapchains.baseAddress?.cast()
                     cStruct.pImageIndices = ptr_imageIndices.baseAddress
                     cStruct.pResults = self.results
                     return try body(&cStruct)
@@ -6637,9 +6637,9 @@ public struct DedicatedAllocationMemoryAllocateInfoNV: ChainableBase, MemoryAllo
         self.buffer = buffer
     }
 
-    public init(cStruct: VkDedicatedAllocationMemoryAllocateInfoNV, device: Device) {
-        self.image = (cStruct.image != nil) ? Image(handle: cStruct.image, device: device) : nil
-        self.buffer = (cStruct.buffer != nil) ? Buffer(handle: cStruct.buffer, device: device) : nil
+    public init(cStruct: VkDedicatedAllocationMemoryAllocateInfoNV) {
+        self.image = (cStruct.image != nil) ? Image(handle: cStruct.image) : nil
+        self.buffer = (cStruct.buffer != nil) ? Buffer(handle: cStruct.buffer) : nil
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkDedicatedAllocationMemoryAllocateInfoNV>) throws(E) -> R) throws(E) -> R {
@@ -6832,11 +6832,11 @@ public struct Win32KeyedMutexAcquireReleaseInfoNV: ChainableBase, SubmitInfoExte
         self.releaseKeys = releaseKeys
     }
 
-    public init(cStruct: VkWin32KeyedMutexAcquireReleaseInfoNV, device: Device) {
-        self.acquireSyncs = UnsafeBufferPointer(start: cStruct.pAcquireSyncs, count: Int(cStruct.acquireCount)).map{ DeviceMemory(handle: $0, device: device) }
+    public init(cStruct: VkWin32KeyedMutexAcquireReleaseInfoNV) {
+        self.acquireSyncs = UnsafeBufferPointer(start: cStruct.pAcquireSyncs, count: Int(cStruct.acquireCount)).map{ DeviceMemory(handle: $0) }
         self.acquireKeys = Array(UnsafeBufferPointer(start: cStruct.pAcquireKeys, count: Int(cStruct.acquireCount)))
         self.acquireTimeoutMilliseconds = Array(UnsafeBufferPointer(start: cStruct.pAcquireTimeoutMilliseconds, count: Int(cStruct.acquireCount)))
-        self.releaseSyncs = UnsafeBufferPointer(start: cStruct.pReleaseSyncs, count: Int(cStruct.releaseCount)).map{ DeviceMemory(handle: $0, device: device) }
+        self.releaseSyncs = UnsafeBufferPointer(start: cStruct.pReleaseSyncs, count: Int(cStruct.releaseCount)).map{ DeviceMemory(handle: $0) }
         self.releaseKeys = Array(UnsafeBufferPointer(start: cStruct.pReleaseKeys, count: Int(cStruct.releaseCount)))
     }
 
@@ -6850,11 +6850,11 @@ public struct Win32KeyedMutexAcquireReleaseInfoNV: ChainableBase, SubmitInfoExte
                             cStruct.sType = VkStructureType(rawValue: VkStructureType.RawValue(Self.structureType.rawValue))
                             cStruct.pNext = maybeMutable(pNext)
                             cStruct.acquireCount = UInt32(ptr_acquireSyncs.count)
-                            cStruct.pAcquireSyncs = ptr_acquireSyncs.baseAddress
+                            cStruct.pAcquireSyncs = ptr_acquireSyncs.baseAddress?.cast()
                             cStruct.pAcquireKeys = ptr_acquireKeys.baseAddress
                             cStruct.pAcquireTimeoutMilliseconds = ptr_acquireTimeoutMilliseconds.baseAddress
                             cStruct.releaseCount = UInt32(ptr_releaseSyncs.count)
-                            cStruct.pReleaseSyncs = ptr_releaseSyncs.baseAddress
+                            cStruct.pReleaseSyncs = ptr_releaseSyncs.baseAddress?.cast()
                             cStruct.pReleaseKeys = ptr_releaseKeys.baseAddress
                             return try body(&cStruct)
                         }
@@ -7908,8 +7908,8 @@ public struct GraphicsShaderGroupCreateInfoNV: ChainableBase {
         self.tessellationState = tessellationState
     }
 
-    public init(cStruct: VkGraphicsShaderGroupCreateInfoNV, device: Device) {
-        self.stages = UnsafeBufferPointer(start: cStruct.pStages, count: Int(cStruct.stageCount)).map{ PipelineShaderStageCreateInfo(cStruct: $0, device: device) }
+    public init(cStruct: VkGraphicsShaderGroupCreateInfoNV) {
+        self.stages = UnsafeBufferPointer(start: cStruct.pStages, count: Int(cStruct.stageCount)).map{ PipelineShaderStageCreateInfo(cStruct: $0) }
         self.vertexInputState = (cStruct.pVertexInputState != nil) ? PipelineVertexInputStateCreateInfo(cStruct: cStruct.pVertexInputState.pointee) : nil
         self.tessellationState = (cStruct.pTessellationState != nil) ? PipelineTessellationStateCreateInfo(cStruct: cStruct.pTessellationState.pointee) : nil
     }
@@ -7950,9 +7950,9 @@ public struct GraphicsPipelineShaderGroupsCreateInfoNV: ChainableBase, GraphicsP
         self.pipelines = pipelines
     }
 
-    public init(cStruct: VkGraphicsPipelineShaderGroupsCreateInfoNV, device: Device) {
-        self.groups = UnsafeBufferPointer(start: cStruct.pGroups, count: Int(cStruct.groupCount)).map{ GraphicsShaderGroupCreateInfoNV(cStruct: $0, device: device) }
-        self.pipelines = UnsafeBufferPointer(start: cStruct.pPipelines, count: Int(cStruct.pipelineCount)).map{ Pipeline(handle: $0, device: device) }
+    public init(cStruct: VkGraphicsPipelineShaderGroupsCreateInfoNV) {
+        self.groups = UnsafeBufferPointer(start: cStruct.pGroups, count: Int(cStruct.groupCount)).map{ GraphicsShaderGroupCreateInfoNV(cStruct: $0) }
+        self.pipelines = UnsafeBufferPointer(start: cStruct.pPipelines, count: Int(cStruct.pipelineCount)).map{ Pipeline(handle: $0) }
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkGraphicsPipelineShaderGroupsCreateInfoNV>) throws(E) -> R) throws(E) -> R {
@@ -7964,7 +7964,7 @@ public struct GraphicsPipelineShaderGroupsCreateInfoNV: ChainableBase, GraphicsP
                 cStruct.groupCount = UInt32(ptr_groups.count)
                 cStruct.pGroups = ptr_groups.baseAddress
                 cStruct.pipelineCount = UInt32(ptr_pipelines.count)
-                cStruct.pPipelines = ptr_pipelines.baseAddress
+                cStruct.pPipelines = ptr_pipelines.baseAddress?.cast()
                 return try body(&cStruct)
             }
         }
@@ -8084,8 +8084,8 @@ public struct IndirectCommandsStreamNV: CStructConvertible {
         self.offset = offset
     }
 
-    public init(cStruct: VkIndirectCommandsStreamNV, device: Device) {
-        self.buffer = Buffer(handle: cStruct.buffer, device: device)
+    public init(cStruct: VkIndirectCommandsStreamNV) {
+        self.buffer = Buffer(handle: cStruct.buffer)
         self.offset = cStruct.offset
     }
 
@@ -8129,13 +8129,13 @@ public struct IndirectCommandsLayoutTokenNV: ChainableBase {
         self.indexTypeValues = indexTypeValues
     }
 
-    public init(cStruct: VkIndirectCommandsLayoutTokenNV, device: Device) {
+    public init(cStruct: VkIndirectCommandsLayoutTokenNV) {
         self.tokenType = IndirectCommandsTokenTypeNV(rawValue: numericBitCast(cStruct.tokenType.rawValue))!
         self.stream = cStruct.stream
         self.offset = cStruct.offset
         self.vertexBindingUnit = cStruct.vertexBindingUnit
         self.vertexDynamicStride = cStruct.vertexDynamicStride == VK_TRUE
-        self.pushconstantPipelineLayout = (cStruct.pushconstantPipelineLayout != nil) ? PipelineLayout(handle: cStruct.pushconstantPipelineLayout, device: device) : nil
+        self.pushconstantPipelineLayout = (cStruct.pushconstantPipelineLayout != nil) ? PipelineLayout(handle: cStruct.pushconstantPipelineLayout) : nil
         self.pushconstantShaderStageFlags = ShaderStageFlags(rawValue: cStruct.pushconstantShaderStageFlags)
         self.pushconstantOffset = cStruct.pushconstantOffset
         self.pushconstantSize = cStruct.pushconstantSize
@@ -8191,10 +8191,10 @@ public struct IndirectCommandsLayoutCreateInfoNV: ChainableBase {
         self.streamStrides = streamStrides
     }
 
-    public init(cStruct: VkIndirectCommandsLayoutCreateInfoNV, device: Device) {
+    public init(cStruct: VkIndirectCommandsLayoutCreateInfoNV) {
         self.flags = IndirectCommandsLayoutUsageFlagsNV(rawValue: cStruct.flags)
         self.pipelineBindPoint = PipelineBindPoint(rawValue: numericBitCast(cStruct.pipelineBindPoint.rawValue))!
-        self.tokens = UnsafeBufferPointer(start: cStruct.pTokens, count: Int(cStruct.tokenCount)).map{ IndirectCommandsLayoutTokenNV(cStruct: $0, device: device) }
+        self.tokens = UnsafeBufferPointer(start: cStruct.pTokens, count: Int(cStruct.tokenCount)).map{ IndirectCommandsLayoutTokenNV(cStruct: $0) }
         self.streamStrides = Array(UnsafeBufferPointer(start: cStruct.pStreamStrides, count: Int(cStruct.streamCount)))
     }
 
@@ -8254,18 +8254,18 @@ public struct GeneratedCommandsInfoNV: ChainableBase {
         self.sequencesIndexOffset = sequencesIndexOffset
     }
 
-    public init(cStruct: VkGeneratedCommandsInfoNV, device: Device) {
+    public init(cStruct: VkGeneratedCommandsInfoNV) {
         self.pipelineBindPoint = PipelineBindPoint(rawValue: numericBitCast(cStruct.pipelineBindPoint.rawValue))!
-        self.pipeline = (cStruct.pipeline != nil) ? Pipeline(handle: cStruct.pipeline, device: device) : nil
-        self.indirectCommandsLayout = IndirectCommandsLayoutNV(handle: cStruct.indirectCommandsLayout, device: device)
-        self.streams = UnsafeBufferPointer(start: cStruct.pStreams, count: Int(cStruct.streamCount)).map{ IndirectCommandsStreamNV(cStruct: $0, device: device) }
+        self.pipeline = (cStruct.pipeline != nil) ? Pipeline(handle: cStruct.pipeline) : nil
+        self.indirectCommandsLayout = IndirectCommandsLayoutNV(handle: cStruct.indirectCommandsLayout)
+        self.streams = UnsafeBufferPointer(start: cStruct.pStreams, count: Int(cStruct.streamCount)).map{ IndirectCommandsStreamNV(cStruct: $0) }
         self.sequencesCount = cStruct.sequencesCount
-        self.preprocessBuffer = Buffer(handle: cStruct.preprocessBuffer, device: device)
+        self.preprocessBuffer = Buffer(handle: cStruct.preprocessBuffer)
         self.preprocessOffset = cStruct.preprocessOffset
         self.preprocessSize = cStruct.preprocessSize
-        self.sequencesCountBuffer = (cStruct.sequencesCountBuffer != nil) ? Buffer(handle: cStruct.sequencesCountBuffer, device: device) : nil
+        self.sequencesCountBuffer = (cStruct.sequencesCountBuffer != nil) ? Buffer(handle: cStruct.sequencesCountBuffer) : nil
         self.sequencesCountOffset = cStruct.sequencesCountOffset
-        self.sequencesIndexBuffer = (cStruct.sequencesIndexBuffer != nil) ? Buffer(handle: cStruct.sequencesIndexBuffer, device: device) : nil
+        self.sequencesIndexBuffer = (cStruct.sequencesIndexBuffer != nil) ? Buffer(handle: cStruct.sequencesIndexBuffer) : nil
         self.sequencesIndexOffset = cStruct.sequencesIndexOffset
     }
 
@@ -8314,10 +8314,10 @@ public struct GeneratedCommandsMemoryRequirementsInfoNV: ChainableBase {
         self.maxSequencesCount = maxSequencesCount
     }
 
-    public init(cStruct: VkGeneratedCommandsMemoryRequirementsInfoNV, device: Device) {
+    public init(cStruct: VkGeneratedCommandsMemoryRequirementsInfoNV) {
         self.pipelineBindPoint = PipelineBindPoint(rawValue: numericBitCast(cStruct.pipelineBindPoint.rawValue))!
-        self.pipeline = (cStruct.pipeline != nil) ? Pipeline(handle: cStruct.pipeline, device: device) : nil
-        self.indirectCommandsLayout = IndirectCommandsLayoutNV(handle: cStruct.indirectCommandsLayout, device: device)
+        self.pipeline = (cStruct.pipeline != nil) ? Pipeline(handle: cStruct.pipeline) : nil
+        self.indirectCommandsLayout = IndirectCommandsLayoutNV(handle: cStruct.indirectCommandsLayout)
         self.maxSequencesCount = cStruct.maxSequencesCount
     }
 
@@ -8351,9 +8351,9 @@ public struct PipelineIndirectDeviceAddressInfoNV: ChainableBase {
         self.pipeline = pipeline
     }
 
-    public init(cStruct: VkPipelineIndirectDeviceAddressInfoNV, device: Device) {
+    public init(cStruct: VkPipelineIndirectDeviceAddressInfoNV) {
         self.pipelineBindPoint = PipelineBindPoint(rawValue: numericBitCast(cStruct.pipelineBindPoint.rawValue))!
-        self.pipeline = Pipeline(handle: cStruct.pipeline, device: device)
+        self.pipeline = Pipeline(handle: cStruct.pipeline)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPipelineIndirectDeviceAddressInfoNV>) throws(E) -> R) throws(E) -> R {
@@ -9307,8 +9307,8 @@ public struct MemoryGetZirconHandleInfoFUCHSIA: ChainableBase {
         self.handleType = handleType
     }
 
-    public init(cStruct: VkMemoryGetZirconHandleInfoFUCHSIA, device: Device) {
-        self.memory = DeviceMemory(handle: cStruct.memory, device: device)
+    public init(cStruct: VkMemoryGetZirconHandleInfoFUCHSIA) {
+        self.memory = DeviceMemory(handle: cStruct.memory)
         self.handleType = ExternalMemoryHandleTypeFlags(rawValue: numericBitCast(cStruct.handleType.rawValue))
     }
 
@@ -9369,8 +9369,8 @@ public struct MemoryGetWin32HandleInfoKHR: ChainableBase {
         self.handleType = handleType
     }
 
-    public init(cStruct: VkMemoryGetWin32HandleInfoKHR, device: Device) {
-        self.memory = DeviceMemory(handle: cStruct.memory, device: device)
+    public init(cStruct: VkMemoryGetWin32HandleInfoKHR) {
+        self.memory = DeviceMemory(handle: cStruct.memory)
         self.handleType = ExternalMemoryHandleTypeFlags(rawValue: numericBitCast(cStruct.handleType.rawValue))
     }
 
@@ -9461,8 +9461,8 @@ public struct MemoryGetFdInfoKHR: ChainableBase {
         self.handleType = handleType
     }
 
-    public init(cStruct: VkMemoryGetFdInfoKHR, device: Device) {
-        self.memory = DeviceMemory(handle: cStruct.memory, device: device)
+    public init(cStruct: VkMemoryGetFdInfoKHR) {
+        self.memory = DeviceMemory(handle: cStruct.memory)
         self.handleType = ExternalMemoryHandleTypeFlags(rawValue: numericBitCast(cStruct.handleType.rawValue))
     }
 
@@ -9501,11 +9501,11 @@ public struct Win32KeyedMutexAcquireReleaseInfoKHR: ChainableBase, SubmitInfoExt
         self.releaseKeys = releaseKeys
     }
 
-    public init(cStruct: VkWin32KeyedMutexAcquireReleaseInfoKHR, device: Device) {
-        self.acquireSyncs = UnsafeBufferPointer(start: cStruct.pAcquireSyncs, count: Int(cStruct.acquireCount)).map{ DeviceMemory(handle: $0, device: device) }
+    public init(cStruct: VkWin32KeyedMutexAcquireReleaseInfoKHR) {
+        self.acquireSyncs = UnsafeBufferPointer(start: cStruct.pAcquireSyncs, count: Int(cStruct.acquireCount)).map{ DeviceMemory(handle: $0) }
         self.acquireKeys = Array(UnsafeBufferPointer(start: cStruct.pAcquireKeys, count: Int(cStruct.acquireCount)))
         self.acquireTimeouts = Array(UnsafeBufferPointer(start: cStruct.pAcquireTimeouts, count: Int(cStruct.acquireCount)))
-        self.releaseSyncs = UnsafeBufferPointer(start: cStruct.pReleaseSyncs, count: Int(cStruct.releaseCount)).map{ DeviceMemory(handle: $0, device: device) }
+        self.releaseSyncs = UnsafeBufferPointer(start: cStruct.pReleaseSyncs, count: Int(cStruct.releaseCount)).map{ DeviceMemory(handle: $0) }
         self.releaseKeys = Array(UnsafeBufferPointer(start: cStruct.pReleaseKeys, count: Int(cStruct.releaseCount)))
     }
 
@@ -9519,11 +9519,11 @@ public struct Win32KeyedMutexAcquireReleaseInfoKHR: ChainableBase, SubmitInfoExt
                             cStruct.sType = VkStructureType(rawValue: VkStructureType.RawValue(Self.structureType.rawValue))
                             cStruct.pNext = maybeMutable(pNext)
                             cStruct.acquireCount = UInt32(ptr_acquireSyncs.count)
-                            cStruct.pAcquireSyncs = ptr_acquireSyncs.baseAddress
+                            cStruct.pAcquireSyncs = ptr_acquireSyncs.baseAddress?.cast()
                             cStruct.pAcquireKeys = ptr_acquireKeys.baseAddress
                             cStruct.pAcquireTimeouts = ptr_acquireTimeouts.baseAddress
                             cStruct.releaseCount = UInt32(ptr_releaseSyncs.count)
-                            cStruct.pReleaseSyncs = ptr_releaseSyncs.baseAddress
+                            cStruct.pReleaseSyncs = ptr_releaseSyncs.baseAddress?.cast()
                             cStruct.pReleaseKeys = ptr_releaseKeys.baseAddress
                             return try body(&cStruct)
                         }
@@ -9616,8 +9616,8 @@ public struct MemoryGetMetalHandleInfoEXT: ChainableBase {
         self.handleType = handleType
     }
 
-    public init(cStruct: VkMemoryGetMetalHandleInfoEXT, device: Device) {
-        self.memory = DeviceMemory(handle: cStruct.memory, device: device)
+    public init(cStruct: VkMemoryGetMetalHandleInfoEXT) {
+        self.memory = DeviceMemory(handle: cStruct.memory)
         self.handleType = ExternalMemoryHandleTypeFlags(rawValue: numericBitCast(cStruct.handleType.rawValue))
     }
 
@@ -9746,8 +9746,8 @@ public struct ImportSemaphoreWin32HandleInfoKHR: ChainableBase {
         self.name = name
     }
 
-    public init(cStruct: VkImportSemaphoreWin32HandleInfoKHR, device: Device) {
-        self.semaphore = Semaphore(handle: cStruct.semaphore, device: device)
+    public init(cStruct: VkImportSemaphoreWin32HandleInfoKHR) {
+        self.semaphore = Semaphore(handle: cStruct.semaphore)
         self.flags = SemaphoreImportFlags(rawValue: cStruct.flags)
         self.handleType = ExternalSemaphoreHandleTypeFlags(rawValue: numericBitCast(cStruct.handleType.rawValue))
         self.handle = cStruct.handle
@@ -9867,8 +9867,8 @@ public struct SemaphoreGetWin32HandleInfoKHR: ChainableBase {
         self.handleType = handleType
     }
 
-    public init(cStruct: VkSemaphoreGetWin32HandleInfoKHR, device: Device) {
-        self.semaphore = Semaphore(handle: cStruct.semaphore, device: device)
+    public init(cStruct: VkSemaphoreGetWin32HandleInfoKHR) {
+        self.semaphore = Semaphore(handle: cStruct.semaphore)
         self.handleType = ExternalSemaphoreHandleTypeFlags(rawValue: numericBitCast(cStruct.handleType.rawValue))
     }
 
@@ -9905,8 +9905,8 @@ public struct ImportSemaphoreFdInfoKHR: ChainableBase {
         self.fd = fd
     }
 
-    public init(cStruct: VkImportSemaphoreFdInfoKHR, device: Device) {
-        self.semaphore = Semaphore(handle: cStruct.semaphore, device: device)
+    public init(cStruct: VkImportSemaphoreFdInfoKHR) {
+        self.semaphore = Semaphore(handle: cStruct.semaphore)
         self.flags = SemaphoreImportFlags(rawValue: cStruct.flags)
         self.handleType = ExternalSemaphoreHandleTypeFlags(rawValue: numericBitCast(cStruct.handleType.rawValue))
         self.fd = cStruct.fd
@@ -9942,8 +9942,8 @@ public struct SemaphoreGetFdInfoKHR: ChainableBase {
         self.handleType = handleType
     }
 
-    public init(cStruct: VkSemaphoreGetFdInfoKHR, device: Device) {
-        self.semaphore = Semaphore(handle: cStruct.semaphore, device: device)
+    public init(cStruct: VkSemaphoreGetFdInfoKHR) {
+        self.semaphore = Semaphore(handle: cStruct.semaphore)
         self.handleType = ExternalSemaphoreHandleTypeFlags(rawValue: numericBitCast(cStruct.handleType.rawValue))
     }
 
@@ -9980,8 +9980,8 @@ public struct ImportSemaphoreZirconHandleInfoFUCHSIA: ChainableBase {
         self.zirconHandle = zirconHandle
     }
 
-    public init(cStruct: VkImportSemaphoreZirconHandleInfoFUCHSIA, device: Device) {
-        self.semaphore = Semaphore(handle: cStruct.semaphore, device: device)
+    public init(cStruct: VkImportSemaphoreZirconHandleInfoFUCHSIA) {
+        self.semaphore = Semaphore(handle: cStruct.semaphore)
         self.flags = SemaphoreImportFlags(rawValue: cStruct.flags)
         self.handleType = ExternalSemaphoreHandleTypeFlags(rawValue: numericBitCast(cStruct.handleType.rawValue))
         self.zirconHandle = cStruct.zirconHandle
@@ -10019,8 +10019,8 @@ public struct SemaphoreGetZirconHandleInfoFUCHSIA: ChainableBase {
         self.handleType = handleType
     }
 
-    public init(cStruct: VkSemaphoreGetZirconHandleInfoFUCHSIA, device: Device) {
-        self.semaphore = Semaphore(handle: cStruct.semaphore, device: device)
+    public init(cStruct: VkSemaphoreGetZirconHandleInfoFUCHSIA) {
+        self.semaphore = Semaphore(handle: cStruct.semaphore)
         self.handleType = ExternalSemaphoreHandleTypeFlags(rawValue: numericBitCast(cStruct.handleType.rawValue))
     }
 
@@ -10149,8 +10149,8 @@ public struct ImportFenceWin32HandleInfoKHR: ChainableBase {
         self.name = name
     }
 
-    public init(cStruct: VkImportFenceWin32HandleInfoKHR, device: Device) {
-        self.fence = Fence(handle: cStruct.fence, device: device)
+    public init(cStruct: VkImportFenceWin32HandleInfoKHR) {
+        self.fence = Fence(handle: cStruct.fence)
         self.flags = FenceImportFlags(rawValue: cStruct.flags)
         self.handleType = ExternalFenceHandleTypeFlags(rawValue: numericBitCast(cStruct.handleType.rawValue))
         self.handle = cStruct.handle
@@ -10229,8 +10229,8 @@ public struct FenceGetWin32HandleInfoKHR: ChainableBase {
         self.handleType = handleType
     }
 
-    public init(cStruct: VkFenceGetWin32HandleInfoKHR, device: Device) {
-        self.fence = Fence(handle: cStruct.fence, device: device)
+    public init(cStruct: VkFenceGetWin32HandleInfoKHR) {
+        self.fence = Fence(handle: cStruct.fence)
         self.handleType = ExternalFenceHandleTypeFlags(rawValue: numericBitCast(cStruct.handleType.rawValue))
     }
 
@@ -10267,8 +10267,8 @@ public struct ImportFenceFdInfoKHR: ChainableBase {
         self.fd = fd
     }
 
-    public init(cStruct: VkImportFenceFdInfoKHR, device: Device) {
-        self.fence = Fence(handle: cStruct.fence, device: device)
+    public init(cStruct: VkImportFenceFdInfoKHR) {
+        self.fence = Fence(handle: cStruct.fence)
         self.flags = FenceImportFlags(rawValue: cStruct.flags)
         self.handleType = ExternalFenceHandleTypeFlags(rawValue: numericBitCast(cStruct.handleType.rawValue))
         self.fd = cStruct.fd
@@ -10304,8 +10304,8 @@ public struct FenceGetFdInfoKHR: ChainableBase {
         self.handleType = handleType
     }
 
-    public init(cStruct: VkFenceGetFdInfoKHR, device: Device) {
-        self.fence = Fence(handle: cStruct.fence, device: device)
+    public init(cStruct: VkFenceGetFdInfoKHR) {
+        self.fence = Fence(handle: cStruct.fence)
         self.handleType = ExternalFenceHandleTypeFlags(rawValue: numericBitCast(cStruct.handleType.rawValue))
     }
 
@@ -10621,9 +10621,9 @@ public struct PhysicalDeviceGroupProperties: ChainableBase {
     public let physicalDevices: Array<PhysicalDevice>
     public let subsetAllocation: Bool
 
-    public init(cStruct: VkPhysicalDeviceGroupProperties, instance: Instance) {
+    public init(cStruct: VkPhysicalDeviceGroupProperties, table: UnsafePointer<InstanceDispatchTable>) {
         self.physicalDeviceCount = cStruct.physicalDeviceCount
-        self.physicalDevices = withUnsafeBytes(of: cStruct.physicalDevices) { $0.bindMemory(to: VkPhysicalDevice?.self).prefix(Int(cStruct.physicalDeviceCount)).map{ PhysicalDevice(handle: $0, instance: instance) } }
+        self.physicalDevices = withUnsafeBytes(of: cStruct.physicalDevices) { $0.bindMemory(to: VkPhysicalDevice?.self).prefix(Int(cStruct.physicalDeviceCount)).map{ PhysicalDevice(handle: $0, table: table) } }
         self.subsetAllocation = cStruct.subsetAllocation == VK_TRUE
     }
 
@@ -10693,9 +10693,9 @@ public struct BindBufferMemoryInfo: ChainableBase {
         self.memoryOffset = memoryOffset
     }
 
-    public init(cStruct: VkBindBufferMemoryInfo, device: Device) {
-        self.buffer = Buffer(handle: cStruct.buffer, device: device)
-        self.memory = DeviceMemory(handle: cStruct.memory, device: device)
+    public init(cStruct: VkBindBufferMemoryInfo) {
+        self.buffer = Buffer(handle: cStruct.buffer)
+        self.memory = DeviceMemory(handle: cStruct.memory)
         self.memoryOffset = cStruct.memoryOffset
     }
 
@@ -10762,9 +10762,9 @@ public struct BindImageMemoryInfo: ChainableBase {
         self.memoryOffset = memoryOffset
     }
 
-    public init(cStruct: VkBindImageMemoryInfo, device: Device) {
-        self.image = Image(handle: cStruct.image, device: device)
-        self.memory = DeviceMemory(handle: cStruct.memory, device: device)
+    public init(cStruct: VkBindImageMemoryInfo) {
+        self.image = Image(handle: cStruct.image)
+        self.memory = DeviceMemory(handle: cStruct.memory)
         self.memoryOffset = cStruct.memoryOffset
     }
 
@@ -11006,8 +11006,8 @@ public struct ImageSwapchainCreateInfoKHR: ChainableBase, ImageCreateInfoExtensi
         self.swapchain = swapchain
     }
 
-    public init(cStruct: VkImageSwapchainCreateInfoKHR, device: Device) {
-        self.swapchain = (cStruct.swapchain != nil) ? SwapchainKHR(handle: cStruct.swapchain, device: device) : nil
+    public init(cStruct: VkImageSwapchainCreateInfoKHR) {
+        self.swapchain = (cStruct.swapchain != nil) ? SwapchainKHR(handle: cStruct.swapchain) : nil
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkImageSwapchainCreateInfoKHR>) throws(E) -> R) throws(E) -> R {
@@ -11037,8 +11037,8 @@ public struct BindImageMemorySwapchainInfoKHR: ChainableBase, BindImageMemoryInf
         self.imageIndex = imageIndex
     }
 
-    public init(cStruct: VkBindImageMemorySwapchainInfoKHR, device: Device) {
-        self.swapchain = SwapchainKHR(handle: cStruct.swapchain, device: device)
+    public init(cStruct: VkBindImageMemorySwapchainInfoKHR) {
+        self.swapchain = SwapchainKHR(handle: cStruct.swapchain)
         self.imageIndex = cStruct.imageIndex
     }
 
@@ -11076,11 +11076,11 @@ public struct AcquireNextImageInfoKHR: ChainableBase {
         self.deviceMask = deviceMask
     }
 
-    public init(cStruct: VkAcquireNextImageInfoKHR, device: Device) {
-        self.swapchain = SwapchainKHR(handle: cStruct.swapchain, device: device)
+    public init(cStruct: VkAcquireNextImageInfoKHR) {
+        self.swapchain = SwapchainKHR(handle: cStruct.swapchain)
         self.timeout = cStruct.timeout
-        self.semaphore = (cStruct.semaphore != nil) ? Semaphore(handle: cStruct.semaphore, device: device) : nil
-        self.fence = (cStruct.fence != nil) ? Fence(handle: cStruct.fence, device: device) : nil
+        self.semaphore = (cStruct.semaphore != nil) ? Semaphore(handle: cStruct.semaphore) : nil
+        self.fence = (cStruct.fence != nil) ? Fence(handle: cStruct.fence) : nil
         self.deviceMask = cStruct.deviceMask
     }
 
@@ -11149,8 +11149,8 @@ public struct DeviceGroupDeviceCreateInfo: ChainableBase, DeviceCreateInfoExtens
         self.physicalDevices = physicalDevices
     }
 
-    public init(cStruct: VkDeviceGroupDeviceCreateInfo, instance: Instance) {
-        self.physicalDevices = UnsafeBufferPointer(start: cStruct.pPhysicalDevices, count: Int(cStruct.physicalDeviceCount)).map{ PhysicalDevice(handle: $0, instance: instance) }
+    public init(cStruct: VkDeviceGroupDeviceCreateInfo, table: UnsafePointer<InstanceDispatchTable>) {
+        self.physicalDevices = UnsafeBufferPointer(start: cStruct.pPhysicalDevices, count: Int(cStruct.physicalDeviceCount)).map{ PhysicalDevice(handle: $0, table: table) }
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkDeviceGroupDeviceCreateInfo>) throws(E) -> R) throws(E) -> R {
@@ -11159,7 +11159,7 @@ public struct DeviceGroupDeviceCreateInfo: ChainableBase, DeviceCreateInfoExtens
             cStruct.sType = VkStructureType(rawValue: VkStructureType.RawValue(Self.structureType.rawValue))
             cStruct.pNext = maybeMutable(pNext)
             cStruct.physicalDeviceCount = UInt32(ptr_physicalDevices.count)
-            cStruct.pPhysicalDevices = ptr_physicalDevices.baseAddress
+            cStruct.pPhysicalDevices = ptr_physicalDevices.baseAddress?.cast()
             return try body(&cStruct)
         }
     }
@@ -11262,13 +11262,13 @@ public struct DescriptorUpdateTemplateCreateInfo: ChainableBase {
         self.set = set
     }
 
-    public init(cStruct: VkDescriptorUpdateTemplateCreateInfo, device: Device) {
+    public init(cStruct: VkDescriptorUpdateTemplateCreateInfo) {
         self.flags = DescriptorUpdateTemplateCreateFlags(rawValue: cStruct.flags)
         self.descriptorUpdateEntries = UnsafeBufferPointer(start: cStruct.pDescriptorUpdateEntries, count: Int(cStruct.descriptorUpdateEntryCount)).map{ DescriptorUpdateTemplateEntry(cStruct: $0) }
         self.templateType = DescriptorUpdateTemplateType(rawValue: numericBitCast(cStruct.templateType.rawValue))!
-        self.descriptorSetLayout = DescriptorSetLayout(handle: cStruct.descriptorSetLayout, device: device)
+        self.descriptorSetLayout = DescriptorSetLayout(handle: cStruct.descriptorSetLayout)
         self.pipelineBindPoint = PipelineBindPoint(rawValue: numericBitCast(cStruct.pipelineBindPoint.rawValue))!
-        self.pipelineLayout = PipelineLayout(handle: cStruct.pipelineLayout, device: device)
+        self.pipelineLayout = PipelineLayout(handle: cStruct.pipelineLayout)
         self.set = cStruct.set
     }
 
@@ -11694,9 +11694,9 @@ public struct PastPresentationTimingInfoEXT: ChainableBase {
         self.swapchain = swapchain
     }
 
-    public init(cStruct: VkPastPresentationTimingInfoEXT, device: Device) {
+    public init(cStruct: VkPastPresentationTimingInfoEXT) {
         self.flags = PastPresentationTimingFlagsEXT(rawValue: cStruct.flags)
-        self.swapchain = SwapchainKHR(handle: cStruct.swapchain, device: device)
+        self.swapchain = SwapchainKHR(handle: cStruct.swapchain)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPastPresentationTimingInfoEXT>) throws(E) -> R) throws(E) -> R {
@@ -11883,8 +11883,8 @@ public struct SwapchainCalibratedTimestampInfoEXT: ChainableBase, CalibratedTime
         self.timeDomainId = timeDomainId
     }
 
-    public init(cStruct: VkSwapchainCalibratedTimestampInfoEXT, device: Device) {
-        self.swapchain = SwapchainKHR(handle: cStruct.swapchain, device: device)
+    public init(cStruct: VkSwapchainCalibratedTimestampInfoEXT) {
+        self.swapchain = SwapchainKHR(handle: cStruct.swapchain)
         self.presentStage = PresentStageFlagsEXT(rawValue: cStruct.presentStage)
         self.timeDomainId = cStruct.timeDomainId
     }
@@ -12551,8 +12551,8 @@ public struct PhysicalDeviceSurfaceInfo2KHR: ChainableBase {
         self.surface = surface
     }
 
-    public init(cStruct: VkPhysicalDeviceSurfaceInfo2KHR, instance: Instance) {
-        self.surface = (cStruct.surface != nil) ? SurfaceKHR(handle: cStruct.surface, instance: instance) : nil
+    public init(cStruct: VkPhysicalDeviceSurfaceInfo2KHR) {
+        self.surface = (cStruct.surface != nil) ? SurfaceKHR(handle: cStruct.surface) : nil
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPhysicalDeviceSurfaceInfo2KHR>) throws(E) -> R) throws(E) -> R {
@@ -12630,8 +12630,8 @@ public struct DisplayProperties2KHR: ChainableBase {
     public static let structureType: StructureType = .displayProperties2KHR
     public let displayProperties: DisplayPropertiesKHR
 
-    public init(cStruct: VkDisplayProperties2KHR, physicalDevice: PhysicalDevice) {
-        self.displayProperties = DisplayPropertiesKHR(cStruct: cStruct.displayProperties, physicalDevice: physicalDevice)
+    public init(cStruct: VkDisplayProperties2KHR) {
+        self.displayProperties = DisplayPropertiesKHR(cStruct: cStruct.displayProperties)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkDisplayProperties2KHR>) throws(E) -> R) throws(E) -> R {
@@ -12657,8 +12657,8 @@ public struct DisplayPlaneProperties2KHR: ChainableBase {
     public static let structureType: StructureType = .displayPlaneProperties2KHR
     public let displayPlaneProperties: DisplayPlanePropertiesKHR
 
-    public init(cStruct: VkDisplayPlaneProperties2KHR, physicalDevice: PhysicalDevice) {
-        self.displayPlaneProperties = DisplayPlanePropertiesKHR(cStruct: cStruct.displayPlaneProperties, physicalDevice: physicalDevice)
+    public init(cStruct: VkDisplayPlaneProperties2KHR) {
+        self.displayPlaneProperties = DisplayPlanePropertiesKHR(cStruct: cStruct.displayPlaneProperties)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkDisplayPlaneProperties2KHR>) throws(E) -> R) throws(E) -> R {
@@ -12684,8 +12684,8 @@ public struct DisplayModeProperties2KHR: ChainableBase {
     public static let structureType: StructureType = .displayModeProperties2KHR
     public let displayModeProperties: DisplayModePropertiesKHR
 
-    public init(cStruct: VkDisplayModeProperties2KHR, display: DisplayKHR) {
-        self.displayModeProperties = DisplayModePropertiesKHR(cStruct: cStruct.displayModeProperties, display: display)
+    public init(cStruct: VkDisplayModeProperties2KHR) {
+        self.displayModeProperties = DisplayModePropertiesKHR(cStruct: cStruct.displayModeProperties)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkDisplayModeProperties2KHR>) throws(E) -> R) throws(E) -> R {
@@ -12742,8 +12742,8 @@ public struct DisplayPlaneInfo2KHR: ChainableBase {
         self.planeIndex = planeIndex
     }
 
-    public init(cStruct: VkDisplayPlaneInfo2KHR, display: DisplayKHR) {
-        self.mode = DisplayModeKHR(handle: cStruct.mode, display: display)
+    public init(cStruct: VkDisplayPlaneInfo2KHR) {
+        self.mode = DisplayModeKHR(handle: cStruct.mode)
         self.planeIndex = cStruct.planeIndex
     }
 
@@ -12929,8 +12929,8 @@ public struct BufferMemoryRequirementsInfo2: ChainableBase {
         self.buffer = buffer
     }
 
-    public init(cStruct: VkBufferMemoryRequirementsInfo2, device: Device) {
-        self.buffer = Buffer(handle: cStruct.buffer, device: device)
+    public init(cStruct: VkBufferMemoryRequirementsInfo2) {
+        self.buffer = Buffer(handle: cStruct.buffer)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkBufferMemoryRequirementsInfo2>) throws(E) -> R) throws(E) -> R {
@@ -12989,8 +12989,8 @@ public struct ImageMemoryRequirementsInfo2: ChainableBase {
         self.image = image
     }
 
-    public init(cStruct: VkImageMemoryRequirementsInfo2, device: Device) {
-        self.image = Image(handle: cStruct.image, device: device)
+    public init(cStruct: VkImageMemoryRequirementsInfo2) {
+        self.image = Image(handle: cStruct.image)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkImageMemoryRequirementsInfo2>) throws(E) -> R) throws(E) -> R {
@@ -13018,8 +13018,8 @@ public struct ImageSparseMemoryRequirementsInfo2: ChainableBase {
         self.image = image
     }
 
-    public init(cStruct: VkImageSparseMemoryRequirementsInfo2, device: Device) {
-        self.image = Image(handle: cStruct.image, device: device)
+    public init(cStruct: VkImageSparseMemoryRequirementsInfo2) {
+        self.image = Image(handle: cStruct.image)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkImageSparseMemoryRequirementsInfo2>) throws(E) -> R) throws(E) -> R {
@@ -13191,9 +13191,9 @@ public struct MemoryDedicatedAllocateInfo: ChainableBase, MemoryAllocateInfoExte
         self.buffer = buffer
     }
 
-    public init(cStruct: VkMemoryDedicatedAllocateInfo, device: Device) {
-        self.image = (cStruct.image != nil) ? Image(handle: cStruct.image, device: device) : nil
-        self.buffer = (cStruct.buffer != nil) ? Buffer(handle: cStruct.buffer, device: device) : nil
+    public init(cStruct: VkMemoryDedicatedAllocateInfo) {
+        self.image = (cStruct.image != nil) ? Image(handle: cStruct.image) : nil
+        self.buffer = (cStruct.buffer != nil) ? Buffer(handle: cStruct.buffer) : nil
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkMemoryDedicatedAllocateInfo>) throws(E) -> R) throws(E) -> R {
@@ -13313,8 +13313,8 @@ public struct SamplerYcbcrConversionInfo: ChainableBase, SamplerCreateInfoExtens
         self.conversion = conversion
     }
 
-    public init(cStruct: VkSamplerYcbcrConversionInfo, device: Device) {
-        self.conversion = SamplerYcbcrConversion(handle: cStruct.conversion, device: device)
+    public init(cStruct: VkSamplerYcbcrConversionInfo) {
+        self.conversion = SamplerYcbcrConversion(handle: cStruct.conversion)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkSamplerYcbcrConversionInfo>) throws(E) -> R) throws(E) -> R {
@@ -13542,8 +13542,8 @@ public struct ConditionalRenderingBeginInfoEXT: ChainableBase {
         self.flags = flags
     }
 
-    public init(cStruct: VkConditionalRenderingBeginInfoEXT, device: Device) {
-        self.buffer = Buffer(handle: cStruct.buffer, device: device)
+    public init(cStruct: VkConditionalRenderingBeginInfoEXT) {
+        self.buffer = Buffer(handle: cStruct.buffer)
         self.offset = cStruct.offset
         self.flags = ConditionalRenderingFlagsEXT(rawValue: cStruct.flags)
     }
@@ -14427,8 +14427,8 @@ public struct ShaderModuleValidationCacheCreateInfoEXT: ChainableBase, ShaderMod
         self.validationCache = validationCache
     }
 
-    public init(cStruct: VkShaderModuleValidationCacheCreateInfoEXT, device: Device) {
-        self.validationCache = ValidationCacheEXT(handle: cStruct.validationCache, device: device)
+    public init(cStruct: VkShaderModuleValidationCacheCreateInfoEXT) {
+        self.validationCache = ValidationCacheEXT(handle: cStruct.validationCache)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkShaderModuleValidationCacheCreateInfoEXT>) throws(E) -> R) throws(E) -> R {
@@ -16855,9 +16855,9 @@ public struct SemaphoreWaitInfo: ChainableBase {
         self.values = values
     }
 
-    public init(cStruct: VkSemaphoreWaitInfo, device: Device) {
+    public init(cStruct: VkSemaphoreWaitInfo) {
         self.flags = SemaphoreWaitFlags(rawValue: cStruct.flags)
-        self.semaphores = UnsafeBufferPointer(start: cStruct.pSemaphores, count: Int(cStruct.semaphoreCount)).map{ Semaphore(handle: $0, device: device) }
+        self.semaphores = UnsafeBufferPointer(start: cStruct.pSemaphores, count: Int(cStruct.semaphoreCount)).map{ Semaphore(handle: $0) }
         self.values = Array(UnsafeBufferPointer(start: cStruct.pValues, count: Int(cStruct.semaphoreCount)))
     }
 
@@ -16869,7 +16869,7 @@ public struct SemaphoreWaitInfo: ChainableBase {
                 cStruct.pNext = maybeMutable(pNext)
                 cStruct.flags = self.flags.rawValue
                 cStruct.semaphoreCount = UInt32(ptr_semaphores.count)
-                cStruct.pSemaphores = ptr_semaphores.baseAddress
+                cStruct.pSemaphores = ptr_semaphores.baseAddress?.cast()
                 cStruct.pValues = ptr_values.baseAddress
                 return try body(&cStruct)
             }
@@ -16895,8 +16895,8 @@ public struct SemaphoreSignalInfo: ChainableBase {
         self.value = value
     }
 
-    public init(cStruct: VkSemaphoreSignalInfo, device: Device) {
-        self.semaphore = Semaphore(handle: cStruct.semaphore, device: device)
+    public init(cStruct: VkSemaphoreSignalInfo) {
+        self.semaphore = Semaphore(handle: cStruct.semaphore)
         self.value = cStruct.value
     }
 
@@ -17158,8 +17158,8 @@ public struct MemoryGetAndroidHardwareBufferInfoANDROID: ChainableBase {
         self.memory = memory
     }
 
-    public init(cStruct: VkMemoryGetAndroidHardwareBufferInfoANDROID, device: Device) {
-        self.memory = DeviceMemory(handle: cStruct.memory, device: device)
+    public init(cStruct: VkMemoryGetAndroidHardwareBufferInfoANDROID) {
+        self.memory = DeviceMemory(handle: cStruct.memory)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkMemoryGetAndroidHardwareBufferInfoANDROID>) throws(E) -> R) throws(E) -> R {
@@ -18979,13 +18979,13 @@ public struct RayTracingPipelineCreateInfoNV: ChainableBase {
         self.basePipelineIndex = basePipelineIndex
     }
 
-    public init(cStruct: VkRayTracingPipelineCreateInfoNV, device: Device) {
+    public init(cStruct: VkRayTracingPipelineCreateInfoNV) {
         self.flags = PipelineCreateFlags(rawValue: cStruct.flags)
-        self.stages = UnsafeBufferPointer(start: cStruct.pStages, count: Int(cStruct.stageCount)).map{ PipelineShaderStageCreateInfo(cStruct: $0, device: device) }
+        self.stages = UnsafeBufferPointer(start: cStruct.pStages, count: Int(cStruct.stageCount)).map{ PipelineShaderStageCreateInfo(cStruct: $0) }
         self.groups = UnsafeBufferPointer(start: cStruct.pGroups, count: Int(cStruct.groupCount)).map{ RayTracingShaderGroupCreateInfoNV(cStruct: $0) }
         self.maxRecursionDepth = cStruct.maxRecursionDepth
-        self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout, device: device) : nil
-        self.basePipelineHandle = (cStruct.basePipelineHandle != nil) ? Pipeline(handle: cStruct.basePipelineHandle, device: device) : nil
+        self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout) : nil
+        self.basePipelineHandle = (cStruct.basePipelineHandle != nil) ? Pipeline(handle: cStruct.basePipelineHandle) : nil
         self.basePipelineIndex = cStruct.basePipelineIndex
     }
 
@@ -19026,8 +19026,8 @@ public struct PipelineLibraryCreateInfoKHR: ChainableBase, GraphicsPipelineCreat
         self.libraries = libraries
     }
 
-    public init(cStruct: VkPipelineLibraryCreateInfoKHR, device: Device) {
-        self.libraries = UnsafeBufferPointer(start: cStruct.pLibraries, count: Int(cStruct.libraryCount)).map{ Pipeline(handle: $0, device: device) }
+    public init(cStruct: VkPipelineLibraryCreateInfoKHR) {
+        self.libraries = UnsafeBufferPointer(start: cStruct.pLibraries, count: Int(cStruct.libraryCount)).map{ Pipeline(handle: $0) }
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPipelineLibraryCreateInfoKHR>) throws(E) -> R) throws(E) -> R {
@@ -19036,7 +19036,7 @@ public struct PipelineLibraryCreateInfoKHR: ChainableBase, GraphicsPipelineCreat
             cStruct.sType = VkStructureType(rawValue: VkStructureType.RawValue(Self.structureType.rawValue))
             cStruct.pNext = maybeMutable(pNext)
             cStruct.libraryCount = UInt32(ptr_libraries.count)
-            cStruct.pLibraries = ptr_libraries.baseAddress
+            cStruct.pLibraries = ptr_libraries.baseAddress?.cast()
             return try body(&cStruct)
         }
     }
@@ -19109,16 +19109,16 @@ public struct RayTracingPipelineCreateInfoKHR: ChainableBase {
         self.basePipelineIndex = basePipelineIndex
     }
 
-    public init(cStruct: VkRayTracingPipelineCreateInfoKHR, device: Device) {
+    public init(cStruct: VkRayTracingPipelineCreateInfoKHR) {
         self.flags = PipelineCreateFlags(rawValue: cStruct.flags)
-        self.stages = UnsafeBufferPointer(start: cStruct.pStages, count: Int(cStruct.stageCount)).map{ PipelineShaderStageCreateInfo(cStruct: $0, device: device) }
+        self.stages = UnsafeBufferPointer(start: cStruct.pStages, count: Int(cStruct.stageCount)).map{ PipelineShaderStageCreateInfo(cStruct: $0) }
         self.groups = UnsafeBufferPointer(start: cStruct.pGroups, count: Int(cStruct.groupCount)).map{ RayTracingShaderGroupCreateInfoKHR(cStruct: $0) }
         self.maxPipelineRayRecursionDepth = cStruct.maxPipelineRayRecursionDepth
-        self.libraryInfo = (cStruct.pLibraryInfo != nil) ? PipelineLibraryCreateInfoKHR(cStruct: cStruct.pLibraryInfo.pointee, device: device) : nil
+        self.libraryInfo = (cStruct.pLibraryInfo != nil) ? PipelineLibraryCreateInfoKHR(cStruct: cStruct.pLibraryInfo.pointee) : nil
         self.libraryInterface = (cStruct.pLibraryInterface != nil) ? RayTracingPipelineInterfaceCreateInfoKHR(cStruct: cStruct.pLibraryInterface.pointee) : nil
         self.dynamicState = (cStruct.pDynamicState != nil) ? PipelineDynamicStateCreateInfo(cStruct: cStruct.pDynamicState.pointee) : nil
-        self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout, device: device) : nil
-        self.basePipelineHandle = (cStruct.basePipelineHandle != nil) ? Pipeline(handle: cStruct.basePipelineHandle, device: device) : nil
+        self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout) : nil
+        self.basePipelineHandle = (cStruct.basePipelineHandle != nil) ? Pipeline(handle: cStruct.basePipelineHandle) : nil
         self.basePipelineIndex = cStruct.basePipelineIndex
     }
 
@@ -19188,17 +19188,17 @@ public struct GeometryTrianglesNV: ChainableBase {
         self.transformOffset = transformOffset
     }
 
-    public init(cStruct: VkGeometryTrianglesNV, device: Device) {
-        self.vertexData = (cStruct.vertexData != nil) ? Buffer(handle: cStruct.vertexData, device: device) : nil
+    public init(cStruct: VkGeometryTrianglesNV) {
+        self.vertexData = (cStruct.vertexData != nil) ? Buffer(handle: cStruct.vertexData) : nil
         self.vertexOffset = cStruct.vertexOffset
         self.vertexCount = cStruct.vertexCount
         self.vertexStride = cStruct.vertexStride
         self.vertexFormat = Format(rawValue: numericBitCast(cStruct.vertexFormat.rawValue))!
-        self.indexData = (cStruct.indexData != nil) ? Buffer(handle: cStruct.indexData, device: device) : nil
+        self.indexData = (cStruct.indexData != nil) ? Buffer(handle: cStruct.indexData) : nil
         self.indexOffset = cStruct.indexOffset
         self.indexCount = cStruct.indexCount
         self.indexType = IndexType(rawValue: numericBitCast(cStruct.indexType.rawValue))!
-        self.transformData = (cStruct.transformData != nil) ? Buffer(handle: cStruct.transformData, device: device) : nil
+        self.transformData = (cStruct.transformData != nil) ? Buffer(handle: cStruct.transformData) : nil
         self.transformOffset = cStruct.transformOffset
     }
 
@@ -19243,8 +19243,8 @@ public struct GeometryAABBNV: ChainableBase {
         self.offset = offset
     }
 
-    public init(cStruct: VkGeometryAABBNV, device: Device) {
-        self.aabbData = (cStruct.aabbData != nil) ? Buffer(handle: cStruct.aabbData, device: device) : nil
+    public init(cStruct: VkGeometryAABBNV) {
+        self.aabbData = (cStruct.aabbData != nil) ? Buffer(handle: cStruct.aabbData) : nil
         self.numAABBs = cStruct.numAABBs
         self.stride = cStruct.stride
         self.offset = cStruct.offset
@@ -19279,9 +19279,9 @@ public struct GeometryDataNV: CStructConvertible {
         self.aabbs = aabbs
     }
 
-    public init(cStruct: VkGeometryDataNV, device: Device) {
-        self.triangles = GeometryTrianglesNV(cStruct: cStruct.triangles, device: device)
-        self.aabbs = GeometryAABBNV(cStruct: cStruct.aabbs, device: device)
+    public init(cStruct: VkGeometryDataNV) {
+        self.triangles = GeometryTrianglesNV(cStruct: cStruct.triangles)
+        self.aabbs = GeometryAABBNV(cStruct: cStruct.aabbs)
     }
 
     public func withCStruct<R, E: Error>(_ body: (UnsafePointer<VkGeometryDataNV>) throws(E) -> R) throws(E) -> R {
@@ -19310,9 +19310,9 @@ public struct GeometryNV: ChainableBase {
         self.flags = flags
     }
 
-    public init(cStruct: VkGeometryNV, device: Device) {
+    public init(cStruct: VkGeometryNV) {
         self.geometryType = GeometryTypeKHR(rawValue: numericBitCast(cStruct.geometryType.rawValue))!
-        self.geometry = GeometryDataNV(cStruct: cStruct.geometry, device: device)
+        self.geometry = GeometryDataNV(cStruct: cStruct.geometry)
         self.flags = GeometryFlagsKHR(rawValue: cStruct.flags)
     }
 
@@ -19351,11 +19351,11 @@ public struct AccelerationStructureInfoNV: ChainableBase {
         self.geometries = geometries
     }
 
-    public init(cStruct: VkAccelerationStructureInfoNV, device: Device) {
+    public init(cStruct: VkAccelerationStructureInfoNV) {
         self.type = cStruct.type
         self.flags = BuildAccelerationStructureFlagsKHR(rawValue: cStruct.flags)
         self.instanceCount = cStruct.instanceCount
-        self.geometries = UnsafeBufferPointer(start: cStruct.pGeometries, count: Int(cStruct.geometryCount)).map{ GeometryNV(cStruct: $0, device: device) }
+        self.geometries = UnsafeBufferPointer(start: cStruct.pGeometries, count: Int(cStruct.geometryCount)).map{ GeometryNV(cStruct: $0) }
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkAccelerationStructureInfoNV>) throws(E) -> R) throws(E) -> R {
@@ -19391,9 +19391,9 @@ public struct AccelerationStructureCreateInfoNV: ChainableBase {
         self.info = info
     }
 
-    public init(cStruct: VkAccelerationStructureCreateInfoNV, device: Device) {
+    public init(cStruct: VkAccelerationStructureCreateInfoNV) {
         self.compactedSize = cStruct.compactedSize
-        self.info = AccelerationStructureInfoNV(cStruct: cStruct.info, device: device)
+        self.info = AccelerationStructureInfoNV(cStruct: cStruct.info)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkAccelerationStructureCreateInfoNV>) throws(E) -> R) throws(E) -> R {
@@ -19430,9 +19430,9 @@ public struct BindAccelerationStructureMemoryInfoNV: ChainableBase {
         self.deviceIndices = deviceIndices
     }
 
-    public init(cStruct: VkBindAccelerationStructureMemoryInfoNV, device: Device) {
-        self.accelerationStructure = AccelerationStructureNV(handle: cStruct.accelerationStructure, device: device)
-        self.memory = DeviceMemory(handle: cStruct.memory, device: device)
+    public init(cStruct: VkBindAccelerationStructureMemoryInfoNV) {
+        self.accelerationStructure = AccelerationStructureNV(handle: cStruct.accelerationStructure)
+        self.memory = DeviceMemory(handle: cStruct.memory)
         self.memoryOffset = cStruct.memoryOffset
         self.deviceIndices = Array(UnsafeBufferPointer(start: cStruct.pDeviceIndices, count: Int(cStruct.deviceIndexCount)))
     }
@@ -19462,23 +19462,23 @@ public struct WriteDescriptorSetAccelerationStructureKHR: ChainableBase, WriteDe
     public typealias CStruct = VkWriteDescriptorSetAccelerationStructureKHR
 
     public static let structureType: StructureType = .writeDescriptorSetAccelerationStructureKHR
-    public let accelerationStructures: Array<AccelerationStructureKHR?>
+    public let accelerationStructures: Array<AccelerationStructureKHR>
 
-    public init(accelerationStructures: Array<AccelerationStructureKHR?>) {
+    public init(accelerationStructures: Array<AccelerationStructureKHR>) {
         self.accelerationStructures = accelerationStructures
     }
 
-    public init(cStruct: VkWriteDescriptorSetAccelerationStructureKHR, device: Device) {
-        self.accelerationStructures = UnsafeBufferPointer(start: cStruct.pAccelerationStructures, count: Int(cStruct.accelerationStructureCount)).map{ ($0 != nil) ? AccelerationStructureKHR(handle: $0, device: device) : nil }
+    public init(cStruct: VkWriteDescriptorSetAccelerationStructureKHR) {
+        self.accelerationStructures = UnsafeBufferPointer(start: cStruct.pAccelerationStructures, count: Int(cStruct.accelerationStructureCount)).map{ AccelerationStructureKHR(handle: $0) }
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkWriteDescriptorSetAccelerationStructureKHR>) throws(E) -> R) throws(E) -> R {
-        try self.accelerationStructures.map{ $0?.handle }.withUnsafeBufferPointer { ptr_accelerationStructures throws(E) in
+        try self.accelerationStructures.map{ $0.handle }.withUnsafeBufferPointer { ptr_accelerationStructures throws(E) in
             var cStruct = VkWriteDescriptorSetAccelerationStructureKHR()
             cStruct.sType = VkStructureType(rawValue: VkStructureType.RawValue(Self.structureType.rawValue))
             cStruct.pNext = maybeMutable(pNext)
             cStruct.accelerationStructureCount = UInt32(ptr_accelerationStructures.count)
-            cStruct.pAccelerationStructures = ptr_accelerationStructures.baseAddress
+            cStruct.pAccelerationStructures = ptr_accelerationStructures.baseAddress?.cast()
             return try body(&cStruct)
         }
     }
@@ -19494,23 +19494,23 @@ public struct WriteDescriptorSetAccelerationStructureNV: ChainableBase, WriteDes
     public typealias CStruct = VkWriteDescriptorSetAccelerationStructureNV
 
     public static let structureType: StructureType = .writeDescriptorSetAccelerationStructureNV
-    public let accelerationStructures: Array<AccelerationStructureNV?>
+    public let accelerationStructures: Array<AccelerationStructureNV>
 
-    public init(accelerationStructures: Array<AccelerationStructureNV?>) {
+    public init(accelerationStructures: Array<AccelerationStructureNV>) {
         self.accelerationStructures = accelerationStructures
     }
 
-    public init(cStruct: VkWriteDescriptorSetAccelerationStructureNV, device: Device) {
-        self.accelerationStructures = UnsafeBufferPointer(start: cStruct.pAccelerationStructures, count: Int(cStruct.accelerationStructureCount)).map{ ($0 != nil) ? AccelerationStructureNV(handle: $0, device: device) : nil }
+    public init(cStruct: VkWriteDescriptorSetAccelerationStructureNV) {
+        self.accelerationStructures = UnsafeBufferPointer(start: cStruct.pAccelerationStructures, count: Int(cStruct.accelerationStructureCount)).map{ AccelerationStructureNV(handle: $0) }
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkWriteDescriptorSetAccelerationStructureNV>) throws(E) -> R) throws(E) -> R {
-        try self.accelerationStructures.map{ $0?.handle }.withUnsafeBufferPointer { ptr_accelerationStructures throws(E) in
+        try self.accelerationStructures.map{ $0.handle }.withUnsafeBufferPointer { ptr_accelerationStructures throws(E) in
             var cStruct = VkWriteDescriptorSetAccelerationStructureNV()
             cStruct.sType = VkStructureType(rawValue: VkStructureType.RawValue(Self.structureType.rawValue))
             cStruct.pNext = maybeMutable(pNext)
             cStruct.accelerationStructureCount = UInt32(ptr_accelerationStructures.count)
-            cStruct.pAccelerationStructures = ptr_accelerationStructures.baseAddress
+            cStruct.pAccelerationStructures = ptr_accelerationStructures.baseAddress?.cast()
             return try body(&cStruct)
         }
     }
@@ -19534,9 +19534,9 @@ public struct AccelerationStructureMemoryRequirementsInfoNV: ChainableBase {
         self.accelerationStructure = accelerationStructure
     }
 
-    public init(cStruct: VkAccelerationStructureMemoryRequirementsInfoNV, device: Device) {
+    public init(cStruct: VkAccelerationStructureMemoryRequirementsInfoNV) {
         self.type = AccelerationStructureMemoryRequirementsTypeNV(rawValue: numericBitCast(cStruct.type.rawValue))!
-        self.accelerationStructure = AccelerationStructureNV(handle: cStruct.accelerationStructure, device: device)
+        self.accelerationStructure = AccelerationStructureNV(handle: cStruct.accelerationStructure)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkAccelerationStructureMemoryRequirementsInfoNV>) throws(E) -> R) throws(E) -> R {
@@ -20784,8 +20784,8 @@ public struct BufferDeviceAddressInfo: ChainableBase {
         self.buffer = buffer
     }
 
-    public init(cStruct: VkBufferDeviceAddressInfo, device: Device) {
-        self.buffer = Buffer(handle: cStruct.buffer, device: device)
+    public init(cStruct: VkBufferDeviceAddressInfo) {
+        self.buffer = Buffer(handle: cStruct.buffer)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkBufferDeviceAddressInfo>) throws(E) -> R) throws(E) -> R {
@@ -21041,8 +21041,8 @@ public struct RenderPassAttachmentBeginInfo: ChainableBase, RenderPassBeginInfoE
         self.attachments = attachments
     }
 
-    public init(cStruct: VkRenderPassAttachmentBeginInfo, device: Device) {
-        self.attachments = UnsafeBufferPointer(start: cStruct.pAttachments, count: Int(cStruct.attachmentCount)).map{ ImageView(handle: $0, device: device) }
+    public init(cStruct: VkRenderPassAttachmentBeginInfo) {
+        self.attachments = UnsafeBufferPointer(start: cStruct.pAttachments, count: Int(cStruct.attachmentCount)).map{ ImageView(handle: $0) }
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkRenderPassAttachmentBeginInfo>) throws(E) -> R) throws(E) -> R {
@@ -21051,7 +21051,7 @@ public struct RenderPassAttachmentBeginInfo: ChainableBase, RenderPassBeginInfoE
             cStruct.sType = VkStructureType(rawValue: VkStructureType.RawValue(Self.structureType.rawValue))
             cStruct.pNext = maybeMutable(pNext)
             cStruct.attachmentCount = UInt32(ptr_attachments.count)
-            cStruct.pAttachments = ptr_attachments.baseAddress
+            cStruct.pAttachments = ptr_attachments.baseAddress?.cast()
             return try body(&cStruct)
         }
     }
@@ -21239,10 +21239,10 @@ public struct ImageViewHandleInfoNVX: ChainableBase {
         self.sampler = sampler
     }
 
-    public init(cStruct: VkImageViewHandleInfoNVX, device: Device) {
-        self.imageView = ImageView(handle: cStruct.imageView, device: device)
+    public init(cStruct: VkImageViewHandleInfoNVX) {
+        self.imageView = ImageView(handle: cStruct.imageView)
         self.descriptorType = DescriptorType(rawValue: numericBitCast(cStruct.descriptorType.rawValue))!
-        self.sampler = (cStruct.sampler != nil) ? Sampler(handle: cStruct.sampler, device: device) : nil
+        self.sampler = (cStruct.sampler != nil) ? Sampler(handle: cStruct.sampler) : nil
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkImageViewHandleInfoNVX>) throws(E) -> R) throws(E) -> R {
@@ -22447,8 +22447,8 @@ public struct PipelineInfoKHR: ChainableBase {
         self.pipeline = pipeline
     }
 
-    public init(cStruct: VkPipelineInfoKHR, device: Device) {
-        self.pipeline = Pipeline(handle: cStruct.pipeline, device: device)
+    public init(cStruct: VkPipelineInfoKHR) {
+        self.pipeline = Pipeline(handle: cStruct.pipeline)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPipelineInfoKHR>) throws(E) -> R) throws(E) -> R {
@@ -22512,8 +22512,8 @@ public struct PipelineExecutableInfoKHR: ChainableBase {
         self.executableIndex = executableIndex
     }
 
-    public init(cStruct: VkPipelineExecutableInfoKHR, device: Device) {
-        self.pipeline = Pipeline(handle: cStruct.pipeline, device: device)
+    public init(cStruct: VkPipelineExecutableInfoKHR) {
+        self.pipeline = Pipeline(handle: cStruct.pipeline)
         self.executableIndex = cStruct.executableIndex
     }
 
@@ -22804,8 +22804,8 @@ public struct SubpassShadingPipelineCreateInfoHUAWEI: ChainableBase, ComputePipe
         self.subpass = subpass
     }
 
-    public init(cStruct: VkSubpassShadingPipelineCreateInfoHUAWEI, device: Device) {
-        self.renderPass = RenderPass(handle: cStruct.renderPass, device: device)
+    public init(cStruct: VkSubpassShadingPipelineCreateInfoHUAWEI) {
+        self.renderPass = RenderPass(handle: cStruct.renderPass)
         self.subpass = cStruct.subpass
     }
 
@@ -22923,8 +22923,8 @@ public struct DeviceMemoryOpaqueCaptureAddressInfo: ChainableBase {
         self.memory = memory
     }
 
-    public init(cStruct: VkDeviceMemoryOpaqueCaptureAddressInfo, device: Device) {
-        self.memory = DeviceMemory(handle: cStruct.memory, device: device)
+    public init(cStruct: VkDeviceMemoryOpaqueCaptureAddressInfo) {
+        self.memory = DeviceMemory(handle: cStruct.memory)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkDeviceMemoryOpaqueCaptureAddressInfo>) throws(E) -> R) throws(E) -> R {
@@ -24468,8 +24468,8 @@ public struct GpaSessionCreateInfoAMD: ChainableBase {
         self.secondaryCopySource = secondaryCopySource
     }
 
-    public init(cStruct: VkGpaSessionCreateInfoAMD, device: Device) {
-        self.secondaryCopySource = (cStruct.secondaryCopySource != nil) ? GpaSessionAMD(handle: cStruct.secondaryCopySource, device: device) : nil
+    public init(cStruct: VkGpaSessionCreateInfoAMD) {
+        self.secondaryCopySource = (cStruct.secondaryCopySource != nil) ? GpaSessionAMD(handle: cStruct.secondaryCopySource) : nil
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkGpaSessionCreateInfoAMD>) throws(E) -> R) throws(E) -> R {
@@ -24993,12 +24993,12 @@ public struct AccelerationStructureBuildGeometryInfoKHR: ChainableBase {
         self.scratchData = scratchData
     }
 
-    public init(cStruct: VkAccelerationStructureBuildGeometryInfoKHR, device: Device) {
+    public init(cStruct: VkAccelerationStructureBuildGeometryInfoKHR) {
         self.type = AccelerationStructureTypeKHR(rawValue: numericBitCast(cStruct.type.rawValue))!
         self.flags = BuildAccelerationStructureFlagsKHR(rawValue: cStruct.flags)
         self.mode = BuildAccelerationStructureModeKHR(rawValue: numericBitCast(cStruct.mode.rawValue))!
-        self.srcAccelerationStructure = (cStruct.srcAccelerationStructure != nil) ? AccelerationStructureKHR(handle: cStruct.srcAccelerationStructure, device: device) : nil
-        self.dstAccelerationStructure = (cStruct.dstAccelerationStructure != nil) ? AccelerationStructureKHR(handle: cStruct.dstAccelerationStructure, device: device) : nil
+        self.srcAccelerationStructure = (cStruct.srcAccelerationStructure != nil) ? AccelerationStructureKHR(handle: cStruct.srcAccelerationStructure) : nil
+        self.dstAccelerationStructure = (cStruct.dstAccelerationStructure != nil) ? AccelerationStructureKHR(handle: cStruct.dstAccelerationStructure) : nil
         self.geometries = (cStruct.pGeometries != nil) ? UnsafeBufferPointer(start: cStruct.pGeometries, count: Int(cStruct.geometryCount)).map{ AccelerationStructureGeometryKHR(cStruct: $0) } : nil
         self.geometries2 = (cStruct.ppGeometries != nil) ? Array(UnsafeBufferPointer(start: cStruct.ppGeometries, count: Int(cStruct.geometryCount))) : nil
         self.scratchData = cStruct.scratchData
@@ -25083,9 +25083,9 @@ public struct AccelerationStructureCreateInfoKHR: ChainableBase {
         self.deviceAddress = deviceAddress
     }
 
-    public init(cStruct: VkAccelerationStructureCreateInfoKHR, device: Device) {
+    public init(cStruct: VkAccelerationStructureCreateInfoKHR) {
         self.createFlags = AccelerationStructureCreateFlagsKHR(rawValue: cStruct.createFlags)
-        self.buffer = Buffer(handle: cStruct.buffer, device: device)
+        self.buffer = Buffer(handle: cStruct.buffer)
         self.offset = cStruct.offset
         self.size = cStruct.size
         self.type = AccelerationStructureTypeKHR(rawValue: numericBitCast(cStruct.type.rawValue))!
@@ -25224,8 +25224,8 @@ public struct AccelerationStructureDeviceAddressInfoKHR: ChainableBase {
         self.accelerationStructure = accelerationStructure
     }
 
-    public init(cStruct: VkAccelerationStructureDeviceAddressInfoKHR, device: Device) {
-        self.accelerationStructure = AccelerationStructureKHR(handle: cStruct.accelerationStructure, device: device)
+    public init(cStruct: VkAccelerationStructureDeviceAddressInfoKHR) {
+        self.accelerationStructure = AccelerationStructureKHR(handle: cStruct.accelerationStructure)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkAccelerationStructureDeviceAddressInfoKHR>) throws(E) -> R) throws(E) -> R {
@@ -25286,9 +25286,9 @@ public struct CopyAccelerationStructureInfoKHR: ChainableBase {
         self.mode = mode
     }
 
-    public init(cStruct: VkCopyAccelerationStructureInfoKHR, device: Device) {
-        self.src = AccelerationStructureKHR(handle: cStruct.src, device: device)
-        self.dst = AccelerationStructureKHR(handle: cStruct.dst, device: device)
+    public init(cStruct: VkCopyAccelerationStructureInfoKHR) {
+        self.src = AccelerationStructureKHR(handle: cStruct.src)
+        self.dst = AccelerationStructureKHR(handle: cStruct.dst)
         self.mode = CopyAccelerationStructureModeKHR(rawValue: numericBitCast(cStruct.mode.rawValue))!
     }
 
@@ -25323,8 +25323,8 @@ public struct CopyAccelerationStructureToMemoryInfoKHR: ChainableBase {
         self.mode = mode
     }
 
-    public init(cStruct: VkCopyAccelerationStructureToMemoryInfoKHR, device: Device) {
-        self.src = AccelerationStructureKHR(handle: cStruct.src, device: device)
+    public init(cStruct: VkCopyAccelerationStructureToMemoryInfoKHR) {
+        self.src = AccelerationStructureKHR(handle: cStruct.src)
         self.dst = cStruct.dst
         self.mode = CopyAccelerationStructureModeKHR(rawValue: numericBitCast(cStruct.mode.rawValue))!
     }
@@ -25360,9 +25360,9 @@ public struct CopyMemoryToAccelerationStructureInfoKHR: ChainableBase {
         self.mode = mode
     }
 
-    public init(cStruct: VkCopyMemoryToAccelerationStructureInfoKHR, device: Device) {
+    public init(cStruct: VkCopyMemoryToAccelerationStructureInfoKHR) {
         self.src = cStruct.src
-        self.dst = AccelerationStructureKHR(handle: cStruct.dst, device: device)
+        self.dst = AccelerationStructureKHR(handle: cStruct.dst)
         self.mode = CopyAccelerationStructureModeKHR(rawValue: numericBitCast(cStruct.mode.rawValue))!
     }
 
@@ -26889,9 +26889,9 @@ public struct CopyBufferInfo2: ChainableBase {
         self.regions = regions
     }
 
-    public init(cStruct: VkCopyBufferInfo2, device: Device) {
-        self.srcBuffer = Buffer(handle: cStruct.srcBuffer, device: device)
-        self.dstBuffer = Buffer(handle: cStruct.dstBuffer, device: device)
+    public init(cStruct: VkCopyBufferInfo2) {
+        self.srcBuffer = Buffer(handle: cStruct.srcBuffer)
+        self.dstBuffer = Buffer(handle: cStruct.dstBuffer)
         self.regions = UnsafeBufferPointer(start: cStruct.pRegions, count: Int(cStruct.regionCount)).map{ BufferCopy2(cStruct: $0) }
     }
 
@@ -26933,10 +26933,10 @@ public struct CopyImageInfo2: ChainableBase {
         self.regions = regions
     }
 
-    public init(cStruct: VkCopyImageInfo2, device: Device) {
-        self.srcImage = Image(handle: cStruct.srcImage, device: device)
+    public init(cStruct: VkCopyImageInfo2) {
+        self.srcImage = Image(handle: cStruct.srcImage)
         self.srcImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.srcImageLayout.rawValue))!
-        self.dstImage = Image(handle: cStruct.dstImage, device: device)
+        self.dstImage = Image(handle: cStruct.dstImage)
         self.dstImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.dstImageLayout.rawValue))!
         self.regions = UnsafeBufferPointer(start: cStruct.pRegions, count: Int(cStruct.regionCount)).map{ ImageCopy2(cStruct: $0) }
     }
@@ -26983,10 +26983,10 @@ public struct BlitImageInfo2: ChainableBase {
         self.filter = filter
     }
 
-    public init(cStruct: VkBlitImageInfo2, device: Device) {
-        self.srcImage = Image(handle: cStruct.srcImage, device: device)
+    public init(cStruct: VkBlitImageInfo2) {
+        self.srcImage = Image(handle: cStruct.srcImage)
         self.srcImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.srcImageLayout.rawValue))!
-        self.dstImage = Image(handle: cStruct.dstImage, device: device)
+        self.dstImage = Image(handle: cStruct.dstImage)
         self.dstImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.dstImageLayout.rawValue))!
         self.regions = UnsafeBufferPointer(start: cStruct.pRegions, count: Int(cStruct.regionCount)).map{ ImageBlit2(cStruct: $0) }
         self.filter = Filter(rawValue: numericBitCast(cStruct.filter.rawValue))!
@@ -27031,9 +27031,9 @@ public struct CopyBufferToImageInfo2: ChainableBase {
         self.regions = regions
     }
 
-    public init(cStruct: VkCopyBufferToImageInfo2, device: Device) {
-        self.srcBuffer = Buffer(handle: cStruct.srcBuffer, device: device)
-        self.dstImage = Image(handle: cStruct.dstImage, device: device)
+    public init(cStruct: VkCopyBufferToImageInfo2) {
+        self.srcBuffer = Buffer(handle: cStruct.srcBuffer)
+        self.dstImage = Image(handle: cStruct.dstImage)
         self.dstImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.dstImageLayout.rawValue))!
         self.regions = UnsafeBufferPointer(start: cStruct.pRegions, count: Int(cStruct.regionCount)).map{ BufferImageCopy2(cStruct: $0) }
     }
@@ -27075,10 +27075,10 @@ public struct CopyImageToBufferInfo2: ChainableBase {
         self.regions = regions
     }
 
-    public init(cStruct: VkCopyImageToBufferInfo2, device: Device) {
-        self.srcImage = Image(handle: cStruct.srcImage, device: device)
+    public init(cStruct: VkCopyImageToBufferInfo2) {
+        self.srcImage = Image(handle: cStruct.srcImage)
         self.srcImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.srcImageLayout.rawValue))!
-        self.dstBuffer = Buffer(handle: cStruct.dstBuffer, device: device)
+        self.dstBuffer = Buffer(handle: cStruct.dstBuffer)
         self.regions = UnsafeBufferPointer(start: cStruct.pRegions, count: Int(cStruct.regionCount)).map{ BufferImageCopy2(cStruct: $0) }
     }
 
@@ -27121,10 +27121,10 @@ public struct ResolveImageInfo2: ChainableBase {
         self.regions = regions
     }
 
-    public init(cStruct: VkResolveImageInfo2, device: Device) {
-        self.srcImage = Image(handle: cStruct.srcImage, device: device)
+    public init(cStruct: VkResolveImageInfo2) {
+        self.srcImage = Image(handle: cStruct.srcImage)
         self.srcImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.srcImageLayout.rawValue))!
-        self.dstImage = Image(handle: cStruct.dstImage, device: device)
+        self.dstImage = Image(handle: cStruct.dstImage)
         self.dstImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.dstImageLayout.rawValue))!
         self.regions = UnsafeBufferPointer(start: cStruct.pRegions, count: Int(cStruct.regionCount)).map{ ImageResolve2(cStruct: $0) }
     }
@@ -28047,8 +28047,8 @@ public struct GeneratedCommandsPipelineInfoEXT: ChainableBase, GeneratedCommands
         self.pipeline = pipeline
     }
 
-    public init(cStruct: VkGeneratedCommandsPipelineInfoEXT, device: Device) {
-        self.pipeline = Pipeline(handle: cStruct.pipeline, device: device)
+    public init(cStruct: VkGeneratedCommandsPipelineInfoEXT) {
+        self.pipeline = Pipeline(handle: cStruct.pipeline)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkGeneratedCommandsPipelineInfoEXT>) throws(E) -> R) throws(E) -> R {
@@ -28076,8 +28076,8 @@ public struct GeneratedCommandsShaderInfoEXT: ChainableBase, GeneratedCommandsIn
         self.shaders = shaders
     }
 
-    public init(cStruct: VkGeneratedCommandsShaderInfoEXT, device: Device) {
-        self.shaders = UnsafeBufferPointer(start: cStruct.pShaders, count: Int(cStruct.shaderCount)).map{ ShaderEXT(handle: $0, device: device) }
+    public init(cStruct: VkGeneratedCommandsShaderInfoEXT) {
+        self.shaders = UnsafeBufferPointer(start: cStruct.pShaders, count: Int(cStruct.shaderCount)).map{ ShaderEXT(handle: $0) }
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkGeneratedCommandsShaderInfoEXT>) throws(E) -> R) throws(E) -> R {
@@ -28086,7 +28086,7 @@ public struct GeneratedCommandsShaderInfoEXT: ChainableBase, GeneratedCommandsIn
             cStruct.sType = VkStructureType(rawValue: VkStructureType.RawValue(Self.structureType.rawValue))
             cStruct.pNext = maybeMutable(pNext)
             cStruct.shaderCount = UInt32(ptr_shaders.count)
-            cStruct.pShaders = ptr_shaders.baseAddress
+            cStruct.pShaders = ptr_shaders.baseAddress?.cast()
             return try body(&cStruct)
         }
     }
@@ -28114,9 +28114,9 @@ public struct GeneratedCommandsMemoryRequirementsInfoEXT: ChainableBase {
         self.maxDrawCount = maxDrawCount
     }
 
-    public init(cStruct: VkGeneratedCommandsMemoryRequirementsInfoEXT, device: Device) {
-        self.indirectExecutionSet = (cStruct.indirectExecutionSet != nil) ? IndirectExecutionSetEXT(handle: cStruct.indirectExecutionSet, device: device) : nil
-        self.indirectCommandsLayout = IndirectCommandsLayoutEXT(handle: cStruct.indirectCommandsLayout, device: device)
+    public init(cStruct: VkGeneratedCommandsMemoryRequirementsInfoEXT) {
+        self.indirectExecutionSet = (cStruct.indirectExecutionSet != nil) ? IndirectExecutionSetEXT(handle: cStruct.indirectExecutionSet) : nil
+        self.indirectCommandsLayout = IndirectCommandsLayoutEXT(handle: cStruct.indirectCommandsLayout)
         self.maxSequenceCount = cStruct.maxSequenceCount
         self.maxDrawCount = cStruct.maxDrawCount
     }
@@ -28151,8 +28151,8 @@ public struct IndirectExecutionSetPipelineInfoEXT: ChainableBase {
         self.maxPipelineCount = maxPipelineCount
     }
 
-    public init(cStruct: VkIndirectExecutionSetPipelineInfoEXT, device: Device) {
-        self.initialPipeline = Pipeline(handle: cStruct.initialPipeline, device: device)
+    public init(cStruct: VkIndirectExecutionSetPipelineInfoEXT) {
+        self.initialPipeline = Pipeline(handle: cStruct.initialPipeline)
         self.maxPipelineCount = cStruct.maxPipelineCount
     }
 
@@ -28176,23 +28176,23 @@ public struct IndirectExecutionSetShaderLayoutInfoEXT: ChainableBase {
     public typealias CStruct = VkIndirectExecutionSetShaderLayoutInfoEXT
 
     public static let structureType: StructureType = .indirectExecutionSetShaderLayoutInfoEXT
-    public let setLayouts: Array<DescriptorSetLayout?>
+    public let setLayouts: Array<DescriptorSetLayout>
 
-    public init(setLayouts: Array<DescriptorSetLayout?> = []) {
+    public init(setLayouts: Array<DescriptorSetLayout> = []) {
         self.setLayouts = setLayouts
     }
 
-    public init(cStruct: VkIndirectExecutionSetShaderLayoutInfoEXT, device: Device) {
-        self.setLayouts = UnsafeBufferPointer(start: cStruct.pSetLayouts, count: Int(cStruct.setLayoutCount)).map{ ($0 != nil) ? DescriptorSetLayout(handle: $0, device: device) : nil }
+    public init(cStruct: VkIndirectExecutionSetShaderLayoutInfoEXT) {
+        self.setLayouts = UnsafeBufferPointer(start: cStruct.pSetLayouts, count: Int(cStruct.setLayoutCount)).map{ DescriptorSetLayout(handle: $0) }
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkIndirectExecutionSetShaderLayoutInfoEXT>) throws(E) -> R) throws(E) -> R {
-        try self.setLayouts.map{ $0?.handle }.withUnsafeBufferPointer { ptr_setLayouts throws(E) in
+        try self.setLayouts.map{ $0.handle }.withUnsafeBufferPointer { ptr_setLayouts throws(E) in
             var cStruct = VkIndirectExecutionSetShaderLayoutInfoEXT()
             cStruct.sType = VkStructureType(rawValue: VkStructureType.RawValue(Self.structureType.rawValue))
             cStruct.pNext = maybeMutable(pNext)
             cStruct.setLayoutCount = UInt32(ptr_setLayouts.count)
-            cStruct.pSetLayouts = ptr_setLayouts.baseAddress
+            cStruct.pSetLayouts = ptr_setLayouts.baseAddress?.cast()
             return try body(&cStruct)
         }
     }
@@ -28220,9 +28220,9 @@ public struct IndirectExecutionSetShaderInfoEXT: ChainableBase {
         self.pushConstantRanges = pushConstantRanges
     }
 
-    public init(cStruct: VkIndirectExecutionSetShaderInfoEXT, device: Device) {
-        self.initialShaders = UnsafeBufferPointer(start: cStruct.pInitialShaders, count: Int(cStruct.shaderCount)).map{ ShaderEXT(handle: $0, device: device) }
-        self.setLayoutInfos = (cStruct.pSetLayoutInfos != nil) ? UnsafeBufferPointer(start: cStruct.pSetLayoutInfos, count: Int(cStruct.shaderCount)).map{ IndirectExecutionSetShaderLayoutInfoEXT(cStruct: $0, device: device) } : nil
+    public init(cStruct: VkIndirectExecutionSetShaderInfoEXT) {
+        self.initialShaders = UnsafeBufferPointer(start: cStruct.pInitialShaders, count: Int(cStruct.shaderCount)).map{ ShaderEXT(handle: $0) }
+        self.setLayoutInfos = (cStruct.pSetLayoutInfos != nil) ? UnsafeBufferPointer(start: cStruct.pSetLayoutInfos, count: Int(cStruct.shaderCount)).map{ IndirectExecutionSetShaderLayoutInfoEXT(cStruct: $0) } : nil
         self.maxShaderCount = cStruct.maxShaderCount
         self.pushConstantRanges = UnsafeBufferPointer(start: cStruct.pPushConstantRanges, count: Int(cStruct.pushConstantRangeCount)).map{ PushConstantRange(cStruct: $0) }
     }
@@ -28235,7 +28235,7 @@ public struct IndirectExecutionSetShaderInfoEXT: ChainableBase {
                     cStruct.sType = VkStructureType(rawValue: VkStructureType.RawValue(Self.structureType.rawValue))
                     cStruct.pNext = maybeMutable(pNext)
                     cStruct.shaderCount = UInt32(ptr_initialShaders.count)
-                    cStruct.pInitialShaders = ptr_initialShaders.baseAddress
+                    cStruct.pInitialShaders = ptr_initialShaders.baseAddress?.cast()
                     cStruct.pSetLayoutInfos = ptr_setLayoutInfos.baseAddress
                     cStruct.maxShaderCount = self.maxShaderCount
                     cStruct.pushConstantRangeCount = UInt32(ptr_pushConstantRanges.count)
@@ -28314,10 +28314,10 @@ public struct GeneratedCommandsInfoEXT: ChainableBase {
         self.maxDrawCount = maxDrawCount
     }
 
-    public init(cStruct: VkGeneratedCommandsInfoEXT, device: Device) {
+    public init(cStruct: VkGeneratedCommandsInfoEXT) {
         self.shaderStages = ShaderStageFlags(rawValue: cStruct.shaderStages)
-        self.indirectExecutionSet = (cStruct.indirectExecutionSet != nil) ? IndirectExecutionSetEXT(handle: cStruct.indirectExecutionSet, device: device) : nil
-        self.indirectCommandsLayout = IndirectCommandsLayoutEXT(handle: cStruct.indirectCommandsLayout, device: device)
+        self.indirectExecutionSet = (cStruct.indirectExecutionSet != nil) ? IndirectExecutionSetEXT(handle: cStruct.indirectExecutionSet) : nil
+        self.indirectCommandsLayout = IndirectCommandsLayoutEXT(handle: cStruct.indirectCommandsLayout)
         self.indirectAddress = cStruct.indirectAddress
         self.indirectAddressSize = cStruct.indirectAddressSize
         self.preprocessAddress = cStruct.preprocessAddress
@@ -28363,9 +28363,9 @@ public struct WriteIndirectExecutionSetPipelineEXT: ChainableBase {
         self.pipeline = pipeline
     }
 
-    public init(cStruct: VkWriteIndirectExecutionSetPipelineEXT, device: Device) {
+    public init(cStruct: VkWriteIndirectExecutionSetPipelineEXT) {
         self.index = cStruct.index
-        self.pipeline = Pipeline(handle: cStruct.pipeline, device: device)
+        self.pipeline = Pipeline(handle: cStruct.pipeline)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkWriteIndirectExecutionSetPipelineEXT>) throws(E) -> R) throws(E) -> R {
@@ -28396,9 +28396,9 @@ public struct WriteIndirectExecutionSetShaderEXT: ChainableBase {
         self.shader = shader
     }
 
-    public init(cStruct: VkWriteIndirectExecutionSetShaderEXT, device: Device) {
+    public init(cStruct: VkWriteIndirectExecutionSetShaderEXT) {
         self.index = cStruct.index
-        self.shader = ShaderEXT(handle: cStruct.shader, device: device)
+        self.shader = ShaderEXT(handle: cStruct.shader)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkWriteIndirectExecutionSetShaderEXT>) throws(E) -> R) throws(E) -> R {
@@ -28472,11 +28472,11 @@ public struct IndirectCommandsLayoutCreateInfoEXT: ChainableBase {
         self.tokens = tokens
     }
 
-    public init(cStruct: VkIndirectCommandsLayoutCreateInfoEXT, device: Device) {
+    public init(cStruct: VkIndirectCommandsLayoutCreateInfoEXT) {
         self.flags = IndirectCommandsLayoutUsageFlagsEXT(rawValue: cStruct.flags)
         self.shaderStages = ShaderStageFlags(rawValue: cStruct.shaderStages)
         self.indirectStride = cStruct.indirectStride
-        self.pipelineLayout = (cStruct.pipelineLayout != nil) ? PipelineLayout(handle: cStruct.pipelineLayout, device: device) : nil
+        self.pipelineLayout = (cStruct.pipelineLayout != nil) ? PipelineLayout(handle: cStruct.pipelineLayout) : nil
         self.tokens = UnsafeBufferPointer(start: cStruct.pTokens, count: Int(cStruct.tokenCount)).map{ IndirectCommandsLayoutTokenEXT(cStruct: $0) }
     }
 
@@ -29088,7 +29088,7 @@ public struct ImageMemoryBarrier2: ChainableBase {
         self.subresourceRange = subresourceRange
     }
 
-    public init(cStruct: VkImageMemoryBarrier2, device: Device) {
+    public init(cStruct: VkImageMemoryBarrier2) {
         self.srcStageMask = PipelineStageFlags2(rawValue: cStruct.srcStageMask)
         self.srcAccessMask = AccessFlags2(rawValue: cStruct.srcAccessMask)
         self.dstStageMask = PipelineStageFlags2(rawValue: cStruct.dstStageMask)
@@ -29097,7 +29097,7 @@ public struct ImageMemoryBarrier2: ChainableBase {
         self.newLayout = ImageLayout(rawValue: numericBitCast(cStruct.newLayout.rawValue))!
         self.srcQueueFamilyIndex = cStruct.srcQueueFamilyIndex
         self.dstQueueFamilyIndex = cStruct.dstQueueFamilyIndex
-        self.image = Image(handle: cStruct.image, device: device)
+        self.image = Image(handle: cStruct.image)
         self.subresourceRange = ImageSubresourceRange(cStruct: cStruct.subresourceRange)
     }
 
@@ -29153,14 +29153,14 @@ public struct BufferMemoryBarrier2: ChainableBase {
         self.size = size
     }
 
-    public init(cStruct: VkBufferMemoryBarrier2, device: Device) {
+    public init(cStruct: VkBufferMemoryBarrier2) {
         self.srcStageMask = PipelineStageFlags2(rawValue: cStruct.srcStageMask)
         self.srcAccessMask = AccessFlags2(rawValue: cStruct.srcAccessMask)
         self.dstStageMask = PipelineStageFlags2(rawValue: cStruct.dstStageMask)
         self.dstAccessMask = AccessFlags2(rawValue: cStruct.dstAccessMask)
         self.srcQueueFamilyIndex = cStruct.srcQueueFamilyIndex
         self.dstQueueFamilyIndex = cStruct.dstQueueFamilyIndex
-        self.buffer = Buffer(handle: cStruct.buffer, device: device)
+        self.buffer = Buffer(handle: cStruct.buffer)
         self.offset = cStruct.offset
         self.size = cStruct.size
     }
@@ -29237,11 +29237,11 @@ public struct DependencyInfo: ChainableBase {
         self.imageMemoryBarriers = imageMemoryBarriers
     }
 
-    public init(cStruct: VkDependencyInfo, device: Device) {
+    public init(cStruct: VkDependencyInfo) {
         self.dependencyFlags = DependencyFlags(rawValue: cStruct.dependencyFlags)
         self.memoryBarriers = UnsafeBufferPointer(start: cStruct.pMemoryBarriers, count: Int(cStruct.memoryBarrierCount)).map{ MemoryBarrier2(cStruct: $0) }
-        self.bufferMemoryBarriers = UnsafeBufferPointer(start: cStruct.pBufferMemoryBarriers, count: Int(cStruct.bufferMemoryBarrierCount)).map{ BufferMemoryBarrier2(cStruct: $0, device: device) }
-        self.imageMemoryBarriers = UnsafeBufferPointer(start: cStruct.pImageMemoryBarriers, count: Int(cStruct.imageMemoryBarrierCount)).map{ ImageMemoryBarrier2(cStruct: $0, device: device) }
+        self.bufferMemoryBarriers = UnsafeBufferPointer(start: cStruct.pBufferMemoryBarriers, count: Int(cStruct.bufferMemoryBarrierCount)).map{ BufferMemoryBarrier2(cStruct: $0) }
+        self.imageMemoryBarriers = UnsafeBufferPointer(start: cStruct.pImageMemoryBarriers, count: Int(cStruct.imageMemoryBarrierCount)).map{ ImageMemoryBarrier2(cStruct: $0) }
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkDependencyInfo>) throws(E) -> R) throws(E) -> R {
@@ -29287,8 +29287,8 @@ public struct SemaphoreSubmitInfo: ChainableBase {
         self.deviceIndex = deviceIndex
     }
 
-    public init(cStruct: VkSemaphoreSubmitInfo, device: Device) {
-        self.semaphore = Semaphore(handle: cStruct.semaphore, device: device)
+    public init(cStruct: VkSemaphoreSubmitInfo) {
+        self.semaphore = Semaphore(handle: cStruct.semaphore)
         self.value = cStruct.value
         self.stageMask = PipelineStageFlags2(rawValue: cStruct.stageMask)
         self.deviceIndex = cStruct.deviceIndex
@@ -29324,8 +29324,8 @@ public struct CommandBufferSubmitInfo: ChainableBase {
         self.deviceMask = deviceMask
     }
 
-    public init(cStruct: VkCommandBufferSubmitInfo, commandPool: CommandPool) {
-        self.commandBuffer = CommandBuffer(handle: cStruct.commandBuffer, commandPool: commandPool)
+    public init(cStruct: VkCommandBufferSubmitInfo, table: UnsafePointer<DeviceDispatchTable>) {
+        self.commandBuffer = CommandBuffer(handle: cStruct.commandBuffer, table: table)
         self.deviceMask = cStruct.deviceMask
     }
 
@@ -29361,11 +29361,11 @@ public struct SubmitInfo2: ChainableBase {
         self.signalSemaphoreInfos = signalSemaphoreInfos
     }
 
-    public init(cStruct: VkSubmitInfo2, device: Device, commandPool: CommandPool) {
+    public init(cStruct: VkSubmitInfo2, table: UnsafePointer<DeviceDispatchTable>) {
         self.flags = SubmitFlags(rawValue: cStruct.flags)
-        self.waitSemaphoreInfos = UnsafeBufferPointer(start: cStruct.pWaitSemaphoreInfos, count: Int(cStruct.waitSemaphoreInfoCount)).map{ SemaphoreSubmitInfo(cStruct: $0, device: device) }
-        self.commandBufferInfos = UnsafeBufferPointer(start: cStruct.pCommandBufferInfos, count: Int(cStruct.commandBufferInfoCount)).map{ CommandBufferSubmitInfo(cStruct: $0, commandPool: commandPool) }
-        self.signalSemaphoreInfos = UnsafeBufferPointer(start: cStruct.pSignalSemaphoreInfos, count: Int(cStruct.signalSemaphoreInfoCount)).map{ SemaphoreSubmitInfo(cStruct: $0, device: device) }
+        self.waitSemaphoreInfos = UnsafeBufferPointer(start: cStruct.pWaitSemaphoreInfos, count: Int(cStruct.waitSemaphoreInfoCount)).map{ SemaphoreSubmitInfo(cStruct: $0) }
+        self.commandBufferInfos = UnsafeBufferPointer(start: cStruct.pCommandBufferInfos, count: Int(cStruct.commandBufferInfoCount)).map{ CommandBufferSubmitInfo(cStruct: $0, table: table) }
+        self.signalSemaphoreInfos = UnsafeBufferPointer(start: cStruct.pSignalSemaphoreInfos, count: Int(cStruct.signalSemaphoreInfoCount)).map{ SemaphoreSubmitInfo(cStruct: $0) }
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkSubmitInfo2>) throws(E) -> R) throws(E) -> R {
@@ -29714,9 +29714,9 @@ public struct CopyMemoryToImageInfo: ChainableBase {
         self.regions = regions
     }
 
-    public init(cStruct: VkCopyMemoryToImageInfo, device: Device) {
+    public init(cStruct: VkCopyMemoryToImageInfo) {
         self.flags = HostImageCopyFlags(rawValue: cStruct.flags)
-        self.dstImage = Image(handle: cStruct.dstImage, device: device)
+        self.dstImage = Image(handle: cStruct.dstImage)
         self.dstImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.dstImageLayout.rawValue))!
         self.regions = UnsafeBufferPointer(start: cStruct.pRegions, count: Int(cStruct.regionCount)).map{ MemoryToImageCopy(cStruct: $0) }
     }
@@ -29758,9 +29758,9 @@ public struct CopyImageToMemoryInfo: ChainableBase {
         self.regions = regions
     }
 
-    public init(cStruct: VkCopyImageToMemoryInfo, device: Device) {
+    public init(cStruct: VkCopyImageToMemoryInfo) {
         self.flags = HostImageCopyFlags(rawValue: cStruct.flags)
-        self.srcImage = Image(handle: cStruct.srcImage, device: device)
+        self.srcImage = Image(handle: cStruct.srcImage)
         self.srcImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.srcImageLayout.rawValue))!
         self.regions = UnsafeBufferPointer(start: cStruct.pRegions, count: Int(cStruct.regionCount)).map{ ImageToMemoryCopy(cStruct: $0) }
     }
@@ -29806,11 +29806,11 @@ public struct CopyImageToImageInfo: ChainableBase {
         self.regions = regions
     }
 
-    public init(cStruct: VkCopyImageToImageInfo, device: Device) {
+    public init(cStruct: VkCopyImageToImageInfo) {
         self.flags = HostImageCopyFlags(rawValue: cStruct.flags)
-        self.srcImage = Image(handle: cStruct.srcImage, device: device)
+        self.srcImage = Image(handle: cStruct.srcImage)
         self.srcImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.srcImageLayout.rawValue))!
-        self.dstImage = Image(handle: cStruct.dstImage, device: device)
+        self.dstImage = Image(handle: cStruct.dstImage)
         self.dstImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.dstImageLayout.rawValue))!
         self.regions = UnsafeBufferPointer(start: cStruct.pRegions, count: Int(cStruct.regionCount)).map{ ImageCopy2(cStruct: $0) }
     }
@@ -29854,8 +29854,8 @@ public struct HostImageLayoutTransitionInfo: ChainableBase {
         self.subresourceRange = subresourceRange
     }
 
-    public init(cStruct: VkHostImageLayoutTransitionInfo, device: Device) {
-        self.image = Image(handle: cStruct.image, device: device)
+    public init(cStruct: VkHostImageLayoutTransitionInfo) {
+        self.image = Image(handle: cStruct.image)
         self.oldLayout = ImageLayout(rawValue: numericBitCast(cStruct.oldLayout.rawValue))!
         self.newLayout = ImageLayout(rawValue: numericBitCast(cStruct.newLayout.rawValue))!
         self.subresourceRange = ImageSubresourceRange(cStruct: cStruct.subresourceRange)
@@ -30659,9 +30659,9 @@ public struct BindVideoSessionMemoryInfoKHR: ChainableBase {
         self.memorySize = memorySize
     }
 
-    public init(cStruct: VkBindVideoSessionMemoryInfoKHR, device: Device) {
+    public init(cStruct: VkBindVideoSessionMemoryInfoKHR) {
         self.memoryBindIndex = cStruct.memoryBindIndex
-        self.memory = DeviceMemory(handle: cStruct.memory, device: device)
+        self.memory = DeviceMemory(handle: cStruct.memory)
         self.memoryOffset = cStruct.memoryOffset
         self.memorySize = cStruct.memorySize
     }
@@ -30700,11 +30700,11 @@ public struct VideoPictureResourceInfoKHR: ChainableBase {
         self.imageViewBinding = imageViewBinding
     }
 
-    public init(cStruct: VkVideoPictureResourceInfoKHR, device: Device) {
+    public init(cStruct: VkVideoPictureResourceInfoKHR) {
         self.codedOffset = Offset2D(cStruct: cStruct.codedOffset)
         self.codedExtent = Extent2D(cStruct: cStruct.codedExtent)
         self.baseArrayLayer = cStruct.baseArrayLayer
-        self.imageViewBinding = ImageView(handle: cStruct.imageViewBinding, device: device)
+        self.imageViewBinding = ImageView(handle: cStruct.imageViewBinding)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkVideoPictureResourceInfoKHR>) throws(E) -> R) throws(E) -> R {
@@ -30741,9 +30741,9 @@ public struct VideoReferenceSlotInfoKHR: ChainableBase {
         self.pictureResource = pictureResource
     }
 
-    public init(cStruct: VkVideoReferenceSlotInfoKHR, device: Device) {
+    public init(cStruct: VkVideoReferenceSlotInfoKHR) {
         self.slotIndex = cStruct.slotIndex
-        self.pictureResource = (cStruct.pPictureResource != nil) ? VideoPictureResourceInfoKHR(cStruct: cStruct.pPictureResource.pointee, device: device) : nil
+        self.pictureResource = (cStruct.pPictureResource != nil) ? VideoPictureResourceInfoKHR(cStruct: cStruct.pPictureResource.pointee) : nil
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkVideoReferenceSlotInfoKHR>) throws(E) -> R) throws(E) -> R {
@@ -30840,14 +30840,14 @@ public struct VideoDecodeInfoKHR: ChainableBase {
         self.referenceSlots = referenceSlots
     }
 
-    public init(cStruct: VkVideoDecodeInfoKHR, device: Device) {
+    public init(cStruct: VkVideoDecodeInfoKHR) {
         self.flags = VideoDecodeFlagsKHR(rawValue: cStruct.flags)
-        self.srcBuffer = Buffer(handle: cStruct.srcBuffer, device: device)
+        self.srcBuffer = Buffer(handle: cStruct.srcBuffer)
         self.srcBufferOffset = cStruct.srcBufferOffset
         self.srcBufferRange = cStruct.srcBufferRange
-        self.dstPictureResource = VideoPictureResourceInfoKHR(cStruct: cStruct.dstPictureResource, device: device)
-        self.setupReferenceSlot = (cStruct.pSetupReferenceSlot != nil) ? VideoReferenceSlotInfoKHR(cStruct: cStruct.pSetupReferenceSlot.pointee, device: device) : nil
-        self.referenceSlots = UnsafeBufferPointer(start: cStruct.pReferenceSlots, count: Int(cStruct.referenceSlotCount)).map{ VideoReferenceSlotInfoKHR(cStruct: $0, device: device) }
+        self.dstPictureResource = VideoPictureResourceInfoKHR(cStruct: cStruct.dstPictureResource)
+        self.setupReferenceSlot = (cStruct.pSetupReferenceSlot != nil) ? VideoReferenceSlotInfoKHR(cStruct: cStruct.pSetupReferenceSlot.pointee) : nil
+        self.referenceSlots = UnsafeBufferPointer(start: cStruct.pReferenceSlots, count: Int(cStruct.referenceSlotCount)).map{ VideoReferenceSlotInfoKHR(cStruct: $0) }
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkVideoDecodeInfoKHR>) throws(E) -> R) throws(E) -> R {
@@ -30950,8 +30950,8 @@ public struct VideoInlineQueryInfoKHR: ChainableBase, VideoDecodeInfoKHRExtensio
         self.queryCount = queryCount
     }
 
-    public init(cStruct: VkVideoInlineQueryInfoKHR, device: Device) {
-        self.queryPool = (cStruct.queryPool != nil) ? QueryPool(handle: cStruct.queryPool, device: device) : nil
+    public init(cStruct: VkVideoInlineQueryInfoKHR) {
+        self.queryPool = (cStruct.queryPool != nil) ? QueryPool(handle: cStruct.queryPool) : nil
         self.firstQuery = cStruct.firstQuery
         self.queryCount = cStruct.queryCount
     }
@@ -31861,10 +31861,10 @@ public struct VideoSessionParametersCreateInfoKHR: ChainableBase {
         self.videoSession = videoSession
     }
 
-    public init(cStruct: VkVideoSessionParametersCreateInfoKHR, device: Device) {
+    public init(cStruct: VkVideoSessionParametersCreateInfoKHR) {
         self.flags = VideoSessionParametersCreateFlagsKHR(rawValue: cStruct.flags)
-        self.videoSessionParametersTemplate = (cStruct.videoSessionParametersTemplate != nil) ? VideoSessionParametersKHR(handle: cStruct.videoSessionParametersTemplate, device: device) : nil
-        self.videoSession = VideoSessionKHR(handle: cStruct.videoSession, device: device)
+        self.videoSessionParametersTemplate = (cStruct.videoSessionParametersTemplate != nil) ? VideoSessionParametersKHR(handle: cStruct.videoSessionParametersTemplate) : nil
+        self.videoSession = VideoSessionKHR(handle: cStruct.videoSession)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkVideoSessionParametersCreateInfoKHR>) throws(E) -> R) throws(E) -> R {
@@ -31923,8 +31923,8 @@ public struct VideoEncodeSessionParametersGetInfoKHR: ChainableBase {
         self.videoSessionParameters = videoSessionParameters
     }
 
-    public init(cStruct: VkVideoEncodeSessionParametersGetInfoKHR, device: Device) {
-        self.videoSessionParameters = VideoSessionParametersKHR(handle: cStruct.videoSessionParameters, device: device)
+    public init(cStruct: VkVideoEncodeSessionParametersGetInfoKHR) {
+        self.videoSessionParameters = VideoSessionParametersKHR(handle: cStruct.videoSessionParameters)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkVideoEncodeSessionParametersGetInfoKHR>) throws(E) -> R) throws(E) -> R {
@@ -31983,11 +31983,11 @@ public struct VideoBeginCodingInfoKHR: ChainableBase {
         self.referenceSlots = referenceSlots
     }
 
-    public init(cStruct: VkVideoBeginCodingInfoKHR, device: Device) {
+    public init(cStruct: VkVideoBeginCodingInfoKHR) {
         self.flags = VideoBeginCodingFlagsKHR(rawValue: cStruct.flags)
-        self.videoSession = VideoSessionKHR(handle: cStruct.videoSession, device: device)
-        self.videoSessionParameters = (cStruct.videoSessionParameters != nil) ? VideoSessionParametersKHR(handle: cStruct.videoSessionParameters, device: device) : nil
-        self.referenceSlots = UnsafeBufferPointer(start: cStruct.pReferenceSlots, count: Int(cStruct.referenceSlotCount)).map{ VideoReferenceSlotInfoKHR(cStruct: $0, device: device) }
+        self.videoSession = VideoSessionKHR(handle: cStruct.videoSession)
+        self.videoSessionParameters = (cStruct.videoSessionParameters != nil) ? VideoSessionParametersKHR(handle: cStruct.videoSessionParameters) : nil
+        self.referenceSlots = UnsafeBufferPointer(start: cStruct.pReferenceSlots, count: Int(cStruct.referenceSlotCount)).map{ VideoReferenceSlotInfoKHR(cStruct: $0) }
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkVideoBeginCodingInfoKHR>) throws(E) -> R) throws(E) -> R {
@@ -32130,14 +32130,14 @@ public struct VideoEncodeInfoKHR: ChainableBase {
         self.precedingExternallyEncodedBytes = precedingExternallyEncodedBytes
     }
 
-    public init(cStruct: VkVideoEncodeInfoKHR, device: Device) {
+    public init(cStruct: VkVideoEncodeInfoKHR) {
         self.flags = VideoEncodeFlagsKHR(rawValue: cStruct.flags)
-        self.dstBuffer = Buffer(handle: cStruct.dstBuffer, device: device)
+        self.dstBuffer = Buffer(handle: cStruct.dstBuffer)
         self.dstBufferOffset = cStruct.dstBufferOffset
         self.dstBufferRange = cStruct.dstBufferRange
-        self.srcPictureResource = VideoPictureResourceInfoKHR(cStruct: cStruct.srcPictureResource, device: device)
-        self.setupReferenceSlot = (cStruct.pSetupReferenceSlot != nil) ? VideoReferenceSlotInfoKHR(cStruct: cStruct.pSetupReferenceSlot.pointee, device: device) : nil
-        self.referenceSlots = UnsafeBufferPointer(start: cStruct.pReferenceSlots, count: Int(cStruct.referenceSlotCount)).map{ VideoReferenceSlotInfoKHR(cStruct: $0, device: device) }
+        self.srcPictureResource = VideoPictureResourceInfoKHR(cStruct: cStruct.srcPictureResource)
+        self.setupReferenceSlot = (cStruct.pSetupReferenceSlot != nil) ? VideoReferenceSlotInfoKHR(cStruct: cStruct.pSetupReferenceSlot.pointee) : nil
+        self.referenceSlots = UnsafeBufferPointer(start: cStruct.pReferenceSlots, count: Int(cStruct.referenceSlotCount)).map{ VideoReferenceSlotInfoKHR(cStruct: $0) }
         self.precedingExternallyEncodedBytes = cStruct.precedingExternallyEncodedBytes
     }
 
@@ -32182,8 +32182,8 @@ public struct VideoEncodeQuantizationMapInfoKHR: ChainableBase, VideoEncodeInfoK
         self.quantizationMapExtent = quantizationMapExtent
     }
 
-    public init(cStruct: VkVideoEncodeQuantizationMapInfoKHR, device: Device) {
-        self.quantizationMap = (cStruct.quantizationMap != nil) ? ImageView(handle: cStruct.quantizationMap, device: device) : nil
+    public init(cStruct: VkVideoEncodeQuantizationMapInfoKHR) {
+        self.quantizationMap = (cStruct.quantizationMap != nil) ? ImageView(handle: cStruct.quantizationMap) : nil
         self.quantizationMapExtent = Extent2D(cStruct: cStruct.quantizationMapExtent)
     }
 
@@ -34785,8 +34785,8 @@ public struct CuFunctionCreateInfoNVX: ChainableBase {
         self.name = name
     }
 
-    public init(cStruct: VkCuFunctionCreateInfoNVX, device: Device) {
-        self.module = CuModuleNVX(handle: cStruct.module, device: device)
+    public init(cStruct: VkCuFunctionCreateInfoNVX) {
+        self.module = CuModuleNVX(handle: cStruct.module)
         self.name = String(cString: cStruct.pName)
     }
 
@@ -34840,8 +34840,8 @@ public struct CuLaunchInfoNVX: ChainableBase {
         self.extras = extras
     }
 
-    public init(cStruct: VkCuLaunchInfoNVX, device: Device) {
-        self.function = CuFunctionNVX(handle: cStruct.function, device: device)
+    public init(cStruct: VkCuLaunchInfoNVX) {
+        self.function = CuFunctionNVX(handle: cStruct.function)
         self.gridDimX = cStruct.gridDimX
         self.gridDimY = cStruct.gridDimY
         self.gridDimZ = cStruct.gridDimZ
@@ -35148,8 +35148,8 @@ public struct DescriptorBufferBindingPushDescriptorBufferHandleEXT: ChainableBas
         self.buffer = buffer
     }
 
-    public init(cStruct: VkDescriptorBufferBindingPushDescriptorBufferHandleEXT, device: Device) {
-        self.buffer = Buffer(handle: cStruct.buffer, device: device)
+    public init(cStruct: VkDescriptorBufferBindingPushDescriptorBufferHandleEXT) {
+        self.buffer = Buffer(handle: cStruct.buffer)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkDescriptorBufferBindingPushDescriptorBufferHandleEXT>) throws(E) -> R) throws(E) -> R {
@@ -35210,8 +35210,8 @@ public struct BufferCaptureDescriptorDataInfoEXT: ChainableBase {
         self.buffer = buffer
     }
 
-    public init(cStruct: VkBufferCaptureDescriptorDataInfoEXT, device: Device) {
-        self.buffer = Buffer(handle: cStruct.buffer, device: device)
+    public init(cStruct: VkBufferCaptureDescriptorDataInfoEXT) {
+        self.buffer = Buffer(handle: cStruct.buffer)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkBufferCaptureDescriptorDataInfoEXT>) throws(E) -> R) throws(E) -> R {
@@ -35239,8 +35239,8 @@ public struct ImageCaptureDescriptorDataInfoEXT: ChainableBase {
         self.image = image
     }
 
-    public init(cStruct: VkImageCaptureDescriptorDataInfoEXT, device: Device) {
-        self.image = Image(handle: cStruct.image, device: device)
+    public init(cStruct: VkImageCaptureDescriptorDataInfoEXT) {
+        self.image = Image(handle: cStruct.image)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkImageCaptureDescriptorDataInfoEXT>) throws(E) -> R) throws(E) -> R {
@@ -35268,8 +35268,8 @@ public struct ImageViewCaptureDescriptorDataInfoEXT: ChainableBase {
         self.imageView = imageView
     }
 
-    public init(cStruct: VkImageViewCaptureDescriptorDataInfoEXT, device: Device) {
-        self.imageView = ImageView(handle: cStruct.imageView, device: device)
+    public init(cStruct: VkImageViewCaptureDescriptorDataInfoEXT) {
+        self.imageView = ImageView(handle: cStruct.imageView)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkImageViewCaptureDescriptorDataInfoEXT>) throws(E) -> R) throws(E) -> R {
@@ -35297,8 +35297,8 @@ public struct SamplerCaptureDescriptorDataInfoEXT: ChainableBase {
         self.sampler = sampler
     }
 
-    public init(cStruct: VkSamplerCaptureDescriptorDataInfoEXT, device: Device) {
-        self.sampler = Sampler(handle: cStruct.sampler, device: device)
+    public init(cStruct: VkSamplerCaptureDescriptorDataInfoEXT) {
+        self.sampler = Sampler(handle: cStruct.sampler)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkSamplerCaptureDescriptorDataInfoEXT>) throws(E) -> R) throws(E) -> R {
@@ -35328,9 +35328,9 @@ public struct AccelerationStructureCaptureDescriptorDataInfoEXT: ChainableBase {
         self.accelerationStructureNV = accelerationStructureNV
     }
 
-    public init(cStruct: VkAccelerationStructureCaptureDescriptorDataInfoEXT, device: Device) {
-        self.accelerationStructure = (cStruct.accelerationStructure != nil) ? AccelerationStructureKHR(handle: cStruct.accelerationStructure, device: device) : nil
-        self.accelerationStructureNV = (cStruct.accelerationStructureNV != nil) ? AccelerationStructureNV(handle: cStruct.accelerationStructureNV, device: device) : nil
+    public init(cStruct: VkAccelerationStructureCaptureDescriptorDataInfoEXT) {
+        self.accelerationStructure = (cStruct.accelerationStructure != nil) ? AccelerationStructureKHR(handle: cStruct.accelerationStructure) : nil
+        self.accelerationStructureNV = (cStruct.accelerationStructureNV != nil) ? AccelerationStructureNV(handle: cStruct.accelerationStructureNV) : nil
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkAccelerationStructureCaptureDescriptorDataInfoEXT>) throws(E) -> R) throws(E) -> R {
@@ -36023,8 +36023,8 @@ public struct MemoryGetRemoteAddressInfoNV: ChainableBase {
         self.handleType = handleType
     }
 
-    public init(cStruct: VkMemoryGetRemoteAddressInfoNV, device: Device) {
-        self.memory = DeviceMemory(handle: cStruct.memory, device: device)
+    public init(cStruct: VkMemoryGetRemoteAddressInfoNV) {
+        self.memory = DeviceMemory(handle: cStruct.memory)
         self.handleType = ExternalMemoryHandleTypeFlags(rawValue: numericBitCast(cStruct.handleType.rawValue))
     }
 
@@ -36057,8 +36057,8 @@ public struct ImportMemoryBufferCollectionFUCHSIA: ChainableBase, MemoryAllocate
         self.index = index
     }
 
-    public init(cStruct: VkImportMemoryBufferCollectionFUCHSIA, device: Device) {
-        self.collection = BufferCollectionFUCHSIA(handle: cStruct.collection, device: device)
+    public init(cStruct: VkImportMemoryBufferCollectionFUCHSIA) {
+        self.collection = BufferCollectionFUCHSIA(handle: cStruct.collection)
         self.index = cStruct.index
     }
 
@@ -36092,8 +36092,8 @@ public struct BufferCollectionImageCreateInfoFUCHSIA: ChainableBase, ImageCreate
         self.index = index
     }
 
-    public init(cStruct: VkBufferCollectionImageCreateInfoFUCHSIA, device: Device) {
-        self.collection = BufferCollectionFUCHSIA(handle: cStruct.collection, device: device)
+    public init(cStruct: VkBufferCollectionImageCreateInfoFUCHSIA) {
+        self.collection = BufferCollectionFUCHSIA(handle: cStruct.collection)
         self.index = cStruct.index
     }
 
@@ -36127,8 +36127,8 @@ public struct BufferCollectionBufferCreateInfoFUCHSIA: ChainableBase, BufferCrea
         self.index = index
     }
 
-    public init(cStruct: VkBufferCollectionBufferCreateInfoFUCHSIA, device: Device) {
-        self.collection = BufferCollectionFUCHSIA(handle: cStruct.collection, device: device)
+    public init(cStruct: VkBufferCollectionBufferCreateInfoFUCHSIA) {
+        self.collection = BufferCollectionFUCHSIA(handle: cStruct.collection)
         self.index = cStruct.index
     }
 
@@ -36506,8 +36506,8 @@ public struct CudaFunctionCreateInfoNV: ChainableBase {
         self.name = name
     }
 
-    public init(cStruct: VkCudaFunctionCreateInfoNV, device: Device) {
-        self.module = CudaModuleNV(handle: cStruct.module, device: device)
+    public init(cStruct: VkCudaFunctionCreateInfoNV) {
+        self.module = CudaModuleNV(handle: cStruct.module)
         self.name = String(cString: cStruct.pName)
     }
 
@@ -36563,8 +36563,8 @@ public struct CudaLaunchInfoNV: ChainableBase {
         self.extras = extras
     }
 
-    public init(cStruct: VkCudaLaunchInfoNV, device: Device) {
-        self.function = CudaFunctionNV(handle: cStruct.function, device: device)
+    public init(cStruct: VkCudaLaunchInfoNV) {
+        self.function = CudaFunctionNV(handle: cStruct.function)
         self.gridDimX = cStruct.gridDimX
         self.gridDimY = cStruct.gridDimY
         self.gridDimZ = cStruct.gridDimZ
@@ -36833,11 +36833,11 @@ public struct RenderingAttachmentInfo: ChainableBase {
         self.clearValue = clearValue
     }
 
-    public init(cStruct: VkRenderingAttachmentInfo, device: Device) {
-        self.imageView = (cStruct.imageView != nil) ? ImageView(handle: cStruct.imageView, device: device) : nil
+    public init(cStruct: VkRenderingAttachmentInfo) {
+        self.imageView = (cStruct.imageView != nil) ? ImageView(handle: cStruct.imageView) : nil
         self.imageLayout = ImageLayout(rawValue: numericBitCast(cStruct.imageLayout.rawValue))!
         self.resolveMode = ResolveModeFlags(rawValue: numericBitCast(cStruct.resolveMode.rawValue))
-        self.resolveImageView = (cStruct.resolveImageView != nil) ? ImageView(handle: cStruct.resolveImageView, device: device) : nil
+        self.resolveImageView = (cStruct.resolveImageView != nil) ? ImageView(handle: cStruct.resolveImageView) : nil
         self.resolveImageLayout = ImageLayout(rawValue: numericBitCast(cStruct.resolveImageLayout.rawValue))!
         self.loadOp = AttachmentLoadOp(rawValue: numericBitCast(cStruct.loadOp.rawValue))!
         self.storeOp = AttachmentStoreOp(rawValue: numericBitCast(cStruct.storeOp.rawValue))!
@@ -36888,14 +36888,14 @@ public struct RenderingInfo: ChainableBase {
         self.stencilAttachment = stencilAttachment
     }
 
-    public init(cStruct: VkRenderingInfo, device: Device) {
+    public init(cStruct: VkRenderingInfo) {
         self.flags = RenderingFlags(rawValue: cStruct.flags)
         self.renderArea = Rect2D(cStruct: cStruct.renderArea)
         self.layerCount = cStruct.layerCount
         self.viewMask = cStruct.viewMask
-        self.colorAttachments = UnsafeBufferPointer(start: cStruct.pColorAttachments, count: Int(cStruct.colorAttachmentCount)).map{ RenderingAttachmentInfo(cStruct: $0, device: device) }
-        self.depthAttachment = (cStruct.pDepthAttachment != nil) ? RenderingAttachmentInfo(cStruct: cStruct.pDepthAttachment.pointee, device: device) : nil
-        self.stencilAttachment = (cStruct.pStencilAttachment != nil) ? RenderingAttachmentInfo(cStruct: cStruct.pStencilAttachment.pointee, device: device) : nil
+        self.colorAttachments = UnsafeBufferPointer(start: cStruct.pColorAttachments, count: Int(cStruct.colorAttachmentCount)).map{ RenderingAttachmentInfo(cStruct: $0) }
+        self.depthAttachment = (cStruct.pDepthAttachment != nil) ? RenderingAttachmentInfo(cStruct: cStruct.pDepthAttachment.pointee) : nil
+        self.stencilAttachment = (cStruct.pStencilAttachment != nil) ? RenderingAttachmentInfo(cStruct: cStruct.pStencilAttachment.pointee) : nil
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkRenderingInfo>) throws(E) -> R) throws(E) -> R {
@@ -36967,8 +36967,8 @@ public struct RenderingFragmentShadingRateAttachmentInfoKHR: ChainableBase, Rend
         self.shadingRateAttachmentTexelSize = shadingRateAttachmentTexelSize
     }
 
-    public init(cStruct: VkRenderingFragmentShadingRateAttachmentInfoKHR, device: Device) {
-        self.imageView = (cStruct.imageView != nil) ? ImageView(handle: cStruct.imageView, device: device) : nil
+    public init(cStruct: VkRenderingFragmentShadingRateAttachmentInfoKHR) {
+        self.imageView = (cStruct.imageView != nil) ? ImageView(handle: cStruct.imageView) : nil
         self.imageLayout = ImageLayout(rawValue: numericBitCast(cStruct.imageLayout.rawValue))!
         self.shadingRateAttachmentTexelSize = Extent2D(cStruct: cStruct.shadingRateAttachmentTexelSize)
     }
@@ -37004,8 +37004,8 @@ public struct RenderingFragmentDensityMapAttachmentInfoEXT: ChainableBase, Rende
         self.imageLayout = imageLayout
     }
 
-    public init(cStruct: VkRenderingFragmentDensityMapAttachmentInfoEXT, device: Device) {
-        self.imageView = ImageView(handle: cStruct.imageView, device: device)
+    public init(cStruct: VkRenderingFragmentDensityMapAttachmentInfoEXT) {
+        self.imageView = ImageView(handle: cStruct.imageView)
         self.imageLayout = ImageLayout(rawValue: numericBitCast(cStruct.imageLayout.rawValue))!
     }
 
@@ -37608,8 +37608,8 @@ public struct DescriptorSetBindingReferenceVALVE: ChainableBase {
         self.binding = binding
     }
 
-    public init(cStruct: VkDescriptorSetBindingReferenceVALVE, device: Device) {
-        self.descriptorSetLayout = DescriptorSetLayout(handle: cStruct.descriptorSetLayout, device: device)
+    public init(cStruct: VkDescriptorSetBindingReferenceVALVE) {
+        self.descriptorSetLayout = DescriptorSetLayout(handle: cStruct.descriptorSetLayout)
         self.binding = cStruct.binding
     }
 
@@ -38229,11 +38229,11 @@ public struct MicromapBuildInfoEXT: ChainableBase {
         self.triangleArrayStride = triangleArrayStride
     }
 
-    public init(cStruct: VkMicromapBuildInfoEXT, device: Device) {
+    public init(cStruct: VkMicromapBuildInfoEXT) {
         self.type = MicromapTypeEXT(rawValue: numericBitCast(cStruct.type.rawValue))!
         self.flags = BuildMicromapFlagsEXT(rawValue: cStruct.flags)
         self.mode = BuildMicromapModeEXT(rawValue: numericBitCast(cStruct.mode.rawValue))!
-        self.dstMicromap = (cStruct.dstMicromap != nil) ? MicromapEXT(handle: cStruct.dstMicromap, device: device) : nil
+        self.dstMicromap = (cStruct.dstMicromap != nil) ? MicromapEXT(handle: cStruct.dstMicromap) : nil
         self.usageCounts = (cStruct.pUsageCounts != nil) ? UnsafeBufferPointer(start: cStruct.pUsageCounts, count: Int(cStruct.usageCountsCount)).map{ MicromapUsageEXT(cStruct: $0) } : nil
         self.usageCounts2 = (cStruct.ppUsageCounts != nil) ? Array(UnsafeBufferPointer(start: cStruct.ppUsageCounts, count: Int(cStruct.usageCountsCount))) : nil
         self.data = cStruct.data
@@ -38369,9 +38369,9 @@ public struct MicromapCreateInfoEXT: ChainableBase {
         self.deviceAddress = deviceAddress
     }
 
-    public init(cStruct: VkMicromapCreateInfoEXT, device: Device) {
+    public init(cStruct: VkMicromapCreateInfoEXT) {
         self.createFlags = MicromapCreateFlagsEXT(rawValue: cStruct.createFlags)
-        self.buffer = Buffer(handle: cStruct.buffer, device: device)
+        self.buffer = Buffer(handle: cStruct.buffer)
         self.offset = cStruct.offset
         self.size = cStruct.size
         self.type = MicromapTypeEXT(rawValue: numericBitCast(cStruct.type.rawValue))!
@@ -38441,9 +38441,9 @@ public struct CopyMicromapInfoEXT: ChainableBase {
         self.mode = mode
     }
 
-    public init(cStruct: VkCopyMicromapInfoEXT, device: Device) {
-        self.src = MicromapEXT(handle: cStruct.src, device: device)
-        self.dst = MicromapEXT(handle: cStruct.dst, device: device)
+    public init(cStruct: VkCopyMicromapInfoEXT) {
+        self.src = MicromapEXT(handle: cStruct.src)
+        self.dst = MicromapEXT(handle: cStruct.dst)
         self.mode = CopyMicromapModeEXT(rawValue: numericBitCast(cStruct.mode.rawValue))!
     }
 
@@ -38478,8 +38478,8 @@ public struct CopyMicromapToMemoryInfoEXT: ChainableBase {
         self.mode = mode
     }
 
-    public init(cStruct: VkCopyMicromapToMemoryInfoEXT, device: Device) {
-        self.src = MicromapEXT(handle: cStruct.src, device: device)
+    public init(cStruct: VkCopyMicromapToMemoryInfoEXT) {
+        self.src = MicromapEXT(handle: cStruct.src)
         self.dst = cStruct.dst
         self.mode = CopyMicromapModeEXT(rawValue: numericBitCast(cStruct.mode.rawValue))!
     }
@@ -38515,9 +38515,9 @@ public struct CopyMemoryToMicromapInfoEXT: ChainableBase {
         self.mode = mode
     }
 
-    public init(cStruct: VkCopyMemoryToMicromapInfoEXT, device: Device) {
+    public init(cStruct: VkCopyMemoryToMicromapInfoEXT) {
         self.src = cStruct.src
-        self.dst = MicromapEXT(handle: cStruct.dst, device: device)
+        self.dst = MicromapEXT(handle: cStruct.dst)
         self.mode = CopyMicromapModeEXT(rawValue: numericBitCast(cStruct.mode.rawValue))!
     }
 
@@ -38749,12 +38749,12 @@ public struct AccelerationStructureTrianglesOpacityMicromapKHR: ChainableBase, A
         self.micromap = micromap
     }
 
-    public init(cStruct: VkAccelerationStructureTrianglesOpacityMicromapKHR, device: Device) {
+    public init(cStruct: VkAccelerationStructureTrianglesOpacityMicromapKHR) {
         self.indexType = IndexType(rawValue: numericBitCast(cStruct.indexType.rawValue))!
         self.indexBuffer = cStruct.indexBuffer
         self.indexStride = cStruct.indexStride
         self.baseTriangle = cStruct.baseTriangle
-        self.micromap = (cStruct.micromap != nil) ? AccelerationStructureKHR(handle: cStruct.micromap, device: device) : nil
+        self.micromap = (cStruct.micromap != nil) ? AccelerationStructureKHR(handle: cStruct.micromap) : nil
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkAccelerationStructureTrianglesOpacityMicromapKHR>) throws(E) -> R) throws(E) -> R {
@@ -38798,14 +38798,14 @@ public struct AccelerationStructureTrianglesOpacityMicromapEXT: ChainableBase, A
         self.micromap = micromap
     }
 
-    public init(cStruct: VkAccelerationStructureTrianglesOpacityMicromapEXT, device: Device) {
+    public init(cStruct: VkAccelerationStructureTrianglesOpacityMicromapEXT) {
         self.indexType = IndexType(rawValue: numericBitCast(cStruct.indexType.rawValue))!
         self.indexBuffer = cStruct.indexBuffer
         self.indexStride = cStruct.indexStride
         self.baseTriangle = cStruct.baseTriangle
         self.usageCounts = (cStruct.pUsageCounts != nil) ? UnsafeBufferPointer(start: cStruct.pUsageCounts, count: Int(cStruct.usageCountsCount)).map{ MicromapUsageEXT(cStruct: $0) } : nil
         self.usageCounts2 = (cStruct.ppUsageCounts != nil) ? Array(UnsafeBufferPointer(start: cStruct.ppUsageCounts, count: Int(cStruct.usageCountsCount))) : nil
-        self.micromap = (cStruct.micromap != nil) ? MicromapEXT(handle: cStruct.micromap, device: device) : nil
+        self.micromap = (cStruct.micromap != nil) ? MicromapEXT(handle: cStruct.micromap) : nil
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkAccelerationStructureTrianglesOpacityMicromapEXT>) throws(E) -> R) throws(E) -> R {
@@ -38931,7 +38931,7 @@ public struct AccelerationStructureTrianglesDisplacementMicromapNV: ChainableBas
         self.micromap = micromap
     }
 
-    public init(cStruct: VkAccelerationStructureTrianglesDisplacementMicromapNV, device: Device) {
+    public init(cStruct: VkAccelerationStructureTrianglesDisplacementMicromapNV) {
         self.displacementBiasAndScaleFormat = Format(rawValue: numericBitCast(cStruct.displacementBiasAndScaleFormat.rawValue))!
         self.displacementVectorFormat = Format(rawValue: numericBitCast(cStruct.displacementVectorFormat.rawValue))!
         self.displacementBiasAndScaleBuffer = cStruct.displacementBiasAndScaleBuffer
@@ -38946,7 +38946,7 @@ public struct AccelerationStructureTrianglesDisplacementMicromapNV: ChainableBas
         self.baseTriangle = cStruct.baseTriangle
         self.usageCounts = (cStruct.pUsageCounts != nil) ? UnsafeBufferPointer(start: cStruct.pUsageCounts, count: Int(cStruct.usageCountsCount)).map{ MicromapUsageEXT(cStruct: $0) } : nil
         self.usageCounts2 = (cStruct.ppUsageCounts != nil) ? Array(UnsafeBufferPointer(start: cStruct.ppUsageCounts, count: Int(cStruct.usageCountsCount))) : nil
-        self.micromap = (cStruct.micromap != nil) ? MicromapEXT(handle: cStruct.micromap, device: device) : nil
+        self.micromap = (cStruct.micromap != nil) ? MicromapEXT(handle: cStruct.micromap) : nil
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkAccelerationStructureTrianglesDisplacementMicromapNV>) throws(E) -> R) throws(E) -> R {
@@ -39198,8 +39198,8 @@ public struct ExportMetalCommandQueueInfoEXT: ChainableBase, ExportMetalObjectsI
         self.mtlCommandQueue = mtlCommandQueue
     }
 
-    public init(cStruct: VkExportMetalCommandQueueInfoEXT, device: Device) {
-        self.queue = Queue(handle: cStruct.queue, device: device)
+    public init(cStruct: VkExportMetalCommandQueueInfoEXT, table: UnsafePointer<DeviceDispatchTable>) {
+        self.queue = Queue(handle: cStruct.queue, table: table)
         self.mtlCommandQueue = cStruct.mtlCommandQueue
     }
 
@@ -39233,8 +39233,8 @@ public struct ExportMetalBufferInfoEXT: ChainableBase, ExportMetalObjectsInfoEXT
         self.mtlBuffer = mtlBuffer
     }
 
-    public init(cStruct: VkExportMetalBufferInfoEXT, device: Device) {
-        self.memory = DeviceMemory(handle: cStruct.memory, device: device)
+    public init(cStruct: VkExportMetalBufferInfoEXT) {
+        self.memory = DeviceMemory(handle: cStruct.memory)
         self.mtlBuffer = cStruct.mtlBuffer
     }
 
@@ -39305,10 +39305,10 @@ public struct ExportMetalTextureInfoEXT: ChainableBase, ExportMetalObjectsInfoEX
         self.mtlTexture = mtlTexture
     }
 
-    public init(cStruct: VkExportMetalTextureInfoEXT, device: Device) {
-        self.image = (cStruct.image != nil) ? Image(handle: cStruct.image, device: device) : nil
-        self.imageView = (cStruct.imageView != nil) ? ImageView(handle: cStruct.imageView, device: device) : nil
-        self.bufferView = (cStruct.bufferView != nil) ? BufferView(handle: cStruct.bufferView, device: device) : nil
+    public init(cStruct: VkExportMetalTextureInfoEXT) {
+        self.image = (cStruct.image != nil) ? Image(handle: cStruct.image) : nil
+        self.imageView = (cStruct.imageView != nil) ? ImageView(handle: cStruct.imageView) : nil
+        self.bufferView = (cStruct.bufferView != nil) ? BufferView(handle: cStruct.bufferView) : nil
         self.plane = ImageAspectFlags(rawValue: numericBitCast(cStruct.plane.rawValue))
         self.mtlTexture = cStruct.mtlTexture
     }
@@ -39381,8 +39381,8 @@ public struct ExportMetalIOSurfaceInfoEXT: ChainableBase, ExportMetalObjectsInfo
         self.ioSurface = ioSurface
     }
 
-    public init(cStruct: VkExportMetalIOSurfaceInfoEXT, device: Device) {
-        self.image = Image(handle: cStruct.image, device: device)
+    public init(cStruct: VkExportMetalIOSurfaceInfoEXT) {
+        self.image = Image(handle: cStruct.image)
         self.ioSurface = cStruct.ioSurface
     }
 
@@ -39449,9 +39449,9 @@ public struct ExportMetalSharedEventInfoEXT: ChainableBase, ExportMetalObjectsIn
         self.mtlSharedEvent = mtlSharedEvent
     }
 
-    public init(cStruct: VkExportMetalSharedEventInfoEXT, device: Device) {
-        self.semaphore = (cStruct.semaphore != nil) ? Semaphore(handle: cStruct.semaphore, device: device) : nil
-        self.event = (cStruct.event != nil) ? Event(handle: cStruct.event, device: device) : nil
+    public init(cStruct: VkExportMetalSharedEventInfoEXT) {
+        self.semaphore = (cStruct.semaphore != nil) ? Semaphore(handle: cStruct.semaphore) : nil
+        self.event = (cStruct.event != nil) ? Event(handle: cStruct.event) : nil
         self.mtlSharedEvent = cStruct.mtlSharedEvent
     }
 
@@ -39891,8 +39891,8 @@ public struct TileMemoryBindInfoQCOM: ChainableBase, CommandBufferInheritanceInf
         self.memory = memory
     }
 
-    public init(cStruct: VkTileMemoryBindInfoQCOM, device: Device) {
-        self.memory = DeviceMemory(handle: cStruct.memory, device: device)
+    public init(cStruct: VkTileMemoryBindInfoQCOM) {
+        self.memory = DeviceMemory(handle: cStruct.memory)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkTileMemoryBindInfoQCOM>) throws(E) -> R) throws(E) -> R {
@@ -41071,11 +41071,11 @@ public struct FrameBoundaryEXT: ChainableBase, SubmitInfoExtension, SubmitInfo2E
         self.tag = tag
     }
 
-    public init(cStruct: VkFrameBoundaryEXT, device: Device) {
+    public init(cStruct: VkFrameBoundaryEXT) {
         self.flags = FrameBoundaryFlagsEXT(rawValue: cStruct.flags)
         self.frameID = cStruct.frameID
-        self.images = (cStruct.pImages != nil) ? UnsafeBufferPointer(start: cStruct.pImages, count: Int(cStruct.imageCount)).map{ Image(handle: $0, device: device) } : nil
-        self.buffers = (cStruct.pBuffers != nil) ? UnsafeBufferPointer(start: cStruct.pBuffers, count: Int(cStruct.bufferCount)).map{ Buffer(handle: $0, device: device) } : nil
+        self.images = (cStruct.pImages != nil) ? UnsafeBufferPointer(start: cStruct.pImages, count: Int(cStruct.imageCount)).map{ Image(handle: $0) } : nil
+        self.buffers = (cStruct.pBuffers != nil) ? UnsafeBufferPointer(start: cStruct.pBuffers, count: Int(cStruct.bufferCount)).map{ Buffer(handle: $0) } : nil
         self.tagName = cStruct.tagName
         self.tagSize = cStruct.tagSize
         self.tag = cStruct.pTag
@@ -41090,9 +41090,9 @@ public struct FrameBoundaryEXT: ChainableBase, SubmitInfoExtension, SubmitInfo2E
                 cStruct.flags = self.flags.rawValue
                 cStruct.frameID = self.frameID
                 cStruct.imageCount = UInt32(ptr_images.count)
-                cStruct.pImages = ptr_images.baseAddress
+                cStruct.pImages = ptr_images.baseAddress?.cast()
                 cStruct.bufferCount = UInt32(ptr_buffers.count)
-                cStruct.pBuffers = ptr_buffers.baseAddress
+                cStruct.pBuffers = ptr_buffers.baseAddress?.cast()
                 cStruct.tagName = self.tagName
                 cStruct.tagSize = self.tagSize
                 cStruct.pTag = self.tag
@@ -41339,23 +41339,23 @@ public struct SwapchainPresentFenceInfoKHR: ChainableBase, PresentInfoKHRExtensi
     public typealias CStruct = VkSwapchainPresentFenceInfoKHR
 
     public static let structureType: StructureType = .swapchainPresentFenceInfoKHR
-    public let fences: Array<Fence?>
+    public let fences: Array<Fence>
 
-    public init(fences: Array<Fence?>) {
+    public init(fences: Array<Fence>) {
         self.fences = fences
     }
 
-    public init(cStruct: VkSwapchainPresentFenceInfoKHR, device: Device) {
-        self.fences = UnsafeBufferPointer(start: cStruct.pFences, count: Int(cStruct.swapchainCount)).map{ ($0 != nil) ? Fence(handle: $0, device: device) : nil }
+    public init(cStruct: VkSwapchainPresentFenceInfoKHR) {
+        self.fences = UnsafeBufferPointer(start: cStruct.pFences, count: Int(cStruct.swapchainCount)).map{ Fence(handle: $0) }
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkSwapchainPresentFenceInfoKHR>) throws(E) -> R) throws(E) -> R {
-        try self.fences.map{ $0?.handle }.withUnsafeBufferPointer { ptr_fences throws(E) in
+        try self.fences.map{ $0.handle }.withUnsafeBufferPointer { ptr_fences throws(E) in
             var cStruct = VkSwapchainPresentFenceInfoKHR()
             cStruct.sType = VkStructureType(rawValue: VkStructureType.RawValue(Self.structureType.rawValue))
             cStruct.pNext = maybeMutable(pNext)
             cStruct.swapchainCount = UInt32(ptr_fences.count)
-            cStruct.pFences = ptr_fences.baseAddress
+            cStruct.pFences = ptr_fences.baseAddress?.cast()
             return try body(&cStruct)
         }
     }
@@ -41480,8 +41480,8 @@ public struct ReleaseSwapchainImagesInfoKHR: ChainableBase {
         self.imageIndices = imageIndices
     }
 
-    public init(cStruct: VkReleaseSwapchainImagesInfoKHR, device: Device) {
-        self.swapchain = SwapchainKHR(handle: cStruct.swapchain, device: device)
+    public init(cStruct: VkReleaseSwapchainImagesInfoKHR) {
+        self.swapchain = SwapchainKHR(handle: cStruct.swapchain)
         self.imageIndices = Array(UnsafeBufferPointer(start: cStruct.pImageIndices, count: Int(cStruct.imageIndexCount)))
     }
 
@@ -42017,9 +42017,9 @@ public struct MemoryMapInfo: ChainableBase {
         self.size = size
     }
 
-    public init(cStruct: VkMemoryMapInfo, device: Device) {
+    public init(cStruct: VkMemoryMapInfo) {
         self.flags = MemoryMapFlags(rawValue: cStruct.flags)
-        self.memory = DeviceMemory(handle: cStruct.memory, device: device)
+        self.memory = DeviceMemory(handle: cStruct.memory)
         self.offset = cStruct.offset
         self.size = cStruct.size
     }
@@ -42054,9 +42054,9 @@ public struct MemoryUnmapInfo: ChainableBase {
         self.memory = memory
     }
 
-    public init(cStruct: VkMemoryUnmapInfo, device: Device) {
+    public init(cStruct: VkMemoryUnmapInfo) {
         self.flags = MemoryUnmapFlags(rawValue: cStruct.flags)
-        self.memory = DeviceMemory(handle: cStruct.memory, device: device)
+        self.memory = DeviceMemory(handle: cStruct.memory)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkMemoryUnmapInfo>) throws(E) -> R) throws(E) -> R {
@@ -42160,7 +42160,7 @@ public struct ShaderCreateInfoEXT: ChainableBase {
         self.specializationInfo = specializationInfo
     }
 
-    public init(cStruct: VkShaderCreateInfoEXT, device: Device) {
+    public init(cStruct: VkShaderCreateInfoEXT) {
         self.flags = ShaderCreateFlagsEXT(rawValue: cStruct.flags)
         self.stage = ShaderStageFlags(rawValue: numericBitCast(cStruct.stage.rawValue))
         self.nextStage = ShaderStageFlags(rawValue: cStruct.nextStage)
@@ -42168,7 +42168,7 @@ public struct ShaderCreateInfoEXT: ChainableBase {
         self.codeSize = cStruct.codeSize
         self.code = cStruct.pCode
         self.name = (cStruct.pName != nil) ? String(cString: cStruct.pName) : nil
-        self.setLayouts = (cStruct.pSetLayouts != nil) ? UnsafeBufferPointer(start: cStruct.pSetLayouts, count: Int(cStruct.setLayoutCount)).map{ DescriptorSetLayout(handle: $0, device: device) } : nil
+        self.setLayouts = (cStruct.pSetLayouts != nil) ? UnsafeBufferPointer(start: cStruct.pSetLayouts, count: Int(cStruct.setLayoutCount)).map{ DescriptorSetLayout(handle: $0) } : nil
         self.pushConstantRanges = (cStruct.pPushConstantRanges != nil) ? UnsafeBufferPointer(start: cStruct.pPushConstantRanges, count: Int(cStruct.pushConstantRangeCount)).map{ PushConstantRange(cStruct: $0) } : nil
         self.specializationInfo = (cStruct.pSpecializationInfo != nil) ? SpecializationInfo(cStruct: cStruct.pSpecializationInfo.pointee) : nil
     }
@@ -42189,7 +42189,7 @@ public struct ShaderCreateInfoEXT: ChainableBase {
                         cStruct.pCode = self.code
                         cStruct.pName = cString_name
                         cStruct.setLayoutCount = UInt32(ptr_setLayouts.count)
-                        cStruct.pSetLayouts = ptr_setLayouts.baseAddress
+                        cStruct.pSetLayouts = ptr_setLayouts.baseAddress?.cast()
                         cStruct.pushConstantRangeCount = UInt32(ptr_pushConstantRanges.count)
                         cStruct.pPushConstantRanges = ptr_pushConstantRanges.baseAddress
                         cStruct.pSpecializationInfo = ptr_specializationInfo
@@ -42688,12 +42688,12 @@ public struct ExecutionGraphPipelineCreateInfoAMDX: ChainableBase {
         self.basePipelineIndex = basePipelineIndex
     }
 
-    public init(cStruct: VkExecutionGraphPipelineCreateInfoAMDX, device: Device) {
+    public init(cStruct: VkExecutionGraphPipelineCreateInfoAMDX) {
         self.flags = PipelineCreateFlags(rawValue: cStruct.flags)
-        self.stages = (cStruct.pStages != nil) ? UnsafeBufferPointer(start: cStruct.pStages, count: Int(cStruct.stageCount)).map{ PipelineShaderStageCreateInfo(cStruct: $0, device: device) } : nil
-        self.libraryInfo = (cStruct.pLibraryInfo != nil) ? PipelineLibraryCreateInfoKHR(cStruct: cStruct.pLibraryInfo.pointee, device: device) : nil
-        self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout, device: device) : nil
-        self.basePipelineHandle = (cStruct.basePipelineHandle != nil) ? Pipeline(handle: cStruct.basePipelineHandle, device: device) : nil
+        self.stages = (cStruct.pStages != nil) ? UnsafeBufferPointer(start: cStruct.pStages, count: Int(cStruct.stageCount)).map{ PipelineShaderStageCreateInfo(cStruct: $0) } : nil
+        self.libraryInfo = (cStruct.pLibraryInfo != nil) ? PipelineLibraryCreateInfoKHR(cStruct: cStruct.pLibraryInfo.pointee) : nil
+        self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout) : nil
+        self.basePipelineHandle = (cStruct.basePipelineHandle != nil) ? Pipeline(handle: cStruct.basePipelineHandle) : nil
         self.basePipelineIndex = cStruct.basePipelineIndex
     }
 
@@ -43135,11 +43135,11 @@ public struct BindDescriptorSetsInfo: ChainableBase {
         self.dynamicOffsets = dynamicOffsets
     }
 
-    public init(cStruct: VkBindDescriptorSetsInfo, device: Device, descriptorPool: DescriptorPool) {
+    public init(cStruct: VkBindDescriptorSetsInfo) {
         self.stageFlags = ShaderStageFlags(rawValue: cStruct.stageFlags)
-        self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout, device: device) : nil
+        self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout) : nil
         self.firstSet = cStruct.firstSet
-        self.descriptorSets = UnsafeBufferPointer(start: cStruct.pDescriptorSets, count: Int(cStruct.descriptorSetCount)).map{ DescriptorSet(handle: $0, descriptorPool: descriptorPool) }
+        self.descriptorSets = UnsafeBufferPointer(start: cStruct.pDescriptorSets, count: Int(cStruct.descriptorSetCount)).map{ DescriptorSet(handle: $0) }
         self.dynamicOffsets = (cStruct.pDynamicOffsets != nil) ? Array(UnsafeBufferPointer(start: cStruct.pDynamicOffsets, count: Int(cStruct.dynamicOffsetCount))) : nil
     }
 
@@ -43153,7 +43153,7 @@ public struct BindDescriptorSetsInfo: ChainableBase {
                 cStruct.layout = self.layout?.handle
                 cStruct.firstSet = self.firstSet
                 cStruct.descriptorSetCount = UInt32(ptr_descriptorSets.count)
-                cStruct.pDescriptorSets = ptr_descriptorSets.baseAddress
+                cStruct.pDescriptorSets = ptr_descriptorSets.baseAddress?.cast()
                 cStruct.dynamicOffsetCount = UInt32(ptr_dynamicOffsets.count)
                 cStruct.pDynamicOffsets = ptr_dynamicOffsets.baseAddress
                 return try body(&cStruct)
@@ -43186,8 +43186,8 @@ public struct PushConstantsInfo: ChainableBase {
         self.values = values
     }
 
-    public init(cStruct: VkPushConstantsInfo, device: Device) {
-        self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout, device: device) : nil
+    public init(cStruct: VkPushConstantsInfo) {
+        self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout) : nil
         self.stageFlags = ShaderStageFlags(rawValue: cStruct.stageFlags)
         self.offset = cStruct.offset
         self.size = cStruct.size
@@ -43229,11 +43229,11 @@ public struct PushDescriptorSetInfo: ChainableBase {
         self.descriptorWrites = descriptorWrites
     }
 
-    public init(cStruct: VkPushDescriptorSetInfo, device: Device, descriptorPool: DescriptorPool) {
+    public init(cStruct: VkPushDescriptorSetInfo) {
         self.stageFlags = ShaderStageFlags(rawValue: cStruct.stageFlags)
-        self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout, device: device) : nil
+        self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout) : nil
         self.set = cStruct.set
-        self.descriptorWrites = UnsafeBufferPointer(start: cStruct.pDescriptorWrites, count: Int(cStruct.descriptorWriteCount)).map{ WriteDescriptorSet(cStruct: $0, descriptorPool: descriptorPool, device: device) }
+        self.descriptorWrites = UnsafeBufferPointer(start: cStruct.pDescriptorWrites, count: Int(cStruct.descriptorWriteCount)).map{ WriteDescriptorSet(cStruct: $0) }
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPushDescriptorSetInfo>) throws(E) -> R) throws(E) -> R {
@@ -43273,9 +43273,9 @@ public struct PushDescriptorSetWithTemplateInfo: ChainableBase {
         self.data = data
     }
 
-    public init(cStruct: VkPushDescriptorSetWithTemplateInfo, device: Device) {
-        self.descriptorUpdateTemplate = DescriptorUpdateTemplate(handle: cStruct.descriptorUpdateTemplate, device: device)
-        self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout, device: device) : nil
+    public init(cStruct: VkPushDescriptorSetWithTemplateInfo) {
+        self.descriptorUpdateTemplate = DescriptorUpdateTemplate(handle: cStruct.descriptorUpdateTemplate)
+        self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout) : nil
         self.set = cStruct.set
         self.data = cStruct.pData
     }
@@ -43316,9 +43316,9 @@ public struct SetDescriptorBufferOffsetsInfoEXT: ChainableBase {
         self.offsets = offsets
     }
 
-    public init(cStruct: VkSetDescriptorBufferOffsetsInfoEXT, device: Device) {
+    public init(cStruct: VkSetDescriptorBufferOffsetsInfoEXT) {
         self.stageFlags = ShaderStageFlags(rawValue: cStruct.stageFlags)
-        self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout, device: device) : nil
+        self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout) : nil
         self.firstSet = cStruct.firstSet
         self.bufferIndices = Array(UnsafeBufferPointer(start: cStruct.pBufferIndices, count: Int(cStruct.setCount)))
         self.offsets = Array(UnsafeBufferPointer(start: cStruct.pOffsets, count: Int(cStruct.setCount)))
@@ -43362,9 +43362,9 @@ public struct BindDescriptorBufferEmbeddedSamplersInfoEXT: ChainableBase {
         self.set = set
     }
 
-    public init(cStruct: VkBindDescriptorBufferEmbeddedSamplersInfoEXT, device: Device) {
+    public init(cStruct: VkBindDescriptorBufferEmbeddedSamplersInfoEXT) {
         self.stageFlags = ShaderStageFlags(rawValue: cStruct.stageFlags)
-        self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout, device: device) : nil
+        self.layout = (cStruct.layout != nil) ? PipelineLayout(handle: cStruct.layout) : nil
         self.set = cStruct.set
     }
 
@@ -43918,8 +43918,8 @@ public struct LatencySleepInfoNV: ChainableBase {
         self.value = value
     }
 
-    public init(cStruct: VkLatencySleepInfoNV, device: Device) {
-        self.signalSemaphore = Semaphore(handle: cStruct.signalSemaphore, device: device)
+    public init(cStruct: VkLatencySleepInfoNV) {
+        self.signalSemaphore = Semaphore(handle: cStruct.signalSemaphore)
         self.value = cStruct.value
     }
 
@@ -44562,8 +44562,8 @@ public struct RenderPassStripeSubmitInfoARM: ChainableBase, CommandBufferSubmitI
         self.stripeSemaphoreInfos = stripeSemaphoreInfos
     }
 
-    public init(cStruct: VkRenderPassStripeSubmitInfoARM, device: Device) {
-        self.stripeSemaphoreInfos = UnsafeBufferPointer(start: cStruct.pStripeSemaphoreInfos, count: Int(cStruct.stripeSemaphoreInfoCount)).map{ SemaphoreSubmitInfo(cStruct: $0, device: device) }
+    public init(cStruct: VkRenderPassStripeSubmitInfoARM) {
+        self.stripeSemaphoreInfos = UnsafeBufferPointer(start: cStruct.pStripeSemaphoreInfos, count: Int(cStruct.stripeSemaphoreInfoCount)).map{ SemaphoreSubmitInfo(cStruct: $0) }
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkRenderPassStripeSubmitInfoARM>) throws(E) -> R) throws(E) -> R {
@@ -46130,8 +46130,8 @@ public struct ExternalComputeQueueCreateInfoNV: ChainableBase {
         self.preferredQueue = preferredQueue
     }
 
-    public init(cStruct: VkExternalComputeQueueCreateInfoNV, device: Device) {
-        self.preferredQueue = Queue(handle: cStruct.preferredQueue, device: device)
+    public init(cStruct: VkExternalComputeQueueCreateInfoNV, table: UnsafePointer<DeviceDispatchTable>) {
+        self.preferredQueue = Queue(handle: cStruct.preferredQueue, table: table)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkExternalComputeQueueCreateInfoNV>) throws(E) -> R) throws(E) -> R {
@@ -46502,9 +46502,9 @@ public struct TensorViewCreateInfoARM: ChainableBase {
         self.format = format
     }
 
-    public init(cStruct: VkTensorViewCreateInfoARM, device: Device) {
+    public init(cStruct: VkTensorViewCreateInfoARM) {
         self.flags = TensorViewCreateFlagsARM(rawValue: cStruct.flags)
-        self.tensor = TensorARM(handle: cStruct.tensor, device: device)
+        self.tensor = TensorARM(handle: cStruct.tensor)
         self.format = Format(rawValue: numericBitCast(cStruct.format.rawValue))!
     }
 
@@ -46535,8 +46535,8 @@ public struct TensorMemoryRequirementsInfoARM: ChainableBase {
         self.tensor = tensor
     }
 
-    public init(cStruct: VkTensorMemoryRequirementsInfoARM, device: Device) {
-        self.tensor = TensorARM(handle: cStruct.tensor, device: device)
+    public init(cStruct: VkTensorMemoryRequirementsInfoARM) {
+        self.tensor = TensorARM(handle: cStruct.tensor)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkTensorMemoryRequirementsInfoARM>) throws(E) -> R) throws(E) -> R {
@@ -46568,9 +46568,9 @@ public struct BindTensorMemoryInfoARM: ChainableBase {
         self.memoryOffset = memoryOffset
     }
 
-    public init(cStruct: VkBindTensorMemoryInfoARM, device: Device) {
-        self.tensor = TensorARM(handle: cStruct.tensor, device: device)
-        self.memory = DeviceMemory(handle: cStruct.memory, device: device)
+    public init(cStruct: VkBindTensorMemoryInfoARM) {
+        self.tensor = TensorARM(handle: cStruct.tensor)
+        self.memory = DeviceMemory(handle: cStruct.memory)
         self.memoryOffset = cStruct.memoryOffset
     }
 
@@ -46595,23 +46595,23 @@ public struct WriteDescriptorSetTensorARM: ChainableBase, WriteDescriptorSetExte
     public typealias CStruct = VkWriteDescriptorSetTensorARM
 
     public static let structureType: StructureType = .writeDescriptorSetTensorARM
-    public let tensorViews: Array<TensorViewARM?>
+    public let tensorViews: Array<TensorViewARM>
 
-    public init(tensorViews: Array<TensorViewARM?>) {
+    public init(tensorViews: Array<TensorViewARM>) {
         self.tensorViews = tensorViews
     }
 
-    public init(cStruct: VkWriteDescriptorSetTensorARM, device: Device) {
-        self.tensorViews = UnsafeBufferPointer(start: cStruct.pTensorViews, count: Int(cStruct.tensorViewCount)).map{ ($0 != nil) ? TensorViewARM(handle: $0, device: device) : nil }
+    public init(cStruct: VkWriteDescriptorSetTensorARM) {
+        self.tensorViews = UnsafeBufferPointer(start: cStruct.pTensorViews, count: Int(cStruct.tensorViewCount)).map{ TensorViewARM(handle: $0) }
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkWriteDescriptorSetTensorARM>) throws(E) -> R) throws(E) -> R {
-        try self.tensorViews.map{ $0?.handle }.withUnsafeBufferPointer { ptr_tensorViews throws(E) in
+        try self.tensorViews.map{ $0.handle }.withUnsafeBufferPointer { ptr_tensorViews throws(E) in
             var cStruct = VkWriteDescriptorSetTensorARM()
             cStruct.sType = VkStructureType(rawValue: VkStructureType.RawValue(Self.structureType.rawValue))
             cStruct.pNext = maybeMutable(pNext)
             cStruct.tensorViewCount = UInt32(ptr_tensorViews.count)
-            cStruct.pTensorViews = ptr_tensorViews.baseAddress
+            cStruct.pTensorViews = ptr_tensorViews.baseAddress?.cast()
             return try body(&cStruct)
         }
     }
@@ -46734,14 +46734,14 @@ public struct TensorMemoryBarrierARM: ChainableBase, DependencyInfoExtension {
         self.tensor = tensor
     }
 
-    public init(cStruct: VkTensorMemoryBarrierARM, device: Device) {
+    public init(cStruct: VkTensorMemoryBarrierARM) {
         self.srcStageMask = PipelineStageFlags2(rawValue: cStruct.srcStageMask)
         self.srcAccessMask = AccessFlags2(rawValue: cStruct.srcAccessMask)
         self.dstStageMask = PipelineStageFlags2(rawValue: cStruct.dstStageMask)
         self.dstAccessMask = AccessFlags2(rawValue: cStruct.dstAccessMask)
         self.srcQueueFamilyIndex = cStruct.srcQueueFamilyIndex
         self.dstQueueFamilyIndex = cStruct.dstQueueFamilyIndex
-        self.tensor = TensorARM(handle: cStruct.tensor, device: device)
+        self.tensor = TensorARM(handle: cStruct.tensor)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkTensorMemoryBarrierARM>) throws(E) -> R) throws(E) -> R {
@@ -46775,8 +46775,8 @@ public struct TensorDependencyInfoARM: ChainableBase, DependencyInfoExtension {
         self.tensorMemoryBarriers = tensorMemoryBarriers
     }
 
-    public init(cStruct: VkTensorDependencyInfoARM, device: Device) {
-        self.tensorMemoryBarriers = UnsafeBufferPointer(start: cStruct.pTensorMemoryBarriers, count: Int(cStruct.tensorMemoryBarrierCount)).map{ TensorMemoryBarrierARM(cStruct: $0, device: device) }
+    public init(cStruct: VkTensorDependencyInfoARM) {
+        self.tensorMemoryBarriers = UnsafeBufferPointer(start: cStruct.pTensorMemoryBarriers, count: Int(cStruct.tensorMemoryBarrierCount)).map{ TensorMemoryBarrierARM(cStruct: $0) }
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkTensorDependencyInfoARM>) throws(E) -> R) throws(E) -> R {
@@ -46935,9 +46935,9 @@ public struct CopyTensorInfoARM: ChainableBase {
         self.regions = regions
     }
 
-    public init(cStruct: VkCopyTensorInfoARM, device: Device) {
-        self.srcTensor = TensorARM(handle: cStruct.srcTensor, device: device)
-        self.dstTensor = TensorARM(handle: cStruct.dstTensor, device: device)
+    public init(cStruct: VkCopyTensorInfoARM) {
+        self.srcTensor = TensorARM(handle: cStruct.srcTensor)
+        self.dstTensor = TensorARM(handle: cStruct.dstTensor)
         self.regions = UnsafeBufferPointer(start: cStruct.pRegions, count: Int(cStruct.regionCount)).map{ TensorCopyARM(cStruct: $0) }
     }
 
@@ -46971,8 +46971,8 @@ public struct MemoryDedicatedAllocateInfoTensorARM: ChainableBase, MemoryAllocat
         self.tensor = tensor
     }
 
-    public init(cStruct: VkMemoryDedicatedAllocateInfoTensorARM, device: Device) {
-        self.tensor = TensorARM(handle: cStruct.tensor, device: device)
+    public init(cStruct: VkMemoryDedicatedAllocateInfoTensorARM) {
+        self.tensor = TensorARM(handle: cStruct.tensor)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkMemoryDedicatedAllocateInfoTensorARM>) throws(E) -> R) throws(E) -> R {
@@ -47066,8 +47066,8 @@ public struct TensorCaptureDescriptorDataInfoARM: ChainableBase {
         self.tensor = tensor
     }
 
-    public init(cStruct: VkTensorCaptureDescriptorDataInfoARM, device: Device) {
-        self.tensor = TensorARM(handle: cStruct.tensor, device: device)
+    public init(cStruct: VkTensorCaptureDescriptorDataInfoARM) {
+        self.tensor = TensorARM(handle: cStruct.tensor)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkTensorCaptureDescriptorDataInfoARM>) throws(E) -> R) throws(E) -> R {
@@ -47095,8 +47095,8 @@ public struct TensorViewCaptureDescriptorDataInfoARM: ChainableBase {
         self.tensorView = tensorView
     }
 
-    public init(cStruct: VkTensorViewCaptureDescriptorDataInfoARM, device: Device) {
-        self.tensorView = TensorViewARM(handle: cStruct.tensorView, device: device)
+    public init(cStruct: VkTensorViewCaptureDescriptorDataInfoARM) {
+        self.tensorView = TensorViewARM(handle: cStruct.tensorView)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkTensorViewCaptureDescriptorDataInfoARM>) throws(E) -> R) throws(E) -> R {
@@ -47124,8 +47124,8 @@ public struct DescriptorGetTensorInfoARM: ChainableBase, DescriptorGetInfoEXTExt
         self.tensorView = tensorView
     }
 
-    public init(cStruct: VkDescriptorGetTensorInfoARM, device: Device) {
-        self.tensorView = (cStruct.tensorView != nil) ? TensorViewARM(handle: cStruct.tensorView, device: device) : nil
+    public init(cStruct: VkDescriptorGetTensorInfoARM) {
+        self.tensorView = (cStruct.tensorView != nil) ? TensorViewARM(handle: cStruct.tensorView) : nil
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkDescriptorGetTensorInfoARM>) throws(E) -> R) throws(E) -> R {
@@ -47153,8 +47153,8 @@ public struct FrameBoundaryTensorsARM: ChainableBase, SubmitInfoExtension, Submi
         self.tensors = tensors
     }
 
-    public init(cStruct: VkFrameBoundaryTensorsARM, device: Device) {
-        self.tensors = UnsafeBufferPointer(start: cStruct.pTensors, count: Int(cStruct.tensorCount)).map{ TensorARM(handle: $0, device: device) }
+    public init(cStruct: VkFrameBoundaryTensorsARM) {
+        self.tensors = UnsafeBufferPointer(start: cStruct.pTensors, count: Int(cStruct.tensorCount)).map{ TensorARM(handle: $0) }
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkFrameBoundaryTensorsARM>) throws(E) -> R) throws(E) -> R {
@@ -47163,7 +47163,7 @@ public struct FrameBoundaryTensorsARM: ChainableBase, SubmitInfoExtension, Submi
             cStruct.sType = VkStructureType(rawValue: VkStructureType.RawValue(Self.structureType.rawValue))
             cStruct.pNext = maybeMutable(pNext)
             cStruct.tensorCount = UInt32(ptr_tensors.count)
-            cStruct.pTensors = ptr_tensors.baseAddress
+            cStruct.pTensors = ptr_tensors.baseAddress?.cast()
             return try body(&cStruct)
         }
     }
@@ -47568,9 +47568,9 @@ public struct DataGraphPipelineCreateInfoARM: ChainableBase {
         self.resourceInfos = resourceInfos
     }
 
-    public init(cStruct: VkDataGraphPipelineCreateInfoARM, device: Device) {
+    public init(cStruct: VkDataGraphPipelineCreateInfoARM) {
         self.flags = PipelineCreateFlags2(rawValue: cStruct.flags)
-        self.layout = PipelineLayout(handle: cStruct.layout, device: device)
+        self.layout = PipelineLayout(handle: cStruct.layout)
         self.resourceInfos = UnsafeBufferPointer(start: cStruct.pResourceInfos, count: Int(cStruct.resourceInfoCount)).map{ DataGraphPipelineResourceInfoARM(cStruct: $0) }
     }
 
@@ -47610,8 +47610,8 @@ public struct DataGraphPipelineShaderModuleCreateInfoARM: ChainableBase, DataGra
         self.constants = constants
     }
 
-    public init(cStruct: VkDataGraphPipelineShaderModuleCreateInfoARM, device: Device) {
-        self.module = (cStruct.module != nil) ? ShaderModule(handle: cStruct.module, device: device) : nil
+    public init(cStruct: VkDataGraphPipelineShaderModuleCreateInfoARM) {
+        self.module = (cStruct.module != nil) ? ShaderModule(handle: cStruct.module) : nil
         self.name = String(cString: cStruct.pName)
         self.specializationInfo = (cStruct.pSpecializationInfo != nil) ? SpecializationInfo(cStruct: cStruct.pSpecializationInfo.pointee) : nil
         self.constants = (cStruct.pConstants != nil) ? UnsafeBufferPointer(start: cStruct.pConstants, count: Int(cStruct.constantCount)).map{ DataGraphPipelineConstantARM(cStruct: $0) } : nil
@@ -47654,9 +47654,9 @@ public struct DataGraphPipelineSessionCreateInfoARM: ChainableBase {
         self.dataGraphPipeline = dataGraphPipeline
     }
 
-    public init(cStruct: VkDataGraphPipelineSessionCreateInfoARM, device: Device) {
+    public init(cStruct: VkDataGraphPipelineSessionCreateInfoARM) {
         self.flags = DataGraphPipelineSessionCreateFlagsARM(rawValue: cStruct.flags)
-        self.dataGraphPipeline = Pipeline(handle: cStruct.dataGraphPipeline, device: device)
+        self.dataGraphPipeline = Pipeline(handle: cStruct.dataGraphPipeline)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkDataGraphPipelineSessionCreateInfoARM>) throws(E) -> R) throws(E) -> R {
@@ -47685,8 +47685,8 @@ public struct DataGraphPipelineSessionBindPointRequirementsInfoARM: ChainableBas
         self.session = session
     }
 
-    public init(cStruct: VkDataGraphPipelineSessionBindPointRequirementsInfoARM, device: Device) {
-        self.session = DataGraphPipelineSessionARM(handle: cStruct.session, device: device)
+    public init(cStruct: VkDataGraphPipelineSessionBindPointRequirementsInfoARM) {
+        self.session = DataGraphPipelineSessionARM(handle: cStruct.session)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkDataGraphPipelineSessionBindPointRequirementsInfoARM>) throws(E) -> R) throws(E) -> R {
@@ -47749,8 +47749,8 @@ public struct DataGraphPipelineSessionMemoryRequirementsInfoARM: ChainableBase {
         self.objectIndex = objectIndex
     }
 
-    public init(cStruct: VkDataGraphPipelineSessionMemoryRequirementsInfoARM, device: Device) {
-        self.session = DataGraphPipelineSessionARM(handle: cStruct.session, device: device)
+    public init(cStruct: VkDataGraphPipelineSessionMemoryRequirementsInfoARM) {
+        self.session = DataGraphPipelineSessionARM(handle: cStruct.session)
         self.bindPoint = DataGraphPipelineSessionBindPointARM(rawValue: numericBitCast(cStruct.bindPoint.rawValue))!
         self.objectIndex = cStruct.objectIndex
     }
@@ -47790,11 +47790,11 @@ public struct BindDataGraphPipelineSessionMemoryInfoARM: ChainableBase {
         self.memoryOffset = memoryOffset
     }
 
-    public init(cStruct: VkBindDataGraphPipelineSessionMemoryInfoARM, device: Device) {
-        self.session = DataGraphPipelineSessionARM(handle: cStruct.session, device: device)
+    public init(cStruct: VkBindDataGraphPipelineSessionMemoryInfoARM) {
+        self.session = DataGraphPipelineSessionARM(handle: cStruct.session)
         self.bindPoint = DataGraphPipelineSessionBindPointARM(rawValue: numericBitCast(cStruct.bindPoint.rawValue))!
         self.objectIndex = cStruct.objectIndex
-        self.memory = DeviceMemory(handle: cStruct.memory, device: device)
+        self.memory = DeviceMemory(handle: cStruct.memory)
         self.memoryOffset = cStruct.memoryOffset
     }
 
@@ -47827,8 +47827,8 @@ public struct DataGraphPipelineInfoARM: ChainableBase {
         self.dataGraphPipeline = dataGraphPipeline
     }
 
-    public init(cStruct: VkDataGraphPipelineInfoARM, device: Device) {
-        self.dataGraphPipeline = Pipeline(handle: cStruct.dataGraphPipeline, device: device)
+    public init(cStruct: VkDataGraphPipelineInfoARM) {
+        self.dataGraphPipeline = Pipeline(handle: cStruct.dataGraphPipeline)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkDataGraphPipelineInfoARM>) throws(E) -> R) throws(E) -> R {
@@ -48555,8 +48555,8 @@ public struct MemoryGetNativeBufferInfoOHOS: ChainableBase {
         self.memory = memory
     }
 
-    public init(cStruct: VkMemoryGetNativeBufferInfoOHOS, device: Device) {
-        self.memory = DeviceMemory(handle: cStruct.memory, device: device)
+    public init(cStruct: VkMemoryGetNativeBufferInfoOHOS) {
+        self.memory = DeviceMemory(handle: cStruct.memory)
     }
 
     public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkMemoryGetNativeBufferInfoOHOS>) throws(E) -> R) throws(E) -> R {
@@ -49125,8 +49125,8 @@ public struct ImageDescriptorInfoEXT: ChainableBase {
         self.layout = layout
     }
 
-    public init(cStruct: VkImageDescriptorInfoEXT, device: Device) {
-        self.view = ImageViewCreateInfo(cStruct: cStruct.pView.pointee, device: device)
+    public init(cStruct: VkImageDescriptorInfoEXT) {
+        self.view = ImageViewCreateInfo(cStruct: cStruct.pView.pointee)
         self.layout = ImageLayout(rawValue: numericBitCast(cStruct.layout.rawValue))!
     }
 
@@ -50341,8 +50341,8 @@ public struct CopyDeviceMemoryImageInfoKHR: ChainableBase {
         self.regions = regions
     }
 
-    public init(cStruct: VkCopyDeviceMemoryImageInfoKHR, device: Device) {
-        self.image = Image(handle: cStruct.image, device: device)
+    public init(cStruct: VkCopyDeviceMemoryImageInfoKHR) {
+        self.image = Image(handle: cStruct.image)
         self.regions = UnsafeBufferPointer(start: cStruct.pRegions, count: Int(cStruct.regionCount)).map{ DeviceMemoryImageCopyKHR(cStruct: $0) }
     }
 

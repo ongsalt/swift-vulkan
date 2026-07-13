@@ -35,8 +35,9 @@ class SwiftStruct:
     name: str
     members: list[SwiftMember]
     member_conversions: tc.MemberConversions
-    convertible_from_c_struct: bool = True
-    parent_classes: list[SwiftClass] = field(default_factory=list)
+    # Set when a member is a dispatchable handle: rebuilding it from a C struct
+    # needs the dispatch table that handle would carry.
+    table_type: str | None = None
     protocols: list[str] = field(default_factory=list)
     protect: str | None = None
 
@@ -66,13 +67,21 @@ class SwiftCommand:
     protect: str | None = None
     enumeration_is_bytes_array: bool = False
     chainable_out_parameters: list[str] | None = None
+    # vkCreateInstance/vkCreateDevice allocate the table the new handle carries;
+    # vkDestroyInstance/vkDestroyDevice free it again
+    creates_table: DispatchTable | None = None
+    destroys_table: bool = False
 
 
 @dataclass(eq=False)
 class DispatchTable:
     name: str
+    # the function pointer used to load every other entry, stored as a field so
+    # children can build their own table from it
     loader: tuple[str, str]
     param: tuple[str, str] | None = None
+    # object retained by the table, supplying the loader function (Entry only)
+    owner: tuple[str, str] | None = None
     commands: list[CCommand] = field(default_factory=list)
 
 
@@ -81,20 +90,16 @@ class SwiftClass:
     name: str
     reference_name: str
     c_handle: CHandle | None = None
-    parent: SwiftClass | None = None
-    dispatch_table: DispatchTable | None = None
-    dispatcher: SwiftClass | None = None
+    # dispatchable handles carry a dispatch table; the rest are just a raw handle
+    dispatchable: bool = False
+    table: DispatchTable | None = None
+    # Entry/Instance/Device allocate the table they carry; Queue, CommandBuffer
+    # and PhysicalDevice borrow their dispatcher's
+    owns_table: bool = False
+    # ObjectType case, for the type-erased (objectType, objectHandle) pair
+    obj_type: str | None = None
     commands: list[SwiftCommand] = field(default_factory=list)
     protect: str | None = None
-
-    @property
-    def ancestors(self) -> list[SwiftClass]:
-        ancestors: list[SwiftClass] = []
-        current_class = self
-        while current_class.parent:
-            current_class = current_class.parent
-            ancestors.append(current_class)
-        return ancestors
 
 
 @dataclass(eq=False)
@@ -140,6 +145,7 @@ class Importer:
         self.swift_context = SwiftContext()
         self.imported_enums: dict[str, SwiftEnum] = {}
         self.imported_structure_types: dict[str, str] = {}
+        self.imported_object_types: dict[str, str] = {}
         self.imported_option_sets: dict[str, SwiftOptionSet] = {}
         self.imported_option_set_bits: dict[str, SwiftOptionSet] = {}
         self.imported_structs: dict[str, SwiftStruct] = {}
@@ -213,6 +219,8 @@ class Importer:
                 SwiftEnum.Case(name=name, value=case.value))
             if swift_enum.name == "StructureType":
                 self.imported_structure_types[case.name] = name
+            elif swift_enum.name == "ObjectType":
+                self.imported_object_types[case.name] = name
 
         if starts_with_digit:
             for case in swift_enum.cases:
@@ -281,42 +289,25 @@ class Importer:
 
         name = remove_vk_prefix(c_struct.name)
 
-        convertible_from_c_struct = True
-        parent_classes: list[SwiftClass] = []
+        table_type: str | None = None
 
         protocols: list[str] = []
         for base in c_struct.struct_extends:
             protocols.append(f"{remove_vk_prefix(base)}Extension")
 
         for member in c_struct.members:
-            # if member.name == 'pNext':
-            #     if member.type.pointer_to.const:
-            #         # protocols.append('InStruct')
-            #         pass
-            #     else:
-            #         protocols.append('OutStruct')
             type_name = member.type.type_name
             if type_name in self.c_structs:
                 child_struct = self.import_struct(self.c_structs[type_name])
-                if convertible_from_c_struct:
-                    convertible_from_c_struct = child_struct.convertible_from_c_struct
-                    for c in child_struct.parent_classes:
-                        if c not in parent_classes:
-                            parent_classes.append(c)
-            elif convertible_from_c_struct:
+                table_type = table_type or child_struct.table_type
+            elif type_name:
                 if type_name in self.imported_aliases:
                     type_name = self.imported_aliases[type_name].c_alias.alias
-                # if type_name in ('VkPhysicalDevice', 'VkDisplayKHR', 'VkDisplayModeKHR'):
-                elif type_name in self.imported_classes:
-                    c = self.imported_classes[type_name].parent
-                    if c and c not in parent_classes:
-                        parent_classes.append(c)
-            # else:
-                # print()
-                # TODO: cant we just do Global.getHandleClass() or some shi
-                # vulkan wont return an existing handle which mean we can create this
-                # convertible_from_c_struct = False
-                # pass
+                cls = self.imported_classes.get(type_name)
+                # only a dispatchable handle needs anything beyond its raw handle
+                # to be rebuilt from a C struct
+                if cls and cls.dispatchable and cls.table:
+                    table_type = table_type or cls.table.name
 
         members, conversions = self.get_member_conversions(
             c_struct.members, c_struct=c_struct)
@@ -324,8 +315,7 @@ class Importer:
                              name=name,
                              members=members,
                              member_conversions=conversions,
-                             convertible_from_c_struct=convertible_from_c_struct,
-                             parent_classes=list(parent_classes),
+                             table_type=table_type,
                              protocols=protocols,
                              protect=c_struct.protect)
         self.swift_context.structs.append(struct)
@@ -337,10 +327,11 @@ class Importer:
             return self.imported_classes['entry']
 
         dispatch_table = DispatchTable(
-            'EntryDispatchTable', ('vkGetInstanceProcAddr', 'PFN_vkGetInstanceProcAddr'))
-        loader = SwiftClass(name='Loader', reference_name='loader')
-        entry = SwiftClass(name='Entry', reference_name='entry', parent=loader,
-                           dispatch_table=dispatch_table, dispatcher=loader)
+            'EntryDispatchTable',
+            ('vkGetInstanceProcAddr', 'PFN_vkGetInstanceProcAddr'),
+            owner=('loader', 'any Loader'))
+        entry = SwiftClass(name='Entry', reference_name='entry',
+                           dispatchable=True, table=dispatch_table, owns_table=True)
 
         self.swift_context.dispatch_tables.append(dispatch_table)
         self.swift_context.classes.append(entry)
@@ -355,50 +346,56 @@ class Importer:
         reference_name, _ = self.pop_extension_tag(name)
         reference_name = reference_name[0].lower() + reference_name[1:]
 
+        owns_table = False
         if handle.name == 'VkInstance':
-            parent = self.import_entry()
-        elif handle.name == 'VkSwapchainKHR':
-            parent = self.imported_classes['VkDevice']
-        else:
-            parent = self.import_handle(
-                handle.parent) if handle.parent else None
-
-        if handle.name == 'VkInstance':
-            dispatch_table = DispatchTable('InstanceDispatchTable',
-                                           ('vkGetInstanceProcAddr',
-                                            'PFN_vkGetInstanceProcAddr'),
-                                           ('instance', 'VkInstance'))
-            dispatcher = self.imported_classes['entry'].parent
+            self.import_entry()
+            table = DispatchTable('InstanceDispatchTable',
+                                  ('vkGetInstanceProcAddr',
+                                   'PFN_vkGetInstanceProcAddr'),
+                                  ('instance', 'VkInstance'))
+            owns_table = True
+            self.swift_context.dispatch_tables.append(table)
         elif handle.name == 'VkDevice':
-            dispatch_table = DispatchTable('DeviceDispatchTable',
-                                           ('vkGetDeviceProcAddr',
-                                            'PFN_vkGetDeviceProcAddr'),
-                                           ('device', 'VkDevice'))
-            dispatcher = self.imported_classes['VkInstance']
+            table = DispatchTable('DeviceDispatchTable',
+                                  ('vkGetDeviceProcAddr',
+                                   'PFN_vkGetDeviceProcAddr'),
+                                  ('device', 'VkDevice'))
+            owns_table = True
+            self.swift_context.dispatch_tables.append(table)
+        elif handle.dispatchable:
+            # borrows the table of the instance/device it was created from
+            table = self.get_dispatcher_of(handle).table
         else:
-            dispatch_table = None
-            dispatcher = None
-
-        if dispatch_table:
-            self.swift_context.dispatch_tables.append(dispatch_table)
+            table = None
 
         cls = SwiftClass(
             c_handle=handle,
             name=name,
             reference_name=reference_name,
-            parent=parent,
-            dispatch_table=dispatch_table,
-            dispatcher=dispatcher,
+            dispatchable=handle.dispatchable,
+            table=table,
+            owns_table=owns_table,
+            obj_type=self.imported_object_types.get(handle.obj_type_enum or ''),
             protect=handle.protect
         )
         self.swift_context.classes.append(cls)
         self.imported_classes[handle.name] = cls
         return cls
 
+    def get_dispatcher_of(self, handle: CHandle) -> SwiftClass:
+        """The Instance/Device whose dispatch table dispatches this handle's commands."""
+        current = handle
+        while current:
+            if current.name in ('VkInstance', 'VkDevice'):
+                return self.import_handle(current)
+            current = current.parent
+        return self.imported_classes['entry']
+
     def import_command(self, c_command: CCommand) -> SwiftCommand:
-        class_params_and_classes: list[tuple[CMember,
-                                             SwiftClass]] = self.get_class_params(c_command)
-        current_class = class_params_and_classes[-1][1] if class_params_and_classes \
+        receiver = self.get_receiver(c_command)
+        class_params_and_classes: list[tuple[CMember, SwiftClass]] = \
+            [receiver] if receiver else []
+        current_class = receiver[1] if receiver \
             else self.imported_classes['entry']
 
         class_name_without_extension, _ = self.pop_extension_tag(
@@ -485,8 +482,16 @@ class Importer:
         c_input_params = class_params + c_input_params[len(class_params):]
 
         dispatcher = self.get_dispatcher(c_command)
-        if dispatcher.dispatch_table:
-            dispatcher.dispatch_table.commands.append(c_command)
+        table = dispatcher.table
+        # the loader function is already a stored field of the table it loads
+        if table and c_command.name != table.loader[0]:
+            table.commands.append(c_command)
+
+        created_class = self.imported_classes.get(
+            c_command.params[-1].type.type_name) if c_command.params else None
+        creates_table = created_class.table \
+            if created_class and created_class.owns_table else None
+        destroys_table = c_command.name in ('vkDestroyInstance', 'vkDestroyDevice')
 
         # a Chainable<_> in overlaod
         should_generate_chainable_overload = self.should_generate_chainable_overload(
@@ -518,6 +523,8 @@ class Importer:
                 dispatcher=dispatcher,
                 protect=c_command.protect,
                 enumeration_is_bytes_array=enumeration_is_bytes_array,
+                creates_table=creates_table,
+                destroys_table=destroys_table,
             )
             current_class.commands.append(command)
 
@@ -544,6 +551,8 @@ class Importer:
             dispatcher=dispatcher,
             protect=c_command.protect,
             enumeration_is_bytes_array=enumeration_is_bytes_array,
+            creates_table=creates_table,
+            destroys_table=destroys_table,
         )
 
         current_class.commands.append(command)
@@ -571,6 +580,8 @@ class Importer:
                 dispatcher=dispatcher,
                 protect=c_command.protect,
                 enumeration_is_bytes_array=enumeration_is_bytes_array,
+                creates_table=creates_table,
+                destroys_table=destroys_table,
                 chainable_out_parameters=chainable_out_parameters
             )
 
@@ -588,8 +599,10 @@ class Importer:
         return alias
 
     def get_dispatcher(self, command: CCommand) -> SwiftClass:
+        # vkGetInstanceProcAddr is the loader function itself, and vkGetDeviceProcAddr
+        # must be reachable from the instance table to build a device table.
         if command.name == 'vkGetInstanceProcAddr':
-            return self.imported_classes['entry'].parent
+            return self.imported_classes['entry']
         if command.name == 'vkGetDeviceProcAddr':
             return self.imported_classes['VkInstance']
 
@@ -597,25 +610,26 @@ class Importer:
             param = command.params[0]
             if param.type.name and param.type.name in self.imported_classes:
                 cls = self.imported_classes[param.type.name]
-                for ancestor in [cls] + cls.ancestors:
-                    if ancestor.c_handle.name in ('VkInstance', 'VkDevice'):
-                        return ancestor
+                if cls.c_handle:
+                    return self.get_dispatcher_of(cls.c_handle)
         return self.imported_classes['entry']
 
-    def get_class_params(self, command: CCommand) -> list[tuple[CMember, SwiftClass]]:
-        class_params: list[tuple[CMember, SwiftClass]] = []
-        previous_class: SwiftClass = None
-        for param in command.params:
-            if param.type.name and param.type.name in self.imported_classes:
-                if not param.type.optional or command.name.startswith(('vkDestroy', 'vkFree')):
-                    cls = self.imported_classes[param.type.name]
-                    if not previous_class or previous_class in cls.ancestors:
-                        previous_class = cls
-                        class_params.append(
-                            (CMember(param.name, CType(param.type.name)), cls))
-                        continue
-            break
-        return class_params
+    def get_receiver(self, command: CCommand) -> tuple[CMember, SwiftClass] | None:
+        """Vulkan always takes the dispatchable object as the first parameter.
+        That object is the receiver; every other handle stays an ordinary parameter."""
+        # the one command whose instance may legitimately be nil: it loads the
+        # global entry points, so it belongs to Entry
+        if command.name == 'vkGetInstanceProcAddr':
+            return None
+        if not command.params:
+            return None
+        param = command.params[0]
+        if not param.type.name:
+            return None
+        cls = self.imported_classes.get(param.type.name)
+        if cls is None or not cls.dispatchable:
+            return None
+        return CMember(param.name, CType(param.type.name)), cls
 
     def get_member_conversions(self, c_members: list[CMember], 
                                c_struct: CStruct | None = None, 
@@ -700,7 +714,7 @@ class Importer:
                 swift_type, conversion = 'Array<PhysicalDevice>', tc.tuple_array_conversion(
                     tc.array_mapped_conversion(
                         tc.class_conversion(
-                            'PhysicalDevice', 'instance'), 'physicalDeviceCount'
+                            'PhysicalDevice', dispatchable=True), 'physicalDeviceCount'
                     ), 'VkPhysicalDevice?', c_member.type.length
                 )
 
@@ -792,9 +806,7 @@ class Importer:
                     return option_set.name, tc.option_set_bit_conversion(c_type.name, option_set.name, option_set.c_bitmask.is64)
                 if c_type.name in self.imported_structs:
                     swift_struct = self.imported_structs[c_type.name]
-                    parent_names = [
-                        p.reference_name for p in swift_struct.parent_classes] if swift_struct.parent_classes else None
-                    return swift_struct.name, tc.struct_conversion(swift_struct.name, parent_names)
+                    return swift_struct.name, tc.struct_conversion(swift_struct.name, swift_struct.table_type)
 
                 alias = self.imported_aliases.get(c_type.name)
                 c_name = alias.c_alias.alias if alias else c_type.name
@@ -802,11 +814,10 @@ class Importer:
                 if c_name in self.imported_classes:
                     cls = self.imported_classes[c_name]
                     cls_name = alias.name if alias else cls.name
-                    parent_name = cls.parent.reference_name if cls.parent else None
                     if optional:
-                        return cls_name + '?', tc.optional_class_conversion(cls_name, parent_name)
+                        return cls_name + '?', tc.optional_class_conversion(cls_name, cls.dispatchable)
                     else:
-                        return cls_name, tc.class_conversion(cls_name, parent_name)
+                        return cls_name, tc.class_conversion(cls_name, cls.dispatchable)
 
             swift_type = c_type.name
             if self.is_pointer_type(c_type) and optional:
@@ -845,16 +856,14 @@ class Importer:
 
                 if c_type.pointer_to.name and not c_type.length and c_type.pointer_to.name in self.imported_structs:
                     swift_struct = self.imported_structs[c_type.pointer_to.name]
-                    parent_names = [
-                        p.reference_name for p in swift_struct.parent_classes] if swift_struct.parent_classes else None
 
                     name = swift_struct.name
                     if transform_chainable:
                         name = f"(some Chainable<{name}>)"
                     if optional and not transform_chainable:
-                        return name + '?', tc.optional_struct_conversion(swift_struct.name, parent_names)
+                        return name + '?', tc.optional_struct_conversion(swift_struct.name, swift_struct.table_type)
                     else:
-                        return name, tc.struct_pointer_conversion(swift_struct.name, parent_names)
+                        return name, tc.struct_pointer_conversion(swift_struct.name, swift_struct.table_type)
 
             to_type, _ = self.get_type_conversion(
                 c_type.pointer_to, implicit_only=True, force_optional=True)
@@ -886,18 +895,31 @@ class Importer:
         if is_string_convertible(c_type.pointer_to) and not optional:
             return 'Array<String>', tc.string_array_conversion(c_type.length)
 
+        # C takes an array of handles as UnsafePointer<VkX?>, which a plain
+        # `map { $0.handle }` no longer produces now that handles are non-optional.
+        # Note the elements are never optional, even when the array is.
+        if c_type.pointer_to.name:
+            cls = self.imported_classes.get(c_type.pointer_to.name)
+            if cls:
+                if not optional:
+                    return f'Array<{cls.name}>', \
+                        tc.handle_array_conversion(
+                            cls.name, c_type.length, cls.dispatchable)
+                else:
+                    return f'Array<{cls.name}>?', \
+                        tc.optional_handle_array_conversion(
+                            cls.name, c_type.length, cls.dispatchable)
+
         if c_type.pointer_to.name and c_type.pointer_to.name in self.imported_structs:
             swift_struct = self.imported_structs[c_type.pointer_to.name]
-            parent_names = [
-                p.reference_name for p in swift_struct.parent_classes] if swift_struct.parent_classes else None
             if not optional:
                 return f'Array<{swift_struct.name}>', \
                     tc.struct_array_conversion(
-                        swift_struct.name, c_type.length, parent_names)
+                        swift_struct.name, c_type.length, swift_struct.table_type)
             else:
                 return f'Array<{swift_struct.name}>?', \
                     tc.optional_struct_array_conversion(
-                        swift_struct.name, c_type.length, parent_names)
+                        swift_struct.name, c_type.length, swift_struct.table_type)
 
         if c_type.pointer_to.name == 'void':
             return 'Array<UInt8>', tc.byte_array_conversion(c_type.length)

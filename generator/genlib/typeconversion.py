@@ -192,52 +192,45 @@ char_array_conversion = Conversion(
 )
 
 
-def struct_conversion(swift_struct: str, parent_names: list[str] | None = None) -> Conversion:
-    swift_params = ['cStruct: $value']
-    if parent_names:
-        for name in parent_names:
-            swift_params.append(f'{name}: $cls_{name}')
+def _table_param(table_type: str | None) -> str:
+    """Rebuilding a struct that holds a dispatchable handle needs that handle's table."""
+    return ', table: $cls_table' if table_type else ''
+
+
+def struct_conversion(swift_struct: str, table_type: str | None = None) -> Conversion:
     return Conversion(
-        swift_value_template=f'{swift_struct}({", ".join(swift_params)})',
+        swift_value_template=f'{swift_struct}(cStruct: $value{_table_param(table_type)})',
         c_closure_template=('$value.withCStruct { ptr_$name$throws in', '}'),
         c_value_template='ptr_$name.pointee'
     )
 
 
-def struct_pointer_conversion(swift_struct: str, parent_names: list[str] | None = None, chainable=False) -> Conversion:
-    swift_params = ['cStruct: $value.pointee']
-    if parent_names:
-        for name in parent_names:
-            swift_params.append(f'{name}: $cls_{name}')
+def struct_pointer_conversion(swift_struct: str, table_type: str | None = None, chainable=False) -> Conversion:
     return Conversion(
-        swift_value_template=f'{swift_struct}({", ".join(swift_params)})',
+        swift_value_template=f'{swift_struct}(cStruct: $value.pointee{_table_param(table_type)})',
         c_closure_template=('$value.withCStruct { ptr_$name$throws in', '}'),
         c_value_template='ptr_$name'
     )
 
 
-def optional_struct_conversion(swift_struct: str, parent_names: list[str] | None = None, chainable=False) -> Conversion:
-    swift_params = ['cStruct: $value.pointee']
-    if parent_names:
-        for name in parent_names:
-            swift_params.append(f'{name}: $cls_{name}')
+def optional_struct_conversion(swift_struct: str, table_type: str | None = None, chainable=False) -> Conversion:
     return Conversion(
-        swift_value_template=f'($value != nil) ? {swift_struct}({", ".join(swift_params)}) : nil',
+        swift_value_template=f'($value != nil) ? {swift_struct}(cStruct: $value.pointee{_table_param(table_type)}) : nil',
         c_closure_template=('$value.withOptionalCStruct { ptr_$name$throws in', '}'),
         c_value_template='ptr_$name'
     )
 
 
-def class_conversion(swift_class: str, parent_name: str | None = None) -> Conversion:
-    class_params = f'handle: $value, {parent_name}: $cls_{parent_name}' if parent_name else 'handle: $value'
+def class_conversion(swift_class: str, dispatchable: bool = False) -> Conversion:
+    class_params = 'handle: $value, table: $cls_table' if dispatchable else 'handle: $value'
     return Conversion(
         swift_value_template=f'{swift_class}({class_params})',
         c_value_template='$value.handle'
     )
 
 
-def optional_class_conversion(swift_class: str, parent_name: str | None = None) -> Conversion:
-    class_params = f'handle: $value, {parent_name}: $cls_{parent_name}' if parent_name else 'handle: $value'
+def optional_class_conversion(swift_class: str, dispatchable: bool = False) -> Conversion:
+    class_params = 'handle: $value, table: $cls_table' if dispatchable else 'handle: $value'
     return Conversion(
         swift_value_template=f'($value != nil) ? {swift_class}({class_params}) : nil',
         c_value_template='$value?.handle'
@@ -290,18 +283,13 @@ def string_array_conversion(length: str) -> ArrayConversion:
     )
 
 
-def struct_array_conversion(swift_struct: str, length: str, parent_names: list[str] | None = None) -> ArrayConversion:
-    swift_params = ['cStruct: $$0']
-    swift_element_params = ['cStruct: $value']
-    if parent_names:
-        for name in parent_names:
-            swift_params.append(f'{name}: $cls_{name}')
-            swift_element_params.append(f'{name}: $cls_{name}')
+def struct_array_conversion(swift_struct: str, length: str, table_type: str | None = None) -> ArrayConversion:
+    table = _table_param(table_type)
     return ArrayConversion(
         length=length,
         swift_value_template='UnsafeBufferPointer(start: $value, count: Int($length))'
-                             f'.map{{ {swift_struct}({", ".join(swift_params)}) }}',
-        swift_element_template=f'{swift_struct}({", ".join(swift_element_params)})',
+                             f'.map{{ {swift_struct}(cStruct: $$0{table}) }}',
+        swift_element_template=f'{swift_struct}(cStruct: $value{table})',
         c_closure_template=(
             '$value.withCStructBufferPointer { ptr_$name$throws in', '}'),
         c_value_template='ptr_$name.baseAddress',
@@ -309,18 +297,45 @@ def struct_array_conversion(swift_struct: str, length: str, parent_names: list[s
     )
 
 
-def optional_struct_array_conversion(swift_struct: str, length: str, parent_names: list[str] | None = None) -> ArrayConversion:
-    swift_params = ['cStruct: $$0']
-    if parent_names:
-        for name in parent_names:
-            swift_params.append(f'{name}: $cls_{name}')
+def optional_struct_array_conversion(swift_struct: str, length: str, table_type: str | None = None) -> ArrayConversion:
     return ArrayConversion(
         length=length,
         swift_value_template='($value != nil) ? UnsafeBufferPointer(start: $value, count: Int($length))'
-                             f'.map{{ {swift_struct}({", ".join(swift_params)}) }} : nil',
+                             f'.map{{ {swift_struct}(cStruct: $$0{_table_param(table_type)}) }} : nil',
         c_closure_template=(
             '$value.withOptionalCStructBufferPointer { ptr_$name$throws in', '}'),
         c_value_template='ptr_$name.baseAddress',
+        c_length_template='UInt32(ptr_$name.count)'
+    )
+
+
+def handle_array_conversion(swift_class: str, length: str, dispatchable: bool = False) -> ArrayConversion:
+    element = class_conversion(swift_class, dispatchable)
+    return ArrayConversion(
+        length=length,
+        swift_value_template='UnsafeBufferPointer(start: $value, count: Int($length))'
+                             f'.map{{ {element.get_swift_value("$$0", safe=True)} }}',
+        swift_element_template=element.get_swift_value('$value', safe=True),
+        c_closure_template=(
+            f'$value.map{{ {element.get_c_value("$$0", safe=True)} }}'
+            '.withUnsafeBufferPointer { ptr_$name$throws in', '}'),
+        # C wants UnsafePointer<VkX?>; a handle and its Optional have the same layout
+        c_value_template='ptr_$name.baseAddress?.cast()',
+        c_length_template='UInt32(ptr_$name.count)'
+    )
+
+
+def optional_handle_array_conversion(swift_class: str, length: str, dispatchable: bool = False) -> ArrayConversion:
+    element = class_conversion(swift_class, dispatchable)
+    return ArrayConversion(
+        length=length,
+        swift_value_template='($value != nil) ? UnsafeBufferPointer(start: $value, count: Int($length))'
+                             f'.map{{ {element.get_swift_value("$$0", safe=True)} }} : nil',
+        swift_element_template=element.get_swift_value('$value', safe=True),
+        c_closure_template=(
+            f'($value?.map{{ {element.get_c_value("$$0", safe=True)} }})'
+            '.withOptionalUnsafeBufferPointer { ptr_$name$throws in', '}'),
+        c_value_template='ptr_$name.baseAddress?.cast()',
         c_length_template='UInt32(ptr_$name.count)'
     )
 

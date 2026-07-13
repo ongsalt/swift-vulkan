@@ -1,0 +1,42 @@
+{
+  "originHash" : "930c018750a7adffa5b23eb49a5a5a068fba1ad69b34c6a47ba136992f6bf5cc",
+  "pins" : [
+    {
+      "identity" : "swift-argument-parser",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-argument-parser",
+      "state" : {
+        "revision" : "6a52f3251125d74daf04fcbd5e6f08a75d074382",
+        "version" : "1.8.2"
+      }
+    },
+    {
+      "identity" : "swiftwayland",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ongsalt/SwiftWayland",
+      "state" : {
+        "branch" : "master",
+        "revision" : "05abc97747fc02e1f687b66b6c9868d008ee7823"
+      }
+    },
+    {
+      "identity" : "swinit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ongsalt/swinit",
+      "state" : {
+        "branch" : "main",
+        "revision" : "30b8db0f6ff3b2426f7683a2f320158adca2c751"
+      }
+    },
+    {
+      "identity" : "xmlcoder",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/CoreOffice/XMLCoder.git",
+      "state" : {
+        "revision" : "42f62383dbcd074440cb1f6a750b9c02df9e7325",
+        "version" : "0.18.2"
+      }
+    }
+  ],
+  "version" : 3
+}

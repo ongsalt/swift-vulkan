@@ -1,4 +1,4 @@
-import CVulkan
+@preconcurrency import CVulkan
 
 #if os(Linux)
     import Glibc
@@ -8,7 +8,7 @@ import CVulkan
     import Darwin
 #endif
 
-public protocol Loader {
+public protocol Loader: Sendable {
     var vkGetInstanceProcAddr: PFN_vkGetInstanceProcAddr { get }
 }
 
@@ -18,38 +18,38 @@ public enum LoaderError: Error {
 }
 
 #if os(Windows)
-    typealias Handle = WinSDK.HINSTANCE
+    typealias LibraryHandle = WinSDK.HINSTANCE
 
-    func loadLibrary(_ path: String) -> Handle? {
+    func loadLibrary(_ path: String) -> LibraryHandle? {
         LoadLibraryA(path)
     }
 
-    func getProcAddress(_ handle: Handle, _ name: String) -> UnsafeMutableRawPointer? {
+    func getProcAddress(_ handle: LibraryHandle, _ name: String) -> UnsafeMutableRawPointer? {
         unsafeBitCast(GetProcAddress(handle, name), to: UnsafeMutableRawPointer?.self)
     }
 
-    func freeLibrary(_ handle: Handle) {
+    func freeLibrary(_ handle: LibraryHandle) {
         FreeLibrary(handle)
 
     }
 #else
-    typealias Handle = UnsafeMutableRawPointer
+    typealias LibraryHandle = UnsafeMutableRawPointer
 
-    func loadLibrary(_ path: String) -> Handle? {
+    func loadLibrary(_ path: String) -> LibraryHandle? {
         dlopen(path, RTLD_LAZY)
     }
 
-    func getProcAddress(_ handle: Handle, _ name: String) -> UnsafeMutableRawPointer? {
+    func getProcAddress(_ handle: LibraryHandle, _ name: String) -> UnsafeMutableRawPointer? {
         dlsym(handle, "vkGetInstanceProcAddr")
     }
 
-    func freeLibrary(_ handle: Handle) {
+    func freeLibrary(_ handle: LibraryHandle) {
         dlclose(handle)
     }
 #endif
 
-public class DynamicLoader: Loader {
-    let handle: Handle
+public final class DynamicLoader: Loader, @unchecked Sendable {
+    let handle: LibraryHandle
 
     public let vkGetInstanceProcAddr: PFN_vkGetInstanceProcAddr
 
@@ -82,7 +82,7 @@ public class DynamicLoader: Loader {
 }
 
 extension Entry {
-    public convenience init() throws {
+    public init() throws {
         self.init(loader: try DynamicLoader())
     }
 }

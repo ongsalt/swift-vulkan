@@ -21,7 +21,7 @@ A simple example of how to get started.
 let entry = try Entry()
 
 // Create an instance
-let instance = try entry.createInstance(.init())
+let instance = try entry.createInstance()
 
 // Find any physical devices
 let physicalDevices = try instance.getPhysicalDevices()
@@ -35,12 +35,10 @@ for device in physicalDevices {
 ## Future Goals
 Swift-vulkan is a relatively new project, and there are still some important milestones to achieve.
 
-- Some degree of automatic memory management (currently, destroy/free commands have to be called manually)
 - Import unions as appropriate Swift types
 - Simpler initializers for structs with optional members, or members that have obvious default values
 - Implement structure chaining (pNext)
 - Optimize struct conversion (currently, a conversion is performed each time a struct is passed to a command)
-- Use preprocessor conditions to enable specific types at compile time (could do this for all extensions / features, or just for platform-specific extensions)
 - Parse Vulkan documentation and generate Swift comments
 
 
