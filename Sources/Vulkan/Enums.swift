@@ -1565,6 +1565,8 @@ public enum StructureType: UInt32, Sendable {
     case physicalDeviceLayeredApiVulkanPropertiesKHR = 1000562004
     case physicalDeviceShaderAtomicFloat16VectorFeaturesNV = 1000563000
     case physicalDeviceShaderReplicatedCompositesFeaturesEXT = 1000564000
+    case tensorExplicitTilingFormatPropertiesARM = 1000565000
+    case tensorRollingBackingCreateInfoARM = 1000565001
     case physicalDeviceShaderFloat8FeaturesEXT = 1000567000
     case physicalDeviceRayTracingValidationFeaturesNV = 1000568000
     case physicalDeviceClusterAccelerationStructureFeaturesNV = 1000569000
@@ -1629,6 +1631,9 @@ public enum StructureType: UInt32, Sendable {
     case cooperativeMatrixFlexibleDimensionsPropertiesNV = 1000593001
     case physicalDeviceCooperativeMatrix2PropertiesNV = 1000593002
     case physicalDevicePipelineOpacityMicromapFeaturesARM = 1000596000
+    case physicalDeviceVideoEncodeFeedback2FeaturesKHR = 1000598000
+    case videoEncodeFeedback2CapabilitiesKHR = 1000598001
+    case queryPoolVideoEncodePerPartitionFeedbackCreateInfoKHR = 1000598002
     case importMemoryMetalHandleInfoEXT = 1000602000
     case memoryMetalHandlePropertiesEXT = 1000602001
     case memoryGetMetalHandleInfoEXT = 1000602002
@@ -1651,6 +1656,8 @@ public enum StructureType: UInt32, Sendable {
     case physicalDeviceRobustness2PropertiesKHR = 1000286001
     case setPresentConfigNV = 1000613000
     case physicalDevicePresentMeteringFeaturesNV = 1000613001
+    case physicalDeviceMultisampledRenderToSwapchainFeaturesEXT = 1000616000
+    case swapchainFlagsSurfaceCapabilitiesEXT = 1000616001
     case physicalDeviceFragmentDensityMapOffsetFeaturesEXT = 1000425000
     case physicalDeviceFragmentDensityMapOffsetPropertiesEXT = 1000425001
     case renderPassFragmentDensityMapOffsetEndInfoEXT = 1000425002
@@ -1690,6 +1697,14 @@ public enum StructureType: UInt32, Sendable {
     case queueFamilyOptimalImageTransferGranularityPropertiesKHR = 1000657001
     case physicalDeviceShaderSubgroupPartitionedFeaturesEXT = 1000662000
     case ubmSurfaceCreateInfoSEC = 1000664000
+    case formatProperties4KHR = 1000668000
+    case imageCreateFlags2CreateInfoKHR = 1000668001
+    case imageUsageFlags2CreateInfoKHR = 1000668002
+    case imageViewUsage2CreateInfoKHR = 1000668003
+    case physicalDeviceExtendedFlagsFeaturesKHR = 1000668004
+    case imageStencilUsage2CreateInfoKHR = 1000668005
+    case sharedPresentSurfaceCapabilities2KHR = 1000668006
+    case physicalDeviceShaderOcpMicroscalingTypesFeaturesEXT = 1000672000
     case physicalDeviceShaderMixedFloatDotProductFeaturesVALVE = 1000673000
     case physicalDeviceThrottleHintFeaturesSEC = 1000674000
     case throttleHintSubmitInfoSEC = 1000674001
@@ -1697,6 +1712,7 @@ public enum StructureType: UInt32, Sendable {
     case dataGraphPipelineSessionNeuralStatisticsCreateInfoARM = 1000676001
     case physicalDeviceDataGraphNeuralAcceleratorStatisticsFeaturesARM = 1000676002
     case physicalDevicePrimitiveRestartIndexFeaturesEXT = 1000678000
+    case physicalDeviceCooperativeMatrixDecodeVectorFeaturesNV = 1000689000
     case bindBufferMemoryInfo = 1000157000
     case bindImageMemoryInfo = 1000157001
     case memoryDedicatedRequirements = 1000127000
@@ -2455,6 +2471,7 @@ public enum VendorId: UInt32, Sendable {
     case mesa = 0x10005
     case pocl = 0x10006
     case mobileye = 0x10007
+    case ape = 0x10008
 }
 
 public enum DriverId: UInt32, Sendable {
@@ -2486,6 +2503,8 @@ public enum DriverId: UInt32, Sendable {
     case mesaHoneykrisp = 26
     case vulkanScEmulationOnVulkan = 27
     case mesaKosmickrisp = 28
+    case mesaGfxstream = 29
+    case apeSoft = 30
 }
 
 public enum ShadingRatePaletteEntryNV: UInt32, Sendable {
@@ -2902,6 +2921,11 @@ public enum ComponentTypeKHR: UInt32, Sendable {
     case uint8PackedNV = 1000491001
     case float8E4m3EXT = 1000491002
     case float8E5m2EXT = 1000491003
+    case float6E2m3EXT = 1000672000
+    case float6E3m2EXT = 1000672001
+    case float4E2m1EXT = 1000672002
+    case float8UnsignedE8m0EXT = 1000672003
+    case mxint8EXT = 1000672004
 }
 
 public enum CubicFilterWeightsQCOM: UInt32, Sendable {
@@ -2970,6 +2994,11 @@ public enum CooperativeVectorMatrixLayoutNV: UInt32, Sendable {
 public enum TensorTilingARM: UInt32, Sendable {
     case optimal = 0
     case linear = 1
+    case brick16Wide = 1000565000
+    case brick8Wide = 1000565001
+    case brick4Wide = 1000565002
+    case blockUInterleaved = 1000565003
+    case blockUInterleaved64k = 1000565004
 }
 
 public enum DefaultVertexAttributeValueKHR: UInt32, Sendable {

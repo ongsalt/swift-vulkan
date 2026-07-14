@@ -3,8 +3,7 @@
 
 /*
 ** Copyright 2015-2026 The Khronos Group Inc.
-**
-** SPDX-License-Identifier: Apache-2.0
+** SPDX-License-Identifier: Apache-2.0 OR MIT
 */
 
 #include "../platform.h"
@@ -40,15 +39,12 @@
 
 
 #ifdef VK_USE_PLATFORM_WAYLAND_KHR
-#include <wayland-client.h>
 #include "vulkan_wayland.h"
 #endif
 
 
 #ifdef VK_USE_PLATFORM_WIN32_KHR
-#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
-#undef WIN32_LEAN_AND_MEAN
 #include "vulkan_win32.h"
 #endif
 

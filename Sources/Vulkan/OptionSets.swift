@@ -651,7 +651,7 @@ public struct ImageUsageFlags: OptionSet, StringConvertibleOptionSet, Sendable {
     public static let reserved29KHR = ImageUsageFlags(rawValue: 536870912)
     public static let reserved30KHR = ImageUsageFlags(rawValue: 1073741824)
     public static let reserved16HUAWEI = ImageUsageFlags(rawValue: 65536)
-    public static let reserved27HUAWEI = ImageUsageFlags(rawValue: 131072)
+    public static let reserved17HUAWEI = ImageUsageFlags(rawValue: 131072)
     public static let hostTransfer = ImageUsageFlags(rawValue: 4194304)
 
     public init(rawValue: UInt32) {
@@ -688,7 +688,7 @@ public struct ImageUsageFlags: OptionSet, StringConvertibleOptionSet, Sendable {
         (.reserved29KHR, "reserved29KHR"),
         (.reserved30KHR, "reserved30KHR"),
         (.reserved16HUAWEI, "reserved16HUAWEI"),
-        (.reserved27HUAWEI, "reserved27HUAWEI"),
+        (.reserved17HUAWEI, "reserved17HUAWEI"),
         (.hostTransfer, "hostTransfer"),
     ]
 }
@@ -711,6 +711,7 @@ public struct ImageCreateFlags: OptionSet, StringConvertibleOptionSet, Sendable 
     public static let typeVideoProfileIndependentKHR = ImageCreateFlags(rawValue: 1048576)
     public static let typeFragmentDensityMapOffsetEXT = ImageCreateFlags(rawValue: 32768)
     public static let typeAliasSingleLayerDescriptorKHR = ImageCreateFlags(rawValue: 4194304)
+    public static let typeReserved19NV = ImageCreateFlags(rawValue: 524288)
     public static let typeAlias = ImageCreateFlags(rawValue: 1024)
     public static let typeSplitInstanceBindRegions = ImageCreateFlags(rawValue: 64)
     public static let type2dArrayCompatible = ImageCreateFlags(rawValue: 32)
@@ -739,6 +740,7 @@ public struct ImageCreateFlags: OptionSet, StringConvertibleOptionSet, Sendable 
         (.typeVideoProfileIndependentKHR, "typeVideoProfileIndependentKHR"),
         (.typeFragmentDensityMapOffsetEXT, "typeFragmentDensityMapOffsetEXT"),
         (.typeAliasSingleLayerDescriptorKHR, "typeAliasSingleLayerDescriptorKHR"),
+        (.typeReserved19NV, "typeReserved19NV"),
         (.typeAlias, "typeAlias"),
         (.typeSplitInstanceBindRegions, "typeSplitInstanceBindRegions"),
         (.type2dArrayCompatible, "type2dArrayCompatible"),
@@ -1646,6 +1648,9 @@ public struct BuildAccelerationStructureFlagsKHR: OptionSet, StringConvertibleOp
     public static let allowOpacityMicromapUpdate = BuildAccelerationStructureFlagsKHR(rawValue: 64)
     public static let allowDisableOpacityMicromaps = BuildAccelerationStructureFlagsKHR(rawValue: 128)
     public static let micromapLossy = BuildAccelerationStructureFlagsKHR(rawValue: 1024)
+    public static let reserved15EXT = BuildAccelerationStructureFlagsKHR(rawValue: 32768)
+    public static let reserved14EXT = BuildAccelerationStructureFlagsKHR(rawValue: 16384)
+    public static let reserved13AMD = BuildAccelerationStructureFlagsKHR(rawValue: 8192)
 
     public init(rawValue: UInt32) {
         self.rawValue = rawValue
@@ -1665,6 +1670,9 @@ public struct BuildAccelerationStructureFlagsKHR: OptionSet, StringConvertibleOp
         (.allowOpacityMicromapUpdate, "allowOpacityMicromapUpdate"),
         (.allowDisableOpacityMicromaps, "allowDisableOpacityMicromaps"),
         (.micromapLossy, "micromapLossy"),
+        (.reserved15EXT, "reserved15EXT"),
+        (.reserved14EXT, "reserved14EXT"),
+        (.reserved13AMD, "reserved13AMD"),
     ]
 }
 
@@ -2147,6 +2155,7 @@ public struct FormatFeatureFlags2: OptionSet, StringConvertibleOptionSet, Sendab
     public static let copyImageIndirectDstKHR = FormatFeatureFlags2(rawValue: 576460752303423488)
     public static let videoEncodeQuantizationDeltaMapKHR = FormatFeatureFlags2(rawValue: 562949953421312)
     public static let videoEncodeEmphasisMapKHR = FormatFeatureFlags2(rawValue: 1125899906842624)
+    public static let sampledImageFilterLinear2dIMG = FormatFeatureFlags2(rawValue: 35184372088832)
     public static let depthCopyOnComputeQueueKHR = FormatFeatureFlags2(rawValue: 4503599627370496)
     public static let depthCopyOnTransferQueueKHR = FormatFeatureFlags2(rawValue: 9007199254740992)
     public static let stencilCopyOnComputeQueueKHR = FormatFeatureFlags2(rawValue: 18014398509481984)
@@ -2214,6 +2223,7 @@ public struct FormatFeatureFlags2: OptionSet, StringConvertibleOptionSet, Sendab
         (.copyImageIndirectDstKHR, "copyImageIndirectDstKHR"),
         (.videoEncodeQuantizationDeltaMapKHR, "videoEncodeQuantizationDeltaMapKHR"),
         (.videoEncodeEmphasisMapKHR, "videoEncodeEmphasisMapKHR"),
+        (.sampledImageFilterLinear2dIMG, "sampledImageFilterLinear2dIMG"),
         (.depthCopyOnComputeQueueKHR, "depthCopyOnComputeQueueKHR"),
         (.depthCopyOnTransferQueueKHR, "depthCopyOnTransferQueueKHR"),
         (.stencilCopyOnComputeQueueKHR, "stencilCopyOnComputeQueueKHR"),
@@ -2225,6 +2235,17 @@ public struct FormatFeatureFlags2: OptionSet, StringConvertibleOptionSet, Sendab
         (.reserved61HUAWEI, "reserved61HUAWEI"),
         (.sampledImageFilterCubic, "sampledImageFilterCubic"),
         (.hostImageTransfer, "hostImageTransfer"),
+    ]
+}
+
+public struct FormatFeatureFlags4KHR: OptionSet, StringConvertibleOptionSet, Sendable {
+    public let rawValue: UInt64
+
+    public init(rawValue: UInt64) {
+        self.rawValue = rawValue
+    }
+
+    static let descriptions: [(Self, String)] = [
     ]
 }
 
@@ -2575,6 +2596,140 @@ public struct BufferUsageFlags2: OptionSet, StringConvertibleOptionSet, Sendable
     ]
 }
 
+public struct ImageUsageFlags2KHR: OptionSet, StringConvertibleOptionSet, Sendable {
+    public let rawValue: UInt64
+
+    public static let transferSrc = ImageUsageFlags2KHR(rawValue: 1)
+    public static let transferDst = ImageUsageFlags2KHR(rawValue: 2)
+    public static let sampled = ImageUsageFlags2KHR(rawValue: 4)
+    public static let storage = ImageUsageFlags2KHR(rawValue: 8)
+    public static let colorAttachment = ImageUsageFlags2KHR(rawValue: 16)
+    public static let depthStencilAttachment = ImageUsageFlags2KHR(rawValue: 32)
+    public static let transientAttachment = ImageUsageFlags2KHR(rawValue: 64)
+    public static let inputAttachment = ImageUsageFlags2KHR(rawValue: 128)
+    public static let reserved31EXT = ImageUsageFlags2KHR(rawValue: 2147483648)
+    public static let reserved24BitCoreavi = ImageUsageFlags2KHR(rawValue: 16777216)
+    public static let reserved28EXT = ImageUsageFlags2KHR(rawValue: 268435456)
+    public static let reserved29 = ImageUsageFlags2KHR(rawValue: 536870912)
+    public static let reserved30 = ImageUsageFlags2KHR(rawValue: 1073741824)
+    public static let reserved16HUAWEI = ImageUsageFlags2KHR(rawValue: 65536)
+    public static let reserved27HUAWEI = ImageUsageFlags2KHR(rawValue: 131072)
+    public static let fragmentShadingRateAttachment = ImageUsageFlags2KHR(rawValue: 256)
+    public static let fragmentDensityMapEXT = ImageUsageFlags2KHR(rawValue: 512)
+    public static let videoDecodeDst = ImageUsageFlags2KHR(rawValue: 1024)
+    public static let videoDecodeSrc = ImageUsageFlags2KHR(rawValue: 2048)
+    public static let videoDecodeDpb = ImageUsageFlags2KHR(rawValue: 4096)
+    public static let videoEncodeDst = ImageUsageFlags2KHR(rawValue: 8192)
+    public static let videoEncodeSrc = ImageUsageFlags2KHR(rawValue: 16384)
+    public static let videoEncodeDpb = ImageUsageFlags2KHR(rawValue: 32768)
+    public static let invocationMaskHUAWEI = ImageUsageFlags2KHR(rawValue: 262144)
+    public static let attachmentFeedbackLoopEXT = ImageUsageFlags2KHR(rawValue: 524288)
+    public static let sampleWeightQCOM = ImageUsageFlags2KHR(rawValue: 1048576)
+    public static let sampleBlockMatchQCOM = ImageUsageFlags2KHR(rawValue: 2097152)
+    public static let hostTransfer = ImageUsageFlags2KHR(rawValue: 4194304)
+    public static let tensorAliasingARM = ImageUsageFlags2KHR(rawValue: 8388608)
+    public static let videoEncodeQuantizationDeltaMap = ImageUsageFlags2KHR(rawValue: 33554432)
+    public static let videoEncodeEmphasisMap = ImageUsageFlags2KHR(rawValue: 67108864)
+    public static let tileMemoryQCOM = ImageUsageFlags2KHR(rawValue: 134217728)
+
+    public init(rawValue: UInt64) {
+        self.rawValue = rawValue
+    }
+
+    static let descriptions: [(Self, String)] = [
+        (.transferSrc, "transferSrc"),
+        (.transferDst, "transferDst"),
+        (.sampled, "sampled"),
+        (.storage, "storage"),
+        (.colorAttachment, "colorAttachment"),
+        (.depthStencilAttachment, "depthStencilAttachment"),
+        (.transientAttachment, "transientAttachment"),
+        (.inputAttachment, "inputAttachment"),
+        (.reserved31EXT, "reserved31EXT"),
+        (.reserved24BitCoreavi, "reserved24BitCoreavi"),
+        (.reserved28EXT, "reserved28EXT"),
+        (.reserved29, "reserved29"),
+        (.reserved30, "reserved30"),
+        (.reserved16HUAWEI, "reserved16HUAWEI"),
+        (.reserved27HUAWEI, "reserved27HUAWEI"),
+        (.fragmentShadingRateAttachment, "fragmentShadingRateAttachment"),
+        (.fragmentDensityMapEXT, "fragmentDensityMapEXT"),
+        (.videoDecodeDst, "videoDecodeDst"),
+        (.videoDecodeSrc, "videoDecodeSrc"),
+        (.videoDecodeDpb, "videoDecodeDpb"),
+        (.videoEncodeDst, "videoEncodeDst"),
+        (.videoEncodeSrc, "videoEncodeSrc"),
+        (.videoEncodeDpb, "videoEncodeDpb"),
+        (.invocationMaskHUAWEI, "invocationMaskHUAWEI"),
+        (.attachmentFeedbackLoopEXT, "attachmentFeedbackLoopEXT"),
+        (.sampleWeightQCOM, "sampleWeightQCOM"),
+        (.sampleBlockMatchQCOM, "sampleBlockMatchQCOM"),
+        (.hostTransfer, "hostTransfer"),
+        (.tensorAliasingARM, "tensorAliasingARM"),
+        (.videoEncodeQuantizationDeltaMap, "videoEncodeQuantizationDeltaMap"),
+        (.videoEncodeEmphasisMap, "videoEncodeEmphasisMap"),
+        (.tileMemoryQCOM, "tileMemoryQCOM"),
+    ]
+}
+
+public struct ImageCreateFlags2KHR: OptionSet, StringConvertibleOptionSet, Sendable {
+    public let rawValue: UInt64
+
+    public static let typeSparseBinding = ImageCreateFlags2KHR(rawValue: 1)
+    public static let typeSparseResidency = ImageCreateFlags2KHR(rawValue: 2)
+    public static let typeSparseAliased = ImageCreateFlags2KHR(rawValue: 4)
+    public static let typeMutableFormat = ImageCreateFlags2KHR(rawValue: 8)
+    public static let typeCubeCompatible = ImageCreateFlags2KHR(rawValue: 16)
+    public static let typeReserved21IMG = ImageCreateFlags2KHR(rawValue: 2097152)
+    public static let typeAliasSingleLayerDescriptor = ImageCreateFlags2KHR(rawValue: 4194304)
+    public static let type2dArrayCompatible = ImageCreateFlags2KHR(rawValue: 32)
+    public static let typeSplitInstanceBindRegions = ImageCreateFlags2KHR(rawValue: 64)
+    public static let typeBlockTexelViewCompatible = ImageCreateFlags2KHR(rawValue: 128)
+    public static let typeExtendedUsage = ImageCreateFlags2KHR(rawValue: 256)
+    public static let typeDisjoint = ImageCreateFlags2KHR(rawValue: 512)
+    public static let typeAlias = ImageCreateFlags2KHR(rawValue: 1024)
+    public static let typeProtected = ImageCreateFlags2KHR(rawValue: 2048)
+    public static let typeSampleLocationsCompatibleDepthEXT = ImageCreateFlags2KHR(rawValue: 4096)
+    public static let typeCornerSampledNV = ImageCreateFlags2KHR(rawValue: 8192)
+    public static let typeSubsampledEXT = ImageCreateFlags2KHR(rawValue: 16384)
+    public static let typeFragmentDensityMapOffsetEXT = ImageCreateFlags2KHR(rawValue: 32768)
+    public static let typeDescriptorBufferCaptureReplayEXT = ImageCreateFlags2KHR(rawValue: 65536)
+    public static let type2dViewCompatibleEXT = ImageCreateFlags2KHR(rawValue: 131072)
+    public static let typeMultisampledRenderToSingleSampledEXT = ImageCreateFlags2KHR(rawValue: 262144)
+    public static let typeVideoProfileIndependent = ImageCreateFlags2KHR(rawValue: 1048576)
+    public static let typeReserved19NV = ImageCreateFlags2KHR(rawValue: 524288)
+
+    public init(rawValue: UInt64) {
+        self.rawValue = rawValue
+    }
+
+    static let descriptions: [(Self, String)] = [
+        (.typeSparseBinding, "typeSparseBinding"),
+        (.typeSparseResidency, "typeSparseResidency"),
+        (.typeSparseAliased, "typeSparseAliased"),
+        (.typeMutableFormat, "typeMutableFormat"),
+        (.typeCubeCompatible, "typeCubeCompatible"),
+        (.typeReserved21IMG, "typeReserved21IMG"),
+        (.typeAliasSingleLayerDescriptor, "typeAliasSingleLayerDescriptor"),
+        (.type2dArrayCompatible, "type2dArrayCompatible"),
+        (.typeSplitInstanceBindRegions, "typeSplitInstanceBindRegions"),
+        (.typeBlockTexelViewCompatible, "typeBlockTexelViewCompatible"),
+        (.typeExtendedUsage, "typeExtendedUsage"),
+        (.typeDisjoint, "typeDisjoint"),
+        (.typeAlias, "typeAlias"),
+        (.typeProtected, "typeProtected"),
+        (.typeSampleLocationsCompatibleDepthEXT, "typeSampleLocationsCompatibleDepthEXT"),
+        (.typeCornerSampledNV, "typeCornerSampledNV"),
+        (.typeSubsampledEXT, "typeSubsampledEXT"),
+        (.typeFragmentDensityMapOffsetEXT, "typeFragmentDensityMapOffsetEXT"),
+        (.typeDescriptorBufferCaptureReplayEXT, "typeDescriptorBufferCaptureReplayEXT"),
+        (.type2dViewCompatibleEXT, "type2dViewCompatibleEXT"),
+        (.typeMultisampledRenderToSingleSampledEXT, "typeMultisampledRenderToSingleSampledEXT"),
+        (.typeVideoProfileIndependent, "typeVideoProfileIndependent"),
+        (.typeReserved19NV, "typeReserved19NV"),
+    ]
+}
+
 public struct AddressCopyFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
     public let rawValue: UInt32
 
@@ -2918,7 +3073,7 @@ public struct SwapchainCreateFlagsKHR: OptionSet, StringConvertibleOptionSet, Se
     public static let presentId2 = SwapchainCreateFlagsKHR(rawValue: 64)
     public static let presentWait2 = SwapchainCreateFlagsKHR(rawValue: 128)
     public static let deferredMemoryAllocation = SwapchainCreateFlagsKHR(rawValue: 8)
-    public static let reserved8EXT = SwapchainCreateFlagsKHR(rawValue: 256)
+    public static let multisampledRenderToSingleSampledEXT = SwapchainCreateFlagsKHR(rawValue: 256)
 
     public init(rawValue: UInt32) {
         self.rawValue = rawValue
@@ -2934,7 +3089,7 @@ public struct SwapchainCreateFlagsKHR: OptionSet, StringConvertibleOptionSet, Se
         (.presentId2, "presentId2"),
         (.presentWait2, "presentWait2"),
         (.deferredMemoryAllocation, "deferredMemoryAllocation"),
-        (.reserved8EXT, "reserved8EXT"),
+        (.multisampledRenderToSingleSampledEXT, "multisampledRenderToSingleSampledEXT"),
     ]
 }
 
@@ -4723,13 +4878,13 @@ public struct VideoEncodeFeedbackFlagsKHR: OptionSet, StringConvertibleOptionSet
     public static let bitstreamBufferOffset = VideoEncodeFeedbackFlagsKHR(rawValue: 1)
     public static let bitstreamBytesWritten = VideoEncodeFeedbackFlagsKHR(rawValue: 2)
     public static let bitstreamHasOverrides = VideoEncodeFeedbackFlagsKHR(rawValue: 4)
-    public static let reserved3 = VideoEncodeFeedbackFlagsKHR(rawValue: 8)
-    public static let reserved4 = VideoEncodeFeedbackFlagsKHR(rawValue: 16)
-    public static let reserved5 = VideoEncodeFeedbackFlagsKHR(rawValue: 32)
-    public static let reserved6 = VideoEncodeFeedbackFlagsKHR(rawValue: 64)
-    public static let reserved7 = VideoEncodeFeedbackFlagsKHR(rawValue: 128)
-    public static let reserved8 = VideoEncodeFeedbackFlagsKHR(rawValue: 256)
-    public static let reserved9 = VideoEncodeFeedbackFlagsKHR(rawValue: 512)
+    public static let averageQuantization = VideoEncodeFeedbackFlagsKHR(rawValue: 8)
+    public static let minQuantization = VideoEncodeFeedbackFlagsKHR(rawValue: 16)
+    public static let maxQuantization = VideoEncodeFeedbackFlagsKHR(rawValue: 32)
+    public static let intraPixels = VideoEncodeFeedbackFlagsKHR(rawValue: 64)
+    public static let interPixels = VideoEncodeFeedbackFlagsKHR(rawValue: 128)
+    public static let skippedPixels = VideoEncodeFeedbackFlagsKHR(rawValue: 256)
+    public static let picturePartitionCount = VideoEncodeFeedbackFlagsKHR(rawValue: 512)
 
     public init(rawValue: UInt32) {
         self.rawValue = rawValue
@@ -4739,13 +4894,31 @@ public struct VideoEncodeFeedbackFlagsKHR: OptionSet, StringConvertibleOptionSet
         (.bitstreamBufferOffset, "bitstreamBufferOffset"),
         (.bitstreamBytesWritten, "bitstreamBytesWritten"),
         (.bitstreamHasOverrides, "bitstreamHasOverrides"),
-        (.reserved3, "reserved3"),
-        (.reserved4, "reserved4"),
-        (.reserved5, "reserved5"),
-        (.reserved6, "reserved6"),
-        (.reserved7, "reserved7"),
-        (.reserved8, "reserved8"),
-        (.reserved9, "reserved9"),
+        (.averageQuantization, "averageQuantization"),
+        (.minQuantization, "minQuantization"),
+        (.maxQuantization, "maxQuantization"),
+        (.intraPixels, "intraPixels"),
+        (.interPixels, "interPixels"),
+        (.skippedPixels, "skippedPixels"),
+        (.picturePartitionCount, "picturePartitionCount"),
+    ]
+}
+
+public struct VideoEncodePerPartitionFeedbackFlagsKHR: OptionSet, StringConvertibleOptionSet, Sendable {
+    public let rawValue: UInt32
+
+    public static let status = VideoEncodePerPartitionFeedbackFlagsKHR(rawValue: 1)
+    public static let bitstreamBufferOffset = VideoEncodePerPartitionFeedbackFlagsKHR(rawValue: 2)
+    public static let bitstreamBytesWritten = VideoEncodePerPartitionFeedbackFlagsKHR(rawValue: 4)
+
+    public init(rawValue: UInt32) {
+        self.rawValue = rawValue
+    }
+
+    static let descriptions: [(Self, String)] = [
+        (.status, "status"),
+        (.bitstreamBufferOffset, "bitstreamBufferOffset"),
+        (.bitstreamBytesWritten, "bitstreamBytesWritten"),
     ]
 }
 

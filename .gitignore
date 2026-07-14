@@ -142,3 +142,5 @@ DerivedData/
 # End of https://www.gitignore.io/api/swiftpackagemanager
 
 Playgrounds/
+
+Vulkan-Headers/

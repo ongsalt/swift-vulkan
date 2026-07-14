@@ -2056,6 +2056,64 @@ public struct ImageCreateInfo: ChainableBase {
 
 public protocol ImageCreateInfoExtension: Chainable {}
 
+public struct ImageCreateFlags2CreateInfoKHR: ChainableBase, ImageCreateInfoExtension, PhysicalDeviceImageFormatInfo2Extension, FramebufferAttachmentImageInfoExtension, VideoFormatPropertiesKHRExtension {
+    public typealias CStruct = VkImageCreateFlags2CreateInfoKHR
+
+    public static let structureType: StructureType = .imageCreateFlags2CreateInfoKHR
+    public let flags: ImageCreateFlags2KHR
+
+    public init(flags: ImageCreateFlags2KHR) {
+        self.flags = flags
+    }
+
+    public init(cStruct: VkImageCreateFlags2CreateInfoKHR) {
+        self.flags = ImageCreateFlags2KHR(rawValue: cStruct.flags)
+    }
+
+    public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkImageCreateFlags2CreateInfoKHR>) throws(E) -> R) throws(E) -> R {
+        var cStruct = VkImageCreateFlags2CreateInfoKHR()
+        cStruct.sType = VkStructureType(rawValue: VkStructureType.RawValue(Self.structureType.rawValue))
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.flags = self.flags.rawValue
+        return try body(&cStruct)
+    }
+
+    public func push<Extension: ImageCreateFlags2CreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol ImageCreateFlags2CreateInfoKHRExtension: Chainable {}
+
+public struct ImageUsageFlags2CreateInfoKHR: ChainableBase, FramebufferAttachmentImageInfoExtension, ImageCreateInfoExtension, PhysicalDeviceImageFormatInfo2Extension, PhysicalDeviceSparseImageFormatInfo2Extension, PhysicalDeviceVideoFormatInfoKHRExtension, SurfaceCapabilities2KHRExtension, SwapchainCreateInfoKHRExtension, VideoFormatPropertiesKHRExtension {
+    public typealias CStruct = VkImageUsageFlags2CreateInfoKHR
+
+    public static let structureType: StructureType = .imageUsageFlags2CreateInfoKHR
+    public let usage: ImageUsageFlags2KHR
+
+    public init(usage: ImageUsageFlags2KHR) {
+        self.usage = usage
+    }
+
+    public init(cStruct: VkImageUsageFlags2CreateInfoKHR) {
+        self.usage = ImageUsageFlags2KHR(rawValue: cStruct.usage)
+    }
+
+    public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkImageUsageFlags2CreateInfoKHR>) throws(E) -> R) throws(E) -> R {
+        var cStruct = VkImageUsageFlags2CreateInfoKHR()
+        cStruct.sType = VkStructureType(rawValue: VkStructureType.RawValue(Self.structureType.rawValue))
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.usage = self.usage.rawValue
+        return try body(&cStruct)
+    }
+
+    public func push<Extension: ImageUsageFlags2CreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol ImageUsageFlags2CreateInfoKHRExtension: Chainable {}
+
 public struct SubresourceLayout: CStructConvertible {
     public typealias CStruct = VkSubresourceLayout
 
@@ -12815,6 +12873,56 @@ public struct SharedPresentSurfaceCapabilitiesKHR: ChainableBase, SurfaceCapabil
 
 public protocol SharedPresentSurfaceCapabilitiesKHRExtension: Chainable {}
 
+public struct SwapchainFlagsSurfaceCapabilitiesEXT: ChainableBase, SurfaceCapabilities2KHRExtension {
+    public typealias CStruct = VkSwapchainFlagsSurfaceCapabilitiesEXT
+
+    public static let structureType: StructureType = .swapchainFlagsSurfaceCapabilitiesEXT
+    public let swapchainSupportedFlags: SwapchainCreateFlagsKHR
+
+    public init(cStruct: VkSwapchainFlagsSurfaceCapabilitiesEXT) {
+        self.swapchainSupportedFlags = SwapchainCreateFlagsKHR(rawValue: cStruct.swapchainSupportedFlags)
+    }
+
+    public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkSwapchainFlagsSurfaceCapabilitiesEXT>) throws(E) -> R) throws(E) -> R {
+        var cStruct = VkSwapchainFlagsSurfaceCapabilitiesEXT()
+        cStruct.sType = VkStructureType(rawValue: VkStructureType.RawValue(Self.structureType.rawValue))
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.swapchainSupportedFlags = self.swapchainSupportedFlags.rawValue
+        return try body(&cStruct)
+    }
+
+    public func push<Extension: SwapchainFlagsSurfaceCapabilitiesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol SwapchainFlagsSurfaceCapabilitiesEXTExtension: Chainable {}
+
+public struct SharedPresentSurfaceCapabilities2KHR: ChainableBase, SurfaceCapabilities2KHRExtension {
+    public typealias CStruct = VkSharedPresentSurfaceCapabilities2KHR
+
+    public static let structureType: StructureType = .sharedPresentSurfaceCapabilities2KHR
+    public let sharedPresentSupportedUsageFlags: ImageUsageFlags2KHR
+
+    public init(cStruct: VkSharedPresentSurfaceCapabilities2KHR) {
+        self.sharedPresentSupportedUsageFlags = ImageUsageFlags2KHR(rawValue: cStruct.sharedPresentSupportedUsageFlags)
+    }
+
+    public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkSharedPresentSurfaceCapabilities2KHR>) throws(E) -> R) throws(E) -> R {
+        var cStruct = VkSharedPresentSurfaceCapabilities2KHR()
+        cStruct.sType = VkStructureType(rawValue: VkStructureType.RawValue(Self.structureType.rawValue))
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.sharedPresentSupportedUsageFlags = self.sharedPresentSupportedUsageFlags.rawValue
+        return try body(&cStruct)
+    }
+
+    public func push<Extension: SharedPresentSurfaceCapabilities2KHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol SharedPresentSurfaceCapabilities2KHRExtension: Chainable {}
+
 public struct PhysicalDevice16BitStorageFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevice16BitStorageFeatures
 
@@ -13240,6 +13348,35 @@ public struct ImageViewUsageCreateInfo: ChainableBase, ImageViewCreateInfoExtens
 }
 
 public protocol ImageViewUsageCreateInfoExtension: Chainable {}
+
+public struct ImageViewUsage2CreateInfoKHR: ChainableBase, ImageViewCreateInfoExtension {
+    public typealias CStruct = VkImageViewUsage2CreateInfoKHR
+
+    public static let structureType: StructureType = .imageViewUsage2CreateInfoKHR
+    public let usage: ImageUsageFlags2KHR
+
+    public init(usage: ImageUsageFlags2KHR) {
+        self.usage = usage
+    }
+
+    public init(cStruct: VkImageViewUsage2CreateInfoKHR) {
+        self.usage = ImageUsageFlags2KHR(rawValue: cStruct.usage)
+    }
+
+    public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkImageViewUsage2CreateInfoKHR>) throws(E) -> R) throws(E) -> R {
+        var cStruct = VkImageViewUsage2CreateInfoKHR()
+        cStruct.sType = VkStructureType(rawValue: VkStructureType.RawValue(Self.structureType.rawValue))
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.usage = self.usage.rawValue
+        return try body(&cStruct)
+    }
+
+    public func push<Extension: ImageViewUsage2CreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol ImageViewUsage2CreateInfoKHRExtension: Chainable {}
 
 public struct ImageViewSlicedCreateInfoEXT: ChainableBase, ImageViewCreateInfoExtension {
     public typealias CStruct = VkImageViewSlicedCreateInfoEXT
@@ -20157,6 +20294,35 @@ public struct ImageStencilUsageCreateInfo: ChainableBase, ImageCreateInfoExtensi
 
 public protocol ImageStencilUsageCreateInfoExtension: Chainable {}
 
+public struct ImageStencilUsage2CreateInfoKHR: ChainableBase, ImageCreateInfoExtension, PhysicalDeviceImageFormatInfo2Extension {
+    public typealias CStruct = VkImageStencilUsage2CreateInfoKHR
+
+    public static let structureType: StructureType = .imageStencilUsage2CreateInfoKHR
+    public let stencilUsage: ImageUsageFlags2KHR
+
+    public init(stencilUsage: ImageUsageFlags2KHR) {
+        self.stencilUsage = stencilUsage
+    }
+
+    public init(cStruct: VkImageStencilUsage2CreateInfoKHR) {
+        self.stencilUsage = ImageUsageFlags2KHR(rawValue: cStruct.stencilUsage)
+    }
+
+    public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkImageStencilUsage2CreateInfoKHR>) throws(E) -> R) throws(E) -> R {
+        var cStruct = VkImageStencilUsage2CreateInfoKHR()
+        cStruct.sType = VkStructureType(rawValue: VkStructureType.RawValue(Self.structureType.rawValue))
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.stencilUsage = self.stencilUsage.rawValue
+        return try body(&cStruct)
+    }
+
+    public func push<Extension: ImageStencilUsage2CreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol ImageStencilUsage2CreateInfoKHRExtension: Chainable {}
+
 public struct DeviceMemoryOverallocationCreateInfoAMD: ChainableBase, DeviceCreateInfoExtension {
     public typealias CStruct = VkDeviceMemoryOverallocationCreateInfoAMD
 
@@ -24318,7 +24484,7 @@ public struct GpaSampleBeginInfoAMD: ChainableBase {
     public let timingPreSample: PipelineStageFlags
     public let timingPostSample: PipelineStageFlags
 
-    public init(sampleType: GpaSampleTypeAMD, sampleInternalOperations: Bool, cacheFlushOnCounterCollection: Bool, sqShaderMaskEnable: Bool, sqShaderMask: GpaSqShaderStageFlagsAMD, perfCounters: Array<GpaPerfCounterAMD>, streamingPerfTraceSampleInterval: UInt32, perfCounterDeviceMemoryLimit: VkDeviceSize, sqThreadTraceEnable: Bool, sqThreadTraceSuppressInstructionTokens: Bool, sqThreadTraceDeviceMemoryLimit: VkDeviceSize, timingPreSample: PipelineStageFlags, timingPostSample: PipelineStageFlags) {
+    public init(sampleType: GpaSampleTypeAMD, sampleInternalOperations: Bool, cacheFlushOnCounterCollection: Bool, sqShaderMaskEnable: Bool, sqShaderMask: GpaSqShaderStageFlagsAMD = [], perfCounters: Array<GpaPerfCounterAMD>, streamingPerfTraceSampleInterval: UInt32, perfCounterDeviceMemoryLimit: VkDeviceSize, sqThreadTraceEnable: Bool, sqThreadTraceSuppressInstructionTokens: Bool, sqThreadTraceDeviceMemoryLimit: VkDeviceSize, timingPreSample: PipelineStageFlags = [], timingPostSample: PipelineStageFlags = []) {
         self.sampleType = sampleType
         self.sampleInternalOperations = sampleInternalOperations
         self.cacheFlushOnCounterCollection = cacheFlushOnCounterCollection
@@ -25622,6 +25788,35 @@ public struct PhysicalDeviceExtendedDynamicState3PropertiesEXT: ChainableBase, P
 }
 
 public protocol PhysicalDeviceExtendedDynamicState3PropertiesEXTExtension: Chainable {}
+
+public struct PhysicalDeviceExtendedFlagsFeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
+    public typealias CStruct = VkPhysicalDeviceExtendedFlagsFeaturesKHR
+
+    public static let structureType: StructureType = .physicalDeviceExtendedFlagsFeaturesKHR
+    public let extendedFlags: Bool
+
+    public init(extendedFlags: Bool = false) {
+        self.extendedFlags = extendedFlags
+    }
+
+    public init(cStruct: VkPhysicalDeviceExtendedFlagsFeaturesKHR) {
+        self.extendedFlags = cStruct.extendedFlags == VK_TRUE
+    }
+
+    public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPhysicalDeviceExtendedFlagsFeaturesKHR>) throws(E) -> R) throws(E) -> R {
+        var cStruct = VkPhysicalDeviceExtendedFlagsFeaturesKHR()
+        cStruct.sType = VkStructureType(rawValue: VkStructureType.RawValue(Self.structureType.rawValue))
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.extendedFlags = VkBool32(self.extendedFlags ? VK_TRUE : VK_FALSE)
+        return try body(&cStruct)
+    }
+
+    public func push<Extension: PhysicalDeviceExtendedFlagsFeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol PhysicalDeviceExtendedFlagsFeaturesKHRExtension: Chainable {}
 
 public struct ColorBlendEquationEXT: CStructConvertible {
     public typealias CStruct = VkColorBlendEquationEXT
@@ -30145,6 +30340,35 @@ public struct MultisampledRenderToSingleSampledInfoEXT: ChainableBase, SubpassDe
 
 public protocol MultisampledRenderToSingleSampledInfoEXTExtension: Chainable {}
 
+public struct PhysicalDeviceMultisampledRenderToSwapchainFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
+    public typealias CStruct = VkPhysicalDeviceMultisampledRenderToSwapchainFeaturesEXT
+
+    public static let structureType: StructureType = .physicalDeviceMultisampledRenderToSwapchainFeaturesEXT
+    public let multisampledRenderToSwapchain: Bool
+
+    public init(multisampledRenderToSwapchain: Bool = false) {
+        self.multisampledRenderToSwapchain = multisampledRenderToSwapchain
+    }
+
+    public init(cStruct: VkPhysicalDeviceMultisampledRenderToSwapchainFeaturesEXT) {
+        self.multisampledRenderToSwapchain = cStruct.multisampledRenderToSwapchain == VK_TRUE
+    }
+
+    public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPhysicalDeviceMultisampledRenderToSwapchainFeaturesEXT>) throws(E) -> R) throws(E) -> R {
+        var cStruct = VkPhysicalDeviceMultisampledRenderToSwapchainFeaturesEXT()
+        cStruct.sType = VkStructureType(rawValue: VkStructureType.RawValue(Self.structureType.rawValue))
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.multisampledRenderToSwapchain = VkBool32(self.multisampledRenderToSwapchain ? VK_TRUE : VK_FALSE)
+        return try body(&cStruct)
+    }
+
+    public func push<Extension: PhysicalDeviceMultisampledRenderToSwapchainFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol PhysicalDeviceMultisampledRenderToSwapchainFeaturesEXTExtension: Chainable {}
+
 public struct PhysicalDevicePipelineProtectedAccessFeatures: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDevicePipelineProtectedAccessFeatures
 
@@ -32519,6 +32743,101 @@ public struct VideoEncodeCapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExt
 }
 
 public protocol VideoEncodeCapabilitiesKHRExtension: Chainable {}
+
+public struct PhysicalDeviceVideoEncodeFeedback2FeaturesKHR: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
+    public typealias CStruct = VkPhysicalDeviceVideoEncodeFeedback2FeaturesKHR
+
+    public static let structureType: StructureType = .physicalDeviceVideoEncodeFeedback2FeaturesKHR
+    public let videoEncodeFeedback2: Bool
+
+    public init(videoEncodeFeedback2: Bool = false) {
+        self.videoEncodeFeedback2 = videoEncodeFeedback2
+    }
+
+    public init(cStruct: VkPhysicalDeviceVideoEncodeFeedback2FeaturesKHR) {
+        self.videoEncodeFeedback2 = cStruct.videoEncodeFeedback2 == VK_TRUE
+    }
+
+    public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPhysicalDeviceVideoEncodeFeedback2FeaturesKHR>) throws(E) -> R) throws(E) -> R {
+        var cStruct = VkPhysicalDeviceVideoEncodeFeedback2FeaturesKHR()
+        cStruct.sType = VkStructureType(rawValue: VkStructureType.RawValue(Self.structureType.rawValue))
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.videoEncodeFeedback2 = VkBool32(self.videoEncodeFeedback2 ? VK_TRUE : VK_FALSE)
+        return try body(&cStruct)
+    }
+
+    public func push<Extension: PhysicalDeviceVideoEncodeFeedback2FeaturesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol PhysicalDeviceVideoEncodeFeedback2FeaturesKHRExtension: Chainable {}
+
+public struct VideoEncodeFeedback2CapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension {
+    public typealias CStruct = VkVideoEncodeFeedback2CapabilitiesKHR
+
+    public static let structureType: StructureType = .videoEncodeFeedback2CapabilitiesKHR
+    public let maxPerPartitionFeedbackEntries: UInt32
+    public let supportedPerPartitionEncodeFeedbackFlags: VideoEncodePerPartitionFeedbackFlagsKHR
+
+    public init(maxPerPartitionFeedbackEntries: UInt32, supportedPerPartitionEncodeFeedbackFlags: VideoEncodePerPartitionFeedbackFlagsKHR) {
+        self.maxPerPartitionFeedbackEntries = maxPerPartitionFeedbackEntries
+        self.supportedPerPartitionEncodeFeedbackFlags = supportedPerPartitionEncodeFeedbackFlags
+    }
+
+    public init(cStruct: VkVideoEncodeFeedback2CapabilitiesKHR) {
+        self.maxPerPartitionFeedbackEntries = cStruct.maxPerPartitionFeedbackEntries
+        self.supportedPerPartitionEncodeFeedbackFlags = VideoEncodePerPartitionFeedbackFlagsKHR(rawValue: cStruct.supportedPerPartitionEncodeFeedbackFlags)
+    }
+
+    public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkVideoEncodeFeedback2CapabilitiesKHR>) throws(E) -> R) throws(E) -> R {
+        var cStruct = VkVideoEncodeFeedback2CapabilitiesKHR()
+        cStruct.sType = VkStructureType(rawValue: VkStructureType.RawValue(Self.structureType.rawValue))
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.maxPerPartitionFeedbackEntries = self.maxPerPartitionFeedbackEntries
+        cStruct.supportedPerPartitionEncodeFeedbackFlags = self.supportedPerPartitionEncodeFeedbackFlags.rawValue
+        return try body(&cStruct)
+    }
+
+    public func push<Extension: VideoEncodeFeedback2CapabilitiesKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol VideoEncodeFeedback2CapabilitiesKHRExtension: Chainable {}
+
+public struct QueryPoolVideoEncodePerPartitionFeedbackCreateInfoKHR: ChainableBase, QueryPoolCreateInfoExtension {
+    public typealias CStruct = VkQueryPoolVideoEncodePerPartitionFeedbackCreateInfoKHR
+
+    public static let structureType: StructureType = .queryPoolVideoEncodePerPartitionFeedbackCreateInfoKHR
+    public let maxPerPartitionFeedbackEntries: UInt32
+    public let perPartitionEncodeFeedbackFlags: VideoEncodePerPartitionFeedbackFlagsKHR
+
+    public init(maxPerPartitionFeedbackEntries: UInt32 = 0, perPartitionEncodeFeedbackFlags: VideoEncodePerPartitionFeedbackFlagsKHR = []) {
+        self.maxPerPartitionFeedbackEntries = maxPerPartitionFeedbackEntries
+        self.perPartitionEncodeFeedbackFlags = perPartitionEncodeFeedbackFlags
+    }
+
+    public init(cStruct: VkQueryPoolVideoEncodePerPartitionFeedbackCreateInfoKHR) {
+        self.maxPerPartitionFeedbackEntries = cStruct.maxPerPartitionFeedbackEntries
+        self.perPartitionEncodeFeedbackFlags = VideoEncodePerPartitionFeedbackFlagsKHR(rawValue: cStruct.perPartitionEncodeFeedbackFlags)
+    }
+
+    public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkQueryPoolVideoEncodePerPartitionFeedbackCreateInfoKHR>) throws(E) -> R) throws(E) -> R {
+        var cStruct = VkQueryPoolVideoEncodePerPartitionFeedbackCreateInfoKHR()
+        cStruct.sType = VkStructureType(rawValue: VkStructureType.RawValue(Self.structureType.rawValue))
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.maxPerPartitionFeedbackEntries = self.maxPerPartitionFeedbackEntries
+        cStruct.perPartitionEncodeFeedbackFlags = self.perPartitionEncodeFeedbackFlags.rawValue
+        return try body(&cStruct)
+    }
+
+    public func push<Extension: QueryPoolVideoEncodePerPartitionFeedbackCreateInfoKHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol QueryPoolVideoEncodePerPartitionFeedbackCreateInfoKHRExtension: Chainable {}
 
 public struct VideoEncodeH264CapabilitiesKHR: ChainableBase, VideoCapabilitiesKHRExtension {
     public typealias CStruct = VkVideoEncodeH264CapabilitiesKHR
@@ -36665,6 +36984,37 @@ public struct FormatProperties3: ChainableBase, FormatProperties2Extension {
 
 public protocol FormatProperties3Extension: Chainable {}
 
+public struct FormatProperties4KHR: ChainableBase, FormatProperties2Extension {
+    public typealias CStruct = VkFormatProperties4KHR
+
+    public static let structureType: StructureType = .formatProperties4KHR
+    public let linearTilingFeatures: FormatFeatureFlags4KHR
+    public let optimalTilingFeatures: FormatFeatureFlags4KHR
+    public let bufferFeatures: FormatFeatureFlags4KHR
+
+    public init(cStruct: VkFormatProperties4KHR) {
+        self.linearTilingFeatures = FormatFeatureFlags4KHR(rawValue: cStruct.linearTilingFeatures)
+        self.optimalTilingFeatures = FormatFeatureFlags4KHR(rawValue: cStruct.optimalTilingFeatures)
+        self.bufferFeatures = FormatFeatureFlags4KHR(rawValue: cStruct.bufferFeatures)
+    }
+
+    public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkFormatProperties4KHR>) throws(E) -> R) throws(E) -> R {
+        var cStruct = VkFormatProperties4KHR()
+        cStruct.sType = VkStructureType(rawValue: VkStructureType.RawValue(Self.structureType.rawValue))
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.linearTilingFeatures = self.linearTilingFeatures.rawValue
+        cStruct.optimalTilingFeatures = self.optimalTilingFeatures.rawValue
+        cStruct.bufferFeatures = self.bufferFeatures.rawValue
+        return try body(&cStruct)
+    }
+
+    public func push<Extension: FormatProperties4KHRExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol FormatProperties4KHRExtension: Chainable {}
+
 public struct DrmFormatModifierProperties2EXT: CStructConvertible {
     public typealias CStruct = VkDrmFormatModifierProperties2EXT
 
@@ -37566,6 +37916,72 @@ public struct DataGraphPipelineSessionNeuralStatisticsCreateInfoARM: ChainableBa
 }
 
 public protocol DataGraphPipelineSessionNeuralStatisticsCreateInfoARMExtension: Chainable {}
+
+public struct TensorExplicitTilingFormatPropertiesARM: ChainableBase, FormatProperties2Extension {
+    public typealias CStruct = VkTensorExplicitTilingFormatPropertiesARM
+
+    public static let structureType: StructureType = .tensorExplicitTilingFormatPropertiesARM
+    public let brick16TilingTensorFeatures: FormatFeatureFlags2
+    public let brick8TilingTensorFeatures: FormatFeatureFlags2
+    public let brick4TilingTensorFeatures: FormatFeatureFlags2
+    public let blockUTilingTensorFeatures: FormatFeatureFlags2
+    public let blockU64kTilingTensorFeatures: FormatFeatureFlags2
+
+    public init(cStruct: VkTensorExplicitTilingFormatPropertiesARM) {
+        self.brick16TilingTensorFeatures = FormatFeatureFlags2(rawValue: cStruct.brick16TilingTensorFeatures)
+        self.brick8TilingTensorFeatures = FormatFeatureFlags2(rawValue: cStruct.brick8TilingTensorFeatures)
+        self.brick4TilingTensorFeatures = FormatFeatureFlags2(rawValue: cStruct.brick4TilingTensorFeatures)
+        self.blockUTilingTensorFeatures = FormatFeatureFlags2(rawValue: cStruct.blockUTilingTensorFeatures)
+        self.blockU64kTilingTensorFeatures = FormatFeatureFlags2(rawValue: cStruct.blockU64kTilingTensorFeatures)
+    }
+
+    public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkTensorExplicitTilingFormatPropertiesARM>) throws(E) -> R) throws(E) -> R {
+        var cStruct = VkTensorExplicitTilingFormatPropertiesARM()
+        cStruct.sType = VkStructureType(rawValue: VkStructureType.RawValue(Self.structureType.rawValue))
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.brick16TilingTensorFeatures = self.brick16TilingTensorFeatures.rawValue
+        cStruct.brick8TilingTensorFeatures = self.brick8TilingTensorFeatures.rawValue
+        cStruct.brick4TilingTensorFeatures = self.brick4TilingTensorFeatures.rawValue
+        cStruct.blockUTilingTensorFeatures = self.blockUTilingTensorFeatures.rawValue
+        cStruct.blockU64kTilingTensorFeatures = self.blockU64kTilingTensorFeatures.rawValue
+        return try body(&cStruct)
+    }
+
+    public func push<Extension: TensorExplicitTilingFormatPropertiesARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol TensorExplicitTilingFormatPropertiesARMExtension: Chainable {}
+
+public struct TensorRollingBackingCreateInfoARM: ChainableBase, TensorCreateInfoARMExtension {
+    public typealias CStruct = VkTensorRollingBackingCreateInfoARM
+
+    public static let structureType: StructureType = .tensorRollingBackingCreateInfoARM
+    public let wraps: (UInt32, UInt32, UInt32, UInt32)
+
+    public init(wraps: (UInt32, UInt32, UInt32, UInt32)) {
+        self.wraps = wraps
+    }
+
+    public init(cStruct: VkTensorRollingBackingCreateInfoARM) {
+        self.wraps = cStruct.wraps
+    }
+
+    public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkTensorRollingBackingCreateInfoARM>) throws(E) -> R) throws(E) -> R {
+        var cStruct = VkTensorRollingBackingCreateInfoARM()
+        cStruct.sType = VkStructureType(rawValue: VkStructureType.RawValue(Self.structureType.rawValue))
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.wraps = self.wraps
+        return try body(&cStruct)
+    }
+
+    public func push<Extension: TensorRollingBackingCreateInfoARMExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol TensorRollingBackingCreateInfoARMExtension: Chainable {}
 
 public struct PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceDescriptorSetHostMappingFeaturesVALVE
@@ -45355,6 +45771,35 @@ public struct CooperativeMatrixFlexibleDimensionsPropertiesNV: ChainableBase {
 
 public protocol CooperativeMatrixFlexibleDimensionsPropertiesNVExtension: Chainable {}
 
+public struct PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
+    public typealias CStruct = VkPhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV
+
+    public static let structureType: StructureType = .physicalDeviceCooperativeMatrixDecodeVectorFeaturesNV
+    public let cooperativeMatrixDecodeVector: Bool
+
+    public init(cooperativeMatrixDecodeVector: Bool = false) {
+        self.cooperativeMatrixDecodeVector = cooperativeMatrixDecodeVector
+    }
+
+    public init(cStruct: VkPhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV) {
+        self.cooperativeMatrixDecodeVector = cStruct.cooperativeMatrixDecodeVector == VK_TRUE
+    }
+
+    public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV>) throws(E) -> R) throws(E) -> R {
+        var cStruct = VkPhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV()
+        cStruct.sType = VkStructureType(rawValue: VkStructureType.RawValue(Self.structureType.rawValue))
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.cooperativeMatrixDecodeVector = VkBool32(self.cooperativeMatrixDecodeVector ? VK_TRUE : VK_FALSE)
+        return try body(&cStruct)
+    }
+
+    public func push<Extension: PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNVExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNVExtension: Chainable {}
+
 public struct PhysicalDeviceHdrVividFeaturesHUAWEI: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
     public typealias CStruct = VkPhysicalDeviceHdrVividFeaturesHUAWEI
 
@@ -51312,4 +51757,45 @@ public struct DataGraphPipelineOpticalFlowDispatchInfoARM: ChainableBase, DataGr
 }
 
 public protocol DataGraphPipelineOpticalFlowDispatchInfoARMExtension: Chainable {}
+
+public struct PhysicalDeviceShaderOCPMicroscalingTypesFeaturesEXT: ChainableBase, PhysicalDeviceFeatures2Extension, DeviceCreateInfoExtension {
+    public typealias CStruct = VkPhysicalDeviceShaderOCPMicroscalingTypesFeaturesEXT
+
+    public static let structureType: StructureType = .physicalDeviceShaderOcpMicroscalingTypesFeaturesEXT
+    public let shaderFloat4: Bool
+    public let shaderFloat6: Bool
+    public let shaderFloat8UnsignedE8M0: Bool
+    public let shaderMXInt8: Bool
+
+    public init(shaderFloat4: Bool = false, shaderFloat6: Bool = false, shaderFloat8UnsignedE8M0: Bool = false, shaderMXInt8: Bool = false) {
+        self.shaderFloat4 = shaderFloat4
+        self.shaderFloat6 = shaderFloat6
+        self.shaderFloat8UnsignedE8M0 = shaderFloat8UnsignedE8M0
+        self.shaderMXInt8 = shaderMXInt8
+    }
+
+    public init(cStruct: VkPhysicalDeviceShaderOCPMicroscalingTypesFeaturesEXT) {
+        self.shaderFloat4 = cStruct.shaderFloat4 == VK_TRUE
+        self.shaderFloat6 = cStruct.shaderFloat6 == VK_TRUE
+        self.shaderFloat8UnsignedE8M0 = cStruct.shaderFloat8UnsignedE8M0 == VK_TRUE
+        self.shaderMXInt8 = cStruct.shaderMXInt8 == VK_TRUE
+    }
+
+    public func withCStruct<R, E: Error>(pNext: UnsafeRawPointer?, _ body: (UnsafePointer<VkPhysicalDeviceShaderOCPMicroscalingTypesFeaturesEXT>) throws(E) -> R) throws(E) -> R {
+        var cStruct = VkPhysicalDeviceShaderOCPMicroscalingTypesFeaturesEXT()
+        cStruct.sType = VkStructureType(rawValue: VkStructureType.RawValue(Self.structureType.rawValue))
+        cStruct.pNext = maybeMutable(pNext)
+        cStruct.shaderFloat4 = VkBool32(self.shaderFloat4 ? VK_TRUE : VK_FALSE)
+        cStruct.shaderFloat6 = VkBool32(self.shaderFloat6 ? VK_TRUE : VK_FALSE)
+        cStruct.shaderFloat8UnsignedE8M0 = VkBool32(self.shaderFloat8UnsignedE8M0 ? VK_TRUE : VK_FALSE)
+        cStruct.shaderMXInt8 = VkBool32(self.shaderMXInt8 ? VK_TRUE : VK_FALSE)
+        return try body(&cStruct)
+    }
+
+    public func push<Extension: PhysicalDeviceShaderOCPMicroscalingTypesFeaturesEXTExtension>(_ ext: Extension) -> Chain<Self, Extension> {
+        Chain(base: base, next: ext)
+    }
+}
+
+public protocol PhysicalDeviceShaderOCPMicroscalingTypesFeaturesEXTExtension: Chainable {}
 

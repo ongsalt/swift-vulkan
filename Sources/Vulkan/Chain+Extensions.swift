@@ -88,6 +88,18 @@ extension Chain where Base == ImageCreateInfo {
     }
 }
 
+extension Chain where Base == ImageCreateFlags2CreateInfoKHR {
+    public func push<NewValue: ImageCreateFlags2CreateInfoKHRExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
+extension Chain where Base == ImageUsageFlags2CreateInfoKHR {
+    public func push<NewValue: ImageUsageFlags2CreateInfoKHRExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
 extension Chain where Base == ImageViewCreateInfo {
     public func push<NewValue: ImageViewCreateInfoExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
         Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
@@ -1500,6 +1512,18 @@ extension Chain where Base == SharedPresentSurfaceCapabilitiesKHR {
     }
 }
 
+extension Chain where Base == SwapchainFlagsSurfaceCapabilitiesEXT {
+    public func push<NewValue: SwapchainFlagsSurfaceCapabilitiesEXTExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
+extension Chain where Base == SharedPresentSurfaceCapabilities2KHR {
+    public func push<NewValue: SharedPresentSurfaceCapabilities2KHRExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
 extension Chain where Base == PhysicalDevice16BitStorageFeatures {
     public func push<NewValue: PhysicalDevice16BitStorageFeaturesExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
         Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
@@ -1580,6 +1604,12 @@ extension Chain where Base == MemoryDedicatedAllocateInfo {
 
 extension Chain where Base == ImageViewUsageCreateInfo {
     public func push<NewValue: ImageViewUsageCreateInfoExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
+extension Chain where Base == ImageViewUsage2CreateInfoKHR {
+    public func push<NewValue: ImageViewUsage2CreateInfoKHRExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
         Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
     }
 }
@@ -2652,6 +2682,12 @@ extension Chain where Base == ImageStencilUsageCreateInfo {
     }
 }
 
+extension Chain where Base == ImageStencilUsage2CreateInfoKHR {
+    public func push<NewValue: ImageStencilUsage2CreateInfoKHRExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
 extension Chain where Base == DeviceMemoryOverallocationCreateInfoAMD {
     public func push<NewValue: DeviceMemoryOverallocationCreateInfoAMDExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
         Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
@@ -3452,6 +3488,12 @@ extension Chain where Base == PhysicalDeviceExtendedDynamicState3PropertiesEXT {
     }
 }
 
+extension Chain where Base == PhysicalDeviceExtendedFlagsFeaturesKHR {
+    public func push<NewValue: PhysicalDeviceExtendedFlagsFeaturesKHRExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
 extension Chain where Base == RenderPassTransformBeginInfoQCOM {
     public func push<NewValue: RenderPassTransformBeginInfoQCOMExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
         Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
@@ -4116,6 +4158,12 @@ extension Chain where Base == MultisampledRenderToSingleSampledInfoEXT {
     }
 }
 
+extension Chain where Base == PhysicalDeviceMultisampledRenderToSwapchainFeaturesEXT {
+    public func push<NewValue: PhysicalDeviceMultisampledRenderToSwapchainFeaturesEXTExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
 extension Chain where Base == PhysicalDevicePipelineProtectedAccessFeatures {
     public func push<NewValue: PhysicalDevicePipelineProtectedAccessFeaturesExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
         Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
@@ -4526,6 +4574,24 @@ extension Chain where Base == VideoEncodeRateControlInfoKHR {
 
 extension Chain where Base == VideoEncodeCapabilitiesKHR {
     public func push<NewValue: VideoEncodeCapabilitiesKHRExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
+extension Chain where Base == PhysicalDeviceVideoEncodeFeedback2FeaturesKHR {
+    public func push<NewValue: PhysicalDeviceVideoEncodeFeedback2FeaturesKHRExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
+extension Chain where Base == VideoEncodeFeedback2CapabilitiesKHR {
+    public func push<NewValue: VideoEncodeFeedback2CapabilitiesKHRExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
+extension Chain where Base == QueryPoolVideoEncodePerPartitionFeedbackCreateInfoKHR {
+    public func push<NewValue: QueryPoolVideoEncodePerPartitionFeedbackCreateInfoKHRExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
         Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
     }
 }
@@ -5120,6 +5186,12 @@ extension Chain where Base == FormatProperties3 {
     }
 }
 
+extension Chain where Base == FormatProperties4KHR {
+    public func push<NewValue: FormatProperties4KHRExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
 extension Chain where Base == DrmFormatModifierPropertiesList2EXT {
     public func push<NewValue: DrmFormatModifierPropertiesList2EXTExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
         Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
@@ -5268,6 +5340,18 @@ extension Chain where Base == DataGraphPipelineNeuralStatisticsCreateInfoARM {
 
 extension Chain where Base == DataGraphPipelineSessionNeuralStatisticsCreateInfoARM {
     public func push<NewValue: DataGraphPipelineSessionNeuralStatisticsCreateInfoARMExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
+extension Chain where Base == TensorExplicitTilingFormatPropertiesARM {
+    public func push<NewValue: TensorExplicitTilingFormatPropertiesARMExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
+extension Chain where Base == TensorRollingBackingCreateInfoARM {
+    public func push<NewValue: TensorRollingBackingCreateInfoARMExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
         Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
     }
 }
@@ -6640,6 +6724,12 @@ extension Chain where Base == CooperativeMatrixFlexibleDimensionsPropertiesNV {
     }
 }
 
+extension Chain where Base == PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV {
+    public func push<NewValue: PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNVExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
 extension Chain where Base == PhysicalDeviceHdrVividFeaturesHUAWEI {
     public func push<NewValue: PhysicalDeviceHdrVividFeaturesHUAWEIExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
         Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
@@ -7590,6 +7680,12 @@ extension Chain where Base == DataGraphPipelineOpticalFlowCreateInfoARM {
 
 extension Chain where Base == DataGraphPipelineOpticalFlowDispatchInfoARM {
     public func push<NewValue: DataGraphPipelineOpticalFlowDispatchInfoARMExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
+        Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
+    }
+}
+
+extension Chain where Base == PhysicalDeviceShaderOCPMicroscalingTypesFeaturesEXT {
+    public func push<NewValue: PhysicalDeviceShaderOCPMicroscalingTypesFeaturesEXTExtension>(_ newValue: NewValue) -> Chain<Base, Chain<NewValue, Next>> {
         Chain<Base, Chain<NewValue, Next>>(base: base, next: Chain<NewValue, Next>(base: newValue, next: next))
     }
 }
